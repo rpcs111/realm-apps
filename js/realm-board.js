@@ -1,4 +1,4 @@
-/* Realm board (Ara) - shared model for queue.html (Layer 1) and mapper.html (live paste).
+/* Realm board - shared model for queue.html (Layer 1) and mapper.html (live paste).
    One board, one key: localStorage "realm_queue_v1". Both pages read and write the same object.
    No network calls. Nothing leaves this browser. 16 Oct 2026. */
 (function(){
@@ -18,9 +18,9 @@ var STEPS=[
  {id:'step_roster',name:'Rostering',url:'',note:'Deputy roster, look-only. Nobody edits shifts (one-touch payroll).',kw:['roster','rostering','shift','deputy','crew','who is on']},
  {id:'step_0',name:'Job',url:'',note:'Job card / job day (calendar notes template: hours, site contact, scope, access, equipment, parking, last INV, WhatsApp, last cert).',kw:['job card','job day','on site','onsite','scope','access','parking','completed','job sheet']},
  {id:'step_1',name:'Cert',url:'https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com',note:'',kw:['cert','certificate','recert','re cert','anchor test','load test','inspection due']},
- {id:'step_2',name:'Invoice',url:'https://books.zoho.com/',note:'',kw:['invoice','inv-','bill ','billed','raise inv']},
+ {id:'step_2',name:'Get paid',url:'https://books.zoho.com/',note:'',kw:['invoice','inv-','bill ','billed','raise inv']},
  {id:'step_3',name:'Outstanding',url:REG,note:'',kw:['outstanding','overdue','owed','owing','statement','balance','debtor','chase']},
- {id:'step_remit',name:'Remittance',url:'',note:'Payment / remittance in info@ closes the invoice.',kw:['remittance','remit','paid','payment received','eft','deposit']},
+ {id:'step_remit',name:'Remittance',url:'',note:'Payment / remittance in the office inbox closes the invoice.',kw:['remittance','remit','paid','payment received','eft','deposit']},
  {id:'step_4',name:'P&L',url:'https://docs.google.com/spreadsheets/d/1HXLRRgHZJDHSj0p_dp3WHgHO-6-Rxg8s/edit?authuser=info@realmpcs.com',note:'',kw:['p&l','pnl','profit','margin','labour cost','cost']},
  {id:'step_5',name:'Close',url:'',note:'',kw:['close','closed','close out','close-out','done','finished']},
  {id:'step_rebook',name:'Rebook',url:'',note:'Next due date / recurring rebook (not built yet).',kw:['rebook','next due','recurring','annual','12 months','next year']}
@@ -51,10 +51,13 @@ function seed(){
 }
 function byId(S,id){for(var i=0;i<S.nodes.length;i++)if(S.nodes[i].id===id)return S.nodes[i];return null}
 /* Migrate an old board in place. Never wipes: only adds what's missing, once. */
+var PASTNAME={step_2:['invoice']};
 function migrate(S){
  if(!S||!S.nodes||!S.edges)return seed();
  var changed=false;
  S.nodes.forEach(function(n){if(!Array.isArray(n.status)){n.status=[];changed=true}if(n.note==null){n.note='';changed=true}if(n.url==null){n.url='';changed=true}});
+ /* Built-in step names that were renamed: a saved board still holding the old default gets the new name; a hand-typed name is kept. */
+ S.nodes.forEach(function(n){var p=PASTNAME[n.id],d;if(p&&p.indexOf(String(n.name||'').trim().toLowerCase())>=0){d=STEPS.filter(function(s){return s.id===n.id})[0];if(d&&n.name!==d.name){n.name=d.name;changed=true}}});
  if((S.v||1)<2){
   STEPS.concat(SYS).forEach(function(d){if(!byId(S,d.id)){var p=MPOS[d.id]||POS[d.id];S.nodes.push(mk(d,d.type||'step',p))}});
   var j=byId(S,'step_0');if(j&&!j.note)j.note=STEPS[5].note;
@@ -74,15 +77,22 @@ function file(S,id,text,src){var n=byId(S,id);text=String(text||'').trim();if(!n
 function norm(s){return String(s||'').toLowerCase().replace(/&amp;/g,'&').replace(/[^a-z0-9&\- ]+/g,' ').replace(/\s+/g,' ').trim()}
 var STOP={st:1,rd:1,street:1,road:1,ave:1,the:1,and:1,new:1,job:1,place:1,pl:1,way:1,lane:1,ln:1,dr:1,rename:1,me:1,of:1};
 /* Smart paste: rank nodes for a pasted text. Name/address matches beat step keywords. */
+function nameScore(t,nm){var sc=0,why='';
+ if(nm.length>=3&&t.indexOf(' '+nm+' ')>=0){sc+=60+nm.length;why='name'}
+ else if(nm.length>=3&&t.indexOf(nm)>=0){sc+=40+nm.length;why='name'}
+ else{var w=nm.split(' ').filter(function(x){return x.length>=3&&!STOP[x]||/^\d+[a-z]?$/.test(x)}),hit=0,num=0;
+  w.forEach(function(x){if(t.indexOf(' '+x+' ')>=0||t.indexOf(' '+x)>=0){hit++;if(/^\d/.test(x))num++}});
+  if(w.length&&hit){sc+=Math.round(30*hit/w.length)+(num&&hit>num?15:0);why='words'}}
+ return [sc,why]}
+/* A node still on its built-in name also matches its past built-in names (PASTNAME), so old words keep finding it. A hand-typed name gets no alias. */
+function namesOf(n){var all=STEPS.concat(SYS),d=null;for(var i=0;i<all.length;i++)if(all[i].id===n.id){d=all[i];break}
+ var out=[n.name];if(d&&PASTNAME[n.id]&&String(n.name||'').trim().toLowerCase()===String(d.name).toLowerCase())out=out.concat(PASTNAME[n.id]);return out}
 function suggest(S,text,max){
  var t=' '+norm(text)+' ',out=[];if(t.trim().length<2)return out;
  S.nodes.forEach(function(n){
-  var nm=norm(n.name),sc=0,why='';if(!nm)return;
-  if(nm.length>=3&&t.indexOf(' '+nm+' ')>=0){sc+=60+nm.length;why='name'}
-  else if(nm.length>=3&&t.indexOf(nm)>=0){sc+=40+nm.length;why='name'}
-  else{var w=nm.split(' ').filter(function(x){return x.length>=3&&!STOP[x]||/^\d+[a-z]?$/.test(x)}),hit=0,num=0;
-   w.forEach(function(x){if(t.indexOf(' '+x+' ')>=0||t.indexOf(' '+x)>=0){hit++;if(/^\d/.test(x))num++}});
-   if(w.length&&hit){sc+=Math.round(30*hit/w.length)+(num&&hit>num?15:0);why='words'}}
+  var sc=0,why='',any=false;
+  namesOf(n).forEach(function(x){var nm=norm(x);if(!nm)return;any=true;var r=nameScore(t,nm);if(r[0]>sc){sc=r[0];why=r[1]}});
+  if(!any)return;
   kwOf(n).forEach(function(k){var kk=norm(k);if(kk&&t.indexOf(kk.length<4?' '+kk+' ':kk)>=0){sc+=12;why=why||'keyword: '+k}});
   if(n.type==='job'&&sc&&why&&why.indexOf('keyword')!==0)sc+=5;
   if(sc>0)out.push({id:n.id,name:n.name,type:n.type,score:sc,why:why});

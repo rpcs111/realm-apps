@@ -181,6 +181,7 @@ function askWhy(line,label,shown){
   check:function(note){if(note.length>WHY_MAX)return "Keep it shorter, please.";var RC=window.RefCheck;
    if(!RC)return "This note can't be checked right now, so it isn't sent.";if(RC.blocked(note))return RC.MSG;return hasCode(note)?codeMsg(note):""},
   okMsg:"Sent. The bots' inbox wrote it down.",
+  kept:function(){return !!(whyIt&&pending(whyIt.id))},
   failMsg:function(){return whyIt&&pending(whyIt.id)?"Kept on this phone. It sends by itself when you're back online.":"Not sent, and this phone couldn't keep it. Copy your reason and try again."},
   send:function(note){var st=vget(),s=st[line];if(!s||s.v!=="disagree")return Promise.reject(new Error("no verdict"));
    if(!whyIt||whyIt.why!==note){whyIt={id:newId(),line:line,label:label,v:"disagree",why:note,t:Date.now()};

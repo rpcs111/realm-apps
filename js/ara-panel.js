@@ -1,8 +1,8 @@
-/* Ara panel. One shared file: behaviour and CSS live here, and a page opts in with a single script tag.
-   It does not draw a second always-on control. It opens from the page's existing Ara symbol.
+/* Chief panel. One shared file: behaviour and CSS live here, and a page opts in with a single script tag.
+   It does not draw a second always-on control. It opens from the page's existing Chief symbol.
 
    Which links: the hub's main tiles, the list Ange named.
-   index.html ARA_APPS plus Notes and Hub: Queue, Realm Flow Map, Layers, ETA, Nova, Cert Studio, Private, Notes, Hub.
+   index.html ARA_APPS plus Notes and Hub: Queue, Realm Flow Map, Layers, ETA, Helper, Cert Studio, Private, Notes, Hub.
    queue.html's footer says "Layer 1: queue only." layers.html calls Layer 1 the base queue board (queue.html).
    That is the queue step. This bar is the hub list, not that narrower board.
    Cert Studio Test sits in ARA_APPS and is not a button here. Search Studio is not a button here.
@@ -19,7 +19,7 @@
     ['Realm Flow Map', 'metatron3.html'],
     ['Layers', 'layers.html'],
     ['ETA', 'eta.html'],
-    ['Nova', 'nova.html'],
+    ['Helper', 'nova.html'],
     ['Cert Studio', 'cert.html'],
     ['Private', 'private.html'],
     ['Notes', 'notes.html'],
@@ -105,7 +105,7 @@
     panel.id = 'araPanel';
     panel.hidden = true;
     panel.setAttribute('role', 'region');
-    panel.setAttribute('aria-label', 'Ara panel');
+    panel.setAttribute('aria-label', 'Chief panel');
     var row = document.createElement('div');
     row.className = 'ara-p-row';
     LINKS.forEach(function (pair) {

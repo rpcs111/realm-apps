@@ -4,9 +4,51 @@
    Same-origin GET only; never touches other origins.
    Local alerts: notificationclick opens that app. periodicsync (where the browser allows it) shows due items the page already stored. No push server. */
 var C='ara-app-v5';
-self.addEventListener('install',function(){self.skipWaiting()});
+self.addEventListener('install',function(e){self.skipWaiting();e.waitUntil(araWarm())});
 self.addEventListener('message',function(e){if(e.data&&e.data.type==='SKIP_WAITING')self.skipWaiting()});
 self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return /^ara-app-/.test(k)&&k!==C}).map(function(k){return caches.delete(k)}))}).catch(function(){}).then(function(){return self.clients.claim()}))});
+/* 1 Nov 2026: first open works offline. While the worker installs (before it controls any page) it fetches its own page and the same-origin files that page names
+   (scripts, styles, manifest, icons; at most 80) into the cache, so the app opens offline after ONE online open, not two. Same-origin only. */
+function araWarm(){
+  var s=self.registration.scope;
+  return caches.open(C).then(function(c){
+    return fetch(new Request(s,{cache:'no-cache',credentials:'same-origin'})).then(function(res){
+      if(!res||!res.ok||res.type!=='basic')return;
+      return c.put(s,res.clone()).then(function(){return res.text()}).then(function(h){
+        var seen={},list=[],re=/(?:src|href)\s*=\s*["']([^"'#]+)["']/g,m;
+        while((m=re.exec(h))&&list.length<80){try{var u=new URL(m[1],s);if(u.origin===self.location.origin&&/\.(js|css|webmanifest|json|png|svg|webp|ico|jpg)$/.test(u.pathname)&&!seen[u.href]){seen[u.href]=1;list.push(u.href)}}catch(err){}}
+        return Promise.all(list.map(function(u){return c.match(u).then(function(hit){if(hit)return;return fetch(new Request(u,{cache:'no-cache'})).then(function(r){if(r&&r.ok&&r.type==='basic')return c.put(u,r)}).catch(function(){})})}));
+      });
+    }).then(function(){return araWarmShared(c)});
+  }).catch(function(){});
+}
+/* 1 Nov 2026 (ELON gate): files the page loads LATER (not named in its HTML) are stored at install too, so the first offline open
+   matches a second one: Deck's history.json, version.json, the Tell button (ara-button.js, loaded by saveapp.js), the mic (mic-chat.js)
+   and the app list (app-shell-config.js, loaded by app-shell.js), plus the app icons named in that list and in this page's manifests.
+   Stored without the ?v= tag; offline the fetch handler already falls back to the same file ignoring the tag. Same-origin only, at most 60 icons. */
+/* 1 Nov r2 gate: also the Tell button's picture and the star/watermark art the pages draw from CSS, and the resume panel
+   (js/resume.js, loaded later by app-shell.js), so the Tell button, the Desk resume panel, Deck and Search look the same offline. */
+var ARA_SHARED=['history.json','version.json','js/ara-button.js','js/mic-chat.js','js/app-shell-config.js','js/resume.js','js/reconnect.js',
+  'pwa/hub-ara-v3-192.svg','pwa/star-deck.svg','pwa/star-desk.svg','pwa/realm-watermark.svg'];
+function araWarmShared(c){
+  var root=new URL('./',self.location.href).href,put=function(u){return c.match(u,{ignoreSearch:true}).then(function(hit){if(hit)return null;
+    return fetch(new Request(u,{cache:'no-cache'})).then(function(r){if(!r||!r.ok||r.type!=='basic')return null;var t=r.clone();return c.put(u,r).then(function(){return t})})}).catch(function(){return null})};
+  return Promise.all(ARA_SHARED.map(function(f){return put(root+f)})).then(function(rs){
+    return c.keys().then(function(ks){
+      var mans=ks.map(function(k){return k.url}).filter(function(u){return /\.webmanifest$/.test(new URL(u).pathname)});
+      return Promise.all(mans.map(function(u){return c.match(u).then(function(r){return r?r.text():''}).then(function(t){return {t:t,b:u}})})).then(function(ms){
+        var cfg=c.match(root+'js/app-shell-config.js',{ignoreSearch:true}).then(function(r){return r?r.text():''});
+        return cfg.then(function(ct){
+          var seen={},icons=[],re=/(?:\.\.?\/)?(pwa\/[A-Za-z0-9._\/-]+\.(?:png|svg|webp|ico))/g,m,add=function(rel,base){if(icons.length>=60)return;try{var u=new URL(rel,base);if(u.origin===self.location.origin){u.search='';if(!seen[u.href]){seen[u.href]=1;icons.push(u.href)}}}catch(err){}};
+          while((m=re.exec(ct)))add(m[1],root);
+          ms.forEach(function(o){var mm,r2=/"src"\s*:\s*"([^"]+)"/g;while((mm=r2.exec(o.t)))add(mm[1],o.b)});
+          return Promise.all(icons.map(put));
+        });
+      });
+    });
+  }).catch(function(){});
+}
+
 self.addEventListener('fetch',function(e){
   var r=e.request;
   if(r.method!=='GET'||r.headers.has('range'))return;

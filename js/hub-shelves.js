@@ -11,7 +11,9 @@ var FLOWMAP_URL="./map.html";
 var FEED="history.json",EVERY_MS=60000,FIRST=10;
 var WHY_FEED="History can't load right now; try again in a minute.";
 var WHY_FLOW="Flow Map opens here once its fixes pass the check.";
-var ROLE={"ELON":"Gate: checks the work","Builder":"Builder: builds and fixes","42*":"Lead: sets the order and merges","Money & Admin":"Money and admin"};
+var ROLE={"ELON":"Checks: checks the work","Builder":"Builds: builds and fixes","42*":"Lead: sets the order and merges","Money & Admin":"Bills and admin","Jobs & Inbox":"Jobs and clients"};
+/* every field shows neutral role words, never a bot name or round tag */
+function neutral(s){s=String(s==null?"":s);var R=[[/\bMoney\s*(?:&amp;|&|and)\s*Admin\b/gi,"Bills and admin"],[/\bJobs\s*(?:&amp;|&|and)\s*Inbox\b/gi,"Jobs and clients"],[/(?:42\*|\bThe Fixer|\bFixer)'s\b/g,"the lead's"],[/42\*|\bThe Fixer\b|\bFixer\b/g,"Lead"],[/\b(?:Builder|BUILDER|Ara|ARA)'s\b/g,"the builds team's"],[/\b(?:Builder|BUILDER|Ara|ARA)\b/g,"Builds"],[/\b(?:ELON|Elon(?! Musk))'s\b/g,"the checks team's"],[/\bELON\b|\bElon\b(?! Musk)/g,"Checks"],[/\bSledge\b/gi,"Apps"],[/\bNova\b|\bNOVA\b/g,"Helper"],[/\bIvor\b/gi,"Helper"],[/\b(?:Metatron|Marvin|Cleaver|Crowbar|Knuckles|Oli)\b/gi,"Team"],[/\bFAIL\s*\d+(?:\s*\/\s*\d+)*/gi,"Not passed"],[/,?\s*\bround\s+(?:\d+|one|two|three|four|five|six|seven|eight|nine|ten)\b/gi,""],[/\b[rR]\d{1,2}\b\s*/g,""]];for(var i=0;i<R.length;i++)s=s.replace(R[i][0],R[i][1]);return s.replace(/^\s+/,"")}
 var FIELDS=["time","who","role","what","result","problem","workaround"];
 var $=function(id){return document.getElementById(id)};
 function mk(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
@@ -39,7 +41,7 @@ titledAny:/\b(?:mrs?|ms)\.?\s+[a-z][a-z'-]+/i,
 };
 /* times ("12:52am", "10:58 to 11:10am") and dates ("28 Oct") are fine; take them out before the digit checks */
 function stripTimes(s){return String(s).replace(/\b\d{1,2}:\d\d\s*(?:to\s*\d{1,2}:\d\d\s*)?(?:[ap]m)?/gi," ").replace(new RegExp("\\b\\d{1,2}\\s+(?:"+MONTHS+")\\b","gi")," ")}
-/* a number then a place name ("93 Pelham", "93 PELHAM"). Capitalised or ALL-CAPS words only: an any-case rule would also hide
+/* a number then a place name ("12 Example", "12 EXAMPLE"). Capitalised or ALL-CAPS words only: an any-case rule would also hide
    plain counts like "36 asks" or "9 open". Lower-case addresses are caught by the street rule above (it needs St, Road ...). */
 var NOT_PLACE=/^(?:PASS|PASSED|FAIL|FAILS|FAILED|GREEN|RED|AMBER|OK|DONE|LIVE|NEW|OPEN|TODO|HOLD|BLOCKED|ALL|AND|THE|FOR|NOT|ROWS|TESTS|CHECKS)$/;
 function numberThenName(s){var re=/\b\d{1,5}[a-z]?\s+([A-Z][a-z']{2,}|[A-Z]{3,})\b/g,m;while((m=re.exec(s))){if(!NOT_STREET.test(m[1])&&!NOT_PLACE.test(m[1]))return true}return false}
@@ -60,7 +62,7 @@ function tkey(t){var D=window.DeckHistory;if(D&&D.tkey)return D.tkey(t);return -
 
 /* ---- history shelf ---- */
 var ROWS=[],HIDDEN=0,SHOWALL=false,LOADS=0,TIMER=null,BUSY=false;
-function clean(r){var o={};FIELDS.forEach(function(k){o[k]=r[k]==null?"":String(r[k]).trim()});if(!o.role)o.role=ROLE[o.who]||"Bot";return o}
+function clean(r){var o={};FIELDS.forEach(function(k){o[k]=r[k]==null?"":String(r[k]).trim()});if(!o.role)o.role=ROLE[o.who]||"Bot";FIELDS.forEach(function(k){o[k]=neutral(o[k])});return o}
 function draw(){var list=$("hhList"),more=$("hhMore"),cnt=$("hhCount");if(!list)return;list.textContent="";
  var show=SHOWALL?ROWS:ROWS.slice(0,FIRST);
  show.forEach(function(r){var li=mk("li","hh-row");

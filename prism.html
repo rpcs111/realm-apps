@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Realm Prism — Ara layer</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Realm Prism — Apps layer</title>
 <link rel="icon" type="image/svg+xml" href="pwa/hub-ara-48.svg?v=20261017-24">
 <!--
   ================= CONFIG (v3 · programs in the centre) =================
@@ -19,7 +19,7 @@
 -->
 <script id="map-config" type="application/json">
 {
- "title": "Realm Prism — Ara layer",
+ "title": "Realm Prism — Apps layer",
  "blurb": "Core programs in the centre: Google Calendar is the source of truth, Google Drive holds the data. Apps down the left, bots down the right, people & vehicles as corner dots.",
  "key": "realm_prism_v2",
  "oldKey": "realm_prism_v1",
@@ -120,43 +120,43 @@
    {
     "id": "pf00",
     "name": "01 RULES",
-    "real": "Drive folder 'ARA LIBRARY › 01 RULES'",
+    "real": "Drive folder 'LIBRARY › 01 RULES'",
     "link": "https://drive.google.com/drive/folders/1PZfjWIX_gIhcCgXGwXo3RqS9cGHE0yiv?authuser=info@realmpcs.com"
    },
    {
     "id": "pf01",
     "name": "02 MAPS",
-    "real": "Drive folder 'ARA LIBRARY › 02 MAPS'",
+    "real": "Drive folder 'LIBRARY › 02 MAPS'",
     "link": "https://drive.google.com/drive/folders/1eLPvakCZ5vi320PTExHwh8NXx8byWFzz?authuser=info@realmpcs.com"
    },
    {
     "id": "pf02",
     "name": "03 APPS & LINKS",
-    "real": "Drive folder 'ARA LIBRARY › 03 APPS & LINKS'",
+    "real": "Drive folder 'LIBRARY › 03 APPS & LINKS'",
     "link": "https://drive.google.com/drive/folders/1DmrKFDumm0hYZ6aKEGh6lUB_JSg0U5kF?authuser=info@realmpcs.com"
    },
    {
     "id": "pf03",
     "name": "04 AUDITS",
-    "real": "Drive folder 'ARA LIBRARY › 04 AUDITS & REPORTS'",
+    "real": "Drive folder 'LIBRARY › 04 AUDITS & REPORTS'",
     "link": "https://drive.google.com/drive/folders/1naUBUR_NDhtVIqW2ZpUFCzGsw769fzxM?authuser=info@realmpcs.com"
    },
    {
     "id": "pf04",
     "name": "05 HOW-TO",
-    "real": "Drive folder 'ARA LIBRARY › 05 HOW-TO'",
+    "real": "Drive folder 'LIBRARY › 05 HOW-TO'",
     "link": "https://drive.google.com/drive/folders/1TwLWj4cb5ZsJfy79H5Mle289P1Dc36GN?authuser=info@realmpcs.com"
    },
    {
     "id": "pf05",
     "name": "06 HISTORY",
-    "real": "Drive folder 'ARA LIBRARY › 06 HISTORY'",
+    "real": "Drive folder 'LIBRARY › 06 HISTORY'",
     "link": "https://drive.google.com/drive/folders/148iUgBiCtPw0sFdA8q-jeZsAFsaR9dnt?authuser=info@realmpcs.com"
    },
    {
     "id": "pf06",
     "name": "TOOL LINKS",
-    "real": "Drive folder 'Ara › REALM TOOL LINKS'",
+    "real": "Drive folder 'REALM TOOL LINKS'",
     "link": "https://drive.google.com/drive/folders/1XmP4QkPiL85SDaYbTutYWgW5zZpW8inr?authuser=info@realmpcs.com"
    },
    {
@@ -542,7 +542,7 @@
   },
   {
    "id": "bridge",
-   "name": "Ara's Bridge",
+   "name": "Apps Bridge",
    "zone": "app",
    "group": "apps",
    "status": "onhold",
@@ -550,9 +550,9 @@
    "sub": "formerly Realm Relay",
    "emoji": "🌉",
    "col": "#a78bfa",
-   "note": "Renamed Ara's Bridge (Ange, 15 Oct). Channel doc: old bridge triggers to be switched off (needs Apps Script sign-in). The register still uses the old name.",
+   "note": "Renamed Apps Bridge (Ange, 15 Oct). Channel doc: old bridge triggers to be switched off (needs Apps Script sign-in). The register still uses the old name.",
    "reg": "bridge",
-   "inReg": "FLOW_NODES: ORION BRIDGE"
+   "inReg": "FLOW_NODES: BRIDGE"
   },
   {
    "id": "tasks",
@@ -614,7 +614,7 @@
    "sub": "metatron3.html",
    "emoji": "🔯",
    "col": "#22d3ee",
-   "inReg": "main tab name: REALM DECK web app renamed ORION — purple Metatron icon, Cer"
+   "inReg": "main tab name: REALM DECK web app renamed — purple Metatron icon, Cer"
   },
   {
    "id": "prismapp",
@@ -630,7 +630,7 @@
   },
   {
    "id": "ara",
-   "name": "Ara",
+   "name": "Apps",
    "zone": "bot",
    "group": "bots",
    "status": "live",
@@ -638,12 +638,12 @@
    "sub": "head · reads logs",
    "emoji": "🧠",
    "col": "#94a3b8",
-   "note": "Head · reads logs · authorises Nova (rule 42). Link = 00 ARA-NOVA CHANNEL doc.",
+   "note": "Head · reads logs · authorises the helper (rule 42). Link = 00 APPS-HELPER CHANNEL doc.",
    "inReg": ""
   },
   {
    "id": "nova",
-   "name": "Nova",
+   "name": "Helper",
    "zone": "bot",
    "group": "bots",
    "status": "partial",
@@ -651,8 +651,8 @@
    "sub": "writes code · own log",
    "emoji": "✨",
    "col": "#a78bfa",
-   "note": "Nova's live Gemini chat on info@. Opens her current thread.",
-   "inReg": "main tab link: NOVA BUILD STEP 2 — Gemini Gem 'Nova' created on info@ (id a"
+   "note": "The helper's live Gemini chat on info@. Opens her current thread.",
+   "inReg": "main tab link: HELPER BUILD STEP 2 — Gemini Gem 'Helper' created on info@ (id a"
   },
   {
    "id": "gemini",
@@ -670,14 +670,14 @@
   },
   {
    "id": "acct",
-   "name": "ELON",
+   "name": "GATE",
    "zone": "bot",
    "group": "bots",
    "status": "partial",
-   "sub": "accountability · checks Ara",
+   "sub": "accountability · checks the apps team",
    "emoji": "🚀",
    "col": "#f43f5e",
-   "note": "Rule 40: ELON audits Ara. No ACCOUNTABILITY LOG file found in Drive yet — no link yet.",
+   "note": "Rule 40: GATE audits the apps team. No ACCOUNTABILITY LOG file found in Drive yet — no link yet.",
    "inReg": ""
   },
   {
@@ -690,19 +690,19 @@
    "sub": "xAI chatbot",
    "img": "img/brand/grok.svg",
    "col": "#e5e7eb",
-   "note": "Grok (xAI). Desk and launcher Grok (Ara) tile added 14 Oct.",
+   "note": "Grok (xAI). Desk and launcher Grok (Apps) tile added 14 Oct.",
    "inReg": ""
   },
   {
    "id": "ivor",
-   "name": "Ivor",
+   "name": "Helper",
    "zone": "bot",
    "group": "bots",
    "status": "partial",
    "sub": "checks Ange · nightly test",
    "emoji": "🛡️",
    "col": "#fbbf24",
-   "note": "Rule 55: nightly memory test with Ivor. No link yet.",
+   "note": "Rule 55: nightly memory test with Helper. No link yet.",
    "inReg": ""
   },
   {
@@ -776,7 +776,7 @@
    "sub": "office computer",
    "emoji": "🖥️",
    "col": "#38bdf8",
-   "note": "The office computer / Ara's box.",
+   "note": "The office computer / the apps team's box.",
    "inReg": ""
   },
   {
@@ -868,7 +868,7 @@
   },
   {
    "id": "x_orion_handoff",
-   "name": "ORION_HANDOFF",
+   "name": "Old handoff sheet",
    "zone": "extra",
    "group": "registers",
    "status": "live",
@@ -916,7 +916,7 @@
   },
   {
    "id": "x_ara_s_bridge_log",
-   "name": "ARA'S BRIDGE LOG",
+   "name": "BRIDGE LOG",
    "zone": "extra",
    "group": "registers",
    "status": "live",
@@ -953,7 +953,7 @@
   },
   {
    "id": "x_realm_web_exit_orion_nova_handoff_29_sep",
-   "name": "REALM WEB EXIT — ORION → NOVA handoff 29 Sep",
+   "name": "REALM WEB EXIT — handoff 29 Sep",
    "zone": "extra",
    "group": "other",
    "status": "live",
@@ -1334,10 +1334,10 @@
    "group": "folders",
    "status": "live",
    "link": "https://drive.google.com/drive/folders/1asZ31d6fZl4uN4dVloVzFcqGRsLTc-L1?authuser=info@realmpcs.com",
-   "sub": "Drive folder 'ORION FULL EXPORT — 13 Oct 2026' (also 'Claude Export 14 Oct 2026')",
+   "sub": "Drive folder 'FULL EXPORT — 13 Oct 2026' (also 'Claude Export 14 Oct 2026')",
    "emoji": "📁",
    "col": "#4285f4",
-   "inReg": "main tab link: ORION FULL EXPORT — every project + memory file to Drive (RE"
+   "inReg": "main tab link: FULL EXPORT — every project + memory file to Drive (RE"
   },
   {
    "id": "mf_wa",
@@ -1897,7 +1897,7 @@
    "from": "grok",
    "to": "ara",
    "kind": "map",
-   "label": "Ara tile",
+   "label": "Apps tile",
    "src": "map",
    "inRegister": false
   }
@@ -1906,7 +1906,7 @@
  "ara_layer": [
   [
    "Basics",
-   "Every job is one row in REALM OPEN REGISTER. Calendar = when; register = status; Zoho Books = money. Ara answers “what's open?” from the register only."
+   "Every job is one row in REALM OPEN REGISTER. Calendar = when; register = status; Zoho Books = money. The apps team answers “what's open?” from the register only."
   ],
   [
    "Templates",
@@ -1921,7 +1921,7 @@
    "Realm Standing Rules — master list in the channel doc (locked 15 Oct 2026). Log before done. Back up before any change."
   ],
   [
-   "Ara",
+   "Apps",
    "Skills: Quote-fix, Cert-file, Call-note, Overnight brief. Routines: register sweep, never-billed check, no 7am client emails."
   ],
   [
@@ -1955,6 +1955,7 @@ header{padding:10px 14px 4px}h1{margin:0;font-size:21px}header p{margin:3px 0 0;
 .card{background:rgba(14,22,44,.65);border:1px solid rgba(125,233,255,.15);border-radius:12px;padding:9px 11px;margin:0 0 7px;font-size:13.5px;line-height:1.4}
 details.card summary{cursor:pointer;font-weight:600}
 .lk a{display:block;padding:5px 0;color:#cfe9ff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.05);font-size:13.5px}
+#bandCard a{min-height:44px;box-sizing:border-box;display:flex;align-items:center}/* 1 Nov: shorter folder names fit on one line; keep the tap 44px tall */
 .lk .g{font-size:11.5px;color:#8ea0c2;margin-top:8px;letter-spacing:.06em}
 @media (min-width:1000px){.page{grid-template-columns:minmax(0,1fr) 300px;align-items:start;padding:0 14px 20px}#wrap{max-width:min(1100px,calc((100vh - 150px)*1.07))}.side{padding:0;max-height:calc(100vh - 150px);overflow:auto}}
 .lab{fill:#e8eefc;text-anchor:middle;pointer-events:none;paint-order:stroke;stroke:#05070f;stroke-linejoin:round}
@@ -1999,7 +2000,7 @@ g.n.hl circle.ring{animation:pulse 1s ease-in-out 3;stroke:#facc15!important;str
 <h2>EVERY NODE · click to place / find</h2><input id="side-search" type="search" placeholder="Filter…" aria-label="Filter nodes"><div id="sideList"></div>
 <h2>CALENDAR</h2><div class="card" id="calCard"></div>
 <h2>DRIVE FOLDERS (band)</h2><div class="card lk" id="bandCard"></div>
-<h2>ARA LAYER</h2><div id="ara"></div>
+<h2>APPS LAYER</h2><div id="ara"></div>
 </aside></div>
 <div id="statusView" role="dialog" aria-label="Status view"></div>
 <div id="pane" role="dialog" aria-label="Node notes">

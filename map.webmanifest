@@ -2,7 +2,7 @@
  "id": "/realm-apps/realm-flowmap-v1",
  "name": "Flow Map",
  "short_name": "Flow Map",
- "description": "Flow Map, by Ara",
+ "description": "Flow Map, by Realm",
  "start_url": "./map.html?app=map",
  "scope": "./map.html",
  "display": "standalone",

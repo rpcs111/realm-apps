@@ -1,8 +1,8 @@
 {
  "id": "/realm-apps/realm-nova-v2",
- "name": "Nova",
- "short_name": "Nova",
- "description": "Nova, by Ara",
+ "name": "Helper",
+ "short_name": "Helper",
+ "description": "Helper, for the Realm team",
  "start_url": "./nova.html?app=nova",
  "scope": "./nova.html",
  "display": "standalone",

@@ -12,7 +12,7 @@ header{padding:12px 14px}h1{margin:0;font-size:22px}header p{margin:4px 0 0;colo
 .nt{font:600 15px system-ui;fill:#fff;text-anchor:middle;pointer-events:none}.ns{font:12px system-ui;fill:#cbd5e1;text-anchor:middle;pointer-events:none}
 g.node a{cursor:pointer}
 </style><script src="js/ara-account.js?v=20261028-1" defer></script></head><body>
-<header><h1>Realm Flow Map — Metatron's Cube</h1><p>Everything loops through Google Calendar. Inner ring = storage, outer ring = the outside world. <a href="./map.html">&#8592; back to the flow map</a></p></header>
+<header><h1>Realm Flow Map — Metatron's Cube</h1><p>Everything runs through Google Calendar. Inner ring = storage, outer ring = the outside world. <a href="./map.html">&#8592; back to the flow map</a></p></header>
 <div class="legend">
 <span><i class="sw" style="background:#4285f4"></i>Google & devices</span>
 <span><i class="sw" style="background:#25d366"></i><i class="sw" style="background:#f59e0b"></i>Outside world</span>
@@ -76,8 +76,8 @@ function node(n,dashed,fill){var g=el('g',{'class':'node','data-id':n.id}),host=
  if(n.sub2)el('text',{x:n.p[0],y:y0+(n.icon?58:36),'class':'ns'},host).textContent=n.sub2}
 inner.forEach(function(n){node(n)});outer.forEach(function(n){node(n)});
 node(centre,false,'#0b2a5b');
-node({id:'ara',name:'Ara',sub:'head · reads logs',col:'#94a3b8',p:[72,926],r:64},true,'#1e293b');
-node({id:'nova',name:'Nova',sub:'writes code · own log',col:'#94a3b8',p:[928,926],r:64},true,'#1e293b');
+node({id:'ara',name:'Chief',sub:'head · reads logs',col:'#94a3b8',p:[72,926],r:64},true,'#1e293b');
+node({id:'nova',name:'Helper',sub:'writes code · own log',col:'#94a3b8',p:[928,926],r:64},true,'#1e293b');
 })();
 </script>
 </body></html>

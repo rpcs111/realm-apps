@@ -16,7 +16,7 @@
         why: 'The walkthrough doc and the quote\u2019s scope list from the subtasks sheet still run in the Google version only. Writing to Sheets and Docs from this page isn\u2019t built yet; the quote here uses the built-in service list.' },
       { what: 'WhatsApp chats saved as a zip', why: 'Only the plain text export opens here. In WhatsApp: Export chat \u203a Without media.' },
       { what: 'Picking up on another phone', why: 'Jobs are kept on this phone only. Picking up on another phone or computer needs the Google sign-in set up for it.' },
-      { what: 'Answers from the bots', why: 'They don\u2019t show in the app yet, because Ara\u2019s inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.' }
+      { what: 'Answers from the bots', why: 'They don\u2019t show in the app yet, because the bots\u2019 inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.' }
     ]
   };
 })();

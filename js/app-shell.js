@@ -285,7 +285,7 @@ function buildSheet(){
    +'<section><h3>Notes</h3><p class="as-about" id="asAbout" hidden></p><textarea id="asText" maxlength="'+MAXLEN+'" aria-label="Note" placeholder="Type a note\u2026 (no codes or key numbers)"></textarea>'
    +'<div class="as-acts"><button type="button" class="as-btn as-pri" id="asSaveNote">Save note</button><button type="button" class="as-btn" id="asSaveSend">Save and send to the bots</button></div>'
    +'<div class="as-msg" id="asMsg" role="status" aria-live="polite"></div>'
-   +'<p class="as-hint">Notes stay on this phone. <b>Send</b> passes one to Ara\u2019s inbox through Let us do this. Anything for a customer comes back to Ange as a draft first. Press and hold any card for a moment, or tap \u270e, to amend it.</p>'
+   +'<p class="as-hint">Notes stay on this phone. <b>Send</b> passes one to the bots\u2019 inbox through Let us do this. Anything for a customer comes back to Ange as a draft first. Press and hold any card for a moment, or tap \u270e, to amend it.</p>'
    +'<ul class="as-notes" id="asList"></ul></section>'
    +'<section id="asChecks"></section><section id="asWhy"></section></div>';
   document.body.appendChild(sheet);
@@ -358,7 +358,12 @@ document.addEventListener('click',function(e){if(swallow||now()-guardFrom<GUARD_
 document.addEventListener('contextmenu',function(e){if(ruleFor(e.target))e.preventDefault()},true);
 
 /* ---- the mic: js/mic-chat.js, loaded as-is ---- */
+/* 1 Nov (ELON gate, fix 16): the mic box shows no bot names. mic-chat.js stays as-is; its two old-name lines are reworded on screen. */
+/* every old bot name the mic box can show (heading, empty line, and the status line after a send) */
+var MIC_SWAP=[[/Saved for Ara\. Ara passes it to 42\*\./g,'Saved. The team will pick it up.'],[/\u2713 Saved for Ara\b/g,'\u2713 Saved'],[/\bSaved for Ara\b/g,'Saved'],[/passes it to 42\*/g,'will pick it up']];
+function micWords(root){if(!root||!document.createTreeWalker)return;var w=document.createTreeWalker(root,4),n;while((n=w.nextNode())){var t=n.nodeValue;if(t.indexOf('Ara')<0&&t.indexOf('42*')<0)continue;var v=t;for(var i=0;i<MIC_SWAP.length;i++)v=v.replace(MIC_SWAP[i][0],MIC_SWAP[i][1]);if(v!==t)n.nodeValue=v}}
 function watchMic(){var ov=document.getElementById('micChat');if(!ov||!window.MutationObserver)return;
+  micWords(ov);new MutationObserver(function(){micWords(ov)}).observe(ov,{childList:true,subtree:true,characterData:true});
   new MutationObserver(function(){var open=!ov.hidden,i=layers.lastIndexOf('mic');if(open&&i<0)pushLayer('mic');else if(!open&&i>=0)dropLayer('mic',false)}).observe(ov,{attributes:true,attributeFilter:['hidden']})}
 function loadMic(){if(A.mic===false)return;
   if(window.MicChat||document.querySelector('script[src*="mic-chat.js"]')){whenMic();return}

@@ -2,7 +2,7 @@
  "id": "/realm-apps/build-map",
  "name": "Build Map",
  "short_name": "Build Map",
- "description": "Build Map: what's live, building, waiting and planned, by Ara",
+ "description": "Build Map: what's live, building, waiting and planned, by Realm",
  "start_url": "./build-map.html?app=build-map",
  "scope": "./build-map.html",
  "display": "standalone",

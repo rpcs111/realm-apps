@@ -8,19 +8,19 @@
    "name": "Notes",
    "status": "green",
    "elon_verified": true,
-   "note": "Live, own icon, scope fixed. Big ELON / IVOR / ARA / NOVA buttons pass Elon's 390x844 test (17 Oct). Notes save on the phone; syncing waits on Ange's Engine Allow tap. Needs a real-phone test.",
+   "note": "Live, own icon, scope fixed. Big GATE / HELPER / APPS / HELPER buttons pass the Gate 390x844 test (17 Oct). Notes save on the phone; syncing waits on Ange's Engine Allow tap. Needs a real-phone test.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Elon re-test, /workspace/buildmap_check"
+   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "notes-elon-relay",
    "group": "APPS",
-   "name": "Notes: ELON / IVOR / ARA / NOVA buttons",
+   "name": "Notes: GATE / HELPER / APPS / HELPER buttons",
    "status": "amber",
    "elon_verified": true,
-   "note": "PASS (Elon, 17 Oct). One tap saves the note and queues it for that helper; lands in ARA CAPTURE INBOX sheet only after Ange's Engine Allow tap (until then: 'Saved on phone, waiting for Allow'). Polish done in v2026.10.17-6: all four buttons equal size, one status line, install tip is a slim top bar.",
+   "note": "PASS (Gate, 17 Oct). One tap saves the note and queues it for that helper; lands in CAPTURE INBOX sheet only after Ange's Engine Allow tap (until then: 'Saved on phone, waiting for Allow'). Polish done in v2026.10.17-6: all four buttons equal size, one status line, install tip is a slim top bar.",
    "verified_date": "2026-10-16T15:20Z",
-   "verified_how": "Elon 390x844 re-test (v2026.10.17-4), /workspace/notes_test2/REPORT.md: all 4 buttons save, tag and flash; 10 rapid notes survive reload"
+   "verified_how": "Gate 390x844 re-test (v2026.10.17-4; report kept on the box): all 4 buttons save, tag and flash; 10 rapid notes survive reload"
   },
   {
    "id": "search",
@@ -38,7 +38,7 @@
    "elon_verified": true,
    "note": "Live, own icon.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Elon re-test, /workspace/buildmap_check"
+   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "hub",
@@ -48,7 +48,7 @@
    "elon_verified": true,
    "note": "Live. The \"need sign in\" message has been removed.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Elon re-test, /workspace/buildmap_check"
+   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "layers",
@@ -58,7 +58,7 @@
    "elon_verified": true,
    "note": "Live, installs.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Elon re-test, /workspace/buildmap_check"
+   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "eta",
@@ -68,17 +68,17 @@
    "elon_verified": true,
    "note": "Live v-25, own install.",
    "verified_date": "2026-10-16T12:51Z",
-   "verified_how": "Elon re-test + bug fixes v-26"
+   "verified_how": "Gate re-test + bug fixes v-26"
   },
   {
    "id": "nova-page",
    "group": "APPS",
-   "name": "Nova page",
+   "name": "Helper page",
    "status": "green",
    "elon_verified": true,
    "note": "Live v-25, own install.",
    "verified_date": "2026-10-16T12:51Z",
-   "verified_how": "Elon re-test + bug fixes v-26"
+   "verified_how": "Gate re-test + bug fixes v-26"
   },
   {
    "id": "flowmap",
@@ -86,9 +86,9 @@
    "name": "Flow Map",
    "status": "amber",
    "elon_verified": true,
-   "note": "Elon PASS v12, 21:08Z",
-   "owner": "Elon",
-   "next": "Elon re-checks map.html?d=fold8 at 390x844."
+   "note": "Gate PASS v12, 21:08Z",
+   "owner": "Gate",
+   "next": "Gate re-checks map.html?d=fold8 at 390x844."
   },
   {
    "id": "scribe",
@@ -98,28 +98,28 @@
    "elon_verified": true,
    "note": "Retired. The old link opens Notes.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Elon re-test, /workspace/buildmap_check"
+   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "grok-howto",
    "group": "APPS",
-   "name": "Grok How-To",
+   "name": "How-To",
    "status": "green",
    "elon_verified": true,
-   "note": "Built 17 Oct: illustrated Grok guide with Julie's iPhone setup (her own login), Fold 8 / Flip 6 steps, Grok in 8 stops (official xAI sources only, no YouTube); Install button 44px and scrolls away, no longer pinned over cards. Headless test 390x844 and iPhone UA: 0 JS errors, no sideways scroll. Waiting for Elon's check. https://rpcs111.github.io/realm-apps/grok-howto.html",
+   "note": "Built 17 Oct: illustrated Grok guide with Julie's iPhone setup (her own login), Fold 8 / Flip 6 steps, Grok in 8 stops (official xAI sources only, no YouTube); Install button 44px and scrolls away, no longer pinned over cards. Headless test 390x844 and iPhone UA: 0 JS errors, no sideways scroll. Waiting for the Gate check. https://rpcs111.github.io/realm-apps/grok-howto.html",
    "source": "Ange via Elon 15:06 UTC 16 Oct: Grok how-to infographic + Julie's phone",
    "verified_date": "2026-10-17",
-   "verified_how": "Elon independent re-check v7 (version 2026.10.17-8), 390x844 Android, ?d=fold8 and ?d=julie: PASS. Report: /workspace/notes_test2/grokhowto_v7_elon/REPORT.md"
+   "verified_how": "Gate independent re-check v7 (version 2026.10.17-8), 390x844 Android, ?d=fold8 and ?d=julie: PASS. Report kept on the box, not in this repo."
   },
   {
    "id": "nova-queue",
    "group": "SYSTEMS & LAYERS",
-   "name": "Nova queue (Gemini)",
+   "name": "Helper queue (helper)",
    "status": "amber",
    "elon_verified": true,
    "note": "Replies 18–26 done (11:54 UTC); nothing since. Daily 7am 'go' still needs Ange.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Elon re-test, /workspace/buildmap_check"
+   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "stream-check",
@@ -127,7 +127,7 @@
    "name": "Weekend stream check",
    "status": "amber",
    "elon_verified": false,
-   "note": "Every 3h until Mon 9am: links, Nova, misses logged. Was green without an Elon check; amber until verified (Standards v2 Fix H, 17 Oct)."
+   "note": "Every 3h until Mon 9am: links, the helper, misses logged. Was green without an Gate check; amber until verified (Standards v2 Fix H, 17 Oct)."
   },
   {
    "id": "handoff",
@@ -135,27 +135,27 @@
    "name": "Handoff log",
    "status": "amber",
    "elon_verified": false,
-   "note": "HANDOFF §7 went quiet after 12:20 UTC 16 Oct while work continued (Elon audit). Amber until Elon re-checks the heartbeat (Standards v2 Fix G/H, 17 Oct). Previous Elon check: 2026-10-16T12:47Z."
+   "note": "HANDOFF §7 went quiet after 12:20 UTC 16 Oct while work continued (Gate audit). Amber until Gate re-checks the heartbeat (Standards v2 Fix G/H, 17 Oct). Previous Gate check: 2026-10-16T12:47Z."
   },
   {
    "id": "engine-sync",
    "group": "SYSTEMS & LAYERS",
-   "name": "Ara Engine sync",
+   "name": "Engine sync",
    "status": "red",
    "elon_verified": true,
    "note": "Waiting on Ange's one-time Allow on the laptop.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Elon re-test, /workspace/buildmap_check"
+   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "ara-capture",
    "group": "SYSTEMS & LAYERS",
-   "name": "Ara button → capture inbox",
+   "name": "Apps button → capture inbox",
    "status": "red",
    "elon_verified": true,
    "note": "Waiting on the same Allow.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Elon re-test, /workspace/buildmap_check"
+   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "tasks-notes",
@@ -165,15 +165,15 @@
    "elon_verified": true,
    "note": "Waiting on the same Allow.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Elon re-test, /workspace/buildmap_check"
+   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "ange-nova-paste",
    "group": "WAITING ON ANGE",
-   "name": "Paste Nova standing command",
+   "name": "Paste the helper standing command",
    "status": "red",
    "elon_verified": false,
-   "note": "One paste in Gemini, then set a daily 7am \"go\"."
+   "note": "One paste in the helper, then set a daily 7am \"go\"."
   },
   {
    "id": "ange-stop-email",
@@ -199,7 +199,7 @@
    "elon_verified": true,
    "note": "~20 unsaved certs. Export with media to Drive.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Elon re-test, /workspace/buildmap_check"
+   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "ange-reinstall",
@@ -215,9 +215,9 @@
    "name": "Deputy cross-reference",
    "status": "grey",
    "elon_verified": true,
-   "note": "Sat. Read-only, Elon's design.",
+   "note": "Sat. Read-only, the Gate design.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Elon re-test, /workspace/buildmap_check"
+   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "unsaved-cert-flag",
@@ -233,14 +233,14 @@
    "name": "Reorder app",
    "status": "grey",
    "elon_verified": true,
-   "note": "Voice phrases are ready (Nova item 20).",
+   "note": "Voice phrases are ready (the helper item 20).",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Elon re-test, /workspace/buildmap_check"
+   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "ring-group",
    "group": "PLANNED",
-   "name": "Ring group (Ara calls your phone)",
+   "name": "Ring group (the apps team calls your phone)",
    "status": "grey",
    "elon_verified": false,
    "note": "Options + price on Sat."
@@ -256,7 +256,7 @@
   {
    "id": "siptalk-karen",
    "group": "1300 / COMMS",
-   "name": "AI receptionist (Karen / SipTalk)",
+   "name": "AI receptionist (SipTalk)",
    "status": "grey",
    "elon_verified": false,
    "note": "Business 1300 line. Existing SipTalk persona Cedar, unassigned. Script: greet→address→who→name→contact→estimate/WO/invoice→enquiry. VIP straight-through; spam cut-offs. Source: AREAS Realm 13, 23 Sep + 1 Oct.",
@@ -286,7 +286,7 @@
    "name": "Log 1300 calls against jobs",
    "status": "grey",
    "elon_verified": false,
-   "note": "SipTalk call log → job COMMS tab via Nova. Outcome becomes STATUS on the job, not another email. 2 Oct build line.",
+   "note": "SipTalk call log → job COMMS tab via the helper. Outcome becomes STATUS on the job, not another email. 2 Oct build line.",
    "source": "Elon overnight audit 16/17 Oct"
   },
   {
@@ -295,7 +295,7 @@
    "name": "SipTalk ring groups (RG1 Julie → RG2 Ange)",
    "status": "grey",
    "elon_verified": false,
-   "note": "Current: 1300 rings Julie then Ange. Plan: bot answers; live transfer to Ange (RG1) only when stuck or VIP. Distinct from Build Map ring-group (Ara→Fold).",
+   "note": "Current: 1300 rings Julie then Ange. Plan: bot answers; live transfer to Ange (RG1) only when stuck or VIP. Distinct from Build Map ring-group (the apps team→Fold).",
    "source": "Elon overnight audit 16/17 Oct"
   },
   {
@@ -313,9 +313,9 @@
    "name": "Frankie and Henry store",
    "status": "red",
    "elon_verified": false,
-   "note": "frankieandhenry.com and .com.au return error 525 (re-checked 17 Oct ~1:55am Melb). No owner since Claude cut. Name renewal only was handled 16 Oct. Evening/Saturday item in Orion daily-sweep.",
+   "note": "frankieandhenry.com and .com.au return error 525 (re-checked 17 Oct ~1:55am Melb). No owner since Claude cut. Name renewal only was handled 16 Oct. Evening/Saturday item in the old daily sweep.",
    "source": "Elon overnight audit 16/17 Oct",
-   "owner": "Ara",
+   "owner": "App builds",
    "next": "Read-only check of the hosting/SSL setup behind the 525 on .com, .com.au and www, then one fix for Ange to approve.",
    "label": "Broken · 525"
   },
@@ -328,7 +328,7 @@
    "note": "Tech bills sheet built 16 Oct (private, info@ Drive). Superloop credit applied twice (Jul+Oct) still needs Ange decision. Was listed as dropped from Build Map.",
    "source": "Elon overnight audit 16/17 Oct",
    "owner": "Ange",
-   "next": "Yes/no: chase Superloop about the credit applied twice (Jul + Oct). Ara drafts the email only after a yes."
+   "next": "Yes/no: chase Superloop about the credit applied twice (Jul + Oct). The apps team drafts the email only after a yes."
   },
   {
    "id": "zoho-todo",
@@ -338,8 +338,8 @@
    "elon_verified": false,
    "note": "Asked 16 Oct; not on Build Map or HANDOFF §7 as a tracked job.",
    "source": "Elon overnight audit 16/17 Oct",
-   "owner": "Nova",
-   "next": "Starts once Ange pastes \"go\" and Nova's queue restarts."
+   "owner": "Helper",
+   "next": "Starts once Ange pastes \"go\" and the helper's queue restarts."
   },
   {
    "id": "zoho-books-crm-pull",
@@ -347,10 +347,10 @@
    "name": "Zoho Books / CRM pull",
    "status": "grey",
    "elon_verified": false,
-   "note": "Nova CRM export authorised 15 Oct; Zoho MCP once lived on Proxmox. Live pull into Realm apps still unbuilt.",
+   "note": "The helper CRM export authorised 15 Oct; Zoho MCP once lived on Proxmox. Live pull into Realm apps still unbuilt.",
    "source": "Elon overnight audit 16/17 Oct",
-   "owner": "Ara",
-   "next": "Compare Nova's CRM export against the Register (export-and-compare only, no Zoho changes)."
+   "owner": "App builds",
+   "next": "Compare the helper's CRM export against the Register (export-and-compare only, no Zoho changes)."
   },
   {
    "id": "flip6-apps",
@@ -361,7 +361,7 @@
    "note": "Asked 16 Oct; not on Build Map / HANDOFF. Exact scope not found beyond the ask — confirm with Ange.",
    "source": "Elon overnight audit 16/17 Oct",
    "owner": "Ange",
-   "next": "Ara asks Ange at the 9am wake what \"Flip 6 apps\" means. Nothing gets built until he answers."
+   "next": "The apps team asks Ange at the 9am wake what \"Flip 6 apps\" means. Nothing gets built until he answers."
   },
   {
    "id": "pomodoro-s26",
@@ -369,10 +369,10 @@
    "name": "Pomodoro + S26 checklist",
    "status": "grey",
    "elon_verified": false,
-   "note": "Pomodoro day pattern (20 min Realm + 5 min lanes) in Orion 4 Oct notes. S26 WhatsApp eSIM hand-back still open (HANDOFF NEXT #4).",
+   "note": "Pomodoro day pattern (20 min Realm + 5 min lanes) in the 4 Oct notes. S26 WhatsApp eSIM hand-back still open (HANDOFF NEXT #4).",
    "source": "Elon overnight audit 16/17 Oct",
-   "owner": "Ara",
-   "next": "Add a reverse-Pomodoro timer (5 Elon / 20 business / 20 guitar) to Notes. The S26 hand-back stays with Ange."
+   "owner": "App builds",
+   "next": "Add a reverse-Pomodoro timer (5 Elon Musk / 20 business / 20 guitar) to Notes. The S26 hand-back stays with Ange."
   },
   {
    "id": "remove-claude-app",
@@ -383,7 +383,7 @@
    "note": "Cutover OPEN: revoke Claude connectors on Mac; billing toggles. HANDOFF Security section. Not on Build Map.",
    "source": "Elon overnight audit 16/17 Oct",
    "owner": "Ange",
-   "next": "Ange removes the Claude connectors on the Mac. Ara sends the 3 steps at the 9am wake."
+   "next": "Ange removes the Claude connectors on the Mac. The apps team sends the 3 steps at the 9am wake."
   },
   {
    "id": "security-app",
@@ -490,7 +490,7 @@
    "name": "Contacts cleanup sheet (personal vs business)",
    "status": "grey",
    "elon_verified": false,
-   "note": "Nova queue item 101 (priority). Nova stalled since 11:54 UTC 16 Oct.",
+   "note": "Helper queue item 101 (priority). The helper stalled since 11:54 UTC 16 Oct.",
    "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
   },
   {
@@ -517,34 +517,34 @@
    "name": "Search Studio new name",
    "status": "grey",
    "elon_verified": false,
-   "note": "Ange 17 Oct ~2am: rename it (his example: 'Ara's art shop or something'). Plain name options first, then build.",
+   "note": "Ange 17 Oct ~2am: rename it (his example: 'the apps art shop or something'). Plain name options first, then build.",
    "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
   },
   {
    "id": "mic-button",
    "group": "MISSED STEPS (17 Oct sweep)",
-   "name": "Mic button redesign (Elon-style mic, no old R) + cyan look",
+   "name": "Mic button redesign (Elon Musk-style mic, no old R) + cyan look",
    "status": "grey",
    "elon_verified": false,
-   "note": "Ange 10:42pm 16 Oct: mic still shows the old R; wants Elon-style mic, Notes note-pad look, his cyan. R/L/N icons redone 16 Oct; mic not checked.",
+   "note": "Ange 10:42pm 16 Oct: mic still shows the old R; wants Elon Musk-style mic, Notes note-pad look, his cyan. R/L/N icons redone 16 Oct; mic not checked.",
    "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
   },
   {
    "id": "desktop-ara",
    "group": "MISSED STEPS (17 Oct sweep)",
-   "name": "Ara on the desktop (Yoga)",
+   "name": "Apps on the desktop (Yoga)",
    "status": "grey",
    "elon_verified": false,
-   "note": "Ara Capture installs on desktop (Ctrl+Alt+A). Desktop Ara chat app + keeping context across apps not confirmed.",
+   "note": "Capture installs on desktop (Ctrl+Alt+A). Desktop the apps team chat app + keeping context across apps not confirmed.",
    "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
   },
   {
    "id": "ara-nova-channel",
    "group": "MISSED STEPS (17 Oct sweep)",
-   "name": "Direct Ara and Nova channel (no pasting)",
+   "name": "Direct Apps and helper channel (no pasting)",
    "status": "grey",
    "elon_verified": false,
-   "note": "Today Ange must paste into Gemini. Back-link test only reads Nova's reply docs. True direct channel not built.",
+   "note": "Today Ange must paste into the helper. Back-link test only reads the helper's reply docs. True direct channel not built.",
    "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
   },
   {
@@ -568,7 +568,7 @@
   {
    "id": "register-cleanup",
    "group": "MISSED STEPS (17 Oct sweep)",
-   "name": "Links register clean-up (old Claude/Orion rows)",
+   "name": "Links register clean-up (old Claude and earlier-bot rows)",
    "status": "grey",
    "elon_verified": false,
    "note": "Hub feed sheet: most rows are old artifacts; several new apps missing. Not edited: needs Ange's OK.",
@@ -586,10 +586,10 @@
   {
    "id": "whatsapp-link",
    "group": "MISSED STEPS (17 Oct sweep)",
-   "name": "WhatsApp link for Ara (office chats)",
+   "name": "WhatsApp link for the apps team (office chats)",
    "status": "grey",
    "elon_verified": false,
-   "note": "Ara has no WhatsApp. Old 2Chat link disconnected (bills log). Export is the stop-gap.",
+   "note": "The apps team has no WhatsApp. Old 2Chat link disconnected (bills log). Export is the stop-gap.",
    "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
   },
   {
@@ -607,7 +607,7 @@
    "name": "Claude handover linked into HANDOFF",
    "status": "grey",
    "elon_verified": false,
-   "note": "Ange 1:32am 17 Oct: 'Have we got the handover from Claude?' Elon review: PARTIAL, not linked from HANDOFF.",
+   "note": "Ange 1:32am 17 Oct: 'Have we got the handover from Claude?' Gate review: PARTIAL, not linked from HANDOFF.",
    "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
   },
   {
@@ -648,44 +648,44 @@
   },
   {
    "id": "anthropic-chase",
-   "group": "MISSED ASKS (Elon cross-check 17 Oct)",
+   "group": "MISSED ASKS (Gate cross-check 17 Oct)",
    "name": "Anthropic refund / credit chase",
    "status": "grey",
    "elon_verified": false,
-   "owner": "Elon",
-   "next": "Elon writes a push-back draft for Ange to review. Nothing gets sent without Ange's yes.",
+   "owner": "Gate",
+   "next": "Gate writes a push-back draft for Ange to review. Nothing gets sent without Ange's yes.",
    "note": "Planned. Missed from the 17 Oct sweep.",
    "source": "Elon cross-check 17 Oct"
   },
   {
    "id": "trading-tracker",
-   "group": "MISSED ASKS (Elon cross-check 17 Oct)",
+   "group": "MISSED ASKS (Gate cross-check 17 Oct)",
    "name": "Trading project + ideas tracker",
    "status": "grey",
    "elon_verified": false,
-   "owner": "Ara",
+   "owner": "App builds",
    "next": "Ange says where it should live. Private, so the details stay off this public page.",
    "note": "Planned. Private.",
    "source": "Elon cross-check 17 Oct"
   },
   {
    "id": "realm-keep-doc",
-   "group": "MISSED ASKS (Elon cross-check 17 Oct)",
+   "group": "MISSED ASKS (Gate cross-check 17 Oct)",
    "name": "REALM KEEP doc",
    "status": "red",
    "elon_verified": false,
-   "owner": "Nova",
-   "next": "Blocked until Ange pastes \"go\" to restart Nova. Then Nova builds it.",
-   "note": "Blocked on Nova (stalled since 11:54 UTC 16 Oct).",
+   "owner": "Helper",
+   "next": "Blocked until Ange pastes \"go\" to restart the helper. Then the helper builds it.",
+   "note": "Blocked on the helper (stalled since 11:54 UTC 16 Oct).",
    "source": "Elon cross-check 17 Oct"
   },
   {
    "id": "phone-alert",
-   "group": "MISSED ASKS (Elon cross-check 17 Oct)",
+   "group": "MISSED ASKS (Gate cross-check 17 Oct)",
    "name": "Phone-call alert when the system breaks",
    "status": "grey",
    "elon_verified": false,
-   "owner": "Ara",
+   "owner": "App builds",
    "next": "Ange says yes or no to Pushover (US$4.99 one-off). Each sign-up or spend needs his yes.",
    "note": "Planned. Options are written up: Pushover emergency alert first, a Twilio call for real outages, and quiet before 9am Melbourne unless it's a full outage. Checks every 5 min and only alerts after 2 failures in a row. Related to \"Ring group\".",
    "source": "Elon cross-check 17 Oct"

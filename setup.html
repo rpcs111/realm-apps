@@ -57,7 +57,7 @@ a.go{flex:0 0 auto;display:inline-flex;align-items:center;min-height:48px;paddin
   }catch(e){}
   var $=function(i){return document.getElementById(i)};
   function paintKey(){var k=rd('realm_key');$('ckKey').className='ck'+(k?' on':' wait');$('ckKey').textContent=k?'\u2713':'1';
-    $('keyMsg').textContent=k?(got.key?'Saved just now for every Realm app on this device.':'Saved on this device.'):'Not on this device yet. Open the setup link from Ara, or paste the key here.';
+    $('keyMsg').textContent=k?(got.key?'Saved just now for every Realm app on this device.':'Saved on this device.'):'Not on this device yet. Open the setup link from the team, or paste the key here.';
     $('keyIn').style.display=k?'none':'flex'}
   $('keyIn').onsubmit=function(e){e.preventDefault();var v=$('keyBox').value.trim().toUpperCase();if(v.replace(/[^A-Z0-9]/g,'').length<20){$('keyMsg').textContent='That looks too short. Check it and try again.';return}wr('realm_key',v);$('keyBox').value='';paintKey()};
   function paintSync(s){var on=s==='synced';$('ckSync').className='ck'+(on?' on':' wait');$('ckSync').textContent=on?'\u2713':'2'}

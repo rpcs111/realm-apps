@@ -1,8 +1,8 @@
 {
   "id": "/realm-apps/search-studio-v5",
-  "name": "Cert Studio",
-  "short_name": "Cert Studio",
-  "description": "Cert Studio, by Ara",
+  "name": "Search Studio",
+  "short_name": "Search Studio",
+  "description": "Search Studio",
   "start_url": "./search.html?app=search",
   "scope": "./search.html",
   "display": "standalone",
@@ -10,33 +10,27 @@
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "pwa/cert-gospel-192.png",
+      "src": "pwa/search-glass-192.png?v=20261101-2",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "pwa/cert-gospel-512.png",
+      "src": "pwa/search-glass-512.png?v=20261101-2",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "pwa/cert-gospel-maskable-512.png",
-      "sizes": "512x512",
+      "src": "pwa/search-glass-maskable-192.png?v=20261101-2",
+      "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "pwa/cert-gospel.svg?v=20261017-24",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "pwa/cert-gospel-maskable.svg?v=20261017-24",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "pwa/search-glass-maskable-512.png?v=20261101-2",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "maskable"
     }
   ]

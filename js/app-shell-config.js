@@ -7,12 +7,12 @@ window.APP_SHELL_CONFIG={
  defaults:{
   hide:['#araSaveRow','#araSave','#araTip','#araHint'],
   whyNot:[
-   {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because Ara\u2019s inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
+   {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because the bots\u2019 inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
   ]
  },
  apps:{
   search:{
-   page:'search.html',name:'Search Studio',icon:'pwa/searchstudio-cube-192.png?v=20261029-1',start:'./search.html?app=search',
+   page:'search.html',name:'Search Studio',icon:'pwa/search-glass-192.png?v=20261101-2',start:'./search.html?app=search',
    checks:['last week and next week\u2019s jobs','the path each amend takes'],
    amend:[{sel:'#weeks',kind:'week view'},{sel:'#amendPath',kind:'amend path'},{sel:'#tips',kind:'search tips',pen:false}],
    /* Pick up where you left off: a search is one job. It starts when something is typed and stays open while it's on screen.
@@ -51,7 +51,7 @@ window.APP_SHELL_CONFIG={
    whyNot:[
 {what:'Picking up on another phone',why:'Unfinished jobs are kept on this phone only. Picking up on another phone or computer, or seeing Desk and Cert Studio jobs here, needs the Google sign-in set up for it.'},
     {what:'Search results',why:'Search needs the Realm key on this phone, so results can\u2019t load until it\u2019s added.',when:function(){var e=document.getElementById('rkLine');return !!(e&&!e.hidden)}},
-    {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because Ara\u2019s inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
+    {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because the bots\u2019 inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
    ]
   },
   map:{
@@ -60,9 +60,9 @@ window.APP_SHELL_CONFIG={
    checks:['every step and its colour','what each step is waiting on'],
    amend:[{sel:'#list .card',kind:'step card'},{sel:'g.node',kind:'bubble',pen:false},{sel:'#sheet',kind:'open step'}],
    whyNot:[
-    {what:'Notes saved on the Flow Map itself',why:'Saving notes to the Flow Map needs the Google side updated. Until then, notes here go to Ara\u2019s inbox instead.'},
+    {what:'Notes saved on the Flow Map itself',why:'Saving notes to the Flow Map needs the Google side updated. Until then, notes here go to the bots\u2019 inbox instead.'},
     {what:'Tap a step to add a note',why:'The newer Flow Map that does this passed its check but isn\u2019t live yet.'},
-    {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because Ara\u2019s inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
+    {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because the bots\u2019 inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
    ]
   },
   notes:{
@@ -71,7 +71,7 @@ window.APP_SHELL_CONFIG={
    amend:[{sel:'#notes > li',kind:'note',skip:'.empty'},{sel:'#puBody li',kind:'pick-up row',skip:'.empty'},{sel:'#tasks li',kind:'to-do',skip:'.empty'},{sel:'#angeTodo',kind:'Ange to do list',pen:false},{sel:'#pickup',kind:'pick-up list',pen:false}],
    whyNot:[
     {what:'Google Tasks',why:'They haven\u2019t loaded on this phone yet. Connect them once in To do.',when:function(){var e=document.getElementById('gtConnect');return !!(e&&!e.hidden)}},
-    {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because Ara\u2019s inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
+    {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because the bots\u2019 inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
    ]
   },
   desk:{
@@ -84,7 +84,17 @@ window.APP_SHELL_CONFIG={
     {what:'Desk\u2019s own unfinished jobs here',why:'Desk runs on a Google page that keeps its own list, so its unfinished jobs show inside Desk, not here. When the Desk icon opens straight into Desk, this list is skipped.'},
     {what:'Picking up on another phone',why:'Unfinished jobs are kept on this phone only. Picking up on another phone or computer, or seeing Desk and Cert Studio jobs here, needs the Google sign-in set up for it.'},
     {what:'Desk crash fix and Amend',why:'They\u2019re built and being checked, but not live. Going live needs the info@ sign-in and Ange\u2019s yes.'},
-    {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because Ara\u2019s inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
+    {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because the bots\u2019 inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
+   ]
+  },
+  deskpages:{
+   page:'desk-pages.html',name:'Desk',start:'./desk-pages.html',
+   checks:['the jobs, certs and quotes tabs','the notes on the Notes tab'],
+   amend:[{sel:'main',kind:'Desk screen',pen:false}],
+   whyNot:[
+    {what:'Opening with no signal',why:'This Desk page has no offline copy yet, so it needs a signal to open. Adding one is a small change that waits on the check and Ange\u2019s yes.'},
+    {what:'Jobs from the jobs file',why:'The jobs list by address is built and checked but held, so it is not on this page yet. It goes live on Ange\u2019s word.'},
+    {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because the bots\u2019 inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
    ]
   },
   deck:{
@@ -94,7 +104,7 @@ window.APP_SHELL_CONFIG={
    resumeList:{at:'#intro',how:'after',heading:'Pick up where you left off'},
    whyNot:[
     {what:'Picking up on another phone',why:'Unfinished jobs are kept on this phone only. Picking up on another phone or computer, or seeing Desk and Cert Studio jobs here, needs the Google sign-in set up for it.'},
-    {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because Ara\u2019s inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
+    {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because the bots\u2019 inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
    ]
   },
   certstudio:{
@@ -107,7 +117,7 @@ window.APP_SHELL_CONFIG={
 {what:'Picking up on another phone',why:'Unfinished jobs are kept on this phone only. Picking up on another phone or computer, or seeing Desk and Cert Studio jobs here, needs the Google sign-in set up for it.'},
     {what:'Cert Studio opens in Google',why:'It needs Chrome signed in as info@, or it asks you to sign in.'},
     {what:'The newer Cert Studio',why:'The easier-to-read headings and bigger buttons are built and being checked, but aren\u2019t live. Going live needs the info@ sign-in and Ange\u2019s yes.'},
-    {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because Ara\u2019s inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
+    {what:'Answers from the bots',why:'They don\u2019t show in the app yet, because the bots\u2019 inbox can\u2019t send answers back to the phone. A sent note shows as Sent once the inbox has it.'}
    ]
   }
  }
