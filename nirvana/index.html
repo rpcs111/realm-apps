@@ -195,7 +195,7 @@ async function open(pass,stored){
   if(nvBusy)return;
   pass=String(pass||"").trim();
   var e=document.getElementById("e"),b=document.getElementById("b"),w=document.getElementById("gxWait");
-  if(!pass){if(!stored){e.textContent="Type the Nirvana key first.";try{document.getElementById("k").focus()}catch(x){}}return}
+  if(!pass){if(!stored){e.textContent="Type the key first.";try{document.getElementById("k").focus()}catch(x){}}return}
   if(!(window.crypto&&crypto.subtle)){e.textContent=nvFail(null,stored);return}
   nvBusy=true;e.textContent="";b.disabled=true;b.textContent="Unlocking…";if(w)w.hidden=false;
   try{
