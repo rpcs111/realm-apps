@@ -334,13 +334,28 @@
      "New data, tap to refresh" line instead. As a backstop, those drafts are kept in this tab (sessionStorage, never synced) when
      the page goes away and put back into the same empty box after any reload. PIN, password, key and code boxes are never kept. */
   var DRK = 'realm_sync_drafts', DR_AGE = 600000, dirty = [];
+  /* Secret boxes are never kept and never hold a reload: type=password, a secret autocomplete value (current-password,
+     new-password, one-time-code, cc-*), or a whole word pin/password/passcode/key/code/otp/token/secret in the box's name, id,
+     aria-label or placeholder. Parts of words do not count (typing, keyboard), and nor does a word after "no" or "not" ("no codes
+     or key numbers"). camelCase ids are split into words first, so lkPin and realmKey count; data-no-draft opts a box out. */
+  var SECRET_AC = /^(current-password|new-password|one-time-code|cc-[a-z-]+)$/, SECRET_W = /\b(pin|password|passcode|key|code|otp|token|secret)s?\b/i;
+  function secretWords(t) {
+    t = String(t || '').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Za-z])(\d)/g, '$1 $2').replace(/[_\-]+/g, ' ');
+    t = t.replace(/\b(no|not|never|without|don\u2019t|don't|do not)\b[^.;:!?()]*/gi, ' ');
+    return SECRET_W.test(t);
+  }
+  function secret(e) {
+    if (e.tagName === 'INPUT' && (e.type || '').toLowerCase() === 'password') return true;
+    var ac = (e.getAttribute('autocomplete') || '').toLowerCase().split(/\s+/);
+    for (var i = 0; i < ac.length; i++) if (SECRET_AC.test(ac[i])) return true;
+    return [e.id, e.name, e.getAttribute('aria-label'), e.getAttribute('placeholder')].some(secretWords);
+  }
   function draftable(e) {
     if (!e || !e.tagName || e.hasAttribute('data-no-draft')) return false;
     var ce = e.isContentEditable && e.getAttribute('contenteditable') !== null, t = e.tagName;
     if (t === 'INPUT') { var ty = (e.type || 'text').toLowerCase(); if (!/^(text|search|email|url|tel|number)$/.test(ty)) return false; }
     else if (t !== 'TEXTAREA' && !ce) return false;
-    var tag = [e.id, e.name, e.getAttribute('aria-label'), e.getAttribute('autocomplete'), e.getAttribute('placeholder')].join(' ');
-    return !/pin|pass|key|token|secret|code|otp/i.test(tag);
+    return !secret(e);
   }
   function val(e) { return e.isContentEditable && e.tagName !== 'INPUT' && e.tagName !== 'TEXTAREA' ? (e.innerText || '') : (e.value || ''); }
   function fkey(e) {
