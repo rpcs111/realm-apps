@@ -100,9 +100,10 @@ const DEF=`flowchart TD
   classDef b5 fill:#00b3a4,color:#fff
   classDef b7 fill:#c35cff,color:#fff`;
 const src=document.getElementById('src');src.value=localStorage.getItem('realmCrewTree_v6')||DEF;
-mermaid.initialize({startOnLoad:false,flowchart:{htmlLabels:false},theme:'base',themeVariables:{lineColor:'#e0459b',primaryColor:'#fff3c4'}});
+/* 2 Nov: the drawing library comes from the internet. Without it the rest of the page (notes, buttons) still works. */
+if(window.mermaid)mermaid.initialize({startOnLoad:false,flowchart:{htmlLabels:false},theme:'base',themeVariables:{lineColor:'#e0459b',primaryColor:'#fff3c4'}});
 let n=0,t;
-async function render(){localStorage.setItem('realmCrewTree_v6',src.value);try{const {svg}=await mermaid.render('m'+(n++),src.value);document.getElementById('tree').innerHTML=svg}catch(e){document.getElementById('tree').innerHTML='<p style="color:#ff4f6d">Tree text has a mistake: '+e.message+'</p>'}}
+async function render(){localStorage.setItem('realmCrewTree_v6',src.value);if(!window.mermaid){document.getElementById('tree').innerHTML='<p style="color:#ffb347">The tree drawing needs the internet. Your tree text is saved on this device and draws when you are back online.</p>';return}try{const {svg}=await mermaid.render('m'+(n++),src.value);document.getElementById('tree').innerHTML=svg}catch(e){document.getElementById('tree').innerHTML='<p style="color:#ff4f6d">Tree text has a mistake: '+e.message+'</p>'}}
 src.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(render,600)});
 function resetTree(){src.value=DEF;render()}
 function save(b,name){const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click()}
