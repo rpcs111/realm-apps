@@ -69,7 +69,7 @@
      (position:absolute, page coordinates) and scrolls away too. */
   function place(){try{
     if(tip&&!tip.hidden&&btn){var b=btn.getBoundingClientRect();tip.style.top=Math.round(b.bottom+(window.scrollY||0)+6)+'px'}}catch(e){}}
-  function refresh(){badge();if(!btn)return;btn.hidden=standalone()&&ownWindow();if(standalone()&&!ownWindow()){btn.lastChild.textContent='Open in Chrome to install';btn.hidden=false;paintHint();return}if(btn.hidden&&tip)tip.hidden=true;label();paintHint()}
+  function refresh(){badge();if(!btn)return;btn.hidden=standalone()&&ownWindow();if(standalone()&&!ownWindow()){btn.lastChild.textContent='Open in Chrome to install';btn.hidden=false;paintHint();return}if(!dp&&saved())btn.hidden=true; /* 2 Nov: saved on this device and Chrome is not offering install: no Save app button again */if(btn.hidden&&tip)tip.hidden=true;label();paintHint()}
   window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;try{localStorage.removeItem(KEY)}catch(x){}refresh()});
   window.addEventListener('appinstalled',function(){dp=null;try{localStorage.setItem(KEY,'1')}catch(x){}if(btn)btn.hidden=true;if(tip)tip.hidden=true;if(hint)hint.style.display='none'});
   function init(){
@@ -178,6 +178,7 @@
 
   if('serviceWorker' in navigator&&location.protocol!=='file:'){
     var base=(S&&S.src)?new URL('../',S.src):new URL('./',location.href);
-    navigator.serviceWorker.register(new URL('app-sw.js?v=20261018-1',base).href,{scope:new URL(path,location.href).href,updateViaCache:'none'}).then(function(r){try{r.update()}catch(e){}}).catch(function(){});
+    navigator.serviceWorker.register(new URL('app-sw.js?v=20261018-1',base).href,{scope:new URL(path,location.href).href,updateViaCache:'none'}).then(function(r){ /* 2 Nov: ask for a newer worker at most once every 6 hours per app, not on every open */
+      var UK='ara_sw_checked:'+path,t=0;try{t=+localStorage.getItem(UK)||0}catch(e){}if(Date.now()-t<216e5)return;try{localStorage.setItem(UK,String(Date.now()))}catch(e){}try{r.update()}catch(e){}}).catch(function(){});
   }
 })();
