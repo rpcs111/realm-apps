@@ -8,19 +8,19 @@
    "name": "Notes",
    "status": "green",
    "elon_verified": true,
-   "note": "Live, own icon, scope fixed. Big GATE / HELPER / APPS / HELPER buttons pass the Gate 390x844 test (17 Oct). Notes save on the phone; syncing waits on Ange's Engine Allow tap. Needs a real-phone test.",
+   "note": "Live, own icon, scope fixed. Big CHECKING HELPER / HELPER / APPS / HELPER buttons pass the Checking Helper 390x844 test (17 Oct). Notes save on the phone; syncing waits on Ange's Engine Allow tap. Needs a real-phone test.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
+   "verified_how": "Checking Helper re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "notes-elon-relay",
    "group": "APPS",
-   "name": "Notes: GATE / HELPER / APPS / HELPER buttons",
+   "name": "Notes: CHECKING HELPER / HELPER / APPS / HELPER buttons",
    "status": "amber",
    "elon_verified": true,
-   "note": "PASS (Gate, 17 Oct). One tap saves the note and queues it for that helper; lands in CAPTURE INBOX sheet only after Ange's Engine Allow tap (until then: 'Saved on phone, waiting for Allow'). Polish done in v2026.10.17-6: all four buttons equal size, one status line, install tip is a slim top bar.",
+   "note": "PASS (Checking Helper, 17 Oct). One tap saves the note and queues it for that helper; lands in CAPTURE INBOX sheet only after Ange's Engine Allow tap (until then: 'Saved on phone, waiting for Allow'). Polish done in v2026.10.17-6: all four buttons equal size, one status line, install tip is a slim top bar.",
    "verified_date": "2026-10-16T15:20Z",
-   "verified_how": "Gate 390x844 re-test (v2026.10.17-4; report kept on the box): all 4 buttons save, tag and flash; 10 rapid notes survive reload"
+   "verified_how": "Checking Helper 390x844 re-test (v2026.10.17-4; report kept on the box): all 4 buttons save, tag and flash; 10 rapid notes survive reload"
   },
   {
    "id": "search",
@@ -38,7 +38,7 @@
    "elon_verified": true,
    "note": "Live, own icon.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
+   "verified_how": "Checking Helper re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "hub",
@@ -48,7 +48,7 @@
    "elon_verified": true,
    "note": "Live. The \"need sign in\" message has been removed.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
+   "verified_how": "Checking Helper re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "layers",
@@ -58,7 +58,7 @@
    "elon_verified": true,
    "note": "Live, installs.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
+   "verified_how": "Checking Helper re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "eta",
@@ -68,7 +68,7 @@
    "elon_verified": true,
    "note": "Live v-25, own install.",
    "verified_date": "2026-10-16T12:51Z",
-   "verified_how": "Gate re-test + bug fixes v-26"
+   "verified_how": "Checking Helper re-test + bug fixes v-26"
   },
   {
    "id": "nova-page",
@@ -78,7 +78,7 @@
    "elon_verified": true,
    "note": "Live v-25, own install.",
    "verified_date": "2026-10-16T12:51Z",
-   "verified_how": "Gate re-test + bug fixes v-26"
+   "verified_how": "Checking Helper re-test + bug fixes v-26"
   },
   {
    "id": "flowmap",
@@ -86,9 +86,9 @@
    "name": "Flow Map",
    "status": "amber",
    "elon_verified": true,
-   "note": "Gate PASS v12, 21:08Z",
-   "owner": "Gate",
-   "next": "Gate re-checks map.html?d=fold8 at 390x844."
+   "note": "Checking Helper PASS v12, 21:08Z",
+   "owner": "Checking Helper",
+   "next": "Checking Helper re-checks map.html?d=fold8 at 390x844."
   },
   {
    "id": "scribe",
@@ -98,7 +98,7 @@
    "elon_verified": true,
    "note": "Retired. The old link opens Notes.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
+   "verified_how": "Checking Helper re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "grok-howto",
@@ -106,10 +106,10 @@
    "name": "How-To",
    "status": "green",
    "elon_verified": true,
-   "note": "Built 17 Oct: illustrated Grok guide with Julie's iPhone setup (her own login), Fold 8 / Flip 6 steps, Grok in 8 stops (official xAI sources only, no YouTube); Install button 44px and scrolls away, no longer pinned over cards. Headless test 390x844 and iPhone UA: 0 JS errors, no sideways scroll. Waiting for the Gate check. https://rpcs111.github.io/realm-apps/grok-howto.html",
+   "note": "Built 17 Oct: illustrated Grok guide with Julie's iPhone setup (her own login), Fold 8 / Flip 6 steps, Grok in 8 stops (official xAI sources only, no YouTube); Install button 44px and scrolls away, no longer pinned over cards. Headless test 390x844 and iPhone UA: 0 JS errors, no sideways scroll. Waiting for the Checking Helper check. https://rpcs111.github.io/realm-apps/grok-howto.html",
    "source": "Ange via Elon 15:06 UTC 16 Oct: Grok how-to infographic + Julie's phone",
    "verified_date": "2026-10-17",
-   "verified_how": "Gate independent re-check v7 (version 2026.10.17-8), 390x844 Android, ?d=fold8 and ?d=julie: PASS. Report kept on the box, not in this repo."
+   "verified_how": "Checking Helper independent re-check v7 (version 2026.10.17-8), 390x844 Android, ?d=fold8 and ?d=julie: PASS. Report kept on the box, not in this repo."
   },
   {
    "id": "nova-queue",
@@ -119,7 +119,7 @@
    "elon_verified": true,
    "note": "Replies 18–26 done (11:54 UTC); nothing since. Daily 7am 'go' still needs Ange.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
+   "verified_how": "Checking Helper re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "stream-check",
@@ -127,7 +127,7 @@
    "name": "Weekend stream check",
    "status": "amber",
    "elon_verified": false,
-   "note": "Every 3h until Mon 9am: links, the helper, misses logged. Was green without an Gate check; amber until verified (Standards v2 Fix H, 17 Oct)."
+   "note": "Every 3h until Mon 9am: links, the helper, misses logged. Was green without a Checking Helper check; amber until verified (Standards v2 Fix H, 17 Oct)."
   },
   {
    "id": "handoff",
@@ -135,7 +135,7 @@
    "name": "Handoff log",
    "status": "amber",
    "elon_verified": false,
-   "note": "HANDOFF §7 went quiet after 12:20 UTC 16 Oct while work continued (Gate audit). Amber until Gate re-checks the heartbeat (Standards v2 Fix G/H, 17 Oct). Previous Gate check: 2026-10-16T12:47Z."
+   "note": "HANDOFF §7 went quiet after 12:20 UTC 16 Oct while work continued (Checking Helper audit). Amber until Checking Helper re-checks the heartbeat (Standards v2 Fix G/H, 17 Oct). Previous Checking Helper check: 2026-10-16T12:47Z."
   },
   {
    "id": "engine-sync",
@@ -145,7 +145,7 @@
    "elon_verified": true,
    "note": "Waiting on Ange's one-time Allow on the laptop.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
+   "verified_how": "Checking Helper re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "ara-capture",
@@ -155,7 +155,7 @@
    "elon_verified": true,
    "note": "Waiting on the same Allow.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
+   "verified_how": "Checking Helper re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "tasks-notes",
@@ -165,7 +165,7 @@
    "elon_verified": true,
    "note": "Waiting on the same Allow.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
+   "verified_how": "Checking Helper re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "ange-nova-paste",
@@ -199,7 +199,7 @@
    "elon_verified": true,
    "note": "~20 unsaved certs. Export with media to Drive.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
+   "verified_how": "Checking Helper re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "ange-reinstall",
@@ -215,9 +215,9 @@
    "name": "Deputy cross-reference",
    "status": "grey",
    "elon_verified": true,
-   "note": "Sat. Read-only, the Gate design.",
+   "note": "Sat. Read-only, the Checking Helper design.",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
+   "verified_how": "Checking Helper re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "unsaved-cert-flag",
@@ -235,7 +235,7 @@
    "elon_verified": true,
    "note": "Voice phrases are ready (the helper item 20).",
    "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Gate re-test (report kept on the box, not in this repo)"
+   "verified_how": "Checking Helper re-test (report kept on the box, not in this repo)"
   },
   {
    "id": "ring-group",
@@ -607,7 +607,7 @@
    "name": "Claude handover linked into HANDOFF",
    "status": "grey",
    "elon_verified": false,
-   "note": "Ange 1:32am 17 Oct: 'Have we got the handover from Claude?' Gate review: PARTIAL, not linked from HANDOFF.",
+   "note": "Ange 1:32am 17 Oct: 'Have we got the handover from Claude?' Checking Helper review: PARTIAL, not linked from HANDOFF.",
    "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
   },
   {
@@ -648,18 +648,18 @@
   },
   {
    "id": "anthropic-chase",
-   "group": "MISSED ASKS (Gate cross-check 17 Oct)",
+   "group": "MISSED ASKS (Checking Helper cross-check 17 Oct)",
    "name": "Anthropic refund / credit chase",
    "status": "grey",
    "elon_verified": false,
-   "owner": "Gate",
-   "next": "Gate writes a push-back draft for Ange to review. Nothing gets sent without Ange's yes.",
+   "owner": "Checking Helper",
+   "next": "Checking Helper writes a push-back draft for Ange to review. Nothing gets sent without Ange's yes.",
    "note": "Planned. Missed from the 17 Oct sweep.",
    "source": "Elon cross-check 17 Oct"
   },
   {
    "id": "trading-tracker",
-   "group": "MISSED ASKS (Gate cross-check 17 Oct)",
+   "group": "MISSED ASKS (Checking Helper cross-check 17 Oct)",
    "name": "Trading project + ideas tracker",
    "status": "grey",
    "elon_verified": false,
@@ -670,7 +670,7 @@
   },
   {
    "id": "realm-keep-doc",
-   "group": "MISSED ASKS (Gate cross-check 17 Oct)",
+   "group": "MISSED ASKS (Checking Helper cross-check 17 Oct)",
    "name": "REALM KEEP doc",
    "status": "red",
    "elon_verified": false,
@@ -681,7 +681,7 @@
   },
   {
    "id": "phone-alert",
-   "group": "MISSED ASKS (Gate cross-check 17 Oct)",
+   "group": "MISSED ASKS (Checking Helper cross-check 17 Oct)",
    "name": "Phone-call alert when the system breaks",
    "status": "grey",
    "elon_verified": false,
