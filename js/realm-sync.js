@@ -54,7 +54,33 @@
       own = '';
       try { var s = document.scripts; for (var i = 0; i < s.length; i++) { var ty = (s[i].type || '').toLowerCase(); if (!s[i].src && (!ty || /javascript|module/.test(ty))) own += s[i].text + '\n'; } } catch (e) {}
     }
-    return own.indexOf('"' + k + '"') >= 0 || own.indexOf("'" + k + "'") >= 0 || own.indexOf('`' + k + '`') >= 0;
+    if (own.indexOf('"' + k + '"') >= 0 || own.indexOf("'" + k + "'") >= 0 || own.indexOf('`' + k + '`') >= 0) return true;
+    var L = ownList();
+    for (var i = 0; i < L.length; i++) { var t = L[i]; if (t === k || (t.charAt(t.length - 1) === '*' && k.indexOf(t.slice(0, -1)) === 0)) return true; }
+    return false;
+  }
+  /* 2 Nov: keys a page reads before this file loads also count as its own when the page names them:
+     - listed on this script tag (data-sync-own="realm_a realm_b_*") or in <meta name="realm-sync-own" content="...">;
+     - the value of a "key" or "...Key" field in the page's own JSON settings block (e.g. "key": "realm_prism_v2");
+     - a quoted key start that the page's own script joins with "+" (e.g. 'realm_setup_' + name), which covers every key with that start.
+     A name has to be at least 8 characters with its "*", so a bare 'realm_' never counts. */
+  var ownPre = null;
+  function ownList() {
+    if (ownPre) return ownPre;
+    ownPre = [];
+    var add = function (t) { t = String(t || '').trim(); if (t.length >= 8 && t.length <= 81 && /^[A-Za-z0-9_\-]+\*?$/.test(t)) ownPre.push(t); };
+    try {
+      if (CUR) (CUR.getAttribute('data-sync-own') || '').split(/[\s,]+/).forEach(add);
+      var mt = document.querySelector('meta[name="realm-sync-own"]'); if (mt) (mt.getAttribute('content') || '').split(/[\s,]+/).forEach(add);
+      var sc = document.scripts, x;
+      for (var i = 0; i < sc.length; i++) {
+        if (sc[i].src) continue;
+        var ty = (sc[i].type || '').toLowerCase(), tx = sc[i].text || '';
+        if (/json/.test(ty)) { var r1 = /"(?:key|[A-Za-z]+Key)"\s*:\s*"([A-Za-z0-9_\-]{3,80})"/g; while ((x = r1.exec(tx))) add(x[1]); }
+        else if (!ty || /javascript|module/.test(ty)) { var r2 = /(['"`])([A-Za-z0-9_\-]{3,79}[_\-])\1\s*\+/g; while ((x = r2.exec(tx))) add(x[2] + '*'); }
+      }
+    } catch (e) {}
+    return ownPre;
   }
   function wr(k, v) { try { if (v == null) rawRemove.call(LS, k); else rawSet.call(LS, k, v); return true; } catch (e) { return false; } }
   function rj(k, d) { try { var v = JSON.parse(rd(k)); return v == null ? d : v; } catch (e) { return d; } }
@@ -190,8 +216,12 @@
       base[k] = { v: R.v == null ? null : R.v, r: R.r || 0 };
     });
   }
+  /* 2 Nov: after a failed sync, automatic tries back off (30 s, 1, 2, 4 ... up to 30 min) with one timer; tapping the sync line
+     or coming back online tries at once. */
+  var errN = 0, errUntil = 0, retryT = 0;
   function cycle(force) {
     if (busy) { again = true; return Promise.resolve(); }
+    if (force !== true && errUntil && Date.now() < errUntil) { if (!retryT) retryT = setTimeout(function () { retryT = 0; cycle(); }, errUntil - Date.now()); return Promise.resolve(); }
     if (BO && force !== true && boUntil && Date.now() < boUntil) return Promise.resolve(); // backing off: Engine not reachable yet
     var k = rd(TOK);
     if (navigator.onLine === false) { set('offline'); return Promise.resolve(); }
@@ -206,10 +236,12 @@
       return push(base, changed, 0);
     }).then(function () { return pushJobs(base, changed, 0); }).then(function () {
       if (meta.nodel) { delete meta.nodel; wj(META, meta); }
+      errN = 0; errUntil = 0;
       set('synced'); readyFns.forEach(function (f) { try { f(); } catch (e) {} });
       if (changed.length) notify(changed);
     }).catch(function (e) {
       if (e && e.quiet) return;
+      errUntil = Date.now() + Math.min(30000 * Math.pow(2, errN), 1800000); errN++;
       if (e && e.net) set(e.message === 'offline' ? 'offline' : 'allow');
       else if (e && /unauthorised/.test(e.message)) set('badkey');
       else set('error', e && e.message);
@@ -271,14 +303,35 @@
     keys.forEach(function (k) { try { window.dispatchEvent(new StorageEvent('storage', { key: k, newValue: rd(k), storageArea: LS, url: location.href })); } catch (e) {} });
     try { window.dispatchEvent(new CustomEvent('realmsync', { detail: { keys: keys } })); } catch (e) {}
     changeFns.forEach(function (f) { try { if (f({ keys: keys }) === true) handled = true; } catch (e) {} });
+    /* 2 Nov: pages that can redraw in place listen for 'realm-sync:changed' (detail.keys) and call preventDefault() once they have
+       redrawn; then the page does not reload. Pages without a listener keep the one capped reload for their own data. */
+    try { var ev = new CustomEvent('realm-sync:changed', { detail: { keys: keys.slice() }, cancelable: true }); window.dispatchEvent(ev); if (ev.defaultPrevented) handled = true; } catch (e) {}
     keys = keys.filter(function (k) { return k !== JOBK && mine(k); }); /* the jobs file never reloads a page: its readers redraw from 'storage'; nor does another app's data */
     if (handled || !keys.length) return;
     keys.forEach(function (k) { stale[k] = 1; });
     reloadWhenIdle();
   }
+  /* 2 Nov: hard cap. A page reloads itself for sync at most once every 30 seconds (counted across reloads in this tab).
+     Inside that time it shows a "New data, tap to refresh" line instead, and the new data is already saved on this device. */
+  var RLK = 'realm_sync_reload_at', RL_GAP = 30000, freshEl = null;
+  function lastReload() { try { return +sessionStorage.getItem(RLK) || 0; } catch (e) { return 0; } }
+  function doReload() {
+    guard = {}; Object.keys(stale).forEach(function (k) { guard[k] = 1; });
+    try { sessionStorage.setItem(RLK, String(Date.now())); } catch (e) {}
+    location.reload();
+  }
+  function showFresh() {
+    if (freshEl || !document.body) return;
+    freshEl = document.createElement('button'); freshEl.type = 'button'; freshEl.id = 'realmSyncFresh';
+    freshEl.textContent = 'New data, tap to refresh';
+    freshEl.style.cssText = 'position:fixed;left:8px;bottom:60px;z-index:2147482001;max-width:calc(100vw - 16px);min-height:44px;min-width:44px;font:600 14px/1.3 system-ui,sans-serif;padding:8px 16px;border-radius:999px;border:1px solid #fcd34d;background:rgba(2,6,23,.94);color:#fde68a;cursor:pointer';
+    freshEl.addEventListener('click', doReload);
+    document.body.appendChild(freshEl);
+  }
   function reloadWhenIdle() {
+    if (Date.now() - lastReload() < RL_GAP) { showFresh(); return; }
     var a = document.activeElement, typing = a && (/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) || a.isContentEditable);
-    if (!typing && !document.hidden) { guard = {}; Object.keys(stale).forEach(function (k) { guard[k] = 1; }); location.reload(); return; }
+    if (!typing && !document.hidden) { doReload(); return; }
     var go = function () { document.removeEventListener('visibilitychange', go); document.removeEventListener('focusout', go); setTimeout(reloadWhenIdle, 400); };
     document.addEventListener('visibilitychange', go); document.addEventListener('focusout', go);
   }
@@ -299,6 +352,6 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
   document.addEventListener('visibilitychange', backSoon);
   window.addEventListener('focus', backSoon);
-  window.addEventListener('online', function () { boN = 0; boUntil = 0; soon(200); });
+  window.addEventListener('online', function () { boN = 0; boUntil = 0; errN = 0; errUntil = 0; soon(200); });
   setInterval(function () { if (!document.hidden && Date.now() - lastPull >= PULL_GAP) cycle(); }, 60000);
 })();
