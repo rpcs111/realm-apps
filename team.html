@@ -70,20 +70,20 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>
 const bots=[
-['Chief','#ffb347','Ange\'s chief and only contact. Passes work down and brings back one answer.'],
-['Gate','#3fa9ff','Checks and audits every change before it merges. Reports to Chief.'],
-['App delivery','#ff8a3d','Runs the apps lane. Reports to Chief.'],
-['App builds','#ff6fb5','Builds and tests apps. Reports to Chief.'],
-['Websites and files','#4fb8ff','Helper bot. Reports to Chief.'],
-['Work catch-up','#00b3a4','Helper bot. Reports to Chief.'],
-['Money admin','#c35cff','Helper bot. Reports to Chief.'],
-['Bills and admin','#ffb800','Bills, payments and paperwork. Reports to Chief.'],
-['Jobs and clients','#22c58b','Job sheets and client messages. Reports to Chief.']];
+['Main Helper','#ffb347','Ange\'s main Helper and only contact. Passes work down and brings back one answer.'],
+['Checking Helper','#3fa9ff','Checks and audits every change before it merges. Reports to the main Helper.'],
+['App delivery','#ff8a3d','Runs the apps lane. Reports to the main Helper.'],
+['App builds','#ff6fb5','Builds and tests apps. Reports to the main Helper.'],
+['Websites and files','#4fb8ff','Helper bot. Reports to the main Helper.'],
+['Work catch-up','#00b3a4','Helper bot. Reports to the main Helper.'],
+['Money admin','#c35cff','Helper bot. Reports to the main Helper.'],
+['Bills and admin','#ffb800','Bills, payments and paperwork. Reports to the main Helper.'],
+['Jobs and clients','#22c58b','Job sheets and client messages. Reports to the main Helper.']];
 document.getElementById('cards').innerHTML=bots.map(b=>`<div class="card" style="--c:${b[1]}"><h3>${b[0]}</h3><p>${b[2]}</p></div>`).join('');
 const DEF=`flowchart TD
   N1([ANGE - Boss]):::boss
-  N1 --> N2[Chief]:::b2
-  N2 --> N3[Gate]:::b4
+  N1 --> N2[Main Helper]:::b2
+  N2 --> N3[Checking Helper]:::b4
   N2 --> N4[App delivery]:::b1
   N2 --> N5[App builds]:::apps
   N2 --> N6[Websites and files]:::b4
@@ -99,7 +99,7 @@ const DEF=`flowchart TD
   classDef b4 fill:#4fb8ff,color:#fff
   classDef b5 fill:#00b3a4,color:#fff
   classDef b7 fill:#c35cff,color:#fff`;
-const src=document.getElementById('src');src.value=localStorage.getItem('realmCrewTree_v6')||DEF;
+const src=document.getElementById('src');src.value=(localStorage.getItem('realmCrewTree_v6')||DEF).replace(/\[Chief\]/g,'[Main Helper]').replace(/\[Gate\]/g,'[Checking Helper]');
 /* 2 Nov: the drawing library comes from the internet. Without it the rest of the page (notes, buttons) still works. */
 if(window.mermaid)mermaid.initialize({startOnLoad:false,flowchart:{htmlLabels:false},theme:'base',themeVariables:{lineColor:'#e0459b',primaryColor:'#fff3c4'}});
 let n=0,t;
