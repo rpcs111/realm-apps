@@ -158,14 +158,20 @@
 
   var busy = false, again = false, timer = 0;
   function soon(ms) { clearTimeout(timer); timer = setTimeout(cycle, ms || 0); }
+  /* 2 Nov: coming back to an app, and the minute timer, only pull when the last pull is 5+ minutes old. Your own changes still send
+     within 2 seconds (touch), and the Sync now button and coming back online still pull at once. */
+  var lastPull = 0, PULL_GAP = 300000;
+  function backSoon() { if (!document.hidden && Date.now() - lastPull >= PULL_GAP) soon(200); }
   function localKeys() { var o = {}; for (var i = 0; i < LS.length; i++) { var k = LS.key(i); if (inScope(k)) o[k] = 1; } return o; }
+  function canon(v) { if (Array.isArray(v)) return v.map(canon); if (v && typeof v === 'object') { var o = {}; Object.keys(v).sort().forEach(function (k) { o[k] = canon(v[k]); }); return o; } return v; }
+  function same(a, b) { if (a === b) return true; if (a == null || b == null) return false; try { return JSON.stringify(canon(JSON.parse(a))) === JSON.stringify(canon(JSON.parse(b))); } catch (e) { return false; } }
   function applyRemote(keys, base, changed) {
     Object.keys(keys).forEach(function (k) {
       if (!inScope(k)) return;
       var R = keys[k], bb = base[k], L = rd(k), noDel = !!(meta.nodel && meta.nodel[k]);
       var lNewer = (meta.t[k] || 0) > (R.t || 0);
       var m = merge(bb ? bb.v : null, L, R.v == null ? null : R.v, noDel, lNewer);
-      if (m !== L) { wr(k, m); changed.push(k); }
+      if (m !== L) { wr(k, m); if (!same(m, L)) changed.push(k); } /* 2 Nov: only a real change in the data counts (same data, other key order or spacing, does not) */
       base[k] = { v: R.v == null ? null : R.v, r: R.r || 0 };
     });
   }
@@ -174,7 +180,7 @@
     if (BO && force !== true && boUntil && Date.now() < boUntil) return Promise.resolve(); // backing off: Engine not reachable yet
     var k = rd(TOK);
     if (navigator.onLine === false) { set('offline'); return Promise.resolve(); }
-    busy = true;
+    busy = true; lastPull = Date.now();
     var base = rj(BASE, {}), changed = [];
     var p = !k
       ? post({ app: 'sync', op: 'ping' }).then(function (j) { set(j && j.engine ? 'nokey' : 'allow'); throw { quiet: 1 }; })
@@ -276,8 +282,8 @@
   };
   function start() { paint(); soon(300); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
-  document.addEventListener('visibilitychange', function () { if (!document.hidden) soon(200); });
-  window.addEventListener('focus', function () { soon(200); });
+  document.addEventListener('visibilitychange', backSoon);
+  window.addEventListener('focus', backSoon);
   window.addEventListener('online', function () { boN = 0; boUntil = 0; soon(200); });
-  setInterval(function () { if (!document.hidden) cycle(); }, 60000);
+  setInterval(function () { if (!document.hidden && Date.now() - lastPull >= PULL_GAP) cycle(); }, 60000);
 })();
