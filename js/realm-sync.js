@@ -143,7 +143,7 @@
       el = document.querySelector('[data-realm-sync]');
       if (!el) {
         el = document.createElement('button'); el.type = 'button'; el.id = 'realmSyncPill';
-        el.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:2147482000;max-width:calc(100vw - 16px);font:600 11px/1.3 system-ui,sans-serif;padding:4px 9px;border-radius:999px;border:1px solid #334155;background:rgba(2,6,23,.88);color:#cbd5e1;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis';
+        el.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:2147482000;max-width:calc(100vw - 16px);font:600 11px/1.3 system-ui,sans-serif;min-height:44px;padding:4px 12px;border-radius:999px;border:1px solid #334155;background:rgba(2,6,23,.88);color:#cbd5e1;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis';
         document.body.appendChild(el);
       }
       el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite'); el.title = 'Tap to sync now';
