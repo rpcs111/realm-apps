@@ -334,21 +334,36 @@
      "New data, tap to refresh" line instead. As a backstop, those drafts are kept in this tab (sessionStorage, never synced) when
      the page goes away and put back into the same empty box after any reload. PIN, password, key and code boxes are never kept. */
   var DRK = 'realm_sync_drafts', DR_AGE = 600000, dirty = [];
-  /* Secret boxes are never kept and never hold a reload: type=password, a secret autocomplete value (current-password,
-     new-password, one-time-code, cc-*), or a whole word pin/password/passcode/key/code/otp/token/secret in the box's name, id,
-     aria-label or placeholder. Parts of words do not count (typing, keyboard), and nor does a word after "no" or "not" ("no codes
-     or key numbers"). camelCase ids are split into words first, so lkPin and realmKey count; data-no-draft opts a box out. */
+  /* Secret boxes are never kept and never hold a reload.
+     - Always secret, whatever the words say: type=password, a secret autocomplete value (current-password, new-password,
+       one-time-code, cc-*), and data-no-draft.
+     - A text input is secret if a whole word pin/password/passcode/key/code/otp/token/secret appears in its name, id, aria-label,
+       placeholder or label. No negation counts for inputs ("Never share your PIN" is still a PIN box).
+     - A note box (textarea or editable area) is checked the same way, except that a "no" directly followed by a list holding the
+       word ("no codes or key numbers") does not count. "not", "never", "do not" and "don't" never cancel a word.
+     Parts of words do not count (typing, keyboard); camelCase ids are split into words first, so lkPin and realmKey count. */
   var SECRET_AC = /^(current-password|new-password|one-time-code|cc-[a-z-]+)$/, SECRET_W = /\b(pin|password|passcode|key|code|otp|token|secret)s?\b/i;
-  function secretWords(t) {
-    t = String(t || '').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Za-z])(\d)/g, '$1 $2').replace(/[_\-]+/g, ' ');
-    t = t.replace(/\b(no|not|never|without|don\u2019t|don't|do not)\b[^.;:!?()]*/gi, ' ');
+  var NO_LIST = /\bno\s+[a-z]+(?:\s+numbers?)?(?:\s+(?:or|and|nor)\s+[a-z]+(?:\s+numbers?)?)*/gi;
+  function words(t) { return String(t || '').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Za-z])(\d)/g, '$1 $2').replace(/[_\-]+/g, ' '); }
+  function secretWords(t, note) {
+    t = words(t);
+    if (note) t = t.replace(NO_LIST, function (m) { return SECRET_W.test(m) ? ' ' : m; });
     return SECRET_W.test(t);
   }
+  function labelText(e) {
+    var t = [], i, l = e.labels || [];
+    for (i = 0; i < l.length; i++) t.push(l[i].textContent);
+    var by = (e.getAttribute('aria-labelledby') || '').split(/\s+/);
+    for (i = 0; i < by.length; i++) { var x = by[i] && document.getElementById(by[i]); if (x) t.push(x.textContent); }
+    return t;
+  }
   function secret(e) {
+    if (e.hasAttribute('data-no-draft')) return true;
     if (e.tagName === 'INPUT' && (e.type || '').toLowerCase() === 'password') return true;
     var ac = (e.getAttribute('autocomplete') || '').toLowerCase().split(/\s+/);
     for (var i = 0; i < ac.length; i++) if (SECRET_AC.test(ac[i])) return true;
-    return [e.id, e.name, e.getAttribute('aria-label'), e.getAttribute('placeholder')].some(secretWords);
+    var note = e.tagName !== 'INPUT';
+    return [e.id, e.name, e.getAttribute('aria-label'), e.getAttribute('placeholder')].concat(labelText(e)).some(function (t) { return secretWords(t, note); });
   }
   function draftable(e) {
     if (!e || !e.tagName || e.hasAttribute('data-no-draft')) return false;
