@@ -488,7 +488,9 @@ function call(fn,args,ms){var ctl=window.AbortController?new AbortController():n
  .then(function(r){return r.text()}).then(function(x){clearTimeout(t);var j;try{j=JSON.parse(x)}catch(e){throw new Error("no answer")}if(!j||!j.ok)throw new Error((j&&j.error)||"failed");return j.result},function(e){clearTimeout(t);throw new Error(e&&e.name==="AbortError"?"timed out":"no connection")})}
 var lists=[],state="idle",lastAt=0,busy=false,pending={};
 function shape(ls){var out=[];(ls||[]).forEach(function(l){(l.tasks||[]).forEach(function(t){if(pending[t.id])return;out.push({id:"g_"+t.id,gid:t.id,listId:l.id,live:true,list:l.title.trim()||"My Tasks",title:t.title||"(no title)",notes:t.notes||"",due:t.due||"",link:""})})});return out}
-function setSrc(txt){window.TSRC=txt;var s=g("tsrc");if(s)s.textContent=txt}
+function setSrc(txt){window.TSRC=txt;var s=g("tsrc");if(s)s.textContent=txt;srcBtn(false)}
+/* the "tap here to try again" line is a real button (Tab, Enter, Space) only once the automatic tries have stopped */
+function srcBtn(on){var s=g("tsrc");if(!s)return;if(on){s.setAttribute("role","button");s.tabIndex=0}else{s.removeAttribute("role");s.removeAttribute("tabindex")}}
 function stamp(at){return new Date(at).toLocaleTimeString("en-AU",{timeZone:"Australia/Melbourne",hour:"numeric",minute:"2-digit"})}
 function apply(ls,at,cached){lists=ls||[];window.TASKS=shape(lists);var n=window.TASKS.length;
  setSrc("Live from Google Tasks \u00b7 "+lists.length+" lists \u00b7 "+n+" open \u00b7 "+(cached?"last copy ":"updated ")+stamp(at)+". Tick = done in Google. Add = straight into that list.");
@@ -508,8 +510,8 @@ function load(force){if(busy)return;if(!key()){state="nokey";if(!lists.length){w
  if(!force&&Date.now()-lastAt<15000)return;busy=true;if(!lists.length){setSrc("Loading your Google Tasks\u2026");if(window.drawPickup)drawPickup()}
  call("getTasks",[],45000).then(function(r){busy=false;if(!r||r.err)throw new Error((r&&r.err)||"no data");lastAt=Date.now();state="ok";load.f=0;try{localStorage.setItem(CK,JSON.stringify({at:lastAt,lists:r.lists||[]}))}catch(e){}apply(r.lists||[],lastAt,false)})
  .catch(function(e){busy=false;try{console.warn(e)}catch(_){}var msg=String(e&&e.message||e);if(/Realm key needed/i.test(msg)){state="badkey";paintConnect();setSrc("Google Tasks: this device\u2019s Realm key was not accepted.");if(window.drawPickup)drawPickup();return}
-  state="err";load.f=(load.f||0)+1;if(load.f<=TBACK.length){var w=TBACK[load.f-1];load.next=Date.now()+w;setTimeout(autoLoad,w);if(!lists.length){setSrc("Loading your Google Tasks\u2026");if(window.drawPickup)drawPickup();return}}
-  setSrc((lists.length?"Showing the last copy. ":"")+"That didn't work. Tap here to try again.");if(window.drawPickup)drawPickup();})}
+  state="err";load.f=(load.f||0)+1;if(load.f<=TBACK.length){var w=TBACK[load.f-1];load.next=Date.now()+w;setTimeout(autoLoad,w);setSrc(lists.length?"Showing the last copy. Google Tasks didn't answer; it will try again shortly.":"Loading your Google Tasks\u2026");if(window.drawPickup)drawPickup();return}
+  setSrc((lists.length?"Showing the last copy. ":"")+"That didn't work. Tap here to try again.");srcBtn(true);if(window.drawPickup)drawPickup();})}
 /* automatic loads: after a failed load wait 3s, 10s, 30s, 1 min, 5 min, then stop until a tap */
 var TBACK=[3000,10000,30000,60000,300000];
 function autoLoad(){if(!load.f){if(tasksOld())load(true);return}if(load.f<=TBACK.length&&Date.now()>=(load.next||0))load(true)}
@@ -519,6 +521,7 @@ g("tasks")&&g("tasks").addEventListener("click",function(e){var b=e.target.close
  pending[t.gid]=1;window.TASKS=window.TASKS.filter(function(x){return x.id!==id});drawTasks();if(window.ruiCounts)ruiCounts();var m=g("tMsg");if(m)m.textContent="\u2713 Done in Google Tasks: "+t.title;
  call("completeTask",[t.listId,t.gid]).then(function(){delete pending[t.gid];lastAt=0;setTimeout(function(){load(true)},1500)}).catch(function(err){delete pending[t.gid];window.TASKS.push(t);drawTasks();if(window.ruiCounts)ruiCounts();try{console.warn(err)}catch(_){}if(m)m.textContent="That didn't work. Please try again."})},true);
 g("tsrc")&&g("tsrc").addEventListener("click",function(){if(state==="err"){load.f=0;load.next=0;load(true)}});
+g("tsrc")&&g("tsrc").addEventListener("keydown",function(e){if(this.getAttribute("role")==="button"&&(e.key==="Enter"||e.key===" ")){e.preventDefault();this.click()}});
 /* add = straight into the chosen list (top box) or the column's own box */
 function addTo(listTitle,title,msgEl,done){if(!title){msgEl.textContent="Type the task first.";return}msgEl.textContent="Adding to "+listTitle.trim()+"\u2026";
  call("addTask",[listTitle,title,""]).then(function(r){msgEl.textContent="\u2713 Added to "+String(r||listTitle).trim()+".";done&&done();lastAt=0;load(true)}).catch(function(e){try{console.warn(e)}catch(_){}msgEl.textContent="That didn't work. Please try again."})}
