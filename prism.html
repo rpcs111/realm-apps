@@ -2095,6 +2095,7 @@ function badge(g,x,y,r,id){var s=STAT[stOf(id)]||STAT.live;var c=el('circle',{cx
 function drawBand(){var B=CFG.band,bb=BB,g=el('g',{'class':'band','data-id':B.id},G.nodes);
  el('rect',{x:bb.x,y:bb.y,width:bb.w,height:bb.h,rx:14,fill:'rgba(66,133,244,.13)',stroke:'#4285f4','stroke-width':PH?3:2},g);
  var ta=el('a',{href:B.link,target:'_blank',rel:'noopener'},g);el('title',{},ta).textContent=B.sub;
+ var sv=g.ownerSVGElement,m=sv&&sv.getScreenCTM&&sv.getScreenCTM(),sc=m&&m.d>0?m.d:1,th=Math.min(bb.h,Math.max(P.f.title*1.8,46/sc));el('rect',{x:bb.x,y:bb.y,width:bb.w,height:th,fill:'transparent','pointer-events':'all','class':'tapx'},ta);
  var is=P.f.title*1.3;el('image',{href:B.img,x:bb.x+10,y:bb.y+P.f.title*.35,width:is,height:is},ta);
  txt('Google Drive · '+B.title,{x:bb.x+bb.w/2+is/2,y:bb.y+P.f.title*1.3,'class':'lab','font-size':P.f.title,'font-weight':700,'stroke-width':0},ta);
  badge(g,bb.x+bb.w-P.f.title*.7,bb.y+P.f.title*.7,P.f.title*.32,B.id);
