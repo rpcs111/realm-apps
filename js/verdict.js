@@ -192,7 +192,7 @@ function askWhy(line,label,shown){
    if(!RC)return "This note can't be checked right now, so it isn't sent.";if(RC.blocked(note))return RC.MSG;return hasCode(note)?codeMsg(note):""},
   okMsg:"Sent. The bots' inbox wrote it down.",
   kept:function(){return !!(whyIt&&pending(whyIt.id))},
-  failMsg:function(){return whyIt&&pending(whyIt.id)?"Kept on this phone. It sends by itself when you're back online.":"Not sent, and this phone couldn't keep it. Copy your reason and try again."},
+  failMsg:function(){return whyIt&&pending(whyIt.id)?(stuck(qitem(whyIt.id))?"Not sent after 6 tries. It is kept on this phone. Tap try again on the line under Agree and Disagree to send it.":"Kept on this phone. It tries again by itself a few times; if it still can't send, the line under Agree and Disagree says tap here to try again."):"Not sent, and this phone couldn't keep it. Copy your reason and try again."},
   send:function(note){var st=vget(),s=st[line];if(!s||s.v!=="disagree")return Promise.reject(new Error("no verdict"));
    if(!whyIt||whyIt.why!==note){whyIt={id:newId(),line:line,label:label,v:"disagree",why:note,t:Date.now()};
     s.whyId=whyIt.id;s.whySent=0;s.why=1;st[line]=s;wr(LSV,st);var q=qget();q.push(whyIt);qput(q);paintAll()}
