@@ -318,6 +318,7 @@
   function doReload() {
     guard = {}; Object.keys(stale).forEach(function (k) { guard[k] = 1; });
     try { sessionStorage.setItem(RLK, String(Date.now())); } catch (e) {}
+    keepDrafts();
     location.reload();
   }
   function showFresh() {
@@ -328,8 +329,59 @@
     freshEl.addEventListener('click', doReload);
     document.body.appendChild(freshEl);
   }
+  /* 2 Nov: typed text is never lost to a sync reload. A box (input, textarea or contenteditable) the user typed in and has not
+     emptied counts as unsaved, and so does the box that has focus while it holds text. Then the page does not reload: it shows the
+     "New data, tap to refresh" line instead. As a backstop, those drafts are kept in this tab (sessionStorage, never synced) when
+     the page goes away and put back into the same empty box after any reload. PIN, password, key and code boxes are never kept. */
+  var DRK = 'realm_sync_drafts', DR_AGE = 600000, dirty = [];
+  function draftable(e) {
+    if (!e || !e.tagName || e.hasAttribute('data-no-draft')) return false;
+    var ce = e.isContentEditable && e.getAttribute('contenteditable') !== null, t = e.tagName;
+    if (t === 'INPUT') { var ty = (e.type || 'text').toLowerCase(); if (!/^(text|search|email|url|tel|number)$/.test(ty)) return false; }
+    else if (t !== 'TEXTAREA' && !ce) return false;
+    var tag = [e.id, e.name, e.getAttribute('aria-label'), e.getAttribute('autocomplete'), e.getAttribute('placeholder')].join(' ');
+    return !/pin|pass|key|token|secret|code|otp/i.test(tag);
+  }
+  function val(e) { return e.isContentEditable && e.tagName !== 'INPUT' && e.tagName !== 'TEXTAREA' ? (e.innerText || '') : (e.value || ''); }
+  function fkey(e) {
+    var t = e.tagName.toLowerCase(), k = e.id ? '#' + e.id : e.name ? t + '[name=' + e.name + ']' : '';
+    if (!k) { var all = document.querySelectorAll(t); for (var i = 0; i < all.length; i++) if (all[i] === e) { k = t + ':' + i; break; } }
+    return k;
+  }
+  document.addEventListener('input', function (ev) { var e = ev.target; if (draftable(e) && dirty.indexOf(e) < 0) dirty.push(e); }, true);
+  function unsaved() {
+    dirty = dirty.filter(function (e) { return e.isConnected; });
+    for (var i = 0; i < dirty.length; i++) if (val(dirty[i]).trim()) return true;
+    var a = document.activeElement;
+    return !!(a && draftable(a) && val(a).trim());
+  }
+  function keepDrafts() {
+    var o = {}, n = 0, a = document.activeElement, L = dirty.slice();
+    if (a && draftable(a) && L.indexOf(a) < 0) L.push(a);
+    L.forEach(function (e) { if (!e.isConnected) return; var v = val(e); if (v.trim()) { o[fkey(e)] = v; n++; } });
+    try { if (n) sessionStorage.setItem(DRK, JSON.stringify({ p: location.pathname, t: Date.now(), f: o })); else sessionStorage.removeItem(DRK); } catch (e) {}
+  }
+  var pend = null;
+  function putBackDrafts() {
+    if (pend === null) {
+      pend = {}; var d = null; try { d = JSON.parse(sessionStorage.getItem(DRK) || 'null'); sessionStorage.removeItem(DRK); } catch (e) {}
+      if (d && d.p === location.pathname && d.f && Date.now() - (d.t || 0) <= DR_AGE) pend = d.f;
+    }
+    Object.keys(pend).forEach(function (k) {
+      var e = null, m = /^([a-z0-9]+):(\d+)$/.exec(k);
+      try { e = m ? document.querySelectorAll(m[1])[+m[2]] : document.querySelector(k.charAt(0) === '#' ? '[id="' + k.slice(1).replace(/"/g, '') + '"]' : k); } catch (x) {}
+      if (!e || !draftable(e) || val(e).trim()) return;
+      if (e.tagName === 'INPUT' || e.tagName === 'TEXTAREA') e.value = pend[k]; else e.innerText = pend[k];
+      delete pend[k];
+      if (dirty.indexOf(e) < 0) dirty.push(e);
+      try { e.dispatchEvent(new Event('input', { bubbles: true })); } catch (x) {}
+    });
+  }
+  window.addEventListener('load', function () { putBackDrafts(); setTimeout(putBackDrafts, 600); });
+  window.addEventListener('pagehide', keepDrafts);
+  window.addEventListener('beforeunload', keepDrafts);
   function reloadWhenIdle() {
-    if (Date.now() - lastReload() < RL_GAP) { showFresh(); return; }
+    if (Date.now() - lastReload() < RL_GAP || unsaved()) { showFresh(); return; }
     var a = document.activeElement, typing = a && (/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) || a.isContentEditable);
     if (!typing && !document.hidden) { doReload(); return; }
     var go = function () { document.removeEventListener('visibilitychange', go); document.removeEventListener('focusout', go); setTimeout(reloadWhenIdle, 400); };
@@ -348,7 +400,7 @@
     onReady: function (fn) { readyFns.push(fn); },
     _merge: merge
   };
-  function start() { paint(); soon(300); }
+  function start() { putBackDrafts(); paint(); soon(300); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
   document.addEventListener('visibilitychange', backSoon);
   window.addEventListener('focus', backSoon);
