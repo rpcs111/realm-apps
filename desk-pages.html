@@ -569,7 +569,7 @@ setTimeout(loadApps,200);
 .quick a{display:inline-flex;align-items:center}
 details summary{display:flex;align-items:center}
 .bar label{display:inline-flex;align-items:center;gap:6px}
-.bar label input[type=checkbox]{width:22px!important;height:22px}
+.bar label input[type=checkbox]{width:44px!important;height:44px;margin:0}
 .fzoom button{width:44px;height:44px}
 #fpanel .x{min-width:44px;min-height:44px}
 /* bottom bar: all 11 tabs on screen at every width, no sideways scroll.
@@ -982,7 +982,7 @@ header{flex-wrap:nowrap;padding-top:6px;padding-bottom:6px}header h1{white-space
 #ptBack{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.55);display:none}#ptBack.on{display:block}
 #ptSheet{position:fixed;left:0;right:0;bottom:0;z-index:51;background:var(--card);border-top:1px solid var(--line);border-radius:16px 16px 0 0;padding:14px 14px calc(16px + env(safe-area-inset-bottom));display:none;max-width:560px;margin:0 auto}
 #ptSheet.on{display:block}#ptSheet h3{margin:0 0 8px;font-size:16px}
-#ptSheet label{display:block;font-size:13px;color:var(--mut);margin:8px 0 4px}
+#ptSheet label{display:flex;align-items:flex-end;min-height:44px;box-sizing:border-box;font-size:13px;color:var(--mut);margin:0 0 4px}
 #ptSheet input,#ptSheet select{width:100%;min-height:44px;font-size:16px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--txt);padding:0 10px}
 #ptMsg{min-height:18px;font-size:13px;color:var(--amber);margin-top:8px}
 @media (min-width:900px){
