@@ -77,15 +77,22 @@ function file(S,id,text,src){var n=byId(S,id);text=String(text||'').trim();if(!n
 function norm(s){return String(s||'').toLowerCase().replace(/&amp;/g,'&').replace(/[^a-z0-9&\- ]+/g,' ').replace(/\s+/g,' ').trim()}
 var STOP={st:1,rd:1,street:1,road:1,ave:1,the:1,and:1,new:1,job:1,place:1,pl:1,way:1,lane:1,ln:1,dr:1,rename:1,me:1,of:1};
 /* Smart paste: rank nodes for a pasted text. Name/address matches beat step keywords. */
+function nameScore(t,nm){var sc=0,why='';
+ if(nm.length>=3&&t.indexOf(' '+nm+' ')>=0){sc+=60+nm.length;why='name'}
+ else if(nm.length>=3&&t.indexOf(nm)>=0){sc+=40+nm.length;why='name'}
+ else{var w=nm.split(' ').filter(function(x){return x.length>=3&&!STOP[x]||/^\d+[a-z]?$/.test(x)}),hit=0,num=0;
+  w.forEach(function(x){if(t.indexOf(' '+x+' ')>=0||t.indexOf(' '+x)>=0){hit++;if(/^\d/.test(x))num++}});
+  if(w.length&&hit){sc+=Math.round(30*hit/w.length)+(num&&hit>num?15:0);why='words'}}
+ return [sc,why]}
+/* A node still on its built-in name also matches its past built-in names (PASTNAME), so old words keep finding it. A hand-typed name gets no alias. */
+function namesOf(n){var all=STEPS.concat(SYS),d=null;for(var i=0;i<all.length;i++)if(all[i].id===n.id){d=all[i];break}
+ var out=[n.name];if(d&&PASTNAME[n.id]&&String(n.name||'').trim().toLowerCase()===String(d.name).toLowerCase())out=out.concat(PASTNAME[n.id]);return out}
 function suggest(S,text,max){
  var t=' '+norm(text)+' ',out=[];if(t.trim().length<2)return out;
  S.nodes.forEach(function(n){
-  var nm=norm(n.name),sc=0,why='';if(!nm)return;
-  if(nm.length>=3&&t.indexOf(' '+nm+' ')>=0){sc+=60+nm.length;why='name'}
-  else if(nm.length>=3&&t.indexOf(nm)>=0){sc+=40+nm.length;why='name'}
-  else{var w=nm.split(' ').filter(function(x){return x.length>=3&&!STOP[x]||/^\d+[a-z]?$/.test(x)}),hit=0,num=0;
-   w.forEach(function(x){if(t.indexOf(' '+x+' ')>=0||t.indexOf(' '+x)>=0){hit++;if(/^\d/.test(x))num++}});
-   if(w.length&&hit){sc+=Math.round(30*hit/w.length)+(num&&hit>num?15:0);why='words'}}
+  var sc=0,why='',any=false;
+  namesOf(n).forEach(function(x){var nm=norm(x);if(!nm)return;any=true;var r=nameScore(t,nm);if(r[0]>sc){sc=r[0];why=r[1]}});
+  if(!any)return;
   kwOf(n).forEach(function(k){var kk=norm(k);if(kk&&t.indexOf(kk.length<4?' '+kk+' ':kk)>=0){sc+=12;why=why||'keyword: '+k}});
   if(n.type==='job'&&sc&&why&&why.indexOf('keyword')!==0)sc+=5;
   if(sc>0)out.push({id:n.id,name:n.name,type:n.type,score:sc,why:why});
