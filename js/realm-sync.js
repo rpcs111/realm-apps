@@ -41,7 +41,17 @@
      The device key and device name stay shared. Pages without it sync exactly what they did before. */
   if (CUR && CUR.hasAttribute('data-sync-anchor')) { INC = [/^realm_anchor_job_[a-z0-9_]{1,60}$/, /^realm_anchor_resume$/]; META = 'realm_sync_meta_anchor'; BASE = 'realm_sync_base_anchor'; }
   function inScope(k) { if (!k || k.length > 80 || !/^[A-Za-z0-9_\-]+$/.test(k)) return false; for (var i = 0; i < INC.length; i++) if (INC[i].test(k)) return true; return false; }
-  function rd(k) { try { return LS.getItem(k); } catch (e) { return null; } }
+  var rawGet = SP.getItem, used = {}; /* used: synced keys this page has read since this file loaded */
+  function rd(k) { try { return rawGet.call(LS, k); } catch (e) { return null; } }
+  /* 2 Nov: a change from another device reloads this page only if it is this page's data: a key the page has read, or a key
+     (or its prefix, for dated keys) named in the page itself. Other apps' data is stored quietly and shows when that app opens. */
+  var html = null;
+  function mine(k) {
+    if (used[k]) return true;
+    if (html == null) { try { html = document.documentElement.outerHTML; } catch (e) { html = ''; } }
+    if (html.indexOf(k) >= 0) return true;
+    var pre = k.replace(/[^_]+$/, ''); return pre.length > 8 && html.indexOf(pre) >= 0;
+  }
   function wr(k, v) { try { if (v == null) rawRemove.call(LS, k); else rawSet.call(LS, k, v); return true; } catch (e) { return false; } }
   function rj(k, d) { try { var v = JSON.parse(rd(k)); return v == null ? d : v; } catch (e) { return d; } }
   function wj(k, o) { return wr(k, JSON.stringify(o)); }
@@ -66,6 +76,7 @@
     meta.t[k] = Date.now(); if (stale[k]) { meta.nodel = meta.nodel || {}; meta.nodel[k] = 1; }
     wj(META, meta); soon(1500);
   }
+  SP.getItem = function (k) { try { if (this === LS && inScope(String(k))) used[String(k)] = 1; } catch (e) {} return rawGet.apply(this, arguments); };
   SP.setItem = function (k, v) { if (guard && this === LS && guard[String(k)]) return; var r = rawSet.apply(this, arguments); try { if (this === LS && inScope(String(k))) touch(String(k)); } catch (e) {} return r; };
   SP.removeItem = function (k) { if (guard && this === LS && guard[String(k)]) return; var r = rawRemove.apply(this, arguments); try { if (this === LS && inScope(String(k))) touch(String(k)); } catch (e) {} return r; };
 
@@ -256,7 +267,7 @@
     keys.forEach(function (k) { try { window.dispatchEvent(new StorageEvent('storage', { key: k, newValue: rd(k), storageArea: LS, url: location.href })); } catch (e) {} });
     try { window.dispatchEvent(new CustomEvent('realmsync', { detail: { keys: keys } })); } catch (e) {}
     changeFns.forEach(function (f) { try { if (f({ keys: keys }) === true) handled = true; } catch (e) {} });
-    keys = keys.filter(function (k) { return k !== JOBK; }); /* the jobs file never reloads a page: its readers redraw from 'storage' */
+    keys = keys.filter(function (k) { return k !== JOBK && mine(k); }); /* the jobs file never reloads a page: its readers redraw from 'storage'; nor does another app's data */
     if (handled || !keys.length) return;
     keys.forEach(function (k) { stale[k] = 1; });
     reloadWhenIdle();
