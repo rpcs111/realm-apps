@@ -4,7 +4,7 @@
 (function(){'use strict';
 if(window.Resume&&window.Resume.v===1)return;
 var RKEY='realm-resume-v1',TKEY='realm-tasks',MAXREC=40,MAXBYTES=1500000,DEBOUNCE=800;
-var APPS={cert:{name:'Cert Studio',page:'certstudio.html'},search:{name:'Search Studio',page:'search.html'},desk:{name:'Desk',page:'desk-app.html'}};
+var APPS={cert:{name:'Cert Studio',page:'certstudio.html'},search:{name:'Search Studio',page:'search.html'},desk:{name:'Desk',page:'desk-pages.html'}};
 var active=null,timers={},pendingSave={},sync=null,syncT=0;
 function now(){return Date.now()}
 function jget(k,d){try{var v=JSON.parse(localStorage.getItem(k)||'null');return v==null?d:v}catch(e){return d}}
