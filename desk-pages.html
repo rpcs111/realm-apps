@@ -1029,7 +1029,7 @@ function setOpen(on,save){P.classList.toggle("open",!!on);$("cpOpen").setAttribu
 function layout(){document.body.classList.toggle("cp-dock",wide());if(wide())setFrame()}
 $("cpOpen").onclick=function(){setOpen(true,true)};$("cpClose").onclick=function(){setOpen(false,true)};
 window.addEventListener("resize",layout);layout();
-var was="0";try{was=localStorage.getItem(OPENK)||"0"}catch(e){}setOpen(was==="1",false);
+var was="0";try{was=localStorage.getItem(OPENK)||"0"}catch(e){}setOpen(was==="1"&&wide(),false); /* 2 Nov: under 900px the calendar covers the page, so it never opens by itself on load; tap Calendar to open it */
 /* street addresses and codes stay out (js/refcheck.js + the same street rule as the Flow Map) */
 var ST="(?:st|street|rd|road|ave|av|avenue|ct|crt|court|dr|drv|drive|pde|parade|cres|crescent|pl|place|ln|lane|hwy|highway|blvd|bvd|boulevard|tce|terrace|cl|close|gr|grove|cct|circuit|esp|esplanade|sq|square|way|wy|mews|glen|parkway|pkwy|gdns|grv|cir|quay|hts)";
 var ADDR=new RegExp("\\b\\d+[a-z]?(?:\\s*[/-]\\s*\\d+)?\\s+((?:[a-z'-]+\\s+){1,2})"+ST+"\\b","gi"),STOP={on:1,the:1,to:1,at:1,in:1,a:1,an:1,of:1,for:1,and:1,then:1,by:1,or:1,is:1,it:1,up:1,from:1,with:1};
