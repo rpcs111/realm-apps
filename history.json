@@ -393,7 +393,7 @@
    "id": "bf29",
    "time": "Wed 28 Oct, 3:02pm",
    "who": "ELON",
-   "what": "Checked Builder's four installable apps, re-gate two",
+   "what": "Checked Builder's four installable apps, re-check two",
    "result": "GREEN, FAIL 0",
    "problem": "None. Every tap big enough for a finger at all six widths",
    "workaround": "None needed"
@@ -420,7 +420,7 @@
    "id": "bf26",
    "time": "Wed 28 Oct, 1:11pm",
    "who": "ELON",
-   "what": "Checked Builder's four installable apps, re-gate one",
+   "what": "Checked Builder's four installable apps, re-check one",
    "result": "FAIL 1",
    "problem": "New tap circles on two Flow Map bubbles covered nearby bubbles and stole their taps",
    "workaround": "Builder made the tap circle smaller"
