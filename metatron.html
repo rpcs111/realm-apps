@@ -76,7 +76,7 @@ function node(n,dashed,fill){var g=el('g',{'class':'node','data-id':n.id}),host=
  if(n.sub2)el('text',{x:n.p[0],y:y0+(n.icon?58:36),'class':'ns'},host).textContent=n.sub2}
 inner.forEach(function(n){node(n)});outer.forEach(function(n){node(n)});
 node(centre,false,'#0b2a5b');
-node({id:'ara',name:'Chief',sub:'head · reads logs',col:'#94a3b8',p:[72,926],r:64},true,'#1e293b');
+node({id:'ara',name:'Main Helper',sub:'head · reads logs',col:'#94a3b8',p:[72,926],r:64},true,'#1e293b');
 node({id:'nova',name:'Helper',sub:'writes code · own log',col:'#94a3b8',p:[928,926],r:64},true,'#1e293b');
 })();
 </script>
