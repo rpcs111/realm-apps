@@ -54,7 +54,33 @@
       own = '';
       try { var s = document.scripts; for (var i = 0; i < s.length; i++) { var ty = (s[i].type || '').toLowerCase(); if (!s[i].src && (!ty || /javascript|module/.test(ty))) own += s[i].text + '\n'; } } catch (e) {}
     }
-    return own.indexOf('"' + k + '"') >= 0 || own.indexOf("'" + k + "'") >= 0 || own.indexOf('`' + k + '`') >= 0;
+    if (own.indexOf('"' + k + '"') >= 0 || own.indexOf("'" + k + "'") >= 0 || own.indexOf('`' + k + '`') >= 0) return true;
+    var L = ownList();
+    for (var i = 0; i < L.length; i++) { var t = L[i]; if (t === k || (t.charAt(t.length - 1) === '*' && k.indexOf(t.slice(0, -1)) === 0)) return true; }
+    return false;
+  }
+  /* 2 Nov: keys a page reads before this file loads also count as its own when the page names them:
+     - listed on this script tag (data-sync-own="realm_a realm_b_*") or in <meta name="realm-sync-own" content="...">;
+     - the value of a "key" or "...Key" field in the page's own JSON settings block (e.g. "key": "realm_prism_v2");
+     - a quoted key start that the page's own script joins with "+" (e.g. 'realm_setup_' + name), which covers every key with that start.
+     A name has to be at least 8 characters with its "*", so a bare 'realm_' never counts. */
+  var ownPre = null;
+  function ownList() {
+    if (ownPre) return ownPre;
+    ownPre = [];
+    var add = function (t) { t = String(t || '').trim(); if (t.length >= 8 && t.length <= 81 && /^[A-Za-z0-9_\-]+\*?$/.test(t)) ownPre.push(t); };
+    try {
+      if (CUR) (CUR.getAttribute('data-sync-own') || '').split(/[\s,]+/).forEach(add);
+      var mt = document.querySelector('meta[name="realm-sync-own"]'); if (mt) (mt.getAttribute('content') || '').split(/[\s,]+/).forEach(add);
+      var sc = document.scripts, x;
+      for (var i = 0; i < sc.length; i++) {
+        if (sc[i].src) continue;
+        var ty = (sc[i].type || '').toLowerCase(), tx = sc[i].text || '';
+        if (/json/.test(ty)) { var r1 = /"(?:key|[A-Za-z]+Key)"\s*:\s*"([A-Za-z0-9_\-]{3,80})"/g; while ((x = r1.exec(tx))) add(x[1]); }
+        else if (!ty || /javascript|module/.test(ty)) { var r2 = /(['"`])([A-Za-z0-9_\-]{3,79}[_\-])\1\s*\+/g; while ((x = r2.exec(tx))) add(x[2] + '*'); }
+      }
+    } catch (e) {}
+    return ownPre;
   }
   function wr(k, v) { try { if (v == null) rawRemove.call(LS, k); else rawSet.call(LS, k, v); return true; } catch (e) { return false; } }
   function rj(k, d) { try { var v = JSON.parse(rd(k)); return v == null ? d : v; } catch (e) { return d; } }
