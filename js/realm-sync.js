@@ -43,14 +43,18 @@
   function inScope(k) { if (!k || k.length > 80 || !/^[A-Za-z0-9_\-]+$/.test(k)) return false; for (var i = 0; i < INC.length; i++) if (INC[i].test(k)) return true; return false; }
   var rawGet = SP.getItem, used = {}; /* used: synced keys this page has read since this file loaded */
   function rd(k) { try { return rawGet.call(LS, k); } catch (e) { return null; } }
-  /* 2 Nov: a change from another device reloads this page only if it is this page's data: a key the page has read, or a key
-     (or its prefix, for dated keys) named in the page itself. Other apps' data is stored quietly and shows when that app opens. */
-  var html = null;
+  /* 2 Nov: a change from another device reloads this page only if it is this page's own data: a key the page has read (also while
+     it redraws from the change), or the full key, in quotes, in this page's own inline scripts. Text, comments outside scripts, data
+     blocks, and keys that only start the same way or contain the name do not count. Other apps' data is stored quietly and shows
+     when that app opens. */
+  var own = null;
   function mine(k) {
     if (used[k]) return true;
-    if (html == null) { try { html = document.documentElement.outerHTML; } catch (e) { html = ''; } }
-    if (html.indexOf(k) >= 0) return true;
-    var pre = k.replace(/[^_]+$/, ''); return pre.length > 8 && html.indexOf(pre) >= 0;
+    if (own == null) {
+      own = '';
+      try { var s = document.scripts; for (var i = 0; i < s.length; i++) { var ty = (s[i].type || '').toLowerCase(); if (!s[i].src && (!ty || /javascript|module/.test(ty))) own += s[i].text + '\n'; } } catch (e) {}
+    }
+    return own.indexOf('"' + k + '"') >= 0 || own.indexOf("'" + k + "'") >= 0 || own.indexOf('`' + k + '`') >= 0;
   }
   function wr(k, v) { try { if (v == null) rawRemove.call(LS, k); else rawSet.call(LS, k, v); return true; } catch (e) { return false; } }
   function rj(k, d) { try { var v = JSON.parse(rd(k)); return v == null ? d : v; } catch (e) { return d; } }
