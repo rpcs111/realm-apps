@@ -216,8 +216,12 @@
       base[k] = { v: R.v == null ? null : R.v, r: R.r || 0 };
     });
   }
+  /* 2 Nov: after a failed sync, automatic tries back off (30 s, 1, 2, 4 ... up to 30 min) with one timer; tapping the sync line
+     or coming back online tries at once. */
+  var errN = 0, errUntil = 0, retryT = 0;
   function cycle(force) {
     if (busy) { again = true; return Promise.resolve(); }
+    if (force !== true && errUntil && Date.now() < errUntil) { if (!retryT) retryT = setTimeout(function () { retryT = 0; cycle(); }, errUntil - Date.now()); return Promise.resolve(); }
     if (BO && force !== true && boUntil && Date.now() < boUntil) return Promise.resolve(); // backing off: Engine not reachable yet
     var k = rd(TOK);
     if (navigator.onLine === false) { set('offline'); return Promise.resolve(); }
@@ -232,10 +236,12 @@
       return push(base, changed, 0);
     }).then(function () { return pushJobs(base, changed, 0); }).then(function () {
       if (meta.nodel) { delete meta.nodel; wj(META, meta); }
+      errN = 0; errUntil = 0;
       set('synced'); readyFns.forEach(function (f) { try { f(); } catch (e) {} });
       if (changed.length) notify(changed);
     }).catch(function (e) {
       if (e && e.quiet) return;
+      errUntil = Date.now() + Math.min(30000 * Math.pow(2, errN), 1800000); errN++;
       if (e && e.net) set(e.message === 'offline' ? 'offline' : 'allow');
       else if (e && /unauthorised/.test(e.message)) set('badkey');
       else set('error', e && e.message);
@@ -297,6 +303,9 @@
     keys.forEach(function (k) { try { window.dispatchEvent(new StorageEvent('storage', { key: k, newValue: rd(k), storageArea: LS, url: location.href })); } catch (e) {} });
     try { window.dispatchEvent(new CustomEvent('realmsync', { detail: { keys: keys } })); } catch (e) {}
     changeFns.forEach(function (f) { try { if (f({ keys: keys }) === true) handled = true; } catch (e) {} });
+    /* 2 Nov: pages that can redraw in place listen for 'realm-sync:changed' (detail.keys) and call preventDefault() once they have
+       redrawn; then the page does not reload. Pages without a listener keep the one capped reload for their own data. */
+    try { var ev = new CustomEvent('realm-sync:changed', { detail: { keys: keys.slice() }, cancelable: true }); window.dispatchEvent(ev); if (ev.defaultPrevented) handled = true; } catch (e) {}
     keys = keys.filter(function (k) { return k !== JOBK && mine(k); }); /* the jobs file never reloads a page: its readers redraw from 'storage'; nor does another app's data */
     if (handled || !keys.length) return;
     keys.forEach(function (k) { stale[k] = 1; });
@@ -343,6 +352,6 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
   document.addEventListener('visibilitychange', backSoon);
   window.addEventListener('focus', backSoon);
-  window.addEventListener('online', function () { boN = 0; boUntil = 0; soon(200); });
+  window.addEventListener('online', function () { boN = 0; boUntil = 0; errN = 0; errUntil = 0; soon(200); });
   setInterval(function () { if (!document.hidden && Date.now() - lastPull >= PULL_GAP) cycle(); }, 60000);
 })();
