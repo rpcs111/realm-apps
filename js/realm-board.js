@@ -18,7 +18,7 @@ var STEPS=[
  {id:'step_roster',name:'Rostering',url:'',note:'Deputy roster, look-only. Nobody edits shifts (one-touch payroll).',kw:['roster','rostering','shift','deputy','crew','who is on']},
  {id:'step_0',name:'Job',url:'',note:'Job card / job day (calendar notes template: hours, site contact, scope, access, equipment, parking, last INV, WhatsApp, last cert).',kw:['job card','job day','on site','onsite','scope','access','parking','completed','job sheet']},
  {id:'step_1',name:'Cert',url:'https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com',note:'',kw:['cert','certificate','recert','re cert','anchor test','load test','inspection due']},
- {id:'step_2',name:'Invoice',url:'https://books.zoho.com/',note:'',kw:['invoice','inv-','bill ','billed','raise inv']},
+ {id:'step_2',name:'Get paid',url:'https://books.zoho.com/',note:'',kw:['invoice','inv-','bill ','billed','raise inv']},
  {id:'step_3',name:'Outstanding',url:REG,note:'',kw:['outstanding','overdue','owed','owing','statement','balance','debtor','chase']},
  {id:'step_remit',name:'Remittance',url:'',note:'Payment / remittance in info@ closes the invoice.',kw:['remittance','remit','paid','payment received','eft','deposit']},
  {id:'step_4',name:'P&L',url:'https://docs.google.com/spreadsheets/d/1HXLRRgHZJDHSj0p_dp3WHgHO-6-Rxg8s/edit?authuser=info@realmpcs.com',note:'',kw:['p&l','pnl','profit','margin','labour cost','cost']},
@@ -51,10 +51,13 @@ function seed(){
 }
 function byId(S,id){for(var i=0;i<S.nodes.length;i++)if(S.nodes[i].id===id)return S.nodes[i];return null}
 /* Migrate an old board in place. Never wipes: only adds what's missing, once. */
+var PASTNAME={step_2:['invoice']};
 function migrate(S){
  if(!S||!S.nodes||!S.edges)return seed();
  var changed=false;
  S.nodes.forEach(function(n){if(!Array.isArray(n.status)){n.status=[];changed=true}if(n.note==null){n.note='';changed=true}if(n.url==null){n.url='';changed=true}});
+ /* Built-in step names that were renamed: a saved board still holding the old default gets the new name; a hand-typed name is kept. */
+ S.nodes.forEach(function(n){var p=PASTNAME[n.id],d;if(p&&p.indexOf(String(n.name||'').trim().toLowerCase())>=0){d=STEPS.filter(function(s){return s.id===n.id})[0];if(d&&n.name!==d.name){n.name=d.name;changed=true}}});
  if((S.v||1)<2){
   STEPS.concat(SYS).forEach(function(d){if(!byId(S,d.id)){var p=MPOS[d.id]||POS[d.id];S.nodes.push(mk(d,d.type||'step',p))}});
   var j=byId(S,'step_0');if(j&&!j.note)j.note=STEPS[5].note;
