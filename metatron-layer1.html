@@ -5,7 +5,7 @@
 *{box-sizing:border-box}html,body{margin:0;background:#05070d;color:#e8eefc;font:15px/1.4 system-ui,Roboto,sans-serif}
 header{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 10px;background:#0a0f1c;border-bottom:1px solid #1e2a44;position:sticky;top:0;z-index:5}
 header h1{font-size:15px;margin:0 8px 0 0;letter-spacing:.06em}
-button{min-height:40px;padding:6px 11px;border-radius:10px;border:1px solid #2c3d63;background:#14213b;color:#fff;font:inherit;cursor:pointer}
+button{min-height:44px;min-width:44px;padding:6px 11px;border-radius:10px;border:1px solid #2c3d63;background:#14213b;color:#fff;font:inherit;cursor:pointer}
 button.on{background:#22d3ee;color:#04121a;border-color:#22d3ee;font-weight:700}
 button.del{background:#5b1620;border-color:#8a2433}
 #wrap{display:grid;grid-template-columns:1fr 340px;min-height:calc(100vh - 58px)}
@@ -19,7 +19,7 @@ aside{border-left:1px solid #1e2a44;padding:10px;overflow:auto;max-height:calc(1
 .card h3{margin:0 0 6px;font-size:14px;color:#22d3ee;letter-spacing:.04em}
 .item{display:flex;gap:6px;align-items:flex-start;justify-content:space-between;border-top:1px solid #1e2a44;padding:6px 0;font-size:13px}
 .item small{display:block;color:#93a3c4}
-.item button{min-height:32px;padding:3px 8px;font-size:12px;flex:none}
+.item button{min-height:44px;padding:3px 8px;font-size:12px;flex:none}
 label{display:block;font-size:12px;color:#93a3c4;margin-top:6px}
 input,textarea,select{width:100%;font:inherit;background:#05070d;color:#fff;border:1px solid #2c3d63;border-radius:8px;padding:7px}
 .row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
@@ -178,7 +178,7 @@ if(n.id==="register")regPanel(P);
 if(MAPREG[n.id]&&n.id!=="register"){var lr=document.createElement("label");lr.textContent="In the register as: "+MAPREG[n.id].map(function(k){var r=regName(k);return r?r[1]+" ("+r[3]+")":k}).join(", ");P.appendChild(lr)}
 if(n.hub){var hb=node(n.hub);if(hb){var l3=document.createElement("label");l3.textContent="Sits on hub: "+hb.t;P.appendChild(l3)}}
 var r=document.createElement("div");r.className="row";P.appendChild(r);
-if(n.link){var a=document.createElement("a");a.href=n.link;a.target="_blank";a.rel="noopener";a.textContent="Open \u2197";a.style.cssText="display:inline-flex;align-items:center;min-height:40px;padding:6px 12px;border-radius:10px;background:#22d3ee;color:#04121a;font-weight:700;text-decoration:none";r.appendChild(a)}
+if(n.link){var a=document.createElement("a");a.href=n.link;a.target="_blank";a.rel="noopener";a.textContent="Open \u2197";a.style.cssText="display:inline-flex;align-items:center;min-height:44px;padding:6px 12px;border-radius:10px;background:#22d3ee;color:#04121a;font-weight:700;text-decoration:none";r.appendChild(a)}
 if(edit){r.appendChild(btn("Connect to\u2026","",function(){connFrom=n.id;$("hint").textContent="Now tap the circle to link "+n.t+" to."}));
 var outs=S.edges.filter(function(e){return e.a===n.id||e.b===n.id});if(outs.length)r.appendChild(btn("Unlink last","",function(){var e=outs[outs.length-1];S.edges.splice(S.edges.indexOf(e),1);save();draw();panel()}));
 if(!n.fixed)r.appendChild(btn("Delete","del",function(){if(!confirm('Delete "'+n.t+'"?'))return;S.nodes.splice(S.nodes.indexOf(n),1);S.edges=S.edges.filter(function(e){return e.a!==n.id&&e.b!==n.id});S.placed=S.placed.filter(function(x){return x!==n.id});sel=null;save();draw();panel()}))}
@@ -187,7 +187,7 @@ function place(x){var h=node(x.hub)||node("cal");var ang=h.id==="cal"?Math.PI*0.
 var n={id:x.id,t:x.t,d:x.d,kind:"step",x:Math.round(C+rr*Math.cos(a2)),y:Math.round(C+rr*Math.sin(a2)),r:x.id==="apps"?50:34,link:x.link||"",st:x.st||"",src:x.src,hub:x.hub};if(x.id==="apps"){n.kind="hub";n.img=x.img;n.r=60;n.hub=""}S.nodes.push(n);
 if(x.hub&&x.id!=="apps")S.edges.push({a:x.hub,b:x.id,k:"hub"});if(x.id==="apps")S.edges.push({a:"apps",b:"cal",k:"direct"});save();sel=x.id;draw();panel()}
 function item(x,D){var it=document.createElement("div");it.className="item";var s=document.createElement("span");s.textContent=x.t;var sm=document.createElement("small");sm.textContent=x.d+" (hub: "+(node(x.hub)?node(x.hub).t:(x.hub==="apps"?"Realm Apps, off map":x.hub))+")";s.appendChild(sm);it.appendChild(s);
-var bx=document.createElement("span");bx.style.cssText="display:flex;gap:4px;flex-direction:column";if(x.link){var a=document.createElement("a");a.href=x.link;a.target="_blank";a.rel="noopener";a.textContent="Open";a.style.fontSize="12px";a.style.color="#22d3ee";bx.appendChild(a)}
+var bx=document.createElement("span");bx.style.cssText="display:flex;gap:4px;flex-direction:column";if(x.link){var a=document.createElement("a");a.href=x.link;a.target="_blank";a.rel="noopener";a.textContent="Open";a.style.cssText="display:inline-flex;align-items:center;min-height:44px;min-width:44px";a.style.fontSize="12px";a.style.color="#22d3ee";bx.appendChild(a)}
 bx.appendChild(btn("+ Place","",function(){place(x)}));it.appendChild(bx);D.appendChild(it)}
 function regPanel(P){function sec(t,arr){var l=document.createElement("label");l.textContent=t+" ("+arr.length+")";P.appendChild(l);var u=document.createElement("div");u.className="src";u.style.color="#cbd5e1";u.textContent=arr.length?arr.join("\n"):"none";P.appendChild(u)}
 var on=S.nodes.filter(function(n){return n.id!=="register"}),used={};var m=[],nm=[];
