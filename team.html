@@ -114,7 +114,8 @@ function dl(kind){const s=document.querySelector('#tree svg');if(!s)return;const
  i.src='data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(x)))}
 const idea=document.getElementById('idea');idea.value=localStorage.getItem('realmCrewIdea')||'';
 idea.addEventListener('input',()=>{localStorage.setItem('realmCrewIdea',idea.value);document.getElementById('saved').textContent=' Saved'});
-function copyIdea(){navigator.clipboard.writeText(idea.value);document.getElementById('saved').textContent=' Copied'}
+function copyIdea(){var s=document.getElementById('saved');function no(){idea.focus();idea.select();s.textContent=' Copy blocked: the text is selected, copy it from the menu'}
+try{(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(idea.value):Promise.reject()).then(function(){s.textContent=' Copied'},no)}catch(e){no()}}
 render();
 </script><script>/* New data from another device: show the new idea text in place, unless you are typing in that box */
 window.addEventListener('realm-sync:changed',function(e){var b=document.getElementById('idea');if((e.detail&&e.detail.keys||[]).indexOf('realmCrewIdea')<0||!b||document.activeElement===b)return;b.value=localStorage.getItem('realmCrewIdea')||'';e.preventDefault()});</script><script src="js/realm-sync.js?v=20261028-7"></script>
