@@ -147,7 +147,8 @@ for(var wi=0;wi<whoBtns.length;wi++)whoBtns[wi].addEventListener("click",functio
 (function(){var d=document.getElementById("more"),K="hub_more_open";try{if(localStorage.getItem(K)==="1")d.open=true}catch(e){}d.addEventListener("toggle",function(){try{localStorage.setItem(K,d.open?"1":"0")}catch(e){}})})();
 /* Version line comes from version.json, so it is always the live one */
 fetch("version.json",{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(j&&j.v)document.getElementById("ver").textContent="Version "+j.v}).catch(function(){});
-if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js?v=20261016v5",{updateViaCache:"none"});
+/* the Hub keeps one worker: the app worker that js/saveapp.js registers below. A Hub-wide sw.js left from before is removed once (no reload). */
+if("serviceWorker" in navigator&&navigator.serviceWorker.getRegistrations)navigator.serviceWorker.getRegistrations().then(function(rs){var hub=new URL("sw.js",location.href).pathname;rs.forEach(function(r){var w=r.active||r.waiting||r.installing;try{if(w&&new URL(w.scriptURL).pathname===hub)r.unregister()}catch(x){}})}).catch(function(){});
 </script>
 <script src="js/saveapp.js?v=20261017s" data-mount="header .nav"></script><script src="js/realm-ui.js?v=20261028-1"></script>
 <script src="js/ara-version.js" defer></script>
