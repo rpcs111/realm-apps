@@ -119,7 +119,7 @@ function show(){$("out").innerHTML=fmt(cur(),0,mode==="py");$("mj").classList.to
 async function load(p,stored){
   if(nvBusy)return;
   p=String(p||"").trim();
-  if(!p){if(!stored){$("e").textContent="Type the Nirvana key first.";try{document.querySelector("input[type=password]").focus()}catch(x){}}return}
+  if(!p){if(!stored){$("e").textContent="Type the key first.";try{document.querySelector("input[type=password]").focus()}catch(x){}}return}
   if(!(window.crypto&&crypto.subtle)){$("e").textContent=nvFail(null,stored);return}
   nvBusy=true;$("e").textContent="";$("b").disabled=true;$("b").textContent="Unlocking…";$("gxWait").hidden=false;
   try{var o=await nvFetch("data.enc.json");D=await nvDec(o,p);pass=p;localStorage.setItem(NVK,p);
