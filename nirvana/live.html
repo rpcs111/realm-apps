@@ -283,7 +283,7 @@ function showWin(done){
 async function unlock(pass,fromStore){
   if(nvBusy)return;
   pass=String(pass||"").trim();
-  if(!pass){if(!fromStore){$("lkE").textContent="Type the Nirvana key first.";try{$("lkI").focus()}catch(x){}}return}
+  if(!pass){if(!fromStore){$("lkE").textContent="Type the key first.";try{$("lkI").focus()}catch(x){}}return}
   if(!(window.crypto&&crypto.subtle)){$("lkE").textContent=nvFail(null,fromStore);return}
   nvBusy=true;$("lkE").textContent="";$("lkB").disabled=true;$("lkB").textContent="Unlocking…";$("lkWait").hidden=false;
   try{await pull(pass);
