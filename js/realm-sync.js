@@ -302,9 +302,27 @@
     keys.forEach(function (k) { stale[k] = 1; });
     reloadWhenIdle();
   }
+  /* 2 Nov: hard cap. A page reloads itself for sync at most once every 30 seconds (counted across reloads in this tab).
+     Inside that time it shows a "New data, tap to refresh" line instead, and the new data is already saved on this device. */
+  var RLK = 'realm_sync_reload_at', RL_GAP = 30000, freshEl = null;
+  function lastReload() { try { return +sessionStorage.getItem(RLK) || 0; } catch (e) { return 0; } }
+  function doReload() {
+    guard = {}; Object.keys(stale).forEach(function (k) { guard[k] = 1; });
+    try { sessionStorage.setItem(RLK, String(Date.now())); } catch (e) {}
+    location.reload();
+  }
+  function showFresh() {
+    if (freshEl || !document.body) return;
+    freshEl = document.createElement('button'); freshEl.type = 'button'; freshEl.id = 'realmSyncFresh';
+    freshEl.textContent = 'New data, tap to refresh';
+    freshEl.style.cssText = 'position:fixed;left:8px;bottom:60px;z-index:2147482001;max-width:calc(100vw - 16px);min-height:44px;min-width:44px;font:600 14px/1.3 system-ui,sans-serif;padding:8px 16px;border-radius:999px;border:1px solid #fcd34d;background:rgba(2,6,23,.94);color:#fde68a;cursor:pointer';
+    freshEl.addEventListener('click', doReload);
+    document.body.appendChild(freshEl);
+  }
   function reloadWhenIdle() {
+    if (Date.now() - lastReload() < RL_GAP) { showFresh(); return; }
     var a = document.activeElement, typing = a && (/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) || a.isContentEditable);
-    if (!typing && !document.hidden) { guard = {}; Object.keys(stale).forEach(function (k) { guard[k] = 1; }); location.reload(); return; }
+    if (!typing && !document.hidden) { doReload(); return; }
     var go = function () { document.removeEventListener('visibilitychange', go); document.removeEventListener('focusout', go); setTimeout(reloadWhenIdle, 400); };
     document.addEventListener('visibilitychange', go); document.addEventListener('focusout', go);
   }
