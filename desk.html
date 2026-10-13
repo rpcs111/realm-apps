@@ -76,7 +76,7 @@ pre{overflow-x:auto}
 .mic{margin-top:6px}
 @media(max-width:380px){main{padding:0 8px}header{padding-left:8px;padding-right:8px;gap:6px}.quick{padding:8px}.apps{grid-template-columns:repeat(2,1fr)}.btn{padding:7px 9px}header h1{font-size:15px}}
 </style></head><body>
-<header><a class="hb" href="./index.html">&larr; Apps</a><h1>REALM <b>DESK</b></h1><button class="hb" id="saveApp">&#11015; Save as app</button><span class="who" id="who"></span></header>
+<header><button class="hb" id="spBtn" aria-label="Menu" onclick="spOpen(1)">&#9776;</button><a class="hb" href="./index.html">&larr; Apps</a><h1>REALM <b>DESK</b></h1><button class="hb" id="saveApp">&#11015; Save as app</button><span class="who" id="who"></span></header>
 <div id="appHelp" style="display:none;margin:8px 14px;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line);font-size:13px">On Android Chrome: tap <b>&#8942;</b> &rsaquo; <b>Add to Home screen</b> (or <b>Install app</b>) &rsaquo; <b>Install</b>.</div>
 <div class="quick">
   <a id="qTel">&#128222; 1300 358 500</a>
@@ -542,4 +542,19 @@ if(SR){Array.prototype.forEach.call(document.querySelectorAll("textarea"),addMic
  new MutationObserver(function(){Array.prototype.forEach.call(document.querySelectorAll("textarea:not([data-mic])"),addMic)}).observe(document.body,{childList:true,subtree:true})}
 })();
 </script>
+<div id="spBg" onclick="spOpen(0)" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:60"></div>
+<aside id="sp" style="position:fixed;top:0;bottom:0;left:0;width:min(280px,82vw);background:#0e1628;border-right:1px solid #24324d;z-index:61;transform:translateX(-105%);transition:transform .2s;padding:calc(14px + env(safe-area-inset-top)) 12px 20px;overflow-y:auto">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b style="letter-spacing:.08em">MENU</b><button onclick="spOpen(0)" style="background:none;border:0;color:#fff;font-size:24px;min-width:44px;min-height:44px">&times;</button></div>
+<a class="spl" href="./index.html">&#127968; Launcher tiles</a>
+<a class="spl" href="#" onclick="spTab('flow');return false">&#10036; Flow</a>
+<a class="spl" href="#" onclick="spTab('certs');return false">&#128994; Certs</a>
+<a class="spl" href="#" onclick="spTab('tasks');return false">&#9989; Tasks</a>
+<a class="spl" href="./status.html">&#128200; Status</a>
+<a class="spl" href="./map.html">&#128506; Flow Map</a>
+<a class="spl" href="./video.html">&#127909; Video search</a>
+<a class="spl" href="./findings.html">&#128221; Findings</a>
+</aside>
+<style>.spl{display:flex;align-items:center;gap:10px;min-height:48px;padding:10px 12px;margin:4px 0;border-radius:10px;background:#16213a;color:#e5e7eb;text-decoration:none;font-size:15px}#sp.open{transform:none!important}</style>
+<script>function spOpen(o){document.getElementById('sp').classList.toggle('open',!!o);document.getElementById('spBg').style.display=o?'block':'none'}
+function spTab(t){spOpen(0);go(t,document.querySelectorAll('nav button')[TABIX[t]])}</script>
 </body></html>
