@@ -56,8 +56,28 @@ pre{white-space:pre-wrap;font:12px/1.4 ui-monospace,monospace;color:var(--mut);m
 .apps a:active{background:#163542}
 .apps a b{display:block;font-size:16px;margin-bottom:3px}
 .apps a span{display:block;font-size:12px;color:#8fb3bb}
+
+/* narrow / Fold cover screen */
+html,body{max-width:100%;overflow-x:hidden}
+body{min-height:100dvh;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+header{flex-wrap:wrap;padding-top:calc(10px + env(safe-area-inset-top))}
+header .who{max-width:40vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hb{background:var(--card);border:1px solid var(--line);color:var(--txt);text-decoration:none;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:600}
+#saveApp{background:var(--cyan);color:#04121a;border-color:var(--cyan)}
+nav{justify-content:flex-start;-webkit-overflow-scrolling:touch;scrollbar-width:none;z-index:20}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;min-width:58px}
+@media(min-width:700px){nav button{flex:1 0 auto}}
+.toast{bottom:calc(76px + env(safe-area-inset-bottom))}
+main,.card,.tab{min-width:0;max-width:100%}
+.card{overflow-wrap:anywhere}
+img,iframe,svg,canvas,table{max-width:100%}
+pre{overflow-x:auto}
+.mic{margin-top:6px}
+@media(max-width:380px){main{padding:0 8px}header{padding-left:8px;padding-right:8px;gap:6px}.quick{padding:8px}.apps{grid-template-columns:repeat(2,1fr)}.btn{padding:7px 9px}header h1{font-size:15px}}
 </style></head><body>
-<header><h1>REALM <b>DESK</b></h1><span class="who" id="who"></span></header>
+<header><a class="hb" href="./index.html">&larr; Apps</a><h1>REALM <b>DESK</b></h1><button class="hb" id="saveApp">&#11015; Save as app</button><span class="who" id="who"></span></header>
+<div id="appHelp" style="display:none;margin:8px 14px;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line);font-size:13px">On Android Chrome: tap <b>&#8942;</b> &rsaquo; <b>Add to Home screen</b> (or <b>Install app</b>) &rsaquo; <b>Install</b>.</div>
 <div class="quick">
   <a id="qTel">&#128222; 1300 358 500</a>
   <a id="qWa" target="_blank">&#128994; Office WhatsApp</a>
@@ -506,5 +526,18 @@ setTimeout(loadApps,200);
   },true);
 })();
 
+</script>
+<script>
+(function(){var dp=null,b=document.getElementById("saveApp"),h=document.getElementById("appHelp");
+if(matchMedia("(display-mode: standalone)").matches||navigator.standalone)b.style.display="none";
+addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e});
+addEventListener("appinstalled",function(){b.style.display="none"});
+b.onclick=function(){if(dp){dp.prompt();dp.userChoice.then(function(){dp=null})}else h.style.display=h.style.display==="none"?"block":"none"};
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SR)["note","fpad"].forEach(function(id){var ta=document.getElementById(id);if(!ta)return;var m=document.createElement("button");m.className="btn mic";m.type="button";m.textContent="\uD83C\uDFA4 Dictate";ta.insertAdjacentElement("afterend",m);var r=null;
+ m.onclick=function(){if(r){r.stop();return}r=new SR();r.lang="en-AU";r.interimResults=false;r.continuous=true;
+  r.onresult=function(e){for(var i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal)ta.value+=(ta.value&&!/\s$/.test(ta.value)?" ":"")+e.results[i][0].transcript.trim()};
+  r.onend=function(){r=null;m.textContent="\uD83C\uDFA4 Dictate"};r.onerror=function(e){toast("Mic: "+e.error)};r.start();m.textContent="\u23F9 Stop"}});
+})();
 </script>
 </body></html>
