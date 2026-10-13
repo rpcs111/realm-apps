@@ -26,7 +26,7 @@ function fix(name,url){var n=name.toUpperCase();
  if(/REALM DESK/.test(n))return "./desk.html";
  if(/CERT STUDIO/.test(n))return "https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec";
  if(/FLOW MAP/.test(n))return "./map.html";
- if(/SCRIBE/.test(n))return "https://script.google.com/macros/s/AKfycbwq0FdxP9Sh3mtB6Y8e-PocRGUUQBub_TQVlv8IiApXU6bQSN6N-CGo8JRQCUyhMjNG/exec";
+ if(/SCRIBE/.test(n))return "./scribe.html";
  return url}
 var BAD=/orion|elon|grok|claude/i;
 fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:"getLinks",args:[],key:(localStorage.getItem("realm_key")||"")})})
@@ -47,6 +47,7 @@ fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content
  t.push({name:"VIDEO SEARCH",sub:"YouTube",u:"./video.html",badge:"",reg:false});
  t.push({name:"FINDINGS",sub:"What changed",u:"./findings.html",badge:"",reg:false});
  t.sort(function(a,b){return (b.reg?1:0)-(a.reg?1:0)});
+ var si=-1;t.forEach(function(x,k){if(/^SCRIBE/i.test(x.name))si=k});var sc=si>=0?t.splice(si,1)[0]:{};sc.name="SCRIBE";sc.sub="You Got Me Bro";sc.u="./scribe.html";sc.badge="";sc.reg=true;t.unshift(sc);
  g.innerHTML=t.map(function(x,i){
    return '<a href="'+esc(x.u)+'" target="_self" class="'+(x.reg?'reg':'')+'" style="background:'+(x.reg?'#047857':COLORS[i%COLORS.length])+'">'+(x.badge?'<i>'+esc(x.badge)+'</i>':'')+'<b>'+esc(x.name)+'</b><span>'+esc(x.sub)+'</span></a>'}).join("");
 }).catch(function(e){document.getElementById("grid").innerHTML='<div class="err">Could not load tiles: '+esc(e.message)+'</div>'});

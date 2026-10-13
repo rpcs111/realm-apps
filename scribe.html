@@ -1,0 +1,87 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#ffffff"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg"><title>You Got Me Bro</title>
+<style>
+*{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:#fff;color:#1c1c1e;font:16px/1.4 -apple-system,system-ui,Roboto,sans-serif;padding:calc(14px + env(safe-area-inset-top)) 16px calc(90px + env(safe-area-inset-bottom))}
+.wrap{max-width:680px;margin:0 auto}
+.top{display:flex;align-items:center;gap:8px}.top a{color:#007aff;text-decoration:none;font-size:16px}h1{font-size:30px;margin:6px 0 2px;letter-spacing:-.02em}
+.start{display:block;width:100%;border:0;border-radius:14px;background:#1c1c1e;color:#fff;font:700 20px inherit;padding:16px;margin:8px 0}.day{font-size:13px;color:#3a3a3c;background:#f2f2f7;border-radius:12px;padding:10px 12px;margin-bottom:8px;overflow-wrap:anywhere}.day b.u{color:#ff3b30}.note a{color:#007aff}.urg{color:#ff3b30;font:700 11px inherit;letter-spacing:.05em}.ft{font-size:12px;color:#8e8e93}li.u{background:#fff5f5}
+.note{font-size:12px;color:#8e8e93;margin-bottom:12px}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-bottom:10px}.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:0;border-radius:999px;padding:7px 12px;font:600 13px inherit;background:#f2f2f7;color:#3a3a3c;min-height:34px}.chip.on{background:#1c1c1e;color:#fff}
+.add{display:flex;gap:8px;margin-bottom:8px}.add input{flex:1;min-width:0;border:0;background:#f2f2f7;border-radius:12px;padding:12px 14px;font-size:16px}
+.add button{border:0;border-radius:12px;background:#007aff;color:#fff;font:600 16px inherit;padding:0 16px;min-width:48px}
+ul{list-style:none;margin:0;padding:0}
+li{display:flex;gap:12px;padding:12px 2px;border-bottom:1px solid #e5e5ea;align-items:flex-start}
+.tick{flex:0 0 26px;height:26px;border-radius:50%;border:2px solid #c7c7cc;background:#fff;margin-top:1px;padding:0;color:#fff;font-size:14px}.tick.d{background:#34c759;border-color:#34c759}
+.body{flex:1;min-width:0}.t{font-weight:600;overflow-wrap:anywhere}.d .t{text-decoration:line-through;color:#8e8e93}
+.n{font-size:14px;color:#636366;white-space:pre-wrap;overflow-wrap:anywhere;margin-top:2px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;align-items:center}
+.own{border:0;border-radius:999px;padding:3px 10px;font:600 12px inherit;color:#fff}
+.att{font-size:13px;color:#007aff;text-decoration:none;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ph{width:56px;height:56px;object-fit:cover;border-radius:8px}
+.ed{border:0;background:none;color:#8e8e93;font-size:20px;min-width:36px;min-height:36px;padding:0}
+.empty{color:#8e8e93;text-align:center;padding:30px 0}
+#sheet{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:flex-end;justify-content:center;z-index:50}
+#sheet .p{background:#fff;width:100%;max-width:680px;border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));max-height:92dvh;overflow-y:auto}
+.p input,.p textarea{width:100%;border:0;background:#f2f2f7;border-radius:10px;padding:11px 12px;font:16px inherit;margin-bottom:8px}.p textarea{min-height:90px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.row button,.row label{flex:1 1 auto;border:0;border-radius:10px;background:#f2f2f7;padding:11px;font:600 14px inherit;text-align:center;color:#1c1c1e}
+.row .pri{background:#007aff;color:#fff}.row .del{background:#fff0f0;color:#ff3b30}
+.atl{display:flex;align-items:center;gap:8px;font-size:13px;margin:4px 0}.atl span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.atl button{border:0;background:none;color:#ff3b30;font-size:18px}
+</style></head><body><div class="wrap">
+<div class="top"><a href="./">&lsaquo; Apps</a></div>
+<h1>You Got Me Bro</h1>
+<button id="start" class="start">Start here bro</button>
+<div class="day" id="day"></div>
+<div class="note">Saved on this phone only until Scribe deploys. Phone pings and WhatsApp intake come once Scribe deploys. <a href="./map.html">Round Flow Map &rsaquo;</a></div>
+<div class="chips" id="f"></div>
+<form class="add" id="add"><input id="nt" placeholder="New item" autocomplete="off"><button aria-label="Add">+</button></form>
+<ul id="list"></ul>
+</div>
+<div id="sheet"><div class="p">
+<input id="eT" placeholder="Title"><textarea id="eN" placeholder="Note"></textarea>
+<div class="ft">From</div><div class="row" id="eF"></div><div class="ft">To</div><div class="row" id="eO"></div><div class="row"><button type="button" id="eU">Urgent</button></div>
+<div id="eA"></div>
+<div class="row"><label>&#128247; Photo<input type="file" accept="image/*" id="aP" hidden></label><button type="button" id="aL">&#128279; Link</button><label>&#128206; File<input type="file" id="aF" hidden></label></div>
+<div class="row"><button type="button" class="del" id="eD">Delete</button><button type="button" id="eC">Cancel</button><button type="button" class="pri" id="eS">Save</button></div>
+</div></div>
+<script>
+var OWN={Ange:"#007aff",Ara:"#5856d6",Nova:"#34c759",Julie:"#ff2d55"},ON=Object.keys(OWN);
+/* Storage adapter: swap to the Desk doPost/Sheet later by setting STORE.remote = exec URL. */
+var STORE={key:"realm_scribe_v1",remote:"",
+ load:function(){try{return JSON.parse(localStorage.getItem(this.key))||[]}catch(e){return[]}},
+ save:function(a){try{localStorage.setItem(this.key,JSON.stringify(a));return true}catch(e){alert("Phone storage is full. Remove a photo or file.");return false}
+  /* later: fetch(this.remote,{method:"POST",body:JSON.stringify({fn:"scribeSave",args:[a],key:localStorage.getItem("realm_key")||""})}) */}};
+var items=STORE.load(),flt=location.hash==="#julie"?"Julie":"Today",cur=null,draft=null;
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function persist(){STORE.save(items);draw()}
+function chips(){var v=["Today","All"].concat(ON);document.getElementById("f").innerHTML=v.map(function(o){return'<button class="chip'+(o===flt?" on":"")+'" data-f="'+o+'">'+(o==="Julie"?"Julie view":o)+'</button>'}).join("")}
+function attHtml(a){return a.map(function(x){if(x.k==="photo")return'<img class="ph" src="'+esc(x.v)+'" alt="">';if(x.k==="link")return'<a class="att" href="'+esc(x.v)+'" target="_blank" rel="noopener">&#128279; '+esc(x.v.replace(/^https?:\/\//,""))+'</a>';return x.v?'<a class="att" href="'+esc(x.v)+'" download="'+esc(x.n)+'">&#128206; '+esc(x.n)+'</a>':'<span class="att">&#128206; '+esc(x.n)+' (name only, too big)</span>'}).join("")}
+function draw(){chips();var a=items.filter(function(i){return flt==="All"||(flt==="Today"?!i.done:i.owner===flt)});
+ a.sort(function(x,y){return(x.done-y.done)||((y.urgent?1:0)-(x.urgent?1:0))||(y.ts-x.ts)});
+ var op=items.filter(function(i){return!i.done}),ur=op.filter(function(i){return i.urgent}).length,by={};op.forEach(function(i){by[i.owner]=(by[i.owner]||0)+1});
+ document.getElementById("day").innerHTML="<b>My day</b> &middot; <b class=u>"+ur+" urgent</b> &middot; "+op.length+" open"+(op.length?" &middot; "+Object.keys(by).map(function(k){return esc(k)+" "+by[k]}).join(", "):"");
+ document.getElementById("list").innerHTML=a.length?a.map(function(i){return'<li class="'+(i.done?"d":"")+(i.urgent&&!i.done?" u":"")+'"><button class="tick'+(i.done?" d":"")+'" data-t="'+i.id+'" aria-label="Done">'+(i.done?"&#10003;":"")+'</button><div class="body">'+(i.urgent?'<div class="urg">URGENT</div>':'')+'<div class="t">'+esc(i.title)+'</div>'+(i.note?'<div class="n">'+esc(i.note)+'</div>':"")+'<div class="meta"><span class="ft">'+esc(i.from||"Ange")+' &rarr;</span><button class="own" data-o="'+i.id+'" style="background:'+OWN[i.owner]+'">'+esc(i.owner)+'</button>'+attHtml(i.att||[])+'</div></div><button class="ed" data-e="'+i.id+'" aria-label="Edit">&#8943;</button></li>'}).join(""):'<li class="empty">Nothing here yet.</li>'}
+function find(id){return items.filter(function(i){return i.id===id})[0]}
+document.getElementById("add").onsubmit=function(e){e.preventDefault();var v=document.getElementById("nt").value.trim();if(!v)return;items.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:v,note:"",done:false,from:"Ange",urgent:false,owner:(flt==="All"||flt==="Today")?"Ange":flt,att:[],ts:Date.now()});document.getElementById("nt").value="";persist()};
+document.getElementById("f").onclick=function(e){var b=e.target.closest("[data-f]");if(!b)return;flt=b.dataset.f;history.replaceState(null,"",flt==="Julie"?"#julie":location.pathname);draw()};
+document.getElementById("list").onclick=function(e){var b=e.target.closest("button");if(!b)return;
+ if(b.dataset.t){var i=find(b.dataset.t);i.done=!i.done;persist()}
+ else if(b.dataset.o){var i=find(b.dataset.o);i.owner=ON[(ON.indexOf(i.owner)+1)%ON.length];persist()}
+ else if(b.dataset.e)openEd(find(b.dataset.e))};
+function drawEd(){document.getElementById("eF").innerHTML=ON.map(function(o){return'<button type="button" data-fr="'+o+'" style="'+((draft.from||"Ange")===o?"background:"+OWN[o]+";color:#fff":"")+'">'+o+'</button>'}).join("");var u=document.getElementById("eU");u.style.background=draft.urgent?"#ff3b30":"";u.style.color=draft.urgent?"#fff":"";u.textContent=draft.urgent?"Urgent \u2713":"Mark urgent";document.getElementById("eO").innerHTML=ON.map(function(o){return'<button type="button" data-w="'+o+'" style="'+(draft.owner===o?"background:"+OWN[o]+";color:#fff":"")+'">'+o+'</button>'}).join("");
+ document.getElementById("eA").innerHTML=draft.att.map(function(x,k){return'<div class="atl">'+(x.k==="photo"?'<img class="ph" src="'+esc(x.v)+'" alt="">':"")+'<span>'+esc(x.k==="link"?x.v:x.n||"photo")+'</span><button type="button" data-x="'+k+'">&times;</button></div>'}).join("")}
+function openEd(i){cur=i;draft=JSON.parse(JSON.stringify(i));draft.att=draft.att||[];document.getElementById("eT").value=i.title;document.getElementById("eN").value=i.note;drawEd();document.getElementById("sheet").style.display="flex"}
+function closeEd(){document.getElementById("sheet").style.display="none";cur=draft=null}
+document.getElementById("eO").onclick=function(e){var b=e.target.closest("[data-w]");if(b){draft.owner=b.dataset.w;drawEd()}};
+document.getElementById("eF").onclick=function(e){var b=e.target.closest("[data-fr]");if(b){draft.from=b.dataset.fr;drawEd()}};
+document.getElementById("eU").onclick=function(){draft.urgent=!draft.urgent;drawEd()};
+document.getElementById("start").onclick=function(){flt="Today";history.replaceState(null,"",location.pathname);draw();document.getElementById("list").scrollIntoView({behavior:"smooth"})};
+document.getElementById("eA").onclick=function(e){var b=e.target.closest("[data-x]");if(b){draft.att.splice(+b.dataset.x,1);drawEd()}};
+document.getElementById("aL").onclick=function(){var u=prompt("Paste link");if(!u)return;u=u.trim();if(!/^https?:\/\//i.test(u))u="https://"+u;draft.att.push({k:"link",v:u});drawEd()};
+document.getElementById("aP").onchange=function(){var f=this.files[0];this.value="";if(!f)return;var img=new Image(),r=new FileReader();r.onload=function(){img.onload=function(){var m=1000,s=Math.min(1,m/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=img.width*s;c.height=img.height*s;c.getContext("2d").drawImage(img,0,0,c.width,c.height);draft.att.push({k:"photo",v:c.toDataURL("image/jpeg",.7),n:f.name});drawEd()};img.src=r.result};r.readAsDataURL(f)};
+document.getElementById("aF").onchange=function(){var f=this.files[0];this.value="";if(!f)return;if(f.size>300000){draft.att.push({k:"file",v:"",n:f.name});drawEd();return}var r=new FileReader();r.onload=function(){draft.att.push({k:"file",v:r.result,n:f.name});drawEd()};r.readAsDataURL(f)};
+document.getElementById("eS").onclick=function(){var t=document.getElementById("eT").value.trim();if(!t)return;draft.title=t;draft.note=document.getElementById("eN").value;var k=items.indexOf(cur);items[k]=draft;closeEd();persist()};
+document.getElementById("eC").onclick=closeEd;
+document.getElementById("sheet").onclick=function(e){if(e.target.id==="sheet")closeEd()};
+document.getElementById("eD").onclick=function(){if(!confirm("Delete this item?"))return;items.splice(items.indexOf(cur),1);closeEd();persist()};
+draw();
+</script></body></html>
