@@ -534,10 +534,12 @@ addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e});
 addEventListener("appinstalled",function(){b.style.display="none"});
 b.onclick=function(){if(dp){dp.prompt();dp.userChoice.then(function(){dp=null})}else h.style.display=h.style.display==="none"?"block":"none"};
 var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-if(SR)["note","fpad"].forEach(function(id){var ta=document.getElementById(id);if(!ta)return;var m=document.createElement("button");m.className="btn mic";m.type="button";m.textContent="\uD83C\uDFA4 Dictate";ta.insertAdjacentElement("afterend",m);var r=null;
+function addMic(ta){if(ta.dataset.mic)return;ta.dataset.mic=1;var m=document.createElement("button");m.className="btn mic";m.type="button";m.textContent="\uD83C\uDFA4 Dictate";ta.insertAdjacentElement("afterend",m);var r=null;
  m.onclick=function(){if(r){r.stop();return}r=new SR();r.lang="en-AU";r.interimResults=false;r.continuous=true;
   r.onresult=function(e){for(var i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal)ta.value+=(ta.value&&!/\s$/.test(ta.value)?" ":"")+e.results[i][0].transcript.trim()};
-  r.onend=function(){r=null;m.textContent="\uD83C\uDFA4 Dictate"};r.onerror=function(e){toast("Mic: "+e.error)};r.start();m.textContent="\u23F9 Stop"}});
+  r.onend=function(){r=null;m.textContent="\uD83C\uDFA4 Dictate"};r.onerror=function(e){toast("Mic: "+e.error)};r.start();m.textContent="\u23F9 Stop"}}
+if(SR){Array.prototype.forEach.call(document.querySelectorAll("textarea"),addMic);
+ new MutationObserver(function(){Array.prototype.forEach.call(document.querySelectorAll("textarea:not([data-mic])"),addMic)}).observe(document.body,{childList:true,subtree:true})}
 })();
 </script>
 </body></html>
