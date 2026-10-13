@@ -9,7 +9,7 @@ h1{margin:0 0 4px;font-size:26px;letter-spacing:.04em}.sub{color:#6b7280;font-si
 #help{display:none;background:#f3f4f6;border-radius:12px;padding:12px 14px;font-size:14px;margin-bottom:12px}
 #grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 #grid a{display:flex;flex-direction:column;justify-content:flex-end;min-height:118px;padding:14px;border-radius:18px;color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.12)}
-#grid a b{font-size:18px;overflow-wrap:anywhere}@media(max-width:380px){body{padding-left:10px;padding-right:10px}#grid{gap:8px}#grid a{min-height:100px;padding:11px}#grid a b{font-size:16px}}#grid a span{font-size:13px;opacity:.9}
+#grid a{position:relative}#grid a.reg{grid-column:1/-1;min-height:130px}#grid a.reg b{font-size:24px}#grid a i{position:absolute;top:10px;right:10px;font-style:normal;font-size:11px;font-weight:700;background:rgba(255,255,255,.9);color:#111827;padding:2px 7px;border-radius:999px}#grid a b{font-size:18px;overflow-wrap:anywhere}@media(max-width:380px){body{padding-left:10px;padding-right:10px}#grid{gap:8px}#grid a{min-height:100px;padding:11px}#grid a b{font-size:16px}}#grid a span{font-size:13px;opacity:.9}
 .err{grid-column:1/-1;background:#fee2e2;color:#991b1b;padding:14px;border-radius:12px}.load{grid-column:1/-1;color:#6b7280}
 </style></head><body>
 <h1>REALM APPS</h1><div class="sub">Tap a tile to open.</div>
@@ -34,9 +34,16 @@ fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content
    if(!/^\s*\u2605/.test(String(x.title))||/orion/i.test(k)||seen[x.title])return false;seen[x.title]=1;return true});
  var g=document.getElementById("grid");
  if(!t.length){g.innerHTML='<div class="err">No tiles found in REALM_LINKS.</div>';return}
- g.innerHTML=t.map(function(x,i){var s=String(x.title).replace(/^\s*\u2605\s*/,"").split(/\s+\u2014\s+/);var name=s[0],sub=s[1]||"";if(BAD.test(sub))sub="";
-   var u=fix(name,x.url),ext=u.indexOf("./")!==0;
-   return '<a href="'+esc(u)+'"'+' target="_self"'+' style="background:'+COLORS[i%COLORS.length]+'"><b>'+esc(name)+'</b><span>'+esc(sub)+'</span></a>'}).join("");
+ t=t.map(function(x){var s=String(x.title).replace(/^\s*\u2605\s*/,"").split(/\s+\u2014\s+/);var name=s[0],sub=s[1]||"",badge="";if(BAD.test(sub))sub="";
+   var u=fix(name,x.url);
+   if(/^REALM DESK/i.test(name))name="REALM DESK";
+   if(/^NOVA$/i.test(name)){u="https://gemini.google.com/gem/aa2550627d15";sub="Gemini"}
+   if(/^(STATUS|QUOTES TONIGHT)$/i.test(name))badge="old app";
+   if(/docs\.google\.com/.test(u))badge="needs sign-in";
+   return {name:name,sub:sub,u:u,badge:badge,reg:/regist/i.test(name+" "+sub)}});
+ t.sort(function(a,b){return (b.reg?1:0)-(a.reg?1:0)});
+ g.innerHTML=t.map(function(x,i){
+   return '<a href="'+esc(x.u)+'" target="_self" class="'+(x.reg?'reg':'')+'" style="background:'+(x.reg?'#047857':COLORS[i%COLORS.length])+'">'+(x.badge?'<i>'+esc(x.badge)+'</i>':'')+'<b>'+esc(x.name)+'</b><span>'+esc(x.sub)+'</span></a>'}).join("");
 }).catch(function(e){document.getElementById("grid").innerHTML='<div class="err">Could not load tiles: '+esc(e.message)+'</div>'});
 var dp=null,btn=document.getElementById("install"),help=document.getElementById("help");
 window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e});
