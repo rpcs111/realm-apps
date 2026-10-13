@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="icon.svg">
 <link rel="icon" href="icon.svg"><link rel="manifest" href="manifest.json">
 <script>
-(function(){var U="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";function call(fn,args,ok,fail){var n=0,note=null,nt=setTimeout(function(){note=document.createElement("div");note.textContent="still loading\u2026";note.style.cssText="position:fixed;top:8px;left:50%;transform:translateX(-50%);background:#333;color:#fff;font:13px sans-serif;padding:4px 10px;border-radius:12px;z-index:99999;opacity:.85";document.body&&document.body.appendChild(note)},8000);function done(){clearTimeout(nt);if(note&&note.parentNode)note.parentNode.removeChild(note)}function go(){var ac=window.AbortController?new AbortController():null,to=setTimeout(function(){ac&&ac.abort()},45000);fetch(U,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args}),signal:ac?ac.signal:undefined}).then(function(r){return r.text()}).then(function(t){clearTimeout(to);var j;try{j=JSON.parse(t)}catch(e){throw new Error("Not JSON")}done();if(j&&j.ok)ok&&ok(j.result);else fail&&fail(new Error((j&&j.error)||"Request failed"))}).catch(function(e){clearTimeout(to);if(n++<3){setTimeout(go,1000*n)}else{done();fail&&fail(e)}})}go()}
+(function(){var U="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";function call(fn,args,ok,fail){var n=0,note=null,nt=setTimeout(function(){note=document.createElement("div");note.textContent="still loading\u2026";note.style.cssText="position:fixed;top:8px;left:50%;transform:translateX(-50%);background:#333;color:#fff;font:13px sans-serif;padding:4px 10px;border-radius:12px;z-index:99999;opacity:.85";document.body&&document.body.appendChild(note)},8000);function done(){clearTimeout(nt);if(note&&note.parentNode)note.parentNode.removeChild(note)}function go(){var ac=window.AbortController?new AbortController():null,to=setTimeout(function(){ac&&ac.abort()},45000);fetch(U,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args,key:(localStorage.getItem("realm_key")||"")}),signal:ac?ac.signal:undefined}).then(function(r){return r.text()}).then(function(t){clearTimeout(to);var j;try{j=JSON.parse(t)}catch(e){throw new Error("Not JSON")}done();if(j&&j.ok)ok&&ok(j.result);else fail&&fail(new Error((j&&j.error)||"Request failed"))}).catch(function(e){clearTimeout(to);if(n++<3){setTimeout(go,1000*n)}else{done();fail&&fail(e)}})}go()}
 function mk(ok,fail){return new Proxy({},{get:function(_,k){if(k==="withSuccessHandler")return function(f){return mk(f,fail)};if(k==="withFailureHandler")return function(f){return mk(ok,f)};return function(){call(k,[].slice.call(arguments),ok,fail||function(e){console.error(e)})}}})}
 window.google={script:{run:mk(null,null)}};})();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js");
@@ -416,7 +416,7 @@ function fvNewVeh(){var v=prompt('Vehicle name (e.g. Hilux, Trailer)');if(!v)ret
 </nav>
 <div class="toast" id="toast"></div>
 <script>
-var CFG={"wa":"https://chat.whatsapp.com/Iwp5QxSiENW2JDWaptbg8H","tel":"tel:1300358500","claude":"https://claude.ai/new","v":"","tab":""};var dayOff=0;var loaded={};
+var CFG={"wa":"https://chat.whatsapp.com/Iwp5QxSiENW2JDWaptbg8H","tel":"tel:1300358500","grok":"https://grok.com/","v":"","tab":""};var dayOff=0;var loaded={};
 var TABIX={start:0,flow:1,search:2,today:3,certs:4,quotes:5,desk:6,tasks:7,chats:8,notes:9,links:10};
 document.getElementById('qTel').href=CFG.tel;document.getElementById('qWa').href=CFG.wa;
 function toast(m){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none'},1800)}
@@ -427,7 +427,7 @@ function sk(id,n){document.getElementById(id).innerHTML=new Array((n||4)+1).join
 function go(name,btn){document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById('tab-'+name).classList.add('on');document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');load(name)}
 function run(fn,args,cb){google.script.run.withSuccessHandler(cb).withFailureHandler(function(e){toast('Error: '+e.message)})[fn].apply(null,args||[])}
  
-function chatOpen(topic,context,where){run('logChat',[topic,context,where||'desk'],function(){toast('Chat logged')});window.open(CFG.claude+'?q='+encodeURIComponent(topic+(context?' — '+context:'')),'_blank')}
+function chatOpen(topic,context,where){run('logChat',[topic,context,where||'desk'],function(){toast('Chat logged')});window.open(CFG.grok+'?q='+encodeURIComponent(topic+(context?' — '+context:'')),'_blank')}
 function newChat(){var t=document.getElementById('cTopic').value.trim();if(!t)return;chatOpen(t,'',document.getElementById('cWhere').value);document.getElementById('cTopic').value='';setTimeout(function(){load('chats',true)},700)}
 function load(name,force){if(loaded[name]&&!force)return;loaded[name]=true;
   if(name==='start'){sk('start',5);run('getStart',[],renderStart)}

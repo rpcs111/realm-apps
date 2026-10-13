@@ -27,7 +27,7 @@ function fix(name,url){var n=name.toUpperCase();
  if(/SCRIBE/.test(n))return "https://script.google.com/macros/s/AKfycbwq0FdxP9Sh3mtB6Y8e-PocRGUUQBub_TQVlv8IiApXU6bQSN6N-CGo8JRQCUyhMjNG/exec";
  return url}
 var BAD=/orion|elon|grok|claude/i;
-fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:"getLinks",args:[]})})
+fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:"getLinks",args:[],key:(localStorage.getItem("realm_key")||"")})})
 .then(function(r){return r.json()}).then(function(j){
  if(!j||!j.ok)throw new Error((j&&j.error)||"getLinks failed");
  var seen={},t=(j.result||[]).filter(function(x){var k=String(x.title)+" "+String(x.url);
@@ -41,6 +41,7 @@ fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content
    if(/^(STATUS|QUOTES TONIGHT)$/i.test(name))badge="old app";
    if(/docs\.google\.com/.test(u))badge="needs sign-in";
    return {name:name,sub:sub,u:u,badge:badge,reg:/regist/i.test(name+" "+sub)}});
+ t.push({name:"GROK",sub:"Ara",u:"https://grok.com/",badge:"",reg:false});
  t.sort(function(a,b){return (b.reg?1:0)-(a.reg?1:0)});
  g.innerHTML=t.map(function(x,i){
    return '<a href="'+esc(x.u)+'" target="_self" class="'+(x.reg?'reg':'')+'" style="background:'+(x.reg?'#047857':COLORS[i%COLORS.length])+'">'+(x.badge?'<i>'+esc(x.badge)+'</i>':'')+'<b>'+esc(x.name)+'</b><span>'+esc(x.sub)+'</span></a>'}).join("");
