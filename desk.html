@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="REALM DESK">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" href="icon.svg"><link rel="manifest" href="manifest.json">
+<script>
+(function(){var U="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";function call(fn,args,ok,fail){fetch(U,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args})}).then(function(r){return r.json()}).then(function(j){if(j&&j.ok)ok&&ok(j.result);else fail&&fail(new Error((j&&j.error)||"Request failed"))}).catch(function(e){fail&&fail(e)})}
+function mk(ok,fail){return new Proxy({},{get:function(_,k){if(k==="withSuccessHandler")return function(f){return mk(f,fail)};if(k==="withFailureHandler")return function(f){return mk(ok,f)};return function(){call(k,[].slice.call(arguments),ok,fail||function(e){console.error(e)})}}})}
+window.google={script:{run:mk(null,null)}};})();
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js");
+</script>
+<title>REALM DESK</title>
+<style>
+:root{--bg:#0b1220;--card:#131c2e;--line:#22304a;--txt:#e8eefc;--mut:#8ea0c2;--cyan:#22d3ee;--green:#22c55e;--red:#ef4444;--amber:#f59e0b;--blue:#3b82f6;--purple:#a78bfa}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:84px}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:10px}
+header h1{font-size:17px;margin:0;letter-spacing:.08em}header h1 b{color:var(--cyan)}
+header .who{margin-left:auto;font-size:12px;color:var(--mut)}
+.quick{display:flex;gap:8px;padding:10px 14px;overflow-x:auto}
+.quick a{flex:0 0 auto;background:var(--card);border:1px solid var(--line);color:var(--txt);text-decoration:none;padding:8px 12px;border-radius:999px;font-size:13px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#0e1628;border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);overflow-x:auto}
+nav button{flex:1 0 auto;min-width:11%;background:none;border:0;color:var(--mut);padding:9px 4px 7px;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button.on{color:var(--cyan)}nav button span{font-size:18px}
+main{padding:0 14px}
+.tab{display:none}.tab.on{display:block}
+.bar{display:flex;gap:8px;align-items:center;margin:8px 0 12px;flex-wrap:wrap}
+.bar h2{font-size:15px;margin:0;flex:1}
+.btn{background:var(--card);border:1px solid var(--line);color:var(--txt);padding:7px 11px;border-radius:9px;font-size:13px}
+.btn.p{background:var(--cyan);color:#04121a;border-color:var(--cyan);font-weight:600}
+.btn.g{border-color:var(--green);color:var(--green)}.btn.r{border-color:var(--red);color:var(--red)}.btn.a{border-color:var(--amber);color:var(--amber)}.btn.b{border-color:var(--blue);color:#93c5fd}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 12px;margin-bottom:9px;border-left:5px solid var(--line)}
+.card .t{font-weight:600}.card .m{color:var(--mut);font-size:12.5px;margin-top:2px}
+.card .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.card .acts .btn{padding:6px 9px;font-size:12px}
+.pill{display:inline-block;font-size:11px;padding:2px 7px;border-radius:999px;background:#1e2a44;color:var(--mut);margin-right:4px}
+.pill.pass{background:#052e16;color:var(--green)}.pill.fail{background:#3b0a0a;color:var(--red)}.pill.partial{background:#3a2a05;color:var(--amber)}
+input,textarea,select{width:100%;background:#0e1628;border:1px solid var(--line);color:var(--txt);border-radius:9px;padding:9px;font:inherit}
+textarea{min-height:90px}
+.empty{color:var(--mut);padding:24px 0;text-align:center}
+.err{background:#3b0a0a;color:#fca5a5;padding:8px 10px;border-radius:9px;font-size:13px;margin-bottom:10px}
+details summary{cursor:pointer;color:var(--mut);font-size:12.5px;margin-top:6px}
+pre{white-space:pre-wrap;font:12px/1.4 ui-monospace,monospace;color:var(--mut);margin:6px 0 0}
+.toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:var(--cyan);color:#04121a;padding:8px 14px;border-radius:999px;font-weight:600;font-size:13px;display:none;z-index:9}
+.sk{height:56px;border-radius:12px;background:linear-gradient(90deg,#131c2e,#1a2540,#131c2e);background-size:200% 100%;animation:sh 1.2s infinite;margin-bottom:9px}
+@keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+ 
+.appsbar{display:flex;align-items:center;justify-content:space-between;margin:2px 2px 8px}
+.appsbar h2{margin:0}
+.apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin:0 0 16px}
+.apps a{display:block;background:#10272f;border:1px solid #19c3d8;border-radius:14px;padding:14px 12px;color:#e8f6f8;text-decoration:none;min-height:74px}
+.apps a:active{background:#163542}
+.apps a b{display:block;font-size:16px;margin-bottom:3px}
+.apps a span{display:block;font-size:12px;color:#8fb3bb}
+</style></head><body>
+<header><h1>REALM <b>DESK</b></h1><span class="who" id="who"></span></header>
+<div class="quick">
+  <a id="qClaude" target="_blank">&#128172; Chat with Orion</a>
+  <a id="qTel">&#128222; 1300 358 500</a>
+  <a id="qWa" target="_blank">&#128994; Office WhatsApp</a>
+  <a href="https://calendar.google.com" target="_blank">&#128197; Diary</a>
+  <a href="https://books.zoho.com" target="_blank">&#129534; Zoho Books</a>
+  <a href="https://once.deputy.com" target="_blank">&#128119; Deputy</a>
+</div>
+<main>
+  <section class="tab on" id="tab-start">
+<div class="appsbar"><h2>My apps</h2><a class="btn" target="_blank" href="https://docs.google.com/spreadsheets/d/144xzuFR9madhVHr5RUVhCn-zZvhyCVBK6yuZfH2xlds/edit">&#9998; Edit tiles</a></div>
+<div id="apps" class="apps"></div>
+    <div class="bar"><h2>Where do I start</h2><span class="pill" id="startWhen"></span><button class="btn" onclick="load('start',true)">&#8635;</button></div>
+    <div id="start"></div>
+  </section>
+  <section class="tab" id="tab-search">
+    <div class="bar"><h2>One place &mdash; search a site</h2></div>
+    <div class="card"><div style="display:flex;gap:6px"><input id="q" placeholder="e.g. 21 Camden or Findon" onkeydown="if(event.key==='Enter')doSearch()"><button class="btn p" onclick="doSearch()">Go</button></div>
+    <div class="m" style="margin-top:6px">Searches: every Realm calendar (6 yrs back) &middot; Drive photos/files/folders &middot; WhatsApp group links &middot; scopes &middot; register &middot; pass/fail results &middot; REALM SOLD 2026 invoices</div></div>
+    <div id="search"></div>
+  </section>
+  <section class="tab" id="tab-today">
+    <div class="bar"><h2 id="dayLabel">Today</h2><button class="btn" onclick="shiftDay(-1)">&#9664;</button><button class="btn" onclick="shiftDay(0)">Today</button><button class="btn" onclick="shiftDay(1)">&#9654;</button></div>
+    <div id="today"></div>
+  </section>
+  <section class="tab" id="tab-certs"><div class="bar"><h2>Certs &mdash; ANCHOR TESTING</h2><button class="btn" onclick="load('certs',true)">&#8635;</button></div><div id="certs"></div></section>
+  <section class="tab" id="tab-quotes"><div class="bar"><h2>Quotes &mdash; yellow calendar</h2><button class="btn" onclick="load('quotes',true)">&#8635;</button></div><div id="quotes"></div></section>
+  <section class="tab" id="tab-desk">
+    <div class="bar"><h2>Open register</h2><label style="font-size:12px;color:var(--mut)"><input type="checkbox" id="showClosed" style="width:auto" onchange="load('desk',true)"> closed</label><button class="btn p" onclick="toggle('addRow')">+ Add</button></div>
+    <div id="addRow" style="display:none" class="card">
+      <input id="nItem" placeholder="What is it?"><div style="height:6px"></div>
+      <div style="display:flex;gap:6px"><select id="nType"><option>task</option><option>build</option><option>flow</option><option>cert</option><option>quote</option><option>idea</option></select><select id="nOwner"><option>Ange</option><option>Julie</option><option>Orion</option></select></div><div style="height:6px"></div>
+      <input id="nNext" placeholder="Next action"><div style="height:6px"></div>
+      <input id="nLink" placeholder="Link (optional)"><div style="height:8px"></div>
+      <button class="btn p" onclick="addReg()">Save to register</button>
+    </div>
+    <div id="desk"></div>
+  </section>
+  <section class="tab" id="tab-tasks"><div class="bar"><h2>Google Tasks</h2><button class="btn" onclick="load('tasks',true)">&#8635;</button></div>
+    <div class="card"><input id="tTitle" placeholder="New task…"><div style="height:6px"></div><div style="display:flex;gap:6px"><select id="tList"><option>Ange to do</option><option>Realm Daily</option><option>Realm Quotes</option><option>JP to do</option><option>LINKS ACCESS</option></select><button class="btn p" onclick="addTk()">Add</button></div></div>
+    <div id="tasks"></div></section>
+  <section class="tab" id="tab-chats">
+    <div class="bar"><h2>Chats &mdash; roll in, file away</h2><label style="font-size:12px;color:var(--mut)"><input type="checkbox" id="showFiled" style="width:auto" onchange="load('chats',true)"> filed</label><button class="btn" onclick="fileAll()">File all</button></div>
+    <div class="card"><div class="m">Every &#128172; button in this app logs the chat here the moment you tap it &mdash; side panel or web. Nothing rolls away unfiled.</div>
+      <div style="height:8px"></div><input id="cTopic" placeholder="Start a chat about…" onkeydown="if(event.key==='Enter')newChat()">
+      <div style="height:6px"></div><div style="display:flex;gap:6px"><select id="cWhere" style="flex:1"><option>side panel</option><option>web</option><option>desk</option></select><button class="btn p" onclick="newChat()">Open &amp; log</button></div></div>
+    <div id="chats"></div>
+  </section>
+  <section class="tab" id="tab-notes"><div class="bar"><h2>Notepad</h2></div>
+    <div class="card"><textarea id="note" placeholder="Type or dictate&hellip; (mic on your keyboard)"></textarea><div style="height:8px"></div>
+    <div style="display:flex;gap:6px"><select id="noteTag" style="flex:1"><option>desk</option><option>flow</option><option>idea</option><option>julie</option><option>park</option></select><button class="btn p" onclick="saveNote()">Save</button></div></div>
+    <div id="notes"></div></section>
+  <section class="tab" id="tab-links"><div class="bar"><h2>Links</h2></div><div id="links"></div></section>
+</main>
+<style>
+#tab-flow{padding:0 14px}
+.fsub{display:flex;gap:6px;overflow-x:auto;margin:8px 0 10px}
+.fsub button{flex:0 0 auto;background:var(--card);border:1px solid var(--line);color:var(--mut);padding:7px 11px;border-radius:999px;font-size:13px}
+.fsub button.on{color:#04121a;background:var(--cyan);border-color:var(--cyan);font-weight:600}
+.fview{display:none}.fview.on{display:block}
+#fmapWrap{position:relative;height:calc(100vh - 250px);min-height:420px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:radial-gradient(circle at 50% 50%,#0f1a30,#0b1220 70%);touch-action:none}
+#fmap{width:100%;height:100%;cursor:grab;user-select:none;-webkit-user-select:none}
+#fmap text{pointer-events:none;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.mt{stroke:#22d3ee;stroke-opacity:.10;fill:none}
+.fleg{position:absolute;left:8px;top:8px;font-size:11px;color:var(--mut);background:#0b1220d9;padding:5px 8px;border-radius:8px;line-height:1.6}
+.fleg i{display:inline-block;width:14px;height:3px;vertical-align:middle;margin:0 4px 0 6px}
+.fzoom{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:6px}
+.fzoom button{width:34px;height:34px;border-radius:9px;background:var(--card);border:1px solid var(--line);color:var(--txt);font-size:17px}
+#fpanel{position:fixed;left:0;right:0;bottom:62px;max-height:74vh;overflow:auto;background:#101a2e;border-top:3px solid var(--cyan);border-radius:16px 16px 0 0;padding:14px 14px 18px;transform:translateY(110%);transition:transform .22s,visibility .22s;visibility:hidden;z-index:30;box-shadow:0 -10px 30px #0008}
+#fpanel.open{transform:none;visibility:visible}
+#fpanel h3{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 6px}
+#fpanel .x{position:absolute;right:10px;top:8px;background:none;border:0;color:var(--mut);font-size:24px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--txt);border-radius:999px;padding:6px 11px;font-size:13px}
+.chip.on.built{background:#052e16;border-color:var(--green);color:var(--green)}
+.chip.on.partial{background:#3a2a05;border-color:var(--amber);color:var(--amber)}
+.chip.on.notbuilt{background:#3b0a0a;border-color:var(--red);color:var(--red)}
+.lk{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.lk .d{width:10px;height:10px;border-radius:50%;flex:0 0 10px}
+.lk .l{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.rulerow{margin:-2px 0 9px 22px;padding:7px 10px;border-left:3px dashed var(--amber);background:#141d30;border-radius:0 10px 10px 0;font-size:12.5px}
+.rulerow input{margin-top:5px;font-size:12.5px;padding:6px 8px}
+.stsel{width:auto;padding:5px 7px;font-size:12px;border-radius:8px}
+.wday{font-size:12px;color:var(--mut);margin:12px 0 5px;text-transform:uppercase;letter-spacing:.06em}
+.big{font-size:22px;font-weight:700;color:var(--green)}
+.vrow{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--line)}
+.vrow input[type=checkbox]{width:26px;height:26px;flex:0 0 26px;accent-color:#22c55e}
+.vrow .vi{flex:1;min-width:0}
+.vrow .vi b{display:block;font-size:15px}
+.vrow.done .vi b{color:var(--green)}
+.vrow .vq{width:52px;flex:0 0 52px;padding:6px;font-size:13px;text-align:center}
+.vrow .vn{margin-top:5px;font-size:12.5px;padding:6px 8px}
+.vrow .vx{background:none;border:0;color:var(--mut);font-size:18px;flex:0 0 auto}
+.vbar{height:10px;border-radius:6px;background:#3b0a0a;overflow:hidden;margin:6px 0 2px}
+.vbar i{display:block;height:100%;background:#22c55e}
+</style>
+<section class="tab" id="tab-flow">
+  <div class="bar"><h2>Realm Flow Map</h2><span class="pill" id="fWhen"></span><button class="btn" onclick="flowLoad(true)">&#8635;</button></div>
+  <div class="fsub" id="fsub">
+    <button class="on" onclick="fGo('map',this)">&#10036; Map</button>
+    <button onclick="fGo('list',this)">&#9776; List</button>
+    <button id="fsubVans" onclick="fGo('vans',this)">&#128656; Vans</button>
+    <button onclick="fGo('pad',this)">&#128221; Notepad</button>
+    <button onclick="fGo('wfki',this)">&#127942; We Fucking Killed It</button>
+    <button onclick="fGo('health',this)">&#129658; Health</button>
+  </div>
+  <div class="fview on" id="fv-map">
+    <div id="fmapWrap">
+      <svg id="fmap" viewBox="-740 -740 1480 1480"><defs>
+        <marker id="aG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0L10,5L0,10z" fill="#22c55e"/></marker>
+        <marker id="aA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0L10,5L0,10z" fill="#f59e0b"/></marker>
+        <marker id="aR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0L10,5L0,10z" fill="#ef4444"/></marker>
+      </defs><g id="fvp"></g></svg>
+      <div class="fleg"><i style="background:#22c55e"></i>built<i style="background:#f59e0b"></i>partial<i style="background:#ef4444"></i>not built / broken<br>inner = status &middot; outer ring = health check &middot; &sect; = standing rules</div>
+      <div class="fzoom"><button onclick="fZoom(.8)">+</button><button onclick="fZoom(1.25)">&minus;</button><button onclick="fFit()">&#9678;</button><button onclick="fExport()" title="Download PDF &#43; picture &#43; CSV">&#11015;</button></div>
+    </div>
+    <div class="m" style="margin:6px 2px;color:var(--mut);font-size:12px">Tap a node for its links, folder, status and notes. Pinch or drag to move. Edits save to the sheet and log for Orion. &#11015; saves the map (PDF + picture + CSV) to REALM TOOL LINKS.</div><div id="fExp"></div>
+  </div>
+  <div class="fview" id="fv-list"><div id="fExpL"></div><div id="flist"></div></div>
+  <div class="fview" id="fv-vans">
+    <div class="chips" id="fvVeh" style="margin-bottom:10px"></div>
+    <div id="fvBody"><div class="sk"></div></div>
+  </div>
+  <div class="fview" id="fv-pad">
+    <div class="card"><textarea id="fpad" placeholder="Map notepad — type or dictate. Orion reads it at the start of every session."></textarea><div style="height:8px"></div><button class="btn p" onclick="fPadSave()">Save</button></div>
+    <div id="fpadList"></div>
+  </div>
+  <div class="fview" id="fv-wfki">
+    <div class="card"><div class="m">What did we close today?</div><div style="height:6px"></div><div style="display:flex;gap:6px"><input id="fwIn" placeholder="e.g. Cert Studio live on the phone" onkeydown="if(event.key==='Enter')fWfkiAdd()"><button class="btn p" onclick="fWfkiAdd()">Killed it</button></div>
+    <div class="m" style="margin-top:6px">Register items ticked Done land here by themselves.</div></div>
+    <div id="fwList"></div>
+  </div>
+  <div class="fview" id="fv-health">
+    <div class="card"><button class="btn p" onclick="fHealth()">&#129658; Run health check now</button><div class="m" id="fhSum" style="margin-top:8px"></div></div>
+    <div id="fhList"></div>
+  </div>
+</section>
+<div id="fpanel"></div>
+<script>
+var F={nodes:[],paths:[]},FB={},fVB={x:-740,y:-740,w:1480,h:1480},fMoved=false;
+var SC={'built':'#22c55e','partial':'#f59e0b','not built':'#ef4444'},HC={'ok':'#22c55e','amber':'#f59e0b','red':'#ef4444','n/a':'#475569','':'#475569'};
+function fCol(n){if(n.kind==='person')return '#a78bfa';return SC[String(n.status||'').toLowerCase()]||'#475569'}
+function fEff(n){return String(n.health)==='red'?'#ef4444':fCol(n)}
+function fGo(v,b){document.querySelectorAll('.fview').forEach(function(x){x.classList.remove('on')});document.getElementById('fv-'+v).classList.add('on');document.querySelectorAll('#fsub button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+  if(v==='pad')run('getMapNotes',[],fPadRender);if(v==='wfki')run('getWfki',[],fWfkiRender);if(v==='health')fHealthRender();if(v==='list')fList();if(v==='vans')fVans()}
+function flowLoad(force){if(F.loaded&&!force)return;document.getElementById('fvp').innerHTML='<text x="0" y="0" fill="#8ea0c2" font-size="28" text-anchor="middle">loading the map&hellip;</text>';
+  run('getFlow',[CFG.v||''],function(r){var first=!F.loaded;F=r;F.loaded=true;FB={};r.nodes.forEach(function(n){FB[n.id]=n});if(first)setTimeout(fPhoneFit,50);document.getElementById('fWhen').textContent=r.nodes.length+' nodes · '+r.when+(r.openChanges?' · '+r.openChanges+' changes for Orion':'');fDraw();if(document.getElementById('fv-list').classList.contains('on'))fList()})}
+function fP(n){if(!n||n.kind==='core')return{x:0,y:0};var a=Number(n.a)*Math.PI/180,r=Number(n.r);return{x:r*Math.cos(a),y:r*Math.sin(a)}}
+var NS='http://www.w3.org/2000/svg';
+function fEl(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);(p||document.getElementById('fvp')).appendChild(e);return e}
+function fRad(n){return n.kind==='core'?66:n.kind==='step'?44:n.kind==='child'?34:n.kind==='entry'?36:n.kind==='person'?38:46}
+function fWrap(s){var w=String(s).split(/\s+/),l=[],c='';w.forEach(function(x){if((c+' '+x).trim().length>11&&c){l.push(c);c=x}else c=(c+' '+x).trim()});if(c)l.push(c);return l.slice(0,3)}
+function fDraw(){var vp=document.getElementById('fvp');vp.innerHTML='';
+  
+  var M=[{x:0,y:0}];[160,320].forEach(function(r){[-90,-30,30,90,150,210].forEach(function(a){a=a*Math.PI/180;M.push({x:r*Math.cos(a),y:r*Math.sin(a)})})});
+  M.forEach(function(p){fEl('circle',{cx:p.x,cy:p.y,r:80,fill:'none',stroke:'#22d3ee','stroke-opacity':.10})});
+  for(var i=0;i<M.length;i++)for(var j=i+1;j<M.length;j++)fEl('line',{x1:M[i].x,y1:M[i].y,x2:M[j].x,y2:M[j].y,stroke:'#22d3ee','stroke-opacity':.10});
+  fEl('circle',{cx:0,cy:0,r:610,fill:'none',stroke:'#a78bfa','stroke-opacity':.25,'stroke-dasharray':'2 10'});
+  fEl('circle',{cx:0,cy:0,r:480,fill:'none',stroke:'#22304a','stroke-dasharray':'4 8'});
+  
+  F.paths.forEach(function(p){var A=FB[p.from],B=FB[p.to];if(!A||!B)return;var a=fP(A),b=fP(B),st=String(p.status).toLowerCase();
+    var step=A.kind==='step'&&B.kind==='step',k=step?1.1:(A.kind==='person'||B.kind==='person')?1.0:.72,mx=(a.x+b.x)/2*k,my=(a.y+b.y)/2*k;
+    if(Math.abs(mx)<1&&Math.abs(my)<1){mx=40;my=40}
+    var ua=Math.hypot(mx-a.x,my-a.y)||1,ub=Math.hypot(b.x-mx,b.y-my)||1,ra=fRad(A)+6,rb=fRad(B)+9;
+    var s={x:a.x+(mx-a.x)/ua*ra,y:a.y+(my-a.y)/ua*ra},t={x:b.x-(b.x-mx)/ub*rb,y:b.y-(b.y-my)/ub*rb};
+    var per=A.kind==='person'||B.kind==='person';var col=per?'#a78bfa':SC[st]||'#475569',mk=per?'':st==='built'?'aG':st==='partial'?'aA':'aR';
+    var g=fEl('g',{'data-path':p.id,style:'cursor:pointer'});
+    fEl('path',{d:'M'+s.x+','+s.y+' Q'+mx+','+my+' '+t.x+','+t.y,fill:'none',stroke:'transparent','stroke-width':22},g);
+    fEl('path',{d:'M'+s.x+','+s.y+' Q'+mx+','+my+' '+t.x+','+t.y,fill:'none',stroke:col,'stroke-width':per?1.8:st==='built'?3:3.5,'stroke-dasharray':per?'3 5':st==='not built'?'9 7':'', 'marker-end':mk?'url(#'+mk+')':'',opacity:.9},g);
+    var tq=A.kind==='core'?.7:B.kind==='core'?.3:.5,u=1-tq,lx=u*u*s.x+2*u*tq*mx+tq*tq*t.x,ly=u*u*s.y+2*u*tq*my+tq*tq*t.y;
+    if(step){var cx=lx*1.09,cy=ly*1.09;fEl('rect',{x:cx-11,y:cy-11,width:22,height:22,rx:4,transform:'rotate(45 '+cx+' '+cy+')',fill:'#141d30',stroke:'#f59e0b'},g);var tt=fEl('text',{x:cx,y:cy+5,'text-anchor':'middle','font-size':14,fill:'#f59e0b'},g);tt.textContent='§';lx*=.9;ly*=.9}
+    var tx=fEl('text',{x:lx,y:ly,'text-anchor':'middle','font-size':step?12:10.5,'font-weight':700,fill:col,stroke:'#0b1220','stroke-width':3,'paint-order':'stroke'},g);tx.textContent=(st==='not built'&&!per?'✗ ':'')+(p.label||'');
+  });
+  
+  F.nodes.forEach(function(n){var p=fP(n),r=fRad(n),g=fEl('g',{'data-id':n.id,transform:'translate('+p.x+','+p.y+')',style:'cursor:pointer'});
+    var h=String(n.health||'');fEl('circle',{r:r+7,fill:'none',stroke:HC[h]||'#475569','stroke-width':4,'stroke-dasharray':h?'':'3 5'},g);
+    var c=fCol(n);fEl('circle',{r:r,fill:c,'fill-opacity':.16,stroke:c,'stroke-width':2.5,'stroke-dasharray':String(n.status).toLowerCase()==='not built'?'7 5':''},g);
+    var L=fWrap(n.name),fs=n.kind==='core'?15:n.kind==='child'?10.5:12.5;L.forEach(function(l,i){var t=fEl('text',{y:(i-(L.length-1)/2)*(fs+2)+fs/3,'text-anchor':'middle','font-size':fs,'font-weight':600,fill:'#e8eefc'},g);t.textContent=l});
+    var tag=n.kind==='person'?(/Role\?/.test(n.notes||'')?'role?':''):String(n.status).toLowerCase()==='not built'?'✗ not built':h==='red'?'⚠ broken link':String(n.internal).toLowerCase()==='yes'?'internal':'';
+    if(tag){var tg=fEl('text',{y:r+22,'text-anchor':'middle','font-size':11,'font-weight':700,fill:h==='red'||/not built/.test(tag)?'#ef4444':'#fde68a'},g);tg.textContent=tag}
+    if(n.button){var bt=fEl('text',{y:-r-12,'text-anchor':'middle','font-size':11,fill:'#22d3ee'},g);bt.textContent=n.button==='roster'?'👷 status':n.button==='getpaid'?'💰 button':n.button==='rebook'?'🔁 start':''}
+  });
+  fSetVB()}
+function fSetVB(){document.getElementById('fmap').setAttribute('viewBox',fVB.x+' '+fVB.y+' '+fVB.w+' '+fVB.h)}
+function fZoom(f){var cx=fVB.x+fVB.w/2,cy=fVB.y+fVB.h/2;fVB.w*=f;fVB.h*=f;fVB.x=cx-fVB.w/2;fVB.y=cy-fVB.h/2;fSetVB()}
+function fFit(){fVB={x:-740,y:-740,w:1480,h:1480};fSetVB()}
+function fPhoneFit(){var w=document.getElementById('fmap').clientWidth||800;if(w<600){fVB={x:-520,y:-560,w:1040,h:1040};fSetVB()}}
+(function(){var svg=document.getElementById('fmap'),pts=new Map(),lastD=null,down=null;
+  svg.addEventListener('pointerdown',function(e){pts.set(e.pointerId,e);if(pts.size===1){down={x:e.clientX,y:e.clientY};fMoved=false}});
+  svg.addEventListener('pointermove',function(e){if(!pts.has(e.pointerId))return;var pv=pts.get(e.pointerId);pts.set(e.pointerId,e);var s=fVB.w/svg.clientWidth;
+    if(pts.size===1){if(down&&Math.hypot(e.clientX-down.x,e.clientY-down.y)>6)fMoved=true;if(fMoved){fVB.x-=(e.clientX-pv.clientX)*s;fVB.y-=(e.clientY-pv.clientY)*s}}
+    else if(pts.size===2){fMoved=true;var v=Array.from(pts.values()),d=Math.hypot(v[0].clientX-v[1].clientX,v[0].clientY-v[1].clientY);if(lastD)fZoom(lastD/d);lastD=d}fSetVB()});
+  ['pointerup','pointercancel','pointerleave'].forEach(function(t){svg.addEventListener(t,function(e){pts.delete(e.pointerId);lastD=null})});
+  svg.addEventListener('wheel',function(e){e.preventDefault();fZoom(e.deltaY>0?1.1:.9)},{passive:false});
+  svg.addEventListener('click',function(e){if(fMoved)return;var n=e.target.closest('[data-id]');if(n)return fNode(n.getAttribute('data-id'));var p=e.target.closest('[data-path]');if(p)fPath(p.getAttribute('data-path'))});
+})();
+ 
+function fOpen(h){var p=document.getElementById('fpanel');p.innerHTML='<button class="x" onclick="fClose()">&times;</button>'+h;p.classList.add('open');p.scrollTop=0}
+function fClose(){document.getElementById('fpanel').classList.remove('open')}
+function fHref(t){t=String(t);if(/^cal:/.test(t))return 'https://calendar.google.com/calendar/u/0/r?cid='+encodeURIComponent(t.slice(4));if(/^drive:/.test(t))return 'https://drive.google.com/open?id='+t.slice(6);if(/^folder:/.test(t))return 'https://drive.google.com/drive/folders/'+t.slice(7);if(/^sheetname:/.test(t))return 'https://drive.google.com/drive/search?q='+encodeURIComponent(t.slice(10));if(/^https?:/.test(t))return t;return ''}
+function fLinks(n){var det={};String(n.health_detail||'').split('\n').forEach(function(l){var m=l.match(/^(✓|✗|\?) ([^—]+?)(?: — (.*))?$/);if(m)det[m[2].trim()]={s:m[1],w:m[3]||''}});
+  return String(n.links||'').split('\n').filter(function(x){return x.trim()}).map(function(l){var p=l.split(' | '),lab=p.length>1?p[0]:l,t=p.length>1?p.slice(1).join(' | '):l,h=fHref(t),d=det[lab.trim()]||{};
+    var col=d.s==='✓'?'#22c55e':d.s==='✗'?'#ef4444':d.s==='?'?'#f59e0b':'#475569';
+    return '<div class="lk"><span class="d" style="background:'+col+'"></span><span class="l">'+esc(lab)+(d.w?' <span style="color:var(--mut);font-size:12px">— '+esc(d.w)+'</span>':'')+'</span>'+(h?'<a class="btn" href="'+esc(h)+'" target="_blank">Open</a>':'<span class="pill">'+esc(t.split(':')[0])+'</span>')+'</div>'}).join('')||'<div class="m">No links yet — add them below.</div>'}
+function fStatusChips(cur,fn){return '<div class="chips">'+['built','partial','not built'].map(function(s){return '<button class="chip '+(s===String(cur).toLowerCase()?'on ':'')+s.replace(' ','')+'" onclick="'+fn+'(\''+s+'\')">'+(s==='built'?'&#10004; built':s==='partial'?'&#9681; partial':'&#10007; not built')+'</button>'}).join('')+'</div>'}
+var fCur=null;
+function fNode(id){var n=FB[id];if(!n)return;fCur={t:'node',id:id,status:n.status};
+  var ins=F.paths.filter(function(p){return p.to===id||p.from===id});
+  var btn='';if(n.button==='roster')btn='<button class="btn p" onclick="fRoster(0)">&#128119; Who&rsquo;s rostered today</button> <button class="btn" onclick="fRoster(1)">Tomorrow</button><div id="fRos"></div>';
+  if(n.button==='getpaid')btn='<a class="btn p" style="display:inline-block;background:var(--green);border-color:var(--green)" href="https://books.zoho.com/app#/invoices" target="_blank">&#128176; Get paid &mdash; open unpaid invoices</a> <button class="btn" onclick="fKill(\'Chased / got paid: \')">&#127942; Log a payment in</button>';
+  if(n.button==='vans')btn='<button class="btn p" onclick="fClose();fGo(\'vans\',document.getElementById(\'fsubVans\'))">&#128656; Open the van kit lists</button>';
+  if(n.button==='rebook')btn='<a class="btn p" style="display:inline-block" href="https://books.zoho.com/app#/invoices" target="_blank">&#128257; Rebook &mdash; open last invoice to clone</a><div class="m" style="margin-top:6px">Auto-clone + price check is <b style="color:var(--red)">not built</b> yet (Zoho is read-only to Orion).</div>';
+  var h='<input id="fnName" value="'+esc(n.name)+'" style="font-size:18px;font-weight:700;margin:0 30px 6px 0;width:calc(100% - 30px)">'+
+    '<div class="m">'+esc(n.kind)+(n.parent?' · under '+esc((FB[n.parent]||{}).name||n.parent):'')+(n.updated?' · edited '+esc(n.updated)+' by '+esc(n.updated_by||''):'')+'</div>'+
+    (btn?'<h3>Action</h3>'+btn:'')+
+    '<h3>Status</h3>'+fStatusChips(n.status,'fSetSt')+
+    '<h3>Health</h3><div class="m"><span class="dot" style="background:'+(HC[String(n.health)]||'#475569')+'"></span>'+(n.health?esc(n.health)+' · checked '+esc(n.checked||''):'not checked yet — run the health check')+'</div>'+
+    '<h3>Links</h3>'+fLinks(n)+
+    (n.folder?'<h3>Folder</h3><a class="btn" href="'+esc(n.folder)+'" target="_blank">&#128193; Open folder</a>':'')+
+    '<h3>Notes</h3><textarea id="fnNotes">'+esc(n.notes||'')+'</textarea>'+
+    '<h3>Standing rules on this node</h3><textarea id="fnRules" placeholder="one per line">'+esc(n.rules||'')+'</textarea>'+
+    (n.uses||n.kind==='step'?'<h3>Uses</h3><input id="fnUses" value="'+esc(n.uses||'')+'">':'')+
+    '<details><summary>Edit links &amp; folder</summary><div class="m" style="margin:6px 0">One per line: <b>Label | link</b> (also cal:ID, drive:ID, folder:ID, sheetname:NAME, prop:KEY)</div><textarea id="fnLinks" style="min-height:120px;font-size:12.5px">'+esc(n.links||'')+'</textarea><div style="height:6px"></div><input id="fnFolder" value="'+esc(n.folder||'')+'" placeholder="Folder link"></details>'+
+    (ins.length?'<h3>Paths</h3>'+ins.map(function(p){var c=SC[String(p.status).toLowerCase()]||'#475569';return '<div class="lk" onclick="fPath(\''+q1(p.id)+'\')" style="cursor:pointer"><span class="d" style="background:'+c+'"></span><span class="l">'+esc((FB[p.from]||{}).name)+' → '+esc((FB[p.to]||{}).name)+' · '+esc(p.label)+'</span><span class="pill">'+esc(p.status)+'</span></div>'}).join(''):'')+
+    '<div style="display:flex;gap:8px;margin-top:14px"><button class="btn p" style="flex:1" onclick="fSaveNode()">Save</button><button class="btn" onclick="chatOpen(\'Orion, flow map node: '+q1(n.name)+'\',\'flow map\',\'desk\')">&#128172; Chat</button></div>';
+  fOpen(h)}
+function fSetSt(s){fCur.status=s;document.querySelectorAll('#fpanel .chip').forEach(function(c){c.classList.toggle('on',c.textContent.indexOf(s)>=0&&!(s==='built'&&/not/.test(c.textContent)))})}
+function fVal(id){var e=document.getElementById(id);return e?e.value:null}
+function fSaveNode(){var n=FB[fCur.id],patch={};var m={name:'fnName',notes:'fnNotes',rules:'fnRules',uses:'fnUses',links:'fnLinks',folder:'fnFolder'};
+  Object.keys(m).forEach(function(k){var v=fVal(m[k]);if(v!==null&&v!==String(n[k]==null?'':n[k]))patch[k]=v});if(fCur.status!==n.status)patch.status=fCur.status;
+  if(!Object.keys(patch).length){toast('Nothing changed');return}
+  run('saveFlowNode',[fCur.id,patch],function(r){toast('Saved · logged for Orion');Object.keys(patch).forEach(function(k){n[k]=patch[k]});fDraw();fList();fClose()})}
+function fPath(id){var p=F.paths.filter(function(x){return x.id===id})[0];if(!p)return;fCur={t:'path',id:id,status:p.status};
+  fOpen('<div style="font-size:18px;font-weight:700;margin-right:30px">'+esc((FB[p.from]||{}).name)+' &rarr; '+esc((FB[p.to]||{}).name)+'</div><div class="m">path'+(p.updated?' · edited '+esc(p.updated):'')+'</div>'+
+    '<h3>Status</h3>'+fStatusChips(p.status,'fSetSt')+'<h3>Label</h3><input id="fpLabel" value="'+esc(p.label||'')+'">'+
+    '<h3>How each side checks the other</h3><textarea id="fpCheck">'+esc(p.check||'')+'</textarea>'+
+    '<h3>&sect; Standing rules at this handoff</h3><textarea id="fpRules">'+esc(p.rules||'')+'</textarea>'+
+    '<div style="display:flex;gap:8px;margin-top:14px"><button class="btn p" style="flex:1" onclick="fSavePath()">Save</button></div>')}
+function fSavePath(){var p=F.paths.filter(function(x){return x.id===fCur.id})[0],patch={};[['label','fpLabel'],['check','fpCheck'],['rules','fpRules']].forEach(function(a){var v=fVal(a[1]);if(v!==null&&v!==String(p[a[0]]||''))patch[a[0]]=v});if(fCur.status!==p.status)patch.status=fCur.status;
+  if(!Object.keys(patch).length){toast('Nothing changed');return}run('saveFlowPath',[fCur.id,patch],function(){toast('Saved · logged for Orion');Object.keys(patch).forEach(function(k){p[k]=patch[k]});fDraw();fList();fClose()})}
+function fRoster(d){document.getElementById('fRos').innerHTML='<div class="sk"></div>';run('getRoster',[d],function(r){var h='<div class="card" style="margin-top:8px;border-left-color:'+(r.err?'var(--red)':'var(--green)')+'"><div class="t">'+esc(r.label)+'</div>';
+  h+=r.err?'<div class="err" style="margin-top:6px">'+esc(r.err)+'</div>':'<div>'+(r.staff||[]).map(function(s){return esc(s)}).join('<br>')+'</div>';
+  h+='<div class="m" style="margin-top:6px">In the diary:</div><div class="m">'+(r.diary||[]).slice(0,20).map(esc).join('<br>')+'</div></div>';document.getElementById('fRos').innerHTML=h})}
+ 
+function fChain(){var out=[],cur='rebook',seen={};while(cur&&!seen[cur]&&FB[cur]){seen[cur]=1;out.push(cur);var nx=F.paths.filter(function(p){return p.from===cur&&FB[p.to]&&FB[p.to].kind==='step'})[0];cur=nx?nx.to:null}return out}
+function fSel(kind,id,cur){return '<select class="stsel" onchange="fQuick(\''+kind+'\',\''+q1(id)+'\',{status:this.value})">'+['built','partial','not built'].map(function(s){return '<option'+(s===String(cur).toLowerCase()?' selected':'')+'>'+s+'</option>'}).join('')+'</select>'}
+function fQuick(kind,id,patch){run(kind==='node'?'saveFlowNode':'saveFlowPath',[id,patch],function(){toast('Saved · logged for Orion');var o=kind==='node'?FB[id]:F.paths.filter(function(p){return p.id===id})[0];Object.keys(patch).forEach(function(k){o[k]=patch[k]});fDraw();if(patch.status)fList()})}
+function fCard(n){var c=fEff(n);return '<div class="card" style="border-left-color:'+c+'"><div style="display:flex;gap:8px;align-items:center"><div class="t" style="flex:1">'+esc(n.name)+'</div>'+(n.kind==='person'?'<span class="pill">person</span>':fSel('node',n.id,n.status))+'</div>'+
+  '<div class="m"><span class="dot" style="background:'+(HC[String(n.health)]||'#475569')+'"></span>health '+esc(n.health||'unchecked')+(n.kind==='child'?' · under '+esc((FB[n.parent]||{}).name||''):'')+'</div>'+
+  '<input style="margin-top:6px;font-size:13px" value="'+esc(n.notes||'')+'" placeholder="notes" onchange="fQuick(\'node\',\''+q1(n.id)+'\',{notes:this.value})">'+
+  '<div class="acts"><button class="btn" onclick="fNode(\''+q1(n.id)+'\')">Open &rsaquo;</button></div></div>'}
+function fList(){if(!F.loaded)return;var c={g:0,a:0,r:0};F.nodes.filter(function(n){return n.kind!=='person'}).forEach(function(n){var e=fEff(n);if(e==='#22c55e')c.g++;else if(e==='#f59e0b')c.a++;else c.r++});
+  var h='<div class="card"><button class="btn" style="float:right" onclick="fExport()">&#11015; Download</button><span class="pill pass">'+c.g+' green</span><span class="pill partial">'+c.a+' amber</span><span class="pill fail">'+c.r+' red</span>'+(F.openChanges?'<span class="pill">'+F.openChanges+' changes waiting for Orion</span>':'')+'</div>';
+  h+='<div class="bar"><h2>The loop &mdash; starts at Rebook</h2></div>';
+  var ch=fChain();ch.forEach(function(id,i){h+=fCard(FB[id]);var nx=ch[i+1]||ch[0];var p=F.paths.filter(function(x){return x.from===id&&x.to===nx})[0];
+    if(p)h+='<div class="rulerow"><span class="dot" style="background:'+(SC[String(p.status).toLowerCase()]||'#475569')+'"></span><b>&sect; '+esc(FB[id].name)+' &rarr; '+esc(FB[nx].name)+'</b> '+fSel('path',p.id,p.status)+'<input value="'+esc(p.rules||'')+'" placeholder="standing rules at this handoff" onchange="fQuick(\'path\',\''+q1(p.id)+'\',{rules:this.value})"></div>'});
+  var entries=F.nodes.filter(function(n){return n.kind==='entry'});if(entries.length)h+='<div class="bar"><h2>Joins the loop</h2></div>'+entries.map(fCard).join('');
+  h+='<div class="bar"><h2>Systems</h2></div>'+F.nodes.filter(function(n){return n.kind==='core'||n.kind==='sys'||n.kind==='child'}).map(fCard).join('');
+  var ppl=F.nodes.filter(function(n){return n.kind==='person'});if(ppl.length)h+='<div class="bar"><h2>People</h2></div>'+ppl.map(fCard).join('');
+  var others=F.nodes.filter(function(n){return ['core','sys','child','step','entry','person'].indexOf(n.kind)<0});if(others.length)h+='<div class="bar"><h2>Added</h2></div>'+others.map(fCard).join('');
+  h+='<div class="bar"><h2>Paths &mdash; each side checks the other</h2></div>'+F.paths.filter(function(p){return !(FB[p.from].kind==='step'&&FB[p.to].kind==='step')}).map(function(p){var col=SC[String(p.status).toLowerCase()]||'#475569';
+    return '<div class="card" style="border-left-color:'+col+'"><div style="display:flex;gap:8px;align-items:center"><div class="t" style="flex:1">'+esc(FB[p.from].name)+' &rarr; '+esc(FB[p.to].name)+'</div>'+fSel('path',p.id,p.status)+'</div><div class="m">'+esc(p.label||'')+(p.check?' · '+esc(p.check):'')+'</div><div class="acts"><button class="btn" onclick="fPath(\''+q1(p.id)+'\')">Open &rsaquo;</button></div></div>'}).join('');
+  var opts=F.nodes.map(function(n){return '<option value="'+esc(n.id)+'">'+esc(n.name)+'</option>'}).join('');
+  h+='<div class="bar"><h2>Add</h2></div><div class="card"><input id="faName" placeholder="New node name"><div style="height:6px"></div><div style="display:flex;gap:6px"><select id="faKind"><option value="sys">system</option><option value="step">step</option><option value="child">under another node</option><option value="person">person</option></select><select id="faParent"><option value="">(no parent)</option>'+opts+'</select></div><div style="height:6px"></div><button class="btn p" onclick="fAddNode()">+ Add node</button></div>';
+  h+='<div class="card"><div style="display:flex;gap:6px"><select id="faFrom">'+opts+'</select><select id="faTo">'+opts+'</select></div><div style="height:6px"></div><input id="faLabel" placeholder="Path label"><div style="height:6px"></div><button class="btn p" onclick="fAddPath()">+ Add path (starts red: not built)</button></div>';
+  document.getElementById('flist').innerHTML=h}
+function fAddNode(){var nm=fVal('faName').trim();if(!nm)return;var par=fVal('faParent'),k=fVal('faKind'),o={name:nm,kind:k,parent:par};if(par&&FB[par]){o.r=Number(FB[par].r||0)+80;o.a=Number(FB[par].a||0)+12}else if(k==='person'){o.r=680;o.a=(F.nodes.length*29)%360}
+  run('addFlowNode',[o],function(){toast('Added · logged for Orion');flowLoad(true)})}
+function fAddPath(){var a=fVal('faFrom'),b=fVal('faTo');if(!a||!b||a===b)return;run('addFlowPath',[{from:a,to:b,label:fVal('faLabel')}],function(){toast('Path added · logged for Orion');flowLoad(true)})}
+ 
+function fExport(){var box=document.getElementById('fExp');if(box)box.innerHTML='<div class="card"><div class="m">Building the picture, PDF and CSV&hellip;</div></div>';toast('Saving the map…');
+  var src=document.getElementById('fmap'),c=src.cloneNode(true);c.setAttribute('viewBox','-740 -740 1480 1480');c.setAttribute('width','2400');c.setAttribute('height','2400');c.setAttribute('xmlns','http://www.w3.org/2000/svg');
+  var bg=document.createElementNS(NS,'rect');bg.setAttribute('x',-740);bg.setAttribute('y',-740);bg.setAttribute('width',1480);bg.setAttribute('height',1480);bg.setAttribute('fill','#0b1220');c.insertBefore(bg,c.firstChild);
+  var st=document.createElementNS(NS,'style');st.textContent='text{font-family:Arial,Helvetica,sans-serif}';c.insertBefore(st,c.firstChild);
+  var url=URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(c)],{type:'image/svg+xml'})),im=new Image();
+  var send=function(b64){run('exportFlow',[b64,CFG.v||''],function(o){var h='<div class="card" style="border-left-color:var(--green)"><div class="t">&#11015; Saved to REALM TOOL LINKS › REALM FLOW MAP exports</div><div class="acts">'+(o.pdf?'<a class="btn p" target="_blank" href="'+esc(o.pdf)+'">PDF</a>':'<span class="btn r">PDF failed</span>')+(o.png?'<a class="btn" target="_blank" href="'+esc(o.png)+'">Picture</a>':'')+'<a class="btn" target="_blank" href="'+esc(o.csv)+'">CSV</a><a class="btn" target="_blank" href="'+esc(o.folder)+'">&#128193; Folder</a></div></div>';if(box)box.innerHTML=h;var lb=document.getElementById('fExpL');if(lb)lb.innerHTML=h;toast('Map saved')})};
+  im.onload=function(){try{var cv=document.createElement('canvas');cv.width=2400;cv.height=2400;cv.getContext('2d').drawImage(im,0,0);send(cv.toDataURL('image/png').split(',')[1])}catch(e){send('')}URL.revokeObjectURL(url)};
+  im.onerror=function(){send('')};im.src=url}
+ 
+function fPadSave(){var t=fVal('fpad').trim();if(!t)return;run('addMapNote',[t],function(){toast('Saved · Orion sees it next session');document.getElementById('fpad').value='';run('getMapNotes',[],fPadRender)})}
+function fPadRender(r){document.getElementById('fpadList').innerHTML=(r||[]).map(function(n){return '<div class="card"><div class="m">'+esc(n.when)+' · '+esc(n.by)+'</div><div style="white-space:pre-wrap">'+esc(n.note)+'</div></div>'}).join('')||'<div class="empty">No notes yet.</div>'}
+function fWfkiAdd(){var t=fVal('fwIn').trim();if(!t)return;run('addWfki',[t,''],function(){toast('We fucking killed it');document.getElementById('fwIn').value='';run('getWfki',[],fWfkiRender)})}
+function fKill(prefix){var t=prompt('What did we close?',prefix||'');if(!t)return;run('addWfki',[t,''],function(){toast('Logged to We Fucking Killed It')})}
+function fWfkiRender(r){var today=new Date().toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'});var by={},order=[];(r||[]).forEach(function(x){if(!by[x.day]){by[x.day]=[];order.push(x.day)}by[x.day].push(x)});
+  var tc=(r||[]).filter(function(x){return x.day===order[0]}).length;
+  document.getElementById('fwList').innerHTML=(order.length?'<div class="card"><div class="big">'+tc+'</div><div class="m">closed on '+esc(order[0])+'</div></div>':'')+order.map(function(d){return '<div class="wday">'+esc(d)+' · '+by[d].length+'</div>'+by[d].map(function(x){return '<div class="card" style="border-left-color:var(--green)"><div class="t">&#127942; '+esc(x.what)+'</div><div class="m">'+esc(x.time)+' · '+esc(x.by)+'</div></div>'}).join('')}).join('')||'<div class="empty">Nothing closed yet today. Go kill something.</div>'}
+function fHealth(){document.getElementById('fhSum').textContent='Checking every link on every node…';run('runHealth',[],function(s){document.getElementById('fhSum').innerHTML='<span class="pill pass">'+s.ok+' ok</span><span class="pill partial">'+s.amber+' amber</span><span class="pill fail">'+s.red+' red</span> · web links '+esc(s.web)+' · '+esc(s.when);flowLoad(true);setTimeout(fHealthRender,2500)})}
+function fHealthRender(){if(!F.loaded){setTimeout(fHealthRender,800);return}var ns=F.nodes.slice().sort(function(a,b){var o={red:0,amber:1,ok:2};return (o[a.health]!=null?o[a.health]:3)-(o[b.health]!=null?o[b.health]:3)});
+  document.getElementById('fhList').innerHTML=ns.map(function(n){return '<div class="card" style="border-left-color:'+(HC[String(n.health)]||'#475569')+'"><div class="t">'+esc(n.name)+' <span class="pill">'+esc(n.health||'unchecked')+'</span></div><pre>'+esc(n.health_detail||'not checked yet')+'</pre></div>'}).join('')}
+
+ 
+var FV={vehicles:[],items:[]},fvCur='Kangoo';
+function fVans(){run('getVanKit',[],function(r){FV=r;if(FV.vehicles.indexOf(fvCur)<0)fvCur=FV.vehicles[0];fvDraw()})}
+function fvPick(v){fvCur=v;fvDraw()}
+function fvDraw(){
+  document.getElementById('fvVeh').innerHTML=FV.vehicles.map(function(v){var its=FV.items.filter(function(i){return i.vehicle===v}),d=its.filter(function(i){return i.packed}).length;
+    return '<button class="chip'+(v===fvCur?' on built':'')+'" onclick="fvPick(\''+q1(v)+'\')">&#128656; '+esc(v)+(its.length?' · '+d+'/'+its.length:'')+'</button>'}).join('')+
+    '<button class="chip" onclick="fvNewVeh()">+ vehicle</button>';
+  var its=FV.items.filter(function(i){return i.vehicle===fvCur}),done=its.filter(function(i){return i.packed}).length,groups={},order=[];
+  its.forEach(function(i){var g=i.job_type||'Every job';if(!groups[g]){groups[g]=[];order.push(g)}groups[g].push(i)});
+  var pct=its.length?Math.round(100*done/its.length):0,all=its.length&&done===its.length;
+  var h='<div class="card" style="border-left-color:'+(all?'var(--green)':its.length?'var(--amber)':'var(--red)')+'"><div class="t">'+esc(fvCur)+' &mdash; '+(all?'&#10004; packed, good to go':its.length?done+' of '+its.length+' loaded':'no list yet')+'</div>'+
+    '<div class="vbar"><i style="width:'+pct+'%"></i></div><div class="m">Tick each item as it goes in the van. Missing or broken? Write it in the note under the item.</div></div>';
+  order.forEach(function(g){h+='<div class="wday">'+esc(g)+'</div><div class="card">'+groups[g].map(function(i){return '<div class="vrow'+(i.packed?' done':'')+'">'+
+    '<input type="checkbox"'+(i.packed?' checked':'')+' onchange="fvTick(\''+q1(i.id)+'\',this.checked)">'+
+    '<div class="vi"><b>'+esc(i.item)+'</b>'+(i.packed&&i.updated?'<span class="m">loaded '+esc(i.updated)+' · '+esc(i.updated_by||'')+'</span>':'')+
+    '<input class="vn" value="'+esc(i.notes||'')+'" placeholder="note (missing, broken, how many…)" onchange="fvSave(\''+q1(i.id)+'\',{notes:this.value})"></div>'+
+    '<input class="vq" value="'+esc(i.qty||'')+'" placeholder="qty" onchange="fvSave(\''+q1(i.id)+'\',{qty:this.value})">'+
+    '<button class="vx" title="Remove from list" onclick="fvDel(\''+q1(i.id)+'\',\''+q1(i.item)+'\')">&times;</button></div>'}).join('')+'</div>'});
+  var jts={};FV.items.forEach(function(i){if(i.job_type)jts[i.job_type]=1});
+  h+='<div class="wday">Add to the '+esc(fvCur)+'</div><div class="card"><input id="fvItem" placeholder="Item e.g. Extension leads" onkeydown="if(event.key===\'Enter\')fvAdd()"><div style="height:6px"></div>'+
+    '<div style="display:flex;gap:6px"><input id="fvJob" list="fvJobs" placeholder="Job type e.g. Gutter clean" style="flex:1"><input id="fvQty" placeholder="qty" style="width:70px"></div>'+
+    '<datalist id="fvJobs">'+Object.keys(jts).concat(['Every job','Window clean','Rope access','Anchor testing','Pressure clean']).filter(function(x,i,a){return a.indexOf(x)===i}).map(function(x){return '<option value="'+esc(x)+'">'}).join('')+'</datalist>'+
+    '<div style="height:8px"></div><button class="btn p" onclick="fvAdd()">Add item</button></div>'+
+    '<div style="display:flex;gap:8px;margin:10px 0 20px"><button class="btn" style="flex:1" onclick="fvClear()">&#8635; New day &mdash; clear ticks</button><button class="btn" onclick="chatOpen(\'Orion, van kit: '+q1(fvCur)+'\',\'van kit\',\'desk\')">&#128172; Chat</button></div>';
+  document.getElementById('fvBody').innerHTML=h}
+function fvTick(id,on){var it=FV.items.filter(function(i){return i.id===id})[0];if(it){it.packed=on?'yes':'';it.updated='now';it.updated_by='you'}fvDraw();run('saveVanItem',[id,{packed:on?'yes':''}],function(){})}
+function fvSave(id,patch){run('saveVanItem',[id,patch],function(){toast('Saved · logged for Orion');var it=FV.items.filter(function(i){return i.id===id})[0];if(it)Object.keys(patch).forEach(function(k){it[k]=patch[k]})})}
+function fvDel(id,name){if(!confirm('Take "'+name+'" off the '+fvCur+' list? (It stays in the sheet, just hidden.)'))return;run('saveVanItem',[id,{packed:'removed'}],function(){toast('Removed · logged for Orion');fVans()})}
+function fvAdd(){var it=fVal('fvItem').trim();if(!it)return;run('addVanItem',[{vehicle:fvCur,item:it,job_type:fVal('fvJob').trim(),qty:fVal('fvQty').trim()}],function(){toast('Added to the '+fvCur);fVans()})}
+function fvClear(){run('clearVanTicks',[fvCur],function(n){toast(n+' ticks cleared');fVans()})}
+function fvNewVeh(){var v=prompt('Vehicle name (e.g. Hilux, Trailer)');if(!v)return;v=v.trim();if(FV.vehicles.indexOf(v)<0)FV.vehicles.push(v);fvCur=v;fvDraw()}
+</script>
+<nav>
+  <button class="on" onclick="go('start',this)"><span>&#127919;</span>Start</button>
+  <button onclick="go('flow',this)"><span>&#10036;</span>Flow</button>
+  <button onclick="go('search',this)"><span>&#128269;</span>Search</button>
+  <button onclick="go('today',this)"><span>&#9728;</span>Today</button>
+  <button onclick="go('certs',this)"><span>&#128994;</span>Certs</button>
+  <button onclick="go('quotes',this)"><span>&#128993;</span>Quotes</button>
+  <button onclick="go('desk',this)"><span>&#128450;</span>Desk</button>
+  <button onclick="go('tasks',this)"><span>&#9989;</span>Tasks</button>
+  <button onclick="go('chats',this)"><span>&#128172;</span>Chats</button>
+  <button onclick="go('notes',this)"><span>&#128221;</span>Notes</button>
+  <button onclick="go('links',this)"><span>&#128279;</span>Links</button>
+</nav>
+<div class="toast" id="toast"></div>
+<script>
+var CFG={"wa":"https://chat.whatsapp.com/Iwp5QxSiENW2JDWaptbg8H","tel":"tel:1300358500","claude":"https://claude.ai/new","v":"","tab":""};var dayOff=0;var loaded={};
+var TABIX={start:0,flow:1,search:2,today:3,certs:4,quotes:5,desk:6,tasks:7,chats:8,notes:9,links:10};
+document.getElementById('qTel').href=CFG.tel;document.getElementById('qWa').href=CFG.wa;
+document.getElementById('qClaude').href=CFG.claude;
+document.getElementById('qClaude').onclick=function(){run('logChat',['Office chat from the desk','quick bar','desk'],function(){});};
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none'},1800)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function q1(s){return esc(s).replace(/'/g,"\\'")}
+function toggle(id){var e=document.getElementById(id);e.style.display=e.style.display==='none'?'block':'none'}
+function sk(id,n){document.getElementById(id).innerHTML=new Array((n||4)+1).join('<div class="sk"></div>')}
+function go(name,btn){document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById('tab-'+name).classList.add('on');document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');load(name)}
+function run(fn,args,cb){google.script.run.withSuccessHandler(cb).withFailureHandler(function(e){toast('Error: '+e.message)})[fn].apply(null,args||[])}
+ 
+function chatOpen(topic,context,where){run('logChat',[topic,context,where||'desk'],function(){toast('Chat logged')});window.open(CFG.claude+'?q='+encodeURIComponent(topic+(context?' — '+context:'')),'_blank')}
+function newChat(){var t=document.getElementById('cTopic').value.trim();if(!t)return;chatOpen(t,'',document.getElementById('cWhere').value);document.getElementById('cTopic').value='';setTimeout(function(){load('chats',true)},700)}
+function load(name,force){if(loaded[name]&&!force)return;loaded[name]=true;
+  if(name==='start'){sk('start',5);run('getStart',[],renderStart)}
+  if(name==='search'){loaded[name]=false}
+  if(name==='today'){sk('today');run('getDay',[dayOff],renderDay)}
+  if(name==='certs'){sk('certs');run('getCerts',[],function(r){renderEvents('certs',r,true)})}
+  if(name==='quotes'){sk('quotes');run('getQuotes',[],function(r){renderEvents('quotes',r,false)})}
+  if(name==='desk'){sk('desk');run('getRegister',[document.getElementById('showClosed').checked],renderReg)}
+  if(name==='tasks'){sk('tasks');run('getTasks',[],renderTasks)}
+  if(name==='chats'){sk('chats',3);run('getChats',[document.getElementById('showFiled').checked],renderChats)}
+  if(name==='notes'){sk('notes',2);run('getNotes',[],renderNotes)}
+  if(name==='links'){sk('links');run('getLinks',[],renderLinks)}
+  if(name==='flow'){flowLoad(force)}}
+function shiftDay(d){dayOff=d===0?0:dayOff+d;load('today',true)}
+function evCard(r,certMode){var res=r.result?'<span class="pill '+esc(r.result.split(' ')[0].toLowerCase())+'">'+esc(r.result)+'</span>':'';
+  var meta=[r.start,r.where].filter(Boolean).join(' &middot; ');
+  var acts='<a class="btn" href="'+esc(r.url)+'" target="_blank">&#128197; Open</a>';
+  if(r.wa)acts+='<a class="btn g" href="'+esc(r.wa)+'" target="_blank">&#128994; Group</a>';else acts+='<span class="btn r">no WA link</span>';
+  if(r.cert&&/^http/.test(r.cert))acts+='<a class="btn b" href="'+esc(r.cert)+'" target="_blank">&#128196; Last cert</a>';
+  if(r.where)acts+='<a class="btn" href="https://maps.google.com/?q='+encodeURIComponent(r.where)+'" target="_blank">&#128506;</a>';
+  if(certMode||/ANCHOR/i.test(r.cal)){acts+='<button class="btn g" onclick="setRes(\''+q1(r.title)+'\',\'PASS\')">Pass</button><button class="btn a" onclick="setRes(\''+q1(r.title)+'\',\'PARTIAL\')">Partial</button><button class="btn r" onclick="setRes(\''+q1(r.title)+'\',\'FAIL\')">Fail</button>'}
+  else{acts+='<button class="btn b" onclick="chase(\''+q1(r.title)+'\')">&#128227; Chase</button>'}
+  acts+='<button class="btn" onclick="toReg(\''+q1(r.title)+'\',\''+esc(r.url)+'\')">&#10133; Register</button>';
+  acts+='<button class="btn" onclick="chatOpen(\'Orion: '+q1(r.title)+'\',\'job card\',\'desk\')">&#128172; Chat</button>';
+  var extra=r.desc?'<details><summary>notes &middot; codes: '+esc(r.codes||'&mdash;')+' &middot; WO: '+esc(r.wo||'&mdash;')+' &middot; inv: '+esc(r.inv||'&mdash;')+'</summary><pre>'+esc(r.desc)+'</pre></details>':'';
+  return '<div class="card" style="border-left-color:'+esc(r.color||'#22304a')+'"><div class="t">'+esc(r.title)+'</div><div class="m"><span class="pill">'+esc(r.cal)+'</span>'+res+esc(meta)+'</div>'+extra+'<div class="acts">'+acts+'</div></div>'}
+function renderDay(r){document.getElementById('dayLabel').textContent=r.label;var h=r.rows.length?r.rows.map(function(x){return evCard(x,false)}).join(''):'<div class="empty">Nothing in the diary.</div>';document.getElementById('today').innerHTML=h}
+function renderEvents(id,r,certMode){var h=r.err?'<div class="err">'+esc(r.err)+'</div>':'';h+=r.rows.length?r.rows.map(function(x){return evCard(x,certMode)}).join(''):'<div class="empty">Nothing found.</div>';document.getElementById(id).innerHTML=h}
+function setRes(job,res){var d=prompt('Date of works for '+job+' (d/m/yyyy)? leave blank = today');run('setResult',[job,res,d||new Date().toLocaleDateString('en-AU'),''],function(){toast(res+' logged');load('certs',true);load('today',true)})}
+function chase(t){run('addTask',['Realm Quotes','CHASE: '+t,'Follow up status of this quote'],function(l){toast('Added to '+l)})}
+function toReg(t,u){run('addRegister',[t,'task','Ange','',u],function(id){toast('Register #'+id)})}
+function renderChats(r){var h=r.length?r.map(function(c){
+  var col=/FILED/i.test(c.status)?'var(--green)':'var(--purple)';
+  return '<div class="card" style="border-left-color:'+col+'"><div class="t">'+esc(c.topic)+'</div><div class="m"><span class="pill">'+esc(c.where)+'</span>'+esc(c.when)+' &middot; '+esc(c.status)+(c.outcome?' &middot; '+esc(c.outcome):'')+'</div>'+
+  '<div class="acts"><button class="btn p" onclick="chatOpen(\''+q1(c.topic)+'\',\'picking this back up\',\''+q1(c.where)+'\')">&#128172; Reopen</button>'+
+  (/FILED/i.test(c.status)?'':'<button class="btn g" onclick="fileIt('+c.row+',false)">&#10004; File away</button><button class="btn b" onclick="fileIt('+c.row+',true)">&#10133; File to register</button>')+
+  '</div></div>'}).join(''):'<div class="empty">No chats logged. Every &#128172; button files one here.</div>';document.getElementById('chats').innerHTML=h}
+function fileIt(row,toReg){var o=prompt('What came out of it? (one line, optional)','');run('fileChat',[row,o||'',toReg],function(m){toast(m);load('chats',true);load('start',true)})}
+function fileAll(){if(!confirm('File away every open chat?'))return;run('fileAllChats',[],function(n){toast(n+' filed');load('chats',true);load('start',true)})}
+function renderReg(r){var h=r.rows.length?r.rows.map(function(x){var st=(x.status||'').toUpperCase();var col=/CLOSED|DONE/.test(st)?'var(--green)':/BLOCK|WAIT/.test(st)?'var(--red)':/PROG|BUILD/.test(st)?'var(--amber)':'var(--blue)';
+  return '<div class="card" style="border-left-color:'+col+'"><div class="t" contenteditable="true" onblur="upd('+x.row+',{item:this.textContent.replace(/^#\\d+\\s*/,\'\')})">#'+esc(x.id)+' '+esc(x.item)+'</div><div class="m"><span class="pill">'+esc(x.type)+'</span><span class="pill">'+esc(x.owner)+'</span>'+esc(st)+(x.updated?' &middot; '+esc(x.updated):'')+'</div>'+
+  '<div style="margin-top:6px"><input value="'+esc(x.next)+'" placeholder="next action" onchange="upd('+x.row+',{next_action:this.value})"></div>'+
+  '<div class="acts">'+(x.link?'<a class="btn" href="'+esc(x.link)+'" target="_blank">&#128279; Open</a>':'')+
+  '<button class="btn g" onclick="upd('+x.row+',{status:\'CLOSED\',close_it:\'&#10004;\'})">&#10004; Done</button><button class="btn a" onclick="push('+x.row+')">&#9208; Push</button><button class="btn b" onclick="upd('+x.row+',{owner:\'Julie\'})">&#8594; Julie</button><button class="btn" onclick="upd('+x.row+',{status:\'IN PROGRESS\'})">&#9654; Doing</button>'+
+  '<button class="btn" onclick="chatOpen(\'Orion, register #'+x.id+': '+q1(x.item)+'\',\'register row\',\'desk\')">&#128172; Chat</button></div></div>'}).join(''):'<div class="empty">Nothing open.</div>';document.getElementById('desk').innerHTML=h}
+function renderStart(r){document.getElementById('startWhen').textContent=r.count+' open · '+r.when;var ic={cert:'&#128994;',quote:'&#128993;',reg:'&#128450;',task:'&#9989;',job:'&#9728;',chat:'&#128172;'};
+  var card=function(x,i){return '<div class="card" style="border-left-color:'+(i<5?'var(--cyan)':'var(--line)')+'"><div class="t">'+(i<5?(i+1)+'. ':'')+esc(x.title)+'</div><div class="m">'+esc(x.why)+'</div><div class="acts"><button class="btn p" onclick="go(\''+x.tab+'\',document.querySelectorAll(\'nav button\')[TABIX[\''+x.tab+'\']])">'+(ic[x.kind]||'')+' Open</button>'+(x.row?'<button class="btn a" onclick="push('+x.row+')">&#9208; Push</button>':'')+'<button class="btn" onclick="chatOpen(\'Orion: '+q1(x.title)+'\',\''+q1(x.why)+'\',\'desk\')">&#128172; Chat</button></div></div>'};
+  var h=r.top.length?'<div class="m" style="margin-bottom:8px">Top five, in order. Do these, ignore the rest until they\'re gone.</div>'+r.top.map(card).join(''):'<div class="empty">Nothing urgent. Go to Today.</div>';
+  if(r.rest.length)h+='<details><summary>'+r.rest.length+' more after these</summary>'+r.rest.map(function(x){return card(x,9)}).join('')+'</details>';
+  document.getElementById('start').innerHTML=h}
+function doSearch(){var q=document.getElementById('q').value.trim();if(!q)return;sk('search',4);run('searchAll',[q],renderSearch)}
+function renderSearch(r){if(r.err){document.getElementById('search').innerHTML='<div class="err">'+esc(r.err)+'</div>';return}
+  var h='<div class="card"><div class="t">'+esc(r.term)+'</div><div class="m">'+r.events.length+' diary entries &middot; first '+esc(r.firstSeen||'&mdash;')+' &middot; last '+esc(r.lastSeen||'&mdash;')+' &middot; '+r.files.length+' Drive files &middot; '+Object.keys(r.wa).length+' WhatsApp group link(s) &middot; '+r.invoices.length+' invoice/estimate rows</div>';
+  Object.keys(r.wa).forEach(function(k){h+='<a class="btn g" style="display:inline-block;margin:6px 6px 0 0" target="_blank" href="'+esc(k)+'">&#128994; Group ('+r.wa[k]+' cards)</a>'});
+  h+='<button class="btn" style="display:inline-block;margin:6px 0 0" onclick="chatOpen(\'Orion, site history for '+q1(r.term)+'\',\'search\',\'desk\')">&#128172; Chat about this site</button></div>';
+  if(r.results.length)h+='<div class="bar"><h2>Pass / fail logged</h2></div>'+r.results.map(function(x){return '<div class="card"><span class="pill '+esc(String(x.result).toLowerCase())+'">'+esc(x.result)+'</span>'+esc(x.job)+' <span class="m">works '+esc(x.works)+' &middot; logged '+esc(x.when)+'</span></div>'}).join('');
+  if(r.scopes.length)h+='<div class="bar"><h2>Scopes on the cards</h2></div>'+r.scopes.slice(0,6).map(function(s){return '<div class="card"><div class="m">'+esc(s.when)+' &middot; '+esc(s.cal)+'</div>'+esc(s.scope)+'</div>'}).join('');
+  if(r.files.length)h+='<div class="bar"><h2>Drive &mdash; photos, files, folders</h2></div>'+r.files.map(function(f){return '<a class="card" style="display:block;text-decoration:none;color:inherit;border-left-color:'+(f.isFolder?'var(--amber)':f.isPhoto?'var(--green)':'var(--blue)')+'" target="_blank" href="'+esc(f.url)+'"><div class="t">'+(f.isFolder?'&#128193; ':f.isPhoto?'&#128444; ':'&#128196; ')+esc(f.name)+'</div><div class="m">'+esc(f.folder)+' &middot; '+esc(f.when)+'</div></a>'}).join('');
+  if(r.driveErr)h+='<div class="err">Drive: '+esc(r.driveErr)+'</div>';
+  if(r.invoices.length)h+='<div class="bar"><h2>REALM SOLD 2026 &mdash; invoices / estimates</h2></div>'+r.invoices.map(function(x){return '<div class="card"><div class="m">'+esc(x.tab)+'</div><pre>'+esc(x.line)+'</pre></div>'}).join('');
+  if(r.invErr)h+='<div class="err">'+esc(r.invErr)+'</div>';
+  if(r.register.length)h+='<div class="bar"><h2>Register</h2></div>'+r.register.map(function(x){return '<div class="card"><div class="t">#'+esc(x.id)+' '+esc(x.item)+'</div><div class="m">'+esc(x.status)+' &middot; '+esc(x.owner)+' &middot; '+esc(x.next)+'</div></div>'}).join('');
+  if(r.events.length)h+='<div class="bar"><h2>Diary history &mdash; every calendar</h2></div>'+r.events.map(function(x){return evCard(x,/ANCHOR/i.test(x.cal))}).join('');
+  if(!r.events.length&&!r.files.length)h+='<div class="empty">Nothing found. Try just the street number and name.</div>';
+  document.getElementById('search').innerHTML=h}
+function push(row){var d=prompt('Push back how many days? (1 = tomorrow, 7 = next week)','1');if(d===null)return;var n=prompt('Why / what needs to happen first? (optional)','');run('pushBack',[row,d,n||''],function(w){toast('Pushed to '+w);load('desk',true);load('start',true)})}
+function upd(row,patch){run('updateRegister',[row,patch],function(){toast('Saved');if(patch.status)load('desk',true)})}
+function addReg(){var i=document.getElementById('nItem').value.trim();if(!i)return;run('addRegister',[i,document.getElementById('nType').value,document.getElementById('nOwner').value,document.getElementById('nNext').value,document.getElementById('nLink').value],function(id){toast('Register #'+id);document.getElementById('nItem').value='';toggle('addRow');load('desk',true)})}
+function renderTasks(r){var h=r.err?'<div class="err">'+esc(r.err)+'</div>':'';r.lists.forEach(function(l){if(!l.tasks.length)return;h+='<div class="bar"><h2>'+esc(l.title)+' <span class="pill">'+l.tasks.length+'</span></h2></div>';h+=l.tasks.map(function(t){return '<div class="card" style="border-left-color:var(--purple)"><div class="t">'+esc(t.title)+'</div>'+(t.notes?'<div class="m">'+esc(t.notes.slice(0,160))+'</div>':'')+(t.due?'<div class="m">due '+esc(t.due)+'</div>':'')+'<div class="acts"><button class="btn g" onclick="done(\''+l.id+'\',\''+t.id+'\')">&#10004; Done</button><button class="btn" onclick="chatOpen(\'Orion, task: '+q1(t.title)+'\',\'task\',\'desk\')">&#128172; Chat</button></div></div>'}).join('')});document.getElementById('tasks').innerHTML=h||'<div class="empty">No open tasks.</div>'}
+function done(l,t){run('completeTask',[l,t],function(){toast('Ticked');load('tasks',true)})}
+function addTk(){var t=document.getElementById('tTitle').value.trim();if(!t)return;run('addTask',[document.getElementById('tList').value,t,''],function(l){toast('Added to '+l);document.getElementById('tTitle').value='';load('tasks',true)})}
+function saveNote(){var n=document.getElementById('note').value.trim();if(!n)return;run('addNote',[n,document.getElementById('noteTag').value],function(){toast('Saved');document.getElementById('note').value='';load('notes',true)})}
+function renderNotes(r){document.getElementById('notes').innerHTML=r.length?r.map(function(n){return '<div class="card"><div class="m">'+esc(n.when)+' &middot; '+esc(n.tag)+'</div><div>'+esc(n.note)+'</div></div>'}).join(''):'<div class="empty">No notes yet.</div>'}
+function renderLinks(r){document.getElementById('links').innerHTML=r.length?r.map(function(l){return '<a class="card" style="display:block;text-decoration:none;color:inherit" href="'+esc(l.url)+'" target="_blank"><div class="t">'+esc(l.title)+'</div><div class="m">'+esc(l.url).slice(0,70)+'</div></a>'}).join(''):'<div class="empty">REALM_LINKS is empty.</div>'}
+run('whoami',[],function(w){document.getElementById('who').textContent=w});
+if(CFG.tab&&TABIX[CFG.tab]!=null){go(CFG.tab,document.querySelectorAll('nav button')[TABIX[CFG.tab]])}else load('start');
+</script>
+<script>
+function loadApps(){google.script.run.withSuccessHandler(function(r){var el=document.getElementById("apps");if(!el)return;var t=(r||[]).filter(function(x){return /^\s*\u2605/.test(String(x.title))});el.innerHTML=t.map(function(x){var s=String(x.title).replace(/^\s*\u2605\s*/,"").split(/\s+\u2014\s+/);return "<a target=\"_blank\" href=\""+esc(x.url)+"\"><b>"+esc(s[0])+"</b><span>"+esc(s[1]||"")+"</span></a>"}).join("")||"<div class=\"m\">No tiles yet. Tap Edit tiles and add a row starting with \u2605.</div>"}).getLinks()}
+setTimeout(loadApps,200);
+ 
+(function(){
+  var css=document.createElement('style');
+  css.textContent='#appPane{position:fixed;inset:0;z-index:9999;background:#0b1b22;display:none;flex-direction:column}#appPane.on{display:flex}#appPane .bar{display:flex;align-items:center;gap:8px;padding:8px 10px;padding-top:calc(8px + env(safe-area-inset-top));background:#10272f;color:#e8f6f8;font:700 14px sans-serif}#appPane .bar b{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}#appPane .bar a,#appPane .bar button{border:0;border-radius:14px;padding:8px 12px;font:800 12px sans-serif;background:#19c3d8;color:#0b1b22;text-decoration:none;cursor:pointer}#appPane .bar button.x{background:#e8f6f8}#appPane iframe{flex:1;border:0;width:100%;background:#fff}';
+  document.head.appendChild(css);
+  var p=document.createElement('div'); p.id='appPane';
+  p.innerHTML='<div class="bar"><button class="x" id="apX">&#10005; Back to Desk</button><b id="apT"></b><a id="apO" target="_blank" rel="noopener">&#8599; Full</a></div><iframe id="apF" allow="microphone; camera; clipboard-write; geolocation"></iframe>';
+  document.body.appendChild(p);
+  document.getElementById('apX').onclick=function(){p.classList.remove('on');document.getElementById('apF').src='about:blank';};
+  window.openApp=function(url,title){document.getElementById('apT').textContent=title||'';document.getElementById('apO').href=url;document.getElementById('apF').src=url;p.classList.add('on');};
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href]'); if(!a||a.id=='apO')return;
+    var u=a.href||''; if(!/^https:\/\/script\.google\.com\/(a\/[^/]+\/)?macros\/(u\/\d+\/)?s\//.test(u))return;
+    u=u.replace(/\/macros\/u\/\d+\//,'/macros/');
+    e.preventDefault(); var b=a.querySelector('b'); openApp(u,(b?b.textContent:a.textContent).trim());
+  },true);
+})();
+
+</script>
+</body></html>
