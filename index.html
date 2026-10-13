@@ -23,6 +23,7 @@ function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return
 function fix(name,url){var n=name.toUpperCase();
  if(/REALM DESK/.test(n))return "./desk.html";
  if(/CERT STUDIO/.test(n))return "https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec";
+ if(/FLOW MAP/.test(n))return "./map.html";
  if(/SCRIBE/.test(n))return "https://script.google.com/macros/s/AKfycbwq0FdxP9Sh3mtB6Y8e-PocRGUUQBub_TQVlv8IiApXU6bQSN6N-CGo8JRQCUyhMjNG/exec";
  return url}
 var BAD=/orion|elon|grok|claude/i;
