@@ -1,1 +1,1 @@
-{"name":"Realm Desk","short_name":"Realm Desk","start_url":"./desk.html","scope":"./","display":"standalone","background_color":"#0b1220","theme_color":"#0b1220","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]}
+{"name":"Realm Apps","short_name":"Realm Apps","start_url":"./index.html","scope":"./","display":"standalone","background_color":"#ffffff","theme_color":"#ffffff","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]}

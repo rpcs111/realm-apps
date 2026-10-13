@@ -1,5 +1,46 @@
-<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Realm Apps</title><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg">
-<style>body{font-family:sans-serif;background:#0b1220;color:#fff;padding:24px}a{display:block;margin:12px 0;padding:18px;border-radius:12px;background:#2563eb;color:#fff;text-decoration:none;font-size:20px}</style>
-<h1>Realm Apps</h1><a href="desk.html">Realm Desk</a>
-<a href="https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec" target=_blank>Cert Studio (opens Google script)</a>
-<a href="https://script.google.com/macros/s/AKfycbwq0FdxP9Sh3mtB6Y8e-PocRGUUQBub_TQVlv8IiApXU6bQSN6N-CGo8JRQCUyhMjNG/exec" target=_blank>Scribe (opens Google script)</a>
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff"><title>Realm Apps</title>
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg"><link rel="apple-touch-icon" href="icon.svg">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#111827;font:16px/1.4 system-ui,-apple-system,Roboto,sans-serif;padding:20px 16px 40px}
+h1{margin:0 0 4px;font-size:26px;letter-spacing:.04em}.sub{color:#6b7280;font-size:14px;margin-bottom:16px}
+#install{display:block;width:100%;padding:16px;border:0;border-radius:14px;background:#111827;color:#fff;font:700 17px sans-serif;margin-bottom:12px}
+#help{display:none;background:#f3f4f6;border-radius:12px;padding:12px 14px;font-size:14px;margin-bottom:12px}
+#grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+#grid a{display:flex;flex-direction:column;justify-content:flex-end;min-height:118px;padding:14px;border-radius:18px;color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+#grid a b{font-size:18px}#grid a span{font-size:13px;opacity:.9}
+.err{grid-column:1/-1;background:#fee2e2;color:#991b1b;padding:14px;border-radius:12px}.load{grid-column:1/-1;color:#6b7280}
+</style></head><body>
+<h1>REALM APPS</h1><div class="sub">Tap a tile to open.</div>
+<button id="install">&#11015; Save as app</button>
+<div id="help">On Android Chrome: tap <b>&#8942;</b> (top right) &rsaquo; <b>Add to Home screen</b> (or <b>Install app</b>) &rsaquo; <b>Install</b>.</div>
+<div id="grid"><div class="load">Loading tiles&hellip;</div></div>
+<script>
+var EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";
+var COLORS=["#2563eb","#16a34a","#dc2626","#9333ea","#ea580c","#0891b2","#db2777","#4f46e5","#65a30d","#b45309"];
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function fix(name,url){var n=name.toUpperCase();
+ if(/REALM DESK/.test(n))return "./desk.html";
+ if(/CERT STUDIO/.test(n))return "https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec";
+ if(/SCRIBE/.test(n))return "https://script.google.com/macros/s/AKfycbwq0FdxP9Sh3mtB6Y8e-PocRGUUQBub_TQVlv8IiApXU6bQSN6N-CGo8JRQCUyhMjNG/exec";
+ return url}
+var BAD=/orion|elon|grok|claude/i;
+fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:"getLinks",args:[]})})
+.then(function(r){return r.json()}).then(function(j){
+ if(!j||!j.ok)throw new Error((j&&j.error)||"getLinks failed");
+ var seen={},t=(j.result||[]).filter(function(x){var k=String(x.title)+" "+String(x.url);
+   if(!/^\s*\u2605/.test(String(x.title))||/orion/i.test(k)||seen[x.title])return false;seen[x.title]=1;return true});
+ var g=document.getElementById("grid");
+ if(!t.length){g.innerHTML='<div class="err">No tiles found in REALM_LINKS.</div>';return}
+ g.innerHTML=t.map(function(x,i){var s=String(x.title).replace(/^\s*\u2605\s*/,"").split(/\s+\u2014\s+/);var name=s[0],sub=s[1]||"";if(BAD.test(sub))sub="";
+   var u=fix(name,x.url),ext=u.indexOf("./")!==0;
+   return '<a href="'+esc(u)+'"'+(ext?' target="_blank" rel="noopener"':'')+' style="background:'+COLORS[i%COLORS.length]+'"><b>'+esc(name)+'</b><span>'+esc(sub)+'</span></a>'}).join("");
+}).catch(function(e){document.getElementById("grid").innerHTML='<div class="err">Could not load tiles: '+esc(e.message)+'</div>'});
+var dp=null,btn=document.getElementById("install"),help=document.getElementById("help");
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e});
+btn.onclick=function(){if(dp){dp.prompt();dp.userChoice.then(function(){dp=null})}else{help.style.display="block"}};
+window.addEventListener("appinstalled",function(){btn.textContent="Saved as app \u2713"});
+if(window.matchMedia("(display-mode: standalone)").matches)btn.style.display="none";
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js");
+</script></body></html>
