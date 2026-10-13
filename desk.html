@@ -122,7 +122,7 @@ pre{overflow-x:auto}
     <div class="bar"><h2>Chats &mdash; roll in, file away</h2><label style="font-size:12px;color:var(--mut)"><input type="checkbox" id="showFiled" style="width:auto" onchange="load('chats',true)"> filed</label><button class="btn" onclick="fileAll()">File all</button></div>
     <div class="card"><div class="m">Every &#128172; button in this app logs the chat here the moment you tap it &mdash; side panel or web. Nothing rolls away unfiled.</div>
       <div style="height:8px"></div><input id="cTopic" placeholder="Start a chat about…" onkeydown="if(event.key==='Enter')newChat()">
-      <div style="height:6px"></div><div style="display:flex;gap:6px"><select id="cWhere" style="flex:1"><option>side panel</option><option>web</option><option>desk</option></select><button class="btn p" onclick="newChat()">Open & log</button></div></div>
+      <div style="height:6px"></div><div style="display:flex;gap:6px"><select id="cWhere" style="flex:1"><option>side panel</option><option>web</option><option>desk</option></select><button class="btn p" onclick="newChat()">Open &amp; log</button></div></div>
     <div id="chats"></div>
   </section>
   <section class="tab" id="tab-notes"><div class="bar"><h2>Notepad</h2></div>
@@ -300,7 +300,7 @@ function fNode(id){var n=FB[id];if(!n)return;fCur={t:'node',id:id,status:n.statu
     '<h3>Notes</h3><textarea id="fnNotes">'+esc(n.notes||'')+'</textarea>'+
     '<h3>Standing rules on this node</h3><textarea id="fnRules" placeholder="one per line">'+esc(n.rules||'')+'</textarea>'+
     (n.uses||n.kind==='step'?'<h3>Uses</h3><input id="fnUses" value="'+esc(n.uses||'')+'">':'')+
-    '<details><summary>Edit links & folder</summary><div class="m" style="margin:6px 0">One per line: <b>Label | link</b> (also cal:ID, drive:ID, folder:ID, sheetname:NAME, prop:KEY)</div><textarea id="fnLinks" style="min-height:120px;font-size:12.5px">'+esc(n.links||'')+'</textarea><div style="height:6px"></div><input id="fnFolder" value="'+esc(n.folder||'')+'" placeholder="Folder link"></details>'+
+    '<details><summary>Edit links &amp; folder</summary><div class="m" style="margin:6px 0">One per line: <b>Label | link</b> (also cal:ID, drive:ID, folder:ID, sheetname:NAME, prop:KEY)</div><textarea id="fnLinks" style="min-height:120px;font-size:12.5px">'+esc(n.links||'')+'</textarea><div style="height:6px"></div><input id="fnFolder" value="'+esc(n.folder||'')+'" placeholder="Folder link"></details>'+
     (ins.length?'<h3>Paths</h3>'+ins.map(function(p){var c=SC[String(p.status).toLowerCase()]||'#475569';return '<div class="lk" onclick="fPath(\''+q1(p.id)+'\')" style="cursor:pointer"><span class="d" style="background:'+c+'"></span><span class="l">'+esc((FB[p.from]||{}).name)+' → '+esc((FB[p.to]||{}).name)+' · '+esc(p.label)+'</span><span class="pill">'+esc(p.status)+'</span></div>'}).join(''):'')+
     '<div style="display:flex;gap:8px;margin-top:14px"><button class="btn p" style="flex:1" onclick="fSaveNode()">Save</button><button class="btn" onclick="chatOpen(\'flow map node: '+q1(n.name)+'\',\'flow map\',\'desk\')">&#128172; Chat</button></div>';
   fOpen(h)}
@@ -420,7 +420,7 @@ var CFG={"wa":"https://chat.whatsapp.com/Iwp5QxSiENW2JDWaptbg8H","tel":"tel:1300
 var TABIX={start:0,flow:1,search:2,today:3,certs:4,quotes:5,desk:6,tasks:7,chats:8,notes:9,links:10};
 document.getElementById('qTel').href=CFG.tel;document.getElementById('qWa').href=CFG.wa;
 function toast(m){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none'},1800)}
-function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&','<':'<','>':'>','"':'"'}[c]})}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function q1(s){return esc(s).replace(/'/g,"\\'")}
 function toggle(id){var e=document.getElementById(id);e.style.display=e.style.display==='none'?'block':'none'}
 function sk(id,n){document.getElementById(id).innerHTML=new Array((n||4)+1).join('<div class="sk"></div>')}
