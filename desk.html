@@ -443,7 +443,7 @@ function load(name,force){if(loaded[name]&&!force)return;loaded[name]=true;
   if(name==='flow'){flowLoad(force)}}
 function shiftDay(d){dayOff=d===0?0:dayOff+d;load('today',true)}
 function evCard(r,certMode){var res=r.result?'<span class="pill '+esc(r.result.split(' ')[0].toLowerCase())+'">'+esc(r.result)+'</span>':'';
-  var meta=[r.start,r.where].filter(Boolean).join(' &middot; ');
+  var meta=[r.start,r.where].filter(Boolean).join(' \u00b7 ');
   var acts='<a class="btn" href="'+esc(r.url)+'" target="_blank">&#128197; Open</a>';
   if(r.wa)acts+='<a class="btn g" href="'+esc(r.wa)+'" target="_blank">&#128994; Group</a>';else acts+='<span class="btn r">no WA link</span>';
   if(r.cert&&/^http/.test(r.cert))acts+='<a class="btn b" href="'+esc(r.cert)+'" target="_blank">&#128196; Last cert</a>';
