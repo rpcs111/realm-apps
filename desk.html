@@ -59,7 +59,6 @@ pre{white-space:pre-wrap;font:12px/1.4 ui-monospace,monospace;color:var(--mut);m
 </style></head><body>
 <header><h1>REALM <b>DESK</b></h1><span class="who" id="who"></span></header>
 <div class="quick">
-  <a id="qClaude" target="_blank">&#128172; Chat with Orion</a>
   <a id="qTel">&#128222; 1300 358 500</a>
   <a id="qWa" target="_blank">&#128994; Office WhatsApp</a>
   <a href="https://calendar.google.com" target="_blank">&#128197; Diary</a>
@@ -89,7 +88,7 @@ pre{white-space:pre-wrap;font:12px/1.4 ui-monospace,monospace;color:var(--mut);m
     <div class="bar"><h2>Open register</h2><label style="font-size:12px;color:var(--mut)"><input type="checkbox" id="showClosed" style="width:auto" onchange="load('desk',true)"> closed</label><button class="btn p" onclick="toggle('addRow')">+ Add</button></div>
     <div id="addRow" style="display:none" class="card">
       <input id="nItem" placeholder="What is it?"><div style="height:6px"></div>
-      <div style="display:flex;gap:6px"><select id="nType"><option>task</option><option>build</option><option>flow</option><option>cert</option><option>quote</option><option>idea</option></select><select id="nOwner"><option>Ange</option><option>Julie</option><option>Orion</option></select></div><div style="height:6px"></div>
+      <div style="display:flex;gap:6px"><select id="nType"><option>task</option><option>build</option><option>flow</option><option>cert</option><option>quote</option><option>idea</option></select><select id="nOwner"><option>Ange</option><option>Julie</option></select></div><div style="height:6px"></div>
       <input id="nNext" placeholder="Next action"><div style="height:6px"></div>
       <input id="nLink" placeholder="Link (optional)"><div style="height:8px"></div>
       <button class="btn p" onclick="addReg()">Save to register</button>
@@ -175,7 +174,7 @@ pre{white-space:pre-wrap;font:12px/1.4 ui-monospace,monospace;color:var(--mut);m
       <div class="fleg"><i style="background:#22c55e"></i>built<i style="background:#f59e0b"></i>partial<i style="background:#ef4444"></i>not built / broken<br>inner = status &middot; outer ring = health check &middot; &sect; = standing rules</div>
       <div class="fzoom"><button onclick="fZoom(.8)">+</button><button onclick="fZoom(1.25)">&minus;</button><button onclick="fFit()">&#9678;</button><button onclick="fExport()" title="Download PDF &#43; picture &#43; CSV">&#11015;</button></div>
     </div>
-    <div class="m" style="margin:6px 2px;color:var(--mut);font-size:12px">Tap a node for its links, folder, status and notes. Pinch or drag to move. Edits save to the sheet and log for Orion. &#11015; saves the map (PDF + picture + CSV) to REALM TOOL LINKS.</div><div id="fExp"></div>
+    <div class="m" style="margin:6px 2px;color:var(--mut);font-size:12px">Tap a node for its links, folder, status and notes. Pinch or drag to move. Edits save to the sheet. &#11015; saves the map (PDF + picture + CSV) to REALM TOOL LINKS.</div><div id="fExp"></div>
   </div>
   <div class="fview" id="fv-list"><div id="fExpL"></div><div id="flist"></div></div>
   <div class="fview" id="fv-vans">
@@ -183,7 +182,7 @@ pre{white-space:pre-wrap;font:12px/1.4 ui-monospace,monospace;color:var(--mut);m
     <div id="fvBody"><div class="sk"></div></div>
   </div>
   <div class="fview" id="fv-pad">
-    <div class="card"><textarea id="fpad" placeholder="Map notepad — type or dictate. Orion reads it at the start of every session."></textarea><div style="height:8px"></div><button class="btn p" onclick="fPadSave()">Save</button></div>
+    <div class="card"><textarea id="fpad" placeholder="Map notepad — type or dictate."></textarea><div style="height:8px"></div><button class="btn p" onclick="fPadSave()">Save</button></div>
     <div id="fpadList"></div>
   </div>
   <div class="fview" id="fv-wfki">
@@ -205,7 +204,7 @@ function fEff(n){return String(n.health)==='red'?'#ef4444':fCol(n)}
 function fGo(v,b){document.querySelectorAll('.fview').forEach(function(x){x.classList.remove('on')});document.getElementById('fv-'+v).classList.add('on');document.querySelectorAll('#fsub button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
   if(v==='pad')run('getMapNotes',[],fPadRender);if(v==='wfki')run('getWfki',[],fWfkiRender);if(v==='health')fHealthRender();if(v==='list')fList();if(v==='vans')fVans()}
 function flowLoad(force){if(F.loaded&&!force)return;document.getElementById('fvp').innerHTML='<text x="0" y="0" fill="#8ea0c2" font-size="28" text-anchor="middle">loading the map&hellip;</text>';
-  run('getFlow',[CFG.v||''],function(r){var first=!F.loaded;F=r;F.loaded=true;FB={};r.nodes.forEach(function(n){FB[n.id]=n});if(first)setTimeout(fPhoneFit,50);document.getElementById('fWhen').textContent=r.nodes.length+' nodes · '+r.when+(r.openChanges?' · '+r.openChanges+' changes for Orion':'');fDraw();if(document.getElementById('fv-list').classList.contains('on'))fList()})}
+  run('getFlow',[CFG.v||''],function(r){var first=!F.loaded;F=r;F.loaded=true;FB={};r.nodes.forEach(function(n){FB[n.id]=n});if(first)setTimeout(fPhoneFit,50);document.getElementById('fWhen').textContent=r.nodes.length+' nodes · '+r.when+(r.openChanges?' · '+r.openChanges+' changes':'');fDraw();if(document.getElementById('fv-list').classList.contains('on'))fList()})}
 function fP(n){if(!n||n.kind==='core')return{x:0,y:0};var a=Number(n.a)*Math.PI/180,r=Number(n.r);return{x:r*Math.cos(a),y:r*Math.sin(a)}}
 var NS='http://www.w3.org/2000/svg';
 function fEl(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);(p||document.getElementById('fvp')).appendChild(e);return e}
@@ -270,7 +269,7 @@ function fNode(id){var n=FB[id];if(!n)return;fCur={t:'node',id:id,status:n.statu
   var btn='';if(n.button==='roster')btn='<button class="btn p" onclick="fRoster(0)">&#128119; Who&rsquo;s rostered today</button> <button class="btn" onclick="fRoster(1)">Tomorrow</button><div id="fRos"></div>';
   if(n.button==='getpaid')btn='<a class="btn p" style="display:inline-block;background:var(--green);border-color:var(--green)" href="https://books.zoho.com/app#/invoices" target="_blank">&#128176; Get paid &mdash; open unpaid invoices</a> <button class="btn" onclick="fKill(\'Chased / got paid: \')">&#127942; Log a payment in</button>';
   if(n.button==='vans')btn='<button class="btn p" onclick="fClose();fGo(\'vans\',document.getElementById(\'fsubVans\'))">&#128656; Open the van kit lists</button>';
-  if(n.button==='rebook')btn='<a class="btn p" style="display:inline-block" href="https://books.zoho.com/app#/invoices" target="_blank">&#128257; Rebook &mdash; open last invoice to clone</a><div class="m" style="margin-top:6px">Auto-clone + price check is <b style="color:var(--red)">not built</b> yet (Zoho is read-only to Orion).</div>';
+  if(n.button==='rebook')btn='<a class="btn p" style="display:inline-block" href="https://books.zoho.com/app#/invoices" target="_blank">&#128257; Rebook &mdash; open last invoice to clone</a><div class="m" style="margin-top:6px">Auto-clone + price check is <b style="color:var(--red)">not built</b> yet (Zoho is read-only).</div>';
   var h='<input id="fnName" value="'+esc(n.name)+'" style="font-size:18px;font-weight:700;margin:0 30px 6px 0;width:calc(100% - 30px)">'+
     '<div class="m">'+esc(n.kind)+(n.parent?' · under '+esc((FB[n.parent]||{}).name||n.parent):'')+(n.updated?' · edited '+esc(n.updated)+' by '+esc(n.updated_by||''):'')+'</div>'+
     (btn?'<h3>Action</h3>'+btn:'')+
@@ -283,14 +282,14 @@ function fNode(id){var n=FB[id];if(!n)return;fCur={t:'node',id:id,status:n.statu
     (n.uses||n.kind==='step'?'<h3>Uses</h3><input id="fnUses" value="'+esc(n.uses||'')+'">':'')+
     '<details><summary>Edit links &amp; folder</summary><div class="m" style="margin:6px 0">One per line: <b>Label | link</b> (also cal:ID, drive:ID, folder:ID, sheetname:NAME, prop:KEY)</div><textarea id="fnLinks" style="min-height:120px;font-size:12.5px">'+esc(n.links||'')+'</textarea><div style="height:6px"></div><input id="fnFolder" value="'+esc(n.folder||'')+'" placeholder="Folder link"></details>'+
     (ins.length?'<h3>Paths</h3>'+ins.map(function(p){var c=SC[String(p.status).toLowerCase()]||'#475569';return '<div class="lk" onclick="fPath(\''+q1(p.id)+'\')" style="cursor:pointer"><span class="d" style="background:'+c+'"></span><span class="l">'+esc((FB[p.from]||{}).name)+' → '+esc((FB[p.to]||{}).name)+' · '+esc(p.label)+'</span><span class="pill">'+esc(p.status)+'</span></div>'}).join(''):'')+
-    '<div style="display:flex;gap:8px;margin-top:14px"><button class="btn p" style="flex:1" onclick="fSaveNode()">Save</button><button class="btn" onclick="chatOpen(\'Orion, flow map node: '+q1(n.name)+'\',\'flow map\',\'desk\')">&#128172; Chat</button></div>';
+    '<div style="display:flex;gap:8px;margin-top:14px"><button class="btn p" style="flex:1" onclick="fSaveNode()">Save</button><button class="btn" onclick="chatOpen(\'flow map node: '+q1(n.name)+'\',\'flow map\',\'desk\')">&#128172; Chat</button></div>';
   fOpen(h)}
 function fSetSt(s){fCur.status=s;document.querySelectorAll('#fpanel .chip').forEach(function(c){c.classList.toggle('on',c.textContent.indexOf(s)>=0&&!(s==='built'&&/not/.test(c.textContent)))})}
 function fVal(id){var e=document.getElementById(id);return e?e.value:null}
 function fSaveNode(){var n=FB[fCur.id],patch={};var m={name:'fnName',notes:'fnNotes',rules:'fnRules',uses:'fnUses',links:'fnLinks',folder:'fnFolder'};
   Object.keys(m).forEach(function(k){var v=fVal(m[k]);if(v!==null&&v!==String(n[k]==null?'':n[k]))patch[k]=v});if(fCur.status!==n.status)patch.status=fCur.status;
   if(!Object.keys(patch).length){toast('Nothing changed');return}
-  run('saveFlowNode',[fCur.id,patch],function(r){toast('Saved · logged for Orion');Object.keys(patch).forEach(function(k){n[k]=patch[k]});fDraw();fList();fClose()})}
+  run('saveFlowNode',[fCur.id,patch],function(r){toast('Saved');Object.keys(patch).forEach(function(k){n[k]=patch[k]});fDraw();fList();fClose()})}
 function fPath(id){var p=F.paths.filter(function(x){return x.id===id})[0];if(!p)return;fCur={t:'path',id:id,status:p.status};
   fOpen('<div style="font-size:18px;font-weight:700;margin-right:30px">'+esc((FB[p.from]||{}).name)+' &rarr; '+esc((FB[p.to]||{}).name)+'</div><div class="m">path'+(p.updated?' · edited '+esc(p.updated):'')+'</div>'+
     '<h3>Status</h3>'+fStatusChips(p.status,'fSetSt')+'<h3>Label</h3><input id="fpLabel" value="'+esc(p.label||'')+'">'+
@@ -298,20 +297,20 @@ function fPath(id){var p=F.paths.filter(function(x){return x.id===id})[0];if(!p)
     '<h3>&sect; Standing rules at this handoff</h3><textarea id="fpRules">'+esc(p.rules||'')+'</textarea>'+
     '<div style="display:flex;gap:8px;margin-top:14px"><button class="btn p" style="flex:1" onclick="fSavePath()">Save</button></div>')}
 function fSavePath(){var p=F.paths.filter(function(x){return x.id===fCur.id})[0],patch={};[['label','fpLabel'],['check','fpCheck'],['rules','fpRules']].forEach(function(a){var v=fVal(a[1]);if(v!==null&&v!==String(p[a[0]]||''))patch[a[0]]=v});if(fCur.status!==p.status)patch.status=fCur.status;
-  if(!Object.keys(patch).length){toast('Nothing changed');return}run('saveFlowPath',[fCur.id,patch],function(){toast('Saved · logged for Orion');Object.keys(patch).forEach(function(k){p[k]=patch[k]});fDraw();fList();fClose()})}
+  if(!Object.keys(patch).length){toast('Nothing changed');return}run('saveFlowPath',[fCur.id,patch],function(){toast('Saved');Object.keys(patch).forEach(function(k){p[k]=patch[k]});fDraw();fList();fClose()})}
 function fRoster(d){document.getElementById('fRos').innerHTML='<div class="sk"></div>';run('getRoster',[d],function(r){var h='<div class="card" style="margin-top:8px;border-left-color:'+(r.err?'var(--red)':'var(--green)')+'"><div class="t">'+esc(r.label)+'</div>';
   h+=r.err?'<div class="err" style="margin-top:6px">'+esc(r.err)+'</div>':'<div>'+(r.staff||[]).map(function(s){return esc(s)}).join('<br>')+'</div>';
   h+='<div class="m" style="margin-top:6px">In the diary:</div><div class="m">'+(r.diary||[]).slice(0,20).map(esc).join('<br>')+'</div></div>';document.getElementById('fRos').innerHTML=h})}
  
 function fChain(){var out=[],cur='rebook',seen={};while(cur&&!seen[cur]&&FB[cur]){seen[cur]=1;out.push(cur);var nx=F.paths.filter(function(p){return p.from===cur&&FB[p.to]&&FB[p.to].kind==='step'})[0];cur=nx?nx.to:null}return out}
 function fSel(kind,id,cur){return '<select class="stsel" onchange="fQuick(\''+kind+'\',\''+q1(id)+'\',{status:this.value})">'+['built','partial','not built'].map(function(s){return '<option'+(s===String(cur).toLowerCase()?' selected':'')+'>'+s+'</option>'}).join('')+'</select>'}
-function fQuick(kind,id,patch){run(kind==='node'?'saveFlowNode':'saveFlowPath',[id,patch],function(){toast('Saved · logged for Orion');var o=kind==='node'?FB[id]:F.paths.filter(function(p){return p.id===id})[0];Object.keys(patch).forEach(function(k){o[k]=patch[k]});fDraw();if(patch.status)fList()})}
+function fQuick(kind,id,patch){run(kind==='node'?'saveFlowNode':'saveFlowPath',[id,patch],function(){toast('Saved');var o=kind==='node'?FB[id]:F.paths.filter(function(p){return p.id===id})[0];Object.keys(patch).forEach(function(k){o[k]=patch[k]});fDraw();if(patch.status)fList()})}
 function fCard(n){var c=fEff(n);return '<div class="card" style="border-left-color:'+c+'"><div style="display:flex;gap:8px;align-items:center"><div class="t" style="flex:1">'+esc(n.name)+'</div>'+(n.kind==='person'?'<span class="pill">person</span>':fSel('node',n.id,n.status))+'</div>'+
   '<div class="m"><span class="dot" style="background:'+(HC[String(n.health)]||'#475569')+'"></span>health '+esc(n.health||'unchecked')+(n.kind==='child'?' · under '+esc((FB[n.parent]||{}).name||''):'')+'</div>'+
   '<input style="margin-top:6px;font-size:13px" value="'+esc(n.notes||'')+'" placeholder="notes" onchange="fQuick(\'node\',\''+q1(n.id)+'\',{notes:this.value})">'+
   '<div class="acts"><button class="btn" onclick="fNode(\''+q1(n.id)+'\')">Open &rsaquo;</button></div></div>'}
 function fList(){if(!F.loaded)return;var c={g:0,a:0,r:0};F.nodes.filter(function(n){return n.kind!=='person'}).forEach(function(n){var e=fEff(n);if(e==='#22c55e')c.g++;else if(e==='#f59e0b')c.a++;else c.r++});
-  var h='<div class="card"><button class="btn" style="float:right" onclick="fExport()">&#11015; Download</button><span class="pill pass">'+c.g+' green</span><span class="pill partial">'+c.a+' amber</span><span class="pill fail">'+c.r+' red</span>'+(F.openChanges?'<span class="pill">'+F.openChanges+' changes waiting for Orion</span>':'')+'</div>';
+  var h='<div class="card"><button class="btn" style="float:right" onclick="fExport()">&#11015; Download</button><span class="pill pass">'+c.g+' green</span><span class="pill partial">'+c.a+' amber</span><span class="pill fail">'+c.r+' red</span>'+(F.openChanges?'<span class="pill">'+F.openChanges+' changes waiting</span>':'')+'</div>';
   h+='<div class="bar"><h2>The loop &mdash; starts at Rebook</h2></div>';
   var ch=fChain();ch.forEach(function(id,i){h+=fCard(FB[id]);var nx=ch[i+1]||ch[0];var p=F.paths.filter(function(x){return x.from===id&&x.to===nx})[0];
     if(p)h+='<div class="rulerow"><span class="dot" style="background:'+(SC[String(p.status).toLowerCase()]||'#475569')+'"></span><b>&sect; '+esc(FB[id].name)+' &rarr; '+esc(FB[nx].name)+'</b> '+fSel('path',p.id,p.status)+'<input value="'+esc(p.rules||'')+'" placeholder="standing rules at this handoff" onchange="fQuick(\'path\',\''+q1(p.id)+'\',{rules:this.value})"></div>'});
@@ -326,8 +325,8 @@ function fList(){if(!F.loaded)return;var c={g:0,a:0,r:0};F.nodes.filter(function
   h+='<div class="card"><div style="display:flex;gap:6px"><select id="faFrom">'+opts+'</select><select id="faTo">'+opts+'</select></div><div style="height:6px"></div><input id="faLabel" placeholder="Path label"><div style="height:6px"></div><button class="btn p" onclick="fAddPath()">+ Add path (starts red: not built)</button></div>';
   document.getElementById('flist').innerHTML=h}
 function fAddNode(){var nm=fVal('faName').trim();if(!nm)return;var par=fVal('faParent'),k=fVal('faKind'),o={name:nm,kind:k,parent:par};if(par&&FB[par]){o.r=Number(FB[par].r||0)+80;o.a=Number(FB[par].a||0)+12}else if(k==='person'){o.r=680;o.a=(F.nodes.length*29)%360}
-  run('addFlowNode',[o],function(){toast('Added · logged for Orion');flowLoad(true)})}
-function fAddPath(){var a=fVal('faFrom'),b=fVal('faTo');if(!a||!b||a===b)return;run('addFlowPath',[{from:a,to:b,label:fVal('faLabel')}],function(){toast('Path added · logged for Orion');flowLoad(true)})}
+  run('addFlowNode',[o],function(){toast('Added');flowLoad(true)})}
+function fAddPath(){var a=fVal('faFrom'),b=fVal('faTo');if(!a||!b||a===b)return;run('addFlowPath',[{from:a,to:b,label:fVal('faLabel')}],function(){toast('Path added');flowLoad(true)})}
  
 function fExport(){var box=document.getElementById('fExp');if(box)box.innerHTML='<div class="card"><div class="m">Building the picture, PDF and CSV&hellip;</div></div>';toast('Saving the map…');
   var src=document.getElementById('fmap'),c=src.cloneNode(true);c.setAttribute('viewBox','-740 -740 1480 1480');c.setAttribute('width','2400');c.setAttribute('height','2400');c.setAttribute('xmlns','http://www.w3.org/2000/svg');
@@ -338,7 +337,7 @@ function fExport(){var box=document.getElementById('fExp');if(box)box.innerHTML=
   im.onload=function(){try{var cv=document.createElement('canvas');cv.width=2400;cv.height=2400;cv.getContext('2d').drawImage(im,0,0);send(cv.toDataURL('image/png').split(',')[1])}catch(e){send('')}URL.revokeObjectURL(url)};
   im.onerror=function(){send('')};im.src=url}
  
-function fPadSave(){var t=fVal('fpad').trim();if(!t)return;run('addMapNote',[t],function(){toast('Saved · Orion sees it next session');document.getElementById('fpad').value='';run('getMapNotes',[],fPadRender)})}
+function fPadSave(){var t=fVal('fpad').trim();if(!t)return;run('addMapNote',[t],function(){toast('Saved');document.getElementById('fpad').value='';run('getMapNotes',[],fPadRender)})}
 function fPadRender(r){document.getElementById('fpadList').innerHTML=(r||[]).map(function(n){return '<div class="card"><div class="m">'+esc(n.when)+' · '+esc(n.by)+'</div><div style="white-space:pre-wrap">'+esc(n.note)+'</div></div>'}).join('')||'<div class="empty">No notes yet.</div>'}
 function fWfkiAdd(){var t=fVal('fwIn').trim();if(!t)return;run('addWfki',[t,''],function(){toast('We fucking killed it');document.getElementById('fwIn').value='';run('getWfki',[],fWfkiRender)})}
 function fKill(prefix){var t=prompt('What did we close?',prefix||'');if(!t)return;run('addWfki',[t,''],function(){toast('Logged to We Fucking Killed It')})}
@@ -373,11 +372,11 @@ function fvDraw(){
     '<div style="display:flex;gap:6px"><input id="fvJob" list="fvJobs" placeholder="Job type e.g. Gutter clean" style="flex:1"><input id="fvQty" placeholder="qty" style="width:70px"></div>'+
     '<datalist id="fvJobs">'+Object.keys(jts).concat(['Every job','Window clean','Rope access','Anchor testing','Pressure clean']).filter(function(x,i,a){return a.indexOf(x)===i}).map(function(x){return '<option value="'+esc(x)+'">'}).join('')+'</datalist>'+
     '<div style="height:8px"></div><button class="btn p" onclick="fvAdd()">Add item</button></div>'+
-    '<div style="display:flex;gap:8px;margin:10px 0 20px"><button class="btn" style="flex:1" onclick="fvClear()">&#8635; New day &mdash; clear ticks</button><button class="btn" onclick="chatOpen(\'Orion, van kit: '+q1(fvCur)+'\',\'van kit\',\'desk\')">&#128172; Chat</button></div>';
+    '<div style="display:flex;gap:8px;margin:10px 0 20px"><button class="btn" style="flex:1" onclick="fvClear()">&#8635; New day &mdash; clear ticks</button><button class="btn" onclick="chatOpen(\'van kit: '+q1(fvCur)+'\',\'van kit\',\'desk\')">&#128172; Chat</button></div>';
   document.getElementById('fvBody').innerHTML=h}
 function fvTick(id,on){var it=FV.items.filter(function(i){return i.id===id})[0];if(it){it.packed=on?'yes':'';it.updated='now';it.updated_by='you'}fvDraw();run('saveVanItem',[id,{packed:on?'yes':''}],function(){})}
-function fvSave(id,patch){run('saveVanItem',[id,patch],function(){toast('Saved · logged for Orion');var it=FV.items.filter(function(i){return i.id===id})[0];if(it)Object.keys(patch).forEach(function(k){it[k]=patch[k]})})}
-function fvDel(id,name){if(!confirm('Take "'+name+'" off the '+fvCur+' list? (It stays in the sheet, just hidden.)'))return;run('saveVanItem',[id,{packed:'removed'}],function(){toast('Removed · logged for Orion');fVans()})}
+function fvSave(id,patch){run('saveVanItem',[id,patch],function(){toast('Saved');var it=FV.items.filter(function(i){return i.id===id})[0];if(it)Object.keys(patch).forEach(function(k){it[k]=patch[k]})})}
+function fvDel(id,name){if(!confirm('Take "'+name+'" off the '+fvCur+' list? (It stays in the sheet, just hidden.)'))return;run('saveVanItem',[id,{packed:'removed'}],function(){toast('Removed');fVans()})}
 function fvAdd(){var it=fVal('fvItem').trim();if(!it)return;run('addVanItem',[{vehicle:fvCur,item:it,job_type:fVal('fvJob').trim(),qty:fVal('fvQty').trim()}],function(){toast('Added to the '+fvCur);fVans()})}
 function fvClear(){run('clearVanTicks',[fvCur],function(n){toast(n+' ticks cleared');fVans()})}
 function fvNewVeh(){var v=prompt('Vehicle name (e.g. Hilux, Trailer)');if(!v)return;v=v.trim();if(FV.vehicles.indexOf(v)<0)FV.vehicles.push(v);fvCur=v;fvDraw()}
@@ -400,8 +399,6 @@ function fvNewVeh(){var v=prompt('Vehicle name (e.g. Hilux, Trailer)');if(!v)ret
 var CFG={"wa":"https://chat.whatsapp.com/Iwp5QxSiENW2JDWaptbg8H","tel":"tel:1300358500","claude":"https://claude.ai/new","v":"","tab":""};var dayOff=0;var loaded={};
 var TABIX={start:0,flow:1,search:2,today:3,certs:4,quotes:5,desk:6,tasks:7,chats:8,notes:9,links:10};
 document.getElementById('qTel').href=CFG.tel;document.getElementById('qWa').href=CFG.wa;
-document.getElementById('qClaude').href=CFG.claude;
-document.getElementById('qClaude').onclick=function(){run('logChat',['Office chat from the desk','quick bar','desk'],function(){});};
 function toast(m){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none'},1800)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function q1(s){return esc(s).replace(/'/g,"\\'")}
@@ -434,7 +431,7 @@ function evCard(r,certMode){var res=r.result?'<span class="pill '+esc(r.result.s
   if(certMode||/ANCHOR/i.test(r.cal)){acts+='<button class="btn g" onclick="setRes(\''+q1(r.title)+'\',\'PASS\')">Pass</button><button class="btn a" onclick="setRes(\''+q1(r.title)+'\',\'PARTIAL\')">Partial</button><button class="btn r" onclick="setRes(\''+q1(r.title)+'\',\'FAIL\')">Fail</button>'}
   else{acts+='<button class="btn b" onclick="chase(\''+q1(r.title)+'\')">&#128227; Chase</button>'}
   acts+='<button class="btn" onclick="toReg(\''+q1(r.title)+'\',\''+esc(r.url)+'\')">&#10133; Register</button>';
-  acts+='<button class="btn" onclick="chatOpen(\'Orion: '+q1(r.title)+'\',\'job card\',\'desk\')">&#128172; Chat</button>';
+  acts+='<button class="btn" onclick="chatOpen(\''+q1(r.title)+'\',\'job card\',\'desk\')">&#128172; Chat</button>';
   var extra=r.desc?'<details><summary>notes &middot; codes: '+esc(r.codes||'&mdash;')+' &middot; WO: '+esc(r.wo||'&mdash;')+' &middot; inv: '+esc(r.inv||'&mdash;')+'</summary><pre>'+esc(r.desc)+'</pre></details>':'';
   return '<div class="card" style="border-left-color:'+esc(r.color||'#22304a')+'"><div class="t">'+esc(r.title)+'</div><div class="m"><span class="pill">'+esc(r.cal)+'</span>'+res+esc(meta)+'</div>'+extra+'<div class="acts">'+acts+'</div></div>'}
 function renderDay(r){document.getElementById('dayLabel').textContent=r.label;var h=r.rows.length?r.rows.map(function(x){return evCard(x,false)}).join(''):'<div class="empty">Nothing in the diary.</div>';document.getElementById('today').innerHTML=h}
@@ -455,9 +452,9 @@ function renderReg(r){var h=r.rows.length?r.rows.map(function(x){var st=(x.statu
   '<div style="margin-top:6px"><input value="'+esc(x.next)+'" placeholder="next action" onchange="upd('+x.row+',{next_action:this.value})"></div>'+
   '<div class="acts">'+(x.link?'<a class="btn" href="'+esc(x.link)+'" target="_blank">&#128279; Open</a>':'')+
   '<button class="btn g" onclick="upd('+x.row+',{status:\'CLOSED\',close_it:\'&#10004;\'})">&#10004; Done</button><button class="btn a" onclick="push('+x.row+')">&#9208; Push</button><button class="btn b" onclick="upd('+x.row+',{owner:\'Julie\'})">&#8594; Julie</button><button class="btn" onclick="upd('+x.row+',{status:\'IN PROGRESS\'})">&#9654; Doing</button>'+
-  '<button class="btn" onclick="chatOpen(\'Orion, register #'+x.id+': '+q1(x.item)+'\',\'register row\',\'desk\')">&#128172; Chat</button></div></div>'}).join(''):'<div class="empty">Nothing open.</div>';document.getElementById('desk').innerHTML=h}
+  '<button class="btn" onclick="chatOpen(\'register #'+x.id+': '+q1(x.item)+'\',\'register row\',\'desk\')">&#128172; Chat</button></div></div>'}).join(''):'<div class="empty">Nothing open.</div>';document.getElementById('desk').innerHTML=h}
 function renderStart(r){document.getElementById('startWhen').textContent=r.count+' open · '+r.when;var ic={cert:'&#128994;',quote:'&#128993;',reg:'&#128450;',task:'&#9989;',job:'&#9728;',chat:'&#128172;'};
-  var card=function(x,i){return '<div class="card" style="border-left-color:'+(i<5?'var(--cyan)':'var(--line)')+'"><div class="t">'+(i<5?(i+1)+'. ':'')+esc(x.title)+'</div><div class="m">'+esc(x.why)+'</div><div class="acts"><button class="btn p" onclick="go(\''+x.tab+'\',document.querySelectorAll(\'nav button\')[TABIX[\''+x.tab+'\']])">'+(ic[x.kind]||'')+' Open</button>'+(x.row?'<button class="btn a" onclick="push('+x.row+')">&#9208; Push</button>':'')+'<button class="btn" onclick="chatOpen(\'Orion: '+q1(x.title)+'\',\''+q1(x.why)+'\',\'desk\')">&#128172; Chat</button></div></div>'};
+  var card=function(x,i){return '<div class="card" style="border-left-color:'+(i<5?'var(--cyan)':'var(--line)')+'"><div class="t">'+(i<5?(i+1)+'. ':'')+esc(x.title)+'</div><div class="m">'+esc(x.why)+'</div><div class="acts"><button class="btn p" onclick="go(\''+x.tab+'\',document.querySelectorAll(\'nav button\')[TABIX[\''+x.tab+'\']])">'+(ic[x.kind]||'')+' Open</button>'+(x.row?'<button class="btn a" onclick="push('+x.row+')">&#9208; Push</button>':'')+'<button class="btn" onclick="chatOpen(\''+q1(x.title)+'\',\''+q1(x.why)+'\',\'desk\')">&#128172; Chat</button></div></div>'};
   var h=r.top.length?'<div class="m" style="margin-bottom:8px">Top five, in order. Do these, ignore the rest until they\'re gone.</div>'+r.top.map(card).join(''):'<div class="empty">Nothing urgent. Go to Today.</div>';
   if(r.rest.length)h+='<details><summary>'+r.rest.length+' more after these</summary>'+r.rest.map(function(x){return card(x,9)}).join('')+'</details>';
   document.getElementById('start').innerHTML=h}
@@ -465,7 +462,7 @@ function doSearch(){var q=document.getElementById('q').value.trim();if(!q)return
 function renderSearch(r){if(r.err){document.getElementById('search').innerHTML='<div class="err">'+esc(r.err)+'</div>';return}
   var h='<div class="card"><div class="t">'+esc(r.term)+'</div><div class="m">'+r.events.length+' diary entries &middot; first '+esc(r.firstSeen||'&mdash;')+' &middot; last '+esc(r.lastSeen||'&mdash;')+' &middot; '+r.files.length+' Drive files &middot; '+Object.keys(r.wa).length+' WhatsApp group link(s) &middot; '+r.invoices.length+' invoice/estimate rows</div>';
   Object.keys(r.wa).forEach(function(k){h+='<a class="btn g" style="display:inline-block;margin:6px 6px 0 0" target="_blank" href="'+esc(k)+'">&#128994; Group ('+r.wa[k]+' cards)</a>'});
-  h+='<button class="btn" style="display:inline-block;margin:6px 0 0" onclick="chatOpen(\'Orion, site history for '+q1(r.term)+'\',\'search\',\'desk\')">&#128172; Chat about this site</button></div>';
+  h+='<button class="btn" style="display:inline-block;margin:6px 0 0" onclick="chatOpen(\'site history for '+q1(r.term)+'\',\'search\',\'desk\')">&#128172; Chat about this site</button></div>';
   if(r.results.length)h+='<div class="bar"><h2>Pass / fail logged</h2></div>'+r.results.map(function(x){return '<div class="card"><span class="pill '+esc(String(x.result).toLowerCase())+'">'+esc(x.result)+'</span>'+esc(x.job)+' <span class="m">works '+esc(x.works)+' &middot; logged '+esc(x.when)+'</span></div>'}).join('');
   if(r.scopes.length)h+='<div class="bar"><h2>Scopes on the cards</h2></div>'+r.scopes.slice(0,6).map(function(s){return '<div class="card"><div class="m">'+esc(s.when)+' &middot; '+esc(s.cal)+'</div>'+esc(s.scope)+'</div>'}).join('');
   if(r.files.length)h+='<div class="bar"><h2>Drive &mdash; photos, files, folders</h2></div>'+r.files.map(function(f){return '<a class="card" style="display:block;text-decoration:none;color:inherit;border-left-color:'+(f.isFolder?'var(--amber)':f.isPhoto?'var(--green)':'var(--blue)')+'" target="_blank" href="'+esc(f.url)+'"><div class="t">'+(f.isFolder?'&#128193; ':f.isPhoto?'&#128444; ':'&#128196; ')+esc(f.name)+'</div><div class="m">'+esc(f.folder)+' &middot; '+esc(f.when)+'</div></a>'}).join('');
@@ -479,17 +476,17 @@ function renderSearch(r){if(r.err){document.getElementById('search').innerHTML='
 function push(row){var d=prompt('Push back how many days? (1 = tomorrow, 7 = next week)','1');if(d===null)return;var n=prompt('Why / what needs to happen first? (optional)','');run('pushBack',[row,d,n||''],function(w){toast('Pushed to '+w);load('desk',true);load('start',true)})}
 function upd(row,patch){run('updateRegister',[row,patch],function(){toast('Saved');if(patch.status)load('desk',true)})}
 function addReg(){var i=document.getElementById('nItem').value.trim();if(!i)return;run('addRegister',[i,document.getElementById('nType').value,document.getElementById('nOwner').value,document.getElementById('nNext').value,document.getElementById('nLink').value],function(id){toast('Register #'+id);document.getElementById('nItem').value='';toggle('addRow');load('desk',true)})}
-function renderTasks(r){var h=r.err?'<div class="err">'+esc(r.err)+'</div>':'';r.lists.forEach(function(l){if(!l.tasks.length)return;h+='<div class="bar"><h2>'+esc(l.title)+' <span class="pill">'+l.tasks.length+'</span></h2></div>';h+=l.tasks.map(function(t){return '<div class="card" style="border-left-color:var(--purple)"><div class="t">'+esc(t.title)+'</div>'+(t.notes?'<div class="m">'+esc(t.notes.slice(0,160))+'</div>':'')+(t.due?'<div class="m">due '+esc(t.due)+'</div>':'')+'<div class="acts"><button class="btn g" onclick="done(\''+l.id+'\',\''+t.id+'\')">&#10004; Done</button><button class="btn" onclick="chatOpen(\'Orion, task: '+q1(t.title)+'\',\'task\',\'desk\')">&#128172; Chat</button></div></div>'}).join('')});document.getElementById('tasks').innerHTML=h||'<div class="empty">No open tasks.</div>'}
+function renderTasks(r){var h=r.err?'<div class="err">'+esc(r.err)+'</div>':'';r.lists.forEach(function(l){if(!l.tasks.length)return;h+='<div class="bar"><h2>'+esc(l.title)+' <span class="pill">'+l.tasks.length+'</span></h2></div>';h+=l.tasks.map(function(t){return '<div class="card" style="border-left-color:var(--purple)"><div class="t">'+esc(t.title)+'</div>'+(t.notes?'<div class="m">'+esc(t.notes.slice(0,160))+'</div>':'')+(t.due?'<div class="m">due '+esc(t.due)+'</div>':'')+'<div class="acts"><button class="btn g" onclick="done(\''+l.id+'\',\''+t.id+'\')">&#10004; Done</button><button class="btn" onclick="chatOpen(\'task: '+q1(t.title)+'\',\'task\',\'desk\')">&#128172; Chat</button></div></div>'}).join('')});document.getElementById('tasks').innerHTML=h||'<div class="empty">No open tasks.</div>'}
 function done(l,t){run('completeTask',[l,t],function(){toast('Ticked');load('tasks',true)})}
 function addTk(){var t=document.getElementById('tTitle').value.trim();if(!t)return;run('addTask',[document.getElementById('tList').value,t,''],function(l){toast('Added to '+l);document.getElementById('tTitle').value='';load('tasks',true)})}
 function saveNote(){var n=document.getElementById('note').value.trim();if(!n)return;run('addNote',[n,document.getElementById('noteTag').value],function(){toast('Saved');document.getElementById('note').value='';load('notes',true)})}
 function renderNotes(r){document.getElementById('notes').innerHTML=r.length?r.map(function(n){return '<div class="card"><div class="m">'+esc(n.when)+' &middot; '+esc(n.tag)+'</div><div>'+esc(n.note)+'</div></div>'}).join(''):'<div class="empty">No notes yet.</div>'}
-function renderLinks(r){document.getElementById('links').innerHTML=r.length?r.map(function(l){return '<a class="card" style="display:block;text-decoration:none;color:inherit" href="'+esc(l.url)+'" target="_blank"><div class="t">'+esc(l.title)+'</div><div class="m">'+esc(l.url).slice(0,70)+'</div></a>'}).join(''):'<div class="empty">REALM_LINKS is empty.</div>'}
+function renderLinks(r){r=(r||[]).filter(function(x){return !/orion/i.test(String(x.title)+' '+String(x.url))});document.getElementById('links').innerHTML=r.length?r.map(function(l){return '<a class="card" style="display:block;text-decoration:none;color:inherit" href="'+esc(l.url)+'" target="_blank"><div class="t">'+esc(l.title)+'</div><div class="m">'+esc(l.url).slice(0,70)+'</div></a>'}).join(''):'<div class="empty">REALM_LINKS is empty.</div>'}
 run('whoami',[],function(w){document.getElementById('who').textContent=w});
 if(CFG.tab&&TABIX[CFG.tab]!=null){go(CFG.tab,document.querySelectorAll('nav button')[TABIX[CFG.tab]])}else load('start');
 </script>
 <script>
-function loadApps(){google.script.run.withSuccessHandler(function(r){var el=document.getElementById("apps");if(!el)return;var t=(r||[]).filter(function(x){return /^\s*\u2605/.test(String(x.title))});el.innerHTML=t.map(function(x){var s=String(x.title).replace(/^\s*\u2605\s*/,"").split(/\s+\u2014\s+/);return "<a target=\"_blank\" href=\""+esc(x.url)+"\"><b>"+esc(s[0])+"</b><span>"+esc(s[1]||"")+"</span></a>"}).join("")||"<div class=\"m\">No tiles yet. Tap Edit tiles and add a row starting with \u2605.</div>"}).getLinks()}
+function loadApps(){google.script.run.withSuccessHandler(function(r){var el=document.getElementById("apps");if(!el)return;var t=(r||[]).filter(function(x){return /^\s*\u2605/.test(String(x.title))&&!/orion/i.test(String(x.title)+" "+String(x.url))});el.innerHTML=t.map(function(x){var s=String(x.title).replace(/^\s*\u2605\s*/,"").split(/\s+\u2014\s+/);return "<a target=\"_blank\" href=\""+esc(x.url)+"\"><b>"+esc(s[0])+"</b><span>"+esc(s[1]||"")+"</span></a>"}).join("")||"<div class=\"m\">No tiles yet. Tap Edit tiles and add a row starting with \u2605.</div>"}).getLinks()}
 setTimeout(loadApps,200);
  
 (function(){
