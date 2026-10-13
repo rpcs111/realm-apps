@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff"><title>Tonight Status</title>
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg">
+<style>
+*{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:#fff;color:#111827;font:16px/1.45 system-ui,-apple-system,Roboto,sans-serif;padding:20px 16px 40px}
+.top{display:flex;gap:8px;margin-bottom:14px}.top a,.top button{flex:1;padding:12px;border:0;border-radius:12px;font:700 15px sans-serif;text-align:center;text-decoration:none}
+.top a{background:#f3f4f6;color:#111827}.top button{background:#111827;color:#fff}
+h1{margin:0 0 12px;font-size:24px;letter-spacing:.04em}
+section{border-radius:14px;padding:12px 14px;margin-bottom:12px;background:#f9fafb;border-left:6px solid #6b7280}
+h2{margin:0 0 6px;font-size:15px;letter-spacing:.05em}ul{margin:0;padding-left:18px}li{margin:4px 0;overflow-wrap:anywhere}
+a{color:#2563eb}.d{border-color:#16a34a}.p{border-color:#ea580c}.n{border-color:#dc2626}.b{border-color:#6b7280}.v{border-color:#9333ea}.r{border-color:#0891b2}
+#help{display:none;background:#f3f4f6;border-radius:12px;padding:12px;font-size:14px;margin-bottom:12px}
+@media(max-width:380px){body{padding-left:10px;padding-right:10px}}
+</style></head><body>
+<div class="top"><a href="./">&larr; Apps</a><button id="install">&#11015; Save as app</button></div>
+<div id="help">Tap <b>&#8942;</b> (top right) &rsaquo; <b>Add to Home screen</b> &rsaquo; <b>Install</b>.</div>
+<h1>TONIGHT STATUS</h1>
+<section class="d"><h2>DONE</h2><ul>
+<li>Launcher live</li><li>Desk live, tested on 5 phone sizes</li><li>Flow and Certs loading fix</li><li>Flow Map unchanged</li><li>8 jobs in ANGE TO DO</li>
+<li>Anthropic total: A$6,275.18 net (A$7,463.88 gross, 117 charges, A$1,188.70 refunded)</li>
+<li><a href="https://docs.google.com/document/d/1VRfexXIQNshrdRg-GJqQPwzBGGCOjVRqy1eE9a1UKcs/edit">Handback doc</a></li><li>clasp signed in</li></ul></section>
+<section class="p"><h2>IN PROGRESS</h2><ul>
+<li>Cert Studio, Scribe and bus webhook deploys: waiting on Google's Apps Script API switch, retried every 10 minutes</li><li>Removing the old assistant name from all apps</li></ul></section>
+<section class="n"><h2>NEEDED FROM ANGE</h2><ul>
+<li>Turn on the <a href="https://script.google.com/home/usersettings">Apps Script API switch</a></li>
+<li>The Deputy account email (not in the handover)</li><li>The 1300 provider and where calls should land</li><li>What the estimate follow-ups should do</li><li>What the asset register tracks</li><li>Send the Anthropic email card</li><li>Turn off auto-recharge</li></ul></section>
+<section class="b"><h2>NOT BUILT YET</h2><ul><li>Estimate follow-ups</li><li>1300 automation</li><li>Asset register</li><li>Side panel</li><li>Key lock</li></ul></section>
+<section class="v"><h2>NOVA DIRECT PATH</h2><ul><li><a href="https://docs.google.com/spreadsheets/d/1Wse18Rrfgp5JcAEHA34Y_1LJZEj8I9asyr3666CYPZY/edit">Bus sheet</a></li><li>Webhook URL: to follow once deployed</li></ul></section>
+<section class="r"><h2>REMOVED STEP LOG</h2><ul><li>The shim was marked cancelled in the handover; reinstated with a security key on 14 Oct.</li></ul></section>
+<script>
+var dp=null,btn=document.getElementById("install"),help=document.getElementById("help");
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e});
+btn.onclick=function(){if(dp){dp.prompt();dp.userChoice.then(function(){dp=null})}else{help.style.display="block"}};
+window.addEventListener("appinstalled",function(){btn.textContent="Saved as app \u2713"});
+if(window.matchMedia("(display-mode: standalone)").matches||navigator.standalone)btn.style.display="none";
+</script></body></html>

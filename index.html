@@ -7,6 +7,7 @@
 h1{margin:0 0 4px;font-size:26px;letter-spacing:.04em}.sub{color:#6b7280;font-size:14px;margin-bottom:16px}
 #install{display:block;width:100%;padding:16px;border:0;border-radius:14px;background:#111827;color:#fff;font:700 17px sans-serif;margin-bottom:12px}
 #help{display:none;background:#f3f4f6;border-radius:12px;padding:12px 14px;font-size:14px;margin-bottom:12px}
+#st{display:block;padding:16px;border-radius:18px;background:#111827;color:#fff;text-decoration:none;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.12)}#st b{font-size:20px;display:block}#st span{font-size:13px;opacity:.85}
 #grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 #grid a{display:flex;flex-direction:column;justify-content:flex-end;min-height:118px;padding:14px;border-radius:18px;color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.12)}
 #grid a{position:relative}#grid a.reg{grid-column:1/-1;min-height:130px}#grid a.reg b{font-size:24px}#grid a i{position:absolute;top:10px;right:10px;font-style:normal;font-size:11px;font-weight:700;background:rgba(255,255,255,.9);color:#111827;padding:2px 7px;border-radius:999px}#grid a b{font-size:18px;overflow-wrap:anywhere}@media(max-width:380px){body{padding-left:10px;padding-right:10px}#grid{gap:8px}#grid a{min-height:100px;padding:11px}#grid a b{font-size:16px}}#grid a span{font-size:13px;opacity:.9}
@@ -15,6 +16,7 @@ h1{margin:0 0 4px;font-size:26px;letter-spacing:.04em}.sub{color:#6b7280;font-si
 <h1>REALM APPS</h1><div class="sub">Tap a tile to open.</div>
 <button id="install">&#11015; Save as app</button>
 <div id="help">On Android Chrome: tap <b>&#8942;</b> (top right) &rsaquo; <b>Add to Home screen</b> (or <b>Install app</b>) &rsaquo; <b>Install</b>.</div>
+<a id="st" href="./status.html"><b>TONIGHT STATUS</b><span>Done, in progress, needed from you</span></a>
 <div id="grid"><div class="load">Loading tiles&hellip;</div></div>
 <script>
 var EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";
