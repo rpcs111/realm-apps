@@ -1,0 +1,16 @@
+/* Realm shared Grok theme v1 (15 Oct 2026). Tokens + shared parts. Pages may override locally. */
+:root{--bg:#05070f;--bg2:#0b1430;--card:rgba(14,22,44,.55);--line:rgba(255,255,255,.07);--ink:#e8eefc;--mute:#8f9bb8;
+--ange:#00E5FF;--julie:#FF4FA3;--a:var(--ange);--od:#ff5a5a;--ok:#2ecc71;--search:#60ff15;
+--win:#2ecc71;--rope:#9b59ff;--gut:#a0662d;--tbc:#ff9f1c;--r:16px;--font:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+body.julie,html.julie body{--a:var(--julie)}
+html{background:var(--bg)}
+body{background:radial-gradient(ellipse at 50% 40%,var(--bg2) 0%,var(--bg) 65%) fixed;color:var(--ink);font-family:var(--font)}
+.rl-card{background:var(--card);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.rl-pill{display:inline-block;padding:7px 13px;border-radius:999px;background:#0f1830;border:1px solid var(--line);color:#cfd8ee;text-decoration:none;font-size:13px}
+.rl-btn{border-radius:999px;border:1px solid color-mix(in srgb,var(--a) 50%,transparent);background:transparent;color:var(--a);padding:8px 14px;font:inherit}
+.rl-btn.pri{background:var(--a);color:var(--bg);border:0;font-weight:600}
+.rl-od::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--od);margin-right:7px;vertical-align:2px}
+.rl-bots{display:flex;gap:14px;overflow-x:auto;padding:10px 14px 6px;scrollbar-width:none}
+.rl-bots a,.rl-bots span{display:flex;flex-direction:column;align-items:center;gap:3px;flex:none;font-size:11px;color:#9aa6c4;text-decoration:none}
+.rl-bots i{font-style:normal;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#0f1830;border:1.5px solid color-mix(in srgb,var(--a) 55%,transparent);color:var(--a);font-weight:600}
+.rl-wrap{max-width:560px;margin:0 auto;padding:0 14px}
