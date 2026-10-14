@@ -43,4 +43,37 @@ if(!SR){mic.title="Use the Gboard mic"}mic.onclick=function(){if(!SR){document.g
  var r=new SR();r.lang="en-AU";r.interimResults=false;mic.classList.add("on");
  r.onresult=function(e){var t=e.results[0][0].transcript;document.getElementById("q").value=t;go(t)};r.onend=function(){mic.classList.remove("on")};r.onerror=function(){mic.classList.remove("on")};r.start()};
 var q0=new URLSearchParams(location.search).get("q");if(q0){document.getElementById("q").value=q0;go(q0)}
-</script><script src="voice.js"></script></body></html>
+</script><style>.am{min-height:34px;padding:4px 10px;font-size:13px;margin-top:6px;background:#0f2a1a;border-color:#16a34a;color:#bbf7d0}.amb{margin-top:8px;display:flex;flex-direction:column;gap:6px}.amb textarea{font:inherit;background:#0b1d33;color:#fff;border:1px solid #16a34a;border-radius:10px;padding:8px;min-height:64px}.amb .r{display:flex;gap:6px;flex-wrap:wrap}.amd{font-size:12px;color:#bbf7d0;margin-top:6px}
+#ara{position:fixed;left:14px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:9000;height:56px;padding:0 18px;border-radius:28px;border:0;background:#16a34a;color:#04121f;font-weight:800;box-shadow:0 2px 12px rgba(22,163,74,.5)}
+#araS{position:fixed;left:0;right:0;bottom:0;z-index:9100;background:#0a1830;border-top:2px solid #16a34a;padding:12px;display:none;flex-direction:column;gap:8px;max-height:70vh;overflow:auto}#araS.on{display:flex}#araS textarea{font:inherit;background:#0b1d33;color:#fff;border:1px solid #35506a;border-radius:10px;padding:8px;min-height:90px}#araS .ctx{font-size:13px;color:#8ea0c2;white-space:pre-line;max-height:90px;overflow:auto}</style>
+<button id="ara" type="button" title="Call Ara on this job">🎤 Ara</button>
+<div id="araS"><b>Call Ara on this job</b><div class="ctx" id="araC"></div><textarea id="araT" placeholder="Say or type what Ara should do…"></textarea><div class="r" style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" id="araM">🎤 Speak</button><button type="button" class="pri" id="araGo">Send to Ara</button><button type="button" id="araX">Close</button></div><div class="m" id="araN">Copies the message, then opens Ara (grok.com) – paste it in. Direct Ara link not set up yet.</div></div>
+<script>
+(function(){
+var ARA_URL="https://grok.com/";var LAST=null;
+function lsj(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+function lss(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function ctxOf(c){return (c.getAttribute("data-ctx")||"").slice(0,500)}
+function dictate(el,btn){var S=window.SpeechRecognition||window.webkitSpeechRecognition;if(!S){el.focus();btn.title="Use the keyboard mic";return}var r=new S();r.lang="en-AU";r.interimResults=false;btn.classList.add("on");btn.textContent="● Listening";r.onresult=function(e){var t=e.results[0][0].transcript;el.value=(el.value?el.value+" ":"")+t};r.onend=r.onerror=function(){btn.classList.remove("on");btn.textContent="🎤 Speak"};r.start()}
+function decorate(){var q=document.getElementById("q").value;[].forEach.call(document.querySelectorAll("#out .card"),function(c){if(c.querySelector(".am"))return;var t=c.textContent.replace(/\s+/g," ").trim();if(!t||/^Nothing found/.test(t))return;c.setAttribute("data-ctx",t);var b=document.createElement("button");b.type="button";b.className="am";b.textContent="✎ Amend";b.onclick=function(){openAmend(c)};c.appendChild(b);
+  var prev=lsj("realm_amends",[]).filter(function(a){return a.ctx===t.slice(0,500)});if(prev.length){var d=document.createElement("div");d.className="amd";d.textContent="Amended: "+prev[prev.length-1].text+" ("+(prev[prev.length-1].saved?"saved to Desk":"local only")+")";c.appendChild(d)}})}
+function openAmend(c){if(c.querySelector(".amb"))return;var w=document.createElement("div");w.className="amb";w.innerHTML='<textarea placeholder="What went wrong / the correct value"></textarea><div class="r"><button type="button" class="pri">Save</button><button type="button">🎤 Speak</button><button type="button">🎤 Save + call Ara</button><button type="button">Cancel</button></div><div class="m"></div>';c.appendChild(w);var ta=w.querySelector("textarea"),bs=w.querySelectorAll("button"),m=w.querySelector(".m");ta.focus();
+ bs[1].onclick=function(){dictate(ta,bs[1])};bs[3].onclick=function(){w.remove()};
+ function save(then){var v=ta.value.trim();if(!v){m.textContent="Type or say the amend first.";return}var ctx=ctxOf(c),q=document.getElementById("q").value;var a={t:Date.now(),q:q,ctx:ctx,text:v,saved:false};var all=lsj("realm_amends",[]);all.push(a);lss("realm_amends",all);
+  var n=lsj("realm_notes",[]);n.push({t:a.t,text:"Amend ["+q+"] "+v+" — re: "+ctx.slice(0,120),who:localStorage.getItem("realm_who")||"ange",page:"search.html"});lss("realm_notes",n);LAST=a;
+  m.textContent="Saved on this phone. Sending to Desk…";
+  call("addNote",["AMEND (Search Studio) q="+q+" | "+v+" | re: "+ctx.slice(0,300),"search-amend"]).then(function(){a.saved=true;lss("realm_amends",all.map(function(x){return x.t===a.t?a:x}));m.textContent="✓ Saved to Desk notes (FLOW_NOTES) and this phone."}).catch(function(e){m.textContent="Saved on this phone only (local) – Desk did not take it: "+e.message});
+  var d=c.querySelector(".amd")||c.appendChild(Object.assign(document.createElement("div"),{className:"amd"}));d.textContent="Amended: "+v;if(then)then(a)}
+ bs[0].onclick=function(){save()};bs[2].onclick=function(){save(function(a){openAra(a)})}}
+function openAra(a){a=a||LAST||lsj("realm_amends",[]).slice(-1)[0];var c=document.getElementById("araC");c.textContent=a?("Job: "+a.ctx.slice(0,300)+"\nAmend: "+a.text):("Search: "+(document.getElementById("q").value||"(none)"));c.dataset.a=a?JSON.stringify(a):"";document.getElementById("araS").classList.add("on");document.getElementById("araT").focus()}
+document.getElementById("ara").onclick=function(){openAra()};
+document.getElementById("araX").onclick=function(){document.getElementById("araS").classList.remove("on")};
+document.getElementById("araM").onclick=function(){dictate(document.getElementById("araT"),this)};
+document.getElementById("araGo").onclick=function(){var ctx=document.getElementById("araC").textContent,t=document.getElementById("araT").value.trim();var msg="Ara – job from Search Studio.\n"+ctx+(t?"\nAsk: "+t:"")+"\n(from "+location.href+")";var n=document.getElementById("araN");
+ function open(){window.open(ARA_URL,"_blank")}
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(msg).then(function(){n.textContent="Copied. Opening Ara – paste and send.";open()},function(){share()})}else share();
+ function share(){if(navigator.share){navigator.share({title:"Ara job",text:msg}).catch(function(){});n.textContent="Pick Grok in the share sheet."}else{prompt("Copy this, then paste into Ara:",msg);open()}}};
+new MutationObserver(decorate).observe(document.getElementById("out"),{childList:true});
+})();
+</script>
+<script src="voice.js"></script></body></html>

@@ -43,7 +43,7 @@ fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content
    if(/docs\.google\.com/.test(u))badge="needs sign-in";
    return {name:name,sub:sub,u:u,badge:badge,reg:/regist/i.test(name+" "+sub)}});
  t.push({name:"ARA",sub:"Chat",u:"https://grok.com/",badge:"",reg:false});
- t.push({name:"REALM SEARCH STUDIO",sub:"Register · Calendar · Drive",u:"./search.html",badge:"",reg:false});
+ t.push({name:"REALM SEARCH STUDIO",sub:"Register · Calendar · Drive",u:"./search.html",badge:"",reg:false,c:"#16a34a"});
  t.push({name:"VIDEO SEARCH",sub:"YouTube",u:"./video.html",badge:"",reg:false});
  t.push({name:"FINDINGS",sub:"What changed",u:"./findings.html",badge:"",reg:false});
  t.push({name:"TEAM",sub:"Ara + coworkers",u:"./team.html",badge:"",reg:false});
@@ -52,7 +52,7 @@ fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content
  var fi=-1;t.forEach(function(x,k){if(/^FLOW MAP$/i.test(x.name))fi=k});t.splice(fi>=0?fi+1:t.length,0,{name:"REALM FLOW MAP",sub:"24 Sep original",u:"https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec",badge:"",reg:false});
  var si=-1;t.forEach(function(x,k){if(/^SCRIBE/i.test(x.name))si=k});var sc=si>=0?t.splice(si,1)[0]:{};sc.name="SCRIBE";sc.sub="You Got Me Bro";sc.u="./scribe.html";sc.badge="";sc.reg=true;t.unshift(sc);
  g.innerHTML=t.map(function(x,i){
-   return '<a href="'+esc(x.u)+'" target="_self" class="'+(x.reg?'reg':'')+'" style="background:'+(x.reg?'#047857':COLORS[i%COLORS.length])+'">'+(x.badge?'<i>'+esc(x.badge)+'</i>':'')+'<b>'+esc(x.name)+'</b><span>'+esc(x.sub)+'</span></a>'}).join("");
+   return '<a href="'+esc(x.u)+'" target="_self" class="'+(x.reg?'reg':'')+'" style="background:'+(x.reg?'#047857':(x.c||COLORS[i%COLORS.length]))+'">'+(x.badge?'<i>'+esc(x.badge)+'</i>':'')+'<b>'+esc(x.name)+'</b><span>'+esc(x.sub)+'</span></a>'}).join("");
 }).catch(function(e){document.getElementById("grid").innerHTML='<div class="err">Could not load tiles: '+esc(e.message)+'</div>'});
 var dp=null,btn=document.getElementById("install"),help=document.getElementById("help");
 window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e});
