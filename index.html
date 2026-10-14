@@ -44,6 +44,7 @@ fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content
    if(/docs\.google\.com/.test(u))badge="needs sign-in";
    return {name:name,sub:sub,u:u,badge:badge,reg:/regist/i.test(name+" "+sub)}});
  t.push({name:"ARA",sub:"Chat",u:"https://grok.com/",badge:"",reg:false});
+ t.push({name:"REALM SEARCH STUDIO",sub:"Register · Calendar · Drive",u:"./search.html",badge:"",reg:false});
  t.push({name:"VIDEO SEARCH",sub:"YouTube",u:"./video.html",badge:"",reg:false});
  t.push({name:"FINDINGS",sub:"What changed",u:"./findings.html",badge:"",reg:false});
  t.sort(function(a,b){return (b.reg?1:0)-(a.reg?1:0)});

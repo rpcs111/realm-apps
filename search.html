@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Realm Search Studio</title><link rel="icon" href="icon.svg"><link rel="manifest" href="manifest.json">
+<style>:root{--ac:#60ff15}*{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:#0b1d33;color:#e8eefc;font:16px/1.4 system-ui,sans-serif;padding-bottom:150px}
+header{position:sticky;top:0;z-index:5;background:#0a1830;border-bottom:1px solid #22406a;padding:10px 12px}
+header h1{margin:0 0 8px;font-size:17px;letter-spacing:.05em}header a{color:#8ea0c2;font-size:13px}
+.bar{display:flex;gap:6px}input{flex:1;min-width:0;font:inherit;background:#0b1d33;color:#fff;border:1px solid #35506a;border-radius:10px;padding:10px;min-height:46px}
+button{min-height:46px;min-width:46px;padding:8px 12px;border-radius:12px;border:1px solid #35506a;background:#183a63;color:#fff;font:inherit;cursor:pointer}
+.pri{background:var(--ac);color:#04121f;border:0;font-weight:700}#mic.on{background:#16a34a}
+main{padding:10px;max-width:680px;margin:auto}.card{background:#13283f;border:1px solid #22406a;border-left:6px solid var(--ac);border-radius:14px;padding:10px 12px;margin:0 0 8px;overflow-wrap:anywhere}
+.card.reg{border-left-color:#f59e0b}.card.file{border-left-color:#38bdf8}.card.ev{border-left-color:#a78bfa}
+h2{font-size:14px;letter-spacing:.06em;color:#8ea0c2;margin:16px 0 6px}.m{color:#8ea0c2;font-size:13px}a{color:#7dd3fc}
+.src{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.src span{font-size:12px;padding:3px 8px;border-radius:999px;background:#1f2f45}.src .live{background:#14532d;color:#bbf7d0}.src .no{background:#3f1d1d;color:#fecaca}
+.msg{color:var(--ac);font-size:14px;min-height:18px;margin:6px 0}.err{background:#3f1d1d;color:#fecaca;padding:10px;border-radius:10px}
+</style></head><body>
+<header><h1>REALM SEARCH STUDIO <a href="./index.html">‹ Apps</a></h1>
+<form class="bar" id="f"><input id="q" placeholder="Address, client or keyword — e.g. 93 Pelham" autocomplete="off" enterkeyhint="search"><button type="button" id="mic" title="Speak">🎤</button><button class="pri" type="submit">Go</button></form>
+<div class="src" id="src"><span>Register</span><span>Calendar</span><span>Drive</span><span>WhatsApp links</span><span class="no">Invoices – needs Search Studio backend deploy</span><span class="no">Scribe notes – needs Search Studio backend deploy</span><span class="no">Gmail – needs Search Studio backend deploy</span></div>
+</header>
+<main><div class="msg" id="msg">Type or tap 🎤, then Go. Data comes live from Realm Desk v9.</div><div id="out"></div></main>
+<script>
+var EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function txt(h){var d=document.createElement("div");d.innerHTML=String(h||"").replace(/<(br|\/p)[^>]*>/gi,"\n");return (d.textContent||"").replace(/\n{3,}/g,"\n\n").trim()}
+function key(){try{return localStorage.getItem("realm_key")||""}catch(e){return""}}
+function call(fn,args){return fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args||[],key:key()})}).then(function(r){return r.json()}).then(function(j){if(!j||!j.ok)throw new Error((j&&j.error)||(fn+" failed"));return j.result})}
+function setSrc(live){var s=document.getElementById("src").children;var names=["Register","Calendar","Drive","WhatsApp links"];for(var i=0;i<4;i++){s[i].className=live?"live":"no";s[i].textContent=names[i]+(live?" – live":" – no answer")}}
+function go(q){q=(q||"").trim();if(!q)return;var o=document.getElementById("out"),m=document.getElementById("msg");m.textContent="Searching “"+q+"”…";o.innerHTML="";
+ try{history.replaceState(null,"","?q="+encodeURIComponent(q))}catch(e){}
+ call("searchAll",[q]).then(function(r){setSrc(true);var h="";
+  var reg=r.register||[],ev=r.events||[],fl=r.files||[],wa=r.wa||{};
+  m.textContent=reg.length+" register · "+ev.length+" calendar · "+fl.length+" Drive · "+Object.keys(wa).length+" WhatsApp"+(r.firstSeen?" · first "+r.firstSeen+", last "+r.lastSeen:"");
+  if(reg.length){h+="<h2>REGISTER</h2>"+reg.map(function(x){return '<div class="card reg"><b>#'+esc(x.id)+' · '+esc(x.status||"")+'</b> <span class="m">'+esc(x.owner||"")+' · '+esc(x.updated||"")+'</span><div>'+esc(String(x.item||"").slice(0,400))+'</div>'+(x.next?'<div class="m">Next: '+esc(x.next)+'</div>':'')+(x.link?'<a href="'+esc(x.link)+'" target="_blank">Open</a>':'')+'</div>'}).join("")}
+  if(ev.length){h+="<h2>CALENDAR</h2>"+ev.map(function(x){var d=txt(x.desc);return '<div class="card ev"><b>'+esc(x.start)+' · '+esc(x.title)+'</b><div class="m">'+esc(x.cal)+(x.where?' · '+esc(x.where):'')+'</div>'+(d?'<div style="white-space:pre-line;font-size:14px">'+esc(d.slice(0,500))+'</div>':'')+(x.url||x.link?'<a href="'+esc(x.url||x.link)+'" target="_blank">Open in Calendar</a>':'')+'</div>'}).join("")}
+  if(fl.length){h+="<h2>DRIVE</h2>"+fl.map(function(x){return '<div class="card file"><a href="'+esc(x.url)+'" target="_blank"><b>'+esc(x.name)+'</b></a><div class="m">'+esc(x.folder||"")+' · '+esc(x.when||"")+'</div></div>'}).join("")}
+  var wk=Object.keys(wa);if(wk.length){h+="<h2>WHATSAPP</h2>"+wk.map(function(u){return '<div class="card"><a href="'+esc(u)+'" target="_blank">'+esc(u)+'</a> <span class="m">seen on '+wa[u]+' cards</span></div>'}).join("")}
+  if(r.invErr)h+='<h2>INVOICES</h2><div class="card m">Not searched: '+esc(r.invErr)+' – needs Search Studio backend deploy.</div>';
+  o.innerHTML=h||'<div class="card">Nothing found. Try just the street number and name.</div>';
+ }).catch(function(e){setSrc(false);m.textContent="";o.innerHTML='<div class="err">Desk v9 did not answer: '+esc(e.message)+'</div>'})}
+document.getElementById("f").onsubmit=function(e){e.preventDefault();go(document.getElementById("q").value)};
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition,mic=document.getElementById("mic");
+if(!SR){mic.title="Use the Gboard mic"}mic.onclick=function(){if(!SR){document.getElementById("q").focus();return}
+ var r=new SR();r.lang="en-AU";r.interimResults=false;mic.classList.add("on");
+ r.onresult=function(e){var t=e.results[0][0].transcript;document.getElementById("q").value=t;go(t)};r.onend=function(){mic.classList.remove("on")};r.onerror=function(){mic.classList.remove("on")};r.start()};
+var q0=new URLSearchParams(location.search).get("q");if(q0){document.getElementById("q").value=q0;go(q0)}
+</script><script src="voice.js"></script></body></html>
