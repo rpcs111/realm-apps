@@ -1,32 +1,32 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#ffffff"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg"><title>You Got Me Bro</title>
 <style>
-*{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:#fff;color:#1c1c1e;font:16px/1.4 -apple-system,system-ui,Roboto,sans-serif;padding:calc(14px + env(safe-area-inset-top)) 16px calc(90px + env(safe-area-inset-bottom))}
+*{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:rgba(14,22,44,.72);color:#e8eefc;font:16px/1.4 -apple-system,system-ui,Roboto,sans-serif;padding:calc(14px + env(safe-area-inset-top)) 16px calc(90px + env(safe-area-inset-bottom))}
 .wrap{max-width:680px;margin:0 auto}
 .top{display:flex;align-items:center;gap:8px}.top a{color:#007aff;text-decoration:none;font-size:16px}h1{font-size:30px;margin:6px 0 2px;letter-spacing:-.02em}
-.start{display:block;width:100%;border:0;border-radius:14px;background:#1c1c1e;color:#fff;font:700 20px inherit;padding:16px;margin:8px 0}.day{font-size:13px;color:#3a3a3c;background:#f2f2f7;border-radius:12px;padding:10px 12px;margin-bottom:8px;overflow-wrap:anywhere}.day b.u{color:#ff3b30}.note a{color:#007aff}.urg{color:#ff3b30;font:700 11px inherit;letter-spacing:.05em}.ft{font-size:12px;color:#8e8e93}li.u{background:#fff5f5}
-.note{font-size:12px;color:#8e8e93;margin-bottom:12px}
+.start{display:block;width:100%;border:0;border-radius:14px;background:#1c1c1e;color:#fff;font:700 20px inherit;padding:16px;margin:8px 0}.day{font-size:13px;color:#e8eefc;background:rgba(14,22,44,.72);border-radius:12px;padding:10px 12px;margin-bottom:8px;overflow-wrap:anywhere}.day b.u{color:#ff3b30}.note a{color:#007aff}.urg{color:#ff3b30;font:700 11px inherit;letter-spacing:.05em}.ft{font-size:12px;color:#8f9bb8}li.u{background:rgba(14,22,44,.72)}
+.note{font-size:12px;color:#8f9bb8;margin-bottom:12px}
 .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-bottom:10px}.chips::-webkit-scrollbar{display:none}
-.chip{flex:0 0 auto;border:0;border-radius:999px;padding:7px 12px;font:600 13px inherit;background:#f2f2f7;color:#3a3a3c;min-height:34px}.chip.on{background:#1c1c1e;color:#fff}
-.add{display:flex;gap:8px;margin-bottom:8px}.add input{flex:1;min-width:0;border:0;background:#f2f2f7;border-radius:12px;padding:12px 14px;font-size:16px}
-.add{flex-direction:column}.add input{padding:15px 14px;font-size:17px}.add button{border:0;border-radius:14px;background:#007aff;color:#fff;font:700 20px inherit;padding:16px;min-height:56px;width:100%}.warn{background:#fff4e5;color:#8a4b00;border-radius:12px;padding:10px 12px;font-size:13px;margin-bottom:8px}.ex{display:block;width:100%;text-align:left;border:1px dashed #c7c7cc;background:#fff;border-radius:12px;padding:12px;margin:6px 0;font:15px inherit;color:#3a3a3c}
+.chip{flex:0 0 auto;border:0;border-radius:999px;padding:7px 12px;font:600 13px inherit;background:rgba(14,22,44,.72);color:#e8eefc;min-height:34px}.chip.on{background:#1c1c1e;color:#fff}
+.add{display:flex;gap:8px;margin-bottom:8px}.add input{flex:1;min-width:0;border:0;background:rgba(14,22,44,.72);border-radius:12px;padding:12px 14px;font-size:16px}
+.add{flex-direction:column}.add input{padding:15px 14px;font-size:17px}.add button{border:0;border-radius:14px;background:#007aff;color:#fff;font:700 20px inherit;padding:16px;min-height:56px;width:100%}.warn{background:rgba(14,22,44,.72);color:#8a4b00;border-radius:12px;padding:10px 12px;font-size:13px;margin-bottom:8px}.ex{display:block;width:100%;text-align:left;border:1px dashed rgba(255,255,255,.1);background:rgba(14,22,44,.72);border-radius:12px;padding:12px;margin:6px 0;font:15px inherit;color:#e8eefc}
 ul{list-style:none;margin:0;padding:0}
-li{display:flex;gap:12px;padding:12px 2px;border-bottom:1px solid #e5e5ea;align-items:flex-start}
-.tick{flex:0 0 26px;height:26px;border-radius:50%;border:2px solid #c7c7cc;background:#fff;margin-top:1px;padding:0;color:#fff;font-size:14px}.tick.d{background:#34c759;border-color:#34c759}
-.body{flex:1;min-width:0}.t{font-weight:600;overflow-wrap:anywhere}.d .t{text-decoration:line-through;color:#8e8e93}
-.n{font-size:14px;color:#636366;white-space:pre-wrap;overflow-wrap:anywhere;margin-top:2px}
+li{display:flex;gap:12px;padding:12px 2px;border-bottom:1px solid rgba(255,255,255,.1);align-items:flex-start}
+.tick{flex:0 0 26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,.1);background:rgba(14,22,44,.72);margin-top:1px;padding:0;color:#fff;font-size:14px}.tick.d{background:#34c759;border-color:#34c759}
+.body{flex:1;min-width:0}.t{font-weight:600;overflow-wrap:anywhere}.d .t{text-decoration:line-through;color:#8f9bb8}
+.n{font-size:14px;color:#8f9bb8;white-space:pre-wrap;overflow-wrap:anywhere;margin-top:2px}
 .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;align-items:center}
 .own{border:0;border-radius:999px;padding:3px 10px;font:600 12px inherit;color:#fff}
 .att{font-size:13px;color:#007aff;text-decoration:none;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ph{width:56px;height:56px;object-fit:cover;border-radius:8px}
-.ed{border:0;background:none;color:#8e8e93;font-size:20px;min-width:36px;min-height:36px;padding:0}
-.empty{color:#8e8e93;text-align:center;padding:30px 0}
+.ed{border:0;background:none;color:#8f9bb8;font-size:20px;min-width:36px;min-height:36px;padding:0}
+.empty{color:#8f9bb8;text-align:center;padding:30px 0}
 #sheet{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:flex-end;justify-content:center;z-index:50}
-#sheet .p{background:#fff;width:100%;max-width:680px;border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));max-height:92dvh;overflow-y:auto}
-.p input,.p textarea{width:100%;border:0;background:#f2f2f7;border-radius:10px;padding:11px 12px;font:16px inherit;margin-bottom:8px}.p textarea{min-height:90px}
-.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.row button,.row label{flex:1 1 auto;border:0;border-radius:10px;background:#f2f2f7;padding:11px;font:600 14px inherit;text-align:center;color:#1c1c1e}
-.row .pri{background:#007aff;color:#fff}.row .del{background:#fff0f0;color:#ff3b30}
+#sheet .p{background:rgba(14,22,44,.72);width:100%;max-width:680px;border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));max-height:92dvh;overflow-y:auto}
+.p input,.p textarea{width:100%;border:0;background:rgba(14,22,44,.72);border-radius:10px;padding:11px 12px;font:16px inherit;margin-bottom:8px}.p textarea{min-height:90px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.row button,.row label{flex:1 1 auto;border:0;border-radius:10px;background:rgba(14,22,44,.72);padding:11px;font:600 14px inherit;text-align:center;color:#e8eefc}
+.row .pri{background:#007aff;color:#fff}.row .del{background:rgba(14,22,44,.72);color:#ff3b30}
 .atl{display:flex;align-items:center;gap:8px;font-size:13px;margin:4px 0}.atl span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.atl button{border:0;background:none;color:#ff3b30;font-size:18px}
-</style></head><body><div class="wrap">
+</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style></head><body><div class="wrap">
 <div class="top"><a href="./">&lsaquo; Apps</a></div>
 <h1>You Got Me Bro</h1>
 <button id="start" class="start">Start here bro</button>
