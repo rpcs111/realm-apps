@@ -1,0 +1,155 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>REALM MAP APP</title>
+<style>
+:root{--bg:#0b1d33;--card:#13283f;--line:#22406a;--cy:#22d3ee;--am:#f59e0b;--gr:#94a3b8;--vi:#a78bfa;--ok:#22c55e}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:#e8eefc;font:15px/1.4 system-ui,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:6px;padding:8px;background:#0a1830;border-bottom:1px solid var(--line);align-items:center}
+header h1{font-size:15px;margin:0 6px 0 0;letter-spacing:.06em}button,.b{min-height:44px;min-width:44px;padding:8px 12px;border-radius:10px;border:1px solid #35506a;background:#183a63;color:#fff;font:inherit;cursor:pointer}
+input,textarea{font:inherit;background:#0b1d33;color:#fff;border:1px solid #35506a;border-radius:8px;padding:8px;width:100%}
+#q{width:180px;min-height:44px}
+#wrap{display:grid;grid-template-columns:1fr 360px;height:calc(100% - 62px)}@media(max-width:820px){#wrap{grid-template-columns:1fr;grid-template-rows:60vh auto;height:auto}}
+#stage{position:relative;overflow:hidden;background:#0a1830;touch-action:none}svg{width:100%;height:100%;display:block}
+#side{overflow:auto;padding:10px;border-left:1px solid var(--line)}
+.lg{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.lg label{display:flex;gap:6px;align-items:center;background:var(--card);padding:8px 10px;border-radius:10px;min-height:44px}
+.sw{width:14px;height:14px;border-radius:50%;display:inline-block}
+.panel,.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:10px}
+.card h3{margin:0 0 6px;color:var(--am);font-size:15px}[contenteditable]{outline:1px dashed transparent}[contenteditable]:focus{outline-color:var(--cy)}
+.cm{border-top:1px solid var(--line);padding:6px 0;font-size:13px;display:flex;gap:6px;justify-content:space-between}.cm small{color:#8ea0c2;display:block}
+.nd{cursor:pointer}.nd text{pointer-events:none}.sel circle.ring{stroke:#fff!important;stroke-width:7}
+.hide{display:none}a{color:var(--cy)}.row{display:flex;gap:6px;margin:6px 0}#close{background:#fff7d6;color:#3a2a05}
+@media print{header,#side .lg,.row{display:none}#wrap{display:block}#stage{height:900px}}
+#lk{position:fixed;inset:0;background:rgba(5,12,24,.96);z-index:20;overflow:auto;padding:14px}#lk h2{color:var(--cy);font-size:15px;margin:16px 0 6px}#lk a{display:block;min-height:48px;padding:12px;margin:0 0 6px;background:#183a63;color:#fff;border-radius:12px;text-decoration:none}#lk a small{display:block;color:#9fb3c8;font-size:12px}
+</style></head><body>
+<header><h1>REALM MAP</h1>
+<button id="zin" aria-label="zoom in">＋</button><button id="zout" aria-label="zoom out">－</button><button id="zr">Reset</button>
+<input id="q" list="nl" placeholder="Find node…"><datalist id="nl"></datalist><button id="go">Go</button>
+<button id="links" style="background:#1f7a3f;font-weight:700">📁 LINKS</button><button id="add">+ Node</button><button id="del">Delete</button>
+<button id="ex">Export JSON</button><label class="b">Import<input id="im" type="file" accept=".json" class="hide"></label>
+<button id="png">PNG</button><button id="pr">Print</button><button id="wipe" title="Reload defaults (clears this browser's saved edits)">Defaults</button></header>
+<div id="lk" class="hide" role="dialog" aria-label="Links"><div class="row"><button id="lkx">✕ Close</button><b style="align-self:center">REALM LINKS — checked 13 Oct 2026</b></div><div id="lkl"></div></div><div id="wrap"><div id="stage"><svg id="svg" viewBox="0 0 1200 1120"><g id="vp"><g id="cube"></g><g id="edges"></g><g id="nodes"></g></g></svg></div>
+<div id="side">
+<div class="lg"><label><input type="checkbox" data-l="base" checked>Base flow <span class="sw" style="background:var(--cy)"></span></label>
+<label><input type="checkbox" data-l="overlay" checked>Overlay <span class="sw" style="background:var(--vi)"></span></label>
+<label><input type="checkbox" data-l="ctrl" checked>Ara control</label></div>
+<div id="ctrlLg" class="panel" style="font-size:13px"><b>Ara control</b><br><span class="sw" style="background:var(--cy)"></span> Acts · <span class="sw" style="background:var(--am)"></span> Needs Ange's yes · <span class="sw" style="background:var(--gr)"></span> Reads only · <span class="sw" style="background:var(--vi)"></span> Overlay piece · <span class="sw" style="background:var(--ok)"></span> Ticked done</div>
+<div id="ed" class="panel"><i>Tap a node to select it. Double-tap to edit it.</i></div>
+<div id="cards"></div>
+<div id="close" class="panel"><b>“We're not gonna have this conversation again.”</b> Correct. This is the single, complete version: /home/box/Desktop/REALM_MAP_APP.html. Your rules, the 12 Oct 2026 reset point and this flow sit in Ara's memory. Changes are edits here, not restarts.</div>
+</div></div>
+<script>
+const KEY='realm_map_app_v1',W=1200,H=1120,CX=600,CY=560;
+const R='https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit';
+function ring(r,i){const a=(-90+60*i)*Math.PI/180;return[CX+r*Math.cos(a),CY+r*Math.sin(a)]}
+const HOME=[[CX,CY]];for(let i=0;i<6;i++)HOME.push(ring(190,i));for(let i=0;i<6;i++)HOME.push(ring(380,i));
+function N(id,t,d,layer,ctrl,i,link){const[x,y]=HOME[i];return{id,title:t,detail:d,layer,ctrl,x,y,done:false,comments:[],link:link||''}}
+function defaults(){return{nodes:[
+N('reg','OPEN REGISTER','REALM OPEN REGISTER · log before done','fixed','act',0,R),
+N('b1','1 Email pull','info@ + 1300 358 500','base','act',1,'https://mail.google.com/mail/u/0/#inbox'),
+N('b2','2 Google Calendar','source of truth · yellow QUOTES','base','act',2,'https://calendar.google.com/calendar/u/0/r'),
+N('b3','3 Quotes · Zoho Books','dedupe first · never Xero','base','yes',3,'https://books.zoho.com/app'),
+N('b4','4 WhatsApp office chat','scope + photos before quote','base','read',4,'https://web.whatsapp.com'),
+N('b5','5 Certs','ANCHOR ROOF TEST › year ANCHOR CERTS › client','base','act',5,'https://drive.google.com/drive/search?q=%22ANCHOR%20ROOF%20TEST%22'),
+N('b6','6 Invoice · Zoho Books','synced to Xero (link: don\'t touch)','base','yes',6,'https://books.zoho.com/app#/invoices'),
+N('p1','BASICS','register = one truth','overlay','p',7,R),
+N('p2','TEMPLATES','Zoho fix · cert name','overlay','p',8),
+N('p3','CONSENT','DRAFT ≠ SEND','overlay','p',9),
+N('p4','MEMORY','rules · reset 12 Oct','overlay','p',10,'https://docs.google.com/document/d/1FTidBT8_sXQHp3oJmQPu6B19G7qsF5dTGwvwf6RshRg/edit'),
+N('p5','ARA','skills · routines · webhooks','overlay','p',11),
+N('p6','OUTSIDE','Deputy · Xero look-only · SipTalk · Fireflies','overlay','read',12,'https://once.deputy.com')],
+cards:[
+['1 · Basics','Every job is one row in REALM OPEN REGISTER. Calendar = when; register = status; Zoho Books = money. Setup: status column + filter view. Ara answers “what\'s open?” from the register only; writes go via ORION_HANDOFF.'],
+['2 · Templates','Zoho fix (six fields: client · site address · scope · billing contact · WhatsApp group · yellow QUOTES). Cert name: client + site address + date certified + “Height Safety Certificate”; match by address. Skills not built yet.'],
+['3 · Consent','Ange\'s yes before send, spend, delete or deploy. DRAFT ≠ SEND. Same deployment only. Hard no: Zapier, Deputy, WhatsApp groups, Zoho–Xero link, waterproofing (→ Mark Senior), Samsung apps, secrets.'],
+['4 · Memory','Realm Standing Rules (26 true rules) + library v2 §4 + §8 command set; reset point 12 Oct 2026. Log before done. Back up before any change.'],
+['5 · Ara','Skills: Quote-fix, Cert-file, Call-note, Overnight brief. Routines: register sweep, never-billed check, no 7am client emails. Webhooks SipTalk→1300 CALL NOTE, Fireflies→Scribe: not built.'],
+['Not built / broken','Netlify hub not live · Desk open to anyone with link · tiles link-pending · Nova tile opens blank Gemini · no code backup · Zapier overage on (kill before 15 Oct).']]}}
+let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}if(!S||!S.nodes)S=defaults();
+const save=()=>localStorage.setItem(KEY,JSON.stringify(S));
+const COL={act:'#22d3ee',yes:'#f59e0b',read:'#94a3b8',p:'#a78bfa'};
+const vis={base:true,overlay:true,ctrl:true};let sel=null,view={x:0,y:0,k:1};
+const $=i=>document.getElementById(i),svg=$('svg'),vp=$('vp');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function el(t,a,p){const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e}
+function apply(){vp.setAttribute('transform',`translate(${view.x},${view.y}) scale(${view.k})`)}
+function drawCube(){const g=$('cube');g.innerHTML='';g.style.display=vis.overlay?'':'none';
+ for(let a=0;a<13;a++)for(let b=a+1;b<13;b++)el('line',{x1:HOME[a][0],y1:HOME[a][1],x2:HOME[b][0],y2:HOME[b][1],stroke:'#a78bfa','stroke-opacity':.2,'stroke-dasharray':'4 6'},g)}
+function draw(){const E=$('edges'),G=$('nodes');E.innerHTML='';G.innerHTML='';
+ if(vis.base){el('circle',{cx:CX,cy:CY,r:190,fill:'none',stroke:'#22d3ee','stroke-width':4,'stroke-opacity':.5},E);
+  const reg=S.nodes.find(n=>n.layer=='fixed'),b=S.nodes.filter(n=>n.layer=='base').concat(reg?[reg]:[]);b.forEach((n,i)=>{const m=b[(i+1)%b.length];if(m)el('line',{x1:n.x,y1:n.y,x2:m.x,y2:m.y,stroke:'#22d3ee','stroke-width':3},E)})}
+ S.nodes.forEach(n=>{if(n.layer=='base'&&!vis.base||n.layer=='overlay'&&!vis.overlay||n.layer=='custom'&&!vis.base)return;
+  const g=el('g',{class:'nd'+(sel==n.id?' sel':''),'data-id':n.id,transform:`translate(${n.x},${n.y})`},G);
+  const r=n.layer=='fixed'?95:n.layer=='overlay'?82:78,c=vis.ctrl?COL[n.ctrl]||'#22d3ee':'#22406a';
+  el('circle',{class:'ring',r,fill:n.done?'#123d2a':'#0f2a47',stroke:n.done?'#22c55e':c,'stroke-width':4,'stroke-dasharray':n.layer=='overlay'?'8 5':''},g);
+  const t=el('text',{y:-8,fill:'#fff','font-size':15,'font-weight':700,'text-anchor':'middle'},g);t.textContent=(n.done?'✔ ':'')+n.title;
+  const w=n.detail.split(' '),h=Math.ceil(w.length/2);[w.slice(0,h).join(' '),w.slice(h).join(' ')].forEach((l,j)=>{const d=el('text',{y:12+j*15,fill:'#cbd5e1','font-size':11.5,'text-anchor':'middle'},g);d.textContent=l});
+  if(n.layer=='fixed'){const f=el('text',{y:52,fill:'#f59e0b','font-size':11,'text-anchor':'middle'},g);f.textContent='🔒 fixed centre'}
+  if(n.comments.length){el('circle',{cx:r*.7,cy:-r*.7,r:15,fill:'#f59e0b'},g);const k=el('text',{x:r*.7,y:-r*.7+5,'text-anchor':'middle','font-size':13,'font-weight':700,fill:'#0b1d33'},g);k.textContent=n.comments.length}});
+ $('nl').innerHTML=S.nodes.map(n=>`<option value="${esc(n.title)}">`).join('')}
+function panel(){const n=S.nodes.find(x=>x.id==sel),P=$('ed');if(!n){P.innerHTML='<i>Tap a node to select it. Double-tap to edit it.</i>';return}
+ const fx=n.layer=='fixed';
+ P.innerHTML=`<b>${fx?'🔒 ':''}Selected</b>
+ <input id="et" value="${esc(n.title)}" ${fx?'disabled':''} aria-label="title"><div class="row"></div>
+ <textarea id="ed2" rows="2" ${fx?'disabled':''} aria-label="detail">${esc(n.detail)}</textarea>
+ <input id="el" placeholder="link https://…" value="${esc(n.link)}" ${fx?'disabled':''}>
+ ${n.link?`<div class="row"><a href="${esc(n.link)}" target="_blank" rel="noopener" class="b" style="text-decoration:none">Open link ↗</a></div>`:''}
+ <label class="row" style="align-items:center"><input type="checkbox" id="dn" style="width:28px;height:28px" ${n.done?'checked':''}> Done</label>
+ <b>Comments (${n.comments.length})</b><div id="cl">${n.comments.map((c,i)=>`<div class="cm"><span>${esc(c.text)}<small>${esc(c.at)}</small></span><button data-ci="${i}">✕</button></div>`).join('')}</div>
+ <div class="row"><input id="ct" placeholder="Add comment"><button id="ca">Add</button></div>`;
+ if(!fx){$('et').oninput=e=>{n.title=e.target.value;save();draw()};$('ed2').oninput=e=>{n.detail=e.target.value;save();draw()};$('el').onchange=e=>{n.link=e.target.value.trim();save();panel()}}
+ $('dn').onchange=e=>{n.done=e.target.checked;save();draw()};
+ $('ca').onclick=()=>{const v=$('ct').value.trim();if(!v)return;n.comments.push({text:v,at:new Date().toISOString().slice(0,16).replace('T',' ')});save();draw();panel()};
+ $('cl').querySelectorAll('button').forEach(b=>b.onclick=()=>{n.comments.splice(+b.dataset.ci,1);save();draw();panel()})}
+function select(id){sel=id;draw();panel()}
+function cards(){$('cards').innerHTML=S.cards.map((c,i)=>`<div class="card"><h3 contenteditable data-i="${i}" data-f="0">${esc(c[0])}</h3><div contenteditable data-i="${i}" data-f="1">${esc(c[1])}</div></div>`).join('');
+ $('cards').querySelectorAll('[contenteditable]').forEach(e=>e.oninput=()=>{S.cards[e.dataset.i][e.dataset.f]=e.textContent;save()})}
+// pan/zoom/drag
+function toWorld(cx,cy){const p=svg.createSVGPoint();p.x=cx;p.y=cy;const q=p.matrixTransform(svg.getScreenCTM().inverse());return[(q.x-view.x)/view.k,(q.y-view.y)/view.k]}
+function zoomAt(f,wx,wy){const k=Math.min(6,Math.max(.3,view.k*f));view.x=wx*view.k+view.x-wx*k;view.y=wy*view.k+view.y-wy*k;view.k=k;apply()}
+function zoomCentre(f){const[wx,wy]=[(W/2-view.x)/view.k,(H/2-view.y)/view.k];zoomAt(f,wx,wy)}
+svg.addEventListener('wheel',e=>{e.preventDefault();const[wx,wy]=toWorld(e.clientX,e.clientY);zoomAt(e.deltaY<0?1.15:1/1.15,wx,wy)},{passive:false});
+const ptrs=new Map();let drag=null,pinch=null,moved=false,lastTap=0;
+svg.addEventListener('pointerdown',e=>{svg.setPointerCapture(e.pointerId);ptrs.set(e.pointerId,[e.clientX,e.clientY]);moved=false;
+ if(ptrs.size==2){const[a,b]=[...ptrs.values()];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1])};drag=null;return}
+ const g=e.target.closest('.nd'),id=g&&g.dataset.id,n=id&&S.nodes.find(x=>x.id==id);const[wx,wy]=toWorld(e.clientX,e.clientY);
+ drag=n?{n,ox:wx-n.x,oy:wy-n.y,fixed:n.layer=='fixed'}:{pan:true,sx:e.clientX,sy:e.clientY,vx:view.x,vy:view.y}});
+svg.addEventListener('pointermove',e=>{if(!ptrs.has(e.pointerId))return;ptrs.set(e.pointerId,[e.clientX,e.clientY]);
+ if(pinch&&ptrs.size==2){const[a,b]=[...ptrs.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);const[wx,wy]=toWorld((a[0]+b[0])/2,(a[1]+b[1])/2);zoomAt(d/pinch.d,wx,wy);pinch.d=d;return}
+ if(!drag)return;moved=true;
+ if(drag.pan){const s=W/svg.getBoundingClientRect().width;view.x=drag.vx+(e.clientX-drag.sx)*s;view.y=drag.vy+(e.clientY-drag.sy)*s;apply()}
+ else if(!drag.fixed){const[wx,wy]=toWorld(e.clientX,e.clientY);drag.n.x=wx-drag.ox;drag.n.y=wy-drag.oy;draw()}});
+function up(e){ptrs.delete(e.pointerId);if(ptrs.size<2)pinch=null;if(drag&&drag.n){if(moved&&!drag.fixed)save();else{const now=Date.now();select(drag.n.id);if(now-lastTap<350&&$('et'))$('et').focus();lastTap=now}}
+ else if(drag&&drag.pan&&!moved)select(null);drag=null}
+svg.addEventListener('pointerup',up);svg.addEventListener('pointercancel',up);
+$('zin').onclick=()=>zoomCentre(1.25);$('zout').onclick=()=>zoomCentre(.8);$('zr').onclick=()=>{view={x:0,y:0,k:1};apply()};
+function jump(q){q=q.trim().toLowerCase();const n=S.nodes.find(x=>x.title.toLowerCase()==q)||S.nodes.find(x=>(x.title+' '+x.detail).toLowerCase().includes(q));if(!n)return null;
+ view.k=2;view.x=W/2-n.x*2;view.y=H/2-n.y*2;apply();select(n.id);return n.id}
+$('go').onclick=()=>jump($('q').value);$('q').onkeydown=e=>{if(e.key=='Enter')jump(e.target.value)};
+$('add').onclick=()=>{const[wx,wy]=[(W/2-view.x)/view.k,(H/2-view.y)/view.k];const n={id:'n'+Date.now(),title:'New step',detail:'detail',layer:'custom',ctrl:'act',x:wx,y:wy,done:false,comments:[],link:''};S.nodes.push(n);save();select(n.id)};
+$('del').onclick=()=>{const n=S.nodes.find(x=>x.id==sel);if(!n)return;if(n.layer=='fixed'){alert('Centre is fixed.');return}if(!confirm('Delete "'+n.title+'"?'))return;S.nodes=S.nodes.filter(x=>x!==n);sel=null;save();draw();panel()};
+function dl(name,url){const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove()}
+$('ex').onclick=()=>dl('realm_map.json',URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'})));
+$('im').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{const d=JSON.parse(t);if(!Array.isArray(d.nodes)||!Array.isArray(d.cards))throw 0;const ids=new Set();for(const n of d.nodes){if(typeof n.id!='string'||ids.has(n.id)||typeof n.title!='string'||typeof n.detail!='string'||typeof n.x!='number'||typeof n.y!='number')throw 0;ids.add(n.id);n.done=!!n.done;n.comments=Array.isArray(n.comments)?n.comments.filter(c=>c&&typeof c.text=='string'):[];n.link=typeof n.link=='string'?n.link:'';n.ctrl=n.ctrl in COL?n.ctrl:'act';}const c=defaults().nodes[0];d.nodes=d.nodes.filter(n=>n.layer!='fixed');d.nodes.unshift(Object.assign(c,{done:false,comments:[]},(JSON.parse(t).nodes.find(n=>n.id=='reg')||{}),{title:c.title,detail:c.detail,x:CX,y:CY,layer:'fixed'}));S=d;save();cards();select(null)}).catch(()=>alert('Not a Realm map JSON'))};
+$('png').onclick=()=>{const c=svg.cloneNode(true);c.setAttribute('xmlns','http://www.w3.org/2000/svg');c.setAttribute('width',W);c.setAttribute('height',H);c.querySelector('#vp').removeAttribute('transform');
+ const img=new Image();img.onload=()=>{const cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');x.fillStyle='#0a1830';x.fillRect(0,0,W,H);x.drawImage(img,0,0);dl('realm_map.png',cv.toDataURL('image/png'))};
+ img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(new XMLSerializer().serializeToString(c))};
+$('pr').onclick=()=>window.print();
+$('wipe').onclick=()=>{if(confirm('Reload defaults? This clears saved edits in this browser only. Export JSON first if you want them.')){S=defaults();save();cards();select(null)}};
+document.querySelectorAll('.lg input').forEach(c=>c.onchange=()=>{vis[c.dataset.l]=c.checked;$('ctrlLg').style.display=vis.ctrl?'':'none';drawCube();draw()});
+
+const LINKS=[{"g": "Register / Sheets", "l": "REALM OPEN REGISTER", "u": "https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit", "s": "needs sign-in"}, {"g": "Register / Sheets", "l": "ORION_HANDOFF", "u": "https://docs.google.com/spreadsheets/d/1x1xLYJnr3k4z91lBiS40eCzKY5GQbdN2eNWzQ9K82uY/edit", "s": "needs sign-in"}, {"g": "Register / Sheets", "l": "REALM AGGREGATED DATA", "u": "https://docs.google.com/spreadsheets/d/1pNv-LB8Y1o94PF-Q9KRqLLemTM2WRnG7_rWE1RMKwWw/edit", "s": "needs sign-in"}, {"g": "Register / Sheets", "l": "REALM_LINKS", "u": "https://docs.google.com/spreadsheets/d/144xzuFR9madhVHr5RUVhCn-zZvhyCVBK6yuZfH2xlds/edit", "s": "needs sign-in"}, {"g": "Register / Sheets", "l": "REALM MASTER address key", "u": "https://docs.google.com/spreadsheets/d/1SjCMOXlYqU02Xgg1Nj1LHHC4yREZgSLwyg0x4YnfZLA/edit", "s": "needs sign-in"}, {"g": "Register / Sheets", "l": "REALM HANDOFF & CLIENT LIST", "u": "https://docs.google.com/spreadsheets/d/1h8MlodpRPwDijnbqrfKmySupnty_c1ik2OKQOU0iovw/edit", "s": "needs sign-in"}, {"g": "Register / Sheets", "l": "ORION BRIDGE LOG", "u": "https://docs.google.com/spreadsheets/d/1-ZyYx9RdYaFwJBjzSglOqc7HeAo11b7MprNut1Vq77k/edit", "s": "needs sign-in"}, {"g": "Register / Sheets", "l": "QUOTES + CERTS aging list", "u": "https://docs.google.com/spreadsheets/d/1uWkqj6gtlbPAbbOXUHF9gywxEj4oRa36d2BjuivwKAI/edit", "s": "needs sign-in"}, {"g": "Drive docs", "l": "REALM TOOL LINKS folder", "u": "https://drive.google.com/drive/folders/1XmP4QkPiL85SDaYbTutYWgW5zZpW8inr", "s": "live"}, {"g": "Drive docs", "l": "Realm Standing Rules", "u": "https://docs.google.com/document/d/1FTidBT8_sXQHp3oJmQPu6B19G7qsF5dTGwvwf6RshRg/edit", "s": "needs sign-in"}, {"g": "Drive docs", "l": "REALM WEB EXIT — ORION → NOVA handoff 29 Sep", "u": "https://docs.google.com/document/d/1jaW12HVYVd7frV44YHlH8K1ZyiuL88iNSYIyi-XUMHY/edit", "s": "needs sign-in"}, {"g": "Drive docs", "l": "REALM WEB EXIT — afternoon sweep 30 Sep", "u": "https://docs.google.com/document/d/17MT1IWgBcu7AuXNBJ7uev5lO27jzU_7sRnIoNS8cYBA/edit", "s": "needs sign-in"}, {"g": "Drive docs", "l": "TWO DESKS — GO LIVE 25 Sep", "u": "https://docs.google.com/document/d/1q2gAO-4c516yvmyIIp5_xdV9o9Ru-meM4xFsm2dAzuA/edit", "s": "needs sign-in"}, {"g": "Drive docs", "l": "REALM VAULT — NIGHT ONE", "u": "https://docs.google.com/document/d/1shtYCIH4l7bc06I0ObIHM9y2kmtZBNOMxe_irWt-HMg/edit", "s": "needs sign-in"}, {"g": "Drive docs", "l": "Amendment 2 — Security 101", "u": "https://docs.google.com/document/d/1ld8GH8a7r1XJ_N5oWThpql3_t3eSUMQ5dAfB8FYJkLg/edit", "s": "needs sign-in"}, {"g": "Drive docs", "l": "REALM EOD HISTORY", "u": "https://docs.google.com/document/d/1ozuEAoM0zmsgkR-9darJ-hs-lIU8lXFx6_OdvqOdn7M/edit", "s": "needs sign-in"}, {"g": "Drive docs", "l": "ANCHOR ROOF TEST (Drive search)", "u": "https://drive.google.com/drive/search?q=%22ANCHOR%20ROOF%20TEST%22", "s": "live"}, {"g": "Flow-map docs", "l": "Realm Flow Map (rev 26 Sep)", "u": "https://docs.google.com/document/d/19lLVGXwM8BTH1f4WA6pvH9Xt9ylWdQmP13rHb5RRrM0/edit", "s": "needs sign-in"}, {"g": "Flow-map docs", "l": "Realm Flow Map (27 Sep)", "u": "https://docs.google.com/document/d/1kB4In4WrynRY6Y1vld_CcX8XoNjeaOzlxPFcRmmPm8Y/edit", "s": "needs sign-in"}, {"g": "Flow-map docs", "l": "Realm Flow Map (25 Sep)", "u": "https://docs.google.com/document/d/17VcuL3WMszBhOLV-3jp8X2Dm4tVM1-SilvLWCvXXaxs/edit", "s": "needs sign-in"}, {"g": "Flow-map docs", "l": "Realm Flow Map (rev 25 Sep)", "u": "https://docs.google.com/document/d/1LT01r7QP7DL629uNHSmL_CvPeUNE6-ui_j3drhgAFYw/edit", "s": "needs sign-in"}, {"g": "Flow-map docs", "l": "Realm Flow Map (rev 21 Sep)", "u": "https://docs.google.com/document/d/1N0Hrx03Huw7oz2ppyPNwyc6vhCwFoZ56TIEal3ldGPI/edit", "s": "needs sign-in"}, {"g": "Flow-map docs", "l": "REALM FLOW MAP — ONE CANVAS 2 Oct (drawio)", "u": "https://drive.google.com/file/d/1yT_2x3dPyce8zjHQfgbDVq3KyEJ9Bpib/view", "s": "needs sign-in"}, {"g": "Flow-map docs", "l": "REALM FLOW CHARTS (drawio)", "u": "https://drive.google.com/file/d/1SQetnjCYSHe1_32QTsv4A-LannluE7Z3/view", "s": "needs sign-in"}, {"g": "Flow-map docs", "l": "Round flow map (Desk, Flow tab)", "u": "https://script.google.com/macros/s/AKfycbzK3mUQipb81VLvLoMfUTY5tGNOimafh_Ljr17VX1OA63bztP1ZqXFEsXUQECe5VkZcyA/exec?tab=flow", "s": "live"}, {"g": "Zoho Books", "l": "Zoho Books (app)", "u": "https://books.zoho.com/app", "s": "live"}, {"g": "Zoho Books", "l": "Zoho Books invoices", "u": "https://books.zoho.com/app#/invoices", "s": "live"}, {"g": "Calendar", "l": "Google Calendar", "u": "https://calendar.google.com/calendar/u/0/r", "s": "live"}, {"g": "Gmail", "l": "Gmail (info@)", "u": "https://mail.google.com/mail/u/0/#inbox", "s": "live"}, {"g": "Gmail", "l": "Gmail drafts", "u": "https://mail.google.com/mail/u/0/#drafts", "s": "live"}, {"g": "Gemini / Nova", "l": "Nova Gem", "u": "https://gemini.google.com/gem/aa2550627d15", "s": "live"}, {"g": "Deputy (look only)", "l": "Deputy", "u": "https://once.deputy.com", "s": "live"}, {"g": "WhatsApp Web", "l": "WhatsApp Web (read)", "u": "https://web.whatsapp.com", "s": "live"}, {"g": "Cert Studio", "l": "Cert Studio", "u": "https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec", "s": "live"}, {"g": "Scribe", "l": "SCRIBE v4", "u": "https://script.google.com/macros/s/AKfycbwq0FdxP9Sh3mtB6Y8e-PocRGUUQBub_TQVlv8IiApXU6bQSN6N-CGo8JRQCUyhMjNG/exec", "s": "live"}, {"g": "Desk", "l": "Realm Desk v7", "u": "https://script.google.com/macros/s/AKfycbzK3mUQipb81VLvLoMfUTY5tGNOimafh_Ljr17VX1OA63bztP1ZqXFEsXUQECe5VkZcyA/exec", "s": "live"}, {"g": "Desk", "l": "Realm Launcher v4", "u": "https://script.google.com/macros/s/AKfycbzquhNRWty9kTneExFyCpUKIPN2DoKU4GNekszu4E_rwgSMEv-pHVadGK5HcoCV3GtKzQ/exec", "s": "live"}, {"g": "Videos", "l": "Custom ERP walkthrough (Airdev)", "u": "https://www.youtube.com/watch?v=rYTUN67JZKs", "s": "live"}, {"g": "Videos", "l": "Every concept explained (Nate Herk)", "u": "https://www.youtube.com/watch?v=NyfYxpXiw_0", "s": "live"}, {"g": "Videos", "l": "Video ref nn29T4yPc8E", "u": "https://www.youtube.com/watch?v=nn29T4yPc8E", "s": "live"}, {"g": "Videos", "l": "Video ref c9_SR0d1LLk", "u": "https://www.youtube.com/watch?v=c9_SR0d1LLk", "s": "live"}, {"g": "Videos", "l": "Advanced hacks (dEBMnnJMmCI)", "u": "https://www.youtube.com/watch?v=dEBMnnJMmCI", "s": "live"}];
+function renderLinks(){const g={};LINKS.forEach(x=>(g[x.g]=g[x.g]||[]).push(x));$('lkl').innerHTML=Object.keys(g).map(k=>`<h2>${esc(k)}</h2>`+g[k].map(x=>`<a href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.l)}<small>${x.s=='live'?'✅ live':'🔐 needs sign-in'}</small></a>`).join('')).join('')}
+$('links').onclick=()=>{renderLinks();$('lk').classList.remove('hide')};$('lkx').onclick=()=>$('lk').classList.add('hide');
+drawCube();draw();cards();apply();
+// headless self-test: ?test=1 (runs on a scratch copy of the state, then restores it)
+if(location.search.includes('test=1')){const r={},bak=localStorage.getItem(KEY);try{
+ select('b3');$('dn').checked=true;$('dn').dispatchEvent(new Event('change'));r.tick=JSON.parse(localStorage.getItem(KEY)).nodes.find(n=>n.id=='b3').done===true&&document.querySelector('[data-id=b3] circle').getAttribute('stroke')=='#22c55e';
+ $('ct').value='test comment';$('ca').click();r.comment=S.nodes.find(n=>n.id=='b3').comments.length==1&&!!document.querySelector('[data-id=b3]').textContent.match(/1/);
+ $('cl').querySelector('button').click();r.commentDelete=S.nodes.find(n=>n.id=='b3').comments.length==0;
+ r.search=jump('cert')=='b5'&&view.k==2&&sel=='b5';
+ $('zr').click();$('zin').click();r.zoomBtn=Math.abs(view.k-1.25)<1e-9;$('zr').click();r.reset=view.k==1;
+ select('reg');r.centreFixed=$('et').disabled;const x0=S.nodes[0].x;r.centreX=x0==CX;
+ const n0=S.nodes.length;$('add').click();r.add=S.nodes.length==n0+1;r.ringThroughRegister=document.querySelectorAll('#edges line').length==7;
+ $('links').click();const as=[...document.querySelectorAll('#lk a')];r.linksPanelOpen=!$('lk').classList.contains('hide');r.linksAll=as.length==LINKS.length&&LINKS.every(x=>as.some(a=>a.getAttribute('href')==x.u));r.linksNewTab=as.every(a=>a.target=='_blank');r.linkCount=as.length;$('lkx').click();
+ r.json=JSON.parse(JSON.stringify(S)).nodes.some(n=>n.done);
+}catch(e){r.error=String(e)}finally{if(bak===null)localStorage.removeItem(KEY);else localStorage.setItem(KEY,bak)}
+ const p=document.createElement('pre');p.id='testresult';p.textContent=JSON.stringify(r);document.body.appendChild(p)}
+</script></body></html>
