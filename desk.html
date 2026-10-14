@@ -22,7 +22,7 @@ header h1{font-size:17px;margin:0;letter-spacing:.08em}header h1 b{color:var(--c
 header .who{margin-left:auto;font-size:12px;color:var(--mut)}
 .quick{display:flex;gap:8px;padding:10px 14px;overflow-x:auto}
 .quick a{flex:0 0 auto;background:var(--card);border:1px solid var(--line);color:var(--txt);text-decoration:none;padding:8px 12px;border-radius:999px;font-size:13px}
-nav{position:fixed;bottom:0;left:0;right:0;background:#0e1628;border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);overflow-x:auto}
+nav{position:fixed;bottom:0;left:0;right:0;background:rgba(14,22,44,.55);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);overflow-x:auto}
 nav button{flex:1 0 auto;min-width:11%;background:none;border:0;color:var(--mut);padding:9px 4px 7px;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:2px}
 nav button.on{color:var(--cyan)}nav button span{font-size:18px}
 main{padding:0 14px}
@@ -38,7 +38,7 @@ main{padding:0 14px}
 .card .acts .btn{padding:6px 9px;font-size:12px}
 .pill{display:inline-block;font-size:11px;padding:2px 7px;border-radius:999px;background:#1e2a44;color:var(--mut);margin-right:4px}
 .pill.pass{background:#052e16;color:var(--green)}.pill.fail{background:#3b0a0a;color:var(--red)}.pill.partial{background:#3a2a05;color:var(--amber)}
-input,textarea,select{width:100%;background:#0e1628;border:1px solid var(--line);color:var(--txt);border-radius:9px;padding:9px;font:inherit}
+input,textarea,select{width:100%;background:rgba(14,22,44,.55);border:1px solid var(--line);color:var(--txt);border-radius:9px;padding:9px;font:inherit}
 textarea{min-height:90px}
 .empty{color:var(--mut);padding:24px 0;text-align:center}
 .err{background:#3b0a0a;color:#fca5a5;padding:8px 10px;border-radius:9px;font-size:13px;margin-bottom:10px}
@@ -75,7 +75,7 @@ img,iframe,svg,canvas,table{max-width:100%}
 pre{overflow-x:auto}
 .mic{margin-top:6px}
 @media(max-width:380px){main{padding:0 8px}header{padding-left:8px;padding-right:8px;gap:6px}.quick{padding:8px}.apps{grid-template-columns:repeat(2,1fr)}.btn{padding:7px 9px}header h1{font-size:15px}}
-</style></head><body>
+</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style></head><body>
 <header><button class="hb" id="spBtn" aria-label="Menu" onclick="spOpen(1)">&#9776;</button><a class="hb" href="./index.html">&larr; Apps</a><h1>REALM <b>DESK</b></h1><button class="hb" id="saveApp">&#11015; Save as app</button><span class="who" id="who"></span></header>
 <div id="appHelp" style="display:none;margin:8px 14px;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line);font-size:13px">On Android Chrome: tap <b>&#8942;</b> &rsaquo; <b>Add to Home screen</b> (or <b>Install app</b>) &rsaquo; <b>Install</b>.</div>
 <div class="quick">
@@ -452,7 +452,7 @@ function evCard(r,certMode){var res=r.result?'<span class="pill '+esc(r.result.s
   acts+='<button class="btn" onclick="toReg(\''+q1(r.title)+'\',\''+esc(r.url)+'\')">&#10133; Register</button>';
   acts+='<button class="btn" onclick="chatOpen(\''+q1(r.title)+'\',\'job card\',\'desk\')">&#128172; Chat</button>';
   var extra=r.desc?'<details><summary>notes &middot; codes: '+(r.codes?esc(r.codes):'&mdash;')+' &middot; WO: '+(r.wo?esc(r.wo):'&mdash;')+' &middot; inv: '+(r.inv?esc(r.inv):'&mdash;')+'</summary><pre>'+esc(r.desc)+'</pre></details>':'';
-  return '<div class="card" style="border-left-color:'+esc(r.color||'#22304a')+'"><div class="t">'+esc(r.title)+'</div><div class="m"><span class="pill">'+esc(r.cal)+'</span>'+res+esc(meta)+'</div>'+extra+'<div class="acts">'+acts+'</div></div>'}
+  return '<div class="card" style="border-left-color:'+esc(r.color||'rgba(255,255,255,.1)')+'"><div class="t">'+esc(r.title)+'</div><div class="m"><span class="pill">'+esc(r.cal)+'</span>'+res+esc(meta)+'</div>'+extra+'<div class="acts">'+acts+'</div></div>'}
 function renderDay(r){document.getElementById('dayLabel').textContent=r.label;var h=r.rows.length?r.rows.map(function(x){return evCard(x,false)}).join(''):'<div class="empty">Nothing in the diary.</div>';document.getElementById('today').innerHTML=h}
 function renderEvents(id,r,certMode){var h=r.err?'<div class="err">'+esc(r.err)+'</div>':'';h+=r.rows.length?r.rows.map(function(x){return evCard(x,certMode)}).join(''):'<div class="empty">Nothing found.</div>';document.getElementById(id).innerHTML=h}
 function setRes(job,res){var d=prompt('Date of works for '+job+' (d/m/yyyy)? leave blank = today');run('setResult',[job,res,d||new Date().toLocaleDateString('en-AU'),''],function(){toast(res+' logged');load('certs',true);load('today',true)})}
@@ -510,7 +510,7 @@ setTimeout(loadApps,200);
  
 (function(){
   var css=document.createElement('style');
-  css.textContent='#appPane{position:fixed;inset:0;z-index:9999;background:#0b1b22;display:none;flex-direction:column}#appPane.on{display:flex}#appPane .bar{display:flex;align-items:center;gap:8px;padding:8px 10px;padding-top:calc(8px + env(safe-area-inset-top));background:#10272f;color:#e8f6f8;font:700 14px sans-serif}#appPane .bar b{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}#appPane .bar a,#appPane .bar button{border:0;border-radius:14px;padding:8px 12px;font:800 12px sans-serif;background:#19c3d8;color:#0b1b22;text-decoration:none;cursor:pointer}#appPane .bar button.x{background:#e8f6f8}#appPane iframe{flex:1;border:0;width:100%;background:#fff}';
+  css.textContent='#appPane{position:fixed;inset:0;z-index:9999;background:#0b1b22;display:none;flex-direction:column}#appPane.on{display:flex}#appPane .bar{display:flex;align-items:center;gap:8px;padding:8px 10px;padding-top:calc(8px + env(safe-area-inset-top));background:#10272f;color:#e8f6f8;font:700 14px sans-serif}#appPane .bar b{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}#appPane .bar a,#appPane .bar button{border:0;border-radius:14px;padding:8px 12px;font:800 12px sans-serif;background:#19c3d8;color:#0b1b22;text-decoration:none;cursor:pointer}#appPane .bar button.x{background:rgba(14,22,44,.72)}#appPane iframe{flex:1;border:0;width:100%;background:rgba(14,22,44,.72)}';
   document.head.appendChild(css);
   var p=document.createElement('div'); p.id='appPane';
   p.innerHTML='<div class="bar"><button class="x" id="apX">&#10005; Back to Desk</button><b id="apT"></b><a id="apO" target="_blank" rel="noopener">&#8599; Full</a></div><iframe id="apF" allow="microphone; camera; clipboard-write; geolocation"></iframe>';
@@ -542,7 +542,7 @@ if(SR){Array.prototype.forEach.call(document.querySelectorAll("textarea"),addMic
 })();
 </script>
 <div id="spBg" onclick="spOpen(0)" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:60"></div>
-<aside id="sp" style="position:fixed;top:0;bottom:0;left:0;width:min(280px,82vw);background:#0e1628;border-right:1px solid #24324d;z-index:61;transform:translateX(-105%);transition:transform .2s;padding:calc(14px + env(safe-area-inset-top)) 12px 20px;overflow-y:auto">
+<aside id="sp" style="position:fixed;top:0;bottom:0;left:0;width:min(280px,82vw);background:rgba(14,22,44,.55);border-right:1px solid #24324d;z-index:61;transform:translateX(-105%);transition:transform .2s;padding:calc(14px + env(safe-area-inset-top)) 12px 20px;overflow-y:auto">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b style="letter-spacing:.08em">MENU</b><button onclick="spOpen(0)" style="background:none;border:0;color:#fff;font-size:24px;min-width:44px;min-height:44px">&times;</button></div>
 <a class="spl" href="./scribe.html">&#128221; You Got Me Bro (Scribe)</a>
 <a class="spl" href="./index.html">&#127968; Launcher tiles</a>
