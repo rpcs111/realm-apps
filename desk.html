@@ -94,8 +94,7 @@ pre{overflow-x:auto}
   </section>
   <section class="tab" id="tab-search">
     <div class="bar"><h2>One place &mdash; search a site</h2></div>
-    <div class="card"><div style="display:flex;gap:6px"><input id="q" placeholder="e.g. 21 Camden or Findon" onkeydown="if(event.key==='Enter')doSearch()"><button class="btn p" onclick="doSearch()">Go</button></div>
-    <div class="m" style="margin-top:6px">Searches: every Realm calendar (6 yrs back) &middot; Drive photos/files/folders &middot; WhatsApp group links &middot; scopes &middot; register &middot; pass/fail results &middot; REALM SOLD 2026 invoices</div></div>
+    <div class="card"><a class="btn p" href="./search.html" style="display:block;text-align:center;font-size:17px;padding:14px">&#128269; Open Search Studio</a></div>
     <div id="search"></div>
   </section>
   <section class="tab" id="tab-today">
@@ -506,7 +505,7 @@ run('whoami',[],function(w){document.getElementById('who').textContent=w});
 if(CFG.tab&&TABIX[CFG.tab]!=null){go(CFG.tab,document.querySelectorAll('nav button')[TABIX[CFG.tab]])}else load('start');
 </script>
 <script>
-function loadApps(){google.script.run.withSuccessHandler(function(r){var el=document.getElementById("apps");if(!el)return;var t=(r||[]).filter(function(x){return /^\s*\u2605/.test(String(x.title))&&!/orion/i.test(String(x.title)+" "+String(x.url))});el.innerHTML=t.map(function(x){var s=String(x.title).replace(/^\s*\u2605\s*/,"").split(/\s+\u2014\s+/);return "<a target=\"_blank\" href=\""+esc(x.url)+"\"><b>"+esc(s[0])+"</b><span>"+esc(s[1]||"")+"</span></a>"}).join("")||"<div class=\"m\">No tiles yet. Tap Edit tiles and add a row starting with \u2605.</div>"}).getLinks()}
+function loadApps(){google.script.run.withSuccessHandler(function(r){var el=document.getElementById("apps");if(!el)return;var t=(r||[]).filter(function(x){return /^\s*\u2605/.test(String(x.title))&&!/orion/i.test(String(x.title)+" "+String(x.url))&&!/FLOW MAP|DESK V3|REALM LAUNCHER/i.test(String(x.title))&&!/^\s*\u2605\s*STATUS(\s|$)/i.test(String(x.title))}).map(function(x){return /^\s*\u2605\s*REALM DESK/i.test(String(x.title))?{title:x.title,url:"./desk.html"}:x}).concat([{title:"\u2605 REALM FLOW MAP \u2014 24 Sep original",url:"https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec"}]);el.innerHTML=t.map(function(x){var s=String(x.title).replace(/^\s*\u2605\s*/,"").split(/\s+\u2014\s+/);return "<a target=\"_blank\" href=\""+esc(x.url)+"\"><b>"+esc(s[0])+"</b><span>"+esc(s[1]||"")+"</span></a>"}).join("")||"<div class=\"m\">No tiles yet. Tap Edit tiles and add a row starting with \u2605.</div>"}).getLinks()}
 setTimeout(loadApps,200);
  
 (function(){
@@ -550,8 +549,8 @@ if(SR){Array.prototype.forEach.call(document.querySelectorAll("textarea"),addMic
 <a class="spl" href="#" onclick="spTab('flow');return false">&#10036; Flow</a>
 <a class="spl" href="#" onclick="spTab('certs');return false">&#128994; Certs</a>
 <a class="spl" href="#" onclick="spTab('tasks');return false">&#9989; Tasks</a>
-<a class="spl" href="./status.html">&#128200; Status</a>
-<a class="spl" href="./map.html">&#128506; Realm Flow Map</a>
+<a class="spl" href="./status.html">&#128200; Tonight Status</a>
+<a class="spl" href="https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec">&#128506; Realm Flow Map</a>
 <a class="spl" href="./video.html">&#127909; Video search</a>
 <a class="spl" href="./findings.html">&#128221; Findings</a>
 </aside>
