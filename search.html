@@ -1,13 +1,13 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Realm Search Studio</title><link rel="icon" href="icon.svg"><link rel="manifest" href="manifest.json">
-<style>:root{--ac:#60ff15}*{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:#0b1d33;color:#e8eefc;font:16px/1.4 system-ui,sans-serif;padding-bottom:150px}
-header{position:sticky;top:0;z-index:5;background:#0a1830;border-bottom:1px solid #22406a;padding:10px 12px}
-header h1{margin:0 0 8px;font-size:17px;letter-spacing:.05em}header a{color:#8ea0c2;font-size:13px}
-.bar{display:flex;gap:6px}input{flex:1;min-width:0;font:inherit;background:#0b1d33;color:#fff;border:1px solid #35506a;border-radius:10px;padding:10px;min-height:46px}
-button{min-height:46px;min-width:46px;padding:8px 12px;border-radius:12px;border:1px solid #35506a;background:#183a63;color:#fff;font:inherit;cursor:pointer}
+<link rel="stylesheet" href="realm.css"><style>:root{--ac:#60ff15}*{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed;color:#e8eefc;font:16px/1.4 system-ui,sans-serif;padding-bottom:150px}
+header{position:sticky;top:0;z-index:5;background:rgba(5,7,15,.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.07);padding:10px 12px}
+header h1{margin:0 0 8px;font-size:15px;font-weight:300;letter-spacing:.35em;text-align:center}header a{color:#8ea0c2;font-size:13px}
+.bar{display:flex;gap:6px}input{flex:1;min-width:0;font:inherit;background:#0f1830;color:#fff;border:1px solid rgba(0,229,255,.35);border-radius:26px;padding-left:16px;padding:10px;min-height:46px}
+button{min-height:46px;min-width:46px;padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:#0f1830;color:#fff;font:inherit;cursor:pointer}
 .pri{background:var(--ac);color:#04121f;border:0;font-weight:700}#mic.on{background:#16a34a}
-main{padding:10px;max-width:680px;margin:auto}.card{background:#13283f;border:1px solid #22406a;border-left:6px solid var(--ac);border-radius:14px;padding:10px 12px;margin:0 0 8px;overflow-wrap:anywhere}
+main{padding:10px;max-width:680px;margin:auto}.card{background:rgba(14,22,44,.55);border:1px solid rgba(255,255,255,.07);border-left:4px solid var(--ac);border-radius:16px;padding:12px 14px;margin:0 0 8px;overflow-wrap:anywhere}
 .card.reg{border-left-color:#f59e0b}.card.file{border-left-color:#38bdf8}.card.ev{border-left-color:#a78bfa}
 h2{font-size:14px;letter-spacing:.06em;color:#8ea0c2;margin:16px 0 6px}.m{color:#8ea0c2;font-size:13px}a{color:#7dd3fc}
 .src{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.src span{font-size:12px;padding:3px 8px;border-radius:999px;background:#1f2f45}.src .live{background:#14532d;color:#bbf7d0}.src .no{background:#3f1d1d;color:#fecaca}
@@ -45,7 +45,7 @@ if(!SR){mic.title="Use the Gboard mic"}mic.onclick=function(){if(!SR){document.g
 var q0=new URLSearchParams(location.search).get("q");if(q0){document.getElementById("q").value=q0;go(q0)}
 </script><style>.am{min-height:34px;padding:4px 10px;font-size:13px;margin-top:6px;background:#0f2a1a;border-color:#16a34a;color:#bbf7d0}.amb{margin-top:8px;display:flex;flex-direction:column;gap:6px}.amb textarea{font:inherit;background:#0b1d33;color:#fff;border:1px solid #16a34a;border-radius:10px;padding:8px;min-height:64px}.amb .r{display:flex;gap:6px;flex-wrap:wrap}.amd{font-size:12px;color:#bbf7d0;margin-top:6px}
 #ara{position:fixed;left:14px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:9000;height:56px;padding:0 18px;border-radius:28px;border:0;background:#16a34a;color:#04121f;font-weight:800;box-shadow:0 2px 12px rgba(22,163,74,.5)}
-#araS{position:fixed;left:0;right:0;bottom:0;z-index:9100;background:#0a1830;border-top:2px solid #16a34a;padding:12px;display:none;flex-direction:column;gap:8px;max-height:70vh;overflow:auto}#araS.on{display:flex}#araS textarea{font:inherit;background:#0b1d33;color:#fff;border:1px solid #35506a;border-radius:10px;padding:8px;min-height:90px}#araS .ctx{font-size:13px;color:#8ea0c2;white-space:pre-line;max-height:90px;overflow:auto}</style>
+#araS{position:fixed;left:0;right:0;bottom:0;z-index:9100;background:#0a1830;border-top:2px solid #16a34a;padding:12px;display:none;flex-direction:column;gap:8px;max-height:70vh;overflow:auto}#araS.on{display:flex}#araS textarea{font:inherit;background:#0f1830;color:#fff;border:1px solid rgba(0,229,255,.35);border-radius:26px;padding-left:16px;padding:8px;min-height:90px}#araS .ctx{font-size:13px;color:#8ea0c2;white-space:pre-line;max-height:90px;overflow:auto}</style>
 <button id="ara" type="button" title="Call Ara on this job">🎤 Ara</button>
 <div id="araS"><b>Call Ara on this job</b><div class="ctx" id="araC"></div><textarea id="araT" placeholder="Say or type what Ara should do…"></textarea><div class="r" style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" id="araM">🎤 Speak</button><button type="button" class="pri" id="araGo">Send to Ara</button><button type="button" id="araX">Close</button></div><div class="m" id="araN">Copies the message, then opens Ara (grok.com) – paste it in. Direct Ara link not set up yet.</div></div>
 <script>
