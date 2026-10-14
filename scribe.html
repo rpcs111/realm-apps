@@ -8,7 +8,7 @@
 .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-bottom:10px}.chips::-webkit-scrollbar{display:none}
 .chip{flex:0 0 auto;border:0;border-radius:999px;padding:7px 12px;font:600 13px inherit;background:#f2f2f7;color:#3a3a3c;min-height:34px}.chip.on{background:#1c1c1e;color:#fff}
 .add{display:flex;gap:8px;margin-bottom:8px}.add input{flex:1;min-width:0;border:0;background:#f2f2f7;border-radius:12px;padding:12px 14px;font-size:16px}
-.add button{border:0;border-radius:12px;background:#007aff;color:#fff;font:600 16px inherit;padding:0 16px;min-width:48px}
+.add{flex-direction:column}.add input{padding:15px 14px;font-size:17px}.add button{border:0;border-radius:14px;background:#007aff;color:#fff;font:700 20px inherit;padding:16px;min-height:56px;width:100%}.warn{background:#fff4e5;color:#8a4b00;border-radius:12px;padding:10px 12px;font-size:13px;margin-bottom:8px}.ex{display:block;width:100%;text-align:left;border:1px dashed #c7c7cc;background:#fff;border-radius:12px;padding:12px;margin:6px 0;font:15px inherit;color:#3a3a3c}
 ul{list-style:none;margin:0;padding:0}
 li{display:flex;gap:12px;padding:12px 2px;border-bottom:1px solid #e5e5ea;align-items:flex-start}
 .tick{flex:0 0 26px;height:26px;border-radius:50%;border:2px solid #c7c7cc;background:#fff;margin-top:1px;padding:0;color:#fff;font-size:14px}.tick.d{background:#34c759;border-color:#34c759}
@@ -33,7 +33,8 @@ li{display:flex;gap:12px;padding:12px 2px;border-bottom:1px solid #e5e5ea;align-
 <div class="day" id="day"></div>
 <div class="note">Saved on this phone only until Scribe deploys. Phone pings and WhatsApp intake come once Scribe deploys. <a href="./map.html">Round Flow Map &rsaquo;</a></div>
 <div class="chips" id="f"></div>
-<form class="add" id="add"><input id="nt" placeholder="New item" autocomplete="off"><button aria-label="Add">+</button></form>
+<div id="warn" class="warn" style="display:none"></div>
+<form class="add" id="add"><input id="nt" placeholder="Type a job, call or note" autocomplete="off" enterkeyhint="done"><button aria-label="Add item">+ Add</button></form>
 <ul id="list"></ul>
 </div>
 <div id="sheet"><div class="p">
@@ -47,8 +48,9 @@ li{display:flex;gap:12px;padding:12px 2px;border-bottom:1px solid #e5e5ea;align-
 var OWN={Ange:"#007aff",Ara:"#5856d6",Nova:"#34c759",Julie:"#ff2d55"},ON=Object.keys(OWN);
 /* Storage adapter: swap to the Desk doPost/Sheet later by setting STORE.remote = exec URL. */
 var STORE={key:"realm_scribe_v1",remote:"",
- load:function(){try{return JSON.parse(localStorage.getItem(this.key))||[]}catch(e){return[]}},
- save:function(a){try{localStorage.setItem(this.key,JSON.stringify(a));return true}catch(e){alert("Phone storage is full. Remove a photo or file.");return false}
+ mem:null,ok:(function(){try{var k="__t";localStorage.setItem(k,"1");localStorage.removeItem(k);return true}catch(e){return false}})(),
+ load:function(){if(!this.ok)return this.mem||[];try{return JSON.parse(localStorage.getItem(this.key))||[]}catch(e){return[]}},
+ save:function(a){this.mem=a;if(!this.ok)return true;try{localStorage.setItem(this.key,JSON.stringify(a));return true}catch(e){this.ok=false;warn("Phone storage is full, so new changes are kept until you close this tab.");return false}
   /* later: fetch(this.remote,{method:"POST",body:JSON.stringify({fn:"scribeSave",args:[a],key:localStorage.getItem("realm_key")||""})}) */}};
 var items=STORE.load(),flt=location.hash==="#julie"?"Julie":"Today",cur=null,draft=null;
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
@@ -59,12 +61,16 @@ function draw(){chips();var a=items.filter(function(i){return flt==="All"||(flt=
  a.sort(function(x,y){return(x.done-y.done)||((y.urgent?1:0)-(x.urgent?1:0))||(y.ts-x.ts)});
  var op=items.filter(function(i){return!i.done}),ur=op.filter(function(i){return i.urgent}).length,by={};op.forEach(function(i){by[i.owner]=(by[i.owner]||0)+1});
  document.getElementById("day").innerHTML="<b>My day</b> &middot; <b class=u>"+ur+" urgent</b> &middot; "+op.length+" open"+(op.length?" &middot; "+Object.keys(by).map(function(k){return esc(k)+" "+by[k]}).join(", "):"");
- document.getElementById("list").innerHTML=a.length?a.map(function(i){return'<li class="'+(i.done?"d":"")+(i.urgent&&!i.done?" u":"")+'"><button class="tick'+(i.done?" d":"")+'" data-t="'+i.id+'" aria-label="Done">'+(i.done?"&#10003;":"")+'</button><div class="body">'+(i.urgent?'<div class="urg">URGENT</div>':'')+'<div class="t">'+esc(i.title)+'</div>'+(i.note?'<div class="n">'+esc(i.note)+'</div>':"")+'<div class="meta"><span class="ft">'+esc(i.from||"Ange")+' &rarr;</span><button class="own" data-o="'+i.id+'" style="background:'+OWN[i.owner]+'">'+esc(i.owner)+'</button>'+attHtml(i.att||[])+'</div></div><button class="ed" data-e="'+i.id+'" aria-label="Edit">&#8943;</button></li>'}).join(""):'<li class="empty">Nothing here yet.</li>'}
+ document.getElementById("list").innerHTML=a.length?a.map(function(i){return'<li class="'+(i.done?"d":"")+(i.urgent&&!i.done?" u":"")+'"><button class="tick'+(i.done?" d":"")+'" data-t="'+i.id+'" aria-label="Done">'+(i.done?"&#10003;":"")+'</button><div class="body">'+(i.urgent?'<div class="urg">URGENT</div>':'')+'<div class="t">'+esc(i.title)+'</div>'+(i.note?'<div class="n">'+esc(i.note)+'</div>':"")+'<div class="meta"><span class="ft">'+esc(i.from||"Ange")+' &rarr;</span><button class="own" data-o="'+i.id+'" style="background:'+OWN[i.owner]+'">'+esc(i.owner)+'</button>'+attHtml(i.att||[])+'</div></div><button class="ed" data-e="'+i.id+'" aria-label="Edit">&#8943;</button></li>'}).join(""):'<li class="empty" style="display:block;text-align:left">Nothing here yet. Tap an example to add it, or type above.'+EX.map(function(x){return'<button class="ex" data-ex="'+esc(x)+'">+ '+esc(x)+'</button>'}).join('')+'</li>'}
+var EX=["Call back client about anchor test","Julie → Ange: send cert for 93 Pelham","Quote follow-up: Leedwell 24 Riley St","Photo of roof access for next quote"];
+function warn(m){var w=document.getElementById("warn");w.textContent=m;w.style.display="block"}
+function addItem(v){items.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:v,note:"",done:false,from:"Ange",urgent:false,owner:(flt==="All"||flt==="Today")?"Ange":flt,att:[],ts:Date.now()});persist()}
 function find(id){return items.filter(function(i){return i.id===id})[0]}
 document.getElementById("add").onsubmit=function(e){e.preventDefault();var v=document.getElementById("nt").value.trim();if(!v)return;items.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:v,note:"",done:false,from:"Ange",urgent:false,owner:(flt==="All"||flt==="Today")?"Ange":flt,att:[],ts:Date.now()});document.getElementById("nt").value="";persist()};
 document.getElementById("f").onclick=function(e){var b=e.target.closest("[data-f]");if(!b)return;flt=b.dataset.f;history.replaceState(null,"",flt==="Julie"?"#julie":location.pathname);draw()};
 document.getElementById("list").onclick=function(e){var b=e.target.closest("button");if(!b)return;
- if(b.dataset.t){var i=find(b.dataset.t);i.done=!i.done;persist()}
+ if(b.dataset.ex){addItem(b.dataset.ex)}
+ else if(b.dataset.t){var i=find(b.dataset.t);i.done=!i.done;persist()}
  else if(b.dataset.o){var i=find(b.dataset.o);i.owner=ON[(ON.indexOf(i.owner)+1)%ON.length];persist()}
  else if(b.dataset.e)openEd(find(b.dataset.e))};
 function drawEd(){document.getElementById("eF").innerHTML=ON.map(function(o){return'<button type="button" data-fr="'+o+'" style="'+((draft.from||"Ange")===o?"background:"+OWN[o]+";color:#fff":"")+'">'+o+'</button>'}).join("");var u=document.getElementById("eU");u.style.background=draft.urgent?"#ff3b30":"";u.style.color=draft.urgent?"#fff":"";u.textContent=draft.urgent?"Urgent \u2713":"Mark urgent";document.getElementById("eO").innerHTML=ON.map(function(o){return'<button type="button" data-w="'+o+'" style="'+(draft.owner===o?"background:"+OWN[o]+";color:#fff":"")+'">'+o+'</button>'}).join("");
@@ -83,5 +89,6 @@ document.getElementById("eS").onclick=function(){var t=document.getElementById("
 document.getElementById("eC").onclick=closeEd;
 document.getElementById("sheet").onclick=function(e){if(e.target.id==="sheet")closeEd()};
 document.getElementById("eD").onclick=function(){if(!confirm("Delete this item?"))return;items.splice(items.indexOf(cur),1);closeEd();persist()};
+if(!STORE.ok)warn("This browser blocks saving (Incognito?). Items stay until you close this tab. Use normal Chrome to keep them.");
 draw();
 </script></body></html>

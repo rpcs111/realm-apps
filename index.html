@@ -29,7 +29,7 @@ function fix(name,url){var n=name.toUpperCase();
  if(/SCRIBE/.test(n))return "./scribe.html";
  return url}
 var BAD=/orion|elon|grok|claude/i;
-fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:"getLinks",args:[],key:(localStorage.getItem("realm_key")||"")})})
+fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:"getLinks",args:[],key:(function(){try{return localStorage.getItem("realm_key")||""}catch(e){return""}})()})})
 .then(function(r){return r.json()}).then(function(j){
  if(!j||!j.ok)throw new Error((j&&j.error)||"getLinks failed");
  var seen={},t=(j.result||[]).filter(function(x){var k=String(x.title)+" "+String(x.url);
