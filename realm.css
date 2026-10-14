@@ -1,6 +1,6 @@
 /* Realm shared Grok theme v1 (15 Oct 2026). Tokens + shared parts. Pages may override locally. */
 :root{--bg:#05070f;--bg2:#0b1430;--card:rgba(14,22,44,.55);--line:rgba(255,255,255,.07);--ink:#e8eefc;--mute:#8f9bb8;
---ange:#00E5FF;--julie:#FF4FA3;--a:var(--ange);--od:#ff5a5a;--ok:#2ecc71;--search:#60ff15;
+--ange:#00E5FF;--panel:#0f1830;--julie:#FF4FA3;--a:var(--ange);--od:#ff5a5a;--ok:#2ecc71;--search:#60ff15;
 --win:#2ecc71;--rope:#9b59ff;--gut:#a0662d;--tbc:#ff9f1c;--r:16px;--font:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
 body.julie,html.julie body{--a:var(--julie)}
 html{background:var(--bg)}
