@@ -47,6 +47,7 @@ fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content
  t.push({name:"REALM SEARCH STUDIO",sub:"Register · Calendar · Drive",u:"./search.html",badge:"",reg:false});
  t.push({name:"VIDEO SEARCH",sub:"YouTube",u:"./video.html",badge:"",reg:false});
  t.push({name:"FINDINGS",sub:"What changed",u:"./findings.html",badge:"",reg:false});
+ t.push({name:"TEAM",sub:"Ara + coworkers",u:"./team.html",badge:"",reg:false});
  t.sort(function(a,b){return (b.reg?1:0)-(a.reg?1:0)});
  var fi=-1;t.forEach(function(x,k){if(/^FLOW MAP$/i.test(x.name))fi=k});t.splice(fi>=0?fi+1:t.length,0,{name:"REALM FLOW MAP \u2014 24 Sep original",sub:"Ange's first map",u:"https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec",badge:"",reg:false});
  var si=-1;t.forEach(function(x,k){if(/^SCRIBE/i.test(x.name))si=k});var sc=si>=0?t.splice(si,1)[0]:{};sc.name="SCRIBE";sc.sub="You Got Me Bro";sc.u="./scribe.html";sc.badge="";sc.reg=true;t.unshift(sc);
