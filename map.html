@@ -1,16 +1,16 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Realm Flow Map</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0b1d33;color:#e2e8f0;font:15px system-ui,sans-serif;overflow-x:hidden}
+*{box-sizing:border-box}body{margin:0;background:rgba(14,22,44,.55);color:#e2e8f0;font:15px system-ui,sans-serif;overflow-x:hidden}
 header{padding:12px 14px}h1{margin:0;font-size:22px}header p{margin:4px 0 0;color:#94a3b8;font-size:13px}
 #wrap{max-width:900px;margin:0 auto;padding:0 8px}svg{width:100%;height:auto;display:block}
 .nt{font:600 15px system-ui;fill:#fff;text-anchor:middle;pointer-events:none}.ns{font:12px system-ui;fill:#cbd5e1;text-anchor:middle;pointer-events:none}
 g.node{cursor:pointer}g.node.sel circle{stroke:#facc15!important}
 #list{max-width:900px;margin:0 auto;padding:8px}.card{background:#12304f;border-radius:12px;padding:10px;margin:8px 0;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.card b{flex:1 1 180px;min-width:0;overflow-wrap:anywhere}.card a{color:#67e8f9;overflow-wrap:anywhere}.card textarea{flex:1 1 100%;min-height:44px;background:#0b1d33;color:#fff;border:1px solid #334155;border-radius:8px;padding:6px;font:14px system-ui}
+.card b{flex:1 1 180px;min-width:0;overflow-wrap:anywhere}.card a{color:#67e8f9;overflow-wrap:anywhere}.card textarea{flex:1 1 100%;min-height:44px;background:rgba(14,22,44,.55);color:#fff;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px;font:14px system-ui}
 button{border:0;border-radius:10px;padding:8px 12px;font:600 14px system-ui;background:#1e3a5f;color:#fff}button.mic{background:#dc2626}button.mic.on{background:#16a34a}
 .legend{font-size:13px;color:#94a3b8;padding:0 14px}.legend span{display:inline-block;margin-right:12px}
 #links{max-width:900px;margin:0 auto;padding:8px 14px 120px}#links a{color:#67e8f9;display:block;padding:6px 0;overflow-wrap:anywhere}
-</style></head><body>
+</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style></head><body>
 <header><h1>Realm Flow Map</h1><p>Google Calendar is the source of truth. Every step updates the Open Register. Tap a step to edit.</p></header>
 <div class="legend"><span>&#8594; main flow</span><span>&#8674; loop-back</span><span style="color:#a78bfa">&#8901;&#8901; updates Register</span></div>
 <div id="wrap"><svg id="map" viewBox="0 0 1000 1000" role="img" aria-label="Realm Flow Map"></svg></div>
@@ -63,7 +63,7 @@ function list(){const L=document.getElementById('list');L.innerHTML='';S.nodes.f
  c.querySelector('.clr').onclick=()=>{if(!ta.value)return;gate('Delete the note on "'+n.title+'"?').then(ok=>{if(!ok)return;n.note='';ta.value='';save()})};L.appendChild(c)})}
 document.getElementById('wipe').onclick=()=>gate('Reset the map to defaults? Your edits and notes in this browser are deleted.').then(ok=>{if(ok){S=defaults();save();draw();list()}});
 draw();list();
-</script><div id="pinx" style="position:fixed;inset:0;z-index:9999;background:#0b1d33;color:#fff;display:flex;align-items:center;justify-content:center;font:16px system-ui,sans-serif;padding:16px">
+</script><div id="pinx" style="position:fixed;inset:0;z-index:9999;background:rgba(14,22,44,.55);color:#fff;display:flex;align-items:center;justify-content:center;font:16px system-ui,sans-serif;padding:16px">
 <div style="width:100%;max-width:320px;text-align:center"><div style="font-size:40px">&#128274;</div><h2 id="pinT" style="margin:8px 0 4px">Realm Map</h2><div id="pinM" style="color:#cbd5e1;font-size:14px;min-height:20px;margin-bottom:12px"></div>
 <input id="pinI" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" style="width:100%;font-size:28px;letter-spacing:.5em;text-align:center;padding:12px;border-radius:12px;border:0;margin-bottom:10px">
 <button id="pinOk" style="width:100%;padding:14px;border:0;border-radius:12px;background:#22d3ee;color:#0b1d33;font:700 17px sans-serif;margin-bottom:8px">Unlock</button>
