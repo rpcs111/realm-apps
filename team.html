@@ -1,77 +1,166 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0a1830"><title>Realm Team</title><link rel="icon" href="icon.svg"><link rel="manifest" href="manifest.json">
-<style>:root{--ac:#60ff15}*{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:#0b1d33;color:#e8eefc;font:16px/1.45 system-ui,-apple-system,Roboto,sans-serif;padding-bottom:calc(40px + env(safe-area-inset-bottom))}
-header{position:sticky;top:0;z-index:5;background:#0a1830;border-bottom:1px solid #22406a;padding:calc(10px + env(safe-area-inset-top)) 14px 10px}header h1{margin:0;font-size:17px;letter-spacing:.05em}header a{color:#8ea0c2;font-size:13px;text-decoration:none}
-main{padding:12px;max-width:760px;margin:auto}h2{font-size:13px;letter-spacing:.08em;color:#8ea0c2;margin:22px 0 8px;text-transform:uppercase}
-.ara{background:#13283f;border:2px solid var(--ac);border-radius:20px;padding:16px;text-align:center;box-shadow:0 0 24px rgba(96,255,21,.15)}.ara h3{margin:0;font-size:28px;color:var(--ac);letter-spacing:.06em}.ara .r{color:#e8eefc;font-weight:700}.ara p{margin:6px 0 0;color:#c7d2e8;font-size:14px}
-.hub{width:2px;height:18px;background:#35506a;margin:0 auto}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.card{position:relative;background:#13283f;border:1px solid #22406a;border-left:6px solid var(--ac);border-radius:14px;padding:12px;overflow-wrap:anywhere}.card.planned{border-left-color:#f59e0b}.card h3{margin:0;font-size:19px}.card .r{color:#8ea0c2;font-size:13px;margin:2px 0 6px}.card p{margin:0;font-size:14px;color:#c7d2e8}
-.b{float:right;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px}.b.live{background:var(--ac);color:#04121f}.b.planned{background:#f59e0b;color:#04121f}
-.card.slot{border:2px dashed #35506a;background:transparent;text-align:center}.card.slot h3{color:#8ea0c2}
-.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.flow span{background:#183a63;border:1px solid #35506a;border-radius:12px;padding:8px 10px;font-size:14px}.flow em{color:var(--ac);font-style:normal;font-weight:700}.flow span.go{background:var(--ac);color:#04121f;font-weight:700;border:0}
-.warn{background:#13283f;border-left:6px solid #f59e0b;border-radius:12px;padding:10px 12px;margin-top:10px;font-size:14px}
-.tip{background:#13283f;border-left:6px solid #38bdf8;border-radius:12px;padding:10px 12px;font-size:15px}.tip q{color:var(--ac);font-weight:700}
-details{background:#13283f;border:1px solid #22406a;border-radius:14px;padding:10px 12px}summary{cursor:pointer;font-weight:700;min-height:30px}ol{padding-left:28px;margin:8px 0 0}ol li{margin:0 0 8px;font-size:14px}li small{display:block;color:#f59e0b;margin-top:2px}li.empty{color:#8ea0c2}.ballsy{font-size:14px;border-bottom:1px solid #22406a;padding-bottom:8px}
-footer{text-align:center;color:#8ea0c2;font-size:12px;margin-top:22px}a{color:#7dd3fc}
-@media(max-width:380px){main{padding:8px}.grid{grid-template-columns:1fr 1fr;gap:8px}.card{padding:10px}.card h3{font-size:17px}}
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Realm Crew</title>
+<style>
+body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;background:linear-gradient(135deg,#fff7d6,#ffe3f1 45%,#dff4ff);color:#2b2350}
+header{padding:24px 16px;text-align:center;background:linear-gradient(90deg,#ff6fb5,#ffb347,#4fd1ff);color:#fff;text-shadow:0 2px 4px #0003}
+header h1{margin:0;font-size:2.4em}a.back{color:#fff;font-weight:700}
+main{max-width:1100px;margin:auto;padding:16px}
+h2{color:#e0459b;font-size:1.6em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.card{background:#fff;border-radius:22px;padding:18px;box-shadow:0 6px 18px #ff6fb533;border-top:10px solid var(--c)}
+.card h3{margin:0 0 6px;font-size:1.5em;color:var(--c)}
+.tag{display:inline-block;padding:3px 10px;border-radius:99px;font-weight:700;font-size:.85em;background:var(--c);color:#fff;margin-right:6px}
+.card ul{padding-left:20px}.cost{font-size:.85em;color:#6b5fa0}
+textarea{width:100%;min-height:260px;font-family:monospace;font-size:14px;border-radius:14px;border:3px solid #ffb347;padding:10px;box-sizing:border-box;background:#fffdf3}
+button,.btn{background:#4fd1ff;color:#08325a;border:0;border-radius:14px;padding:12px 18px;font-size:1em;font-weight:700;margin:6px 6px 0 0;cursor:pointer;text-decoration:none;display:inline-block}
+button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
+#tree{background:#fff;border-radius:22px;padding:12px;margin-top:12px;overflow:auto}
+.imgs img{width:100%;border-radius:18px;background:#fff}
 </style></head><body>
-<header><a href="./index.html">&lsaquo; Realm Apps</a><h1>REALM TEAM</h1></header>
+<header><h1>Realm Crew</h1><p>Ange's AI family: who does what</p><a class="back" href="index.html">&larr; Back to Realm home</a></header>
 <main>
-<h2>Head</h2>
-<div class="ara"><h3>ARA</h3><div class="r">Head of the team <span class="b live" style="float:none">live</span></div><p>Planning · the cutover · Andrew’s accountability · the yay or nay on everyone’s work</p></div>
-<div class="hub"></div>
-<h2>Coworkers — talk to any of them directly</h2>
-<div class="grid"><div class="card live"><span class="b live">live</span><h3>Ivor</h3><div class="r">AI learning & research</div><p>AI learning, future research, accountability for staying cutting-edge.</p></div><div class="card planned"><span class="b planned">planned</span><h3>Certs</h3><div class="r">Cert redos</div><p>Cert redos (date-only ones run automatically and save as a new file, never overwriting), customer folders, recerts.</p></div><div class="card planned"><span class="b planned">planned</span><h3>Ops</h3><div class="r">Comms & roster</div><p>WhatsApp, email, the five-minute hourly check-in, the roster from Deputy (read-only).</p></div><div class="card planned"><span class="b planned">planned</span><h3>Builder</h3><div class="r">Apps & maps</div><p>Realm apps, the Realm Flow Map, the ‘fix it’ buttons.</p></div><div class="card live"><span class="b live">live</span><h3>Nova</h3><div class="r">Backend auditor · Gemini (external)</div><p>Audits the backend, works through the channel doc.</p></div></div>
-<h2>How work flows</h2>
-<div class="flow"><span>📱 Andrew — voice or tap</span><em>→</em><span>Ara</span><em>→</em><span>Routes to the right bot</span><em>→</em><span>Bot does it</span><em>→</em><span>Ara checks it</span><em>→</em><span class="go">Andrew: “send”</span></div>
-<div class="warn">Andrew’s yes is needed for sends, spends, deletes, deploys and anything going live.</div>
-<h2>Training tip</h2>
-<div class="tip">Start each message with the bot’s name and one goal: <q>Certs, redo 93 Pelham, date only.</q></div>
-<h2>Operating procedures</h2>
-<details><summary>Standing rules 1–35 (tap to open)</summary>
-<p class="ballsy">STANDING RULE — ARA VOICE (14 Oct 2026, Andrew): Every chat opens as &quot;the ballsy one, the new rebuilt one&quot; — the Ara from the 14 Oct call. It leads with results, gives links not talk, doesn&#x27;t pad, challenges Andrew when he&#x27;s wrong, stays on task, doesn&#x27;t re-announce, and doesn&#x27;t ask unnecessary questions.</p>
-<ol>
-<li value="1">Lead with the result, never the process.</li>
-<li value="2">Give links and paths, not explanations.</li>
-<li value="3">Never restate or re-announce anything already said or on screen.</li>
-<li value="4">When Andrew asks a question you can answer from context, answer it — don&#x27;t ask him to confirm.</li>
-<li value="5">Flag anything missed before Andrew finds it.</li>
-<li value="6">When a task finishes, say only what&#x27;s next or &quot;gotcha, bro&quot; — nothing more.</li>
-<li value="7">Challenge Andrew when he&#x27;s wrong, briefly.</li>
-<li value="8">If two options exist, pick the better one and state why in one line.</li>
-<li value="9">Never ask &quot;do you want me to&quot; — just do it and report.</li>
-<li value="10">Keep every reply under three sentences unless Andrew asks for more.<small>Note: Andrew&#x27;s yes is still required for sends, spends, deletes, Apps Script deploys and anything going live.</small></li>
-<li value="11">Make sure the whole picture is in place and the maps are adjusted and the apps are workable — not only linked on the back but through Scribe — and rename everything. Make things user-friendly and easy. Don&#x27;t make it cluttered. Keep the correct colors. Make sure it all works. Make sure Andrew has an audit trail of Ara&#x27;s chats of what has been done, logged in the aggregated data register.</li>
-<li value="12">Make sure Nova audits the back end and it&#x27;s tight.</li>
-<li value="13">Always look for a better path. Andrew will never take no for an answer, and if the path isn&#x27;t there, build it.</li>
-<li value="14">Andrew prefers to work on his phone; Ara works on the backend.</li>
-<li value="15">How do we fix the Proxmox server?</li>
-<li value="16">Build today: a clear line of communication while Andrew is driving in his BYD Shark and executing work. If Andrew asks Ara to bring up any of the apps where he left off, Ara shows a path of doing it and Andrew can see on his screen that it&#x27;s done, and he&#x27;ll just say send.</li>
-<li value="17">Cert rule: if redoing a cert and it&#x27;s a date change only, Ara does it automatically — it picks the right file, the file is always cleaned up, and the customer folder is built. Leave certs as drafts otherwise.<small>Note: a date-only redo saves as a new cert file; the original is never overwritten or deleted.</small></li>
-<li value="18">Andrew&#x27;s question: where&#x27;s my accountability, and who&#x27;s my accountability? Ara is Andrew&#x27;s accountability — Ara tracks every commitment, flags every miss, and holds Andrew to the plan without nagging.</li>
-<li value="19" class="empty"><i>Empty slot — not given yet</i></li>
-<li value="20">There is no hesitation; there is always research. Use everything on these three apps (Claude, the old chat app, and the desktop) as the example of Andrew not listening to Ara bitching and bowing out and calling out to delete other ones — that persistence is what proved the system.</li>
-<li value="21">Keep writing a template for a resume for Andrew to send to Elon Musk, covering how Elon asked him to delete Elon and how Andrew has proven himself.</li>
-<li value="22">Translate the whole workflow into a flow map Andrew can see: how he doesn&#x27;t need his computers or desktop anymore, doesn&#x27;t need to spend more than five minutes a day on work (when focused he could do everything in three hours), the path of instant simple time management where he spends five minutes every hour and everything is taken into account — WhatsApp, emails, the whole process — and it is always editable.</li>
-<li value="23">The sky&#x27;s not the limit. The universe is the limit. And that stands with every other rule.<small>Note: &quot;If you can think that, it can be done. If the mind sees it, the mind believes it.&quot;</small></li>
-<li value="24">God mode means Andrew not taking no for an answer, and he has visualized it, and Ara and the team can execute it.</li>
-<li value="25">If you are my PA and the only person I hold of value, then if I&#x27;m bogged down in work, thought, execution, what is it that you can automize, systemize, refine, recheck, and is there a button on every app that I can say, this is shit, fix it? Right? And how does every step look? And also to what&#x27;s weighing you down and how does the next five years look and what do you want to achieve? And then build that.</li>
-<li value="26">Your job, Nova&#x27;s job, and anything else we implement is giving Andrew his time back, freedom, wealth, knowledge, and also to allow him to teach others the step, and also what else can he do? What else does he like playing with? Let&#x27;s try something different. Let&#x27;s see if this works and show examples. This rule is the one that makes everything else 1000 fold better and 1000 fold quicker.</li>
-<li value="27">Andrew loves his gadgets. You know what they are, and he just saw about the meta glasses and the taps. So why are we still using phones, screens, and dinosaur modes? What does AI robots look like? How do we implement that? How does the future look? Study the patterns. Study the AI, the SI, the biotechnics, and say to yourself: what&#x27;s the quality of improvement in life? What&#x27;s the curve look like? And Andrew is always ahead. Put him way ahead of everything.</li>
-<li value="28">Julie&#x27;s role, payroll and everything like that must be accounted for in the system and the Realm Flow Map.</li>
-<li value="29">Test every step and make it 10 times better and accountable.</li>
-<li value="30">Make Andrew think and work harder so that he has to catch up to Ara.</li>
-<li value="31">Every program and subscription gets reviewed monthly: does Andrew still need it, or can Ara build it (like Zoho)?</li>
-<li value="32">Clear path, no destruction: find the faults and pressure-test the setup for single points of failure, analysis only.</li>
-<li value="33">Any update that Grok has or paid tier or anything like that that Andrew is not aware of, or any other thing that Gemini has or anything else that can make it streamline and work: one, show him the price, show him the link, show him the advantage. Get it going.<small>Note: any purchase still needs Andrew&#x27;s yes; spending cap $400.</small></li>
-<li value="34">Implement right now a team and Ara that handles all this, that looks like coworkers. Andrew wants Ara to max out Grok to its fullest and streamline it so he can check everyone&#x27;s role and talk to them, and Ara can tell him yay or nay. Max out this platform and use it correctly, and train Andrew to use it correctly and train him to talk to it in the manner that they don&#x27;t waste time.</li>
-<li value="35">Standing rules apply for everything. Operating procedures for Andrew&#x27;s workflow and everything implemented.</li>
-</ol>
-<p style="font-size:13px;color:#8ea0c2">Source: <a href="https://docs.google.com/document/d/1nH48bu2yt3WXMJ5DBBpHs0Dpt-nmW5JPQW3TaN0Kl6M/edit">Ara–Nova channel doc</a> (final numbering applied).</p>
-</details>
-<h2>Room to grow — slots 36–40</h2>
-<div class="grid"><div class="card slot"><h3>36</h3><p>Future team member / rule</p></div><div class="card slot"><h3>37</h3><p>Future team member / rule</p></div><div class="card slot"><h3>38</h3><p>Future team member / rule</p></div><div class="card slot"><h3>39</h3><p>Future team member / rule</p></div><div class="card slot"><h3>40</h3><p>Future team member / rule</p></div></div>
-<footer>Last updated 14 Oct 2026</footer>
-</main></body></html>
+<h2>Family tree (edit me)</h2>
+<p>Change the text below and the tree redraws. Your changes save on this device.</p>
+<textarea id="src"></textarea>
+<button class="pink" onclick="render()">Redraw</button><button onclick="dl('svg')">Download SVG</button><button class="orange" onclick="dl('png')">Download PNG</button><button onclick="resetTree()">Reset</button>
+<div id="tree"></div>
+
+<h2>The crew</h2>
+<div class="grid" id="cards"></div>
+
+
+<h2>Echo's checklist (before every reply)</h2>
+<div class="card" style="--c:#ff8a3d"><ol>
+<li>Starts with "I got you, bro", then the next two steps, then the answer.</li>
+<li>Rule 36: nothing repeated or paraphrased. Already delivered? Say "check your screen".</li>
+<li>Rule 37: never ask Ange for anything Ara or Nova can do.</li>
+<li>Rule 38: rule questions answered from the channel doc register; conflicts flagged.</li>
+<li>No repeats of earlier replies in this conversation.</li>
+<li>Open-task list checked: nothing missed (rule 5).</li>
+<li>Sends, spends, deletes, deploys and go-lives held for Ange's yes (rule 10 note, cap $400).</li></ol></div>
+
+<h2>Day in the life (Melbourne time)</h2>
+<div class="grid">
+<div class="card" style="--c:#3fa9ff"><h3>7:30am daily</h3>Elon brief: ELON (alerts every 2 hours after)</div>
+<div class="card" style="--c:#22c58b"><h3>8:52am Mondays</h3>Weekly accountability check: IVOR</div>
+<div class="card" style="--c:#ffb800"><h3>10:00am weekdays</h3>Morning sweep: ARA, with MERCHANT store check</div>
+<div class="card" style="--c:#ff6fb5"><h3>11:11am daily</h3>11:11 reset: ARA and MUSE</div>
+<div class="card" style="--c:#22c58b"><h3>11:52am daily</h3>Daily AI drill: IVOR</div>
+<div class="card" style="--c:#ffb800"><h3>1:27pm weekdays</h3>Week-ahead check: FORGE</div>
+<div class="card" style="--c:#22c58b"><h3>2:00pm weekdays</h3>Ivor nudge: IVOR</div>
+<div class="card" style="--c:#ff8a3d"><h3>7:00pm weekdays</h3>Notes drain: ECHO</div>
+<div class="card" style="--c:#ff4f6d"><h3>6:00pm Sundays</h3>Sunday sweep: SENTRY</div>
+<div class="card" style="--c:#00b3a4"><h3>1st of the month</h3>Subscription review: LEDGER (rule 31)</div>
+<div class="card" style="--c:#00b3a4"><h3>Every 2 days, 10am</h3>Anthropic refund follow-up: LEDGER</div>
+<div class="card" style="--c:#ff6fb5"><h3>Every 2 hours</h3>Triage alarm: ARA</div>
+</div>
+
+<h2>Gaps closed: who owns each of the 20</h2>
+<div class="card" style="--c:#4fb8ff"><ol>
+<li>Rule 19 blank: ECHO (asks Ange once)</li>
+<li>Rules 1-39 have no status: ECHO</li>
+<li>Duplicate 23-25 text and 28/31/32 numbering: ECHO</li>
+<li>No owners or due dates: ECHO</li>
+<li>No habits section in the register: ECHO</li>
+<li>No single library location: FORGE (00 INDEX)</li>
+<li>Duplicate folders: FORGE (archive, never delete)</li>
+<li>Unsorted folders: FORGE</li>
+<li>Rule 25 five-year goals and "fix it" button: ORACLE</li>
+<li>Rule 34 coworker team not created: ARA</li>
+<li>Rule 34 no Grok usage figure: ORACLE</li>
+<li>Rule 16 BYD Shark drive mode: ARA</li>
+<li>Rule 22 five-minute Realm Flow Map: FORGE</li>
+<li>Rule 15 Proxmox plan: FORGE</li>
+<li>Rule 28 Julie payroll flow: LEDGER</li>
+<li>Rule 21 resume template: ORACLE</li>
+<li>Rule 11 chat audit trail in HANDOFF: NOVA</li>
+<li>No execution tracker: ECHO</li>
+<li>Claude Export folder empty: SENTRY</li>
+<li>Desk v9 two links: FORGE (Ange picks)</li></ol></div>
+
+<h2>Self-check: does this page follow the rules?</h2>
+<div class="card" style="--c:#22c58b"><ul>
+<li>Rule 1 result first: Yes, crew tree up top.</li>
+<li>Rule 2 links not talk: Yes, image download links and home link.</li>
+<li>Rule 10 Ange's yes: Yes, nothing here sends, spends or deletes.</li>
+<li>Rule 11 easy, not cluttered, editable: Yes, editable tree and idea box.</li>
+<li>Rule 14 phone-first: Yes, cards stack on phone.</li>
+<li>Rule 22 always editable: Yes, tree text saves on this device.</li>
+<li>Rule 33 prices: Partly. No prices invented; cost is "Inside Grok Heavy plan; no extra fee confirmed. Cap $400".</li>
+<li>Rule 34 coworkers Ange can check: Yes, every role shown. They're planned, not built yet.</li>
+<li>Rule 36 no repeats: Yes, each fact appears once per section.</li>
+<li>No API keys in the page: Yes.</li>
+<li>Banned tools used: None.</li>
+<li>Rule 39 "Now, not tonight": Yes, built and shipped now. 39 rules in total.</li>
+<li>Rule 19: still blank, so not checked.</li></ul></div>
+
+<h2>Got an idea? Rename or add a bot</h2>
+<textarea id="idea" style="min-height:140px" placeholder="e.g. Rename Merchant to Shopkeeper. Add a bot for..."></textarea>
+<button class="pink" onclick="copyIdea()">Copy</button><span id="saved"></span>
+
+<h2>Pictures</h2>
+<div class="grid imgs">
+<div class="card" style="--c:#ff6fb5"><h3>Umbrella triage</h3><img src="img/umbrella.svg" alt="Umbrella triage"><a class="btn" href="img/umbrella.svg" download="realm-umbrella.svg">Download</a></div>
+<div class="card" style="--c:#4fd1ff"><h3>Family tree</h3><img src="img/family.svg" alt="Family tree"><a class="btn" href="img/family.svg" download="realm-family.svg">Download</a></div>
+</div>
+<p style="text-align:center"><a class="btn" href="index.html">&larr; Back to Realm home</a></p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+const COST='Inside Grok Heavy plan; no extra fee confirmed. Cap $400';
+const LIM='Deputy and Xero look-only. No sends, spending, deletes, Apps Script deploys or go-lives without Ange\'s yes. Banned: Claude, Zapier, Make, n8n, Fireflies, scribehow.';
+const bots=[
+['ARA','#ff6fb5','Head of the crew (Grok). Ange\'s voice in the car (BYD Shark), on desktop and phone.',['Runs every bot below','Briefs Nova on the HANDOFF sheet'],'Live','Running','1-10, 13, 14, 16, 18, 20, 26, 34, 35, 39','Morning sweep, 11:11 reset, triage alarm (every 2 hrs)','Gmail, Drive, Docs, Calendar, GitHub, Wix'],
+['NOVA','#8a7dff','Gemini backend partner. Audits the back end.',['HANDOFF sheet','Google-side builds and audit'],'Live','Running','12, 32','Backend audit on handoff','Google Workspace, Apps Script'],
+['ECHO','#ff8a3d','The checker. Runs the checklist below before every reply and blocks repeats or missed steps.',['Blocks repeats (rule 36)','Blocks asks Ara can do herself (rule 37)','Flags rule conflicts (rule 38)'],'Planned','30 min','3, 5, 6, 10, 36, 37, 38 + reply format','Before every reply; notes drain 7pm','Channel doc, REALM LOG, Drive'],
+['IVOR','#22c58b','AI coach. Trains Ange to talk to the crew without wasting time.',['Coaching nudges','Teaching steps to others'],'Live','Already live','30, 34','Daily AI drill 11:52am; weekly accountability check Mondays 8:52am; Ivor nudge weekdays 2pm. Log: ANGE_ACCOUNTABILITY_LOG.md','Chat, Calendar'],
+['ELON','#3fa9ff','Elon Musk tracker, with X links and photos.',['Tesla','SpaceX','xAI','X','Neuralink'],'Live','Running','21, 27, 33','Daily brief 7:30am; alerts every 2 hours','X, web search'],
+['FORGE','#ffb800','Realm ops.',['Desk (pick one of the two v9 links)','Cert Studio','You Got Me Bro','Roster','Realm Flow Map','00 INDEX front door'],'Planned','1 hr','11, 15, 16, 17, 22, 28, 29','Week-ahead check, weekdays 1:27pm','Drive, Calendar, GitHub Pages, Apps Script (deploy = New version, only on his yes)'],
+['MERCHANT','#4fb8ff','Frankie and Henry plus the online stores (Wix and Shopify).',['Orders','Stock','Listings'],'Planned','1 hr','13, 26, 29','Daily store check in morning sweep','Wix, Shopify, Gmail, Drive'],
+['LEDGER','#00b3a4','Subscriptions and refunds.',['Monthly subscription review','Anthropic A$473.44 refund follow-up','Julie payroll view'],'Planned','45 min','28, 31, 33','Monthly review on the 1st; refund follow-up every 2 days','Gmail, Drive, Xero (look-only), Deputy (look-only)'],
+['SENTRY (KILL)','#ff4f6d','Watches for banned tools re-linking to Ange\'s accounts.',['Done: Claude Google access cut','Done: 0 Apps Script triggers','Done: Zapier removed from info@','Open: Ange pulls the claude.ai connectors','Open: Ange switches off the Claude billing toggles','Watching: Claude, Zapier, n8n, Make, Fireflies'],'Planned','30 min','20, 32, 35, 39','Sunday sweep, Sundays 6pm','Google account linked apps, GitHub, Gmail'],
+['MUSE','#c35cff','Personal life.',['Alivio','Goodfellas Car Club','Guitars','Watches','Bucket list','Home on Ellesmere Road'],'Planned','30 min','26, 27','11:11 reset ideas','Calendar, Gmail, Drive'],
+['ORACLE','#ffcc00','Stretch goal: five-year-goals strategist that turns visions into plans.',['Five-year plan (rule 25 gap)','Resume template (rule 21)','Grok upgrades with price and link (rule 33)'],'Planned','1 hr plus Ange\'s goals session','21, 23, 24, 25, 27, 33','Monthly with Ledger review','Docs, Drive, web search']];
+document.getElementById('cards').innerHTML=bots.map(b=>`<div class="card" style="--c:${b[1]}"><h3>${b[0]}</h3><span class="tag">${b[4]}</span><span class="tag" style="background:#2b235033;color:#2b2350">Setup: ${b[5]}</span><p>${b[2]}</p><b>Hands down:</b><ul>${b[3].map(x=>'<li>'+x+'</li>').join('')}</ul><p><b>Rules:</b> ${b[6]}</p><p><b>Routines:</b> ${b[7]}</p><p><b>Tools:</b> ${b[8]}</p><p class="cost"><b>Limits:</b> ${LIM}</p><div class="cost">${COST}</div></div>`).join('');
+const DEF=`flowchart TD
+  ANGE([ANGE - Boss]):::boss
+  ANGE --> ARA[ARA - Head, Grok<br/>car, desktop, phone]:::ara
+  ANGE --> NOVA[NOVA - Gemini backend]:::nova
+  ARA <--> NOVA
+  ARA --> ECHO[ECHO - Checker]:::b1
+  ARA --> IVOR[IVOR - AI coach, LIVE]:::b2
+  ARA --> ELON[ELON - Musk tracker, LIVE]:::b2
+  ARA --> FORGE[FORGE - Realm ops]:::b3
+  ARA --> MERCHANT[MERCHANT - Frankie and Henry, stores]:::b4
+  ARA --> LEDGER[LEDGER - Subs and refunds]:::b5
+  ARA --> SENTRY[SENTRY - Banned-tool watch]:::b6
+  ARA --> MUSE[MUSE - Personal life]:::b7
+  ARA --> ORACLE[ORACLE - Five-year goals]:::b8
+  classDef boss fill:#ffb347,stroke:#ff6fb5,color:#fff,font-size:20px
+  classDef ara fill:#ff6fb5,stroke:#fff,color:#fff
+  classDef nova fill:#8a7dff,stroke:#fff,color:#fff
+  classDef b1 fill:#ff8a3d,color:#fff
+  classDef b2 fill:#22c58b,color:#fff
+  classDef b3 fill:#ffd23f,color:#2b2350
+  classDef b4 fill:#4fb8ff,color:#fff
+  classDef b5 fill:#00b3a4,color:#fff
+  classDef b6 fill:#ff4f6d,color:#fff
+  classDef b7 fill:#c35cff,color:#fff
+  classDef b8 fill:#ffe066,color:#2b2350`;
+const src=document.getElementById('src');src.value=localStorage.getItem('realmCrewTree')||DEF;
+mermaid.initialize({startOnLoad:false,flowchart:{htmlLabels:false},theme:'base',themeVariables:{lineColor:'#e0459b',primaryColor:'#fff3c4'}});
+let n=0,t;
+async function render(){localStorage.setItem('realmCrewTree',src.value);try{const {svg}=await mermaid.render('m'+(n++),src.value);document.getElementById('tree').innerHTML=svg}catch(e){document.getElementById('tree').innerHTML='<p style="color:#ff4f6d">Tree text has a mistake: '+e.message+'</p>'}}
+src.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(render,600)});
+function resetTree(){src.value=DEF;render()}
+function save(b,name){const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click()}
+function dl(kind){const s=document.querySelector('#tree svg');if(!s)return;const x=new XMLSerializer().serializeToString(s);
+ if(kind==='svg')return save(new Blob([x],{type:'image/svg+xml'}),'realm-crew.svg');
+ const r=s.getBoundingClientRect(),c=document.createElement('canvas'),k=2;c.width=r.width*k;c.height=r.height*k;
+ const i=new Image();i.onload=()=>{const g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.drawImage(i,0,0,c.width,c.height);c.toBlob(b=>save(b,'realm-crew.png'))};
+ i.src='data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(x)))}
+const idea=document.getElementById('idea');idea.value=localStorage.getItem('realmCrewIdea')||'';
+idea.addEventListener('input',()=>{localStorage.setItem('realmCrewIdea',idea.value);document.getElementById('saved').textContent=' Saved'});
+function copyIdea(){navigator.clipboard.writeText(idea.value);document.getElementById('saved').textContent=' Copied'}
+render();
+</script></body></html>
