@@ -13,4 +13,5 @@ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;
 function draw(){var a=L();document.getElementById("r").innerHTML=a.length?a.map(function(q){return'<li><a href="'+esc(U(q))+'">&#9654; '+esc(q)+'</a></li>'}).join(""):'<li style="color:#6b7280">None yet.</li>';document.getElementById("clr").style.display=a.length?"block":"none"}
 document.getElementById("f").onsubmit=function(e){e.preventDefault();var q=document.getElementById("q").value.trim();if(!q)return;var a=L().filter(function(x){return x!==q});a.unshift(q);localStorage.setItem(K,JSON.stringify(a.slice(0,20)));draw();location.href=U(q)};
 document.getElementById("clr").onclick=function(){localStorage.removeItem(K);draw()};draw();
-</script></body></html>
+</script><script src="voice.js"></script>
+</body></html>

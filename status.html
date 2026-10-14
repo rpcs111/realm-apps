@@ -42,4 +42,5 @@ window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=
 btn.onclick=function(){if(dp){dp.prompt();dp.userChoice.then(function(){dp=null})}else{help.style.display="block"}};
 window.addEventListener("appinstalled",function(){btn.textContent="Saved as app \u2713"});
 if(window.matchMedia("(display-mode: standalone)").matches||navigator.standalone)btn.style.display="none";
-</script></body></html>
+</script><script src="voice.js"></script>
+</body></html>
