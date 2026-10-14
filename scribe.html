@@ -91,4 +91,5 @@ document.getElementById("sheet").onclick=function(e){if(e.target.id==="sheet")cl
 document.getElementById("eD").onclick=function(){if(!confirm("Delete this item?"))return;items.splice(items.indexOf(cur),1);closeEd();persist()};
 if(!STORE.ok)warn("This browser blocks saving (Incognito?). Items stay until you close this tab. Use normal Chrome to keep them.");
 draw();
-</script></body></html>
+</script><script src="voice.js"></script>
+</body></html>
