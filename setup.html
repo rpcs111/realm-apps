@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Setup - Apps Script API</title>
+<style>
+body{margin:0;background:#000;color:#e8fff0;font:20px/1.5 -apple-system,system-ui,sans-serif;padding:16px}
+h1{font-size:24px;color:#22c55e;margin:8px 0 16px}
+details{border:2px solid #22c55e;border-radius:14px;margin:0 0 14px;background:#06140b}
+summary{padding:18px 16px;font-size:22px;font-weight:700;cursor:pointer;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary:before{content:'+ ';color:#22c55e}
+details[open] summary:before{content:'- '}
+.b{padding:0 16px 18px}
+a.btn{display:block;text-align:center;background:#22c55e;color:#000;font-weight:800;padding:16px;border-radius:12px;text-decoration:none;margin-top:10px}
+label{display:flex;gap:12px;align-items:center;font-size:18px;margin-top:10px}
+input[type=checkbox]{width:28px;height:28px}
+.f{font-size:14px;color:#7a9;margin-top:20px}
+</style></head><body>
+<h1>Connect Ara: 5 steps on your phone</h1>
+
+<details open><summary>1. Add info@ to Chrome Beta</summary><div class="b">Open Chrome Beta. Tap your profile picture (top right). Tap <b>Add account</b> and sign in as <b>info@realmpcs.com.au</b>.<label><input type="checkbox" data-k="s1">Done</label></div></details>
+
+<details><summary>2. Switch to that account</summary><div class="b">Tap the profile picture again and pick <b>info@realmpcs.com.au</b> so Chrome Beta is using it.<label><input type="checkbox" data-k="s2">Done</label></div></details>
+
+<details><summary>3. Open Apps Script settings</summary><div class="b">Tap the button below. If it shows a cramped layout, tap the three dots and turn on <b>Desktop site</b>.<a class="btn" href="https://script.google.com/home/usersettings" target="_blank" rel="noopener">Open Apps Script settings</a><label><input type="checkbox" data-k="s3">Done</label></div></details>
+
+<details><summary>4. Switch on the API</summary><div class="b">Find <b>Google Apps Script API</b> and flip the switch to <b>On</b>.<label><input type="checkbox" data-k="s4">Done</label></div></details>
+
+<details><summary>5. Tell Ara</summary><div class="b">Say or type <b>"API on"</b> to Ara. Ara then starts the deploy login and hands you one Google approval.<label><input type="checkbox" data-k="s5">Done</label></div></details>
+
+<div class="f">Ticks save on this phone only. Built by Ara.</div>
+<script>
+document.querySelectorAll('input[data-k]').forEach(function(c){var k='realm_setup_'+c.dataset.k;c.checked=localStorage.getItem(k)==='1';c.addEventListener('change',function(){localStorage.setItem(k,c.checked?'1':'0');if(c.checked){var d=c.closest('details');d.open=false;var n=d.nextElementSibling;if(n&&n.tagName==='DETAILS')n.open=true;}});});
+</script>
+</body></html>
