@@ -36,6 +36,7 @@ footer{font-size:11px;color:#6b7a99;padding:8px 10px}
 <button id="bAdd" type="button">+ Add node</button>
 <button id="bConn" type="button">Connect two</button>
 <button id="bCube" type="button" class="on">Cube lines</button>
+<button id="bReg" type="button" class="on">Register links</button>
 <button id="bExport" type="button">Export</button>
 <button id="bReset" type="button">Reset</button>
 <span id="hint">Tap a circle to open it. Map only: nothing here runs a Realm process.</span>
@@ -47,16 +48,16 @@ footer{font-size:11px;color:#6b7a99;padding:8px 10px}
 <aside>
 <div class="card" id="panel"><h3>Selected</h3><i style="font-size:13px;color:#93a3c4">Tap a circle. In Edit mode you can drag, rename, link and delete.</i></div>
 <div class="card legend" id="legend"><h3>Status view</h3><span><i class="dot" style="background:#22c55e"></i>live</span><span><i class="dot" style="background:#facc15"></i>half</span><span><i class="dot" style="background:#ef4444"></i>not built</span><span><i class="dot" style="background:#64748b"></i>not stated</span><div style="font-size:12px;color:#93a3c4;margin-top:4px">Status only where Orion's 30 Sep map states it (Orion's key: green live, half, red not built; half shows yellow here).</div></div>
-<div class="card"><h3>Lines</h3><div style="font-size:12px;color:#93a3c4"><span style="color:#22d3ee">Blue circles</span> = hubs (Calendar centre; Drive lower right is the data layer). <span style="color:#a78bfa">Purple circles</span> = the step each hub holds. Solid blue-grey lines = Gmail, Google Tasks and Drive link straight to Calendar. <span style="color:#93c5fd">Light blue arrows</span> = direction (WhatsApp to 2Chat to Calendar; Orion's step order once steps are placed). Dashed grey = belongs to that hub. Violet = links you add.</div></div>
+<div class="card"><h3>Lines</h3><div style="font-size:12px;color:#93a3c4"><span style="color:#22d3ee">Blue circles</span> = hubs (Calendar centre; Drive lower right is the data layer). <span style="color:#a78bfa">Purple circles</span> = the step each hub holds. Solid blue-grey lines = Gmail, Google Tasks and Drive link straight to Calendar. <span style="color:#93c5fd">Light blue arrows</span> = direction (WhatsApp to 2Chat to Calendar; Orion's step order once steps are placed). Thin cyan lines = REALM OPEN REGISTER (under Calendar) links to every circle that appears in its FLOW_NODES tab. Dashed grey = belongs to that hub. Violet = links you add.</div></div>
 <div class="card" id="notes"><h3>Ange's notes (sketch 15 Oct)</h3><div style="font-size:12px;color:#93a3c4">His handwritten side notes, in his order. + Place puts one on the map.</div><div id="noteList"></div></div>
 <div class="card" id="steps"><h3>Steps (from Orion's map)</h3><div style="font-size:12px;color:#93a3c4">Grouped by Orion's flows A-E, in his order. + Place puts a step back on the map next to its hub.</div><div id="stepList"></div></div>
 <div class="card" id="side"><h3>Other items (off the map)</h3><div id="sideList"></div></div>
 <div class="card"><h3>Template</h3><div style="font-size:12px;color:#93a3c4">Steps, order and links taken from REALM_ORION_MASTER_MAP.drawio (Orion, 30 Sep 2026, Drive file 1R8tf-g6dbkOFcXO2Ru8dyqEPr8B19-TI), flows A-E and Systems. Hub layout per Ange's sketch, 15 Oct 2026, on the true cube points: Calendar centre, Gmail top, Google Tasks upper right, Drive lower right (data layer), Zoho Books / CRM bottom, WhatsApp lower left (via a 2Chat bridge, map only), Deputy upper left (look-only). Realm Apps (placeholder name) is in the side list.</div></div>
 </aside></div>
-<footer>Saved in this browser only (key realm_metatron_layer1_v3). Export to keep a copy. Built by Ara.</footer>
+<footer>Saved in this browser only (key realm_metatron_layer1_v4). Export to keep a copy. Built by Ara.</footer>
 <script>
 "use strict";
-var KEY="realm_metatron_layer1_v3",C=650,R1=180,R2=360,NS="http://www.w3.org/2000/svg";
+var KEY="realm_metatron_layer1_v4",C=650,R1=180,R2=360,NS="http://www.w3.org/2000/svg";
 function pt(r,deg){var a=deg*Math.PI/180;return[Math.round(C+r*Math.cos(a)),Math.round(C+r*Math.sin(a))]}
 var ANG={gmail:-90,tasks:-30,drive:30,zoho:90,wa:150,deputy:210};
 var L={deputy:"https://www.deputy.com/",chat:"https://app.2chat.io/",cal:"https://calendar.google.com/calendar/u/0/r",gmail:"https://mail.google.com/mail/u/0/#inbox",tasks:"https://tasks.google.com",drive:"https://drive.google.com/drive/folders/1XmP4QkPiL85SDaYbTutYWgW5zZpW8inr",zoho:"https://books.zoho.com/app",wa:"https://web.whatsapp.com",apps:"https://rpcs111.github.io/realm-apps/",certs:"https://drive.google.com/drive/search?q=%22ANCHOR%20ROOF%20TEST%22",cert:"https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec",desk:"https://script.google.com/macros/s/AKfycbzK3mUQipb81VLvLoMfUTY5tGNOimafh_Ljr17VX1OA63bztP1ZqXFEsXUQECe5VkZcyA/exec",reg:"https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit",inv:"https://books.zoho.com/app#/invoices"};
@@ -66,6 +67,7 @@ function S_(id,t,d,r,deg,link,src,st,hub,g){return{id:id,t:t,d:d,link:link||"",s
 var CHP=pt(270,172),CHX=CHP[0],CHY=CHP[1];
 function defaults(){
 var n=[
+{id:"register",t:"REALM OPEN REGISTER",d:"every build, flow and status; holds the FLOW_ map tabs",kind:"hub",x:pt(R1,90)[0],y:pt(R1,90)[1],r:56,img:"img/brand/google-sheets.svg",link:L.reg,st:"",src:"Sheet 1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM. Thin blue lines = this register's FLOW_NODES that match a circle on the map (read 15 Oct 2026; register rows dated 28 Sep 2026).",fixed:true,reg:["register"]},
 H("cal","Calendar",-1,"img/brand/google-calendar.svg",L.cal,"Orion s1: GOOGLE CALENDAR - jobs + staffing (ANCHOR TESTING, ROPE ACCESS, QUOTES yellow). Rule 4: Calendar = jobs/staffing."),
 H("gmail","Gmail","gmail","img/brand/gmail.svg",L.gmail,"Orion INPUTS: email (info@)."),
 H("tasks","Google Tasks","tasks","img/brand/google-tasks.svg",L.tasks,"Orion s7: GOOGLE TASKS (7 lists) ANGE TO DO, REALM QUOTES, JP TO DO, JOBS TO BOOK, WHATSAPP-JOBS, BILLS, LINKS ACCESS."),
@@ -77,7 +79,6 @@ H("deputy","Deputy (look-only)","deputy","",L.deputy,"Orion s3: DEPUTY - roster 
 I("fa0","A1 Site address in","HALLMARK check: exact street address before any booking or quote","gmail",L.gmail,"Orion fa0: A - SITE ADDRESS IN (HALLMARK check). Rule 5 HALLMARK.","","gmail"),
 I("fd0","D Email to right list","Gmail trigger, classify, Task in the right list","tasks",L.tasks,"Orion fd0: D - EMAIL > RIGHT LIST (Studio, proposed, not built).","notbuilt","tasks"),
 I("fb0","B Cert","redo cert / WhatsApp group link / ANCHOR TESTING booking","drive",L.certs,"Orion fb0: B - CERT - redo cert <site> / WhatsApp group link / ANCHOR TESTING booking.","","drive"),
-I("fa2","A3 Zoho estimate","to YELLOW on QUOTES calendar (codes, roof access, anchor system)","zoho",L.zoho,"Orion fa2: Zoho estimate > YELLOW on QUOTES calendar (codes, roof access, anchor system).","","zoho"),
 I("fa4","A5 Job complete","crew posts job complete in group, photos to job Drive folder","wa",L.wa,"Orion fa4: crew posts job complete in group > photos to job Drive folder, group link + notes on the event, invoice attached, hours added.","","wa"),
 I("fc0","C Done sweep","6:20pm sweep, gaps, approval list to phone","deputy","","Orion fc0: C - DONE SWEEP (6:20pm). Its read step uses calendar + Deputy.","","deputy")
 ];
@@ -86,10 +87,11 @@ fl.forEach(function(p){e.push({a:p[0],b:p[1],k:"flow"})});
 n.forEach(function(x){if(x.hub)e.push({a:x.hub,b:x.id,k:"hub"})});
 ["gmail","tasks","drive"].forEach(function(h){e.push({a:h,b:"cal",k:"direct"})});
 e.push({a:"wa",b:"chat2",k:"bridge"});e.push({a:"chat2",b:"cal",k:"bridge"});
-return{v:3,nodes:n,edges:e,placed:[]}}
+return{v:4,nodes:n,edges:e,placed:[]}}
 var STEPS=[
 S_("in1","Inputs","voice/chat nudge, email info@, WhatsApp job groups, Zoho quote on screen, calendar booking",520,-72,L.gmail,"Orion inputs: voice/chat nudge, email (info@), WhatsApp job groups, Zoho quote on screen, calendar booking.","","gmail","A"),
 S_("fa1","A2 Last done?","last done? (Calendar), invoiced? (SOLD/Zoho), WhatsApp group link?",290,-60,L.cal,"Orion fa1: last done? (Calendar), invoiced? (REALM SOLD / Zoho), WhatsApp group link?","","cal","A"),
+S_("fa2","A3 Zoho estimate","to YELLOW on QUOTES calendar (codes, roof access, anchor system)",0,0,L.zoho,"Orion fa2: Zoho estimate > YELLOW on QUOTES calendar (codes, roof access, anchor system). Was the inner circle above Zoho; moved off the map 15 Oct for the register.","","zoho","A"),
 S_("fa3","A4 Won, booked","booking on the right calendar, Deputy shift, job card + SWMS, crew named",290,120,L.cal,"Orion fa3: WON > booking on the right calendar, Deputy shift, job card + SWMS from own templates, crew named.","","cal","A"),
 S_("fa5","A6 Zoho invoice","Zoho invoice to REALM SOLD row, remittance auto-tick",500,110,L.inv,"Orion fa5: Zoho invoice > REALM SOLD row > remittance auto-tick (Studio flow, not yet on).","notbuilt","zoho","A"),
 S_("fb1","B2 Pull","date of works, last year's cert, anchor plan, photos, access notes",470,8,"","Orion fb1: pull: date of works from chat, last year's cert, anchor plan, photos (auto-save), access notes.","","drive","B"),
@@ -106,6 +108,11 @@ S_("fd2","D3 Bills","bills to BILLS list; paid in Zoho to auto-tick + CRM note +
 S_("fe0","E Staff records","Drive > HR > STAFF > name",420,-2,"","Orion fe0: E - STAFF RECORDS - Drive > HR > STAFF > <name> (Contract, Licences, Payroll, Comms, Warnings), email index per person, policy pack legal-checked.","","drive","E")
 ];
 var GROUPS={A:"A - The job (inquiry to paid)",B:"B - Cert",C:"C - Done sweep",D:"D - Email to right list",E:"E - Staff records"};
+var REGD={"nodes": [["calendar", "CALENDAR \u00b7 info@realmpcs.com", "core", "built"], ["whatsapp", "WhatsApp", "sys", "partial"], ["gmail", "Gmail", "sys", "built"], ["tasks", "Google Tasks", "sys", "built"], ["deputy", "Deputy", "sys", "partial"], ["zohobooks", "Zoho Books", "sys", "partial"], ["zohocrm", "Zoho CRM", "sys", "partial"], ["drive", "Google Drive", "sys", "built"], ["bridge", "ORION BRIDGE", "sys", "built"], ["certstudio", "Cert Studio", "sys", "built"], ["anchorfolder", "ANCHOR ROOF TEST", "child", "built"], ["aggregated", "Aggregated data sheet", "sys", "partial"], ["register", "REALM OPEN REGISTER", "sys", "built"], ["gemini", "Gemini automations", "sys", "not built"], ["rebook", "Rebook", "step", "not built"], ["quote", "Quote", "step", "partial"], ["book", "Book", "step", "partial"], ["roster", "Roster", "step", "partial"], ["job", "Job", "step", "partial"], ["cert", "Cert", "step", "partial"], ["signoff", "Signed off", "step", "partial"], ["getpaid", "Get paid", "step", "partial"], ["inquiry", "New inquiry", "entry", "partial"], ["p_ange", "Ange", "person", "built"], ["p_julie", "Julie", "person", "built"], ["p_ground", "Ground crew", "person", "built"], ["p_rope", "Rope crew", "person", "built"], ["vans", "Van kit", "child", "partial"]], "paths": [["rebook", "quote", "clone + price check", "not built"], ["inquiry", "quote", "new work", "partial"], ["quote", "book", "5 unbooked", "not built"], ["book", "roster", "typed twice", "not built"], ["roster", "job", "pre-start pack", "partial"], ["job", "cert", "Pass/Fail", "partial"], ["cert", "signoff", "cert sent", "partial"], ["signoff", "getpaid", "never billed", "not built"], ["getpaid", "rebook", "overdue", "not built"], ["whatsapp", "calendar", "group \u2194 job card", "partial"], ["calendar", "gmail", "booking \u2194 approval", "not built"], ["gmail", "tasks", "email \u2192 task", "not built"], ["calendar", "deputy", "who is rostered", "not built"], ["certstudio", "anchorfolder", "cert \u2192 client folder", "not built"], ["anchorfolder", "calendar", "cert on ANCHOR TESTING", "partial"], ["zohocrm", "zohobooks", "client \u2192 estimate", "partial"], ["zohobooks", "aggregated", "invoice status", "not built"], ["bridge", "register", "writes", "built"], ["bridge", "tasks", "writes", "built"], ["gmail", "gemini", "triage", "not built"], ["drive", "gemini", "dupe cleanup", "not built"], ["aggregated", "gemini", "dupe check", "not built"], ["gemini", "register", "status log", "not built"], ["p_ange", "getpaid", "debtor calls", "built"], ["p_ange", "rebook", "approves", "built"], ["p_julie", "book", "books", "built"], ["p_julie", "roster", "drafts roster", "built"], ["p_ground", "roster", "rostered", "built"], ["p_rope", "job", "on the ropes", "built"], ["roster", "vans", "which van \u00b7 which kit", "partial"], ["vans", "job", "van packed", "partial"], ["p_ground", "vans", "loads the van", "partial"]]};
+var MAPREG={cal:["calendar"],gmail:["gmail"],tasks:["tasks"],drive:["drive"],zoho:["zohobooks","zohocrm"],wa:["whatsapp"],deputy:["deputy"],chat2:["whatsapp"],fa0:["inquiry"],fd0:["gemini"],fb0:["cert"],fa4:["job"],
+fa2:["quote"],fa3:["book"],fa5:["getpaid"],fb2:["certstudio"],fb4:["anchorfolder"],fd1:["gemini"],in1:["inquiry"],an1:["certstudio"],an4:["calendar"],an7:["rebook"],s6:["zohobooks"],a3:["certstudio"]};
+function regName(id){for(var i=0;i<REGD.nodes.length;i++)if(REGD.nodes[i][0]===id)return REGD.nodes[i];return null}
+var regOn=true;
 var NOTES=[
 {id:"an1",t:"1 Cert Studio",d:"note on sketch",hub:"drive",link:L.cert,src:"Ange's sketch 15 Oct: CERTSTUDIO. Link is the Cert Studio app from the repo launcher (index.html)."},
 {id:"an2",t:"2 Launcher",d:"note on sketch",hub:"cal",link:"https://rpcs111.github.io/realm-apps/index.html",src:"Ange's sketch 15 Oct: LAUNCHER (read as Launcher; written LOUNCER)."},
@@ -118,7 +125,6 @@ var NOTES=[
 var SIDE=[
 {id:"apps",t:"Realm Apps",d:"placeholder hub from Ange's drawing (name to be changed later); was upper left",hub:"cal",link:L.apps,img:"icon.svg",src:"Placeholder name from Ange's drawing. Orion's THE FOUR APPS sat here in spirit (Launcher, Desk, Cert Studio, Proxmox) - see side list."},
 {id:"ff0",t:"F Subscription oversight",d:"Subscription Ledger, cut iAuditor, 2Chat renew or replace, Zapier cap, Google seats",hub:"apps",src:"Orion ff0: F - SUBSCRIPTION OVERSIGHT."},
-{id:"s5",t:"REALM OPEN REGISTER",d:"every build/flow/link, status, close_it",hub:"drive",link:L.reg,src:"Orion s5: REALM OPEN REGISTER (Sheet)."},
 {id:"s6",t:"REALM SOLD 2026",d:"master invoices + estimates to follow-ups",hub:"zoho",src:"Orion s6: REALM SOLD 2026 (Sheet). No link in Orion's map."},
 {id:"a1",t:"Launcher",d:"one tile, three buttons",hub:"apps",link:L.apps,st:"half",src:"Orion a1: ORION LAUNCHER - status: Claude artifact only > APK."},
 {id:"a2",t:"Realm Desk",d:"Jobs / Certs / Open + Calendar-Gmail side panel",hub:"apps",link:L.desk,st:"live",src:"Orion a2: REALM DESK - status: Apps Script LIVE > APK."},
@@ -126,7 +132,7 @@ var SIDE=[
 {id:"a4",t:"Proxmox / network",d:"homelab, MCP servers, tunnel",hub:"apps",st:"notbuilt",src:"Orion a4: PROXMOX / NETWORK - status: not built > APK."}
 ];
 var S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(err){S=null}
-if(!S||!S.nodes||S.v!==3)S=defaults();
+if(!S||!S.nodes||S.v!==4)S=defaults();
 function save(){localStorage.setItem(KEY,JSON.stringify(S))}
 var edit=false,statusOn=false,cubeOn=true,sel=null,connFrom=null;
 var $=function(i){return document.getElementById(i)},svg=$("svg");
@@ -143,6 +149,7 @@ var x1=a.x+dx/d*a.r,y1=a.y+dy/d*a.r,x2=b.x-dx/d*(b.r+3),y2=b.y-dy/d*(b.r+3);
 if(e.k==="hub")el("line",{x1:x1,y1:y1,x2:x2,y2:y2,stroke:"#64748b","stroke-width":1.5,"stroke-dasharray":"5 6"},E);
 else if(e.k==="direct")el("line",{x1:x1,y1:y1,x2:x2,y2:y2,stroke:"#7c93b8","stroke-width":2.5,"stroke-opacity":.8},E);
 else el("line",{x1:x1,y1:y1,x2:x2,y2:y2,stroke:e.k==="user"?"#a78bfa":"#93c5fd","stroke-width":e.k==="bridge"?3:2.5,"marker-end":e.k==="user"?"url(#au)":"url(#ar)"},E)});
+var rg=node("register");if(regOn&&rg)S.nodes.forEach(function(n){if(n.id==="register"||!MAPREG[n.id])return;var dx=n.x-rg.x,dy=n.y-rg.y,d=Math.hypot(dx,dy)||1;el("line",{x1:rg.x+dx/d*rg.r,y1:rg.y+dy/d*rg.r,x2:n.x-dx/d*n.r,y2:n.y-dy/d*n.r,stroke:"#22d3ee","stroke-width":1.2,"stroke-opacity":.45,"class":"reglink"},E)});
 S.nodes.forEach(function(n){var g=el("g",{"class":"nd","data-id":n.id,transform:"translate("+n.x+","+n.y+")"},G);
 var col=statusOn?SC[n.st||""]:(n.kind==="hub"?"#22d3ee":n.kind==="inner"?"#a78bfa":n.kind==="custom"?"#f472b6":n.kind==="bridge"?"#38bdf8":"#60a5fa");
 el("circle",{r:n.r,fill:n.kind==="hub"?"#0b1220":"#0d1528",stroke:sel===n.id?"#fff":col,"stroke-width":sel===n.id?6:(n.kind==="hub"?6:2.5),"stroke-opacity":(n.kind==="inner"&&!statusOn)?.65:1,"stroke-dasharray":n.kind==="bridge"?"6 4":""},g);
@@ -152,7 +159,7 @@ if(n.kind==="hub"){if(n.img){var im=el("image",{x:-26,y:-50,width:52,height:52},
 else{var mk=n.id==="deputy"?["DEPUTY","#ffffff",24]:["ZOHO","#e42527",30];var zb=el("text",{y:-12,"text-anchor":"middle","font-size":mk[2],"font-weight":800,fill:mk[1]},g);zb.textContent=mk[0]}}
 if(n.kind==="bridge"){var bl=wrap(n.t,9);bl.forEach(function(l,j){var t=el("text",{y:j*14-(bl.length-1)*7+4,"text-anchor":"middle","font-size":12.5,"font-weight":800,fill:"#fff"},g);t.textContent=l})}
 else if(n.kind==="step"){var lines=wrap(n.t,10);lines.slice(0,3).forEach(function(l,j){var t=el("text",{y:j*12-(lines.length>1?6:-4),"text-anchor":"middle","font-size":10.5,"font-weight":700,fill:"#fff"},g);t.textContent=l})}
-else{var tl=wrap(n.t,n.kind==="hub"?14:12);tl.slice(0,2).forEach(function(l,j){var t=el("text",{y:ty+j*17,"text-anchor":"middle","font-size":n.kind==="hub"?16:14,"font-weight":800,fill:"#fff"},g);t.textContent=l});
+else{var tl=wrap(n.t,n.kind==="hub"?14:12);tl.slice(0,2).forEach(function(l,j){var t=el("text",{y:ty+j*17,"text-anchor":"middle","font-size":n.kind==="hub"?(n.r<70?12:16):14,"font-weight":800,fill:"#fff"},g);t.textContent=l});
 if(n.kind!=="hub"&&n.d){wrap(n.d,18).slice(0,2).forEach(function(l,j){var t=el("text",{y:ty+tl.length*17+4+j*13,"text-anchor":"middle","font-size":10.5,fill:"#cbd5e1"},g);t.textContent=l})}}
 if(n.kind==="hub"&&n.fixed){var f=el("text",{y:n.r-10,"text-anchor":"middle","font-size":10,fill:"#64748b"},g);f.textContent="hub"}});
 side()}
@@ -164,7 +171,9 @@ function field(lab,key,ta){var l=document.createElement("label");l.textContent=l
 if(edit){field("Name","t");field("What it is","d",true);field("Link (opens the app or step)","link")}
 else if(n.d){var p=document.createElement("div");p.style.fontSize="13px";p.textContent=n.d;P.appendChild(p)}
 var l=document.createElement("label");l.textContent="Status";P.appendChild(l);var s=document.createElement("select");[["","not stated"],["live","live"],["half","half"],["notbuilt","not built"]].forEach(function(o){var op=document.createElement("option");op.value=o[0];op.textContent=o[1];s.appendChild(op)});s.value=n.st||"";s.disabled=!edit;s.onchange=function(){n.st=s.value;save();draw()};P.appendChild(s);
-if(n.src){var l2=document.createElement("label");l2.textContent="From Orion's map";P.appendChild(l2);var sr=document.createElement("div");sr.className="src";sr.textContent=n.src;P.appendChild(sr)}
+if(n.src){var l2=document.createElement("label");l2.textContent=(n.id==="register"||/^an[0-9]/.test(n.id))?"Source":"From Orion's map";P.appendChild(l2);var sr=document.createElement("div");sr.className="src";sr.textContent=n.src;P.appendChild(sr)}
+if(n.id==="register")regPanel(P);
+if(MAPREG[n.id]&&n.id!=="register"){var lr=document.createElement("label");lr.textContent="In the register as: "+MAPREG[n.id].map(function(k){var r=regName(k);return r?r[1]+" ("+r[3]+")":k}).join(", ");P.appendChild(lr)}
 if(n.hub){var hb=node(n.hub);if(hb){var l3=document.createElement("label");l3.textContent="Sits on hub: "+hb.t;P.appendChild(l3)}}
 var r=document.createElement("div");r.className="row";P.appendChild(r);
 if(n.link){var a=document.createElement("a");a.href=n.link;a.target="_blank";a.rel="noopener";a.textContent="Open \u2197";a.style.cssText="display:inline-flex;align-items:center;min-height:40px;padding:6px 12px;border-radius:10px;background:#22d3ee;color:#04121a;font-weight:700;text-decoration:none";r.appendChild(a)}
@@ -178,6 +187,12 @@ if(x.hub&&x.id!=="apps")S.edges.push({a:x.hub,b:x.id,k:"hub"});if(x.id==="apps")
 function item(x,D){var it=document.createElement("div");it.className="item";var s=document.createElement("span");s.textContent=x.t;var sm=document.createElement("small");sm.textContent=x.d+" (hub: "+(node(x.hub)?node(x.hub).t:(x.hub==="apps"?"Realm Apps, off map":x.hub))+")";s.appendChild(sm);it.appendChild(s);
 var bx=document.createElement("span");bx.style.cssText="display:flex;gap:4px;flex-direction:column";if(x.link){var a=document.createElement("a");a.href=x.link;a.target="_blank";a.rel="noopener";a.textContent="Open";a.style.fontSize="12px";a.style.color="#22d3ee";bx.appendChild(a)}
 bx.appendChild(btn("+ Place","",function(){place(x)}));it.appendChild(bx);D.appendChild(it)}
+function regPanel(P){function sec(t,arr){var l=document.createElement("label");l.textContent=t+" ("+arr.length+")";P.appendChild(l);var u=document.createElement("div");u.className="src";u.style.color="#cbd5e1";u.textContent=arr.length?arr.join("\n"):"none";P.appendChild(u)}
+var on=S.nodes.filter(function(n){return n.id!=="register"}),used={};var m=[],nm=[];
+on.forEach(function(n){if(MAPREG[n.id]){MAPREG[n.id].forEach(function(k){used[k]=1});m.push(n.t+"  =  "+MAPREG[n.id].map(function(k){var r=regName(k);return r?r[1]+" ["+r[3]+"]":k}).join(" + "))}else nm.push(n.t)});
+var off=REGD.nodes.filter(function(r){return!used[r[0]]&&r[0]!=="register"&&r[2]!=="person"}).map(function(r){return r[1]+" ("+r[2]+", "+r[3]+")"});
+sec("Matched: on the map and in the register",m);sec("On the map but NOT in the register",nm);sec("In the register but not on the map",off);
+var l=document.createElement("label");l.textContent="Register FLOW_PATHS: "+REGD.paths.length+" links, e.g. "+REGD.paths.slice(0,3).map(function(p){return p[0]+" > "+p[1]+" ("+p[3]+")"}).join("; ");P.appendChild(l)}
 function side(){var DN=$("noteList");DN.textContent="";NOTES.forEach(function(x){if(!node(x.id))item(x,DN)});if(!DN.childNodes.length){var iN=document.createElement("i");iN.style.fontSize="12px";iN.textContent="All placed.";DN.appendChild(iN)}
 var D=$("stepList");D.textContent="";var last="";STEPS.forEach(function(x){if(node(x.id))return;if(x.g!==last){last=x.g;var h=document.createElement("div");h.style.cssText="font-size:12px;font-weight:700;color:#a78bfa;margin-top:8px";h.textContent=GROUPS[x.g];D.appendChild(h)}item(x,D)});
 if(!D.childNodes.length){var i0=document.createElement("i");i0.style.fontSize="12px";i0.textContent="All placed.";D.appendChild(i0)}
@@ -190,6 +205,7 @@ svg.addEventListener("pointerup",function(){if(!drag)return;var n=drag.n;drag=nu
 if(connFrom&&connFrom!==n.id){S.edges.push({a:connFrom,b:n.id,k:"user"});connFrom=null;$("hint").textContent="Linked.";save()}sel=n.id;draw();panel()});
 $("bEdit").onclick=function(){edit=!edit;this.classList.toggle("on",edit);$("hint").textContent=edit?"Edit on: drag steps, rename, link, delete. The 7 hubs stay where Ange drew them.":"Tap a circle to open it. Map only: nothing here runs a Realm process.";panel()};
 $("bStatus").onclick=function(){statusOn=!statusOn;this.classList.toggle("on",statusOn);draw()};
+$("bReg").onclick=function(){regOn=!regOn;this.classList.toggle("on",regOn);draw()};
 $("bCube").onclick=function(){cubeOn=!cubeOn;this.classList.toggle("on",cubeOn);drawCube()};
 $("bAdd").onclick=function(){var t=prompt("Name of the new step?","New step");if(!t)return;var id="n"+Date.now();S.nodes.push({id:id,t:t,d:"",kind:"custom",x:C+40,y:C+560,r:40,link:"",st:"",src:"",hub:""});save();sel=id;if(!edit)$("bEdit").click();draw();panel()};
 $("bConn").onclick=function(){if(!sel){alert("Tap the first circle, then press Connect two.");return}connFrom=sel;$("hint").textContent="Now tap the circle to link to."};
