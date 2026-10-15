@@ -271,6 +271,13 @@ function tab(t){if(window.innerWidth>900)return;if(t==='insp'){if($('layout').cl
 Array.prototype.forEach.call(document.querySelectorAll('.tabs button'),function(b){b.onclick=function(){tab(b.dataset.t)}});
 window.addEventListener('resize',drawEdges);
 load();save();render();renderLog();
+// keep the queue when you jump in and out: save on leave, reload on return (bfcache), restore the selected node
+var SELKEY='realm_queue_sel_v1';
+function keep(){try{save();localStorage.setItem(SELKEY,JSON.stringify({sel:sel,t:Date.now()}))}catch(e){}}
+window.addEventListener('pagehide',keep);
+document.addEventListener('visibilitychange',function(){if(document.hidden)keep()});
+window.addEventListener('pageshow',function(e){if(!e.persisted)return;load();if(sel&&!byId(sel))sel=null;render();renderLog();showSel()});
+try{var ks=JSON.parse(localStorage.getItem(SELKEY)||'null');if(ks&&ks.sel&&byId(ks.sel)&&Date.now()-ks.t<864e5){sel=ks.sel;render();showSel()}}catch(e){}
 window.__realmQueue={state:function(){return S},apps:APPS};
 })();
 </script></body></html>
