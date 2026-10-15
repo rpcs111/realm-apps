@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Metatron Layer 1 - Realm hub map</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:#05070d;color:#e8eefc;font:15px/1.4 system-ui,Roboto,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 10px;background:#0a0f1c;border-bottom:1px solid #1e2a44;position:sticky;top:0;z-index:5}
+header h1{font-size:15px;margin:0 8px 0 0;letter-spacing:.06em}
+button{min-height:40px;padding:6px 11px;border-radius:10px;border:1px solid #2c3d63;background:#14213b;color:#fff;font:inherit;cursor:pointer}
+button.on{background:#22d3ee;color:#04121a;border-color:#22d3ee;font-weight:700}
+button.del{background:#5b1620;border-color:#8a2433}
+#wrap{display:grid;grid-template-columns:1fr 340px;min-height:calc(100vh - 58px)}
+@media(max-width:860px){#wrap{grid-template-columns:1fr}}
+#stage{position:relative;touch-action:none;overflow:hidden}
+svg{width:100%;height:100%;max-height:calc(100vh - 58px);display:block;user-select:none}
+@media(max-width:860px){svg{height:auto;max-height:none}}
+aside{border-left:1px solid #1e2a44;padding:10px;overflow:auto;max-height:calc(100vh - 58px)}
+@media(max-width:860px){aside{border-left:0;border-top:1px solid #1e2a44;max-height:none}}
+.card{background:#0d1528;border:1px solid #1e2a44;border-radius:12px;padding:10px;margin-bottom:10px}
+.card h3{margin:0 0 6px;font-size:14px;color:#22d3ee;letter-spacing:.04em}
+.item{display:flex;gap:6px;align-items:flex-start;justify-content:space-between;border-top:1px solid #1e2a44;padding:6px 0;font-size:13px}
+.item small{display:block;color:#93a3c4}
+.item button{min-height:32px;padding:3px 8px;font-size:12px;flex:none}
+label{display:block;font-size:12px;color:#93a3c4;margin-top:6px}
+input,textarea,select{width:100%;font:inherit;background:#05070d;color:#fff;border:1px solid #2c3d63;border-radius:8px;padding:7px}
+.row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:4px;margin-right:8px;font-size:12px}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+#hint{font-size:12px;color:#93a3c4}
+.nd{cursor:pointer}.nd text{pointer-events:none}
+.src{font-size:12px;color:#c4b5fd;white-space:pre-wrap}
+footer{font-size:11px;color:#6b7a99;padding:8px 10px}
+</style></head><body>
+<header><h1>METATRON - LAYER 1</h1>
+<button id="bEdit" type="button">Edit</button>
+<button id="bStatus" type="button">Status</button>
+<button id="bAdd" type="button">+ Add node</button>
+<button id="bConn" type="button">Connect two</button>
+<button id="bCube" type="button" class="on">Cube lines</button>
+<button id="bExport" type="button">Export</button>
+<button id="bReset" type="button">Reset</button>
+<span id="hint">Tap a circle to open it. Map only: nothing here runs a Realm process.</span>
+</header>
+<div id="wrap"><div id="stage"><svg id="svg" viewBox="70 60 1160 1180" aria-label="Metatron's Cube layer 1 map"><defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#f59e0b"/></marker>
+<marker id="au" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#a78bfa"/></marker>
+</defs><g id="cube"></g><g id="edges"></g><g id="nodes"></g></svg></div>
+<aside>
+<div class="card" id="panel"><h3>Selected</h3><i style="font-size:13px;color:#93a3c4">Tap a circle. In Edit mode you can drag, rename, link and delete.</i></div>
+<div class="card legend" id="legend"><h3>Status view</h3><span><i class="dot" style="background:#22c55e"></i>live</span><span><i class="dot" style="background:#f59e0b"></i>half</span><span><i class="dot" style="background:#ef4444"></i>not built</span><span><i class="dot" style="background:#64748b"></i>not stated</span><div style="font-size:12px;color:#93a3c4;margin-top:4px">Status only where Orion's 30 Sep map states it (Orion's key: green live, amber half, red not built).</div></div>
+<div class="card"><h3>Lines</h3><div style="font-size:12px;color:#93a3c4"><span style="color:#f59e0b">Amber arrows</span> = Orion's step order (flows A-D). Dashed grey = step belongs to that hub. <span style="color:#a78bfa">Violet</span> = links you add.</div></div>
+<div class="card" id="side"><h3>From Orion's map, not on the cube yet</h3><div id="sideList"></div></div>
+<div class="card"><h3>Template</h3><div style="font-size:12px;color:#93a3c4">Steps, order and links taken from REALM_ORION_MASTER_MAP.drawio (Orion, 30 Sep 2026, Drive file 1R8tf-g6dbkOFcXO2Ru8dyqEPr8B19-TI), flows A-E and Systems. Hub layout as Ange drew it on 15 Oct 2026: Calendar centre, Gmail top, Google Tasks upper right, Drive lower right, Zoho bottom, WhatsApp lower left, Realm Apps upper left (name is a placeholder).</div></div>
+</aside></div>
+<footer>Saved in this browser only (key realm_metatron_layer1_v1). Export to keep a copy. Built by Ara.</footer>
+<script>
+"use strict";
+var KEY="realm_metatron_layer1_v1",C=650,R1=180,R2=360,NS="http://www.w3.org/2000/svg";
+function pt(r,deg){var a=deg*Math.PI/180;return[Math.round(C+r*Math.cos(a)),Math.round(C+r*Math.sin(a))]}
+var ANG=[-90,-30,30,90,150,210];
+var L={cal:"https://calendar.google.com/calendar/u/0/r",gmail:"https://mail.google.com/mail/u/0/#inbox",tasks:"https://tasks.google.com",drive:"https://drive.google.com/drive/folders/1XmP4QkPiL85SDaYbTutYWgW5zZpW8inr",zoho:"https://books.zoho.com/app",wa:"https://web.whatsapp.com",apps:"https://rpcs111.github.io/realm-apps/",certs:"https://drive.google.com/drive/search?q=%22ANCHOR%20ROOF%20TEST%22",cert:"https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec",desk:"https://script.google.com/macros/s/AKfycbzK3mUQipb81VLvLoMfUTY5tGNOimafh_Ljr17VX1OA63bztP1ZqXFEsXUQECe5VkZcyA/exec",reg:"https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit",inv:"https://books.zoho.com/app#/invoices"};
+function H(id,t,k,img,link,src){var p=k<0?[C,C]:pt(R2,ANG[k]);return{id:id,t:t,d:"",kind:"hub",x:p[0],y:p[1],r:78,img:img,link:link,st:"",src:src,fixed:true}}
+function I(id,t,d,k,link,src,st,hub){var p=pt(R1,ANG[k]);return{id:id,t:t,d:d,kind:"inner",x:p[0],y:p[1],r:70,link:link||"",st:st||"",src:src,hub:hub}}
+function S_(id,t,d,r,deg,link,src,st,hub){var p=pt(r,deg);return{id:id,t:t,d:d,kind:"step",x:p[0],y:p[1],r:34,link:link||"",st:st||"",src:src,hub:hub}}
+function defaults(){
+var n=[
+H("cal","Calendar",-1,"img/brand/google-calendar.svg",L.cal,"Orion s1: GOOGLE CALENDAR - jobs + staffing (ANCHOR TESTING, ROPE ACCESS, QUOTES yellow). Rule 4: Calendar = jobs/staffing."),
+H("gmail","Gmail",0,"img/brand/gmail.svg",L.gmail,"Orion INPUTS: email (info@)."),
+H("tasks","Google Tasks",1,"img/brand/google-tasks.svg",L.tasks,"Orion s7: GOOGLE TASKS (7 lists) ANGE TO DO, REALM QUOTES, JP TO DO, JOBS TO BOOK, WHATSAPP-JOBS, BILLS, LINKS ACCESS."),
+H("drive","Drive",2,"img/brand/google-drive.svg",L.drive,"Orion s8 + s9: DRIVE > REALM TOOL LINKS; DRIVE > ANCHOR ROOF TEST > 2026 ANCHOR CERTS > client (the ONLY cert home)."),
+H("zoho","Zoho",3,"",L.zoho,"Orion s2: ZOHO BOOKS / CRM - estimates, invoices, money."),
+H("wa","WhatsApp",4,"img/brand/whatsapp_mono.svg",L.wa,"Orion s4: WHATSAPP BUSINESS - site groups, photos, scope (2Chat pipe DOWN on 30 Sep)."),
+H("apps","Realm Apps",5,"icon.svg",L.apps,"Placeholder name from Ange's drawing. Orion's THE FOUR APPS sat here in spirit (Launcher, Desk, Cert Studio, Proxmox) - see side list."),
+I("fa0","A1 Site address in","HALLMARK check: exact street address before any booking or quote",0,L.gmail,"Orion fa0: A - SITE ADDRESS IN (HALLMARK check). Rule 5 HALLMARK.","","gmail"),
+I("fd0","D Email to right list","Gmail trigger, classify, Task in the right list",1,L.tasks,"Orion fd0: D - EMAIL > RIGHT LIST (Studio, proposed, not built).","notbuilt","tasks"),
+I("fb0","B Cert","redo cert / WhatsApp group link / ANCHOR TESTING booking",2,L.certs,"Orion fb0: B - CERT - redo cert <site> / WhatsApp group link / ANCHOR TESTING booking.","","drive"),
+I("fa2","A3 Zoho estimate","to YELLOW on QUOTES calendar (codes, roof access, anchor system)",3,L.zoho,"Orion fa2: Zoho estimate > YELLOW on QUOTES calendar (codes, roof access, anchor system).","","zoho"),
+I("fa4","A5 Job complete","crew posts job complete in group, photos to job Drive folder",4,L.wa,"Orion fa4: crew posts job complete in group > photos to job Drive folder, group link + notes on the event, invoice attached, hours added.","","wa"),
+I("fc0","C Done sweep","6:20pm sweep, gaps, approval list to phone",5,"","Orion fc0: C - DONE SWEEP (6:20pm).","","apps"),
+S_("fa1","A2 Last done?","last done? (Calendar), invoiced? (SOLD/Zoho), WhatsApp group link?",290,-60,L.cal,"Orion fa1: last done? (Calendar), invoiced? (REALM SOLD / Zoho), WhatsApp group link?","","cal"),
+S_("fa3","A4 Won, booked","booking on the right calendar, Deputy shift, job card + SWMS, crew named",290,120,L.cal,"Orion fa3: WON > booking on the right calendar, Deputy shift, job card + SWMS from own templates, crew named.","","cal"),
+S_("fa5","A6 Zoho invoice","Zoho invoice to REALM SOLD row, remittance auto-tick",500,110,L.inv,"Orion fa5: Zoho invoice > REALM SOLD row > remittance auto-tick (Studio flow, not yet on).","notbuilt","zoho"),
+S_("in1","Inputs","voice/chat nudge, email info@, WhatsApp job groups, Zoho quote on screen, calendar booking",520,-72,L.gmail,"Orion inputs: voice/chat nudge, email (info@), WhatsApp job groups, Zoho quote on screen, calendar booking.","","gmail"),
+S_("fd1","D2 Classify","Gemini classify (quote, bill/remittance, compliance, job, noise) to Task in right list",500,-45,L.tasks,"Orion fd1: Gmail trigger > Gemini classify (quote, bill/remittance, compliance platform, job, noise) > Task in right list, label, archive noise.","notbuilt","tasks"),
+S_("fd2","D3 Bills","bills to BILLS list; paid in Zoho to auto-tick + CRM note + label",500,-15,L.tasks,"Orion fd2: bills > BILLS list; paid in Zoho > auto-tick + CRM note + Gmail label.","notbuilt","tasks"),
+S_("fb1","B2 Pull","date of works, last year's cert, anchor plan, photos, access notes",470,8,"","Orion fb1: pull: date of works from chat, last year's cert, anchor plan, photos (auto-save), access notes.","","drive"),
+S_("fb2","B3 Cert Studio PDF","next inspection +12 months, saves to ANCHOR CERTS",520,22,L.cert,"Orion fb2: CERT STUDIO builds PDF (next inspection = +12 months) > saves to 2026 ANCHOR CERTS > client.","","drive"),
+S_("fb3","B4 Approval card","PDF inline, tap send, Gmail WITH attachment",530,37,"","Orion fb3: APPROVAL CARD on phone - PDF inline > tap send > Gmail WITH attachment (never empty).","","drive"),
+S_("fb4","B5 Link cert","on ANCHOR TESTING event + group + Zoho record, +12m renewal",520,52,"","Orion fb4: link cert on the ANCHOR TESTING event + site WhatsApp group + Zoho record, register row, +12m renewal on calendar.","","drive"),
+S_("fb5","B6 Julie review","CERTS DONE sheet, visual, no login",470,64,"","Orion fb5: Julie review sheet (CERTS DONE) - visual, no login.","","drive"),
+S_("fe0","E Staff records","Drive > HR > STAFF > name",420,-2,"","Orion fe0: E - STAFF RECORDS - Drive > HR > STAFF > <name> (Contract, Licences, Payroll, Comms, Warnings), email index per person, policy pack legal-checked.","","drive"),
+S_("fc1","C2 Read","REALM EOD HISTORY + calendar + Deputy",520,195,"","Orion fc1: read REALM EOD HISTORY (Gemini) + calendar + Deputy.","","apps"),
+S_("fc2","C3 Gaps","job no shift, shift no job, cert unsent, invoice missing, photos, quote over 7 days",540,212,"","Orion fc2: gaps: job no shift, shift no job, cert unsent, invoice missing, photos not loaded, quote >7 days.","","apps"),
+S_("fc3","C4 Approval list","to phone with approve buttons, register updated",540,228,L.reg,"Orion fc3: APPROVAL LIST to phone (bullets + approve buttons) > I execute > register updated.","","apps"),
+S_("x6l","Approval rail","back to phone",520,244,"","Orion x6l: APPROVAL RAIL back to phone.","","apps")
+];
+var e=[],fl=[["fa0","fa1"],["fa1","fa2"],["fa2","fa3"],["fa3","fa4"],["fa4","fa5"],["fb0","fb1"],["fb1","fb2"],["fb2","fb3"],["fb3","fb4"],["fb4","fb5"],["fc0","fc1"],["fc1","fc2"],["fc2","fc3"],["fc3","x6l"],["fd0","fd1"],["fd1","fd2"]];
+fl.forEach(function(p){e.push({a:p[0],b:p[1],k:"flow"})});
+n.forEach(function(x){if(x.hub)e.push({a:x.hub,b:x.id,k:"hub"})});
+return{v:1,nodes:n,edges:e,placed:[]}}
+var SIDE=[
+{id:"ff0",t:"F Subscription oversight",d:"Subscription Ledger, cut iAuditor, 2Chat renew or replace, Zapier cap, Google seats",hub:"apps",src:"Orion ff0: F - SUBSCRIPTION OVERSIGHT."},
+{id:"s3",t:"Deputy (look-only)",d:"roster / shifts",hub:"cal",link:"https://once.deputy.com",src:"Orion s3: DEPUTY roster/shifts (Orion read it via Zapier; Zapier is now banned, Deputy is look-only)."},
+{id:"s5",t:"REALM OPEN REGISTER",d:"every build/flow/link, status, close_it",hub:"drive",link:L.reg,src:"Orion s5: REALM OPEN REGISTER (Sheet)."},
+{id:"s6",t:"REALM SOLD 2026",d:"master invoices + estimates to follow-ups",hub:"zoho",src:"Orion s6: REALM SOLD 2026 (Sheet). No link in Orion's map."},
+{id:"a1",t:"Launcher",d:"one tile, three buttons",hub:"apps",link:L.apps,st:"half",src:"Orion a1: ORION LAUNCHER - status: Claude artifact only > APK."},
+{id:"a2",t:"Realm Desk",d:"Jobs / Certs / Open + Calendar-Gmail side panel",hub:"apps",link:L.desk,st:"live",src:"Orion a2: REALM DESK - status: Apps Script LIVE > APK."},
+{id:"a3",t:"Cert Studio",d:"build cert, PDF inline, approve, Gmail with attachment",hub:"apps",link:L.cert,st:"half",src:"Orion a3: CERT STUDIO - status: HTML tool, not yet Apps Script app > APK."},
+{id:"a4",t:"Proxmox / network",d:"homelab, MCP servers, tunnel",hub:"apps",st:"notbuilt",src:"Orion a4: PROXMOX / NETWORK - status: not built > APK."}
+];
+var S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(err){S=null}
+if(!S||!S.nodes||S.v!==1)S=defaults();
+function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+var edit=false,statusOn=false,cubeOn=true,sel=null,connFrom=null;
+var $=function(i){return document.getElementById(i)},svg=$("svg");
+function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+function node(id){for(var i=0;i<S.nodes.length;i++)if(S.nodes[i].id===id)return S.nodes[i];return null}
+var SC={live:"#22c55e",half:"#f59e0b",notbuilt:"#ef4444","":"#64748b"};
+function drawCube(){var g=$("cube");g.textContent="";if(!cubeOn)return;var P=[[C,C]];for(var i=0;i<6;i++)P.push(pt(R1,ANG[i]));for(i=0;i<6;i++)P.push(pt(R2,ANG[i]));
+for(var a=0;a<13;a++)for(var b=a+1;b<13;b++)el("line",{x1:P[a][0],y1:P[a][1],x2:P[b][0],y2:P[b][1],stroke:"#94a3b8","stroke-opacity":.16,"stroke-width":1.2},g);
+P.forEach(function(p){el("circle",{cx:p[0],cy:p[1],r:R1/2,fill:"none",stroke:"#94a3b8","stroke-opacity":.28,"stroke-width":1.5},g)})}
+function wrap(s,n){var w=String(s).split(" "),out=[],cur="";w.forEach(function(x){if((cur+" "+x).trim().length>n){if(cur)out.push(cur);cur=x}else cur=(cur+" "+x).trim()});if(cur)out.push(cur);return out}
+function draw(){var E=$("edges"),G=$("nodes");E.textContent="";G.textContent="";
+S.edges.forEach(function(e){var a=node(e.a),b=node(e.b);if(!a||!b)return;var dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1;
+var x1=a.x+dx/d*a.r,y1=a.y+dy/d*a.r,x2=b.x-dx/d*(b.r+3),y2=b.y-dy/d*(b.r+3);
+if(e.k==="hub")el("line",{x1:x1,y1:y1,x2:x2,y2:y2,stroke:"#64748b","stroke-width":1.5,"stroke-dasharray":"5 6"},E);
+else el("line",{x1:x1,y1:y1,x2:x2,y2:y2,stroke:e.k==="flow"?"#f59e0b":"#a78bfa","stroke-width":3,"marker-end":e.k==="flow"?"url(#ar)":"url(#au)"},E)});
+S.nodes.forEach(function(n){var g=el("g",{"class":"nd","data-id":n.id,transform:"translate("+n.x+","+n.y+")"},G);
+var col=statusOn?SC[n.st||""]:(n.kind==="hub"?"#22d3ee":n.kind==="inner"?"#a78bfa":n.kind==="custom"?"#f472b6":"#f59e0b");
+el("circle",{r:n.r,fill:n.kind==="hub"?"#0b1220":"#0d1528",stroke:sel===n.id?"#fff":col,"stroke-width":sel===n.id?6:(n.kind==="step"?2.5:4)},g);
+if(statusOn&&n.st)el("circle",{r:n.r-7,fill:SC[n.st],"fill-opacity":.18},g);
+var ty=n.kind==="hub"?28:(n.kind==="inner"?-8:4);
+if(n.kind==="hub"){if(n.img){var im=el("image",{x:-26,y:-50,width:52,height:52},g);im.setAttributeNS("http://www.w3.org/1999/xlink","href",n.img);im.setAttribute("href",n.img)}
+else{var zb=el("text",{y:-12,"text-anchor":"middle","font-size":30,"font-weight":800,fill:"#e42527"},g);zb.textContent="ZOHO"}}
+if(n.kind==="step"){var lines=wrap(n.t,10);lines.slice(0,3).forEach(function(l,j){var t=el("text",{y:j*12-(lines.length>1?6:-4),"text-anchor":"middle","font-size":10.5,"font-weight":700,fill:"#fff"},g);t.textContent=l})}
+else{var tl=wrap(n.t,n.kind==="hub"?14:12);tl.slice(0,2).forEach(function(l,j){var t=el("text",{y:ty+j*17,"text-anchor":"middle","font-size":n.kind==="hub"?16:14,"font-weight":800,fill:"#fff"},g);t.textContent=l});
+if(n.kind!=="hub"&&n.d){wrap(n.d,18).slice(0,2).forEach(function(l,j){var t=el("text",{y:ty+tl.length*17+4+j*13,"text-anchor":"middle","font-size":10.5,fill:"#cbd5e1"},g);t.textContent=l})}}
+if(n.kind==="hub"&&n.fixed){var f=el("text",{y:n.r-10,"text-anchor":"middle","font-size":10,fill:"#64748b"},g);f.textContent="hub"}});
+side()}
+function btn(t,cls,fn){var b=document.createElement("button");b.type="button";b.textContent=t;if(cls)b.className=cls;b.onclick=fn;return b}
+function panel(){var P=$("panel");P.textContent="";var h=document.createElement("h3");P.appendChild(h);var n=node(sel);
+if(!n){h.textContent="Selected";var i=document.createElement("i");i.style.cssText="font-size:13px;color:#93a3c4";i.textContent="Tap a circle. In Edit mode you can drag, rename, link and delete.";P.appendChild(i);return}
+h.textContent=n.t;
+function field(lab,key,ta){var l=document.createElement("label");l.textContent=lab;P.appendChild(l);var f=document.createElement(ta?"textarea":"input");if(ta)f.rows=2;f.value=n[key]||"";f.disabled=!edit;f.oninput=function(){n[key]=f.value;save();draw();if(key==="t")h.textContent=n.t};P.appendChild(f)}
+if(edit){field("Name","t");field("What it is","d",true);field("Link (opens the app or step)","link")}
+else if(n.d){var p=document.createElement("div");p.style.fontSize="13px";p.textContent=n.d;P.appendChild(p)}
+var l=document.createElement("label");l.textContent="Status";P.appendChild(l);var s=document.createElement("select");[["","not stated"],["live","live"],["half","half"],["notbuilt","not built"]].forEach(function(o){var op=document.createElement("option");op.value=o[0];op.textContent=o[1];s.appendChild(op)});s.value=n.st||"";s.disabled=!edit;s.onchange=function(){n.st=s.value;save();draw()};P.appendChild(s);
+if(n.src){var l2=document.createElement("label");l2.textContent="From Orion's map";P.appendChild(l2);var sr=document.createElement("div");sr.className="src";sr.textContent=n.src;P.appendChild(sr)}
+if(n.hub){var hb=node(n.hub);if(hb){var l3=document.createElement("label");l3.textContent="Sits on hub: "+hb.t;P.appendChild(l3)}}
+var r=document.createElement("div");r.className="row";P.appendChild(r);
+if(n.link){var a=document.createElement("a");a.href=n.link;a.target="_blank";a.rel="noopener";a.textContent="Open \u2197";a.style.cssText="display:inline-flex;align-items:center;min-height:40px;padding:6px 12px;border-radius:10px;background:#22d3ee;color:#04121a;font-weight:700;text-decoration:none";r.appendChild(a)}
+if(edit){r.appendChild(btn("Connect to\u2026","",function(){connFrom=n.id;$("hint").textContent="Now tap the circle to link "+n.t+" to."}));
+var outs=S.edges.filter(function(e){return e.a===n.id||e.b===n.id});if(outs.length)r.appendChild(btn("Unlink last","",function(){var e=outs[outs.length-1];S.edges.splice(S.edges.indexOf(e),1);save();draw();panel()}));
+if(!n.fixed)r.appendChild(btn("Delete","del",function(){if(!confirm('Delete "'+n.t+'"?'))return;S.nodes.splice(S.nodes.indexOf(n),1);S.edges=S.edges.filter(function(e){return e.a!==n.id&&e.b!==n.id});S.placed=S.placed.filter(function(x){return x!==n.id});sel=null;save();draw();panel()}))}
+r.appendChild(btn("Close","",function(){sel=null;draw();panel()}))}
+function side(){var D=$("sideList");D.textContent="";SIDE.forEach(function(x){if(node(x.id))return;var it=document.createElement("div");it.className="item";var s=document.createElement("span");s.textContent=x.t;var sm=document.createElement("small");sm.textContent=x.d+" (suggested hub: "+(node(x.hub)?node(x.hub).t:x.hub)+")";s.appendChild(sm);it.appendChild(s);
+var bx=document.createElement("span");bx.style.cssText="display:flex;gap:4px;flex-direction:column";if(x.link){var a=document.createElement("a");a.href=x.link;a.target="_blank";a.rel="noopener";a.textContent="Open";a.style.fontSize="12px";a.style.color="#22d3ee";bx.appendChild(a)}
+bx.appendChild(btn("+ Place","",function(){var h=node(x.hub)||node("cal");var ang=Math.atan2(h.y-C,h.x-C);var rr=h.id==="cal"?260:470;var k=S.nodes.filter(function(m){return m.hub===h.id}).length;var a2=ang+(k%2?1:-1)*0.12*(1+k/2);
+S.nodes.push({id:x.id,t:x.t,d:x.d,kind:"step",x:Math.round(C+rr*Math.cos(a2)),y:Math.round(C+rr*Math.sin(a2)),r:34,link:x.link||"",st:x.st||"",src:x.src,hub:x.hub});S.edges.push({a:x.hub,b:x.id,k:"hub"});save();sel=x.id;draw();panel()}));it.appendChild(bx);D.appendChild(it)});
+if(!D.childNodes.length){var i=document.createElement("i");i.style.fontSize="12px";i.textContent="All placed.";D.appendChild(i)}}
+function toW(cx,cy){var p=svg.createSVGPoint();p.x=cx;p.y=cy;var q=p.matrixTransform(svg.getScreenCTM().inverse());return[q.x,q.y]}
+var drag=null,moved=false;
+svg.addEventListener("pointerdown",function(e){var g=e.target.closest(".nd");if(!g)return;var n=node(g.getAttribute("data-id"));if(!n)return;var w=toW(e.clientX,e.clientY);drag={n:n,ox:w[0]-n.x,oy:w[1]-n.y};moved=false;if(edit&&!n.fixed){svg.setPointerCapture(e.pointerId);e.preventDefault()}});
+svg.addEventListener("pointermove",function(e){if(!drag||!edit||drag.n.fixed)return;var w=toW(e.clientX,e.clientY);var nx=w[0]-drag.ox,ny=w[1]-drag.oy;if(Math.abs(nx-drag.n.x)+Math.abs(ny-drag.n.y)>2)moved=true;drag.n.x=Math.round(nx);drag.n.y=Math.round(ny);draw()});
+svg.addEventListener("pointerup",function(){if(!drag)return;var n=drag.n;drag=null;if(moved){save();return}
+if(connFrom&&connFrom!==n.id){S.edges.push({a:connFrom,b:n.id,k:"user"});connFrom=null;$("hint").textContent="Linked.";save()}sel=n.id;draw();panel()});
+$("bEdit").onclick=function(){edit=!edit;this.classList.toggle("on",edit);$("hint").textContent=edit?"Edit on: drag steps, rename, link, delete. The 7 hubs stay where Ange drew them.":"Tap a circle to open it. Map only: nothing here runs a Realm process.";panel()};
+$("bStatus").onclick=function(){statusOn=!statusOn;this.classList.toggle("on",statusOn);draw()};
+$("bCube").onclick=function(){cubeOn=!cubeOn;this.classList.toggle("on",cubeOn);drawCube()};
+$("bAdd").onclick=function(){var t=prompt("Name of the new step?","New step");if(!t)return;var id="n"+Date.now();S.nodes.push({id:id,t:t,d:"",kind:"custom",x:C+40,y:C+560,r:40,link:"",st:"",src:"",hub:""});save();sel=id;if(!edit)$("bEdit").click();draw();panel()};
+$("bConn").onclick=function(){if(!sel){alert("Tap the first circle, then press Connect two.");return}connFrom=sel;$("hint").textContent="Now tap the circle to link to."};
+$("bExport").onclick=function(){var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:"application/json"}));a.download="metatron_layer1.json";document.body.appendChild(a);a.click();a.remove()};
+$("bReset").onclick=function(){if(confirm("Reset this map to the default layout? Your edits in this browser are cleared. Export first to keep them.")){S=defaults();save();sel=null;draw();panel()}};
+drawCube();draw();panel();
+</script></body></html>
