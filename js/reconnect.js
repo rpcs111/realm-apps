@@ -37,7 +37,8 @@ function ensurePill(){
  pill=document.createElement('button');pill.type='button';pill.id='rlPill';pill.setAttribute('aria-live','polite');
  pill.innerHTML='<i></i><span></span>';pillTxt=pill.querySelector('span');
  pill.onclick=function(){if(state==='tap'){tapResume();return}tries=0;check('tap')};
- document.body.appendChild(pill);
+ var mt=document.querySelector('[data-rl-pill]');
+ if(mt){pill.style.position='static';pill.style.maxWidth='none';pill.style.marginRight='auto';pill.style.flex='none';mt.insertBefore(pill,mt.firstChild)}else document.body.appendChild(pill);
 }
 var okHide=null;
 function show(s){
