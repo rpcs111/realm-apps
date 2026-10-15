@@ -13,7 +13,7 @@ h2{font-size:14px;letter-spacing:.06em;color:#8ea0c2;margin:16px 0 6px}.m{color:
 .src{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.src span{font-size:12px;padding:3px 8px;border-radius:999px;background:#1f2f45}.src .live{background:#14532d;color:#bbf7d0}.src .no{background:#3f1d1d;color:#fecaca}
 .msg{color:var(--ac);font-size:14px;min-height:18px;margin:6px 0}.err{background:#3f1d1d;color:#fecaca;padding:10px;border-radius:10px}
 </style></head><body>
-<header><h1>REALM SEARCH STUDIO <a href="./index.html">‹ Apps</a></h1>
+<header><h1>REALM SEARCH STUDIO <a href="./index.html">‹ Apps</a> <a id="toNotes" href="./scribe.html">Notes ›</a></h1>
 <form class="bar" id="f"><input id="q" placeholder="Address, client or keyword — e.g. 93 Pelham" autocomplete="off" enterkeyhint="search"><button type="button" id="mic" title="Speak">🎤</button><button class="pri" type="submit">Go</button></form>
 <div class="src" id="src"><span>Register</span><span>Calendar</span><span>Drive</span><span>WhatsApp links</span><span class="no">Invoices – needs Search Studio backend deploy</span><span class="no">Scribe notes – needs Search Studio backend deploy</span><span class="no">Gmail – needs Search Studio backend deploy</span></div>
 </header>
@@ -21,7 +21,7 @@ h2{font-size:14px;letter-spacing:.06em;color:#8ea0c2;margin:16px 0 6px}.m{color:
 <script src="js/reconnect.js"></script>
 <script>
 var EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";
-function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"\x26amp;","<":"\x26lt;",">":"\x26gt;",'"':"\x26quot;"}[c]})}
 function txt(h){var d=document.createElement("div");d.innerHTML=String(h||"").replace(/<(br|\/p)[^>]*>/gi,"\n");return (d.textContent||"").replace(/\n{3,}/g,"\n\n").trim()}
 function key(){try{return localStorage.getItem("realm_key")||""}catch(e){return""}}
 function call(fn,args){return (window.RealmLine?RealmLine.fetch:fetch)(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args||[],key:key()})}).then(function(r){return r.json()}).then(function(j){if(!j||!j.ok)throw new Error((j&&j.error)||(fn+" failed"));return j.result})}
