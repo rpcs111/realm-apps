@@ -24,8 +24,8 @@ h1{font-size:28px;margin:6px 0 2px;letter-spacing:.02em}.sub{font-size:13px;colo
 <div class="box">Use Chrome signed into <b>info@realmpcs.com</b>. The Start / list, Amend and Drive buttons need the Realm Google sign-in. On first use, approve the Docs and Sheets permission as info@.<br>Mic: tap a text box and use the keyboard mic (Gboard or iPhone &#127908;).</div>
 </div>
 <script>
-var https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec="https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec";
-if(/[?&]go=1/.test(location.search)){location.replace(https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec)}
+var CS_URL="https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec";
+if(/[?&]go=1/.test(location.search)){location.replace(CS_URL)}
 var dp=null,help=document.getElementById("help");
 window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e});
 document.getElementById("save").onclick=function(){if(dp){dp.prompt();dp.userChoice.then(function(){dp=null})}else{help.style.display="block"}};
