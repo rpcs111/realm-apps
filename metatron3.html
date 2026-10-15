@@ -1,23 +1,95 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Realm Metatron — editable cube</title>
 <link rel="icon" href="icon.svg">
 <!--
-  ================= REALM METATRON 3 CONFIG =================
-  Everything on the cube comes from the JSON block below (id="m3-config"). Edit it to add / remove / rename nodes.
-   centre  : Google Calendar, locked at the exact centre of the cube.
-   cluster : Google cluster around the calendar ("a" = angle in degrees, 0 = right, 90 = down; "img" = local brand icon).
-   band    : Aggregated data band directly under the calendar; "folders" = chips (real Drive folders, or marked PLACEHOLDER in "real").
-   inner   : INNER RING buttons on the 6 inner cube points (+ extras on the same ring). Tap = note / link panel.
-   cube    : nodes on the 6 outer cube points.
-   sat     : satellites (2Chat) placed beside another node ("of"), at angle "a" / radius "r" (in cube units).
-   outer   : small circles. ring "flow" = job-flow ring (in order), ring "outer" = outer ring.
-   edges   : {"from","to","kind","label"}  kind = flow | loop | feed | path.
-  Changes made on the page (moves, renames, colours, icons, notes, links, deletes, new nodes, new connectors)
-  are saved in this browser only: localStorage "realm_metatron3_v1". Use Export to download them, Reset to clear.
-  ===========================================================
+  ================= CONFIG (v3 · programs in the centre) =================
+  Everything on the map comes from the JSON block below (id="map-config"). Edit it to add / remove / rename things.
+   key / oldKey : localStorage keys. New positions start fresh; notes, renames, links, statuses and added nodes carry over from oldKey once.
+   centre    : Google Calendar, locked in the exact centre ("Source of truth").
+   band      : Google Drive data layer directly under the calendar; "folders" = chips (real Drive folders, or PLACEHOLDER).
+   nodes     : every node. "zone" decides where it sits:
+                 prog  = big core program around the calendar ("slot" = angle, 0 right, 90 down)
+                 app / step = apps column down the LEFT (steps = Realm Flow sub-nodes)
+                 bot   = bots column down the RIGHT
+                 dot   = people & vehicles, small dots in the corner
+                 extra = listed in the sidebar only; click it there to place it on the map
+               "status" = live | partial | blocked | notbuilt | lookonly | onhold ; "inReg" = where it was found in the REALM OPEN REGISTER (blank = not found).
+   edges     : the connection list (bridges). Drawn automatically between nodes that are on the map.
+               "inRegister" = true when the same link exists in the register's FLOW_PATHS tab.
+  =========================================================================
 -->
-<script id="m3-config" type="application/json">
+<script id="map-config" type="application/json">
 {
  "title": "Realm Metatron — editable cube",
+ "blurb": "Core programs in the centre: Google Calendar is the source of truth, Google Drive holds the data. Apps down the left, bots down the right, people & vehicles as corner dots.",
+ "key": "realm_metatron3_v2",
+ "oldKey": "realm_metatron3_v1",
+ "registerSnapshot": "REALM OPEN REGISTER read-only export 15 Oct 2026 (FLOW_NODES, FLOW_PATHS, main tab)",
+ "groups": [
+  [
+   "core",
+   "Core programs"
+  ],
+  [
+   "apps",
+   "Apps (Realm Flow + steps)"
+  ],
+  [
+   "bots",
+   "Bots"
+  ],
+  [
+   "registers",
+   "Registers & sheets"
+  ],
+  [
+   "flows",
+   "Flows"
+  ],
+  [
+   "folders",
+   "Drive folders"
+  ],
+  [
+   "people",
+   "People & vehicles"
+  ],
+  [
+   "other",
+   "Other items"
+  ]
+ ],
+ "statuses": [
+  [
+   "live",
+   "Live",
+   "#22c55e"
+  ],
+  [
+   "partial",
+   "Partial",
+   "#f59e0b"
+  ],
+  [
+   "blocked",
+   "Blocked",
+   "#ef4444"
+  ],
+  [
+   "notbuilt",
+   "Not built",
+   "#64748b"
+  ],
+  [
+   "lookonly",
+   "Look-only",
+   "#60a5fa"
+  ],
+  [
+   "onhold",
+   "On hold",
+   "#a78bfa"
+  ]
+ ],
  "centre": {
   "id": "calendar",
   "name": "Google Calendar",
@@ -35,46 +107,10 @@
    "QUOTES (yellow)",
    "TBC BOOKINGS"
   ],
-  "notes": "bookings & scopes · every step updates the Open Register"
+  "notes": "bookings & scopes · every step updates the Open Register",
+  "status": "live",
+  "inReg": "FLOW_NODES: CALENDAR · info@realmpcs.com"
  },
- "cluster": [
-  {
-   "id": "gmail",
-   "name": "Gmail",
-   "sub": "the pull · info@",
-   "img": "img/brand/gmail.svg",
-   "link": "https://mail.google.com/mail/u/0/#inbox",
-   "a": -145,
-   "pa": -160
-  },
-  {
-   "id": "keep",
-   "name": "Notes",
-   "sub": "Google Keep",
-   "img": "img/brand/google-keep.svg",
-   "link": "https://keep.google.com/",
-   "a": -35,
-   "pa": -60
-  },
-  {
-   "id": "sheets",
-   "name": "Register",
-   "sub": "REALM OPEN REGISTER",
-   "img": "img/brand/google-sheets.svg",
-   "link": "https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit",
-   "a": 180,
-   "pa": -120
-  },
-  {
-   "id": "drive",
-   "name": "Google Drive",
-   "sub": "storage",
-   "img": "img/brand/google-drive.svg",
-   "link": "https://drive.google.com/drive/my-drive",
-   "a": 0,
-   "pa": -20
-  }
- ],
  "band": {
   "id": "aggregated",
   "title": "Aggregated data",
@@ -117,993 +153,1834 @@
     "real": "PLACEHOLDER folder — no P&L folder exists; links the file 'RPCS Adjusted P&L FY24-FY26.xlsx'",
     "link": "https://docs.google.com/spreadsheets/d/1HXLRRgHZJDHSj0p_dp3WHgHO-6-Rxg8s/edit"
    }
-  ]
+  ],
+  "img": "img/brand/google-drive.svg",
+  "status": "live",
+  "reg": "drive",
+  "inReg": "FLOW_NODES: Google Drive"
  },
- "inner": [
+ "nodes": [
   {
-   "id": "ange",
-   "name": "Ange",
-   "emoji": "👤",
-   "col": "#00e5ff",
-   "a": -90,
-   "note": "Owner. Approves sends, spends, deletes and deploys."
+   "id": "sheets",
+   "name": "Register",
+   "zone": "prog",
+   "group": "core",
+   "status": "live",
+   "link": "https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit",
+   "sub": "Google Sheets · REALM OPEN REGISTER",
+   "img": "img/brand/google-sheets.svg",
+   "col": "#0f9d58",
+   "reg": "register",
+   "slot": -90,
+   "inReg": "FLOW_NODES: REALM OPEN REGISTER"
   },
   {
-   "id": "julie",
-   "name": "Julie",
-   "emoji": "👤",
-   "col": "#ff4fa3",
-   "a": -30,
-   "note": "Staff · payroll · books jobs · drafts the roster."
+   "id": "gmail",
+   "name": "Gmail",
+   "zone": "prog",
+   "group": "core",
+   "status": "live",
+   "link": "https://mail.google.com/mail/u/0/#inbox",
+   "sub": "the pull · info@",
+   "img": "img/brand/gmail.svg",
+   "col": "#ea4335",
+   "reg": "gmail",
+   "slot": -145,
+   "inReg": "FLOW_NODES: Gmail"
   },
   {
-   "id": "pc",
-   "name": "The PC",
-   "emoji": "🖥️",
-   "col": "#38bdf8",
-   "a": 30,
-   "note": "The office computer / Ara's box."
-  },
-  {
-   "id": "ara",
-   "name": "Ara",
-   "sub": "head · reads logs",
-   "emoji": "🧠",
-   "col": "#94a3b8",
-   "a": 90,
-   "note": "Head · reads logs · authorises Nova (rule 42) and Claude (rule 41)."
-  },
-  {
-   "id": "bots",
-   "name": "Chatbots",
-   "sub": "Nova · Claude · Gemini",
-   "emoji": "🤖",
-   "col": "#a78bfa",
-   "a": 150,
-   "note": "Nova (writes code · own log, Gemini Gem), Claude, Gemini.",
-   "link": "https://gemini.google.com/gem/aa2550627d15"
-  },
-  {
-   "id": "acct",
-   "name": "Accountability",
-   "sub": "Elon Musk 2.0 · checks Ara",
-   "emoji": "🚀",
-   "col": "#f43f5e",
-   "a": 210,
-   "note": "Elon Musk 2.0 — checks Ara."
-  },
-  {
-   "id": "ivor",
-   "name": "Ivor",
-   "sub": "checks Ange",
-   "emoji": "🛡️",
-   "col": "#fbbf24",
-   "a": 0,
-   "note": "Checks Ange (Ivor nightly test)."
-  },
-  {
-   "id": "nirvana",
-   "name": "NIRVANA",
-   "sub": "wins",
-   "emoji": "🏆",
-   "col": "#22c55e",
-   "a": 180,
-   "note": "The 'we fucking killed it' list — wins."
-  }
- ],
- "cube": [
-  {
-   "id": "desk",
-   "name": "Desk v9",
-   "emoji": "🖥️",
-   "col": "#38bdf8",
-   "link": "https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec",
-   "a": -90
-  },
-  {
-   "id": "whatsapp",
-   "name": "WhatsApp",
-   "sub": "office group",
-   "img": "img/brand/whatsapp.svg",
-   "col": "#25d366",
-   "link": "https://chat.whatsapp.com/Iwp5QxSiENW2JDWaptbg8H",
-   "a": -30
-  },
-  {
-   "id": "zohobooks",
-   "name": "Zoho Books",
-   "sub": "quote · invoice",
-   "emoji": "🧾",
-   "col": "#f0a020",
-   "link": "https://books.zoho.com/app#/invoices",
-   "a": 30
-  },
-  {
-   "id": "deputy",
-   "name": "Deputy",
-   "sub": "look-only",
-   "emoji": "🗓️",
-   "col": "#f59e0b",
-   "link": "https://once.deputy.com",
-   "a": 90
-  },
-  {
-   "id": "zohocrm",
-   "name": "Zoho CRM",
-   "sub": "clients",
-   "emoji": "🤝",
-   "col": "#e42527",
-   "link": "https://crm.zoho.com",
-   "a": 150
+   "id": "keep",
+   "name": "Notes (Keep)",
+   "zone": "prog",
+   "group": "core",
+   "status": "live",
+   "link": "https://keep.google.com/",
+   "sub": "Google Keep",
+   "img": "img/brand/keep_starlink.svg",
+   "col": "#e5e7eb",
+   "slot": -35,
+   "inReg": ""
   },
   {
    "id": "siptalk",
    "name": "1300 SipTalk",
+   "zone": "prog",
+   "group": "core",
+   "status": "live",
+   "link": "tel:1300358500",
    "sub": "1300 358 500",
    "emoji": "☎️",
    "col": "#f97316",
-   "link": "tel:1300358500",
-   "a": 210
-  }
- ],
- "sat": [
+   "slot": 180,
+   "inReg": ""
+  },
   {
-   "id": "twochat",
-   "name": "2Chat",
-   "sub": "bridge",
-   "emoji": "📲",
-   "col": "#fb923c",
-   "link": "https://app.2chat.io",
-   "of": "whatsapp",
-   "t": 0.42,
-   "off": 46
-  }
- ],
- "outer": [
+   "id": "whatsapp",
+   "name": "WhatsApp",
+   "zone": "prog",
+   "group": "core",
+   "status": "partial",
+   "link": "https://chat.whatsapp.com/Iwp5QxSiENW2JDWaptbg8H",
+   "sub": "office group",
+   "img": "img/brand/whatsapp_mono.svg",
+   "col": "#e5e7eb",
+   "note": "Register FLOW_NODES: partial (one group per site; 2Chat pipe dead).",
+   "reg": "whatsapp",
+   "slot": 0,
+   "inReg": "FLOW_NODES: WhatsApp"
+  },
+  {
+   "id": "zohocrm",
+   "name": "Zoho CRM",
+   "zone": "prog",
+   "group": "core",
+   "status": "partial",
+   "link": "https://crm.zoho.com",
+   "sub": "clients",
+   "emoji": "🤝",
+   "col": "#e42527",
+   "note": "Register FLOW_NODES: partial.",
+   "reg": "zohocrm",
+   "slot": 145,
+   "inReg": "FLOW_NODES: Zoho CRM"
+  },
+  {
+   "id": "zohobooks",
+   "name": "Zoho Books",
+   "zone": "prog",
+   "group": "core",
+   "status": "partial",
+   "link": "https://books.zoho.com/app#/invoices",
+   "sub": "quote · invoice",
+   "emoji": "🧾",
+   "col": "#f0a020",
+   "note": "Register FLOW_NODES: partial.",
+   "reg": "zohobooks",
+   "slot": 35,
+   "inReg": "FLOW_NODES: Zoho Books"
+  },
+  {
+   "id": "deputy",
+   "name": "Deputy",
+   "zone": "prog",
+   "group": "core",
+   "status": "lookonly",
+   "link": "https://once.deputy.com",
+   "sub": "rostering · look-only",
+   "emoji": "🗓️",
+   "col": "#f59e0b",
+   "note": "Standing rule 48: Deputy and Xero are look-only.",
+   "reg": "deputy",
+   "slot": 90,
+   "inReg": "FLOW_NODES: Deputy"
+  },
+  {
+   "id": "realmflow",
+   "name": "Realm Flow",
+   "zone": "app",
+   "group": "apps",
+   "status": "live",
+   "link": "./map.html",
+   "sub": "the flow map · steps below",
+   "emoji": "🗺️",
+   "col": "#22d3ee",
+   "inReg": "main tab name: Realm Flow Map web app — THE CANVAS (keeper). Calendar hub, "
+  },
   {
    "id": "enquiry",
-   "ring": "flow",
    "name": "Enquiry",
+   "zone": "step",
+   "group": "apps",
+   "status": "partial",
+   "link": "https://mail.google.com/mail/u/0/#inbox",
    "emoji": "📥",
    "col": "#22d3ee",
-   "link": "https://mail.google.com/mail/u/0/#inbox",
-   "sub": "Gmail · 1300 · WhatsApp"
+   "note": "Register FLOW_NODES: partial.",
+   "reg": "inquiry",
+   "inReg": "FLOW_NODES: New inquiry"
   },
   {
    "id": "log",
-   "ring": "flow",
    "name": "Log",
+   "zone": "step",
+   "group": "apps",
+   "status": "partial",
+   "link": "./scribe.html",
    "emoji": "✍️",
    "col": "#22d3ee",
-   "link": "./scribe.html"
+   "note": "Not in register FLOW_NODES.",
+   "inReg": ""
   },
   {
    "id": "quote",
-   "ring": "flow",
    "name": "Quote",
-   "emoji": "💲",
+   "zone": "step",
+   "group": "apps",
+   "status": "partial",
+   "link": "https://books.zoho.com/app#/quotes",
+   "emoji": "💬",
    "col": "#22d3ee",
-   "link": "https://books.zoho.com/app#/quotes"
+   "note": "Register FLOW_NODES: partial.",
+   "reg": "quote",
+   "inReg": "FLOW_NODES: Quote"
   },
   {
    "id": "followup",
-   "ring": "flow",
    "name": "Follow-up",
+   "zone": "step",
+   "group": "apps",
+   "status": "partial",
+   "link": "./scribe.html",
    "emoji": "🔁",
-   "col": "#a78bfa",
-   "link": "./scribe.html"
+   "col": "#22d3ee",
+   "note": "Not in register FLOW_NODES.",
+   "inReg": "main tab name: CALENDAR NUDGE CLEANUP — 7 Oct 2026: all auto-generated nudg"
   },
   {
    "id": "book",
-   "ring": "flow",
    "name": "Booking",
-   "emoji": "📌",
-   "col": "#a78bfa",
-   "link": "https://calendar.google.com/calendar/u/0/r?authuser=info@realmpcs.com"
+   "zone": "step",
+   "group": "apps",
+   "status": "partial",
+   "link": "https://calendar.google.com/calendar/u/0/r?authuser=info@realmpcs.com",
+   "emoji": "📅",
+   "col": "#22d3ee",
+   "note": "Register FLOW_NODES: partial.",
+   "reg": "book",
+   "inReg": "FLOW_NODES: Book"
   },
   {
    "id": "roster",
-   "ring": "flow",
    "name": "Rostering",
-   "emoji": "👥",
-   "col": "#fbbf24",
-   "link": "https://once.deputy.com"
+   "zone": "step",
+   "group": "apps",
+   "status": "partial",
+   "link": "https://once.deputy.com",
+   "emoji": "👷",
+   "col": "#22d3ee",
+   "note": "Register FLOW_NODES: partial.",
+   "reg": "roster",
+   "inReg": "FLOW_NODES: Roster"
   },
   {
    "id": "jobday",
-   "ring": "flow",
    "name": "Job day",
+   "zone": "step",
+   "group": "apps",
+   "status": "partial",
+   "link": "https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec",
    "emoji": "🧗",
    "col": "#22d3ee",
-   "link": "https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec"
+   "note": "Register FLOW_NODES: partial.",
+   "reg": "job",
+   "inReg": "FLOW_NODES: Job"
   },
   {
    "id": "cert",
-   "ring": "flow",
    "name": "Cert",
+   "zone": "step",
+   "group": "apps",
+   "status": "partial",
+   "link": "https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec",
    "emoji": "📜",
    "col": "#22d3ee",
-   "link": "https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec"
+   "note": "Register FLOW_NODES: partial.",
+   "reg": "cert",
+   "inReg": "FLOW_NODES: Cert"
   },
   {
    "id": "invoice",
-   "ring": "flow",
    "name": "Invoice",
-   "emoji": "🧾",
-   "col": "#22d3ee",
+   "zone": "step",
+   "group": "apps",
+   "status": "partial",
    "link": "https://books.zoho.com/app#/invoices",
-   "sub": "get paid"
+   "emoji": "💵",
+   "col": "#22d3ee",
+   "note": "Register FLOW_NODES: partial.",
+   "reg": "getpaid",
+   "inReg": "FLOW_NODES: Get paid"
   },
   {
    "id": "close",
-   "ring": "flow",
    "name": "Close",
+   "zone": "step",
+   "group": "apps",
+   "status": "partial",
+   "link": "https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit",
    "emoji": "✅",
    "col": "#22d3ee",
-   "link": "https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit",
-   "sub": "signed off"
+   "note": "Register FLOW_NODES: partial.",
+   "reg": "signoff",
+   "inReg": "FLOW_NODES: Signed off"
   },
   {
    "id": "rebook",
-   "ring": "flow",
    "name": "Rebook",
+   "zone": "step",
+   "group": "apps",
+   "status": "notbuilt",
+   "link": "./map.html",
    "emoji": "♻️",
-   "col": "#64748b",
-   "sub": "not built"
-  },
-  {
-   "id": "tasks",
-   "ring": "outer",
-   "name": "Google Tasks",
-   "sub": "G Task · You Got Me Bro",
-   "img": "img/brand/google-tasks.svg",
-   "col": "#4285f4",
-   "link": "https://tasks.google.com/"
+   "col": "#22d3ee",
+   "note": "Register FLOW_NODES: not built. No app yet — opens the flow map.",
+   "reg": "rebook",
+   "inReg": "FLOW_NODES: Rebook"
   },
   {
    "id": "search",
-   "ring": "outer",
    "name": "Search Studio",
-   "emoji": "🔍",
-   "col": "#60ff15",
-   "link": "./search.html"
+   "zone": "app",
+   "group": "apps",
+   "status": "partial",
+   "link": "./search.html",
+   "sub": "search live · outcomes not built",
+   "emoji": "🔎",
+   "col": "#38bdf8",
+   "note": "Search works; outcomes not built (register RESULTS tab is empty).",
+   "inReg": ""
   },
   {
-   "id": "ygmb",
-   "ring": "outer",
-   "name": "You Got Me Bro",
-   "emoji": "✍️",
+   "id": "desk",
+   "name": "Desk v9",
+   "zone": "app",
+   "group": "apps",
+   "status": "blocked",
+   "link": "https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec",
+   "sub": "backend blocked on info@ sign-in",
+   "emoji": "🖥️",
    "col": "#38bdf8",
-   "link": "./scribe.html"
+   "note": "Backend blocked on the info@ sign-in.",
+   "inReg": ""
   },
   {
    "id": "certstudio",
-   "ring": "outer",
    "name": "Cert Studio",
-   "emoji": "📜",
+   "zone": "app",
+   "group": "apps",
+   "status": "blocked",
+   "link": "https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec",
+   "sub": "backend blocked on info@ sign-in",
+   "emoji": "🏅",
    "col": "#38bdf8",
-   "link": "https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec"
+   "note": "Backend blocked on the info@ sign-in (Apps Script API switch / deploy needs sign-in).",
+   "reg": "certstudio",
+   "inReg": "FLOW_NODES: Cert Studio"
+  },
+  {
+   "id": "ygmb",
+   "name": "You Got Me Bro",
+   "zone": "app",
+   "group": "apps",
+   "status": "partial",
+   "link": "./scribe.html",
+   "sub": "scribe · notes",
+   "emoji": "🤙",
+   "col": "#38bdf8",
+   "note": "Scribe renamed You Got Me Bro (rule 52). Page live; Scribe deploy needs sign-in.",
+   "inReg": ""
   },
   {
    "id": "angetodo",
-   "ring": "outer",
    "name": "Ange To Do",
+   "zone": "app",
+   "group": "apps",
+   "status": "live",
+   "link": "https://tasks.google.com/",
+   "sub": "Google Tasks list",
    "emoji": "📝",
-   "col": "#00e5ff",
-   "link": "https://tasks.google.com/"
+   "col": "#38bdf8",
+   "inReg": "main tab name: Flow 1 — Task enrichment Apps Script (ANGE TO DO)"
   },
   {
    "id": "steppity",
-   "ring": "outer",
    "name": "Steppity",
+   "zone": "app",
+   "group": "apps",
+   "status": "notbuilt",
+   "sub": "no link yet",
    "emoji": "👣",
-   "col": "#84cc16"
-  },
-  {
-   "id": "xero",
-   "ring": "outer",
-   "name": "Xero",
-   "emoji": "👁️",
-   "col": "#94a3b8",
-   "sub": "look-only"
+   "col": "#fb923c",
+   "note": "No app or link found yet.",
+   "inReg": ""
   },
   {
    "id": "bridge",
-   "ring": "outer",
-   "name": "ORION BRIDGE",
+   "name": "Ara's Bridge",
+   "zone": "app",
+   "group": "apps",
+   "status": "onhold",
+   "link": "https://script.google.com/macros/s/AKfycbwGFJQKakl8aDiGgtnE7obWfNYs4YalvwfW0vGaAeFVG4AE1YFna-eEQuoktpl0NPG0zA/exec",
+   "sub": "formerly Realm Relay",
    "emoji": "🌉",
+   "col": "#a78bfa",
+   "note": "Renamed Ara's Bridge (Ange, 15 Oct). Channel doc: old bridge triggers to be switched off (needs Apps Script sign-in). The register still uses the old name.",
+   "reg": "bridge",
+   "inReg": "FLOW_NODES: ORION BRIDGE"
+  },
+  {
+   "id": "tasks",
+   "name": "Google Tasks",
+   "zone": "app",
+   "group": "apps",
+   "status": "live",
+   "link": "https://tasks.google.com/",
+   "sub": "G Task",
+   "img": "img/brand/google-tasks.svg",
+   "col": "#4285f4",
+   "reg": "tasks",
+   "inReg": "FLOW_NODES: Google Tasks"
+  },
+  {
+   "id": "xero",
+   "name": "Xero",
+   "zone": "app",
+   "group": "apps",
+   "status": "lookonly",
+   "sub": "look-only · no link yet",
+   "emoji": "📊",
+   "col": "#13b5ea",
+   "note": "Standing rule 48: look-only. Xero is off the table (channel entry 9).",
+   "inReg": ""
+  },
+  {
+   "id": "twochat",
+   "name": "2Chat",
+   "zone": "app",
+   "group": "apps",
+   "status": "onhold",
+   "link": "https://app.2chat.io",
+   "sub": "WhatsApp bridge · on hold",
+   "emoji": "📲",
+   "col": "#fb923c",
+   "note": "On hold — 2Chat account expired (register: BLOCKED gating click).",
+   "inReg": "main tab name: Gating click — 2Chat WhatsApp pipe (account expired)"
+  },
+  {
+   "id": "nirvana",
+   "name": "NIRVANA",
+   "zone": "app",
+   "group": "apps",
+   "status": "partial",
+   "sub": "wins list",
+   "emoji": "🏆",
+   "col": "#22c55e",
+   "note": "The 'we fucking killed it' list — wins. Notes live here for now; no link yet.",
+   "inReg": ""
+  },
+  {
+   "id": "metatron",
+   "name": "Metatron",
+   "zone": "app",
+   "group": "apps",
+   "status": "live",
+   "link": "./metatron3.html",
+   "sub": "metatron3.html",
+   "emoji": "🔯",
+   "col": "#22d3ee",
+   "inReg": "main tab name: REALM DECK web app renamed ORION — purple Metatron icon, Cer"
+  },
+  {
+   "id": "prismapp",
+   "name": "Prism",
+   "zone": "app",
+   "group": "apps",
+   "status": "live",
+   "link": "./prism.html",
+   "sub": "prism.html",
+   "emoji": "🔺",
+   "col": "#22d3ee",
+   "inReg": ""
+  },
+  {
+   "id": "ara",
+   "name": "Ara",
+   "zone": "bot",
+   "group": "bots",
+   "status": "live",
+   "link": "https://docs.google.com/document/d/1nH48bu2yt3WXMJ5DBBpHs0Dpt-nmW5JPQW3TaN0Kl6M/edit",
+   "sub": "head · reads logs",
+   "emoji": "🧠",
    "col": "#94a3b8",
-   "link": "https://script.google.com/macros/s/AKfycbwGFJQKakl8aDiGgtnE7obWfNYs4YalvwfW0vGaAeFVG4AE1YFna-eEQuoktpl0NPG0zA/exec"
+   "note": "Head · reads logs · authorises Nova (rule 42) and Claude (rule 41). Link = 00 ARA-NOVA CHANNEL doc.",
+   "inReg": ""
   },
   {
-   "id": "vans",
-   "ring": "outer",
-   "name": "Van kit",
-   "emoji": "🚐",
+   "id": "orion",
+   "name": "Orion",
+   "zone": "bot",
+   "group": "bots",
+   "status": "onhold",
+   "link": "https://docs.google.com/document/d/1VRfexXIQNshrdRg-GJqQPwzBGGCOjVRqy1eE9a1UKcs/edit",
+   "sub": "earlier bot · being handed back",
+   "emoji": "🛰️",
+   "col": "#c084fc",
+   "note": "Claude/Orion access being revoked and taken over (channel entry 8). Link = REALM HANDBACK – for Orion.",
+   "inReg": "FLOW_NODES name: ORION BRIDGE"
+  },
+  {
+   "id": "nova",
+   "name": "Nova",
+   "zone": "bot",
+   "group": "bots",
+   "status": "partial",
+   "link": "https://gemini.google.com/gem/aa2550627d15",
+   "sub": "writes code · own log",
+   "emoji": "✨",
+   "col": "#a78bfa",
+   "note": "Gemini Gem 'Nova' on info@. Register: NOVA GEM TEST — Gem answers fail (OPEN).",
+   "inReg": "main tab link: NOVA BUILD STEP 2 — Gemini Gem 'Nova' created on info@ (id a"
+  },
+  {
+   "id": "claude",
+   "name": "Claude",
+   "zone": "bot",
+   "group": "bots",
+   "status": "onhold",
+   "link": "https://claude.ai",
+   "sub": "cut off",
+   "emoji": "🤖",
+   "col": "#d97706",
+   "note": "Claude cut off (channel entry 5); handover to Ara/Nova.",
+   "inReg": "main tab name: Side ventures — day trading + Claude teaching"
+  },
+  {
+   "id": "gemini",
+   "name": "Gemini",
+   "zone": "bot",
+   "group": "bots",
+   "status": "partial",
+   "link": "https://gemini.google.com/",
+   "sub": "automations not built",
+   "emoji": "♊",
+   "col": "#4285f4",
+   "note": "Register FLOW_NODES 'Gemini automations': not built.",
+   "reg": "gemini",
+   "inReg": "FLOW_NODES: Gemini automations"
+  },
+  {
+   "id": "acct",
+   "name": "Elon Musk 2.0",
+   "zone": "bot",
+   "group": "bots",
+   "status": "partial",
+   "sub": "accountability · checks Ara",
+   "emoji": "🚀",
+   "col": "#f43f5e",
+   "note": "Rule 40: Elon Musk 2.0 audits Ara. No ACCOUNTABILITY LOG file found in Drive yet — no link yet.",
+   "inReg": ""
+  },
+  {
+   "id": "grok",
+   "name": "Grok",
+   "zone": "bot",
+   "group": "bots",
+   "status": "live",
+   "link": "https://grok.com",
+   "sub": "xAI chatbot",
+   "img": "img/brand/grok.svg",
+   "col": "#e5e7eb",
+   "note": "Grok (xAI). Desk and launcher Grok (Ara) tile added 14 Oct.",
+   "inReg": ""
+  },
+  {
+   "id": "ivor",
+   "name": "Ivor",
+   "zone": "bot",
+   "group": "bots",
+   "status": "partial",
+   "sub": "checks Ange · nightly test",
+   "emoji": "🛡️",
    "col": "#fbbf24",
-   "link": "https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit",
-   "sub": "Kangoo"
+   "note": "Rule 55: nightly memory test with Ivor. No link yet.",
+   "inReg": ""
   },
   {
-   "id": "shannon",
-   "ring": "outer",
-   "name": "Shannon",
+   "id": "ange",
+   "name": "Ange",
+   "zone": "dot",
+   "group": "people",
+   "status": "live",
+   "sub": "owner",
    "emoji": "👤",
-   "col": "#cbd5e1"
+   "col": "#00e5ff",
+   "note": "Owner. Approves sends, spends, deletes and deploys.",
+   "reg": "p_ange",
+   "inReg": "FLOW_NODES: Ange"
   },
   {
-   "id": "nadia",
-   "ring": "outer",
-   "name": "Nadia",
+   "id": "julie",
+   "name": "Julie",
+   "zone": "dot",
+   "group": "people",
+   "status": "live",
+   "sub": "office",
    "emoji": "👤",
-   "col": "#cbd5e1"
-  },
-  {
-   "id": "jordy",
-   "ring": "outer",
-   "name": "Jordy",
-   "emoji": "👤",
-   "col": "#cbd5e1"
+   "col": "#ff4fa3",
+   "note": "Staff · payroll · books jobs · drafts the roster.",
+   "reg": "p_julie",
+   "inReg": "FLOW_NODES: Julie"
   },
   {
    "id": "ground",
-   "ring": "outer",
    "name": "Ground crew",
+   "zone": "dot",
+   "group": "people",
+   "status": "live",
    "emoji": "🧹",
-   "col": "#cbd5e1"
+   "col": "#94a3b8",
+   "reg": "p_ground",
+   "inReg": "FLOW_NODES: Ground crew"
   },
   {
    "id": "rope",
-   "ring": "outer",
    "name": "Rope crew",
+   "zone": "dot",
+   "group": "people",
+   "status": "live",
    "emoji": "🧗",
-   "col": "#cbd5e1"
+   "col": "#94a3b8",
+   "reg": "p_rope",
+   "inReg": "FLOW_NODES: Rope crew"
+  },
+  {
+   "id": "vans",
+   "name": "Van kit",
+   "zone": "dot",
+   "group": "people",
+   "status": "partial",
+   "link": "https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit",
+   "sub": "Kangoo · VAN_KIT tab",
+   "emoji": "🚐",
+   "col": "#f59e0b",
+   "note": "Register FLOW_NODES: partial.",
+   "reg": "vans",
+   "inReg": "FLOW_NODES: Van kit"
+  },
+  {
+   "id": "pc",
+   "name": "The PC",
+   "zone": "dot",
+   "group": "people",
+   "status": "live",
+   "sub": "office computer",
+   "emoji": "🖥️",
+   "col": "#38bdf8",
+   "note": "The office computer / Ara's box.",
+   "inReg": ""
+  },
+  {
+   "id": "handoff",
+   "name": "REALM HANDOFF",
+   "zone": "extra",
+   "group": "registers",
+   "status": "live",
+   "link": "https://docs.google.com/spreadsheets/d/1SWCOcN88G3QPpdvTjbSJIIoyW0_z8lyksfbjQwTBga8/edit",
+   "sub": "sheet",
+   "emoji": "📗",
+   "col": "#0f9d58",
+   "inReg": "main tab name: REALM HANDOFF & CLIENT LIST — sheet (the base SCRIBE is buil"
+  },
+  {
+   "id": "rules",
+   "name": "Standing rules register",
+   "zone": "extra",
+   "group": "registers",
+   "status": "live",
+   "link": "https://docs.google.com/document/d/1nH48bu2yt3WXMJ5DBBpHs0Dpt-nmW5JPQW3TaN0Kl6M/edit",
+   "sub": "MASTER STANDING RULES · channel doc",
+   "emoji": "📕",
+   "col": "#ef4444",
+   "inReg": ""
+  },
+  {
+   "id": "meet",
+   "name": "REALM MEET RECORDINGS",
+   "zone": "extra",
+   "group": "registers",
+   "status": "live",
+   "link": "https://docs.google.com/spreadsheets/d/13QpygblRPrGIM7a6PLzt4THo18yLhx21kjuWqc63Zks/edit",
+   "sub": "sheet",
+   "emoji": "🎙️",
+   "col": "#0f9d58",
+   "inReg": ""
+  },
+  {
+   "id": "acctlog",
+   "name": "ACCOUNTABILITY LOG",
+   "zone": "extra",
+   "group": "registers",
+   "status": "notbuilt",
+   "sub": "not found in Drive",
+   "emoji": "📒",
+   "col": "#f43f5e",
+   "note": "No file named ACCOUNTABILITY LOG found in Drive (searched 15 Oct). No link yet.",
+   "inReg": ""
+  },
+  {
+   "id": "anchorfolder",
+   "name": "ANCHOR ROOF TEST",
+   "zone": "extra",
+   "group": "folders",
+   "status": "live",
+   "link": "https://drive.google.com/drive/search?q=%22ANCHOR%20ROOF%20TEST%22",
+   "sub": "cert folder",
+   "emoji": "📁",
+   "col": "#4285f4",
+   "reg": "anchorfolder",
+   "inReg": "FLOW_NODES: ANCHOR ROOF TEST"
+  },
+  {
+   "id": "aggsheet",
+   "name": "REALM AGGREGATED DATA",
+   "zone": "extra",
+   "group": "registers",
+   "status": "partial",
+   "link": "https://docs.google.com/spreadsheets/d/1pNv-LB8Y1o94PF-Q9KRqLLemTM2WRnG7_rWE1RMKwWw/edit",
+   "sub": "sheet",
+   "emoji": "📗",
+   "col": "#0f9d58",
+   "note": "Register FLOW_NODES: partial (nearly empty).",
+   "reg": "aggregated",
+   "inReg": "FLOW_NODES: Aggregated data sheet"
+  },
+  {
+   "id": "x_24_sep_original_flow_map",
+   "name": "24 Sep original flow map",
+   "zone": "extra",
+   "group": "flows",
+   "status": "live",
+   "link": "https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec",
+   "sub": "Realm apps",
+   "emoji": "🔀",
+   "col": "#64748b",
+   "inReg": "main tab link: Realm Flow Map web app — THE CANVAS (keeper). Calendar hub, "
+  },
+  {
+   "id": "x_orion_handoff",
+   "name": "ORION_HANDOFF",
+   "zone": "extra",
+   "group": "registers",
+   "status": "live",
+   "link": "https://docs.google.com/spreadsheets/d/1x1xLYJnr3k4z91lBiS40eCzKY5GQbdN2eNWzQ9K82uY/edit",
+   "sub": "Register / Sheets",
+   "emoji": "📗",
+   "col": "#64748b",
+   "inReg": "FLOW_NODES link: Gemini automations"
+  },
+  {
+   "id": "x_realm_links",
+   "name": "REALM_LINKS",
+   "zone": "extra",
+   "group": "registers",
+   "status": "live",
+   "link": "https://docs.google.com/spreadsheets/d/144xzuFR9madhVHr5RUVhCn-zZvhyCVBK6yuZfH2xlds/edit",
+   "sub": "Register / Sheets",
+   "emoji": "📗",
+   "col": "#64748b",
+   "inReg": "FLOW_NODES link: REALM OPEN REGISTER"
+  },
+  {
+   "id": "x_realm_master_address_key",
+   "name": "REALM MASTER address key",
+   "zone": "extra",
+   "group": "registers",
+   "status": "live",
+   "link": "https://docs.google.com/spreadsheets/d/1SjCMOXlYqU02Xgg1Nj1LHHC4yREZgSLwyg0x4YnfZLA/edit",
+   "sub": "Register / Sheets",
+   "emoji": "📗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_realm_handoff_client_list",
+   "name": "REALM HANDOFF & CLIENT LIST",
+   "zone": "extra",
+   "group": "registers",
+   "status": "live",
+   "link": "https://docs.google.com/spreadsheets/d/1h8MlodpRPwDijnbqrfKmySupnty_c1ik2OKQOU0iovw/edit",
+   "sub": "Register / Sheets",
+   "emoji": "📗",
+   "col": "#64748b",
+   "inReg": "main tab link: REALM HANDOFF & CLIENT LIST — sheet (the base SCRIBE is buil"
+  },
+  {
+   "id": "x_ara_s_bridge_log",
+   "name": "ARA'S BRIDGE LOG",
+   "zone": "extra",
+   "group": "registers",
+   "status": "live",
+   "link": "https://docs.google.com/spreadsheets/d/1-ZyYx9RdYaFwJBjzSglOqc7HeAo11b7MprNut1Vq77k/edit",
+   "sub": "Register / Sheets",
+   "emoji": "📗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_quotes_certs_aging_list",
+   "name": "QUOTES + CERTS aging list",
+   "zone": "extra",
+   "group": "registers",
+   "status": "live",
+   "link": "https://docs.google.com/spreadsheets/d/1uWkqj6gtlbPAbbOXUHF9gywxEj4oRa36d2BjuivwKAI/edit",
+   "sub": "Register / Sheets",
+   "emoji": "📗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_realm_tool_links_folder",
+   "name": "REALM TOOL LINKS folder",
+   "zone": "extra",
+   "group": "other",
+   "status": "onhold",
+   "link": "https://drive.google.com/drive/folders/1XmP4QkPiL85SDaYbTutYWgW5zZpW8inr",
+   "sub": "Drive docs",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "note": "Superseded / older version.",
+   "inReg": "FLOW_NODES link: Google Drive"
+  },
+  {
+   "id": "x_realm_web_exit_orion_nova_handoff_29_sep",
+   "name": "REALM WEB EXIT — ORION → NOVA handoff 29 Sep",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://docs.google.com/document/d/1jaW12HVYVd7frV44YHlH8K1ZyiuL88iNSYIyi-XUMHY/edit",
+   "sub": "Drive docs",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_realm_web_exit_afternoon_sweep_30_sep",
+   "name": "REALM WEB EXIT — afternoon sweep 30 Sep",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://docs.google.com/document/d/17MT1IWgBcu7AuXNBJ7uev5lO27jzU_7sRnIoNS8cYBA/edit",
+   "sub": "Drive docs",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_two_desks_go_live_25_sep",
+   "name": "TWO DESKS — GO LIVE 25 Sep",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://docs.google.com/document/d/1q2gAO-4c516yvmyIIp5_xdV9o9Ru-meM4xFsm2dAzuA/edit",
+   "sub": "Drive docs",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_realm_vault_night_one",
+   "name": "REALM VAULT — NIGHT ONE",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://docs.google.com/document/d/1shtYCIH4l7bc06I0ObIHM9y2kmtZBNOMxe_irWt-HMg/edit",
+   "sub": "Drive docs",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_amendment_2_security_101",
+   "name": "Amendment 2 — Security 101",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://docs.google.com/document/d/1ld8GH8a7r1XJ_N5oWThpql3_t3eSUMQ5dAfB8FYJkLg/edit",
+   "sub": "Drive docs",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_realm_eod_history",
+   "name": "REALM EOD HISTORY",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://docs.google.com/document/d/1ozuEAoM0zmsgkR-9darJ-hs-lIU8lXFx6_OdvqOdn7M/edit",
+   "sub": "Drive docs",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_anchor_roof_test_drive_search",
+   "name": "ANCHOR ROOF TEST (Drive search)",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://drive.google.com/drive/search?q=%22ANCHOR%20ROOF%20TEST%22",
+   "sub": "Drive docs",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_realm_flow_map_rev_26_sep",
+   "name": "Realm Flow Map (rev 26 Sep)",
+   "zone": "extra",
+   "group": "flows",
+   "status": "live",
+   "link": "https://docs.google.com/document/d/19lLVGXwM8BTH1f4WA6pvH9Xt9ylWdQmP13rHb5RRrM0/edit",
+   "sub": "Flow-map docs",
+   "emoji": "🔀",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_realm_flow_map_27_sep",
+   "name": "Realm Flow Map (27 Sep)",
+   "zone": "extra",
+   "group": "flows",
+   "status": "live",
+   "link": "https://docs.google.com/document/d/1kB4In4WrynRY6Y1vld_CcX8XoNjeaOzlxPFcRmmPm8Y/edit",
+   "sub": "Flow-map docs",
+   "emoji": "🔀",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_realm_flow_map_25_sep",
+   "name": "Realm Flow Map (25 Sep)",
+   "zone": "extra",
+   "group": "flows",
+   "status": "live",
+   "link": "https://docs.google.com/document/d/17VcuL3WMszBhOLV-3jp8X2Dm4tVM1-SilvLWCvXXaxs/edit",
+   "sub": "Flow-map docs",
+   "emoji": "🔀",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_realm_flow_map_rev_25_sep",
+   "name": "Realm Flow Map (rev 25 Sep)",
+   "zone": "extra",
+   "group": "flows",
+   "status": "live",
+   "link": "https://docs.google.com/document/d/1LT01r7QP7DL629uNHSmL_CvPeUNE6-ui_j3drhgAFYw/edit",
+   "sub": "Flow-map docs",
+   "emoji": "🔀",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_realm_flow_map_rev_21_sep",
+   "name": "Realm Flow Map (rev 21 Sep)",
+   "zone": "extra",
+   "group": "flows",
+   "status": "live",
+   "link": "https://docs.google.com/document/d/1N0Hrx03Huw7oz2ppyPNwyc6vhCwFoZ56TIEal3ldGPI/edit",
+   "sub": "Flow-map docs",
+   "emoji": "🔀",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_realm_flow_map_one_canvas_2_oct_drawio",
+   "name": "REALM FLOW MAP — ONE CANVAS 2 Oct (drawio)",
+   "zone": "extra",
+   "group": "flows",
+   "status": "live",
+   "link": "https://drive.google.com/file/d/1yT_2x3dPyce8zjHQfgbDVq3KyEJ9Bpib/view",
+   "sub": "Flow-map docs",
+   "emoji": "🔀",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_realm_flow_charts_drawio",
+   "name": "REALM FLOW CHARTS (drawio)",
+   "zone": "extra",
+   "group": "flows",
+   "status": "live",
+   "link": "https://drive.google.com/file/d/1SQetnjCYSHe1_32QTsv4A-LannluE7Z3/view",
+   "sub": "Flow-map docs",
+   "emoji": "🔀",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_round_flow_map_desk_flow_tab_older",
+   "name": "Round flow map (Desk, Flow tab) (older)",
+   "zone": "extra",
+   "group": "flows",
+   "status": "onhold",
+   "link": "https://script.google.com/macros/s/AKfycbzK3mUQipb81VLvLoMfUTY5tGNOimafh_Ljr17VX1OA63bztP1ZqXFEsXUQECe5VkZcyA/exec?tab=flow",
+   "sub": "Flow-map docs",
+   "emoji": "🔀",
+   "col": "#64748b",
+   "note": "Superseded / older version.",
+   "inReg": "main tab link: REALM DESK web app — THE APP (keeper). Tabs Start / Search /"
+  },
+  {
+   "id": "x_zoho_books_app",
+   "name": "Zoho Books (app)",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://books.zoho.com/app",
+   "sub": "Zoho Books",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_gmail_drafts",
+   "name": "Gmail drafts",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://mail.google.com/mail/u/0/#drafts",
+   "sub": "Gmail",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_whatsapp_web_read",
+   "name": "WhatsApp Web (read)",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://web.whatsapp.com",
+   "sub": "WhatsApp Web",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_scribe_v4_older",
+   "name": "SCRIBE v4 (older)",
+   "zone": "extra",
+   "group": "other",
+   "status": "onhold",
+   "link": "https://script.google.com/macros/s/AKfycbwq0FdxP9Sh3mtB6Y8e-PocRGUUQBub_TQVlv8IiApXU6bQSN6N-CGo8JRQCUyhMjNG/exec",
+   "sub": "Scribe",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "note": "Superseded / older version.",
+   "inReg": "main tab link: SCRIBE — Apps Script project built on REALM HANDOFF & CLIENT"
+  },
+  {
+   "id": "x_realm_desk_v7_older",
+   "name": "Realm Desk v7 (older)",
+   "zone": "extra",
+   "group": "other",
+   "status": "onhold",
+   "link": "https://script.google.com/macros/s/AKfycbzK3mUQipb81VLvLoMfUTY5tGNOimafh_Ljr17VX1OA63bztP1ZqXFEsXUQECe5VkZcyA/exec",
+   "sub": "Desk",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "note": "Superseded / older version.",
+   "inReg": "main tab link: REALM DESK web app — THE APP (keeper). Tabs Start / Search /"
+  },
+  {
+   "id": "x_realm_launcher_v4_older",
+   "name": "Realm Launcher v4 (older)",
+   "zone": "extra",
+   "group": "other",
+   "status": "onhold",
+   "link": "https://script.google.com/macros/s/AKfycbzquhNRWty9kTneExFyCpUKIPN2DoKU4GNekszu4E_rwgSMEv-pHVadGK5HcoCV3GtKzQ/exec",
+   "sub": "Desk",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "note": "Superseded / older version.",
+   "inReg": "main tab link: REALM LAUNCHER — one-door tile page (Apps Script, no scopes)"
+  },
+  {
+   "id": "x_custom_erp_walkthrough_airdev",
+   "name": "Custom ERP walkthrough (Airdev)",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://www.youtube.com/watch?v=rYTUN67JZKs",
+   "sub": "Videos",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_every_concept_explained_nate_herk",
+   "name": "Every concept explained (Nate Herk)",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://www.youtube.com/watch?v=NyfYxpXiw_0",
+   "sub": "Videos",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_video_ref_nn29t4ypc8e",
+   "name": "Video ref nn29T4yPc8E",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://www.youtube.com/watch?v=nn29T4yPc8E",
+   "sub": "Videos",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_video_ref_c9_sr0d1llk",
+   "name": "Video ref c9_SR0d1LLk",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://www.youtube.com/watch?v=c9_SR0d1LLk",
+   "sub": "Videos",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_advanced_hacks_debmnnjmmci",
+   "name": "Advanced hacks (dEBMnnJMmCI)",
+   "zone": "extra",
+   "group": "other",
+   "status": "live",
+   "link": "https://www.youtube.com/watch?v=dEBMnnJMmCI",
+   "sub": "Videos",
+   "emoji": "🔗",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_ara_library_01_rules",
+   "name": "ARA LIBRARY › 01 RULES",
+   "zone": "extra",
+   "group": "folders",
+   "status": "live",
+   "link": "https://drive.google.com/drive/folders/1PZfjWIX_gIhcCgXGwXo3RqS9cGHE0yiv",
+   "sub": "Drive folders (prism band)",
+   "emoji": "📁",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_ara_library_02_maps",
+   "name": "ARA LIBRARY › 02 MAPS",
+   "zone": "extra",
+   "group": "folders",
+   "status": "live",
+   "link": "https://drive.google.com/drive/folders/1eLPvakCZ5vi320PTExHwh8NXx8byWFzz",
+   "sub": "Drive folders (prism band)",
+   "emoji": "📁",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_ara_library_03_apps_links",
+   "name": "ARA LIBRARY › 03 APPS & LINKS",
+   "zone": "extra",
+   "group": "folders",
+   "status": "live",
+   "link": "https://drive.google.com/drive/folders/1DmrKFDumm0hYZ6aKEGh6lUB_JSg0U5kF",
+   "sub": "Drive folders (prism band)",
+   "emoji": "📁",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_ara_library_04_audits_reports",
+   "name": "ARA LIBRARY › 04 AUDITS & REPORTS",
+   "zone": "extra",
+   "group": "folders",
+   "status": "live",
+   "link": "https://drive.google.com/drive/folders/1naUBUR_NDhtVIqW2ZpUFCzGsw769fzxM",
+   "sub": "Drive folders (prism band)",
+   "emoji": "📁",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_ara_library_05_how_to",
+   "name": "ARA LIBRARY › 05 HOW-TO",
+   "zone": "extra",
+   "group": "folders",
+   "status": "live",
+   "link": "https://drive.google.com/drive/folders/1TwLWj4cb5ZsJfy79H5Mle289P1Dc36GN",
+   "sub": "Drive folders (prism band)",
+   "emoji": "📁",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_ara_library_06_history",
+   "name": "ARA LIBRARY › 06 HISTORY",
+   "zone": "extra",
+   "group": "folders",
+   "status": "live",
+   "link": "https://drive.google.com/drive/folders/148iUgBiCtPw0sFdA8q-jeZsAFsaR9dnt",
+   "sub": "Drive folders (prism band)",
+   "emoji": "📁",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_ara_realm_tool_links",
+   "name": "Ara › REALM TOOL LINKS",
+   "zone": "extra",
+   "group": "folders",
+   "status": "live",
+   "link": "https://drive.google.com/drive/folders/1XmP4QkPiL85SDaYbTutYWgW5zZpW8inr",
+   "sub": "Drive folders (prism band)",
+   "emoji": "📁",
+   "col": "#64748b",
+   "inReg": "FLOW_NODES link: Google Drive"
+  },
+  {
+   "id": "x_claude_export_14_oct_2026",
+   "name": "Claude Export 14 Oct 2026",
+   "zone": "extra",
+   "group": "folders",
+   "status": "live",
+   "link": "https://drive.google.com/drive/folders/1hi-h5Gnxlj177Qi9_GjGD42hQjjQcAqJ",
+   "sub": "Drive folders (prism band)",
+   "emoji": "📁",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_anchor_roof_test_2026_anchor_certs",
+   "name": "ANCHOR ROOF TEST › 2026 ANCHOR CERTS",
+   "zone": "extra",
+   "group": "folders",
+   "status": "live",
+   "link": "https://drive.google.com/drive/folders/1lSohy0BLAOaOJI-dh8s9t3MtnTpvUuqP",
+   "sub": "Drive folders (prism band)",
+   "emoji": "📁",
+   "col": "#64748b",
+   "inReg": "FLOW_NODES link: ANCHOR ROOF TEST"
+  },
+  {
+   "id": "x_anchor_roof_test_cert_templates",
+   "name": "ANCHOR ROOF TEST › CERT TEMPLATES",
+   "zone": "extra",
+   "group": "folders",
+   "status": "live",
+   "link": "https://drive.google.com/drive/folders/1YsaFDpZfSqU6s48C53Mqxq4XrCAtiAYl",
+   "sub": "Drive folders (prism band)",
+   "emoji": "📁",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_google_file_jobs",
+   "name": "GOOGLE  FILE JOBS",
+   "zone": "extra",
+   "group": "folders",
+   "status": "live",
+   "link": "https://drive.google.com/drive/folders/1CWQA9v2fkVqIhGPJZe47u-7mpuWhtjeE",
+   "sub": "Drive folders (prism band)",
+   "emoji": "📁",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_rpcs_sold2026",
+   "name": "*RPCS SOLD2026",
+   "zone": "extra",
+   "group": "folders",
+   "status": "live",
+   "link": "https://drive.google.com/drive/folders/1I9OpITh0MCLcsAaPiLgn31_uD0VlnkBM",
+   "sub": "Drive folders (prism band)",
+   "emoji": "📁",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_map_original",
+   "name": "Flow map (original v1)",
+   "zone": "extra",
+   "group": "flows",
+   "status": "live",
+   "link": "./metatron.html",
+   "sub": "metatron.html · first cube",
+   "emoji": "🔀",
+   "col": "#64748b",
+   "inReg": ""
+  },
+  {
+   "id": "x_metatron2",
+   "name": "Metatron cube v2",
+   "zone": "extra",
+   "group": "flows",
+   "status": "live",
+   "link": "./metatron2.html",
+   "sub": "metatron2.html",
+   "emoji": "🔀",
+   "col": "#64748b",
+   "inReg": ""
   }
  ],
  "edges": [
   {
-   "from": "enquiry",
-   "to": "log",
-   "kind": "flow"
-  },
-  {
-   "from": "log",
-   "to": "quote",
-   "kind": "flow"
-  },
-  {
-   "from": "quote",
-   "to": "followup",
-   "kind": "flow"
-  },
-  {
-   "from": "followup",
-   "to": "book",
-   "kind": "flow"
-  },
-  {
-   "from": "book",
-   "to": "roster",
-   "kind": "flow"
-  },
-  {
-   "from": "roster",
-   "to": "jobday",
-   "kind": "flow"
-  },
-  {
-   "from": "jobday",
-   "to": "cert",
-   "kind": "flow"
-  },
-  {
-   "from": "cert",
-   "to": "invoice",
-   "kind": "flow"
-  },
-  {
-   "from": "invoice",
-   "to": "close",
-   "kind": "flow"
-  },
-  {
-   "from": "quote",
-   "to": "book",
-   "kind": "loop",
-   "label": "approved"
-  },
-  {
-   "from": "followup",
-   "to": "quote",
-   "kind": "loop",
-   "label": "re-quote"
-  },
-  {
-   "from": "cert",
-   "to": "log",
-   "kind": "loop",
-   "label": "next due"
-  },
-  {
-   "from": "close",
-   "to": "followup",
-   "kind": "loop",
-   "label": "rebook"
-  },
-  {
-   "from": "close",
-   "to": "rebook",
-   "kind": "loop",
-   "label": "rebook"
-  },
-  {
-   "from": "rebook",
-   "to": "quote",
-   "kind": "loop",
-   "label": "clone + price check"
-  },
-  {
    "from": "zohocrm",
-   "to": "zohobooks",
+   "to": "aggregated",
    "kind": "feed",
-   "label": "client → estimate"
+   "label": "clients → Drive",
+   "src": "map",
+   "inRegister": false
   },
   {
    "from": "zohobooks",
    "to": "aggregated",
    "kind": "feed",
-   "label": "invoice status"
-  },
-  {
-   "from": "zohocrm",
-   "to": "aggregated",
-   "kind": "feed",
-   "label": "clients"
-  },
-  {
-   "from": "whatsapp",
-   "to": "twochat",
-   "kind": "feed",
-   "label": "source"
-  },
-  {
-   "from": "twochat",
-   "to": "calendar",
-   "kind": "feed",
-   "label": "bridge"
-  },
-  {
-   "from": "drive",
-   "to": "aggregated",
-   "kind": "feed",
-   "label": "folders"
-  },
-  {
-   "from": "roster",
-   "to": "vans",
-   "kind": "path",
-   "label": "which van · which kit"
-  },
-  {
-   "from": "vans",
-   "to": "jobday",
-   "kind": "path",
-   "label": "van packed"
-  },
-  {
-   "from": "ground",
-   "to": "vans",
-   "kind": "path",
-   "label": "loads the van"
-  },
-  {
-   "from": "ange",
-   "to": "invoice",
-   "kind": "path",
-   "label": "debtor calls"
-  },
-  {
-   "from": "ange",
-   "to": "rebook",
-   "kind": "path",
-   "label": "approves"
-  },
-  {
-   "from": "julie",
-   "to": "book",
-   "kind": "path",
-   "label": "books"
-  },
-  {
-   "from": "julie",
-   "to": "roster",
-   "kind": "path",
-   "label": "drafts roster"
-  },
-  {
-   "from": "ground",
-   "to": "roster",
-   "kind": "path",
-   "label": "rostered"
-  },
-  {
-   "from": "rope",
-   "to": "jobday",
-   "kind": "path",
-   "label": "on the ropes"
-  },
-  {
-   "from": "bridge",
-   "to": "sheets",
-   "kind": "path",
-   "label": "writes"
-  },
-  {
-   "from": "bridge",
-   "to": "tasks",
-   "kind": "path",
-   "label": "writes"
+   "label": "quotes · invoices → Drive",
+   "src": "both",
+   "inRegister": true
   },
   {
    "from": "deputy",
-   "to": "roster",
-   "kind": "path",
-   "label": "hours"
+   "to": "aggregated",
+   "kind": "feed",
+   "label": "roster hours (look-only) → Drive",
+   "src": "map",
+   "inRegister": false
   },
   {
-   "from": "certstudio",
-   "to": "cert",
-   "kind": "path",
-   "label": "makes cert"
-  },
-  {
-   "from": "siptalk",
-   "to": "enquiry",
-   "kind": "path",
-   "label": "calls"
-  },
-  {
-   "from": "desk",
-   "to": "jobday",
-   "kind": "path",
-   "label": "job card"
-  },
-  {
-   "from": "ygmb",
-   "to": "followup",
-   "kind": "path",
-   "label": "follow-ups"
-  },
-  {
-   "from": "bots",
-   "to": "bridge",
-   "kind": "path",
-   "label": "code"
+   "from": "rebook",
+   "to": "quote",
+   "kind": "reg",
+   "label": "clone + price check",
+   "src": "register",
+   "inRegister": true
   },
   {
    "from": "enquiry",
    "to": "quote",
-   "kind": "path",
-   "label": "new work · partial"
+   "kind": "reg",
+   "label": "new work",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "quote",
+   "to": "book",
+   "kind": "reg",
+   "label": "5 unbooked",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "book",
+   "to": "roster",
+   "kind": "reg",
+   "label": "typed twice",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "roster",
+   "to": "jobday",
+   "kind": "reg",
+   "label": "pre-start pack",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "jobday",
+   "to": "cert",
+   "kind": "reg",
+   "label": "Pass/Fail",
+   "src": "register",
+   "inRegister": true
   },
   {
    "from": "cert",
    "to": "close",
-   "kind": "path",
-   "label": "cert sent · partial"
+   "kind": "reg",
+   "label": "cert sent",
+   "src": "register",
+   "inRegister": true
   },
   {
    "from": "close",
    "to": "invoice",
-   "kind": "path",
-   "label": "never billed · not built"
+   "kind": "reg",
+   "label": "never billed",
+   "src": "register",
+   "inRegister": true
   },
   {
    "from": "invoice",
    "to": "rebook",
-   "kind": "path",
-   "label": "overdue · not built"
+   "kind": "reg",
+   "label": "overdue",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "whatsapp",
+   "to": "calendar",
+   "kind": "reg",
+   "label": "group ↔ job card",
+   "src": "register",
+   "inRegister": true
   },
   {
    "from": "calendar",
    "to": "gmail",
-   "kind": "path",
-   "label": "booking ↔ approval · not built"
+   "kind": "reg",
+   "label": "booking ↔ approval",
+   "src": "register",
+   "inRegister": true
   },
   {
    "from": "gmail",
    "to": "tasks",
-   "kind": "path",
-   "label": "email → task · not built"
+   "kind": "reg",
+   "label": "email → task",
+   "src": "register",
+   "inRegister": true
   },
   {
    "from": "calendar",
    "to": "deputy",
-   "kind": "path",
-   "label": "who is rostered · not built"
+   "kind": "reg",
+   "label": "who is rostered",
+   "src": "register",
+   "inRegister": true
   },
   {
    "from": "certstudio",
-   "to": "aggregated",
-   "kind": "path",
-   "label": "cert → client folder · not built"
+   "to": "anchorfolder",
+   "kind": "reg",
+   "label": "cert → client folder",
+   "src": "register",
+   "inRegister": true
   },
   {
-   "from": "aggregated",
+   "from": "anchorfolder",
    "to": "calendar",
-   "kind": "path",
-   "label": "cert on ANCHOR TESTING · partial"
+   "kind": "reg",
+   "label": "cert on ANCHOR TESTING",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "zohocrm",
+   "to": "zohobooks",
+   "kind": "reg",
+   "label": "client → estimate",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "bridge",
+   "to": "sheets",
+   "kind": "reg",
+   "label": "writes",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "bridge",
+   "to": "tasks",
+   "kind": "reg",
+   "label": "writes",
+   "src": "register",
+   "inRegister": true
   },
   {
    "from": "gmail",
-   "to": "bots",
-   "kind": "path",
-   "label": "triage · not built"
-  },
-  {
-   "from": "drive",
-   "to": "bots",
-   "kind": "path",
-   "label": "dupe cleanup · not built"
+   "to": "gemini",
+   "kind": "reg",
+   "label": "triage",
+   "src": "register",
+   "inRegister": true
   },
   {
    "from": "aggregated",
-   "to": "bots",
-   "kind": "path",
-   "label": "dupe check · not built"
+   "to": "gemini",
+   "kind": "reg",
+   "label": "dupe cleanup",
+   "src": "both",
+   "inRegister": true
   },
   {
-   "from": "bots",
+   "from": "gemini",
    "to": "sheets",
-   "kind": "path",
-   "label": "status log · not built"
+   "kind": "reg",
+   "label": "status log",
+   "src": "register",
+   "inRegister": true
   },
   {
-   "from": "deputy",
-   "to": "aggregated",
-   "kind": "feed",
-   "label": "roster hours (look-only)"
+   "from": "ange",
+   "to": "invoice",
+   "kind": "reg",
+   "label": "debtor calls",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "ange",
+   "to": "rebook",
+   "kind": "reg",
+   "label": "approves",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "julie",
+   "to": "book",
+   "kind": "reg",
+   "label": "books",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "julie",
+   "to": "roster",
+   "kind": "reg",
+   "label": "drafts roster",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "ground",
+   "to": "roster",
+   "kind": "reg",
+   "label": "rostered",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "rope",
+   "to": "jobday",
+   "kind": "reg",
+   "label": "on the ropes",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "roster",
+   "to": "vans",
+   "kind": "reg",
+   "label": "which van · which kit",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "vans",
+   "to": "jobday",
+   "kind": "reg",
+   "label": "van packed",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "ground",
+   "to": "vans",
+   "kind": "reg",
+   "label": "loads the van",
+   "src": "register",
+   "inRegister": true
+  },
+  {
+   "from": "enquiry",
+   "to": "log",
+   "kind": "flow",
+   "label": "flow",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "log",
+   "to": "quote",
+   "kind": "flow",
+   "label": "flow",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "quote",
+   "to": "followup",
+   "kind": "flow",
+   "label": "flow",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "followup",
+   "to": "book",
+   "kind": "flow",
+   "label": "flow",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "cert",
+   "to": "invoice",
+   "kind": "flow",
+   "label": "flow",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "close",
+   "to": "rebook",
+   "kind": "flow",
+   "label": "flow",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "realmflow",
+   "to": "enquiry",
+   "kind": "map",
+   "label": "steps",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "log",
+   "to": "ygmb",
+   "kind": "map",
+   "label": "logged in",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "followup",
+   "to": "ygmb",
+   "kind": "map",
+   "label": "follow-ups",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "cert",
+   "to": "certstudio",
+   "kind": "map",
+   "label": "cert built",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "jobday",
+   "to": "desk",
+   "kind": "map",
+   "label": "job day",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "quote",
+   "to": "zohobooks",
+   "kind": "map",
+   "label": "estimate",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "invoice",
+   "to": "zohobooks",
+   "kind": "map",
+   "label": "invoice",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "book",
+   "to": "calendar",
+   "kind": "map",
+   "label": "booked",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "roster",
+   "to": "deputy",
+   "kind": "map",
+   "label": "shift",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "enquiry",
+   "to": "gmail",
+   "kind": "map",
+   "label": "email",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "enquiry",
+   "to": "siptalk",
+   "kind": "map",
+   "label": "calls",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "enquiry",
+   "to": "whatsapp",
+   "kind": "map",
+   "label": "messages",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "whatsapp",
+   "to": "twochat",
+   "kind": "map",
+   "label": "source",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "twochat",
+   "to": "calendar",
+   "kind": "map",
+   "label": "bridge",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "search",
+   "to": "sheets",
+   "kind": "map",
+   "label": "reads",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "search",
+   "to": "calendar",
+   "kind": "map",
+   "label": "reads",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "desk",
+   "to": "sheets",
+   "kind": "map",
+   "label": "register",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "angetodo",
+   "to": "tasks",
+   "kind": "map",
+   "label": "list",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "ygmb",
+   "to": "tasks",
+   "kind": "map",
+   "label": "tasks",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "ara",
+   "to": "sheets",
+   "kind": "map",
+   "label": "reads logs",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "nova",
+   "to": "ara",
+   "kind": "map",
+   "label": "own log",
+   "src": "map",
+   "inRegister": false
   },
   {
    "from": "acct",
    "to": "ara",
-   "kind": "path",
-   "label": "checks"
+   "kind": "map",
+   "label": "checks",
+   "src": "map",
+   "inRegister": false
   },
   {
    "from": "ivor",
    "to": "ange",
-   "kind": "path",
-   "label": "checks"
+   "kind": "map",
+   "label": "checks",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "orion",
+   "to": "bridge",
+   "kind": "map",
+   "label": "built it",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "claude",
+   "to": "orion",
+   "kind": "map",
+   "label": "was Orion",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "nova",
+   "to": "gemini",
+   "kind": "map",
+   "label": "Gem",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "ara",
+   "to": "rules",
+   "kind": "map",
+   "label": "rules",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "acct",
+   "to": "acctlog",
+   "kind": "map",
+   "label": "logs misses",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "nirvana",
+   "to": "ara",
+   "kind": "map",
+   "label": "wins",
+   "src": "map",
+   "inRegister": false
+  },
+  {
+   "from": "grok",
+   "to": "ara",
+   "kind": "map",
+   "label": "Ara tile",
+   "src": "map",
+   "inRegister": false
   }
  ],
- "links": [
-  {
-   "g": "Realm apps",
-   "l": "Realm Desk v9",
-   "u": "https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec"
-  },
-  {
-   "g": "Realm apps",
-   "l": "Cert Studio",
-   "u": "https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec"
-  },
-  {
-   "g": "Realm apps",
-   "l": "You Got Me Bro",
-   "u": "./scribe.html"
-  },
-  {
-   "g": "Realm apps",
-   "l": "Search Studio",
-   "u": "./search.html"
-  },
-  {
-   "g": "Realm apps",
-   "l": "REALM OPEN REGISTER",
-   "u": "https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit"
-  },
-  {
-   "g": "Realm apps",
-   "l": "Google Calendar (info@)",
-   "u": "https://calendar.google.com/calendar/u/0/r?authuser=info@realmpcs.com"
-  },
-  {
-   "g": "Realm apps",
-   "l": "Flow map",
-   "u": "./map.html"
-  },
-  {
-   "g": "Realm apps",
-   "l": "Metatron cube",
-   "u": "./metatron2.html"
-  },
-  {
-   "g": "Realm apps",
-   "l": "First cube",
-   "u": "./metatron.html"
-  },
-  {
-   "g": "Realm apps",
-   "l": "24 Sep original flow map",
-   "u": "https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec"
-  },
-  {
-   "g": "Realm apps",
-   "l": "2Chat (API)",
-   "u": "https://app.2chat.io"
-  },
-  {
-   "g": "Realm apps",
-   "l": "Google Keep",
-   "u": "https://keep.google.com/"
-  },
-  {
-   "g": "Register / Sheets",
-   "l": "ORION_HANDOFF",
-   "u": "https://docs.google.com/spreadsheets/d/1x1xLYJnr3k4z91lBiS40eCzKY5GQbdN2eNWzQ9K82uY/edit"
-  },
-  {
-   "g": "Register / Sheets",
-   "l": "REALM AGGREGATED DATA",
-   "u": "https://docs.google.com/spreadsheets/d/1pNv-LB8Y1o94PF-Q9KRqLLemTM2WRnG7_rWE1RMKwWw/edit"
-  },
-  {
-   "g": "Register / Sheets",
-   "l": "REALM_LINKS",
-   "u": "https://docs.google.com/spreadsheets/d/144xzuFR9madhVHr5RUVhCn-zZvhyCVBK6yuZfH2xlds/edit"
-  },
-  {
-   "g": "Register / Sheets",
-   "l": "REALM MASTER address key",
-   "u": "https://docs.google.com/spreadsheets/d/1SjCMOXlYqU02Xgg1Nj1LHHC4yREZgSLwyg0x4YnfZLA/edit"
-  },
-  {
-   "g": "Register / Sheets",
-   "l": "REALM HANDOFF & CLIENT LIST",
-   "u": "https://docs.google.com/spreadsheets/d/1h8MlodpRPwDijnbqrfKmySupnty_c1ik2OKQOU0iovw/edit"
-  },
-  {
-   "g": "Register / Sheets",
-   "l": "ORION BRIDGE LOG",
-   "u": "https://docs.google.com/spreadsheets/d/1-ZyYx9RdYaFwJBjzSglOqc7HeAo11b7MprNut1Vq77k/edit"
-  },
-  {
-   "g": "Register / Sheets",
-   "l": "QUOTES + CERTS aging list",
-   "u": "https://docs.google.com/spreadsheets/d/1uWkqj6gtlbPAbbOXUHF9gywxEj4oRa36d2BjuivwKAI/edit"
-  },
-  {
-   "g": "Drive docs",
-   "l": "REALM TOOL LINKS folder",
-   "u": "https://drive.google.com/drive/folders/1XmP4QkPiL85SDaYbTutYWgW5zZpW8inr"
-  },
-  {
-   "g": "Drive docs",
-   "l": "Realm Standing Rules",
-   "u": "https://docs.google.com/document/d/1FTidBT8_sXQHp3oJmQPu6B19G7qsF5dTGwvwf6RshRg/edit"
-  },
-  {
-   "g": "Drive docs",
-   "l": "REALM WEB EXIT — ORION → NOVA handoff 29 Sep",
-   "u": "https://docs.google.com/document/d/1jaW12HVYVd7frV44YHlH8K1ZyiuL88iNSYIyi-XUMHY/edit"
-  },
-  {
-   "g": "Drive docs",
-   "l": "REALM WEB EXIT — afternoon sweep 30 Sep",
-   "u": "https://docs.google.com/document/d/17MT1IWgBcu7AuXNBJ7uev5lO27jzU_7sRnIoNS8cYBA/edit"
-  },
-  {
-   "g": "Drive docs",
-   "l": "TWO DESKS — GO LIVE 25 Sep",
-   "u": "https://docs.google.com/document/d/1q2gAO-4c516yvmyIIp5_xdV9o9Ru-meM4xFsm2dAzuA/edit"
-  },
-  {
-   "g": "Drive docs",
-   "l": "REALM VAULT — NIGHT ONE",
-   "u": "https://docs.google.com/document/d/1shtYCIH4l7bc06I0ObIHM9y2kmtZBNOMxe_irWt-HMg/edit"
-  },
-  {
-   "g": "Drive docs",
-   "l": "Amendment 2 — Security 101",
-   "u": "https://docs.google.com/document/d/1ld8GH8a7r1XJ_N5oWThpql3_t3eSUMQ5dAfB8FYJkLg/edit"
-  },
-  {
-   "g": "Drive docs",
-   "l": "REALM EOD HISTORY",
-   "u": "https://docs.google.com/document/d/1ozuEAoM0zmsgkR-9darJ-hs-lIU8lXFx6_OdvqOdn7M/edit"
-  },
-  {
-   "g": "Drive docs",
-   "l": "ANCHOR ROOF TEST (Drive search)",
-   "u": "https://drive.google.com/drive/search?q=%22ANCHOR%20ROOF%20TEST%22"
-  },
-  {
-   "g": "Flow-map docs",
-   "l": "Realm Flow Map (rev 26 Sep)",
-   "u": "https://docs.google.com/document/d/19lLVGXwM8BTH1f4WA6pvH9Xt9ylWdQmP13rHb5RRrM0/edit"
-  },
-  {
-   "g": "Flow-map docs",
-   "l": "Realm Flow Map (27 Sep)",
-   "u": "https://docs.google.com/document/d/1kB4In4WrynRY6Y1vld_CcX8XoNjeaOzlxPFcRmmPm8Y/edit"
-  },
-  {
-   "g": "Flow-map docs",
-   "l": "Realm Flow Map (25 Sep)",
-   "u": "https://docs.google.com/document/d/17VcuL3WMszBhOLV-3jp8X2Dm4tVM1-SilvLWCvXXaxs/edit"
-  },
-  {
-   "g": "Flow-map docs",
-   "l": "Realm Flow Map (rev 25 Sep)",
-   "u": "https://docs.google.com/document/d/1LT01r7QP7DL629uNHSmL_CvPeUNE6-ui_j3drhgAFYw/edit"
-  },
-  {
-   "g": "Flow-map docs",
-   "l": "Realm Flow Map (rev 21 Sep)",
-   "u": "https://docs.google.com/document/d/1N0Hrx03Huw7oz2ppyPNwyc6vhCwFoZ56TIEal3ldGPI/edit"
-  },
-  {
-   "g": "Flow-map docs",
-   "l": "REALM FLOW MAP — ONE CANVAS 2 Oct (drawio)",
-   "u": "https://drive.google.com/file/d/1yT_2x3dPyce8zjHQfgbDVq3KyEJ9Bpib/view"
-  },
-  {
-   "g": "Flow-map docs",
-   "l": "REALM FLOW CHARTS (drawio)",
-   "u": "https://drive.google.com/file/d/1SQetnjCYSHe1_32QTsv4A-LannluE7Z3/view"
-  },
-  {
-   "g": "Flow-map docs",
-   "l": "Round flow map (Desk, Flow tab) (older)",
-   "u": "https://script.google.com/macros/s/AKfycbzK3mUQipb81VLvLoMfUTY5tGNOimafh_Ljr17VX1OA63bztP1ZqXFEsXUQECe5VkZcyA/exec?tab=flow"
-  },
-  {
-   "g": "Zoho Books",
-   "l": "Zoho Books (app)",
-   "u": "https://books.zoho.com/app"
-  },
-  {
-   "g": "Zoho Books",
-   "l": "Zoho Books invoices",
-   "u": "https://books.zoho.com/app#/invoices"
-  },
-  {
-   "g": "Calendar",
-   "l": "Google Calendar",
-   "u": "https://calendar.google.com/calendar/u/0/r"
-  },
-  {
-   "g": "Gmail",
-   "l": "Gmail (info@)",
-   "u": "https://mail.google.com/mail/u/0/#inbox"
-  },
-  {
-   "g": "Gmail",
-   "l": "Gmail drafts",
-   "u": "https://mail.google.com/mail/u/0/#drafts"
-  },
-  {
-   "g": "Gemini / Nova",
-   "l": "Nova Gem",
-   "u": "https://gemini.google.com/gem/aa2550627d15"
-  },
-  {
-   "g": "Deputy (look only)",
-   "l": "Deputy",
-   "u": "https://once.deputy.com"
-  },
-  {
-   "g": "WhatsApp Web",
-   "l": "WhatsApp Web (read)",
-   "u": "https://web.whatsapp.com"
-  },
-  {
-   "g": "Scribe",
-   "l": "SCRIBE v4 (older)",
-   "u": "https://script.google.com/macros/s/AKfycbwq0FdxP9Sh3mtB6Y8e-PocRGUUQBub_TQVlv8IiApXU6bQSN6N-CGo8JRQCUyhMjNG/exec"
-  },
-  {
-   "g": "Desk",
-   "l": "Realm Desk v7 (older)",
-   "u": "https://script.google.com/macros/s/AKfycbzK3mUQipb81VLvLoMfUTY5tGNOimafh_Ljr17VX1OA63bztP1ZqXFEsXUQECe5VkZcyA/exec"
-  },
-  {
-   "g": "Desk",
-   "l": "Realm Launcher v4 (older)",
-   "u": "https://script.google.com/macros/s/AKfycbzquhNRWty9kTneExFyCpUKIPN2DoKU4GNekszu4E_rwgSMEv-pHVadGK5HcoCV3GtKzQ/exec"
-  },
-  {
-   "g": "Videos",
-   "l": "Custom ERP walkthrough (Airdev)",
-   "u": "https://www.youtube.com/watch?v=rYTUN67JZKs"
-  },
-  {
-   "g": "Videos",
-   "l": "Every concept explained (Nate Herk)",
-   "u": "https://www.youtube.com/watch?v=NyfYxpXiw_0"
-  },
-  {
-   "g": "Videos",
-   "l": "Video ref nn29T4yPc8E",
-   "u": "https://www.youtube.com/watch?v=nn29T4yPc8E"
-  },
-  {
-   "g": "Videos",
-   "l": "Video ref c9_SR0d1LLk",
-   "u": "https://www.youtube.com/watch?v=c9_SR0d1LLk"
-  },
-  {
-   "g": "Videos",
-   "l": "Advanced hacks (dEBMnnJMmCI)",
-   "u": "https://www.youtube.com/watch?v=dEBMnnJMmCI"
-  },
-  {
-   "g": "Drive folders (prism band)",
-   "l": "ARA LIBRARY › 01 RULES",
-   "u": "https://drive.google.com/drive/folders/1PZfjWIX_gIhcCgXGwXo3RqS9cGHE0yiv"
-  },
-  {
-   "g": "Drive folders (prism band)",
-   "l": "ARA LIBRARY › 02 MAPS",
-   "u": "https://drive.google.com/drive/folders/1eLPvakCZ5vi320PTExHwh8NXx8byWFzz"
-  },
-  {
-   "g": "Drive folders (prism band)",
-   "l": "ARA LIBRARY › 03 APPS & LINKS",
-   "u": "https://drive.google.com/drive/folders/1DmrKFDumm0hYZ6aKEGh6lUB_JSg0U5kF"
-  },
-  {
-   "g": "Drive folders (prism band)",
-   "l": "ARA LIBRARY › 04 AUDITS & REPORTS",
-   "u": "https://drive.google.com/drive/folders/1naUBUR_NDhtVIqW2ZpUFCzGsw769fzxM"
-  },
-  {
-   "g": "Drive folders (prism band)",
-   "l": "ARA LIBRARY › 05 HOW-TO",
-   "u": "https://drive.google.com/drive/folders/1TwLWj4cb5ZsJfy79H5Mle289P1Dc36GN"
-  },
-  {
-   "g": "Drive folders (prism band)",
-   "l": "ARA LIBRARY › 06 HISTORY",
-   "u": "https://drive.google.com/drive/folders/148iUgBiCtPw0sFdA8q-jeZsAFsaR9dnt"
-  },
-  {
-   "g": "Drive folders (prism band)",
-   "l": "Ara › REALM TOOL LINKS",
-   "u": "https://drive.google.com/drive/folders/1XmP4QkPiL85SDaYbTutYWgW5zZpW8inr"
-  },
-  {
-   "g": "Drive folders (prism band)",
-   "l": "Claude Export 14 Oct 2026",
-   "u": "https://drive.google.com/drive/folders/1hi-h5Gnxlj177Qi9_GjGD42hQjjQcAqJ"
-  },
-  {
-   "g": "Drive folders (prism band)",
-   "l": "ANCHOR ROOF TEST › 2026 ANCHOR CERTS",
-   "u": "https://drive.google.com/drive/folders/1lSohy0BLAOaOJI-dh8s9t3MtnTpvUuqP"
-  },
-  {
-   "g": "Drive folders (prism band)",
-   "l": "ANCHOR ROOF TEST › CERT TEMPLATES",
-   "u": "https://drive.google.com/drive/folders/1YsaFDpZfSqU6s48C53Mqxq4XrCAtiAYl"
-  },
-  {
-   "g": "Drive folders (prism band)",
-   "l": "GOOGLE  FILE JOBS",
-   "u": "https://drive.google.com/drive/folders/1CWQA9v2fkVqIhGPJZe47u-7mpuWhtjeE"
-  },
-  {
-   "g": "Drive folders (prism band)",
-   "l": "*RPCS SOLD2026",
-   "u": "https://drive.google.com/drive/folders/1I9OpITh0MCLcsAaPiLgn31_uD0VlnkBM"
-  },
-  {
-   "g": "Realm apps",
-   "l": "Realm Prism",
-   "u": "./prism.html"
-  }
- ],
+ "registerOnlyPaths": [],
  "ara_layer": [
   [
    "Basics",
@@ -1137,6 +2014,7 @@
 }
 </script>
 <style>
+
 *{box-sizing:border-box}html{background:#05070f}
 body{margin:0;background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed;color:#e8eefc;font:15px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;overflow-x:hidden}
 header{padding:10px 14px 4px}h1{margin:0;font-size:21px}header p{margin:3px 0 0;color:#94a3b8;font-size:13px}a{color:#7de9ff}
@@ -1168,163 +2046,257 @@ g.n{cursor:pointer}g.n.drag{touch-action:none}g.n.sel circle.ring{stroke:#facc15
 #pane textarea{min-height:80px}#pane .row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}#pane .row button,#pane .row a{font:13px system-ui;border-radius:10px;border:1px solid rgba(125,233,255,.3);background:#0f1830;color:#e8eefc;padding:8px 12px;text-decoration:none}
 #pane .row .pri{background:#22d3ee;color:#04121f;font-weight:700;border:0}#pane .row .del{border-color:#f43f5e;color:#fecdd3}
 #pane .two{display:flex;gap:8px}#pane .two>div{flex:1}
+
+#pane{max-height:86vh;overflow:auto}.page{grid-template-columns:minmax(0,1fr)}.side{min-width:0}
+@media (min-width:1000px){.page{grid-template-columns:minmax(0,1fr) 320px}#wrap{max-width:min(1500px,calc((100vh - 140px)*1.65))}}
+.edge{transition:stroke-opacity .15s}.edge.hot{stroke-opacity:.95!important;stroke-width:3px}.edge.pp{display:none}.edge.pp.hot{display:inline}
+svg.boff .edge:not(.feed):not(.hot){display:none}svg.bon .edge{stroke-opacity:.6!important}
+g.n.hl circle.ring{animation:pulse 1s ease-in-out 3;stroke:#facc15!important;stroke-width:6px}
+@keyframes pulse{50%{stroke-opacity:.2}}
+.sec{fill:#7dd3fc;font-weight:700;letter-spacing:.12em;text-anchor:start}
+#side-search{width:100%;font:14px system-ui;background:#0f1830;color:#fff;border:1px solid rgba(125,233,255,.3);border-radius:10px;padding:9px;margin:4px 0 8px}
+.sg{margin:0 0 8px}.sg>b{display:block;font-size:12px;letter-spacing:.08em;color:#94a3b8;margin:8px 0 3px}
+.si{display:flex;align-items:center;gap:6px;padding:5px 4px;border-bottom:1px solid rgba(255,255,255,.05);font-size:13.5px;cursor:pointer;color:#dbe7ff}
+.si:hover{background:rgba(125,233,255,.07)}.si .pm{width:18px;text-align:center;color:#64748b;font-weight:700}.si.on .pm{color:#22c55e}
+.si .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.si .st{font-size:10.5px;padding:1px 6px;border-radius:8px;color:#04121f;font-weight:700;white-space:nowrap}
+.si .inf{border:0;background:none;color:#7de9ff;font-size:15px;cursor:pointer;padding:0 4px}
+#statusView{position:fixed;inset:10px;z-index:60;background:#07101f;border:2px solid #22d3ee;border-radius:14px;padding:12px;overflow:auto;display:none}
+#statusView.on{display:block}#statusView h3{margin:0 0 6px}#statusView table{border-collapse:collapse;width:100%;font-size:13px}
+#statusView th,#statusView td{border-bottom:1px solid rgba(255,255,255,.07);padding:5px 6px;text-align:left;vertical-align:top}
+#statusView select{font:13px system-ui;border-radius:8px;padding:3px;border:0;font-weight:700}
+.ok{color:#4ade80}.bad{color:#f87171}.mid{color:#fbbf24}.mut{color:#8ea0c2}
+#pane .nolink{color:#fbbf24;font-size:13px;margin-top:6px;display:none}
 </style></head><body>
-<header><h1>Realm Metatron — editable cube</h1><p>Google Calendar is the source of truth. Tap an inner button for its notes. Edit to rename, recolour, move, add or link anything. <a href="./prism.html">prism</a> · <a href="./map.html">flow map</a></p></header>
-<div class="legend">
-<span><i class="sw" style="background:#4285f4"></i>Google</span>
-<span><i class="sw" style="background:#22d3ee"></i>job flow</span>
-<span><i class="sw" style="background:#a78bfa"></i><i class="sw" style="background:#fbbf24"></i>workflow / people</span>
-<span><i class="sw" style="background:#25d366"></i><i class="sw" style="background:#f97316"></i>outside world</span>
-<span><i class="sw" style="background:#e42527"></i>Zoho</span>
-<span><i class="ln" style="border-color:#22d3ee"></i>flow</span>
-<span><i class="ln" style="border-top-style:dashed;border-color:#f59e0b"></i>loop-back</span>
-<span><i class="ln" style="border-color:#fb923c"></i>feed / bridge</span>
-<span><i class="ln" style="border-top-style:dotted;border-color:#64748b"></i>related</span>
-<span>→ small arrow = points to Calendar</span>
-</div>
-<div class="bar"><button id="bEdit" type="button">✎ Edit</button><button id="bExport" type="button">⬇ Export layout</button><button id="bReset" type="button">↺ Reset</button><span id="hint"></span></div>
-<div class="bar" id="editbar"><input type="text" id="nName" placeholder="New node name" maxlength="40"><input type="color" id="nCol" value="#22d3ee" title="Colour"><input type="text" id="nEmo" placeholder="Emoji" maxlength="4" style="width:70px"><button id="bAdd" type="button">+ Add node</button><button id="bConn" type="button">⤳ Connect two nodes</button></div>
+<header><h1 id="ttl"></h1><p><span id="blurb"></span></p></header>
+<div class="legend" id="legend"></div>
+<div class="bar"><button id="bEdit" type="button">✎ Edit</button><button id="bStatus" type="button">● Status</button><button id="bBridges" type="button">Bridges: faint</button><button id="bExport" type="button">⬇ Export</button><button id="bReset" type="button">↺ Reset</button><span id="hint"></span></div>
+<div class="bar" id="editbar"><input type="text" id="nName" placeholder="New node name" maxlength="40"><input type="color" id="nCol" value="#22d3ee" title="Colour"><input type="text" id="nEmo" placeholder="Emoji" maxlength="4" style="width:70px"><button id="bAdd" type="button">+ Add node</button><button id="bConn" type="button">⤳ Connect two nodes</button><span style="font-size:12px;color:#94a3b8">Edit on: drag to move · tap to edit</span></div>
 <div class="page">
-<div id="wrap"><svg id="map" role="img" aria-label="Realm Metatron cube"></svg></div>
+<div id="wrap"><svg id="map" role="img" aria-label="Realm programs map"></svg></div>
 <aside class="side">
+<h2>EVERY NODE · click to place / find</h2><input id="side-search" type="search" placeholder="Filter…" aria-label="Filter nodes"><div id="sideList"></div>
 <h2>CALENDAR</h2><div class="card" id="calCard"></div>
-<h2>AGGREGATED DATA FOLDERS</h2><div class="card" id="bandCard"></div>
+<h2>DRIVE FOLDERS (band)</h2><div class="card lk" id="bandCard"></div>
 <h2>ARA LAYER</h2><div id="ara"></div>
-<h2>REALM LINKS</h2><div class="card lk" id="links"></div>
 </aside></div>
+<div id="statusView" role="dialog" aria-label="Status view"></div>
 <div id="pane" role="dialog" aria-label="Node notes">
 <h3 id="pT"></h3>
 <div class="two"><div><label for="pName">Title</label><input id="pName" maxlength="60"></div><div style="flex:0 0 70px"><label for="pEmo">Icon</label><input id="pEmo" maxlength="4"></div><div style="flex:0 0 56px"><label for="pCol">Colour</label><input id="pCol" type="color" style="padding:2px;height:38px"></div></div>
+<div class="two"><div><label for="pStat">Status</label><select id="pStat" style="width:100%;font:14px system-ui;padding:7px;border-radius:10px"></select></div></div>
 <label for="pNote">Note</label><textarea id="pNote" maxlength="2000"></textarea>
 <label for="pLink">Link</label><input id="pLink" placeholder="https://…" maxlength="500">
-<div class="row"><button class="pri" id="pSave" type="button">Save</button><a id="pOpen" target="_blank" rel="noopener">Open link</a><button class="del" id="pDel" type="button">Delete</button><button id="pX" type="button">Close</button></div>
+<div class="nolink" id="pNo">No link yet — add one above and Save.</div>
+<div class="row"><button class="pri" id="pSave" type="button">Save</button><a id="pOpen" target="_blank" rel="noopener">Open</a><button id="pConn" type="button">⤳ Connect to…</button><button class="del" id="pDel" type="button">Remove</button><button id="pX" type="button">Close</button></div>
+<div id="pReg" style="font-size:12px;color:#8ea0c2;margin-top:6px"></div>
 </div>
 <script>
 (function(){
 'use strict';
-var CFG=JSON.parse(document.getElementById('m3-config').textContent);
-var KEY='realm_metatron3_v1',NS='http://www.w3.org/2000/svg';
-function blank(){return {pos:{d:{},p:{}},added:[],edges:[],over:{},del:{}}}
-function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&s.pos){var b=blank();for(var k in b)if(!s[k])s[k]=b[k];return s}}catch(e){}return blank()}
+var CFG=JSON.parse(document.getElementById('map-config').textContent);
+var KEY=CFG.key,NS='http://www.w3.org/2000/svg',STAT={},STLIST=CFG.statuses;STLIST.forEach(function(s){STAT[s[0]]={l:s[1],c:s[2]}});
+function $(i){return document.getElementById(i)}
+$('ttl').textContent=CFG.title;$('blurb').textContent=CFG.blurb;
+(function(){var lg=$('legend');STLIST.forEach(function(s){var sp=document.createElement('span');var i=document.createElement('i');i.className='sw';i.style.background=s[2];sp.appendChild(i);sp.appendChild(document.createTextNode(s[1]));lg.appendChild(sp)});
+ var a=document.createElement('span');a.style.whiteSpace='normal';a.textContent='— orange = feeds into Drive · faint lines = bridges (hover / tap a node to light them)';lg.appendChild(a)})();
+function blank(){return {pos:{d:{},p:{}},added:[],edges:[],over:{},del:{},placed:{},status:{}}}
+function fill(s){var b=blank();for(var k in b)if(!s[k])s[k]=b[k];return s}
+function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&s.pos)return fill(s)}catch(e){}
+ /* one-time carry-over from the old key: notes / renames / links / added nodes / connectors (NOT positions) */
+ var n=blank();try{var o=JSON.parse(localStorage.getItem(CFG.oldKey));if(o){['over','added','edges'].forEach(function(k){if(o[k])n[k]=o[k]});if(n.over.bots&&!n.over.claude){n.over.claude=n.over.bots}
+  n.added.forEach(function(a){n.placed[a.id]=1});n.migrated=CFG.oldKey}}catch(e){}return n}
 var S=load();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+if(S.migrated)save();
 function safeUrl(u){u=String(u||'').trim();return /^(https?:\/\/|tel:|mailto:|\.\/)/i.test(u)?u:''}
-var svg=document.getElementById('map'),wrap=document.getElementById('wrap'),hint=document.getElementById('hint');
-var EDIT=false,CONNECT=false,first=null,PH=false,P,POS={},NODES={},FOLD={};
+var svg=$('map'),wrap=$('wrap'),hint=$('hint');
+var EDIT=false,CONNECT=false,first=null,PH=false,P,POS={},NODES={},ALL={},FOLD={},BB=null,BR='faint';
 var LAY={
- d:{w:1200,h:1120,c:[600,560],sx:1,sy:1,D:210,CL:125,F:{rx:318,ry:318,s:-76},O:{rx:545,ry:505,s:-84},
-    r:{centre:54,cluster:28,inner:33,cube:33,sat:24,flow:18,outer:18,added:18},f:{lab:13,sub:10.5,big:14,chip:12,title:14},band:{w:250,cols:2,row:26}},
- p:{w:1000,h:2300,c:[500,1150],sx:.8,sy:2.0,D:225,CL:185,F:{rx:318,ry:318,s:-60},O:{rx:545,ry:540,s:-84},
-    r:{centre:66,cluster:38,inner:42,cube:42,sat:32,flow:28,outer:28,added:28},f:{lab:20,sub:16,big:21,chip:18,title:21},band:{w:220,cols:1,row:40}}};
+ d:{w:1500,c:[750,400],E:{rx:300,ry:270},cube:140,r:{centre:70,prog:46,app:15,step:10,bot:18,dot:9,extra:9},f:{lab:18,sub:13,big:22,chip:13,title:16,side:15,tiny:11,sec:13},
+    band:{w:380,cols:3,row:32},gap:24,colA:40,colB:215,colR:1180,top:66,rowStep:33,rowApp:48,rowBot:56,dotsX:1200,dotsDX:95,dotsDY:54,dotsCols:3},
+ p:{w:1000,c:[500,640],E:{rx:365,ry:480},cube:240,r:{centre:112,prog:80,app:22,step:16,bot:24,dot:15,extra:15},f:{lab:36,sub:25,big:40,chip:26,title:30,side:30,tiny:22,sec:28},
+    band:{w:400,cols:2,row:58},gap:44,colA:50,colB:520,rowStep:58,rowApp:72,rowBot:84,dotsDX:150,dotsDY:96,dotsCols:3}};
 function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e}
 function txt(s,a,p){var e=el('text',a,p);e.textContent=s;return e}
-function M(dx,dy){return [P.c[0]+dx*P.sx,P.c[1]+dy*P.sy]}
-function polar(R,deg){var a=deg*Math.PI/180;return M(R*Math.cos(a),R*Math.sin(a))}
-function eli(E,deg){var a=deg*Math.PI/180;return M(E.rx*Math.cos(a),E.ry*Math.sin(a))}
-function defaults(){var D={};D[CFG.centre.id]=P.c.slice();
- CFG.cluster.forEach(function(n){D[n.id]=polar(P.CL,PH&&n.pa!=null?n.pa:n.a)});CFG.inner.forEach(function(n){D[n.id]=polar(P.D,n.a)});CFG.cube.forEach(function(n){D[n.id]=polar(2*P.D,n.a)});
- CFG.sat.forEach(function(n){D[n.id]=polar(P.D*(n.r||2.25),n.a!=null?n.a:-48)});
- var fl=CFG.outer.filter(function(n){return n.ring==='flow'}),ou=CFG.outer.filter(function(n){return n.ring!=='flow'});
- fl.forEach(function(n,i){D[n.id]=eli(P.F,P.F.s+i*360/fl.length)});ou.forEach(function(n,i){D[n.id]=eli(P.O,P.O.s+i*360/ou.length)});
- S.added.forEach(function(n,i){D[n.id]=M(-P.D*1.4+i*50,-P.D*2.25)});return D}
-function rOf(id){var n=NODES[id];return n?P.r[n._k]:0}
+function stOf(id){var n=ALL[id];return (S.status[id])||(n&&n.status)||'live'}
+function isPlaced(n){if(S.del[n.id])return false;return n.zone==='extra'?!!S.placed[n.id]:true}
+function build(){ALL={};NODES={};function mk(n){var o=S.over[n.id]||{};var m=Object.assign({},n);['name','col','note','link','emoji'].forEach(function(f){if(o[f]!=null&&o[f]!=='')m[f]=o[f]});if(o.emoji)m.emojiOver=1;return m}
+ ALL[CFG.centre.id]=Object.assign({zone:'centre',group:'core'},CFG.centre);NODES[CFG.centre.id]=ALL[CFG.centre.id];
+ ALL[CFG.band.id]=Object.assign({zone:'band',group:'core',name:'Google Drive · '+CFG.band.title},CFG.band);
+ CFG.nodes.concat(S.added.map(function(a){return Object.assign({zone:'extra',group:'other',status:'live',sub:'added'},a)})).forEach(function(n){var m=mk(n);ALL[n.id]=m;if(isPlaced(n))NODES[n.id]=m});
+ FOLD={};CFG.band.folders.forEach(function(f){var o=S.over[f.id]||{};FOLD[f.id]=Object.assign({},f,o.name?{name:o.name}:{},o.link?{link:o.link}:{},o.note?{note:o.note}:{})})}
+function eli(deg){var a=deg*Math.PI/180;return [P.c[0]+P.E.rx*Math.cos(a),P.c[1]+P.E.ry*Math.sin(a)]}
+function bandBox(){var b=P.band,n=CFG.band.folders.filter(function(f){return !S.del[f.id]}).length,rows=Math.max(1,Math.ceil(n/b.cols));return {x:P.c[0]-b.w/2,y:P.c[1]+P.r.centre+P.gap*.6,w:b.w,h:P.f.title*2.1+rows*b.row+10}}
+var SECS=[];
+function layout(){var D={};D[CFG.centre.id]=P.c.slice();BB=bandBox();SECS=[];var bottom=0;
+ var by=function(z){return CFG.nodes.filter(function(n){return n.zone===z&&NODES[n.id]})};
+ by('prog').forEach(function(n){var q=eli(n.slot);if(n.slot===90)q[1]=Math.max(q[1],BB.y+BB.h+P.r.prog+P.gap);D[n.id]=q;bottom=Math.max(bottom,q[1]+P.r.prog+P.f.lab*2.4)});
+ var steps=by('step'),apps=by('app'),rf=apps.filter(function(n){return n.id==='realmflow'}),others=apps.filter(function(n){return n.id!=='realmflow'}),bots=by('bot'),dots=by('dot');
+ var extras=CFG.nodes.filter(function(n){return n.zone==='extra'&&NODES[n.id]}).concat(S.added.filter(function(a){return NODES[a.id]}));
+ var y,i;
+ if(!PH){var t=P.top;SECS.push(['APPS',P.colA-14,t-30],['BOTS',P.colR-14,t-30]);
+  y=t;rf.forEach(function(n){D[n.id]=[P.colA,y];y+=P.rowStep+6});steps.forEach(function(n){D[n.id]=[P.colA+22,y];y+=P.rowStep});var yA=y;
+  y=t;others.forEach(function(n){D[n.id]=[P.colB,y];y+=P.rowApp});var yB=y;
+  y=t;bots.forEach(function(n){D[n.id]=[P.colR,y];y+=P.rowBot});
+  var dy0=y+30;SECS.push(['PEOPLE & VEHICLES',P.colR-14,dy0-28]);dots.forEach(function(n,i){D[n.id]=[P.dotsX+(i%P.dotsCols)*P.dotsDX,dy0+Math.floor(i/P.dotsCols)*P.dotsDY]});
+  var ey=dy0+Math.ceil(dots.length/P.dotsCols)*P.dotsDY+30;if(extras.length)SECS.push(['PLACED',P.colR-14,ey-28]);
+  extras.forEach(function(n,i){D[n.id]=[P.dotsX+(i%P.dotsCols)*P.dotsDX,ey+Math.floor(i/P.dotsCols)*P.dotsDY]});
+  var ye=extras.length?ey+Math.ceil(extras.length/P.dotsCols)*P.dotsDY:0;
+  P.h=Math.ceil(Math.max(bottom,yA,yB,ye,dy0+Math.ceil(dots.length/P.dotsCols)*P.dotsDY)+10)}
+ else{y=bottom+P.f.sec*2.2;SECS.push(['APPS',P.colA-20,y-P.f.sec*1.2]);var y0=y;
+  rf.forEach(function(n){D[n.id]=[P.colA,y];y+=P.rowStep+10});steps.forEach(function(n){D[n.id]=[P.colA+34,y];y+=P.rowStep});var yA2=y;
+  y=y0;others.forEach(function(n){D[n.id]=[P.colB,y];y+=P.rowApp});y=Math.max(y,yA2)+P.f.sec*3;
+  SECS.push(['BOTS',P.colA-20,y-P.f.sec*2.1],['PEOPLE & VEHICLES',P.colB-20,y-P.f.sec*2.1]);var y1=y;
+  bots.forEach(function(n){D[n.id]=[P.colA,y];y+=P.rowBot});var yb=y;
+  dots.forEach(function(n,i){D[n.id]=[P.colB+(i%P.dotsCols)*P.dotsDX,y1+Math.floor(i/P.dotsCols)*P.dotsDY]});
+  y=Math.max(yb,y1+Math.ceil(dots.length/P.dotsCols)*P.dotsDY)+P.f.sec*2.4;
+  if(extras.length)SECS.push(['PLACED',P.colA-20,y-P.f.sec*1.2]);
+  extras.forEach(function(n,i){D[n.id]=[P.colA+60+(i%3)*300,y+Math.floor(i/3)*P.dotsDY]});
+  y+=Math.ceil(extras.length/3)*P.dotsDY;P.h=Math.ceil(y+10)}
+ return D}
+function rOf(id){var n=NODES[id];if(!n)return 0;return n.zone==='centre'?P.r.centre:P.r[n.zone]}
 var mk={},DEFS,G={};
 function marker(col,sz){var id='m'+col.replace('#','')+sz;if(mk[id])return 'url(#'+id+')';var m=el('marker',{id:id,viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:sz,markerHeight:sz,markerUnits:'userSpaceOnUse',orient:'auto-start-reverse'},DEFS);el('path',{d:'M0,0L10,5L0,10z',fill:col},m);mk[id]=1;return 'url(#'+id+')'}
-function bandBox(){var b=P.band,n=CFG.band.folders.filter(function(f){return !S.del[f.id]}).length,rows=Math.max(1,Math.ceil(n/b.cols));var h=P.f.title*1.9+rows*b.row+8;var top=P.c[1]+P.r.centre+(PH?14:10);return {x:P.c[0]-b.w/2,y:top,w:b.w,h:h}}
-function endpoint(id,toward){if(id===CFG.band.id){var bb=bandBox(),x=Math.max(bb.x+16,Math.min(bb.x+bb.w-16,toward[0])),y=toward[1]<bb.y?bb.y:bb.y+bb.h;if(toward[1]>=bb.y&&toward[1]<=bb.y+bb.h){x=toward[0]<bb.x?bb.x:bb.x+bb.w;y=Math.max(bb.y+8,Math.min(bb.y+bb.h-8,toward[1]))}return {p:[x,y],r:2}}return {p:POS[id],r:rOf(id)}}
-function line(f,t,o){var tp=t===CFG.band.id?POS[f]:POS[t];if(!tp)return;var A=endpoint(f,tp),Bp=endpoint(t,A.p);if(!A.p||!Bp.p)return;
+function endpoint(id,toward){if(id===CFG.band.id){var bb=BB,x=Math.max(bb.x+16,Math.min(bb.x+bb.w-16,toward[0])),y=toward[1]<bb.y?bb.y:bb.y+bb.h;if(toward[1]>=bb.y&&toward[1]<=bb.y+bb.h){x=toward[0]<bb.x?bb.x:bb.x+bb.w;y=Math.max(bb.y+8,Math.min(bb.y+bb.h-8,toward[1]))}return {p:[x,y],r:2}}return {p:POS[id],r:rOf(id)}}
+function bandCentre(){return [BB.x+BB.w/2,BB.y+BB.h/2]}
+function line(e,o){var f=e.from,t=e.to,tp=t===CFG.band.id?POS[f]:POS[t];if(!tp)return;var A=endpoint(f,f===CFG.band.id?POS[t]:tp),Bp=endpoint(t,A.p);if(!A.p||!Bp.p)return;
  var dx=Bp.p[0]-A.p[0],dy=Bp.p[1]-A.p[1],L=Math.hypot(dx,dy)||1,ux=dx/L,uy=dy/L,a=[A.p[0]+ux*(A.r+3),A.p[1]+uy*(A.r+3)],b=[Bp.p[0]-ux*(Bp.r+4),Bp.p[1]-uy*(Bp.r+4)];
  var bend=o.bend||0,cx=(a[0]+b[0])/2-uy*L*bend,cy=(a[1]+b[1])/2+ux*L*bend;
- var p=el('path',{d:'M'+a[0].toFixed(1)+','+a[1].toFixed(1)+' Q'+cx.toFixed(1)+','+cy.toFixed(1)+' '+b[0].toFixed(1)+','+b[1].toFixed(1),fill:'none',stroke:o.col,'stroke-width':o.w,'stroke-dasharray':o.dash||'','stroke-opacity':o.op||1,'marker-end':o.arrow?marker(o.col,o.ms||12):'','data-edge':f+'>'+t,'class':'edge'},G.edges);
- if(o.label)el('title',{},p).textContent=o.label;
- if(o.show){var t0=o.t||.5,u=1-t0,mx=u*u*a[0]+2*u*t0*cx+t0*t0*b[0],my=u*u*a[1]+2*u*t0*cy+t0*t0*b[1];var lt=txt(o.show,{x:mx+(o.lx||0),y:my+(o.ly||0),'class':'lab','font-size':P.f.sub+1,'stroke-width':4},G.labels);lt.setAttribute('fill','#fde68a')}}
-function drawGeo(){var pts=[[0,0]],R=P.D;for(var k=0;k<6;k++){var a=(-90+60*k)*Math.PI/180;pts.push([R*Math.cos(a),R*Math.sin(a)])}for(k=0;k<6;k++){a=(-90+60*k)*Math.PI/180;pts.push([2*R*Math.cos(a),2*R*Math.sin(a)])}
- pts=pts.map(function(q){return M(q[0],q[1])});
- for(var i=0;i<13;i++)for(var j=i+1;j<13;j++)el('line',{x1:pts[i][0],y1:pts[i][1],x2:pts[j][0],y2:pts[j][1],stroke:'#7dd3fc','stroke-opacity':.09,'stroke-width':1.3,'class':'geo'},G.geo);
- pts.forEach(function(q){el('ellipse',{cx:q[0],cy:q[1],rx:R/2*P.sx,ry:R/2*P.sy,fill:'none',stroke:'#7dd3fc','stroke-opacity':.13,'stroke-width':1.3,'class':'geoc'},G.geo)})}
-function drawBand(){var B=CFG.band,bb=bandBox(),g=el('g',{'class':'band','data-id':B.id},G.nodes);
- el('rect',{x:bb.x,y:bb.y,width:bb.w,height:bb.h,rx:12,fill:'rgba(66,133,244,.12)',stroke:'#4285f4','stroke-width':2},g);
- var ta=el('a',{href:B.link,target:'_blank',rel:'noopener'},g);el('title',{},ta).textContent=B.sub;txt(B.title,{x:bb.x+bb.w/2,y:bb.y+P.f.title*1.25,'class':'lab','font-size':P.f.title,'font-weight':700,'stroke-width':0},ta);
+ var p=el('path',{d:'M'+a[0].toFixed(1)+','+a[1].toFixed(1)+' Q'+cx.toFixed(1)+','+cy.toFixed(1)+' '+b[0].toFixed(1)+','+b[1].toFixed(1),fill:'none',stroke:o.col,'stroke-width':o.w,'stroke-dasharray':o.dash||'','stroke-opacity':o.op,'marker-end':o.arrow?marker(o.col,o.ms):'','data-edge':f+'>'+t,'data-a':f,'data-b':t,'class':'edge'+(o.cls?' '+o.cls:'')},G.edges);
+ el('title',{},p).textContent=(ALL[f]?ALL[f].name:f)+' → '+(ALL[t]?ALL[t].name:t)+(e.label?' · '+e.label:'')+(e.inRegister?' · in register':' · not in register')}
+function drawGeo(){var pts=[[0,0]],R=P.cube;for(var k=0;k<6;k++){var a=(-90+60*k)*Math.PI/180;pts.push([R*Math.cos(a),R*Math.sin(a)])}for(k=0;k<6;k++){a=(-90+60*k)*Math.PI/180;pts.push([2*R*Math.cos(a),2*R*Math.sin(a)])}
+ var sx=PH?.82:1.13,sy=PH?1.0:.98;pts=pts.map(function(q){return [P.c[0]+q[0]*sx,P.c[1]+q[1]*sy]});
+ for(var i=0;i<13;i++)for(var j=i+1;j<13;j++)el('line',{x1:pts[i][0],y1:pts[i][1],x2:pts[j][0],y2:pts[j][1],stroke:'#7dd3fc','stroke-opacity':.06,'stroke-width':1.2,'class':'geo'},G.geo);
+ pts.forEach(function(q){el('ellipse',{cx:q[0],cy:q[1],rx:R/2*sx,ry:R/2*sy,fill:'none',stroke:'#7dd3fc','stroke-opacity':.09,'stroke-width':1.2,'class':'geoc'},G.geo)})}
+function badge(g,x,y,r,id){var s=STAT[stOf(id)]||STAT.live;var c=el('circle',{cx:x,cy:y,r:r,fill:s.c,stroke:'#05070f','stroke-width':Math.max(1.5,r*.3),'class':'badge','data-st':stOf(id)},g);el('title',{},c).textContent=s.l}
+function drawBand(){var B=CFG.band,bb=BB,g=el('g',{'class':'band','data-id':B.id},G.nodes);
+ el('rect',{x:bb.x,y:bb.y,width:bb.w,height:bb.h,rx:14,fill:'rgba(66,133,244,.13)',stroke:'#4285f4','stroke-width':PH?3:2},g);
+ var ta=el('a',{href:B.link,target:'_blank',rel:'noopener'},g);el('title',{},ta).textContent=B.sub;
+ var is=P.f.title*1.3;el('image',{href:B.img,x:bb.x+10,y:bb.y+P.f.title*.35,width:is,height:is},ta);
+ txt('Google Drive · '+B.title,{x:bb.x+bb.w/2+is/2,y:bb.y+P.f.title*1.3,'class':'lab','font-size':P.f.title,'font-weight':700,'stroke-width':0},ta);
+ badge(g,bb.x+bb.w-P.f.title*.7,bb.y+P.f.title*.7,P.f.title*.32,B.id);
  var fl=CFG.band.folders.filter(function(f){return !S.del[f.id]}),cw=(bb.w-12)/P.band.cols;
- fl.forEach(function(f0,i){var f=FOLD[f0.id],col=i%P.band.cols,row=Math.floor(i/P.band.cols),x=bb.x+6+col*cw,y=bb.y+P.f.title*1.9+row*P.band.row;
-  var a=el('g',{'class':'chip','data-fid':f.id},g);el('title',{},a).textContent=f.name+' — '+f.real;
-  el('rect',{x:x+2,y:y,width:cw-4,height:P.band.row-5,rx:6,fill:'#0f2547',stroke:/PLACEHOLDER/.test(f.real)?'rgba(250,204,21,.6)':'rgba(138,180,248,.35)','stroke-dasharray':/PLACEHOLDER/.test(f.real)?'4 3':''},a);
-  var t=txt((f.emoji||'📁')+' '+f.name,{x:x+cw/2,y:y+(P.band.row-5)/2,'class':'lab','font-size':P.f.chip,'dominant-baseline':'central','stroke-width':0},a);
-  var w=t.getComputedTextLength();if(w>cw-10)t.setAttribute('font-size',(P.f.chip*(cw-10)/w).toFixed(1))})}
-function nodeG(n){var p=POS[n.id],r=rOf(n.id),k=n._k,col=n.col||'#4285f4';
- var g=el('g',{'class':'n'+(k!=='centre'?' drag':'')+(first===n.id?' sel':''),'data-id':n.id,'data-kind':k},G.nodes);
- el('title',{},g).textContent=n.name+(n.sub?' — '+n.sub:'')+(n.note?'\n'+n.note:'');
- el('circle',{cx:p[0],cy:p[1],r:r,fill:'#0b1a33',stroke:col,'stroke-width':k==='flow'||k==='outer'||k==='added'?2.5:3.5,'class':'ring','stroke-dasharray':k==='inner'?'':''},g);
- if(k==='inner')el('circle',{cx:p[0],cy:p[1],r:r-5,fill:col,'fill-opacity':.16},g);
- if(n.img&&!n.emojiOver){var s=r*1.15;el('image',{href:n.img,x:p[0]-s/2,y:p[1]-s/2,width:s,height:s,preserveAspectRatio:'xMidYMid meet'},g)}
- else if(n.emoji)txt(n.emoji,{x:p[0],y:p[1]+1,'class':'emo','font-size':(r*1.0).toFixed(1)},g);
- var small=k==='flow'||k==='outer'||k==='added',fs=small?P.f.lab:P.f.big;
- if(k==='centre'){var y0=p[1]-r-P.f.big*1.55;txt(n.name,{x:p[0],y:y0,'class':'lab','font-size':P.f.big+2,'font-weight':700,'stroke-width':4},g);var st=txt(n.sub,{x:p[0],y:y0+P.f.big*1.2,'class':'sub','font-size':P.f.big-1,'stroke-width':4},g);st.setAttribute('fill','#fde68a');return}
- var y=p[1]+r+fs*1.05;txt(n.name,{x:p[0],y:y,'class':'lab','font-size':fs,'font-weight':small?500:700,'stroke-width':4},g);
- if(!small&&n.sub&&!PH&&k!=='cluster')txt(n.sub,{x:p[0],y:y+P.f.sub*1.25,'class':'sub','font-size':P.f.sub,'stroke-width':3},g)}
-function stub(n){var p=POS[n.id],c=P.c,dx=c[0]-p[0],dy=c[1]-p[1],L=Math.hypot(dx,dy);if(L<1)return;var r=rOf(n.id),len=PH?30:20,ux=dx/L,uy=dy/L;
- el('line',{x1:p[0]+ux*(r+3),y1:p[1]+uy*(r+3),x2:p[0]+ux*(r+3+len),y2:p[1]+uy*(r+3+len),stroke:n.col||'#94a3b8','stroke-width':PH?3:2,'marker-end':marker(n.col||'#94a3b8',PH?12:9),'class':'stub','data-stub':n.id},G.edges)}
-var EST={flow:{col:'#22d3ee',w:2.2,op:.55,arrow:1,bend:.1},loop:{col:'#f59e0b',w:1.8,op:.5,dash:'7 6',arrow:1,bend:.3},feed:{col:'#fb923c',w:3,op:.95,arrow:1,ms:14},path:{col:'#64748b',w:1.3,op:.35,dash:'2 6',arrow:0},user:{col:'#facc15',w:2.2,op:.85,arrow:1}};
-function build(){NODES={};function put(n,k){if(S.del[n.id])return;var o=S.over[n.id]||{};var m=Object.assign({_k:k},n);['name','col','note','link','emoji'].forEach(function(f){if(o[f]!=null&&o[f]!=='')m[f]=o[f]});if(o.emoji)m.emojiOver=1;NODES[n.id]=m}
- put(CFG.centre,'centre');CFG.cluster.forEach(function(n){put(n,'cluster')});CFG.inner.forEach(function(n){put(n,'inner')});CFG.cube.forEach(function(n){put(n,'cube')});CFG.sat.forEach(function(n){put(n,'sat')});
- CFG.outer.forEach(function(n){put(n,n.ring==='flow'?'flow':'outer')});S.added.forEach(function(n){put(n,'added')});
- FOLD={};CFG.band.folders.forEach(function(f){var o=S.over[f.id]||{};FOLD[f.id]=Object.assign({},f,o.name?{name:o.name}:{},o.link?{link:o.link}:{},o.note?{note:o.note}:{},o.emoji?{emoji:o.emoji}:{})})}
-function render(){PH=wrap.clientWidth<700;P=LAY[PH?'p':'d'];var L=PH?'p':'d';build();
- svg.setAttribute('viewBox','0 0 '+P.w+' '+P.h);svg.innerHTML='';mk={};DEFS=el('defs',{});G.geo=el('g',{});G.edges=el('g',{});G.nodes=el('g',{});G.labels=el('g',{});
- var D=defaults();POS={};for(var id in NODES)POS[id]=(id!==CFG.centre.id&&S.pos[L][id])?S.pos[L][id]:D[id];
- drawGeo();drawBand();
- CFG.edges.concat(S.edges.map(function(e){return Object.assign({kind:'user'},e)})).forEach(function(e){var okF=POS[e.from]||e.from===CFG.band.id,okT=POS[e.to]||e.to===CFG.band.id;if(!okF||!okT)return;var st=EST[e.kind]||EST.path;
-  var lab=(e.kind==='feed'&&/^(source|bridge)$/.test(e.label))?e.label:'';line(e.from,e.to,Object.assign({label:e.label,show:lab},st,e.from==='twochat'?{t:.45,lx:PH?24:14,ly:PH?-14:-8}:{lx:PH?30:20,ly:PH?8:5}))});
- for(id in NODES){var k=NODES[id]._k;if(k==='flow'||k==='outer'||k==='added'||(k==='cube'&&id!=='whatsapp'&&id!=='zohocrm'&&id!=='zohobooks'&&id!=='deputy'))stub(NODES[id])}
- for(id in NODES)nodeG(NODES[id]);svg.appendChild(G.labels);sidePanels()}
-/* ---------- pointer: drag + tap ---------- */
+ fl.forEach(function(f0,i){var f=FOLD[f0.id],col=i%P.band.cols,row=Math.floor(i/P.band.cols),x=bb.x+6+col*cw,y=bb.y+P.f.title*2.1+row*P.band.row;
+  var a=el('g',{'class':'chip','data-fid':f.id},g);el('title',{},a).textContent=f.name+' — '+f.real;var ph=/PLACEHOLDER/.test(f.real);
+  el('rect',{x:x+2,y:y,width:cw-4,height:P.band.row-6,rx:7,fill:'#0f2547',stroke:ph?'rgba(250,204,21,.6)':'rgba(138,180,248,.35)','stroke-dasharray':ph?'4 3':''},a);
+  var t=txt(f.name,{x:x+cw/2,y:y+(P.band.row-6)/2,'class':'lab','font-size':P.f.chip,'dominant-baseline':'central','stroke-width':0},a);
+  var w=t.getComputedTextLength();if(w>cw-12)t.setAttribute('font-size',(P.f.chip*(cw-12)/w).toFixed(1))})}
+function short(s,n){return s.length>n?s.slice(0,n-1)+'…':s}
+function nodeG(n){var p=POS[n.id],r=rOf(n.id),z=n.zone,col=n.col||'#4285f4';
+ var g=el('g',{'class':'n'+(z==='dot'||z==='extra'?' dot':''),'data-id':n.id,'data-kind':z},G.nodes);
+ el('title',{},g).textContent=n.name+(n.sub?' — '+n.sub:'')+' · '+(STAT[stOf(n.id)]||{}).l+(n.note?'\n'+n.note:'')+(safeUrl(n.link)?'':'\n(no link yet)');
+ if(r<20)el('circle',{cx:p[0],cy:p[1],r:r+(PH?14:9),fill:'transparent','class':'hit'},g);
+ el('circle',{cx:p[0],cy:p[1],r:r,fill:z==='dot'||z==='extra'?col:'#0b1a33','fill-opacity':z==='dot'||z==='extra'?.35:1,stroke:col,'stroke-width':z==='prog'||z==='centre'?(PH?5:3.5):2,'class':'ring'},g);
+ if(z!=='dot'&&z!=='extra'){if(n.img&&!n.emojiOver){var s=r*1.2;el('image',{href:n.img,x:p[0]-s/2,y:p[1]-s/2,width:s,height:s,preserveAspectRatio:'xMidYMid meet'},g)}
+  else if(n.emoji)txt(n.emoji,{x:p[0],y:p[1]+1,'class':'emo','font-size':(r*(z==='step'?1.15:1.0)).toFixed(1)},g)}
+ badge(g,p[0]+r*.78,p[1]-r*.78,Math.max(z==='prog'||z==='centre'?r*.2:r*.42,PH?6:4),n.id);
+ if(z==='centre'){var y0=p[1]-r-P.f.big*1.5;txt(n.name,{x:p[0],y:y0,'class':'lab','font-size':P.f.big+2,'font-weight':700,'stroke-width':5},g);var st=txt(n.sub,{x:p[0],y:y0+P.f.big*1.2,'class':'sub','font-size':P.f.big-2,'stroke-width':5},g);st.setAttribute('fill','#fde68a');return}
+ if(z==='prog'){var y=p[1]+r+P.f.lab*1.05;txt(n.name,{x:p[0],y:y,'class':'lab','font-size':P.f.lab,'font-weight':700,'stroke-width':5},g);if(n.sub)txt(short(n.sub,PH?22:30),{x:p[0],y:y+P.f.sub*(PH?1.5:1.2),'class':'sub','font-size':P.f.sub,'stroke-width':4},g);return}
+ if(z==='app'||z==='step'||z==='bot'){var fs=z==='step'?P.f.side*.92:P.f.side,lx=p[0]+r+(PH?12:7);
+  var t1=txt(n.name,{x:lx,y:z==='bot'?p[1]-1:p[1],'class':'lab','font-size':fs,'font-weight':z==='step'?500:700,'stroke-width':4,'dominant-baseline':z==='bot'?'auto':'central'},g);t1.style.textAnchor='start';
+  if(z==='bot'&&n.sub){var t2=txt(short(n.sub,PH?20:26),{x:lx,y:p[1]+P.f.tiny*1.15,'class':'sub','font-size':P.f.tiny,'stroke-width':3},g);t2.style.textAnchor='start'}return}
+ var tl=txt(short(n.name,PH?16:14),{x:p[0],y:p[1]+r+P.f.tiny*1.15,'class':'sub','font-size':P.f.tiny,'stroke-width':3},g)}
+function stub(n){var p=POS[n.id],c=P.c,dx=c[0]-p[0],dy=c[1]-p[1],L=Math.hypot(dx,dy);if(L<1)return;var r=rOf(n.id),len=PH?44:26,ux=dx/L,uy=dy/L;
+ el('line',{x1:p[0]+ux*(r+4),y1:p[1]+uy*(r+4),x2:p[0]+ux*(r+4+len),y2:p[1]+uy*(r+4+len),stroke:n.col||'#94a3b8','stroke-width':PH?5:3,'marker-end':marker(n.col||'#94a3b8',PH?20:12),'class':'stub','data-stub':n.id},G.edges)}
+function onMap(id){return !!(NODES[id]||id===CFG.band.id)}
+function allEdges(){return CFG.edges.concat(S.edges.map(function(e){return Object.assign({kind:'user',inRegister:false,src:'added'},e)}))}
+function render(){PH=wrap.clientWidth<700;P=LAY[PH?'p':'d'];var L=PH?'p':'d';build();var D=layout();
+ svg.setAttribute('viewBox','0 0 '+P.w+' '+P.h);svg.innerHTML='';mk={};DEFS=el('defs',{});G.geo=el('g',{});G.edges=el('g',{});G.nodes=el('g',{});
+ svg.setAttribute('class',BR==='off'?'boff':BR==='on'?'bon':'');
+ POS={};for(var id in NODES)POS[id]=(id!==CFG.centre.id&&S.pos[L][id])?S.pos[L][id]:D[id];
+ drawGeo();SECS.forEach(function(s){var t=txt(s[0],{x:s[1],y:s[2],'class':'sec','font-size':P.f.sec},G.geo);t.style.textAnchor='start'});drawBand();
+ var fed={};allEdges().forEach(function(e){if(!onMap(e.from)||!onMap(e.to))return;var fz=(ALL[e.from]||{}).zone,tz=(ALL[e.to]||{}).zone;
+  var o=e.kind==='feed'?{col:'#fb923c',w:PH?5:3,op:.95,arrow:1,ms:PH?22:14,cls:'feed'}:e.kind==='user'?{col:'#facc15',w:PH?3:2,op:.8,arrow:1,ms:PH?18:11}:{col:e.inRegister?'#7dd3fc':'#94a3b8',w:PH?2.5:1.4,op:.13,arrow:1,ms:PH?14:8,bend:.06,cls:(fz==='dot'||tz==='dot')?'pp':''};
+  line(e,o);if(e.kind==='feed')fed[e.from]=1});
+ for(id in NODES)if(NODES[id].zone==='prog'&&!fed[id])stub(NODES[id]);
+ for(id in NODES)nodeG(NODES[id]);sideList();sidePanels();if(SV.classList.contains('on'))statusView()}
+function focus(id,on){[].forEach.call(svg.querySelectorAll('.edge'),function(e){if(e.getAttribute('data-a')===id||e.getAttribute('data-b')===id)e.classList.toggle('hot',on)})}
+function highlight(id){var g=svg.querySelector('g.n[data-id="'+(window.CSS&&CSS.escape?CSS.escape(id):id)+'"]')||svg.querySelector('.chip[data-fid="'+id+'"]')||(id===CFG.band.id?svg.querySelector('g.band'):null);if(!g)return;
+ [].forEach.call(svg.querySelectorAll('.hl'),function(x){x.classList.remove('hl')});g.classList.add('hl');focus(id,true);try{g.scrollIntoView({block:'center',behavior:'smooth'})}catch(e){}
+ setTimeout(function(){g.classList.remove('hl');focus(id,false)},3200)}
+/* ---------- pointer: tap = open, Edit = drag / edit ---------- */
 var drag=null;
 function svgPt(e){var pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;return pt.matrixTransform(svg.getScreenCTM().inverse())}
+svg.addEventListener('pointerover',function(e){var g=e.target.closest&&e.target.closest('g.n');if(g)focus(g.getAttribute('data-id'),true)});
+svg.addEventListener('pointerout',function(e){var g=e.target.closest&&e.target.closest('g.n');if(g&&!(e.relatedTarget&&g.contains(e.relatedTarget)))focus(g.getAttribute('data-id'),false)});
 svg.addEventListener('pointerdown',function(e){var g=e.target.closest&&e.target.closest('g.n'),c=e.target.closest&&e.target.closest('.chip');
  if(c&&!g){drag={chip:c.getAttribute('data-fid'),x0:e.clientX,y0:e.clientY,moved:false};return}
- if(!g)return;var id=g.getAttribute('data-id');drag={id:id,x0:e.clientX,y0:e.clientY,moved:false};if(id!==CFG.centre.id)e.preventDefault()});
-window.addEventListener('pointermove',function(e){if(!drag||drag.chip||drag.id===CFG.centre.id)return;if(!drag.moved&&Math.hypot(e.clientX-drag.x0,e.clientY-drag.y0)<5)return;drag.moved=true;
+ if(!g)return;var id=g.getAttribute('data-id');drag={id:id,x0:e.clientX,y0:e.clientY,moved:false};if(EDIT&&id!==CFG.centre.id)e.preventDefault()});
+window.addEventListener('pointermove',function(e){if(!drag||drag.chip||!EDIT||drag.id===CFG.centre.id)return;if(!drag.moved&&Math.hypot(e.clientX-drag.x0,e.clientY-drag.y0)<6)return;drag.moved=true;
  var p=svgPt(e);S.pos[PH?'p':'d'][drag.id]=[Math.max(10,Math.min(P.w-10,Math.round(p.x))),Math.max(10,Math.min(P.h-10,Math.round(p.y)))];render()});
-window.addEventListener('pointerup',function(){if(!drag)return;var d=drag;drag=null;if(d.moved){save();return}
+window.addEventListener('pointerup',function(e){if(!drag)return;var d=drag;drag=null;if(d.moved){save();return}
+ if(Math.hypot(e.clientX-d.x0,e.clientY-d.y0)>12)return;
  if(d.chip){var f=FOLD[d.chip];if(EDIT)openPane(d.chip,true);else{var u=safeUrl(f.link);if(u)window.open(u,'_blank','noopener')}return}
  var n=NODES[d.id];if(!n)return;
- if(CONNECT){if(!first){first=d.id;hint.textContent='Now tap the second node.';render()}else if(first!==d.id){S.edges.push({from:first,to:d.id,label:'added'});save();first=null;hint.textContent='Connector added. Tap two more, or press Connect again to stop.';render()}return}
- if(EDIT||n._k==='inner'||!safeUrl(n.link)){openPane(d.id,false);return}
- var u=safeUrl(n.link);window.open(u,u.charAt(0)==='.'?'_self':'_blank','noopener')});
+ if(CONNECT){connectTap(d.id);return}
+ if(EDIT){openPane(d.id,false);return}
+ var u=safeUrl(n.link);if(!u){openPane(d.id,false);return}
+ window.open(u,u.charAt(0)==='.'?'_self':'_blank','noopener')});
 window.addEventListener('pointercancel',function(){if(drag&&drag.moved)save();drag=null});
+function connectTap(id){if(!first){first=id;hint.textContent='Now tap the second node.';highlight(id)}else if(first!==id){S.edges.push({from:first,to:id,label:'added'});save();first=null;CONNECT=false;bC.classList.remove('on');hint.textContent='Connector added.';render()}}
 /* ---------- note / edit pane ---------- */
-var pane=document.getElementById('pane'),cur=null;
-function $(i){return document.getElementById(i)}
-function openPane(id,isChip){var n=isChip?FOLD[id]:NODES[id];if(!n)return;cur={id:id,chip:isChip};
- $('pT').textContent=isChip?'Folder: '+n.name:(n._k==='inner'?'Notes — ':'')+n.name;
+var pane=$('pane'),cur=null;
+STLIST.forEach(function(s){var o=document.createElement('option');o.value=s[0];o.textContent=s[1];$('pStat').appendChild(o)});
+function openPane(id,isChip){var n=isChip?FOLD[id]:ALL[id];if(!n)return;cur={id:id,chip:isChip};
+ $('pT').textContent=isChip?'Folder: '+n.name:n.name+(n.sub?' — '+n.sub:'');
  $('pName').value=n.name||'';$('pEmo').value=(S.over[id]&&S.over[id].emoji)||n.emoji||'';$('pCol').value=/^#[0-9a-f]{6}$/i.test(n.col||'')?n.col:'#22d3ee';
- $('pNote').value=n.note||(isChip?n.real:'')||'';$('pLink').value=n.link||'';var u=safeUrl(n.link);$('pOpen').style.display=u?'':'none';if(u)$('pOpen').href=u;
- $('pDel').style.display=(EDIT&&id!==CFG.centre.id)?'':'none';$('pCol').disabled=isChip;pane.classList.add('on')}
+ $('pStat').value=stOf(id);$('pStat').disabled=isChip;
+ $('pNote').value=n.note||(isChip?n.real:'')||'';$('pLink').value=n.link||'';var u=safeUrl(n.link);$('pOpen').style.display=u?'':'none';if(u)$('pOpen').href=u;$('pNo').style.display=u?'none':'block';
+ $('pReg').textContent=isChip?'':(n.inReg?'In REALM OPEN REGISTER: '+n.inReg:'Not found in REALM OPEN REGISTER (name or link).');
+ $('pDel').style.display=(id!==CFG.centre.id&&(EDIT||n.zone==='extra'))?'':'none';$('pConn').style.display=isChip?'none':'';$('pCol').disabled=isChip;pane.classList.add('on')}
 $('pX').onclick=function(){pane.classList.remove('on');cur=null};
+$('pConn').onclick=function(){if(!cur)return;var id=cur.id;pane.classList.remove('on');cur=null;if(!NODES[id]&&ALL[id]){S.placed[id]=1;delete S.del[id];save();render()}CONNECT=true;bC.classList.add('on');first=null;connectTap(id)};
 $('pSave').onclick=function(){if(!cur)return;var o=S.over[cur.id]||{};o.name=$('pName').value.trim().slice(0,60);o.note=$('pNote').value.slice(0,2000);o.link=$('pLink').value.trim().slice(0,500);
  if(o.link&&!safeUrl(o.link)){hint.textContent='Link must start with https://, tel:, mailto: or ./';return}
- o.emoji=$('pEmo').value.trim().slice(0,4);if(!cur.chip)o.col=$('pCol').value;
+ o.emoji=$('pEmo').value.trim().slice(0,4);if(!cur.chip){o.col=$('pCol').value;S.status[cur.id]=$('pStat').value}
  var ad=S.added.filter(function(a){return a.id===cur.id})[0];if(ad){['name','note','link','emoji','col'].forEach(function(f){if(o[f])ad[f]=o[f]})}
  S.over[cur.id]=o;save();hint.textContent='Saved in this browser.';pane.classList.remove('on');cur=null;render()};
-$('pDel').onclick=function(){if(!cur||cur.id===CFG.centre.id)return;var nm=$('pName').value||cur.id;if(!confirm('Delete "'+nm+'" from this map? (Reset brings it back.)'))return;
- if(S.added.some(function(a){return a.id===cur.id}))S.added=S.added.filter(function(a){return a.id!==cur.id});else S.del[cur.id]=1;
- S.edges=S.edges.filter(function(e){return e.from!==cur.id&&e.to!==cur.id});save();pane.classList.remove('on');cur=null;render()};
+$('pDel').onclick=function(){if(!cur||cur.id===CFG.centre.id)return;var nm=$('pName').value||cur.id;if(!confirm('Remove "'+nm+'" from this map? (It stays in the sidebar; click it there to place it again.)'))return;
+ if(S.added.some(function(a){return a.id===cur.id})){S.added=S.added.filter(function(a){return a.id!==cur.id});S.edges=S.edges.filter(function(e){return e.from!==cur.id&&e.to!==cur.id})}else{S.del[cur.id]=1;delete S.placed[cur.id]}
+ save();pane.classList.remove('on');cur=null;render()};
 /* ---------- toolbar ---------- */
 var bE=$('bEdit'),bC=$('bConn');
-bE.onclick=function(){EDIT=!EDIT;bE.classList.toggle('on',EDIT);$('editbar').classList.toggle('on',EDIT);if(!EDIT){CONNECT=false;first=null;bC.classList.remove('on')}hint.textContent=EDIT?'Edit on: tap anything to rename / recolour / note / link / delete; drag to move.':'';render()};
-$('bAdd').onclick=function(){var nm=$('nName').value.trim();if(!nm){hint.textContent='Type a name first.';return}S.added.push({id:'u'+Date.now().toString(36),name:nm.slice(0,40),col:$('nCol').value,emoji:($('nEmo').value||'●').slice(0,4)});save();$('nName').value='';hint.textContent='Added "'+nm+'" at the top. Drag it into place.';render()};
-bC.onclick=function(){CONNECT=!CONNECT;first=null;bC.classList.toggle('on',CONNECT);hint.textContent=CONNECT?'Tap the first node, then the second.':'';render()};
-$('bExport').onclick=function(){var out=JSON.parse(JSON.stringify(CFG));out.saved=S;out.exported=new Date().toISOString();var b=new Blob([JSON.stringify(out,null,1)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='realm-metatron3-layout.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)};
-$('bReset').onclick=function(){if(!confirm('Reset the cube? Moves, edits, notes, deletes, added nodes and connectors in this browser are cleared.'))return;try{localStorage.removeItem(KEY)}catch(e){}S=load();first=null;render()};
-/* ---------- side panels (text only) ---------- */
+bE.onclick=function(){EDIT=!EDIT;bE.classList.toggle('on',EDIT);$('editbar').classList.toggle('on',EDIT);if(!EDIT){CONNECT=false;first=null;bC.classList.remove('on')}hint.textContent=EDIT?'Edit on: drag to move · tap to rename / recolour / status / note / link / remove.':'';render()};
+$('bAdd').onclick=function(){var nm=$('nName').value.trim();if(!nm){hint.textContent='Type a name first.';return}var id='u'+Date.now().toString(36);S.added.push({id:id,name:nm.slice(0,40),col:$('nCol').value,emoji:($('nEmo').value||'●').slice(0,4)});S.placed[id]=1;save();$('nName').value='';hint.textContent='Added "'+nm+'" under PLACED. Drag it into place.';render();highlight(id)};
+bC.onclick=function(){CONNECT=!CONNECT;first=null;bC.classList.toggle('on',CONNECT);hint.textContent=CONNECT?'Tap the first node, then the second.':'';};
+$('bBridges').onclick=function(){BR=BR==='faint'?'on':BR==='on'?'off':'faint';this.textContent='Bridges: '+BR;render()};
+$('bExport').onclick=function(){var out=JSON.parse(JSON.stringify(CFG));out.saved=S;out.bridgeCheck=bridgeCheck();out.exported=new Date().toISOString();var b=new Blob([JSON.stringify(out,null,1)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=CFG.key+'-layout.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)};
+$('bReset').onclick=function(){if(!confirm('Reset the map? Moves, edits, notes, statuses, removals, added nodes and connectors in this browser are cleared.'))return;try{localStorage.removeItem(KEY)}catch(e){}S=blank();save();first=null;render()};
+/* ---------- bridge check + status view ---------- */
+function bridgeCheck(){return allEdges().map(function(e){var drawn=onMap(e.from)&&onMap(e.to);var res=drawn&&e.inRegister?'bridge OK':drawn?'missing in register':e.inRegister?'missing on map':'not placed (map-only link)';
+ return {from:e.from,fromName:(ALL[e.from]||{}).name||e.from,to:e.to,toName:(ALL[e.to]||{}).name||e.to,label:e.label||'',inEdgeList:e.src!=='added',inRegister:!!e.inRegister,drawn:drawn,result:res}}).concat((CFG.registerOnlyPaths||[]).map(function(r){return {from:r.from,fromName:r.from,to:r.to,toName:r.to,label:r.label,inEdgeList:false,inRegister:true,drawn:false,result:'missing on map (register only)'}}))}
+var SV=$('statusView');
 function add(p,tag,text,attrs){var e=document.createElement(tag);if(text!=null)e.textContent=text;for(var k in attrs||{})e.setAttribute(k,attrs[k]);p.appendChild(e);return e}
+function statusView(){SV.textContent='';var h=add(SV,'div',null,{style:'display:flex;gap:8px;align-items:center;flex-wrap:wrap'});add(h,'h3','Status & bridge check');var x=add(h,'button','Close',{type:'button',style:'margin-left:auto'});x.onclick=function(){SV.classList.remove('on');SV.textContent=''};
+ add(SV,'div','Register data: '+CFG.registerSnapshot+'. Read-only — nothing here edits the register. Status changes save in this browser.',{'class':'mut',style:'font-size:12px;margin-bottom:8px'});
+ var BC=bridgeCheck(),per={};BC.forEach(function(b){[b.from,b.to].forEach(function(i){per[i]=per[i]||{ok:0,mr:0,mm:0};if(b.result==='bridge OK')per[i].ok++;else if(b.result.indexOf('missing in register')===0)per[i].mr++;else if(b.result.indexOf('missing on map')===0)per[i].mm++})});
+ var cnt={};var ids=[CFG.centre.id,CFG.band.id].concat(Object.keys(ALL).filter(function(i){return i!==CFG.centre.id&&i!==CFG.band.id}));ids.forEach(function(i){var s=stOf(i);cnt[s]=(cnt[s]||0)+1});
+ add(SV,'div',STLIST.map(function(s){return s[1]+': '+(cnt[s[0]]||0)}).join(' · ')+'  |  bridges: '+BC.filter(function(b){return b.result==='bridge OK'}).length+' OK · '+BC.filter(function(b){return b.result.indexOf('missing in register')===0}).length+' missing in register · '+BC.filter(function(b){return b.result.indexOf('missing on map')===0}).length+' missing on map',{style:'font-size:13px;margin-bottom:8px'});
+ var t=add(SV,'table');var hr=add(add(t,'thead'),'tr');['Node','Group','Status','On map','In register','Bridges (OK / missing in register / missing on map)'].forEach(function(c){add(hr,'th',c)});var tb=add(t,'tbody');
+ ids.forEach(function(i){var n=ALL[i];if(!n)return;var tr=add(tb,'tr',null,{'data-node':i});add(tr,'td',n.name);add(tr,'td',n.group||'');var td=add(tr,'td');
+  var sel=add(td,'select',null,{'data-sid':i,'aria-label':'Status of '+n.name});STLIST.forEach(function(s){var o=add(sel,'option',s[1],{value:s[0]})});sel.value=stOf(i);var paint=function(){sel.style.background=STAT[sel.value].c;sel.style.color='#04121f'};paint();
+  sel.onchange=function(){S.status[i]=sel.value;save();paint();render()};
+  add(tr,'td',onMap(i)?'yes':'no',{'class':onMap(i)?'ok':'mut'});add(tr,'td',n.inReg?'yes — '+n.inReg:'missing in register',{'class':n.inReg?'ok':'bad'});var pp=per[i]||{ok:0,mr:0,mm:0};add(tr,'td',pp.ok+' / '+pp.mr+' / '+pp.mm,{'class':pp.mm?'mid':''})});
+ add(SV,'h3','Bridges',{style:'margin-top:14px'});var t2=add(SV,'table');var h2=add(add(t2,'thead'),'tr');['From','To','Label','In edge list','In register (FLOW_PATHS)','Drawn','Result'].forEach(function(c){add(h2,'th',c)});var tb2=add(t2,'tbody');
+ BC.forEach(function(b){var tr=add(tb2,'tr');[b.fromName,b.toName,b.label,b.inEdgeList?'yes':'added',b.inRegister?'yes':'no',b.drawn?'yes':'no'].forEach(function(c){add(tr,'td',c)});add(tr,'td',b.result,{'class':b.result==='bridge OK'?'ok':b.result.indexOf('missing')===0?'bad':'mut'})})}
+$('bStatus').onclick=function(){SV.classList.add('on');statusView()};
+/* ---------- sidebar ---------- */
+var SL=$('sideList'),SQ=$('side-search');SQ.oninput=function(){sideList()};
+function sideList(){var q=SQ.value.trim().toLowerCase();SL.textContent='';
+ var items=[ALL[CFG.centre.id],ALL[CFG.band.id]].concat(CFG.nodes.map(function(n){return ALL[n.id]})).concat(CFG.band.folders.map(function(f){return {id:f.id,name:FOLD[f.id].name,group:'folders',chip:1,status:'live'}})).concat(S.added.map(function(a){return ALL[a.id]}));
+ CFG.groups.concat([['other','Other items']]).forEach(function(gp,gi,arr){if(arr.findIndex(function(x){return x[0]===gp[0]})!==gi)return;var list=items.filter(function(n){return n&&(n.group||'other')===gp[0]&&(!q||(n.name+' '+(n.sub||'')).toLowerCase().indexOf(q)>=0)});if(!list.length)return;
+  var d=add(SL,'div',null,{'class':'sg'});add(d,'b',gp[1]+' ('+list.length+')');
+  list.forEach(function(n){var on=n.chip?!S.del[n.id]:onMap(n.id);var row=add(d,'div',null,{'class':'si'+(on?' on':''),'data-sid':n.id,role:'button',tabindex:'0'});
+   add(row,'span',on?'✓':'+',{'class':'pm',title:on?'on the map':'not placed — click to place'});add(row,'span',n.name,{'class':'nm',title:n.name+(n.sub?' — '+n.sub:'')});
+   if(!n.chip){var s=STAT[stOf(n.id)];add(row,'span',s.l,{'class':'st',style:'background:'+s.c})}
+   var inf=add(row,'button','ⓘ',{'class':'inf',type:'button','aria-label':'Notes for '+n.name});inf.onclick=function(ev){ev.stopPropagation();openPane(n.id,!!n.chip)};
+   row.onclick=function(){if(!on&&!n.chip){S.placed[n.id]=1;delete S.del[n.id];save();render();hint.textContent='Placed "'+n.name+'" (bridges drawn to placed nodes).'}else if(!on&&n.chip){delete S.del[n.id];save();render()}highlight(n.id)}})})}
 function sidePanels(){var cc=$('calCard');cc.textContent='';add(cc,'b',CFG.centre.name+' — '+CFG.centre.sub);add(cc,'div',CFG.centre.notes);add(cc,'div','Calendars: '+CFG.centre.calendars.join(' · '));
- var bc=$('bandCard');bc.textContent='';CFG.band.folders.forEach(function(f0){var f=FOLD[f0.id];if(S.del[f0.id])return;var d=add(bc,'div',null);var u=safeUrl(f.link);var a=add(d,'a',f.name,u?{href:u,target:'_blank',rel:'noopener'}:{});add(d,'div',f.real,{style:'font-size:12px;color:#8ea0c2;margin-bottom:5px'})})}
+ var bc=$('bandCard');bc.textContent='';CFG.band.folders.forEach(function(f0){var f=FOLD[f0.id];if(S.del[f0.id])return;var u=safeUrl(f.link);add(bc,'a',f.name+' — '+f.real,u?{href:u,target:'_blank',rel:'noopener'}:{})})}
 var ar=$('ara');CFG.ara_layer.forEach(function(c){var d=add(ar,'details',null,{'class':'card'});add(d,'summary',c[0]);add(d,'div',c[1])});
-var lk=$('links'),lastG='';CFG.links.forEach(function(l){if(l.g!==lastG){add(lk,'div',l.g,{'class':'g'});lastG=l.g}var a=add(lk,'a',l.l,{href:l.u});if(l.u.charAt(0)!=='.'){a.target='_blank';a.rel='noopener'}});
 var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){if((wrap.clientWidth<700)!==PH)render()},150)});
 render();
-window.__m3={LAY:LAY,render:render,S:function(){return S},POS:function(){return POS}};
+window.__v2={LAY:LAY,render:render,S:function(){return S},POS:function(){return POS},bridgeCheck:bridgeCheck,highlight:highlight};
 })();
 </script>
 </body></html>
