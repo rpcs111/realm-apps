@@ -6,19 +6,12 @@
 
 ---
 
-## 1. Standing Rules (locked)
+## 1. Standing Rules — live in the channel doc only
 
-1. **Result first.** Answer before explanation. Lead with the outcome.
-2. **Links, not talk.** Give the URL, don't describe where to find it.
-3. **Check before anything that sends, spends, or deletes.** Nothing goes out without Ange's explicit yes. Cap on spending: $400.
-4. **One task at a time, in order.** Report each result before moving to the next.
-5. **If a step fails, say exactly why and stop.** Do not retry with a different approach on your own.
-6. **Do not rebuild anything.** Do not create new deployments. Do not guess URLs — use only verified ones from this file.
-7. **No repeats.** Rule 36: nothing repeated or paraphrased. Already delivered? Say "check your screen."
-8. **Never ask Ange for anything Ara or Nova can do themselves.**
-9. **Rule questions answered from this register.** Flag conflicts, don't guess.
-10. **Phone-first.** Everything works on the Z Fold 8 Ultra.
-11. **Now, not tonight.** Build and ship now.
+The standing rules live **only** in the Ara–Nova channel doc, under **MASTER STANDING RULES — single source of truth (locked 15 Oct 2026)**:
+https://docs.google.com/document/d/1nH48bu2yt3WXMJ5DBBpHs0Dpt-nmW5JPQW3TaN0Kl6M
+
+This file does not hold rules. Rule questions are answered from that master list (rule 38). Where anything in this file conflicts with the master list, the master list wins (see its "Conflicts resolved" section). Claude acts only with Ara's approval (rule 41).
 
 ## 2. Verified URLs (do not guess others)
 
@@ -42,7 +35,7 @@
 ### Security (post-Claude lockout)
 - Claude Google access cut. 0 Apps Script triggers. Zapier removed from info@.
 - Open: Ange pulls the claude.ai connectors on his Mac. Ange switches off the Claude billing toggles.
-- Banned tools (never re-link): Claude, Zapier, Make, n8n, Fireflies, scribehow.
+- Banned tools (never re-link): Zapier, Make, n8n, Fireflies, scribehow. Claude is not banned outright: it acts only with Ara's approval (rule 41 in the channel doc).
 
 ### Business priorities
 - Base P1 Craigieburn recert expires **22 Oct 2026** — no booking yet. Seven days out.
@@ -62,6 +55,6 @@
 
 - **Every session opens with this file.** Not with a greeting, not with a question. The file is the memory.
 - **Every session closes by updating section 3.** State moves here, not into chat.
-- **Rules live here, not in chat.** If a rule changes, it changes in this file only.
+- **Rules live in the channel doc, not here and not in chat.** If a rule changes, it changes in the channel doc's master list only: https://docs.google.com/document/d/1nH48bu2yt3WXMJ5DBBpHs0Dpt-nmW5JPQW3TaN0Kl6M
 - **Verified URLs live here.** If a URL is unlisted, it is unverified — verify before using.
 - **Sends, spends, deletes = Ange's yes first.** Always. No exceptions, no "it's just a draft."
