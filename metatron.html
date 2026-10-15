@@ -1,0 +1,83 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Realm Flow Map — Metatron's Cube</title>
+<link rel="icon" href="icon.svg">
+<style>
+*{box-sizing:border-box}html{background:#05070f}
+body{margin:0;background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed;color:#e8eefc;font:15px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;overflow-x:hidden}
+header{padding:12px 14px}h1{margin:0;font-size:22px}header p{margin:4px 0 0;color:#94a3b8;font-size:13px}header a{color:#7de9ff}
+.legend{font-size:13px;color:#94a3b8;padding:0 14px;max-width:900px}.legend span{display:inline-block;margin:2px 14px 2px 0;white-space:nowrap}
+.sw{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+#wrap{max-width:min(900px,100%);margin:0 auto;padding:0 6px}svg{width:100%;height:auto;display:block}
+@media (min-width:700px){#wrap{max-width:min(900px,calc(100vh - 110px))}}
+.ni{font:24px system-ui;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.nt{font:600 15px system-ui;fill:#fff;text-anchor:middle;pointer-events:none}.ns{font:12px system-ui;fill:#cbd5e1;text-anchor:middle;pointer-events:none}
+g.node a{cursor:pointer}
+</style></head><body>
+<header><h1>Realm Flow Map — Metatron's Cube</h1><p>Everything loops through Google Calendar. Inner ring = storage, outer ring = the outside world. <a href="./map.html">&#8592; back to the flow map</a></p></header>
+<div class="legend">
+<span><i class="sw" style="background:#4285f4"></i>Google & devices</span>
+<span><i class="sw" style="background:#25d366"></i><i class="sw" style="background:#f59e0b"></i>Outside world</span>
+<span>&#8594; solid: outside world into Calendar</span>
+<span>&#8901;&#8901;&#8594; dotted: storage into Calendar</span>
+<span style="color:#64748b">faint lines: Metatron's Cube</span>
+</div>
+<div id="wrap"><svg id="map" viewBox="0 0 1000 1000" role="img" aria-label="Realm Flow Map as Metatron's Cube"></svg></div>
+<script>
+(function(){
+var NS='http://www.w3.org/2000/svg',svg=document.getElementById('map'),C=500,D=170;
+function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e}
+function pt(r,deg){var a=deg*Math.PI/180;return [C+r*Math.cos(a),C+r*Math.sin(a)]}
+var CAL='https://calendar.google.com/calendar/u/0/r',GM='https://mail.google.com/mail/u/0/#inbox',GD='https://drive.google.com/drive/my-drive',GT='https://tasks.google.com/';
+/* nodes: [id,name,sub,icon,colour,ring,angle,link] */
+var centre={id:'cal',name:'Google Calendar',sub:'source of truth',sub2:'bookings & scopes',icon:'\u{1F4C5}',col:'#1a73e8',p:[C,C],r:80,link:CAL};
+var inner=[
+ {id:'i_tasks',name:'Google Tasks',sub:'You Got Me Bro',sub2:'scribe/notes',icon:'\u2705',col:'#4285f4',a:-90,link:GT},
+ {id:'i_gmail',name:'Gmail',sub:'the pull',icon:'\u2709\uFE0F',col:'#5e97f6',a:30,link:GM},
+ {id:'i_drive',name:'Google Drive',sub:'storage',icon:'\u{1F5C2}\uFE0F',col:'#8ab4f8',a:150,link:GD}];
+var ph=-90+360/14,outer=[
+ {id:'o_gmail',name:'Gmail',icon:'\u2709\uFE0F',col:'#5e97f6',link:GM},
+ {id:'o_gtask',name:'G Task',icon:'\u2705',col:'#4285f4',link:GT},
+ {id:'o_todo',name:'Ange To Do',icon:'\u{1F4DD}',col:'#00e5ff',link:GT},
+ {id:'o_drive',name:'Google Drive',icon:'\u{1F5C2}\uFE0F',col:'#8ab4f8',link:GD},
+ {id:'o_wa',name:'WhatsApp',icon:'\u{1F4AC}',col:'#25d366',link:'https://web.whatsapp.com/'},
+ {id:'o_2chat',name:'2Chat',icon:'\u{1F4F2}',col:'#f59e0b',link:''},
+ {id:'o_step',name:'Steppity',icon:'\u{1F463}',col:'#84cc16',link:''}];
+var RI=50,RO=56;
+inner.forEach(function(n){n.p=pt(D,n.a);n.r=RI});
+outer.forEach(function(n,k){n.a=ph+k*360/7;n.p=pt(2*D,n.a);n.r=RO});
+var defs=el('defs',{}),mk={};
+function marker(col){if(mk[col])return mk[col];var id='ah'+col.slice(1);var m=el('marker',{id:id,viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs);el('path',{d:'M0,0L10,5L0,10z',fill:col},m);return mk[col]='url(#'+id+')'}
+/* 1. Metatron's Cube geometry: 13 circles + all 78 connecting lines, faint */
+var geo=el('g',{opacity:.9}),G=[[C,C]];
+for(var k=0;k<6;k++)G.push(pt(D,-90+60*k));for(k=0;k<6;k++)G.push(pt(2*D,-90+60*k));
+for(var i=0;i<13;i++)for(var j=i+1;j<13;j++)el('line',{x1:G[i][0],y1:G[i][1],x2:G[j][0],y2:G[j][1],stroke:'#7dd3fc','stroke-opacity':.10,'stroke-width':1.2},geo);
+G.forEach(function(q){el('circle',{cx:q[0],cy:q[1],r:D/2,fill:'none',stroke:'#7dd3fc','stroke-opacity':.16,'stroke-width':1.2},geo)});
+/* 2. Edges into the centre. Straight unless an inner node is in the way; then a gentle bend around it. */
+function bez(a,c,b,t){var u=1-t;return [u*u*a[0]+2*u*t*c[0]+t*t*b[0],u*u*a[1]+2*u*t*c[1]+t*t*b[1]]}
+function clear(a,c,b,skip){for(var t=0;t<=1;t+=0.02){var q=bez(a,c,b,t);for(var m=0;m<inner.length;m++){var n=inner[m];if(n===skip)continue;if(Math.hypot(q[0]-n.p[0],q[1]-n.p[1])<n.r+14)return false}}return true}
+function edge(from,to,dash,width,skip){
+ var dx=to.p[0]-from.p[0],dy=to.p[1]-from.p[1],L=Math.hypot(dx,dy),ux=dx/L,uy=dy/L,px=-uy,py=ux;
+ var a=[from.p[0]+ux*(from.r+3),from.p[1]+uy*(from.r+3)],b=[to.p[0]-ux*(to.r+5),to.p[1]-uy*(to.r+5)],mid=[(a[0]+b[0])/2,(a[1]+b[1])/2],c=mid;
+ if(!clear(a,c,b,skip)){for(var s=20;s<=260;s+=10){var sides=[1,-1];var ok=false;for(var z=0;z<2;z++){var cc=[mid[0]+px*s*sides[z],mid[1]+py*s*sides[z]];if(clear(a,cc,b,skip)){c=cc;ok=true;break}}if(ok)break}
+  /* re-aim the end points along the curve tangents */
+  var t1=[c[0]-from.p[0],c[1]-from.p[1]],l1=Math.hypot(t1[0],t1[1]),t2=[to.p[0]-c[0],to.p[1]-c[1]],l2=Math.hypot(t2[0],t2[1]);
+  a=[from.p[0]+t1[0]/l1*(from.r+3),from.p[1]+t1[1]/l1*(from.r+3)];b=[to.p[0]-t2[0]/l2*(to.r+5),to.p[1]-t2[1]/l2*(to.r+5)]}
+ el('path',{d:'M'+a[0]+','+a[1]+' Q'+c[0]+','+c[1]+' '+b[0]+','+b[1],fill:'none',stroke:from.col,'stroke-width':width,'stroke-dasharray':dash||'','stroke-linecap':'round','marker-end':marker(from.col),'class':'edge','data-from':from.id})}
+outer.forEach(function(n){edge(n,centre,'',3.2,null)});
+inner.forEach(function(n){edge(n,centre,'2 7',3,n)});
+/* 3. Nodes */
+function node(n,dashed,fill){var g=el('g',{'class':'node','data-id':n.id}),host=g;
+ if(n.link){host=el('a',{href:n.link,target:'_blank',rel:'noopener'},g)}
+ el('circle',{cx:n.p[0],cy:n.p[1],r:n.r,fill:fill||'#0b1a33',stroke:n.col,'stroke-width':4,'stroke-dasharray':dashed?'6 4':''},host);
+ el('circle',{cx:n.p[0],cy:n.p[1],r:n.r-6,fill:n.col,'fill-opacity':.14},host);
+ var y0=n.p[1]-(n.sub2?24:n.sub?16:10);
+ if(n.icon)el('text',{x:n.p[0],y:y0,'class':'ni'},host).textContent=n.icon;
+ el('text',{x:n.p[0],y:y0+(n.icon?28:6),'class':'nt'},host).textContent=n.name;
+ if(n.sub)el('text',{x:n.p[0],y:y0+(n.icon?44:22),'class':'ns'},host).textContent=n.sub;
+ if(n.sub2)el('text',{x:n.p[0],y:y0+(n.icon?58:36),'class':'ns'},host).textContent=n.sub2}
+inner.forEach(function(n){node(n)});outer.forEach(function(n){node(n)});
+node(centre,false,'#0b2a5b');
+node({id:'ara',name:'Ara',sub:'head · reads logs',col:'#94a3b8',p:[72,926],r:64},true,'#1e293b');
+node({id:'nova',name:'Nova',sub:'writes code · own log',col:'#94a3b8',p:[928,926],r:64},true,'#1e293b');
+})();
+</script>
+</body></html>
