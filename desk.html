@@ -7,8 +7,9 @@
 <meta name="apple-mobile-web-app-title" content="REALM DESK">
 <link rel="apple-touch-icon" href="icon.svg">
 <link rel="icon" href="icon.svg"><link rel="manifest" href="manifest.json">
+<script src="js/reconnect.js"></script>
 <script>
-(function(){var U="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";function call(fn,args,ok,fail){var n=0,note=null,nt=setTimeout(function(){note=document.createElement("div");note.textContent="still loading\u2026";note.style.cssText="position:fixed;top:8px;left:50%;transform:translateX(-50%);background:#333;color:#fff;font:13px sans-serif;padding:4px 10px;border-radius:12px;z-index:99999;opacity:.85";document.body&&document.body.appendChild(note)},8000);function done(){clearTimeout(nt);if(note&&note.parentNode)note.parentNode.removeChild(note)}function go(){var ac=window.AbortController?new AbortController():null,to=setTimeout(function(){ac&&ac.abort()},45000);fetch(U,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args,key:(function(){try{return localStorage.getItem("realm_key")||""}catch(e){return""}})()}),signal:ac?ac.signal:undefined}).then(function(r){return r.text()}).then(function(t){clearTimeout(to);var j;try{j=JSON.parse(t)}catch(e){throw new Error("Not JSON")}done();if(j&&j.ok)ok&&ok(j.result);else fail&&fail(new Error((j&&j.error)||"Request failed"))}).catch(function(e){clearTimeout(to);if(n++<3){setTimeout(go,1000*n)}else{done();fail&&fail(e)}})}go()}
+(function(){var U="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";window.__deskExec=U;function call(fn,args,ok,fail){var n=0,note=null,nt=setTimeout(function(){note=document.createElement("div");note.textContent="still loading\u2026";note.style.cssText="position:fixed;top:8px;left:50%;transform:translateX(-50%);background:#333;color:#fff;font:13px sans-serif;padding:4px 10px;border-radius:12px;z-index:99999;opacity:.85";document.body&&document.body.appendChild(note)},8000);function done(){clearTimeout(nt);if(note&&note.parentNode)note.parentNode.removeChild(note)}function go(){var ac=window.AbortController?new AbortController():null,to=setTimeout(function(){ac&&ac.abort()},45000);fetch(U,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args,key:(function(){try{return localStorage.getItem("realm_key")||""}catch(e){return""}})()}),signal:ac?ac.signal:undefined}).then(function(r){return r.text()}).then(function(t){clearTimeout(to);var j;try{j=JSON.parse(t)}catch(e){throw new Error("Not JSON")}done();window.RealmLine&&RealmLine.ok();if(j&&j.ok)ok&&ok(j.result);else fail&&fail(new Error((j&&j.error)||"Request failed"))}).catch(function(e){clearTimeout(to);var RL=window.RealmLine;if(RL&&(document.hidden||!navigator.onLine)&&RL.park(go,e))return;if(n++<3){setTimeout(go,1000*n)}else if(RL&&RL.isNet(e)&&RL.park(go,e)){return}else{done();RL&&RL.fail(e,/Not JSON/.test(e&&e.message));fail&&fail(e)}})}go()}
 function mk(ok,fail){return new Proxy({},{get:function(_,k){if(k==="withSuccessHandler")return function(f){return mk(f,fail)};if(k==="withFailureHandler")return function(f){return mk(ok,f)};return function(){call(k,[].slice.call(arguments),ok,fail||function(e){console.error(e)})}}})}
 window.google={script:{run:mk(null,null)}};})();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js");
@@ -502,6 +503,7 @@ function saveNote(){var n=document.getElementById('note').value.trim();if(!n)ret
 function renderNotes(r){document.getElementById('notes').innerHTML=r.length?r.map(function(n){return '<div class="card"><div class="m">'+esc(n.when)+' &middot; '+esc(n.tag)+'</div><div>'+esc(n.note)+'</div></div>'}).join(''):'<div class="empty">No notes yet.</div>'}
 function renderLinks(r){r=(r||[]).filter(function(x){return !/orion/i.test(String(x.title)+' '+String(x.url))});document.getElementById('links').innerHTML=r.length?r.map(function(l){return '<a class="card" style="display:block;text-decoration:none;color:inherit" href="'+esc(l.url)+'" target="_blank"><div class="t">'+esc(l.title)+'</div><div class="m">'+esc(l.url).slice(0,70)+'</div></a>'}).join(''):'<div class="empty">REALM_LINKS is empty.</div>'}
 run('whoami',[],function(w){document.getElementById('who').textContent=w});
+try{var _rt=JSON.parse(localStorage.getItem('realm_desk_tab')||'null');if(!CFG.tab&&!location.hash&&_rt&&_rt.n&&TABIX[_rt.n]!=null&&_rt.n!=='search'&&Date.now()-_rt.t<4*36e5)CFG.tab=_rt.n}catch(_e){}
 if(CFG.tab&&TABIX[CFG.tab]!=null){go(CFG.tab,document.querySelectorAll('nav button')[TABIX[CFG.tab]])}else load('start');
 </script>
 <script>
@@ -534,9 +536,9 @@ addEventListener("appinstalled",function(){b.style.display="none"});
 b.onclick=function(){if(dp){dp.prompt();dp.userChoice.then(function(){dp=null})}else h.style.display=h.style.display==="none"?"block":"none"};
 var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 function addMic(ta){if(ta.dataset.mic)return;ta.dataset.mic=1;var m=document.createElement("button");m.className="btn mic";m.type="button";m.textContent="\uD83C\uDFA4 Dictate";ta.insertAdjacentElement("afterend",m);var r=null;
- m.onclick=function(){if(r){r.stop();return}r=new SR();r.lang="en-AU";r.interimResults=false;r.continuous=true;
+ var mk="dictate:"+(ta.id||Math.random().toString(36).slice(2,7));m.onclick=function(){if(r){window.RealmLine&&RealmLine.micStop(mk);r.stop();return}r=new SR();r.onstart=function(){window.RealmLine&&RealmLine.micLive(mk)};window.RealmLine&&RealmLine.mic(mk,function(){if(!r)m.onclick()});r.lang="en-AU";r.interimResults=false;r.continuous=true;
   r.onresult=function(e){for(var i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal)ta.value+=(ta.value&&!/\s$/.test(ta.value)?" ":"")+e.results[i][0].transcript.trim()};
-  r.onend=function(){r=null;m.textContent="\uD83C\uDFA4 Dictate"};r.onerror=function(e){toast("Mic: "+e.error)};r.start();m.textContent="\u23F9 Stop"}}
+  r.onend=function(){r=null;m.textContent="\uD83C\uDFA4 Dictate";window.RealmLine&&RealmLine.micEnd(mk)};r.onerror=function(e){toast("Mic: "+e.error)};try{r.start()}catch(x){r=null;return}m.textContent="\u23F9 Stop"}}
 if(SR){Array.prototype.forEach.call(document.querySelectorAll("textarea"),addMic);
  new MutationObserver(function(){Array.prototype.forEach.call(document.querySelectorAll("textarea:not([data-mic])"),addMic)}).observe(document.body,{childList:true,subtree:true})}
 })();
@@ -557,5 +559,11 @@ if(SR){Array.prototype.forEach.call(document.querySelectorAll("textarea"),addMic
 <style>.spl{display:flex;align-items:center;gap:10px;min-height:48px;padding:10px 12px;margin:4px 0;border-radius:10px;background:#16213a;color:#e5e7eb;text-decoration:none;font-size:15px}#sp.open{transform:none!important}</style>
 <script>function spOpen(o){document.getElementById('sp').classList.toggle('open',!!o);document.getElementById('spBg').style.display=o?'block':'none'}
 function spTab(t){spOpen(0);go(t,document.querySelectorAll('nav button')[TABIX[t]])}</script>
+<script>/* bot line reconnect hooks (see js/reconnect.js) */
+(function(){if(!window.RealmLine)return;var U=window.__deskExec;
+RealmLine.line({name:'Realm Desk',ping:function(){return RealmLine.pingExec(U)}});
+RealmLine.drafts(['nItem','nNext','nLink','tTitle','cTopic','note','fpad','fwIn','faName','faLabel','fvItem','fvJob']);
+RealmLine.onBack(function(ev){if(ev!=='leave')return;try{var a=document.querySelector('.tab.on');if(a)localStorage.setItem('realm_desk_tab',JSON.stringify({n:a.id.replace('tab-',''),t:Date.now()}))}catch(e){}});
+})();</script>
 <script src="voice.js"></script>
 </body></html>
