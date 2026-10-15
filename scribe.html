@@ -86,4 +86,4 @@ $("mic").onclick=function(){if(listening){try{rec.stop()}catch(e){}if(window.Rea
 if(window.RealmLine){RealmLine.drafts(["nt"]);if(RealmLine.mic)RealmLine.mic("notes",startMic);RealmLine.onBack(function(){ticks=lsGet(TK,{});notes=lsGet(NK,[]);if(!Array.isArray(notes))notes=[];drawTasks();drawNotes()})}
 drawTasks();drawNotes();
 </script><script src="voice.js"></script>
-</body></html>
+<script src="js/saveapp.js" data-mount=".top"></script></body></html>
