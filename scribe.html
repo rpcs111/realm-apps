@@ -44,6 +44,7 @@ li{display:flex;gap:12px;padding:12px 2px;border-bottom:1px solid rgba(255,255,2
 <div class="row"><label>&#128247; Photo<input type="file" accept="image/*" id="aP" hidden></label><button type="button" id="aL">&#128279; Link</button><label>&#128206; File<input type="file" id="aF" hidden></label></div>
 <div class="row"><button type="button" class="del" id="eD">Delete</button><button type="button" id="eC">Cancel</button><button type="button" class="pri" id="eS">Save</button></div>
 </div></div>
+<script src="js/reconnect.js"></script>
 <script>
 var OWN={Ange:"#007aff",Ara:"#5856d6",Nova:"#34c759",Julie:"#ff2d55"},ON=Object.keys(OWN);
 /* Storage adapter: swap to the Desk doPost/Sheet later by setting STORE.remote = exec URL. */
@@ -91,5 +92,9 @@ document.getElementById("sheet").onclick=function(e){if(e.target.id==="sheet")cl
 document.getElementById("eD").onclick=function(){if(!confirm("Delete this item?"))return;items.splice(items.indexOf(cur),1);closeEd();persist()};
 if(!STORE.ok)warn("This browser blocks saving (Incognito?). Items stay until you close this tab. Use normal Chrome to keep them.");
 draw();
-</script><script src="voice.js"></script>
+</script><script>/* keep drafts and the open editor when you jump in and out (see js/reconnect.js) */
+(function(){if(!window.RealmLine)return;var EK='realm_scribe_edit_v1';RealmLine.drafts(['nt']);
+RealmLine.onBack(function(ev){if(ev!=='leave')return;try{if(draft&&cur&&document.getElementById('sheet').style.display==='flex'){var d=JSON.parse(JSON.stringify(draft));d.title=document.getElementById('eT').value;d.note=document.getElementById('eN').value;localStorage.setItem(EK,JSON.stringify({id:cur.id,d:d,t:Date.now()}))}else localStorage.removeItem(EK)}catch(e){}});
+try{var sv=JSON.parse(localStorage.getItem(EK)||'null');localStorage.removeItem(EK);if(sv&&Date.now()-sv.t<864e5){var it=find(sv.id);if(it){openEd(it);draft=sv.d;draft.att=draft.att||[];document.getElementById('eT').value=sv.d.title||'';document.getElementById('eN').value=sv.d.note||'';drawEd()}}}catch(e){}
+})();</script><script src="voice.js"></script>
 </body></html>
