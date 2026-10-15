@@ -1,0 +1,118 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Realm Flow Map — Metatron's Cube</title>
+<link rel="icon" href="icon.svg">
+<style>
+*{box-sizing:border-box}html{background:#05070f}
+body{margin:0;background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed;color:#e8eefc;font:15px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;overflow-x:hidden}
+header{padding:10px 14px 4px}h1{margin:0;font-size:21px}header p{margin:3px 0 0;color:#94a3b8;font-size:13px}a{color:#7de9ff}
+.legend{font-size:13px;color:#a8b3c9;padding:4px 14px 0;display:flex;flex-wrap:wrap;gap:4px 16px}.legend span{white-space:nowrap}
+.sw{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:3px;vertical-align:-1px}
+.ln{display:inline-block;width:26px;height:0;border-top:3px solid #cbd5e1;vertical-align:4px;margin-right:5px}
+.page{display:grid;grid-template-columns:1fr;gap:6px;padding:4px 4px 24px}
+#wrap{width:100%;max-width:900px;margin:0 auto}svg{width:100%;height:auto;display:block}
+.links{max-width:900px;width:100%;margin:0 auto;padding:0 10px}.links h2{font-size:13px;letter-spacing:.12em;color:#94a3b8;margin:8px 0 6px;font-weight:600}
+.links a{display:flex;align-items:center;gap:10px;padding:10px 12px;margin:0 0 7px;background:rgba(14,22,44,.65);border:1px solid rgba(125,233,255,.18);border-radius:12px;color:#e8eefc;text-decoration:none;font-size:15px}
+.links a i{font-style:normal;font-size:18px;width:24px;text-align:center}.links a small{color:#8ea0c2;margin-left:auto;font-size:12px}
+@media (min-width:1000px){.page{grid-template-columns:minmax(0,1fr) 260px;align-items:start;padding:0 14px 20px}#wrap{max-width:min(900px,calc(100vh - 120px))}.links{padding:0;margin-top:8px}}
+.ni{text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.nt{font-weight:700;fill:#fff;text-anchor:middle;pointer-events:none}.ns{fill:#cbd5e1;text-anchor:middle;pointer-events:none}
+.el{font:600 19px system-ui;}.ph .el{font-size:24px}.el{fill:#fde68a;text-anchor:middle;paint-order:stroke;stroke:#05070f;stroke-width:5px;pointer-events:none}
+</style></head><body>
+<header><h1>Realm Flow Map — Metatron's Cube</h1><p>Everything loops through Google Calendar. <a href="./map.html">&#8592; flow map</a> · <a href="./metatron.html">first cube</a></p></header>
+<div class="legend">
+<span><i class="sw" style="background:#4285f4"></i>Google</span>
+<span><i class="sw" style="background:#a78bfa"></i><i class="sw" style="background:#fbbf24"></i>Workflow</span>
+<span><i class="sw" style="background:#25d366"></i><i class="sw" style="background:#f97316"></i>Outside world</span>
+<span><i class="ln"></i>into Calendar</span>
+<span><i class="ln" style="border-top-style:dotted"></i>storage</span>
+<span><i class="ln" style="border-top-style:dashed"></i>workflow, both ways</span>
+<span style="color:#64748b">faint lines = Metatron's Cube</span>
+</div>
+<div class="page">
+<div id="wrap"><svg id="map" viewBox="12 -18 976 1032" role="img" aria-label="Realm Flow Map as Metatron's Cube"></svg></div>
+<nav class="links" aria-label="Realm links"><h2>REALM LINKS</h2>
+<a href="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec" target="_blank" rel="noopener"><i>&#128421;&#65039;</i>Realm Desk v9</a>
+<a href="https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec" target="_blank" rel="noopener"><i>&#128220;</i>Cert Studio</a>
+<a href="./scribe.html"><i>&#9989;</i>You Got Me Bro</a>
+<a href="./search.html"><i>&#128269;</i>Search Studio</a>
+<a href="https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit" target="_blank" rel="noopener"><i>&#128203;</i>REALM OPEN REGISTER<small>sheet</small></a>
+<a href="https://calendar.google.com/calendar/u/0/r?authuser=info@realmpcs.com" target="_blank" rel="noopener"><i>&#128197;</i>Google Calendar<small>info@</small></a>
+<a href="./map.html"><i>&#128506;&#65039;</i>Flow map</a>
+</nav>
+</div>
+<script>
+(function(){
+var NS='http://www.w3.org/2000/svg',svg=document.getElementById('map'),C=500,D=200;
+function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e}
+function pt(r,deg){var a=deg*Math.PI/180;return [C+r*Math.cos(a),C+r*Math.sin(a)]}
+var CAL='https://calendar.google.com/calendar/u/0/r?authuser=info@realmpcs.com',GM='https://mail.google.com/mail/u/0/#inbox',GD='https://drive.google.com/drive/my-drive',GT='https://tasks.google.com/',YG='./scribe.html',DESK='https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec';
+var PH=svg.getBoundingClientRect().width<600,RC=PH?82:78,RI=PH?82:64,RO=PH?78:70;
+var centre={id:'cal',name:['Google','Calendar'],pn:['Calendar'],ic:1,sub:['Source of truth'],ps:['Source','of truth'],icon:'\u{1F4C5}',col:'#1a73e8',fill:'#0b2a5b',p:[C,C],r:RC,link:CAL};
+/* inner hexagon, alternating storage / workflow (angle 0 = right, clockwise) */
+var inner=[
+ {id:'i_tasks',kind:'store',name:['Google','Tasks'],sub:['You Got Me Bro'],ps:['You Got','Me Bro'],icon:'\u2705',col:'#4285f4',a:-90,link:GT},
+ {id:'i_book',kind:'flow',name:['Booking'],sub:['into Calendar'],ps:['into','Calendar'],icon:'\u{1F4CC}',col:'#a78bfa',a:-30,link:CAL},
+ {id:'i_gmail',kind:'store',name:['Gmail'],sub:['the pull'],icon:'\u2709\uFE0F',col:'#5e97f6',a:30,link:GM},
+ {id:'i_roster',kind:'flow',name:['Rostering'],sub:['Deputy · look-only'],ps:['Deputy','look-only'],icon:'\u{1F465}',col:'#fbbf24',a:90,link:'https://once.deputy.com'},
+ {id:'i_drive',kind:'store',name:['Google','Drive'],sub:['storage'],icon:'\u{1F5C2}\uFE0F',col:'#8ab4f8',a:150,link:GD},
+ {id:'i_follow',kind:'flow',name:['Follow-ups'],sub:['You Got Me Bro'],ps:['You Got','Me Bro'],icon:'\u{1F501}',col:'#c084fc',a:210,link:YG}];
+/* outer hexagon */
+var outer=[
+ {id:'o_gmail',name:['Gmail'],icon:'\u2709\uFE0F',col:'#5e97f6',a:-90,link:GM},
+ {id:'o_gtask',name:['G Task'],icon:'\u2705',col:'#4285f4',a:-30,link:GT},
+ {id:'o_todo',name:['Ange','To Do'],icon:'\u{1F4DD}',col:'#22d3ee',a:30,link:GT},
+ {id:'o_drive',name:['Google','Drive'],icon:'\u{1F5C2}\uFE0F',col:'#8ab4f8',a:90,link:GD},
+ {id:'o_wa',name:['WhatsApp'],icon:'\u{1F4AC}',col:'#25d366',a:150,link:'https://web.whatsapp.com/'},
+ {id:'o_step',name:['Steppity'],icon:'\u{1F463}',col:'#f97316',a:210,link:''}];
+inner.forEach(function(n){n.p=pt(D,n.a);n.r=RI});
+outer.forEach(function(n){n.p=pt(2*D,n.a);n.r=RO});
+var chat={id:'o_2chat',name:['2Chat'],icon:'\u{1F4F2}',col:'#fb923c',p:pt(372,124),r:50,link:''};
+var ara={id:'ara',name:['Ara'],sub:['head · reads logs'],ps:['head','reads logs'],col:'#94a3b8',fill:'#1e293b',p:[100,930],r:78,dash:1};
+var nova={id:'nova',name:['Nova'],sub:['writes code · own log'],ps:['writes code','own log'],col:'#94a3b8',fill:'#1e293b',p:[900,930],r:78,dash:1};
+var ALL=[centre].concat(inner,outer,[chat,ara,nova]);
+var defs=el('defs',{}),mk={};
+function marker(col){if(mk[col])return mk[col];var id='ah'+col.slice(1);var m=el('marker',{id:id,viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:16,markerHeight:16,markerUnits:'userSpaceOnUse',orient:'auto-start-reverse'},defs);el('path',{d:'M0,0L10,5L0,10z',fill:col},m);return mk[col]='url(#'+id+')'}
+/* 1. Metatron's Cube: 13 circles + 78 lines */
+var geo=el('g',{}),G=[[C,C]],k,i,j;
+for(k=0;k<6;k++)G.push(pt(D,-90+60*k));for(k=0;k<6;k++)G.push(pt(2*D,-90+60*k));
+for(i=0;i<13;i++)for(j=i+1;j<13;j++)el('line',{x1:G[i][0],y1:G[i][1],x2:G[j][0],y2:G[j][1],stroke:'#7dd3fc','stroke-opacity':.10,'stroke-width':1.4,'class':'geo'},geo);
+G.forEach(function(q){el('circle',{cx:q[0],cy:q[1],r:D/2,fill:'none',stroke:'#7dd3fc','stroke-opacity':.15,'stroke-width':1.4},geo)});
+/* 2. arrows: straight if clear, otherwise bent around any node in the way */
+function bez(a,c,b,t){var u=1-t;return [u*u*a[0]+2*u*t*c[0]+t*t*b[0],u*u*a[1]+2*u*t*c[1]+t*t*b[1]]}
+function clear(a,c,b,from,to){for(var t=0;t<=1;t+=0.02){var q=bez(a,c,b,t);for(var m=0;m<ALL.length;m++){var n=ALL[m];if(n===from||n===to)continue;if(Math.hypot(q[0]-n.p[0],q[1]-n.p[1])<n.r+12)return false}}return true}
+function edge(from,to,o){o=o||{};
+ var dx=to.p[0]-from.p[0],dy=to.p[1]-from.p[1],L=Math.hypot(dx,dy),ux=dx/L,uy=dy/L,px=-uy,py=ux;
+ var a=[from.p[0]+ux*(from.r+3),from.p[1]+uy*(from.r+3)],b=[to.p[0]-ux*(to.r+4),to.p[1]-uy*(to.r+4)],mid=[(a[0]+b[0])/2,(a[1]+b[1])/2],c=mid,bent=false;
+ if(!clear(a,c,b,from,to)){var sides=o.side?[o.side,-o.side]:[1,-1],done=false;
+  for(var s=20;s<=320&&!done;s+=8)for(var z=0;z<2;z++){var cc=[mid[0]+px*s*sides[z],mid[1]+py*s*sides[z]];if(clear(a,cc,b,from,to)){c=cc;done=true;bent=true;break}}
+  var t1=[c[0]-from.p[0],c[1]-from.p[1]],l1=Math.hypot(t1[0],t1[1]),t2=[to.p[0]-c[0],to.p[1]-c[1]],l2=Math.hypot(t2[0],t2[1]);
+  a=[from.p[0]+t1[0]/l1*(from.r+3),from.p[1]+t1[1]/l1*(from.r+3)];b=[to.p[0]-t2[0]/l2*(to.r+4),to.p[1]-t2[1]/l2*(to.r+4)]}
+ var attrs={d:'M'+a[0]+','+a[1]+' Q'+c[0]+','+c[1]+' '+b[0]+','+b[1],fill:'none',stroke:from.col,'stroke-width':o.w||3.5,'stroke-dasharray':o.dash||'','stroke-linecap':o.dash&&o.dash.charAt(0)==='1'?'round':'butt','marker-end':marker(from.col),'class':'edge','data-from':from.id,'data-to':to.id};
+ if(o.both)attrs['marker-start']=marker(from.col);
+ var path=el('path',attrs,o.layer);
+ if(o.label){var q=bez(a,c,b,o.at||.5);el('text',{x:q[0]+(o.lx||0),y:q[1]+(o.ly||0),'class':'el'},o.layer).textContent=o.label}
+ return path}
+var lay=el('g',{});if(PH)svg.classList.add('ph');
+/* outer -> centre, solid. Each bends anticlockwise into the gap between two inner nodes. WhatsApp goes via 2Chat. */
+outer.forEach(function(n){if(n.id!=='o_wa')edge(n,centre,{side:-1,layer:lay})});
+edge(outer[4],chat,{layer:lay,label:'source',lx:-34,ly:32,w:3.5});
+edge(chat,centre,{layer:lay,label:'bridge',at:.06,lx:44,ly:22,w:3.5});
+inner.forEach(function(n){if(n.kind==='store')edge(n,centre,{dash:'1 8',layer:lay,w:4});else edge(n,centre,{dash:'9 6',both:true,layer:lay,w:3.5})});
+/* 3. nodes */
+function node(n){var g=el('g',{'class':'node cube','data-id':n.id}),host=g;
+ if(n.link){host=el('a',{href:n.link,target:n.link.charAt(0)==='.'?'_self':'_blank',rel:'noopener'},g)}
+ el('circle',{cx:n.p[0],cy:n.p[1],r:n.r,fill:n.fill||'#0b1a33',stroke:n.col,'stroke-width':4,'stroke-dasharray':n.dash?'7 5':''},host);
+ if(!n.dash)el('circle',{cx:n.p[0],cy:n.p[1],r:n.r-6,fill:n.col,'fill-opacity':.15},host);
+ var small=n.r<60,fsN=PH?(small?25:27):(small?19:21),fsS=PH?23:15,LH=1.3;
+ var subs=(PH&&n.ps)?n.ps:(n.sub||[]),rows=[];if(n.ic)rows.push({s:n.icon,c:'ni',f:PH?26:24});
+ ((PH&&n.pn)?n.pn:n.name).forEach(function(s){rows.push({s:s,c:'nt',f:fsN})});subs.forEach(function(s){rows.push({s:s,c:'ns',f:fsS})});
+ var H=rows.reduce(function(h,r){return h+r.f*LH},0),y=n.p[1]-H/2;
+ rows.forEach(function(r){var t=el('text',{x:n.p[0],y:(y+r.f*LH/2).toFixed(1),'class':r.c,'font-size':r.f,'dominant-baseline':'central'},host);t.textContent=r.s;
+  if(r.c!=='ni'){var dy=Math.max(Math.abs(y-n.p[1]),Math.abs(y+r.f*LH-n.p[1])),max=2*Math.sqrt(Math.max(0,n.r*n.r-dy*dy))-12,w=t.getComputedTextLength();if(w>max&&max>0)t.setAttribute('font-size',(r.f*max/w).toFixed(1))}
+  y+=r.f*LH});
+ /* icon badge on the rim, top-left */
+ if(n.icon&&!n.ic){var br=PH?24:19,oa=Math.atan2(n.p[1]-C,n.p[0]-C),bx=n.p[0]+Math.cos(oa)*(n.r+br*0.55),by=n.p[1]+Math.sin(oa)*(n.r+br*0.55);el('circle',{cx:bx,cy:by,r:br,fill:'#0b1a33',stroke:n.col,'stroke-width':2.5},host);el('text',{x:bx,y:by+1,'class':'ni','font-size':PH?26:21,'dominant-baseline':'central'},host).textContent=n.icon}}
+ALL.forEach(node);
+[].forEach.call(svg.querySelectorAll('text.el'),function(x){svg.appendChild(x)});
+})();
+</script>
+</body></html>
