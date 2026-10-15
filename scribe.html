@@ -1,100 +1,83 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#ffffff"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg"><title>You Got Me Bro</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#05070f"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg"><title>Notes</title>
+<link rel="stylesheet" href="realm.css">
 <style>
-*{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:rgba(14,22,44,.72);color:#e8eefc;font:16px/1.4 -apple-system,system-ui,Roboto,sans-serif;padding:calc(14px + env(safe-area-inset-top)) 16px calc(90px + env(safe-area-inset-bottom))}
+*{box-sizing:border-box}html,body{overflow-x:hidden}
+body{margin:0;background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed;color:#e8eefc;font:16px/1.4 -apple-system,system-ui,Roboto,sans-serif;padding:calc(12px + env(safe-area-inset-top)) 14px calc(120px + env(safe-area-inset-bottom))}
 .wrap{max-width:680px;margin:0 auto}
-.top{display:flex;align-items:center;gap:8px}.top a{color:#007aff;text-decoration:none;font-size:16px}h1{font-size:30px;margin:6px 0 2px;letter-spacing:-.02em}
-.start{display:block;width:100%;border:0;border-radius:14px;background:#1c1c1e;color:#fff;font:700 20px inherit;padding:16px;margin:8px 0}.day{font-size:13px;color:#e8eefc;background:rgba(14,22,44,.72);border-radius:12px;padding:10px 12px;margin-bottom:8px;overflow-wrap:anywhere}.day b.u{color:#ff3b30}.note a{color:#007aff}.urg{color:#ff3b30;font:700 11px inherit;letter-spacing:.05em}.ft{font-size:12px;color:#8f9bb8}li.u{background:rgba(14,22,44,.72)}
-.note{font-size:12px;color:#8f9bb8;margin-bottom:12px}
-.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-bottom:10px}.chips::-webkit-scrollbar{display:none}
-.chip{flex:0 0 auto;border:0;border-radius:999px;padding:7px 12px;font:600 13px inherit;background:rgba(14,22,44,.72);color:#e8eefc;min-height:34px}.chip.on{background:#1c1c1e;color:#fff}
-.add{display:flex;gap:8px;margin-bottom:8px}.add input{flex:1;min-width:0;border:0;background:rgba(14,22,44,.72);border-radius:12px;padding:12px 14px;font-size:16px}
-.add{flex-direction:column}.add input{padding:15px 14px;font-size:17px}.add button{border:0;border-radius:14px;background:#007aff;color:#fff;font:700 20px inherit;padding:16px;min-height:56px;width:100%}.warn{background:rgba(14,22,44,.72);color:#8a4b00;border-radius:12px;padding:10px 12px;font-size:13px;margin-bottom:8px}.ex{display:block;width:100%;text-align:left;border:1px dashed rgba(255,255,255,.1);background:rgba(14,22,44,.72);border-radius:12px;padding:12px;margin:6px 0;font:15px inherit;color:#e8eefc}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}.top a{color:#7de9ff;text-decoration:none;font-size:16px;padding:8px 0}
+h1{font-size:30px;margin:4px 0 2px;letter-spacing:-.02em}h2{font-size:18px;margin:22px 0 6px}
+.sub{font-size:12px;color:#8f9bb8;margin-bottom:10px}
+.box{background:rgba(14,22,44,.8);border:1px solid rgba(0,229,255,.25);border-radius:14px;padding:10px}
+textarea{width:100%;min-height:110px;border:1px solid rgba(0,229,255,.35);background:#0f1830;color:#e8eefc;border-radius:12px;padding:12px;font:17px/1.4 inherit;resize:vertical}
+.btns{display:flex;gap:8px;margin-top:8px}
+.btns button{border:0;border-radius:14px;font:700 18px inherit;min-height:56px;padding:0 16px;color:#fff}
+#mic{background:#dc2626;flex:0 0 120px}#mic.on{background:#16a34a}#save{background:#007aff;flex:1}
+#micMsg{font-size:13px;color:#8f9bb8;margin-top:6px;min-height:18px}
 ul{list-style:none;margin:0;padding:0}
-li{display:flex;gap:12px;padding:12px 2px;border-bottom:1px solid rgba(255,255,255,.1);align-items:flex-start}
-.tick{flex:0 0 26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,.1);background:rgba(14,22,44,.72);margin-top:1px;padding:0;color:#fff;font-size:14px}.tick.d{background:#34c759;border-color:#34c759}
-.body{flex:1;min-width:0}.t{font-weight:600;overflow-wrap:anywhere}.d .t{text-decoration:line-through;color:#8f9bb8}
-.n{font-size:14px;color:#8f9bb8;white-space:pre-wrap;overflow-wrap:anywhere;margin-top:2px}
-.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;align-items:center}
-.own{border:0;border-radius:999px;padding:3px 10px;font:600 12px inherit;color:#fff}
-.att{font-size:13px;color:#007aff;text-decoration:none;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ph{width:56px;height:56px;object-fit:cover;border-radius:8px}
-.ed{border:0;background:none;color:#8f9bb8;font-size:20px;min-width:36px;min-height:36px;padding:0}
-.empty{color:#8f9bb8;text-align:center;padding:30px 0}
-#sheet{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:flex-end;justify-content:center;z-index:50}
-#sheet .p{background:rgba(14,22,44,.72);width:100%;max-width:680px;border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));max-height:92dvh;overflow-y:auto}
-.p input,.p textarea{width:100%;border:0;background:rgba(14,22,44,.72);border-radius:10px;padding:11px 12px;font:16px inherit;margin-bottom:8px}.p textarea{min-height:90px}
-.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.row button,.row label{flex:1 1 auto;border:0;border-radius:10px;background:rgba(14,22,44,.72);padding:11px;font:600 14px inherit;text-align:center;color:#e8eefc}
-.row .pri{background:#007aff;color:#fff}.row .del{background:rgba(14,22,44,.72);color:#ff3b30}
-.atl{display:flex;align-items:center;gap:8px;font-size:13px;margin:4px 0}.atl span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.atl button{border:0;background:none;color:#ff3b30;font-size:18px}
-</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style></head><body><div class="wrap">
-<div class="top"><a href="./">&lsaquo; Apps</a></div>
-<h1>You Got Me Bro</h1>
-<button id="start" class="start">Start here bro</button>
-<div class="day" id="day"></div>
-<div class="note">Saved on this phone only until Scribe deploys. Phone pings and WhatsApp intake come once Scribe deploys. <a href="https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec">Realm Flow Map &rsaquo;</a></div>
-<div class="chips" id="f"></div>
-<div id="warn" class="warn" style="display:none"></div>
-<form class="add" id="add"><input id="nt" placeholder="Type a job, call or note" autocomplete="off" enterkeyhint="done"><button aria-label="Add item">+ Add</button></form>
-<ul id="list"></ul>
+li{display:flex;gap:12px;padding:12px 2px;border-bottom:1px solid rgba(255,255,255,.08);align-items:flex-start}
+.tick{flex:0 0 30px;height:30px;border-radius:50%;border:2px solid #4b5b7a;background:transparent;color:#fff;font-size:16px;padding:0;margin-top:1px}
+.tick.d{background:#34c759;border-color:#34c759}
+.b{flex:1;min-width:0}.t{font-weight:600;overflow-wrap:anywhere}.d .t{text-decoration:line-through;color:#8f9bb8}
+.n{font-size:13px;color:#9fb0cf;white-space:pre-wrap;overflow-wrap:anywhere;margin-top:3px}
+.x{border:0;background:none;color:#ff6b6b;font-size:20px;min-width:36px;min-height:36px}
+.src{font-size:12px;color:#9fb0cf;background:rgba(14,22,44,.8);border-left:3px solid #22d3ee;border-radius:8px;padding:8px 10px;margin-bottom:8px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.row a,.row button{flex:1 1 auto;text-align:center;border:1px solid rgba(0,229,255,.35);background:#0f1830;color:#e8eefc;border-radius:12px;padding:10px;font:600 14px inherit;text-decoration:none;min-height:44px}
+.cnt{font-size:13px;color:#8f9bb8}.empty{color:#8f9bb8;padding:12px 2px}
+</style></head><body><div class="wrap">
+<div class="top"><a href="./index.html">‹ Apps</a><a id="toSearch" href="./search.html">Search Studio ›</a></div>
+<h1>Notes</h1>
+<div class="sub">Was You Got Me Bro / Scribe. Notes and ticks are saved on this phone.</div>
+<div class="box">
+<textarea id="nt" placeholder="Type a note, or tap Mic and talk" aria-label="Note"></textarea>
+<div class="btns"><button id="mic" type="button" aria-label="Dictate a note">🎤 Mic</button><button id="save" type="button">Save note</button></div>
+<div id="micMsg"></div>
 </div>
-<div id="sheet"><div class="p">
-<input id="eT" placeholder="Title"><textarea id="eN" placeholder="Note"></textarea>
-<div class="ft">From</div><div class="row" id="eF"></div><div class="ft">To</div><div class="row" id="eO"></div><div class="row"><button type="button" id="eU">Urgent</button></div>
-<div id="eA"></div>
-<div class="row"><label>&#128247; Photo<input type="file" accept="image/*" id="aP" hidden></label><button type="button" id="aL">&#128279; Link</button><label>&#128206; File<input type="file" id="aF" hidden></label></div>
-<div class="row"><button type="button" class="del" id="eD">Delete</button><button type="button" id="eC">Cancel</button><button type="button" class="pri" id="eS">Save</button></div>
-</div></div>
+<h2>Tasks <span class="cnt" id="tcnt"></span></h2>
+<div class="src" id="tsrc"></div>
+<ul id="tasks"></ul>
+<div class="row"><button id="exp" type="button">Export ticks (CSV)</button><a href="https://tasks.google.com/" target="_blank" rel="noopener">Open Google Tasks</a><a href="https://docs.google.com/spreadsheets/d/1JXjBlr019zrZpNmEpI_a1ZqZ3EFwc5O0HOKbXae2hsg/edit" target="_blank" rel="noopener">Open overlay sheet</a></div>
+<h2>My notes <span class="cnt" id="ncnt"></span></h2>
+<ul id="notes"></ul>
+</div>
 <script src="js/reconnect.js"></script>
 <script>
-var OWN={Ange:"#007aff",Ara:"#5856d6",Nova:"#34c759",Julie:"#ff2d55"},ON=Object.keys(OWN);
-/* Storage adapter: swap to the Desk doPost/Sheet later by setting STORE.remote = exec URL. */
-var STORE={key:"realm_scribe_v1",remote:"",
- mem:null,ok:(function(){try{var k="__t";localStorage.setItem(k,"1");localStorage.removeItem(k);return true}catch(e){return false}})(),
- load:function(){if(!this.ok)return this.mem||[];try{return JSON.parse(localStorage.getItem(this.key))||[]}catch(e){return[]}},
- save:function(a){this.mem=a;if(!this.ok)return true;try{localStorage.setItem(this.key,JSON.stringify(a));return true}catch(e){this.ok=false;warn("Phone storage is full, so new changes are kept until you close this tab.");return false}
-  /* later: fetch(this.remote,{method:"POST",body:JSON.stringify({fn:"scribeSave",args:[a],key:localStorage.getItem("realm_key")||""})}) */}};
-var items=STORE.load(),flt=location.hash==="#julie"?"Julie":"Today",cur=null,draft=null;
-function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
-function persist(){STORE.save(items);draw()}
-function chips(){var v=["Today","All"].concat(ON);document.getElementById("f").innerHTML=v.map(function(o){return'<button class="chip'+(o===flt?" on":"")+'" data-f="'+o+'">'+(o==="Julie"?"Julie view":o)+'</button>'}).join("")}
-function attHtml(a){return a.map(function(x){if(x.k==="photo")return'<img class="ph" src="'+esc(x.v)+'" alt="">';if(x.k==="link")return'<a class="att" href="'+esc(x.v)+'" target="_blank" rel="noopener">&#128279; '+esc(x.v.replace(/^https?:\/\//,""))+'</a>';return x.v?'<a class="att" href="'+esc(x.v)+'" download="'+esc(x.n)+'">&#128206; '+esc(x.n)+'</a>':'<span class="att">&#128206; '+esc(x.n)+' (name only, too big)</span>'}).join("")}
-function draw(){chips();var a=items.filter(function(i){return flt==="All"||(flt==="Today"?!i.done:i.owner===flt)});
- a.sort(function(x,y){return(x.done-y.done)||((y.urgent?1:0)-(x.urgent?1:0))||(y.ts-x.ts)});
- var op=items.filter(function(i){return!i.done}),ur=op.filter(function(i){return i.urgent}).length,by={};op.forEach(function(i){by[i.owner]=(by[i.owner]||0)+1});
- document.getElementById("day").innerHTML="<b>My day</b> &middot; <b class=u>"+ur+" urgent</b> &middot; "+op.length+" open"+(op.length?" &middot; "+Object.keys(by).map(function(k){return esc(k)+" "+by[k]}).join(", "):"");
- document.getElementById("list").innerHTML=a.length?a.map(function(i){return'<li class="'+(i.done?"d":"")+(i.urgent&&!i.done?" u":"")+'"><button class="tick'+(i.done?" d":"")+'" data-t="'+i.id+'" aria-label="Done">'+(i.done?"&#10003;":"")+'</button><div class="body">'+(i.urgent?'<div class="urg">URGENT</div>':'')+'<div class="t">'+esc(i.title)+'</div>'+(i.note?'<div class="n">'+esc(i.note)+'</div>':"")+'<div class="meta"><span class="ft">'+esc(i.from||"Ange")+' &rarr;</span><button class="own" data-o="'+i.id+'" style="background:'+OWN[i.owner]+'">'+esc(i.owner)+'</button>'+attHtml(i.att||[])+'</div></div><button class="ed" data-e="'+i.id+'" aria-label="Edit">&#8943;</button></li>'}).join(""):'<li class="empty" style="display:block;text-align:left">Nothing here yet. Tap an example to add it, or type above.'+EX.map(function(x){return'<button class="ex" data-ex="'+esc(x)+'">+ '+esc(x)+'</button>'}).join('')+'</li>'}
-var EX=["Call back client about anchor test","Julie → Ange: send cert for 93 Pelham","Quote follow-up: Leedwell 24 Riley St","Photo of roof access for next quote"];
-function warn(m){var w=document.getElementById("warn");w.textContent=m;w.style.display="block"}
-function addItem(v){items.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:v,note:"",done:false,from:"Ange",urgent:false,owner:(flt==="All"||flt==="Today")?"Ange":flt,att:[],ts:Date.now()});persist()}
-function find(id){return items.filter(function(i){return i.id===id})[0]}
-document.getElementById("add").onsubmit=function(e){e.preventDefault();var v=document.getElementById("nt").value.trim();if(!v)return;items.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:v,note:"",done:false,from:"Ange",urgent:false,owner:(flt==="All"||flt==="Today")?"Ange":flt,att:[],ts:Date.now()});document.getElementById("nt").value="";persist()};
-document.getElementById("f").onclick=function(e){var b=e.target.closest("[data-f]");if(!b)return;flt=b.dataset.f;history.replaceState(null,"",flt==="Julie"?"#julie":location.pathname);draw()};
-document.getElementById("list").onclick=function(e){var b=e.target.closest("button");if(!b)return;
- if(b.dataset.ex){addItem(b.dataset.ex)}
- else if(b.dataset.t){var i=find(b.dataset.t);i.done=!i.done;persist()}
- else if(b.dataset.o){var i=find(b.dataset.o);i.owner=ON[(ON.indexOf(i.owner)+1)%ON.length];persist()}
- else if(b.dataset.e)openEd(find(b.dataset.e))};
-function drawEd(){document.getElementById("eF").innerHTML=ON.map(function(o){return'<button type="button" data-fr="'+o+'" style="'+((draft.from||"Ange")===o?"background:"+OWN[o]+";color:#fff":"")+'">'+o+'</button>'}).join("");var u=document.getElementById("eU");u.style.background=draft.urgent?"#ff3b30":"";u.style.color=draft.urgent?"#fff":"";u.textContent=draft.urgent?"Urgent \u2713":"Mark urgent";document.getElementById("eO").innerHTML=ON.map(function(o){return'<button type="button" data-w="'+o+'" style="'+(draft.owner===o?"background:"+OWN[o]+";color:#fff":"")+'">'+o+'</button>'}).join("");
- document.getElementById("eA").innerHTML=draft.att.map(function(x,k){return'<div class="atl">'+(x.k==="photo"?'<img class="ph" src="'+esc(x.v)+'" alt="">':"")+'<span>'+esc(x.k==="link"?x.v:x.n||"photo")+'</span><button type="button" data-x="'+k+'">&times;</button></div>'}).join("")}
-function openEd(i){cur=i;draft=JSON.parse(JSON.stringify(i));draft.att=draft.att||[];document.getElementById("eT").value=i.title;document.getElementById("eN").value=i.note;drawEd();document.getElementById("sheet").style.display="flex"}
-function closeEd(){document.getElementById("sheet").style.display="none";cur=draft=null}
-document.getElementById("eO").onclick=function(e){var b=e.target.closest("[data-w]");if(b){draft.owner=b.dataset.w;drawEd()}};
-document.getElementById("eF").onclick=function(e){var b=e.target.closest("[data-fr]");if(b){draft.from=b.dataset.fr;drawEd()}};
-document.getElementById("eU").onclick=function(){draft.urgent=!draft.urgent;drawEd()};
-document.getElementById("start").onclick=function(){flt="Today";history.replaceState(null,"",location.pathname);draw();document.getElementById("list").scrollIntoView({behavior:"smooth"})};
-document.getElementById("eA").onclick=function(e){var b=e.target.closest("[data-x]");if(b){draft.att.splice(+b.dataset.x,1);drawEd()}};
-document.getElementById("aL").onclick=function(){var u=prompt("Paste link");if(!u)return;u=u.trim();if(!/^https?:\/\//i.test(u))u="https://"+u;draft.att.push({k:"link",v:u});drawEd()};
-document.getElementById("aP").onchange=function(){var f=this.files[0];this.value="";if(!f)return;var img=new Image(),r=new FileReader();r.onload=function(){img.onload=function(){var m=1000,s=Math.min(1,m/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=img.width*s;c.height=img.height*s;c.getContext("2d").drawImage(img,0,0,c.width,c.height);draft.att.push({k:"photo",v:c.toDataURL("image/jpeg",.7),n:f.name});drawEd()};img.src=r.result};r.readAsDataURL(f)};
-document.getElementById("aF").onchange=function(){var f=this.files[0];this.value="";if(!f)return;if(f.size>300000){draft.att.push({k:"file",v:"",n:f.name});drawEd();return}var r=new FileReader();r.onload=function(){draft.att.push({k:"file",v:r.result,n:f.name});drawEd()};r.readAsDataURL(f)};
-document.getElementById("eS").onclick=function(){var t=document.getElementById("eT").value.trim();if(!t)return;draft.title=t;draft.note=document.getElementById("eN").value;var k=items.indexOf(cur);items[k]=draft;closeEd();persist()};
-document.getElementById("eC").onclick=closeEd;
-document.getElementById("sheet").onclick=function(e){if(e.target.id==="sheet")closeEd()};
-document.getElementById("eD").onclick=function(){if(!confirm("Delete this item?"))return;items.splice(items.indexOf(cur),1);closeEd();persist()};
-if(!STORE.ok)warn("This browser blocks saving (Incognito?). Items stay until you close this tab. Use normal Chrome to keep them.");
-draw();
-</script><script>/* keep drafts and the open editor when you jump in and out (see js/reconnect.js) */
-(function(){if(!window.RealmLine)return;var EK='realm_scribe_edit_v1';RealmLine.drafts(['nt']);
-RealmLine.onBack(function(ev){if(ev!=='leave')return;try{if(draft&&cur&&document.getElementById('sheet').style.display==='flex'){var d=JSON.parse(JSON.stringify(draft));d.title=document.getElementById('eT').value;d.note=document.getElementById('eN').value;localStorage.setItem(EK,JSON.stringify({id:cur.id,d:d,t:Date.now()}))}else localStorage.removeItem(EK)}catch(e){}});
-try{var sv=JSON.parse(localStorage.getItem(EK)||'null');localStorage.removeItem(EK);if(sv&&Date.now()-sv.t<864e5){var it=find(sv.id);if(it){openEd(it);draft=sv.d;draft.att=draft.att||[];document.getElementById('eT').value=sv.d.title||'';document.getElementById('eN').value=sv.d.note||'';drawEd()}}}catch(e){}
-})();</script><script src="voice.js"></script>
+"use strict";
+var TASKS=[{"id": "ov2", "row": 2, "title": "CHECK CERT \u00b7 161 Flinders Lane", "due": "", "snap": "SNAPSHOT 17 Sep \u2014 live status unknown", "scope": "Anchor certification \u2014 re cert", "src": "JP to do (via 'JP TO DO \u2014 cert checks (mirror)' sheet, 17 Sep)", "link": "https://tasks.google.com/", "notes": "Cert SENT 17 Sep; invoice NO (raise in Zoho, EST-7024)"}, {"id": "ov3", "row": 3, "title": "CHECK CERT \u00b7 2 Johnston St Collingwood", "due": "", "snap": "SNAPSHOT 17 Sep \u2014 live status unknown", "scope": "Anchor certification \u2014 re cert", "src": "JP to do (via 'JP TO DO \u2014 cert checks (mirror)' sheet, 17 Sep)", "link": "https://tasks.google.com/", "notes": "Cert SENT 17 Sep; invoice NO (raise from EST-7019)"}, {"id": "ov4", "row": 4, "title": "CHECK CERT \u00b7 42-44 Shiel St North Melbourne", "due": "", "snap": "SNAPSHOT 17 Sep \u2014 live status unknown", "scope": "Anchor certification \u2014 re cert", "src": "JP to do (via 'JP TO DO \u2014 cert checks (mirror)' sheet, 17 Sep)", "link": "https://tasks.google.com/", "notes": "Cert SENT 17 Sep; invoice NO (WO M6020-184)"}, {"id": "ov5", "row": 5, "title": "CHECK CERT \u00b7 1-3 Valiant St Abbotsford", "due": "", "snap": "SNAPSHOT 17 Sep \u2014 live status unknown", "scope": "Anchor certification \u2014 re cert", "src": "JP to do (via 'JP TO DO \u2014 cert checks (mirror)' sheet, 17 Sep)", "link": "https://tasks.google.com/", "notes": "Cert SENT 17 Sep; invoice NO (WO not sighted)"}, {"id": "ov6", "row": 6, "title": "CHECK CERT \u00b7 159 La Trobe St (Latrobe Gardens) \u2014 25.8.26", "due": "", "snap": "SNAPSHOT 17 Sep \u2014 live status unknown", "scope": "Anchor certification \u2014 re cert", "src": "JP to do (via 'JP TO DO \u2014 cert checks (mirror)' sheet, 17 Sep)", "link": "https://tasks.google.com/", "notes": "Cert SENT 17 Sep; INV-8159 sent 26 Aug, payment not seen"}, {"id": "ov7", "row": 7, "title": "CHECK CERT \u00b7 11 Findon St Hawthorn \u2014 27.8.26", "due": "", "snap": "SNAPSHOT 17 Sep \u2014 live status unknown", "scope": "Anchor certification \u2014 re cert", "src": "JP to do (via 'JP TO DO \u2014 cert checks (mirror)' sheet, 17 Sep)", "link": "https://tasks.google.com/", "notes": "Cert SENT 17 Sep; invoice NO (raise from EST-7042 $495)"}, {"id": "ov8", "row": 8, "title": "CHECK CERT \u00b7 5 Davidson St South Yarra \u2014 31.7.26", "due": "", "snap": "SNAPSHOT 17 Sep \u2014 live status unknown", "scope": "Anchor certification \u2014 re cert", "src": "JP to do (via 'JP TO DO \u2014 cert checks (mirror)' sheet, 17 Sep)", "link": "https://tasks.google.com/", "notes": "Cert SENT 17 Sep; INV-8139 $1595 PAID 13 Aug"}, {"id": "ov9", "row": 9, "title": "Ring Shannons 13 46 46 \u2014 X3 agreed value dispute", "due": "2026-10-06 08:00", "snap": "SNAPSHOT 5 Oct \u2014 live status unknown", "scope": "(personal)", "src": "Ange to do (logged in REALM OPEN REGISTER CHANGELOG, 5 Oct)", "link": "https://tasks.google.com/", "notes": "Created 5 Oct per register log row 109"}, {"id": "ov10", "row": 10, "title": "MOVE WHATSAPP BUSINESS off the S26", "due": "~2026-10-20", "snap": "SNAPSHOT 9 Oct \u2014 live status unknown", "scope": "(none / admin)", "src": "Ange to do (H-0017 handover, 9 Oct)", "link": "https://tasks.google.com/", "notes": "Phone changeover; phone return due about 20 Oct"}];
+var TSRC="Source: GOOGLE TASKS OVERLAY sheet in Drive (read 15 Oct 2026). These "+TASKS.length+" rows are snapshots from 17 Sep, 5 Oct and 9 Oct, not a live pull from Google Tasks, so some may already be done. Ticks here stay on this phone; use Export so Ara can check them against the system.";
+var TK="realm_notes_tasks_v1",NK="realm_scribe_v1";
+function $(i){return document.getElementById(i)}
+function lsGet(k,d){try{var v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){$("micMsg").textContent="This browser is not saving (private mode?).";return false}}
+var ticks=lsGet(TK,{}),notes=lsGet(NK,[]);if(!Array.isArray(notes))notes=[];
+function mk(t,c,txt){var e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e}
+function drawTasks(){var U=$("tasks");U.textContent="";$("tsrc").textContent=TSRC;var done=0;
+TASKS.forEach(function(t){var tk=ticks[t.id],d=!!(tk&&tk.done);if(d)done++;var li=mk("li",d?"d":"");var b=mk("button","tick"+(d?" d":""),d?"\u2713":"");b.type="button";b.setAttribute("aria-label","Tick "+t.title);b.setAttribute("data-t",t.id);
+b.onclick=function(){var cur=ticks[t.id]&&ticks[t.id].done;ticks[t.id]={done:!cur,at:new Date().toISOString()};lsSet(TK,ticks);drawTasks()};
+var bd=mk("div","b");bd.appendChild(mk("div","t",t.title));var meta=[];if(t.due)meta.push("Due "+t.due);if(t.scope)meta.push(t.scope);if(t.notes)meta.push(t.notes);meta.push(t.src+" \u00b7 "+t.snap);bd.appendChild(mk("div","n",meta.join("\n")));
+li.appendChild(b);li.appendChild(bd);U.appendChild(li)});
+$("tcnt").textContent=done+" of "+TASKS.length+" ticked"}
+function drawNotes(){var U=$("notes");U.textContent="";var a=notes.slice().sort(function(x,y){return(x.done-y.done)||(y.ts-x.ts)});$("ncnt").textContent=notes.filter(function(n){return!n.done}).length+" open";
+if(!a.length){U.appendChild(mk("li","empty","No notes yet. Type or tap Mic above, then Save note."));return}
+a.forEach(function(n){var li=mk("li",n.done?"d":"");var b=mk("button","tick"+(n.done?" d":""),n.done?"\u2713":"");b.type="button";b.setAttribute("aria-label","Done");b.onclick=function(){n.done=!n.done;lsSet(NK,notes);drawNotes()};
+var bd=mk("div","b");bd.appendChild(mk("div","t",n.title||""));var extra=[];if(n.note)extra.push(n.note);if(n.owner&&n.owner!=="Ange")extra.push("For "+n.owner);if(n.ts)extra.push(new Date(n.ts).toLocaleString("en-AU",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}));(n.att||[]).forEach(function(x){if(x.k==="link")extra.push(x.v);else if(x.n)extra.push("Attachment: "+x.n)});bd.appendChild(mk("div","n",extra.join("\n")));
+var x=mk("button","x","\u00d7");x.type="button";x.setAttribute("aria-label","Delete note");x.onclick=function(){if(!confirm("Delete this note?"))return;notes.splice(notes.indexOf(n),1);lsSet(NK,notes);drawNotes()};
+li.appendChild(b);li.appendChild(bd);li.appendChild(x);U.appendChild(li)})}
+$("save").onclick=function(){var v=$("nt").value.trim();if(!v)return;var lines=v.split("\n");notes.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:lines[0].slice(0,140),note:lines.length>1||lines[0].length>140?v:"",done:false,from:"Ange",urgent:false,owner:"Ange",att:[],ts:Date.now()});lsSet(NK,notes);$("nt").value="";drawNotes()};
+function csvq(s){s=String(s==null?"":s);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
+$("exp").onclick=function(){var rows=[["sheet_row","title","due","linked_scope","source","snapshot_status","notes","ticked_here","ticked_at"]];TASKS.forEach(function(t){var tk=ticks[t.id]||{};rows.push([t.row,t.title,t.due,t.scope,t.src,t.snap,t.notes,tk.done?"yes":"no",tk.at||""])});
+var csv="\ufeff"+rows.map(function(r){return r.map(csvq).join(",")}).join("\r\n");var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="realm_tasks_ticks_"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove()};
+/* mic: dictation into the note box */
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,listening=false,base="";
+function micUI(on){listening=on;$("mic").classList.toggle("on",on);$("mic").textContent=on?"\u25a0 Stop":"\ud83c\udfa4 Mic"}
+function startMic(){if(!SR){$("micMsg").textContent="Voice typing is not available in this browser. Use the mic on your keyboard.";return}
+try{rec=new SR();rec.lang="en-AU";rec.interimResults=true;rec.continuous=true;base=$("nt").value?$("nt").value.replace(/\s*$/," "):"";
+rec.onresult=function(e){var fin="",tmp="";for(var i=e.resultIndex;i<e.results.length;i++){var r=e.results[i];if(r.isFinal)fin+=r[0].transcript;else tmp+=r[0].transcript}if(fin){base+=fin.trim()+" "}$("nt").value=base+tmp};
+rec.onerror=function(e){$("micMsg").textContent="Mic: "+(e.error||"error")+". Tap Mic to try again."};
+rec.onend=function(){micUI(false);$("nt").value=$("nt").value.trim();if(window.RealmLine&&RealmLine.micEnd)RealmLine.micEnd("notes")};
+rec.start();micUI(true);$("micMsg").textContent="Listening\u2026 tap Stop when done.";if(window.RealmLine&&RealmLine.micLive)RealmLine.micLive("notes")}catch(err){micUI(false);$("micMsg").textContent="Mic could not start: "+err}}
+$("mic").onclick=function(){if(listening){try{rec.stop()}catch(e){}if(window.RealmLine&&RealmLine.micStop)RealmLine.micStop("notes");micUI(false);$("micMsg").textContent="Stopped."}else startMic()};
+if(window.RealmLine){RealmLine.drafts(["nt"]);if(RealmLine.mic)RealmLine.mic("notes",startMic);RealmLine.onBack(function(){ticks=lsGet(TK,{});notes=lsGet(NK,[]);if(!Array.isArray(notes))notes=[];drawTasks();drawNotes()})}
+drawTasks();drawNotes();
+</script><script src="voice.js"></script>
 </body></html>
