@@ -47,29 +47,30 @@ footer{font-size:11px;color:#6b7a99;padding:8px 10px}
 <aside>
 <div class="card" id="panel"><h3>Selected</h3><i style="font-size:13px;color:#93a3c4">Tap a circle. In Edit mode you can drag, rename, link and delete.</i></div>
 <div class="card legend" id="legend"><h3>Status view</h3><span><i class="dot" style="background:#22c55e"></i>live</span><span><i class="dot" style="background:#facc15"></i>half</span><span><i class="dot" style="background:#ef4444"></i>not built</span><span><i class="dot" style="background:#64748b"></i>not stated</span><div style="font-size:12px;color:#93a3c4;margin-top:4px">Status only where Orion's 30 Sep map states it (Orion's key: green live, half, red not built; half shows yellow here).</div></div>
-<div class="card"><h3>Lines</h3><div style="font-size:12px;color:#93a3c4"><span style="color:#22d3ee">Blue circles</span> = hubs (Calendar centre; Drive underneath is the data layer). <span style="color:#a78bfa">Purple circles</span> = the step each hub holds. Solid blue-grey lines = Gmail, Google Tasks and Drive link straight to Calendar. <span style="color:#93c5fd">Light blue arrows</span> = direction (WhatsApp to 2Chat to Calendar; Orion's step order once steps are placed). Dashed grey = belongs to that hub. Violet = links you add.</div></div>
+<div class="card"><h3>Lines</h3><div style="font-size:12px;color:#93a3c4"><span style="color:#22d3ee">Blue circles</span> = hubs (Calendar centre; Drive lower right is the data layer). <span style="color:#a78bfa">Purple circles</span> = the step each hub holds. Solid blue-grey lines = Gmail, Google Tasks and Drive link straight to Calendar. <span style="color:#93c5fd">Light blue arrows</span> = direction (WhatsApp to 2Chat to Calendar; Orion's step order once steps are placed). Dashed grey = belongs to that hub. Violet = links you add.</div></div>
+<div class="card" id="notes"><h3>Ange's notes (sketch 15 Oct)</h3><div style="font-size:12px;color:#93a3c4">His handwritten side notes, in his order. + Place puts one on the map.</div><div id="noteList"></div></div>
 <div class="card" id="steps"><h3>Steps (from Orion's map)</h3><div style="font-size:12px;color:#93a3c4">Grouped by Orion's flows A-E, in his order. + Place puts a step back on the map next to its hub.</div><div id="stepList"></div></div>
 <div class="card" id="side"><h3>Other items (off the map)</h3><div id="sideList"></div></div>
-<div class="card"><h3>Template</h3><div style="font-size:12px;color:#93a3c4">Steps, order and links taken from REALM_ORION_MASTER_MAP.drawio (Orion, 30 Sep 2026, Drive file 1R8tf-g6dbkOFcXO2Ru8dyqEPr8B19-TI), flows A-E and Systems. Hub layout per Ange, 15 Oct 2026: Calendar centre, Drive directly underneath (data layer), Gmail top, Google Tasks upper right, Zoho lower right, WhatsApp left level with Calendar (via a 2Chat bridge, map only), Deputy upper left (look-only). Realm Apps (placeholder name) is in the side list.</div></div>
+<div class="card"><h3>Template</h3><div style="font-size:12px;color:#93a3c4">Steps, order and links taken from REALM_ORION_MASTER_MAP.drawio (Orion, 30 Sep 2026, Drive file 1R8tf-g6dbkOFcXO2Ru8dyqEPr8B19-TI), flows A-E and Systems. Hub layout per Ange's sketch, 15 Oct 2026, on the true cube points: Calendar centre, Gmail top, Google Tasks upper right, Drive lower right (data layer), Zoho Books / CRM bottom, WhatsApp lower left (via a 2Chat bridge, map only), Deputy upper left (look-only). Realm Apps (placeholder name) is in the side list.</div></div>
 </aside></div>
-<footer>Saved in this browser only (key realm_metatron_layer1_v2). Export to keep a copy. Built by Ara.</footer>
+<footer>Saved in this browser only (key realm_metatron_layer1_v3). Export to keep a copy. Built by Ara.</footer>
 <script>
 "use strict";
-var KEY="realm_metatron_layer1_v2",C=650,R1=180,R2=360,NS="http://www.w3.org/2000/svg";
+var KEY="realm_metatron_layer1_v3",C=650,R1=180,R2=360,NS="http://www.w3.org/2000/svg";
 function pt(r,deg){var a=deg*Math.PI/180;return[Math.round(C+r*Math.cos(a)),Math.round(C+r*Math.sin(a))]}
-var ANG={gmail:-90,tasks:-30,zoho:30,drive:90,wa:180,deputy:210};
+var ANG={gmail:-90,tasks:-30,drive:30,zoho:90,wa:150,deputy:210};
 var L={deputy:"https://www.deputy.com/",chat:"https://app.2chat.io/",cal:"https://calendar.google.com/calendar/u/0/r",gmail:"https://mail.google.com/mail/u/0/#inbox",tasks:"https://tasks.google.com",drive:"https://drive.google.com/drive/folders/1XmP4QkPiL85SDaYbTutYWgW5zZpW8inr",zoho:"https://books.zoho.com/app",wa:"https://web.whatsapp.com",apps:"https://rpcs111.github.io/realm-apps/",certs:"https://drive.google.com/drive/search?q=%22ANCHOR%20ROOF%20TEST%22",cert:"https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec",desk:"https://script.google.com/macros/s/AKfycbzK3mUQipb81VLvLoMfUTY5tGNOimafh_Ljr17VX1OA63bztP1ZqXFEsXUQECe5VkZcyA/exec",reg:"https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit",inv:"https://books.zoho.com/app#/invoices"};
 function H(id,t,k,img,link,src){var p=k<0?[C,C]:pt(R2,ANG[k]);return{id:id,t:t,d:"",kind:"hub",x:p[0],y:p[1],r:78,img:img,link:link,st:"",src:src,fixed:true}}
 function I(id,t,d,k,link,src,st,hub){var p=pt(R1,ANG[k]);return{id:id,t:t,d:d,kind:"inner",x:p[0],y:p[1],r:60,link:link||"",st:st||"",src:src,hub:hub}}
 function S_(id,t,d,r,deg,link,src,st,hub,g){return{id:id,t:t,d:d,link:link||"",st:st||"",src:src,hub:hub,g:g}}
-var CHP=pt(270,150),CHX=CHP[0],CHY=CHP[1];
+var CHP=pt(270,172),CHX=CHP[0],CHY=CHP[1];
 function defaults(){
 var n=[
 H("cal","Calendar",-1,"img/brand/google-calendar.svg",L.cal,"Orion s1: GOOGLE CALENDAR - jobs + staffing (ANCHOR TESTING, ROPE ACCESS, QUOTES yellow). Rule 4: Calendar = jobs/staffing."),
 H("gmail","Gmail","gmail","img/brand/gmail.svg",L.gmail,"Orion INPUTS: email (info@)."),
 H("tasks","Google Tasks","tasks","img/brand/google-tasks.svg",L.tasks,"Orion s7: GOOGLE TASKS (7 lists) ANGE TO DO, REALM QUOTES, JP TO DO, JOBS TO BOOK, WHATSAPP-JOBS, BILLS, LINKS ACCESS."),
-H("drive","Drive - data layer","drive","img/brand/google-drive.svg",L.drive,"Orion s8 + s9: DRIVE > REALM TOOL LINKS; DRIVE > ANCHOR ROOF TEST > 2026 ANCHOR CERTS > client (the ONLY cert home)."),
-H("zoho","Zoho","zoho","",L.zoho,"Orion s2: ZOHO BOOKS / CRM - estimates, invoices, money."),
+H("drive","Drive - data layer","drive","img/brand/google-drive.svg",L.drive,"Data layer (Ange, 15 Oct). Orion s8 + s9: DRIVE > REALM TOOL LINKS; DRIVE > ANCHOR ROOF TEST > 2026 ANCHOR CERTS > client (the ONLY cert home)."),
+H("zoho","Zoho Books / CRM","zoho","",L.zoho,"Orion s2: ZOHO BOOKS / CRM - estimates, invoices, money."),
 H("wa","WhatsApp","wa","img/brand/whatsapp_mono.svg",L.wa,"Orion s4: WHATSAPP BUSINESS - site groups, photos, scope (2Chat pipe DOWN on 30 Sep)."),
 H("deputy","Deputy (look-only)","deputy","",L.deputy,"Orion s3: DEPUTY - roster / shifts (Orion read future shifts via Zapier; Zapier is now banned). Look-only: nothing on this map writes to Deputy."),
 {id:"chat2",t:"2Chat bridge",d:"Step 1: WhatsApp job-group messages tagged to a job reach Calendar (source of truth) via 2Chat. Map only - not connected. Rule 33: do not pay for or reinstate 2Chat without Ange's yes.",kind:"bridge",x:CHX,y:CHY,r:44,link:L.chat,st:"notbuilt",src:"Orion s4 + d8: WhatsApp pipe via 2Chat was DOWN on 25-30 Sep (account expired). Added 15 Oct per Ange as step 1 of WhatsApp to Calendar.",hub:""},
@@ -85,7 +86,7 @@ fl.forEach(function(p){e.push({a:p[0],b:p[1],k:"flow"})});
 n.forEach(function(x){if(x.hub)e.push({a:x.hub,b:x.id,k:"hub"})});
 ["gmail","tasks","drive"].forEach(function(h){e.push({a:h,b:"cal",k:"direct"})});
 e.push({a:"wa",b:"chat2",k:"bridge"});e.push({a:"chat2",b:"cal",k:"bridge"});
-return{v:2,nodes:n,edges:e,placed:[]}}
+return{v:3,nodes:n,edges:e,placed:[]}}
 var STEPS=[
 S_("in1","Inputs","voice/chat nudge, email info@, WhatsApp job groups, Zoho quote on screen, calendar booking",520,-72,L.gmail,"Orion inputs: voice/chat nudge, email (info@), WhatsApp job groups, Zoho quote on screen, calendar booking.","","gmail","A"),
 S_("fa1","A2 Last done?","last done? (Calendar), invoiced? (SOLD/Zoho), WhatsApp group link?",290,-60,L.cal,"Orion fa1: last done? (Calendar), invoiced? (REALM SOLD / Zoho), WhatsApp group link?","","cal","A"),
@@ -105,6 +106,15 @@ S_("fd2","D3 Bills","bills to BILLS list; paid in Zoho to auto-tick + CRM note +
 S_("fe0","E Staff records","Drive > HR > STAFF > name",420,-2,"","Orion fe0: E - STAFF RECORDS - Drive > HR > STAFF > <name> (Contract, Licences, Payroll, Comms, Warnings), email index per person, policy pack legal-checked.","","drive","E")
 ];
 var GROUPS={A:"A - The job (inquiry to paid)",B:"B - Cert",C:"C - Done sweep",D:"D - Email to right list",E:"E - Staff records"};
+var NOTES=[
+{id:"an1",t:"1 Cert Studio",d:"note on sketch",hub:"drive",link:L.cert,src:"Ange's sketch 15 Oct: CERTSTUDIO. Link is the Cert Studio app from the repo launcher (index.html)."},
+{id:"an2",t:"2 Launcher",d:"note on sketch",hub:"cal",link:"https://rpcs111.github.io/realm-apps/index.html",src:"Ange's sketch 15 Oct: LAUNCHER (read as Launcher; written LOUNCER)."},
+{id:"an3",t:"3 Status job",d:"note on sketch",hub:"cal",src:"Ange's sketch 15 Oct: STATUS JOB."},
+{id:"an4",t:"4 GCal = source of truth",d:"note on sketch",hub:"cal",link:L.cal,src:"Ange's sketch 15 Oct: GCAL SOURCE OF TRUTH."},
+{id:"an5",t:"5 Ange to do",d:"note on sketch",hub:"tasks",link:L.tasks,src:"Ange's sketch 15 Oct: Ange to do (arrow note). Orion's map had an ANGE TO DO list in Google Tasks."},
+{id:"an6",t:"6 Invoice - WhatsApp group",d:"crew, van, scope",hub:"wa",link:L.wa,src:"Ange's sketch 15 Oct: INVOICE - WHATS GRP CREW VAN SCOPE (arrow note). Read as: Invoice - WhatsApp group: crew, van, scope. INVOICE and GRP are a best reading of the handwriting."},
+{id:"an7",t:"7 Invoice clone - Estimate convert",d:"note on sketch",hub:"zoho",link:L.inv,src:"Ange's sketch 15 Oct: INVOICE CLONE - EST CONVERT. Read as: Invoice clone - Estimate convert."}
+];
 var SIDE=[
 {id:"apps",t:"Realm Apps",d:"placeholder hub from Ange's drawing (name to be changed later); was upper left",hub:"cal",link:L.apps,img:"icon.svg",src:"Placeholder name from Ange's drawing. Orion's THE FOUR APPS sat here in spirit (Launcher, Desk, Cert Studio, Proxmox) - see side list."},
 {id:"ff0",t:"F Subscription oversight",d:"Subscription Ledger, cut iAuditor, 2Chat renew or replace, Zapier cap, Google seats",hub:"apps",src:"Orion ff0: F - SUBSCRIPTION OVERSIGHT."},
@@ -116,14 +126,14 @@ var SIDE=[
 {id:"a4",t:"Proxmox / network",d:"homelab, MCP servers, tunnel",hub:"apps",st:"notbuilt",src:"Orion a4: PROXMOX / NETWORK - status: not built > APK."}
 ];
 var S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(err){S=null}
-if(!S||!S.nodes||S.v!==2)S=defaults();
+if(!S||!S.nodes||S.v!==3)S=defaults();
 function save(){localStorage.setItem(KEY,JSON.stringify(S))}
 var edit=false,statusOn=false,cubeOn=true,sel=null,connFrom=null;
 var $=function(i){return document.getElementById(i)},svg=$("svg");
 function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
 function node(id){for(var i=0;i<S.nodes.length;i++)if(S.nodes[i].id===id)return S.nodes[i];return null}
 var SC={live:"#22c55e",half:"#facc15",notbuilt:"#ef4444","":"#64748b"};
-function drawCube(){var g=$("cube");g.textContent="";if(!cubeOn)return;var P=[[C,C]],K=["gmail","tasks","zoho","drive","wa","deputy"];for(var i=0;i<6;i++)P.push(pt(R1,ANG[K[i]]));for(i=0;i<6;i++)P.push(pt(R2,ANG[K[i]]));
+function drawCube(){var g=$("cube");g.textContent="";if(!cubeOn)return;var P=[[C,C]],K=["gmail","tasks","drive","zoho","wa","deputy"];for(var i=0;i<6;i++)P.push(pt(R1,ANG[K[i]]));for(i=0;i<6;i++)P.push(pt(R2,ANG[K[i]]));
 for(var a=0;a<13;a++)for(var b=a+1;b<13;b++)el("line",{x1:P[a][0],y1:P[a][1],x2:P[b][0],y2:P[b][1],stroke:"#94a3b8","stroke-opacity":.16,"stroke-width":1.2},g);
 P.forEach(function(p){el("circle",{cx:p[0],cy:p[1],r:R1/2,fill:"none",stroke:"#94a3b8","stroke-opacity":.28,"stroke-width":1.5},g)})}
 function wrap(s,n){var w=String(s).split(" "),out=[],cur="";w.forEach(function(x){if((cur+" "+x).trim().length>n){if(cur)out.push(cur);cur=x}else cur=(cur+" "+x).trim()});if(cur)out.push(cur);return out}
@@ -168,7 +178,8 @@ if(x.hub&&x.id!=="apps")S.edges.push({a:x.hub,b:x.id,k:"hub"});if(x.id==="apps")
 function item(x,D){var it=document.createElement("div");it.className="item";var s=document.createElement("span");s.textContent=x.t;var sm=document.createElement("small");sm.textContent=x.d+" (hub: "+(node(x.hub)?node(x.hub).t:(x.hub==="apps"?"Realm Apps, off map":x.hub))+")";s.appendChild(sm);it.appendChild(s);
 var bx=document.createElement("span");bx.style.cssText="display:flex;gap:4px;flex-direction:column";if(x.link){var a=document.createElement("a");a.href=x.link;a.target="_blank";a.rel="noopener";a.textContent="Open";a.style.fontSize="12px";a.style.color="#22d3ee";bx.appendChild(a)}
 bx.appendChild(btn("+ Place","",function(){place(x)}));it.appendChild(bx);D.appendChild(it)}
-function side(){var D=$("stepList");D.textContent="";var last="";STEPS.forEach(function(x){if(node(x.id))return;if(x.g!==last){last=x.g;var h=document.createElement("div");h.style.cssText="font-size:12px;font-weight:700;color:#a78bfa;margin-top:8px";h.textContent=GROUPS[x.g];D.appendChild(h)}item(x,D)});
+function side(){var DN=$("noteList");DN.textContent="";NOTES.forEach(function(x){if(!node(x.id))item(x,DN)});if(!DN.childNodes.length){var iN=document.createElement("i");iN.style.fontSize="12px";iN.textContent="All placed.";DN.appendChild(iN)}
+var D=$("stepList");D.textContent="";var last="";STEPS.forEach(function(x){if(node(x.id))return;if(x.g!==last){last=x.g;var h=document.createElement("div");h.style.cssText="font-size:12px;font-weight:700;color:#a78bfa;margin-top:8px";h.textContent=GROUPS[x.g];D.appendChild(h)}item(x,D)});
 if(!D.childNodes.length){var i0=document.createElement("i");i0.style.fontSize="12px";i0.textContent="All placed.";D.appendChild(i0)}
 var D2=$("sideList");D2.textContent="";SIDE.forEach(function(x){if(!node(x.id))item(x,D2)});if(!D2.childNodes.length){var i1=document.createElement("i");i1.style.fontSize="12px";i1.textContent="All placed.";D2.appendChild(i1)}}
 function toW(cx,cy){var p=svg.createSVGPoint();p.x=cx;p.y=cy;var q=p.matrixTransform(svg.getScreenCTM().inverse());return[q.x,q.y]}
