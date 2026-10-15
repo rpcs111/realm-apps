@@ -18,6 +18,7 @@ h1{margin:0 0 4px;font-size:26px;letter-spacing:.04em}.sub{color:#6b7280;font-si
 <div id="help">On Android Chrome: tap <b>&#8942;</b> (top right) &rsaquo; <b>Add to Home screen</b> (or <b>Install app</b>) &rsaquo; <b>Install</b>.</div>
 <a id="st" href="./status.html"><b>TONIGHT STATUS</b><span>Done, in progress, needed from you</span></a>
 <div id="grid"><div class="load">Loading tiles&hellip;</div></div>
+<script src="js/reconnect.js"></script>
 <script>
 var EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";
 var COLORS=["#2563eb","#16a34a","#dc2626","#9333ea","#ea580c","#0891b2","#db2777","#4f46e5","#65a30d","#b45309"];
@@ -28,7 +29,7 @@ function fix(name,url){var n=name.toUpperCase();
  if(/SCRIBE/.test(n))return "./scribe.html";
  return url}
 var BAD=/orion|elon|grok|claude/i;
-fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:"getLinks",args:[],key:(function(){try{return localStorage.getItem("realm_key")||""}catch(e){return""}})()})})
+(window.RealmLine?RealmLine.fetch:fetch)(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:"getLinks",args:[],key:(function(){try{return localStorage.getItem("realm_key")||""}catch(e){return""}})()})})
 .then(function(r){return r.json()}).then(function(j){
  if(!j||!j.ok)throw new Error((j&&j.error)||"getLinks failed");
  var seen={},t=(j.result||[]).filter(function(x){var k=String(x.title)+" "+String(x.url);
@@ -61,5 +62,6 @@ window.addEventListener("appinstalled",function(){btn.textContent="Saved as app 
 if(window.matchMedia("(display-mode: standalone)").matches)btn.style.display="none";
 if(navigator.standalone)btn.style.display="none";
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js");
-</script><script src="voice.js"></script>
+</script><script>/* bot line reconnect hooks (see js/reconnect.js) */
+(function(){if(!window.RealmLine)return;RealmLine.line({name:'Desk v9 (tiles)',ping:function(){return RealmLine.pingExec(EXEC)},onUp:function(){if(document.querySelector('#grid .err'))location.reload()}});})();</script><script src="voice.js"></script>
 </body></html>

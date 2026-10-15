@@ -18,12 +18,13 @@ h2{font-size:14px;letter-spacing:.06em;color:#8ea0c2;margin:16px 0 6px}.m{color:
 <div class="src" id="src"><span>Register</span><span>Calendar</span><span>Drive</span><span>WhatsApp links</span><span class="no">Invoices – needs Search Studio backend deploy</span><span class="no">Scribe notes – needs Search Studio backend deploy</span><span class="no">Gmail – needs Search Studio backend deploy</span></div>
 </header>
 <main><div class="msg" id="msg">Type or tap 🎤, then Go. Data comes live from Realm Desk v9.</div><div id="out"></div></main>
+<script src="js/reconnect.js"></script>
 <script>
 var EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function txt(h){var d=document.createElement("div");d.innerHTML=String(h||"").replace(/<(br|\/p)[^>]*>/gi,"\n");return (d.textContent||"").replace(/\n{3,}/g,"\n\n").trim()}
 function key(){try{return localStorage.getItem("realm_key")||""}catch(e){return""}}
-function call(fn,args){return fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args||[],key:key()})}).then(function(r){return r.json()}).then(function(j){if(!j||!j.ok)throw new Error((j&&j.error)||(fn+" failed"));return j.result})}
+function call(fn,args){return (window.RealmLine?RealmLine.fetch:fetch)(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args||[],key:key()})}).then(function(r){return r.json()}).then(function(j){if(!j||!j.ok)throw new Error((j&&j.error)||(fn+" failed"));return j.result})}
 function setSrc(live){var s=document.getElementById("src").children;var names=["Register","Calendar","Drive","WhatsApp links"];for(var i=0;i<4;i++){s[i].className=live?"live":"no";s[i].textContent=names[i]+(live?" – live":" – no answer")}}
 function go(q){q=(q||"").trim();if(!q)return;var o=document.getElementById("out"),m=document.getElementById("msg");m.textContent="Searching “"+q+"”…";o.innerHTML="";
  try{history.replaceState(null,"","?q="+encodeURIComponent(q))}catch(e){}
@@ -40,8 +41,8 @@ function go(q){q=(q||"").trim();if(!q)return;var o=document.getElementById("out"
 document.getElementById("f").onsubmit=function(e){e.preventDefault();go(document.getElementById("q").value)};
 var SR=window.SpeechRecognition||window.webkitSpeechRecognition,mic=document.getElementById("mic");
 if(!SR){mic.title="Use the Gboard mic"}mic.onclick=function(){if(!SR){document.getElementById("q").focus();return}
- var r=new SR();r.lang="en-AU";r.interimResults=false;mic.classList.add("on");
- r.onresult=function(e){var t=e.results[0][0].transcript;document.getElementById("q").value=t;go(t)};r.onend=function(){mic.classList.remove("on")};r.onerror=function(){mic.classList.remove("on")};r.start()};
+ var r=new SR();r.lang="en-AU";r.interimResults=false;mic.classList.add("on");var RL=window.RealmLine;RL&&RL.mic("search",function(){mic.onclick()});r.onstart=function(){RL&&RL.micLive("search")};
+ r.onresult=function(e){RL&&RL.micStop("search");var t=e.results[0][0].transcript;document.getElementById("q").value=t;go(t)};r.onend=function(){mic.classList.remove("on");RL&&RL.micEnd("search")};r.onerror=function(){mic.classList.remove("on")};r.start()};
 var q0=new URLSearchParams(location.search).get("q");if(q0){document.getElementById("q").value=q0;go(q0)}
 </script><style>.am{min-height:34px;padding:4px 10px;font-size:13px;margin-top:6px;background:#0f2a1a;border-color:#16a34a;color:#bbf7d0}.amb{margin-top:8px;display:flex;flex-direction:column;gap:6px}.amb textarea{font:inherit;background:#0b1d33;color:#fff;border:1px solid #16a34a;border-radius:10px;padding:8px;min-height:64px}.amb .r{display:flex;gap:6px;flex-wrap:wrap}.amd{font-size:12px;color:#bbf7d0;margin-top:6px}
 #ara{position:fixed;left:14px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:9000;height:56px;padding:0 18px;border-radius:28px;border:0;background:#16a34a;color:#04121f;font-weight:800;box-shadow:0 2px 12px rgba(22,163,74,.5)}
@@ -76,4 +77,6 @@ document.getElementById("araGo").onclick=function(){var ctx=document.getElementB
 new MutationObserver(decorate).observe(document.getElementById("out"),{childList:true});
 })();
 </script>
+<script>/* bot line reconnect hooks (see js/reconnect.js) */
+(function(){if(!window.RealmLine)return;RealmLine.line({name:'Desk v9 (Search)',ping:function(){return RealmLine.pingExec(EXEC)}});RealmLine.drafts(['q','araT']);})();</script>
 <script src="voice.js"></script></body></html>
