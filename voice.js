@@ -1,4 +1,6 @@
 /* Realm shared voice + edit control. Voice can never delete: deletes stay on-screen with two confirms + typed PIN. */
+/* load the shared reconnect helper on every voice page */
+(function(){if(window.RealmLine||document.querySelector('script[src$="js/reconnect.js"]'))return;try{var me=document.currentScript&&document.currentScript.src;var x=document.createElement('script');x.src=me?new URL('js/reconnect.js',me).href:'js/reconnect.js';document.head.appendChild(x)}catch(e){}})();
 (function(){
 var page=(location.pathname.split('/').pop()||'index.html').replace(/\.html$/,'')||'index';
 function $(s){return document.querySelector(s)}
@@ -68,7 +70,7 @@ function run(raw){var s=norm(raw);toast('Heard: "'+raw+'"');var m;
 window.realmVoice=run;
 var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return;
 var b=document.createElement('button');b.id='vMic';b.type='button';b.setAttribute('aria-label','Voice');b.innerHTML='&#127908;';document.body.appendChild(b);
-var rec=null;b.onclick=function(){if(rec){rec.stop();return}try{rec=new SR()}catch(e){b.style.display='none';return}rec.lang='en-AU';rec.interimResults=false;rec.maxAlternatives=1;
- rec.onresult=function(e){run(e.results[0][0].transcript)};rec.onerror=function(e){toast(e.error==='not-allowed'?'Mic blocked: allow it in Chrome settings':'Didn\'t catch that')};rec.onend=function(){rec=null;b.classList.remove('on')};
+var rec=null;function RL(){return window.RealmLine}b.onclick=function(){if(rec){RL()&&RL().micStop('voice');rec.stop();return}try{rec=new SR()}catch(e){b.style.display='none';return}rec.lang='en-AU';rec.interimResults=false;rec.maxAlternatives=1;RL()&&RL().mic('voice',function(){if(!rec)b.onclick()});rec.onstart=function(){RL()&&RL().micLive('voice')};
+ rec.onresult=function(e){RL()&&RL().micStop('voice');run(e.results[0][0].transcript)};rec.onerror=function(e){toast(e.error==='not-allowed'?'Mic blocked: allow it in Chrome settings':'Didn\'t catch that')};rec.onend=function(){rec=null;b.classList.remove('on');RL()&&RL().micEnd('voice')};
  b.classList.add('on');toast('Listening…');try{rec.start()}catch(e){rec=null;b.classList.remove('on')}};
 })();
