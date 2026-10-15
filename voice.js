@@ -28,7 +28,9 @@ var H={};
 function toScribe(t){location.href='./scribe.html#add='+encodeURIComponent(t)}
 function deskSearch(t){location.href='./desk.html#search='+encodeURIComponent(t)}
 var last=null;function L(){if(!last)return null;var id=last.id;var f=(window.items||[]).filter(function(x){return x.id===id})[0];if(f)last=f;return f||null}
-if(page==='scribe'){
+if(page==='search'){H.search=function(t){var q=$('#q');if(!q)return;q.value=t;if(typeof go==='function')go(t);toast('Searching: '+t)};H.fallback=H.search}
+if(page==='scribe'&&typeof window.addItem!=='function'){var nt0=document.getElementById('nt');if(nt0){H.add=function(t){nt0.value=t;var sb=document.getElementById('save');if(sb)sb.click()};H.fallback=function(t){nt0.value=(nt0.value?nt0.value+' ':'')+t;toast('Added to note box – tap Save note')};H.confirm=function(){var sb=document.getElementById('save');if(sb)sb.click()}}}
+else if(page==='scribe'){
  function sFind(t){var x=norm(t),r=null;(window.items||[]).forEach(function(i){if(!r&&norm(i.title).indexOf(x)>=0)r=i});return r}
  function cur(){return (window.draft&&document.getElementById('sheet').style.display==='flex')?'sheet':null}
  H.add=function(t){addItem(t);last=items[items.length-1];toast('Added: '+t)};
@@ -66,6 +68,7 @@ function run(raw){var s=norm(raw);toast('Heard: "'+raw+'"');var m;
  if(m=s.match(/^(?:search|find|look up)\s+(.+)/)){var q=String(raw).replace(/^\s*(search|find|look up)\s+(for\s+)?/i,'');H.search?H.search(q):deskSearch(q);return 'search'}
  if(/^(confirm|yes|save|ok)$/.test(s)){var pin=document.getElementById('pinx');if(pin&&pin.style.display!=='none'){toast('Type your PIN. Voice cannot enter it.');return 'blocked'}H.confirm?H.confirm():toast('Nothing to confirm');return 'confirm'}
  if(/^(cancel|stop|close|no)$/.test(s)){var pin2=document.getElementById('pinNo');if(pin2&&pin2.style.display!=='none'&&document.getElementById('pinx').style.display!=='none'){pin2.click();toast('Cancelled');return 'cancel'}H.cancel?H.cancel():toast('Nothing open');return 'cancel'}
+ if(H.fallback){H.fallback(String(raw));return 'fallback'}
  toast('Try: open, back, add, edit, done, assign to, search, confirm, cancel');return 'unknown'}
 window.realmVoice=run;
 var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return;

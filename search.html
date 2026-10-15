@@ -8,7 +8,7 @@ header{position:sticky;top:0;z-index:5;background:rgba(0,0,0,.88);backdrop-filte
 header h1{margin:0;font-size:14px;font-weight:500;letter-spacing:.32em;text-transform:uppercase}
 .bar{display:flex;gap:6px;max-width:680px;margin:0 auto}input{flex:1;min-width:0;font:inherit;background:#0a0a0a;color:#fff;border:1px solid var(--l);border-radius:26px;padding:10px 16px;min-height:46px;outline:none}input:focus{border-color:var(--ac)}
 button{min-height:46px;min-width:46px;padding:8px 12px;border-radius:999px;border:1px solid #2a2a2a;background:#000;color:#fff;font:inherit;cursor:pointer}button:hover{border-color:var(--ac)}
-.pri{background:#fff;color:#000;border:0;font-weight:600;letter-spacing:.04em}
+.pri{background:#fff;color:#000;border:0;font-weight:600;letter-spacing:.04em}#goBtn{touch-action:manipulation;min-width:56px}#goBtn.busy{background:#22d3ee;animation:gbp 1s infinite}@keyframes gbp{50%{opacity:.55}}
 .micI{display:inline-block;width:26px;height:26px;flex:none;background:var(--mic) center/contain no-repeat;vertical-align:middle}
 #mic{display:flex;align-items:center;justify-content:center;width:46px;padding:0;border-color:var(--ac)}
 #mic.on,button.on{background:rgba(34,211,238,.12);box-shadow:0 0 0 3px rgba(34,211,238,.25),0 0 22px rgba(34,211,238,.45)}
@@ -21,7 +21,7 @@ h2{font-size:12px;font-weight:500;letter-spacing:.24em;color:var(--m);margin:18p
 </style></head><body>
 <header><div class="nav"><a href="./index.html">‹ Apps</a><a id="toNotes" href="./scribe.html">Notes ›</a></div>
 <div class="brand"><span class="mark" role="img" aria-label="Ara"></span><h1>Realm Search Studio</h1></div>
-<form class="bar" id="f"><input id="q" placeholder="Address, client or keyword" autocomplete="off" enterkeyhint="search"><button type="button" id="mic" title="Speak" aria-label="Speak a search"><span class="micI" aria-hidden="true"></span></button><button class="pri" type="submit">Go</button></form>
+<form class="bar" id="f"><input id="q" placeholder="Address, client or keyword" autocomplete="off" enterkeyhint="search"><button type="button" id="mic" title="Speak" aria-label="Speak a search"><span class="micI" aria-hidden="true"></span></button><button class="pri" type="submit" id="goBtn">Go</button></form>
 <div class="src" id="src"><span>Register</span><span>Calendar</span><span>Drive</span><span>WhatsApp links</span><span class="no">Invoices – needs Search Studio backend deploy</span><span class="no">Scribe notes – needs Search Studio backend deploy</span><span class="no">Gmail – needs Search Studio backend deploy</span></div>
 </header>
 <main><div class="msg" id="msg">Type or tap the mic, then Go. Data comes live from Realm Desk v9.</div><div id="out"></div></main>
@@ -31,11 +31,12 @@ var EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"\x26amp;","<":"\x26lt;",">":"\x26gt;",'"':"\x26quot;"}[c]})}
 function txt(h){var d=document.createElement("div");d.innerHTML=String(h||"").replace(/<(br|\/p)[^>]*>/gi,"\n");return (d.textContent||"").replace(/\n{3,}/g,"\n\n").trim()}
 function key(){try{return localStorage.getItem("realm_key")||""}catch(e){return""}}
-function call(fn,args){return (window.RealmLine?RealmLine.fetch:fetch)(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args||[],key:key()})}).then(function(r){return r.json()}).then(function(j){if(!j||!j.ok)throw new Error((j&&j.error)||(fn+" failed"));return j.result})}
+function call(fn,args){var tmo=new Promise(function(_,rej){setTimeout(function(){rej(new Error("no answer after 90s – check signal and tap Go again"))},90000)});return Promise.race([tmo,callRaw(fn,args)])}
+function callRaw(fn,args){return (window.RealmLine?RealmLine.fetch:fetch)(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args||[],key:key()})}).then(function(r){return r.json()}).then(function(j){if(!j||!j.ok)throw new Error((j&&j.error)||(fn+" failed"));return j.result})}
 function setSrc(live){var s=document.getElementById("src").children;var names=["Register","Calendar","Drive","WhatsApp links"];for(var i=0;i<4;i++){s[i].className=live?"live":"no";s[i].textContent=names[i]+(live?" – live":" – no answer")}}
-function go(q){q=(q||"").trim();if(!q)return;var o=document.getElementById("out"),m=document.getElementById("msg");m.textContent="Searching “"+q+"”…";o.innerHTML="";
+var lastGo=0;function go(q){q=(q||"").trim();var o=document.getElementById("out"),m=document.getElementById("msg");if(!q){m.textContent="Type or say an address, client or keyword first, then Go.";try{document.getElementById("q").focus()}catch(e){}return}var nowT=Date.now();if(q===go.lastQ&&nowT-lastGo<800)return;lastGo=nowT;go.lastQ=q;try{document.getElementById("q").blur()}catch(e){}o.innerHTML="";var gb=document.getElementById("goBtn"),t0=Date.now();function tick(){if(mySeq!==go.seq)return;var sec=Math.round((Date.now()-t0)/1000);m.textContent="Searching “"+q+"”… "+sec+"s (Desk usually takes 10–30s)"}var mySeq=go.seq=(go.seq||0)+1;clearInterval(go.iv);tick();go.iv=setInterval(tick,1000);gb.classList.add("busy");gb.textContent="…";function done(){if(mySeq!==go.seq)return;clearInterval(go.iv);gb.classList.remove("busy");gb.textContent="Go"}
  try{history.replaceState(null,"","?q="+encodeURIComponent(q))}catch(e){}
- call("searchAll",[q]).then(function(r){setSrc(true);var h="";
+ call("searchAll",[q]).then(function(r){if(mySeq!==go.seq)return;done();setSrc(true);var h="";
   var reg=r.register||[],ev=r.events||[],fl=r.files||[],wa=r.wa||{};
   m.textContent=reg.length+" register · "+ev.length+" calendar · "+fl.length+" Drive · "+Object.keys(wa).length+" WhatsApp"+(r.firstSeen?" · first "+r.firstSeen+", last "+r.lastSeen:"");
   if(reg.length){h+="<h2>REGISTER</h2>"+reg.map(function(x){return '<div class="card reg"><b>#'+esc(x.id)+' · '+esc(x.status||"")+'</b> <span class="m">'+esc(x.owner||"")+' · '+esc(x.updated||"")+'</span><div>'+esc(String(x.item||"").slice(0,400))+'</div>'+(x.next?'<div class="m">Next: '+esc(x.next)+'</div>':'')+(x.link?'<a href="'+esc(x.link)+'" target="_blank">Open</a>':'')+'</div>'}).join("")}
@@ -44,12 +45,16 @@ function go(q){q=(q||"").trim();if(!q)return;var o=document.getElementById("out"
   var wk=Object.keys(wa);if(wk.length){h+="<h2>WHATSAPP</h2>"+wk.map(function(u){return '<div class="card"><a href="'+esc(u)+'" target="_blank">'+esc(u)+'</a> <span class="m">seen on '+wa[u]+' cards</span></div>'}).join("")}
   if(r.invErr)h+='<h2>INVOICES</h2><div class="card m">Not searched: '+esc(r.invErr)+' – needs Search Studio backend deploy.</div>';
   o.innerHTML=h||'<div class="card">Nothing found. Try just the street number and name.</div>';
- }).catch(function(e){setSrc(false);m.textContent="";o.innerHTML='<div class="err">Desk v9 did not answer: '+esc(e.message)+'</div>'})}
-document.getElementById("f").onsubmit=function(e){e.preventDefault();go(document.getElementById("q").value)};
+ }).catch(function(e){if(mySeq!==go.seq)return;done();setSrc(false);m.textContent="";o.innerHTML='<div class="err">Desk v9 did not answer: '+esc(e.message)+'</div>'})}
+function goNow(e){if(e&&e.preventDefault)e.preventDefault();go(document.getElementById("q").value);return false}
+document.getElementById("f").onsubmit=goNow;
+/* phone-safe: Go fires on its own click, not only via form submit; Enter/keyboard Search key also fire */
+document.getElementById("goBtn").addEventListener("click",goNow);
+document.getElementById("q").addEventListener("keydown",function(e){if(e.key==="Enter"||e.keyCode===13){goNow(e)}});
 var SR=window.SpeechRecognition||window.webkitSpeechRecognition,mic=document.getElementById("mic");
 if(!SR){mic.title="Use the Gboard mic"}mic.onclick=function(){if(!SR){document.getElementById("q").focus();return}
  var r=new SR();r.lang="en-AU";r.interimResults=false;mic.classList.add("on");var RL=window.RealmLine;RL&&RL.mic("search",function(){mic.onclick()});r.onstart=function(){RL&&RL.micLive("search")};
- r.onresult=function(e){RL&&RL.micStop("search");var t=e.results[0][0].transcript;document.getElementById("q").value=t;go(t)};r.onend=function(){mic.classList.remove("on");RL&&RL.micEnd("search")};r.onerror=function(){mic.classList.remove("on")};r.start()};
+ r.onresult=function(e){RL&&RL.micStop("search");var t=e.results[0][0].transcript,qi=document.getElementById("q");qi.value=t;try{qi.dispatchEvent(new Event("input",{bubbles:true}))}catch(x){}go(t)};r.onend=function(){mic.classList.remove("on");RL&&RL.micEnd("search")};r.onerror=function(){mic.classList.remove("on")};r.start()};
 var q0=new URLSearchParams(location.search).get("q");if(q0){document.getElementById("q").value=q0;go(q0)}
 </script><style>.am{min-height:34px;padding:4px 12px;font-size:13px;margin-top:8px;background:#000;border-color:#2a2a2a;color:#e4e4e7}.amb button{display:inline-flex;align-items:center;gap:6px}.amb .micI,#araM .micI{width:20px;height:20px}.amb{margin-top:8px;display:flex;flex-direction:column;gap:6px}.amb textarea{font:inherit;background:#000;color:#fff;border:1px solid var(--l);border-radius:12px;padding:8px;min-height:64px}.amb .r{display:flex;gap:6px;flex-wrap:wrap}.amd{font-size:12px;color:#67e8f9;margin-top:6px}
 #ara{position:fixed;left:14px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:9000;height:56px;padding:0 18px 0 8px;border-radius:28px;border:1px solid var(--ac);background:#000;color:#fff;font-weight:500;letter-spacing:.14em;display:flex;align-items:center;gap:8px;box-shadow:0 0 18px rgba(34,211,238,.35)}#ara .mark{width:38px;height:38px;border-radius:50%}
