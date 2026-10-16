@@ -10,23 +10,23 @@ g.node{cursor:pointer}g.node.sel circle{stroke:#facc15!important}
 button{border:0;border-radius:10px;padding:8px 12px;font:600 14px system-ui;background:#1e3a5f;color:#fff}button.mic{background:#dc2626}button.mic.on{background:#16a34a}
 .legend{font-size:13px;color:#94a3b8;padding:0 14px}.legend span{display:inline-block;margin-right:12px}
 #links{max-width:900px;margin:0 auto;padding:8px 14px 120px}#links a{color:#67e8f9;display:block;padding:6px 0;overflow-wrap:anywhere}
-</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style></head><body>
+</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style><script src="js/ara-account.js?v=20261016a" defer></script></head><body>
 <header><h1>Realm Flow Map</h1><p>Google Calendar is the source of truth. Every step updates the Open Register. Tap a step to edit.</p></header>
 <div class="legend"><span>&#8594; main flow</span><span>&#8674; loop-back</span><span style="color:#a78bfa">&#8901;&#8901; updates Register</span></div>
 <div id="wrap"><svg id="map" viewBox="0 0 1000 1000" role="img" aria-label="Realm Flow Map"></svg></div>
 <div id="list"></div>
 <div id="links"><b>Links</b>
-<a href="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec" target="_blank" rel="noopener">Realm Desk v9</a>
-<a href="https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec" target="_blank" rel="noopener">Cert Studio</a>
+<a href="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec?authuser=info@realmpcs.com.au" target="_blank" rel="noopener">Realm Desk v9</a>
+<a href="https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com.au" target="_blank" rel="noopener">Cert Studio</a>
 <a href="./scribe.html">You Got Me Bro</a>
-<a href="https://calendar.google.com/calendar/u/0/r" target="_blank" rel="noopener">Google Calendar (source of truth)</a>
-<a href="https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit" target="_blank" rel="noopener">REALM OPEN REGISTER</a>
-<a href="https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec" target="_blank" rel="noopener">24 Sep original</a>
+<a href="https://calendar.google.com/calendar/r?authuser=info@realmpcs.com.au" target="_blank" rel="noopener">Google Calendar (source of truth)</a>
+<a href="https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com.au" target="_blank" rel="noopener">REALM OPEN REGISTER</a>
+<a href="https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec?authuser=info@realmpcs.com.au" target="_blank" rel="noopener">24 Sep original</a>
 <button id="wipe" style="margin-top:12px">Reset map to defaults</button></div>
 <script>
 const KEY='realm_flow_map_v3',NS='http://www.w3.org/2000/svg';let MEM=null;
-const DESK='https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec',CERT='https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec',YGMB='./scribe.html',BOOKS='https://books.zoho.com/app',CAL='https://calendar.google.com/calendar/u/0/r',REG='https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit';
-function defaults(){const s=[['Enquiry','Gmail · 1300 SipTalk · WhatsApp','https://mail.google.com/mail/u/0/#inbox'],['Log','You Got Me Bro',YGMB],['Quote','Zoho Books',BOOKS+'#/quotes'],['Follow-up','You Got Me Bro',YGMB],['Book','Google Calendar',CAL],['Roster','Deputy (look-only)','https://once.deputy.com'],['Job day','Desk v9',DESK],['Cert','Cert Studio',CERT],['Invoice','Zoho Books',BOOKS+'#/invoices'],['Close','Open Register',REG]];
+const DESK='https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec?authuser=info@realmpcs.com.au',CERT='https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com.au',YGMB='./scribe.html',BOOKS='https://books.zoho.com/app',CAL='https://calendar.google.com/calendar/r?authuser=info@realmpcs.com.au',REG='https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com.au';
+function defaults(){const s=[['Enquiry','Gmail · 1300 SipTalk · WhatsApp','https://mail.google.com/mail/?authuser=info@realmpcs.com.au#inbox'],['Log','You Got Me Bro',YGMB],['Quote','Zoho Books',BOOKS+'#/quotes'],['Follow-up','You Got Me Bro',YGMB],['Book','Google Calendar',CAL],['Roster','Deputy (look-only)','https://once.deputy.com'],['Job day','Desk v9',DESK],['Cert','Cert Studio',CERT],['Invoice','Zoho Books',BOOKS+'#/invoices'],['Close','Open Register',REG]];
  return {nodes:s.map((x,i)=>({id:'s'+(i+1),n:i+1,title:x[0],tool:x[1],link:x[2],note:''})).concat([{id:'ara',n:0,title:'Ara',tool:'head · reads logs',link:'',note:''},{id:'nova',n:0,title:'Nova',tool:'writes code · own log',link:'',note:''}])}}
 function load(){let d=null;try{d=JSON.parse(localStorage.getItem(KEY))}catch(e){d=MEM}return d&&Array.isArray(d.nodes)?d:defaults()}
 function save(){const t=JSON.stringify(S);try{localStorage.setItem(KEY,t)}catch(e){MEM=JSON.parse(t)}}
