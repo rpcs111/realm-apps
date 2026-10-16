@@ -1,8 +1,8 @@
 {
  "id": "/realm-apps/cert-gospel",
- "name": "Realm Cert Studio",
- "short_name": "Certs",
- "description": "Realm Cert Studio - the trusted current Cert Studio (live v6). Gold check = gospel",
+ "name": "Cert Studio",
+ "short_name": "Cert Studio",
+ "description": "Cert Studio - the trusted current Cert Studio (live v6). Gold check = gospel",
  "start_url": "./cert.html?go=1",
  "scope": "./cert.html",
  "display": "standalone",
