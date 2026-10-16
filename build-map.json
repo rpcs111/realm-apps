@@ -1,6 +1,6 @@
 {
  "title": "Build Map",
- "updated": "2026-10-16T12:48:47Z",
+ "updated": "2026-10-16T12:51:11Z",
  "items": [
   {
    "id": "notes",
@@ -55,24 +55,30 @@
    "group": "APPS",
    "name": "ETA board",
    "status": "green",
-   "elon_verified": false,
-   "note": "Live v-25, own install."
+   "elon_verified": true,
+   "note": "Live v-25, own install.",
+   "verified_date": "2026-10-16T12:51Z",
+   "verified_how": "Elon re-test + bug fixes v-26"
   },
   {
    "id": "nova-page",
    "group": "APPS",
    "name": "Nova page",
    "status": "green",
-   "elon_verified": false,
-   "note": "Live v-25, own install."
+   "elon_verified": true,
+   "note": "Live v-25, own install.",
+   "verified_date": "2026-10-16T12:51Z",
+   "verified_how": "Elon re-test + bug fixes v-26"
   },
   {
    "id": "flowmap",
    "group": "APPS",
    "name": "Flow Map",
    "status": "green",
-   "elon_verified": false,
-   "note": "Live v-25, now installable."
+   "elon_verified": true,
+   "note": "Live v-25, now installable.",
+   "verified_date": "2026-10-16T12:51Z",
+   "verified_how": "Elon re-test + bug fixes v-26"
   },
   {
    "id": "scribe",
