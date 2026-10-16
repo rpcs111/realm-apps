@@ -101,7 +101,7 @@
     nokey: function () { return 'Saved on this device \u2014 open the sync link from Ara once on this device'; },
     badkey: function () { return 'Saved on this device \u2014 sync link not accepted, ask Ara for the new one'; },
     offline: function () { return 'Saved on this device \u2014 offline, syncs when back online'; },
-    error: function () { return 'Saved on this device \u2014 sync will retry (' + (st.msg || 'error') + ')'; }
+    error: function () { return (!st.msg || st.msg === 'error') ? TXT.allow() : 'Saved on this device \u2014 sync will retry (' + st.msg + ')'; }
   };
   function paint() {
     if (!document.body) return;

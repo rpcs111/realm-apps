@@ -85,9 +85,11 @@
    "group": "APPS",
    "name": "Flow Map",
    "status": "amber",
-   "elon_verified": false,
-   "note": "26 nodes, every one opens something. Legend counts are worked out from the bubbles on screen: 18 live, 4 live but waiting on Ange (Notes, Search Studio, Ara button, Engine sync), 2 planned (1300 line, Julie), plus 2 hubs (Calendar, Register). Elon check 17 Oct: PASS with corrections; fixed in v2026.10.17-6 (Ara button amber, '1300' off step 1, subtitles wrap instead of cut off, install tip no longer covers bubbles). Awaiting Elon re-check + real-phone test."
-  },
+   "elon_verified": true,
+   "note": "26 nodes, every one opens something. Legend counts are worked out from the bubbles on screen: 18 live, 4 live but waiting on Ange (Notes, Search Studio, Ara button, Engine sync), 2 planned (1300 line, Julie), plus 2 hubs (Calendar, Register). Elon check 17 Oct: PASS with corrections; fixed in v2026.10.17-6 (Ara button amber, '1300' off step 1, subtitles wrap instead of cut off, install tip no longer covers bubbles). PASS (Elon re-check 17 Oct, v2026.10.17-6). Real-phone test still to do.",
+   "verified_date": "2026-10-17",
+   "verified_how": "Elon 390x844 re-check of gh-pages bfbb56a (v2026.10.17-6): 18 live / 4 waiting / 2 planned / 2 hubs, Ara amber, no 1300 in step 1, subtitles wrap, all app links 200. Report: /workspace/notes_test2/v6/REPORT.md"
+ },
   {
    "id": "scribe",
    "group": "APPS",
