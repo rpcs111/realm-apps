@@ -12,7 +12,7 @@
 (function(){var U="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";window.__deskExec=U;function call(fn,args,ok,fail){var n=0,note=null,nt=setTimeout(function(){note=document.createElement("div");note.textContent="still loading\u2026";note.style.cssText="position:fixed;top:8px;left:50%;transform:translateX(-50%);background:#333;color:#fff;font:13px sans-serif;padding:4px 10px;border-radius:12px;z-index:99999;opacity:.85";document.body&&document.body.appendChild(note)},8000);function done(){clearTimeout(nt);if(note&&note.parentNode)note.parentNode.removeChild(note)}function go(){var ac=window.AbortController?new AbortController():null,to=setTimeout(function(){ac&&ac.abort()},45000);fetch(U,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args,key:(function(){try{return localStorage.getItem("realm_key")||""}catch(e){return""}})()}),signal:ac?ac.signal:undefined}).then(function(r){return r.text()}).then(function(t){clearTimeout(to);var j;try{j=JSON.parse(t)}catch(e){throw new Error("Not JSON")}done();window.RealmLine&&RealmLine.ok();if(j&&j.ok)ok&&ok(j.result);else fail&&fail(new Error((j&&j.error)||"Request failed"))}).catch(function(e){clearTimeout(to);var RL=window.RealmLine;if(RL&&(document.hidden||!navigator.onLine)&&RL.park(go,e))return;if(n++<3){setTimeout(go,1000*n)}else if(RL&&RL.isNet(e)&&RL.park(go,e)){return}else{done();RL&&RL.fail(e,/Not JSON/.test(e&&e.message));fail&&fail(e)}})}go()}
 function mk(ok,fail){return new Proxy({},{get:function(_,k){if(k==="withSuccessHandler")return function(f){return mk(f,fail)};if(k==="withFailureHandler")return function(f){return mk(ok,f)};return function(){call(k,[].slice.call(arguments),ok,fail||function(e){console.error(e)})}}})}
 window.google={script:{run:mk(null,null)}};})();
-if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js");
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js?v=20261016v5",{updateViaCache:"none"});
 </script>
 <title>REALM DESK</title>
 <style>
@@ -565,5 +565,5 @@ RealmLine.line({name:'Realm Desk',ping:function(){return RealmLine.pingExec(U)}}
 RealmLine.drafts(['nItem','nNext','nLink','tTitle','cTopic','note','fpad','fwIn','faName','faLabel','fvItem','fvJob']);
 RealmLine.onBack(function(ev){if(ev!=='leave')return;try{var a=document.querySelector('.tab.on');if(a)localStorage.setItem('realm_desk_tab',JSON.stringify({n:a.id.replace('tab-',''),t:Date.now()}))}catch(e){}});
 })();</script>
-<script src="voice.js"></script>
+<script src="voice.js?v=20261016v5"></script>
 </body></html>
