@@ -76,19 +76,19 @@ img,iframe,svg,canvas,table{max-width:100%}
 pre{overflow-x:auto}
 .mic{margin-top:6px}
 @media(max-width:380px){main{padding:0 8px}header{padding-left:8px;padding-right:8px;gap:6px}.quick{padding:8px}.apps{grid-template-columns:repeat(2,1fr)}.btn{padding:7px 9px}header h1{font-size:15px}}
-</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style></head><body>
+</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style><script src="js/ara-account.js?v=20261016a" defer></script></head><body>
 <header><button class="hb" id="spBtn" aria-label="Menu" onclick="spOpen(1)">&#9776;</button><a class="hb" href="./index.html">&larr; Apps</a><h1>REALM <b>DESK</b></h1><button class="hb" id="saveApp">&#11015; Save as app</button><span class="who" id="who"></span></header>
 <div id="appHelp" style="display:none;margin:8px 14px;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line);font-size:13px">On Android Chrome: tap <b>&#8942;</b> &rsaquo; <b>Add to Home screen</b> (or <b>Install app</b>) &rsaquo; <b>Install</b>.</div>
 <div class="quick">
   <a id="qTel">&#128222; 1300 358 500</a>
   <a id="qWa" target="_blank">&#128994; Office WhatsApp</a>
-  <a href="https://calendar.google.com" target="_blank">&#128197; Diary</a>
+  <a href="https://calendar.google.com/?authuser=info@realmpcs.com.au" target="_blank">&#128197; Diary</a>
   <a href="https://books.zoho.com" target="_blank">&#129534; Zoho Books</a>
   <a href="https://once.deputy.com" target="_blank">&#128119; Deputy</a>
 </div>
 <main>
   <section class="tab on" id="tab-start">
-<div class="appsbar"><h2>My apps</h2><a class="btn" target="_blank" href="https://docs.google.com/spreadsheets/d/144xzuFR9madhVHr5RUVhCn-zZvhyCVBK6yuZfH2xlds/edit">&#9998; Edit tiles</a></div>
+<div class="appsbar"><h2>My apps</h2><a class="btn" target="_blank" href="https://docs.google.com/spreadsheets/d/144xzuFR9madhVHr5RUVhCn-zZvhyCVBK6yuZfH2xlds/edit?authuser=info@realmpcs.com.au">&#9998; Edit tiles</a></div>
 <div id="apps" class="apps"></div>
     <div class="bar"><h2>Where do I start</h2><span class="pill" id="startWhen"></span><button class="btn" onclick="load('start',true)">&#8635;</button></div>
     <div id="start"></div>
@@ -507,7 +507,7 @@ try{var _rt=JSON.parse(localStorage.getItem('realm_desk_tab')||'null');if(!CFG.t
 if(CFG.tab&&TABIX[CFG.tab]!=null){go(CFG.tab,document.querySelectorAll('nav button')[TABIX[CFG.tab]])}else load('start');
 </script>
 <script>
-function loadApps(){google.script.run.withSuccessHandler(function(r){var el=document.getElementById("apps");if(!el)return;var t=(r||[]).filter(function(x){return /^\s*\u2605/.test(String(x.title))&&!/orion/i.test(String(x.title)+" "+String(x.url))&&!/FLOW MAP|DESK V3|REALM LAUNCHER/i.test(String(x.title))&&!/^\s*\u2605\s*STATUS(\s|$)/i.test(String(x.title))}).map(function(x){return /^\s*\u2605\s*REALM DESK/i.test(String(x.title))?{title:x.title,url:"./desk.html"}:x}).concat([{title:"\u2605 REALM FLOW MAP \u2014 24 Sep original",url:"https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec"}]);el.innerHTML=t.map(function(x){var s=String(x.title).replace(/^\s*\u2605\s*/,"").split(/\s+\u2014\s+/);return "<a target=\"_blank\" href=\""+esc(x.url)+"\"><b>"+esc(s[0])+"</b><span>"+esc(s[1]||"")+"</span></a>"}).join("")||"<div class=\"m\">No tiles yet. Tap Edit tiles and add a row starting with \u2605.</div>"}).getLinks()}
+function loadApps(){google.script.run.withSuccessHandler(function(r){var el=document.getElementById("apps");if(!el)return;var t=(r||[]).filter(function(x){return /^\s*\u2605/.test(String(x.title))&&!/orion/i.test(String(x.title)+" "+String(x.url))&&!/FLOW MAP|DESK V3|REALM LAUNCHER/i.test(String(x.title))&&!/^\s*\u2605\s*STATUS(\s|$)/i.test(String(x.title))}).map(function(x){return /^\s*\u2605\s*REALM DESK/i.test(String(x.title))?{title:x.title,url:"./desk.html"}:x}).concat([{title:"\u2605 REALM FLOW MAP \u2014 24 Sep original",url:"https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec?authuser=info@realmpcs.com.au"}]);el.innerHTML=t.map(function(x){var s=String(x.title).replace(/^\s*\u2605\s*/,"").split(/\s+\u2014\s+/);return "<a target=\"_blank\" href=\""+esc(x.url)+"\"><b>"+esc(s[0])+"</b><span>"+esc(s[1]||"")+"</span></a>"}).join("")||"<div class=\"m\">No tiles yet. Tap Edit tiles and add a row starting with \u2605.</div>"}).getLinks()}
 setTimeout(loadApps,200);
  
 (function(){
@@ -552,7 +552,7 @@ if(SR){Array.prototype.forEach.call(document.querySelectorAll("textarea"),addMic
 <a class="spl" href="#" onclick="spTab('certs');return false">&#128994; Certs</a>
 <a class="spl" href="#" onclick="spTab('tasks');return false">&#9989; Tasks</a>
 <a class="spl" href="./status.html">&#128200; Tonight Status</a>
-<a class="spl" href="https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec">&#128506; Realm Flow Map</a>
+<a class="spl" href="https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec?authuser=info@realmpcs.com.au">&#128506; Realm Flow Map</a>
 <a class="spl" href="./video.html">&#127909; Video search</a>
 <a class="spl" href="./findings.html">&#128221; Findings</a>
 </aside>
