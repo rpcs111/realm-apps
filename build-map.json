@@ -85,8 +85,8 @@
    "group": "APPS",
    "name": "Flow Map",
    "status": "amber",
-   "elon_verified": false,
-   "note": "Updated 17 Oct from Elon's cross-check: 33 bubbles, every status honest. Amber now = waiting or partly working: Log + Follow-up (waiting on Ara Engine Allow), Enquiry (no WhatsApp route yet), Quote + Invoice (opens Zoho sign-in only), Roster (Deputy look-only, general sign-in page), Ara (opens the ARA button in Notes; no direct chat link exists). Job day now opens Realm Desk (desk.html); \"Desk v9\" removed. New: Grok How-To (live), Ara Capture (waits on Allow), F&H store (red, 525), Reorder, Xenon, Vault (side branch, not live), Bills log (private sheet). Legend counts are still worked out from the bubbles on screen. Waiting for Elon to re-check.",
+   "elon_verified": true,
+   "note": "Elon PASS v12, 21:08Z",
    "owner": "Elon",
    "next": "Elon re-checks map.html?d=fold8 at 390x844."
   },
