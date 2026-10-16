@@ -1,6 +1,7 @@
 /* Ara per-page service worker: network-first, same-origin GET only. Registered by js/saveapp.js with scope = the page itself. */
-var C='ara-app-v2'; /* v2 15 Oct 2026: per-app Ara icons, mic fixes */
+var C='ara-app-v3'; /* v3 16 Oct 2026: version.json auto-refresh (js/ara-version.js), dense Search Studio */
 self.addEventListener('install',function(){self.skipWaiting()});
+self.addEventListener('message',function(e){if(e.data&&e.data.type==='SKIP_WAITING')self.skipWaiting()});
 self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return /^ara-app-/.test(k)&&k!==C}).map(function(k){return caches.delete(k)}))}).catch(function(){}).then(function(){return self.clients.claim()}))});
 self.addEventListener('fetch',function(e){
   var r=e.request;
