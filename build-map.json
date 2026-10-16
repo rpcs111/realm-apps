@@ -1,6 +1,6 @@
 {
  "title": "Build Map",
- "updated": "2026-10-16T14:51:00Z",
+ "updated": "2026-10-16T15:00:00Z",
  "items": [
   {
    "id": "notes",
@@ -375,6 +375,240 @@
    "elon_verified": false,
    "note": "1 Oct standing rule: threat-detection / pen-test / lockdown applied to every build. Not enforced as a pre-build checklist tonight.",
    "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "julie-guide",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Julie: bad-day guide (talks Ange through a rough day)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Ange 17 Oct ~2am Melb voice: 'If I have a bad day and I'm not feeling it, you just guide me through it. And that's the whole idea of building Julie.' Not built. Scope to confirm with Ange.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "vault",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Realm Vault (one switch: change password, reconnect, 2FA)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Prototype on side branch proto-vault (demo data, lock screen, 1Password as real backend). NOT live. Waiting on Ange's OK to go live.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "kill-switch",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Kill switch: pause everything if a key sheet or value goes missing",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Resilience design point 1 + 14 Oct NUC kill-switch plan. Plan only, not built. Must work when Ange has no access.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "perm-drift",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Permissions drift check (re-verify Google permissions after resets)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Resilience design point 2: Google resets permissions/filters; detect and restore. Not built.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "cold-backup",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Cold backup of master sheets (offline laptop, not phone/USB/iCloud)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Resilience design point 5 + 1 Oct lockdown ask. Offline recovery guide done (private). Cold copy itself not set up.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "sheet-lock",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Lock the key sheet against delete / forward",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Nothing changed yet: Ange to name which sheet. Real safety net = shared drive where only Ange can delete.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "mobile-mgmt",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Workspace mobile management + remote wipe on",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Remote wipe only works if it is on before a phone goes missing. Ange's tap in Workspace admin.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "proxmox-hardening",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Server + network hardening (UPS, Tailscale, UniFi keys, old staff Wi-Fi, backups)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "16 Oct read-only checks: none fully done. Mostly on-site jobs for Ange. Details private on box.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "contacts-cleanup",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Contacts cleanup sheet (personal vs business)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Nova queue item 101 (priority). Nova stalled since 11:54 UTC 16 Oct.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "inbox-junk",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Inbox junk list as one button in an app",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Unread count + noise split done 16 Oct (private). One-tap junk button in an app not built. No junking without Ange's yes.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "cert-dupe-test",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Cert Studio test: redo one real past cert and compare",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Use one unsaved cert from the office WhatsApp chats once exported. Blocked on the WhatsApp export + Cert test Allow.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "search-rename",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Search Studio new name",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Ange 17 Oct ~2am: rename it (his example: 'Ara's art shop or something'). Plain name options first, then build.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "mic-button",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Mic button redesign (Elon-style mic, no old R) + cyan look",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Ange 10:42pm 16 Oct: mic still shows the old R; wants Elon-style mic, Notes note-pad look, his cyan. R/L/N icons redone 16 Oct; mic not checked.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "desktop-ara",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Ara on the desktop (Yoga)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Ara Capture installs on desktop (Ctrl+Alt+A). Desktop Ara chat app + keeping context across apps not confirmed.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "ara-nova-channel",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Direct Ara and Nova channel (no pasting)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Today Ange must paste into Gemini. Back-link test only reads Nova's reply docs. True direct channel not built.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "clasp-reauth",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Stop the script login expiring overnight",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Admin console reauth setting + Engine Cloud project link. Clasp re-sign-in needed 16 Oct. Not fixed.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "prism-step-pages",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Prism 'step pages'",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "No file or definition found. Ange to name them.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "register-cleanup",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Links register clean-up (old Claude/Orion rows)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Hub feed sheet: most rows are old artifacts; several new apps missing. Not edited: needs Ange's OK.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "gmail-filters",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Gmail filters (receipts + stop noise emails)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Ange 9:58pm 16 Oct: 'I don't see these emails again.' Receipts filter spec held for Ange's yes. Old filters never ran.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "whatsapp-link",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "WhatsApp link for Ara (office chats)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Ara has no WhatsApp. Old 2Chat link disconnected (bills log). Export is the stop-gap.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "staff-ios-links",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Staff app links for iPhone (no Chrome Beta)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Ange 10:11pm 16 Oct: staff member on iOS; send Wednesday. Not built or sent.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "claude-handover",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Claude handover linked into HANDOFF",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Ange 1:32am 17 Oct: 'Have we got the handover from Claude?' Elon review: PARTIAL, not linked from HANDOFF.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "julie-followup",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Julie follow-up sheet (review, share, name)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Draft v1 since 7 Oct, waiting on Ange: review, share, name the file. Julie stepping out.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "mac-test",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Test the apps on the Mac",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Overnight build list item 4. Not done.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "ange-js-error",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Private gateway page JS error",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "One old JS error on ange.html seen in every live check since 16 Oct. Not fixed.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "ventrip",
+   "group": "MISSED STEPS (17 Oct sweep)",
+   "name": "Website backend hook ('Ventrip', confirm what it is)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Ange 8:42pm 16 Oct mentioned it for the website. What it is not confirmed.",
+   "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
   }
  ]
 }
