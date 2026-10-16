@@ -10,63 +10,94 @@ g.node{cursor:pointer}g.node.sel circle{stroke:#facc15!important}
 button{border:0;border-radius:10px;padding:8px 12px;font:600 14px system-ui;background:#1e3a5f;color:#fff}button.mic{background:#dc2626}button.mic.on{background:#16a34a}
 .legend{font-size:13px;color:#94a3b8;padding:0 14px}.legend span{display:inline-block;margin-right:12px}
 #links{max-width:900px;margin:0 auto;padding:8px 14px 120px}#links a{color:#67e8f9;display:block;padding:6px 0;overflow-wrap:anywhere}
-</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style><script src="js/ara-account.js?v=20261016b" defer></script></head><body>
-<header><h1>Realm Flow Map</h1><p>Google Calendar is the source of truth. Every step updates the Open Register. Tap a step to edit.</p></header>
+</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style><script src="js/ara-account.js?v=20261016b" defer></script><style id="fm17">.nt{font:700 25px system-ui!important}.ns{font:19px system-ui!important}
+g.node:focus{outline:none}g.node:focus circle{stroke:#facc15}g.node circle{transition:stroke .2s}g.node:active circle{filter:brightness(1.4)}
+.legend.st .dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px;border:2px solid}
+.dot.live{border-color:#22c55e}.dot.wait{border-color:#f59e0b}.dot.plan{border-color:#94a3b8;border-style:dashed}
+h2.sec{max-width:900px;margin:18px auto 0;padding:0 14px;font-size:19px;color:#67e8f9}p.secp{max-width:900px;margin:2px auto 0;padding:0 14px;color:#94a3b8;font-size:13px}
+#wrap2{max-width:900px;margin:0 auto;padding:0 8px}
+a.go{display:inline-block;background:#0e7490;color:#fff!important;border-radius:10px;padding:8px 14px;font:600 14px system-ui;text-decoration:none}
+#sheet{position:fixed;left:0;right:0;bottom:calc(72px + env(safe-area-inset-bottom));z-index:2147482400;padding:0 10px}#sheet[hidden]{display:none}
+#sheet .sh{max-width:520px;margin:0 auto;background:#0f1d3a;border:1px solid rgba(103,232,249,.45);border-radius:16px;padding:12px 14px;box-shadow:0 -6px 30px rgba(0,229,255,.18)}
+#sheet b{display:block;font-size:18px}#sheet span{display:block;color:#94a3b8;font-size:14px;margin:2px 0 10px}.shb{display:flex;gap:8px}.shb>*{flex:1;text-align:center}
+</style></head><body>
+<header><h1>Realm Flow Map</h1><p>Google Calendar is the source of truth. Every step updates the Open Register. Tap a bubble to open it.</p></header>
 <div class="legend"><span>&#8594; main flow</span><span>&#8674; loop-back</span><span style="color:#a78bfa">&#8901;&#8901; updates Register</span></div>
+<div class="legend st"><span><i class="dot live"></i>live</span><span><i class="dot wait"></i>live, waiting on Ange</span><span><i class="dot plan"></i>planned (not built yet)</span></div>
 <div id="wrap"><svg id="map" viewBox="0 0 1000 1000" role="img" aria-label="Realm Flow Map"></svg></div>
+<div id="sheet" hidden><div class="sh"><b id="shT"></b><span id="shS"></span><div class="shb"><a id="shO" class="go" target="_blank" rel="noopener">Open</a><button id="shN">Notes</button><button id="shX">Close</button></div></div></div>
+<h2 class="sec">Realm apps</h2><p class="secp">Every app on its own page. Tap to open. Grey dashed = planned, see the Build Map.</p>
+<div id="wrap2"><svg id="apps" viewBox="0 0 1000 1080" role="img" aria-label="Realm apps"></svg></div>
+<h2 class="sec">Step notes</h2>
 <div id="list"></div>
 <div id="links"><b>Links</b>
 <a href="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec?authuser=info@realmpcs.com" target="_blank" rel="noopener">Realm Desk v9</a>
 <a href="https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com" target="_blank" rel="noopener">Cert Studio</a>
-<a href="./notes.html">You Got Me Bro</a>
+<a href="./notes.html">Notes (You Got Me Bro)</a>
+<a href="./build-map.html">Build Map</a>
+<a href="./index.html">Realm Apps home</a>
 <a href="https://calendar.google.com/calendar/r?authuser=info@realmpcs.com" target="_blank" rel="noopener">Google Calendar (source of truth)</a>
 <a href="https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com" target="_blank" rel="noopener">REALM OPEN REGISTER</a>
 <a href="https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec?authuser=info@realmpcs.com" target="_blank" rel="noopener">24 Sep original</a>
 <button id="wipe" style="margin-top:12px">Reset map to defaults</button></div>
 <script>
 const KEY='realm_flow_map_v3',NS='http://www.w3.org/2000/svg';let MEM=null;
-const DESK='https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec?authuser=info@realmpcs.com',CERT='https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com',YGMB='./notes.html',BOOKS='https://books.zoho.com/app',CAL='https://calendar.google.com/calendar/r?authuser=info@realmpcs.com',REG='https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com';
-function defaults(){const s=[['Enquiry','Gmail · 1300 SipTalk · WhatsApp','https://mail.google.com/mail/?authuser=info@realmpcs.com#inbox'],['Log','You Got Me Bro',YGMB],['Quote','Zoho Books',BOOKS+'#/quotes'],['Follow-up','You Got Me Bro',YGMB],['Book','Google Calendar',CAL],['Roster','Deputy (look-only)','https://once.deputy.com'],['Job day','Desk v9',DESK],['Cert','Cert Studio',CERT],['Invoice','Zoho Books',BOOKS+'#/invoices'],['Close','Open Register',REG]];
- return {nodes:s.map((x,i)=>({id:'s'+(i+1),n:i+1,title:x[0],tool:x[1],link:x[2],note:''})).concat([{id:'ara',n:0,title:'Ara',tool:'head · reads logs',link:'',note:''},{id:'nova',n:0,title:'Nova',tool:'writes code · own log',link:'',note:''}])}}
-function load(){let d=null;try{d=JSON.parse(localStorage.getItem(KEY))}catch(e){d=MEM}return d&&Array.isArray(d.nodes)?d:defaults()}
+const DESK='https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec?authuser=info@realmpcs.com',CERT='https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com',YGMB='./notes.html',BOOKS='https://books.zoho.com/app',CAL='https://calendar.google.com/calendar/r?authuser=info@realmpcs.com',REG='https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com',BM='./build-map.html';
+/* 17 Oct 2026: every node now opens something real. st = live | wait (live, waiting on an Ange-only step) | plan (not built, opens the Build Map). Links always come from here; your saved titles and notes are kept. */
+function defaults(){const s=[['Enquiry','Gmail · 1300 · WhatsApp','https://mail.google.com/mail/?authuser=info@realmpcs.com#inbox','live'],['Log','Notes',YGMB,'live'],['Quote','Zoho Books',BOOKS+'#/quotes','live'],['Follow-up','Notes',YGMB,'live'],['Book','Google Calendar',CAL,'live'],['Roster','Deputy (look-only)','https://once.deputy.com','live'],['Job day','Desk v9',DESK,'live'],['Cert','Cert Studio',CERT,'live'],['Invoice','Zoho Books',BOOKS+'#/invoices','live'],['Close','Open Register',REG,'live']];
+ return {nodes:s.map((x,i)=>({id:'s'+(i+1),n:i+1,title:x[0],tool:x[1],link:x[2],st:x[3],note:''})).concat([{id:'ara',n:0,title:'Ara',tool:'head · chat',link:'https://grok.com/',st:'live',note:''},{id:'nova',n:0,title:'Nova',tool:'Nova page',link:'./nova.html',st:'live',note:''}])}}
+const APPS=[['home','Home','all apps','./index.html','live'],['notes','Notes','You Got Me Bro','./notes.html','wait'],['search','Search Studio','Register · Drive','./search.html','wait'],['cert','Cert Studio','anchor certs','./cert.html','live'],['eta','ETA','what is running','./eta.html','live'],['nova','Nova','pipelines + rules','./nova.html','live'],['bmap','Build Map','what is built','./build-map.html','live'],['layers','Layers','layer by layer','./layers.html','live']];
+const PLAN=[['p1300','1300 line','Karen + call backs'],['pjulie','Julie','bad-day guide'],['parab','Ara button','capture inbox'],['psync','Engine sync','waits on Allow','wait']];
+function load(){let d=null;try{d=JSON.parse(localStorage.getItem(KEY))}catch(e){d=MEM}const D=defaults();
+ if(d&&Array.isArray(d.nodes)){const m={};d.nodes.forEach(x=>{if(x&&x.id)m[x.id]=x});D.nodes.forEach(n=>{const o=m[n.id];if(!o)return;if(o.note)n.note=o.note;if(o.title)n.title=o.title})}return D}
 function save(){const t=JSON.stringify(S);try{localStorage.setItem(KEY,t)}catch(e){MEM=JSON.parse(t)}}
 let S=load(),sel=null;
-const C=500,R=390,POS=i=>{const a=-Math.PI/2+i*2*Math.PI/10;return [C+R*Math.cos(a),C+R*Math.sin(a)]},NR=62;
+const C=500,R=380,POS=i=>{const a=-Math.PI/2+i*2*Math.PI/10;return [C+R*Math.cos(a),C+R*Math.sin(a)]},NR=78,STC={live:'#22c55e',wait:'#f59e0b',plan:'#94a3b8'};
 function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e}
-const svg=document.getElementById('map');
+const svg=document.getElementById('map'),svg2=document.getElementById('apps');
+function go(u){if(!u)return;if(/^\.\//.test(u))location.href=u;else window.open(u,'_blank','noopener')}
+function sheet(n){const sh=document.getElementById('sheet');document.getElementById('shT').textContent=(n.n?n.n+'. ':'')+n.title;document.getElementById('shS').textContent=n.tool+(n.st=='wait'?' · waiting on Ange':'');const o=document.getElementById('shO');o.href=n.link;o.target=/^\.\//.test(n.link)?'_self':'_blank';
+ document.getElementById('shN').onclick=()=>{sh.hidden=true;const c=document.getElementById('c_'+n.id);c&&c.scrollIntoView({behavior:'smooth',block:'center'})};sh.hidden=false}
+document.getElementById('shX').onclick=()=>{document.getElementById('sheet').hidden=true;sel=null;draw()};
 function edge(p,q,dash,col,bend,r1,r2){const dx=q[0]-p[0],dy=q[1]-p[1],L=Math.hypot(dx,dy),ux=dx/L,uy=dy/L;const a=[p[0]+ux*r1,p[1]+uy*r1],b=[q[0]-ux*r2,q[1]-uy*r2];
  const mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,cx=mx+(C-mx)*bend,cy=my+(C-my)*bend;
  el('path',{d:`M${a[0]},${a[1]} Q${cx},${cy} ${b[0]},${b[1]}`,fill:'none',stroke:col,'stroke-width':dash?2.5:4,'stroke-dasharray':dash||'','marker-end':'url(#ah'+(col=='#22d3ee'?'m':col=='#f59e0b'?'l':'r')+')'})}
+function bubble(par,p,r,fill,stroke,dash,t1,t2,cls,onT){const g=el('g',{class:'node'+(cls?' '+cls:''),tabindex:0,role:'button','aria-label':t1+' '+t2},par);
+ el('circle',{cx:p[0],cy:p[1],r,fill,stroke,'stroke-width':5,'stroke-dasharray':dash||''},g);
+ el('text',{x:p[0],y:p[1]-4,class:'nt'},g).textContent=t1;el('text',{x:p[0],y:p[1]+24,class:'ns'},g).textContent=t2.length>13?t2.slice(0,12)+'…':t2;
+ g.onclick=onT;g.onkeydown=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();onT()}};return g}
 function draw(){svg.innerHTML='';const d=el('defs',{});[['m','#22d3ee'],['l','#f59e0b'],['r','#a78bfa']].forEach(([k,c])=>{const m=el('marker',{id:'ah'+k,viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},d);el('path',{d:'M0,0L10,5L0,10z',fill:c},m)});
- const cal=[C,C-60],reg=[C,C+75];
- for(let i=0;i<10;i++)edge(POS(i),reg,'3 7','#a78bfa',0,NR,58);
+ const cal=[C,C-70],reg=[C,C+85];
+ for(let i=0;i<10;i++)edge(POS(i),reg,'3 7','#a78bfa',0,NR,66);
  for(let i=0;i<10;i++)edge(POS(i),POS((i+1)%10),'','#22d3ee',-0.12,NR+2,NR+4);
  [[3,5],[4,3],[8,2],[10,4]].forEach(([a,b])=>edge(POS(a-1),POS(b-1),'10 7','#f59e0b',a==10?0.35:a==4?-0.35:0.55,NR+2,NR+4));
- const hub=(p,r,f,t1,t2,u)=>{const g=el('g',{class:'node'});el('circle',{cx:p[0],cy:p[1],r,fill:f,stroke:'#fff','stroke-width':3},g);el('text',{x:p[0],y:p[1]-2,class:'nt'},g).textContent=t1;el('text',{x:p[0],y:p[1]+16,class:'ns'},g).textContent=t2;g.onclick=()=>window.open(u,'_blank')};
- hub(cal,70,'#14532d','Google Calendar','source of truth',CAL);hub(reg,58,'#3b0764','Register','every step',REG);
- S.nodes.forEach((n,k)=>{const p=n.n?POS(n.n-1):(n.id=='ara'?[70,935]:[930,935]);const r=n.n?NR:52;const g=el('g',{class:'node'+(sel==n.id?' sel':''),'data-id':n.id});
-  el('circle',{cx:p[0],cy:p[1],r,fill:n.n?'#0f2a47':'#334155',stroke:n.n?'#22d3ee':'#94a3b8','stroke-width':4,'stroke-dasharray':n.n?'':'6 4'},g);
-  el('text',{x:p[0],y:p[1]-4,class:'nt'},g).textContent=(n.n?n.n+' ':'')+n.title;
-  const t=n.tool.length>18?n.tool.slice(0,17)+'…':n.tool;el('text',{x:p[0],y:p[1]+16,class:'ns'},g).textContent=t;
-  g.onclick=()=>{sel=n.id;draw();const c=document.getElementById('c_'+n.id);c&&c.scrollIntoView({behavior:'smooth',block:'center'})}})}
+ bubble(svg,cal,84,'#14532d','#fff','','Calendar','source of truth','hub',()=>go(CAL));bubble(svg,reg,66,'#3b0764','#fff','','Register','every step','hub',()=>go(REG));
+ S.nodes.forEach(n=>{const p=n.n?POS(n.n-1):(n.id=='ara'?[80,925]:[920,925]);const r=n.n?NR:66;
+  bubble(svg,p,r,n.n?'#0f2a47':'#1e293b',sel==n.id?'#facc15':STC[n.st]||'#22d3ee',n.st=='plan'?'10 7':'',(n.n?n.n+' ':'')+n.title,n.tool,(sel==n.id?'sel ':'')+'st-'+n.st,()=>{sel=n.id;draw();sheet(n)}).setAttribute('data-id',n.id)})}
+function drawApps(){svg2.innerHTML='';const c=[500,400],r=300;const nd=APPS.length-1;
+ const P=i=>{const a=-Math.PI/2+i*2*Math.PI/nd;return [c[0]+r*Math.cos(a),c[1]+r*Math.sin(a)]};
+ for(let i=1;i<APPS.length;i++){const p=P(i-1);el('line',{x1:c[0],y1:c[1],x2:p[0],y2:p[1],stroke:'#22d3ee','stroke-width':3,'stroke-opacity':.45,'stroke-dasharray':'4 8'},svg2)}
+ APPS.forEach((a,i)=>{const p=i?P(i-1):c;bubble(svg2,p,i?82:96,i?'#0f2a47':'#0e7490',STC[a[4]],'',a[1],a[2],'app st-'+a[4],()=>go(a[3])).setAttribute('data-id',a[0])});
+ PLAN.forEach((a,i)=>{const p=[140+i*240,970];bubble(svg2,p,90,'#1e293b',STC[a[3]||'plan'],'10 7',a[1],a[2],'app st-'+(a[3]||'plan'),()=>go(BM)).setAttribute('data-id',a[0])});
+ el('text',{x:500,y:850,class:'ns'},svg2).textContent='PLANNED / WAITING · tap to see it on the Build Map'}
 let rec=null;
 function dictate(n,btn,ta){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('Voice not supported in this browser.');return}
  if(rec){rec.stop();return}rec=new SR();rec.lang='en-AU';rec.interimResults=false;btn.classList.add('on');
  rec.onresult=e=>{const t=e.results[0][0].transcript;/* voice only ever appends text; it cannot delete or skip the PIN */ta.value=(ta.value?ta.value+' ':'')+t;n.note=ta.value;save()};
  rec.onend=()=>{btn.classList.remove('on');rec=null};rec.start()}
 function list(){const L=document.getElementById('list');L.innerHTML='';S.nodes.forEach(n=>{const c=document.createElement('div');c.className='card';c.id='c_'+n.id;
- c.innerHTML=`<b contenteditable="true"></b>${n.link?`<a target="_blank" rel="noopener"></a>`:''}<button class="mic" title="Dictate a note" aria-label="Dictate a note"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="8.25" y="2.5" width="7.5" height="12.5" rx="3.75" fill="currentColor"/><path d="M5.25 11.25a6.75 6.75 0 0 0 13.5 0M12 18v3.25" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg></button><button class="clr">Clear note</button><textarea placeholder="Notes"></textarea>`;
+ c.innerHTML=`<b contenteditable="true"></b>${n.link?`<a class="go" rel="noopener"></a>`:''}<button class="mic" title="Dictate a note" aria-label="Dictate a note"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="8.25" y="2.5" width="7.5" height="12.5" rx="3.75" fill="currentColor"/><path d="M5.25 11.25a6.75 6.75 0 0 0 13.5 0M12 18v3.25" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg></button><button class="clr">Clear note</button><textarea placeholder="Notes"></textarea>`;
  const b=c.querySelector('b'),ta=c.querySelector('textarea');b.textContent=(n.n?n.n+'. ':'')+n.title+' · '+n.tool;ta.value=n.note||'';
- if(n.link){const a=c.querySelector('a');a.href=n.link;a.textContent='open'}
+ if(n.link){const a=c.querySelector('a');a.href=n.link;a.target=/^\.\//.test(n.link)?'_self':'_blank';a.textContent='Open'}
  b.onblur=()=>{const v=b.textContent.replace(/^\d+\.\s*/,'');const i=v.indexOf(' · ');n.title=(i<0?v:v.slice(0,i)).trim()||n.title;if(i>=0)n.tool=v.slice(i+3).trim();save();draw()};
- ta.oninput=()=>{n.note=ta.value;save()};c.querySelector('.mic').onclick=e=>dictate(n,e.target,ta);
+ ta.oninput=()=>{n.note=ta.value;save()};c.querySelector('.mic').onclick=e=>dictate(n,e.currentTarget,ta);
  c.querySelector('.clr').onclick=()=>{if(!ta.value)return;gate('Delete the note on "'+n.title+'"?').then(ok=>{if(!ok)return;n.note='';ta.value='';save()})};L.appendChild(c)})}
 document.getElementById('wipe').onclick=()=>gate('Reset the map to defaults? Your edits and notes in this browser are deleted.').then(ok=>{if(ok){S=defaults();save();draw();list()}});
-draw();list();
+draw();drawApps();list();
 </script><script>
 /* PIN gate removed 15 Oct 2026 (rule 43: opens with one click, no login). Deletes still need two confirms. */
 window.gate=function(q){return Promise.resolve(confirm(q)&&confirm("Are you sure? This can't be undone."))};
 </script>
 <script src="voice.js?v=20261016v5"></script>
-<script src="js/realm-sync.js?v=20261016v6"></script>
+<script src="js/realm-sync.js?v=20261017a" data-backoff data-allow-text="Saved on this phone. Syncs once Ange taps Allow."></script>
 </body></html>
