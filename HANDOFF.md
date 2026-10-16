@@ -104,6 +104,7 @@ Backup first: box `backups/handover_20261016_0915/` (HANDOVER.md, CHASE_DRAFT.md
 
 Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINISHES (or fails), not just at session end. Any session — phone, laptop, voice, Nova, routines — reads this file first and picks up from the newest line. A RUNNING line with no matching DONE means the job may have been cut off: check its output before redoing it. Format: `time (Melb) | STATUS | job | result / where it is`.
 
+- 12:38pm 16 Oct | RUNNING | Google Tasks → Notes live copy (approved t1170u): every 15 min, all lists, per-task links | building in box /workspace/tasks_sync/; needs clasp sign-in to push
 - 12:26pm 16 Oct | RUNNING | layers.html visual layer map (layers 1–3, overlay, connectors, Mend on every item) | building on gh-pages, new files only
 - 12:24pm 16 Oct | WAITING ANGE | clasp re-sign-in as info@ (token expired, invalid_rapt) | sign-in link sent in chat; needs the localhost:45763 address back. Blocks clasp push/run.
 - 12:17pm 16 Oct | RUNNING | Cert Studio (Ara) test copy full check: Drive address lookup fix, undo, save, 12-month redo, two-places-open, unfinished cert always saves | test project 1dVHQt4X…; live v6 untouched; clasp steps queued until sign-in
