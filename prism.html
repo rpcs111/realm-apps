@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Realm Prism — Ara layer</title>
-<link rel="icon" href="icon.svg">
+<link rel="icon" type="image/svg+xml" href="pwa/hub-ara-48.svg?v=20261016a">
 <!--
   ================= CONFIG (v3 · programs in the centre) =================
   Everything on the map comes from the JSON block below (id="map-config"). Edit it to add / remove / rename things.
@@ -77,7 +77,7 @@
   [
    "notbuilt",
    "Not built",
-   "#64748b"
+   "#94a3b8"
   ],
   [
    "lookonly",
@@ -638,21 +638,8 @@
    "sub": "head · reads logs",
    "emoji": "🧠",
    "col": "#94a3b8",
-   "note": "Head · reads logs · authorises Nova (rule 42) and Claude (rule 41). Link = 00 ARA-NOVA CHANNEL doc.",
+   "note": "Head · reads logs · authorises Nova (rule 42). Link = 00 ARA-NOVA CHANNEL doc.",
    "inReg": ""
-  },
-  {
-   "id": "orion",
-   "name": "Orion",
-   "zone": "bot",
-   "group": "bots",
-   "status": "onhold",
-   "link": "https://docs.google.com/document/d/1VRfexXIQNshrdRg-GJqQPwzBGGCOjVRqy1eE9a1UKcs/edit",
-   "sub": "earlier bot · being handed back",
-   "emoji": "🛰️",
-   "col": "#c084fc",
-   "note": "Claude/Orion access being revoked and taken over (channel entry 8). Link = REALM HANDBACK – for Orion.",
-   "inReg": "FLOW_NODES name: ORION BRIDGE"
   },
   {
    "id": "nova",
@@ -666,19 +653,6 @@
    "col": "#a78bfa",
    "note": "Gemini Gem 'Nova' on info@. Register: NOVA GEM TEST — Gem answers fail (OPEN).",
    "inReg": "main tab link: NOVA BUILD STEP 2 — Gemini Gem 'Nova' created on info@ (id a"
-  },
-  {
-   "id": "claude",
-   "name": "Claude",
-   "zone": "bot",
-   "group": "bots",
-   "status": "onhold",
-   "link": "https://claude.ai",
-   "sub": "cut off",
-   "emoji": "🤖",
-   "col": "#d97706",
-   "note": "Claude cut off (channel entry 5); handover to Ara/Nova.",
-   "inReg": "main tab name: Side ventures — day trading + Claude teaching"
   },
   {
    "id": "gemini",
@@ -1888,22 +1862,6 @@
    "inRegister": false
   },
   {
-   "from": "orion",
-   "to": "bridge",
-   "kind": "map",
-   "label": "built it",
-   "src": "map",
-   "inRegister": false
-  },
-  {
-   "from": "claude",
-   "to": "orion",
-   "kind": "map",
-   "label": "was Orion",
-   "src": "map",
-   "inRegister": false
-  },
-  {
    "from": "nova",
    "to": "gemini",
    "kind": "map",
@@ -2021,7 +1979,7 @@ g.n.hl circle.ring{animation:pulse 1s ease-in-out 3;stroke:#facc15!important;str
 #side-search{width:100%;font:14px system-ui;background:#0f1830;color:#fff;border:1px solid rgba(125,233,255,.3);border-radius:10px;padding:9px;margin:4px 0 8px}
 .sg{margin:0 0 8px}.sg>b{display:block;font-size:12px;letter-spacing:.08em;color:#94a3b8;margin:8px 0 3px}
 .si{display:flex;align-items:center;gap:6px;padding:5px 4px;border-bottom:1px solid rgba(255,255,255,.05);font-size:13.5px;cursor:pointer;color:#dbe7ff}
-.si:hover{background:rgba(125,233,255,.07)}.si .pm{width:18px;text-align:center;color:#64748b;font-weight:700}.si.on .pm{color:#22c55e}
+.si:hover{background:rgba(125,233,255,.07)}.si .pm{width:18px;text-align:center;color:#94a3b8;font-weight:700}.si.on .pm{color:#22c55e}
 .si .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.si .st{font-size:10.5px;padding:1px 6px;border-radius:8px;color:#04121f;font-weight:700;white-space:nowrap}
 .si .inf{border:0;background:none;color:#7de9ff;font-size:15px;cursor:pointer;padding:0 4px}
 #statusView{position:fixed;inset:10px;z-index:60;background:#07101f;border:2px solid #22d3ee;border-radius:14px;padding:12px;overflow:auto;display:none}
