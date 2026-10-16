@@ -189,7 +189,7 @@ function bump(){clearTimeout(idleT);if(cryptoKey)idleT=setTimeout(function(){loc
 document.addEventListener('visibilitychange',function(){if(document.hidden&&cryptoKey)lock('Locked when hidden')});
 window.addEventListener('pagehide',function(){if(cryptoKey)lock()});
 /* app */
-function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&','<':'<','>':'>','"':'"',"'":'&#39;'}[c]})}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function safeUrl(u){u=String(u||'').trim();if(!/^https?:\/\//i.test(u)&&!/^\.\//.test(u))u='https://'+u;try{var x=new URL(u,location.href);return /^https?:$/.test(x.protocol)?x.href:null}catch(e){return null}}
 function openApp(){
  $('#gate').classList.add('hide');var a=$('#app');a.classList.remove('hide');a.removeAttribute('aria-hidden');
@@ -198,7 +198,7 @@ function openApp(){
  h+='<section class="wide"><h2>Edits / amend requests</h2><div class="row"><input id="edin" placeholder="What needs fixing or changing?" aria-label="New edit request"><button class="pri sm" id="edadd">Add</button><button class="sm" id="edcopy">Copy all for Ara</button></div><ul class="edits" id="edlist"></ul></section>';
  STATIC.forEach(function(g){h+='<section><h2>'+esc(g.h)+'</h2><ul class="links">'+g.items.map(function(i){return '<li><a href="'+esc(i[2])+'" target="_blank" rel="noopener noreferrer">'+esc(i[0])+'<small>'+esc(i[1])+'</small></a></li>'}).join('')+'</ul></section>'});
  h+='<section><h2>My links</h2><ul class="links" id="mylinks"></ul><div class="row" style="margin-top:8px"><input id="lname" placeholder="Name" aria-label="Link name"><input id="lurl" placeholder="https://…" aria-label="Link URL" inputmode="url"><button class="pri sm" id="ladd">Add link</button></div><p class="st">Saved encrypted on this device only.</p></section>';
- h+='<section class="wide"><h2>Security & backup</h2><p class="note">A 4–6 digit PIN only guards against casual access on this device. Your notes, links and edits are encrypted and never leave this device unless you export them. The Google files open with your own Google sign-in. Nothing private is stored on the website.</p><div class="row" style="margin-top:10px"><button class="sm" id="chpin">Change PIN</button><button class="sm" id="exp">Export encrypted backup</button><button class="sm" id="imp">Import backup</button><button class="sm warn" id="wipe">Wipe this device</button></div></section>';
+ h+='<section class="wide"><h2>Security &amp; backup</h2><p class="note">A 4–6 digit PIN only guards against casual access on this device. Your notes, links and edits are encrypted and never leave this device unless you export them. The Google files open with your own Google sign-in. Nothing private is stored on the website.</p><div class="row" style="margin-top:10px"><button class="sm" id="chpin">Change PIN</button><button class="sm" id="exp">Export encrypted backup</button><button class="sm" id="imp">Import backup</button><button class="sm warn" id="wipe">Wipe this device</button></div></section>';
  h+='</main>';a.innerHTML=h;
  var n=$('#notes');n.value=data.notes;n.addEventListener('input',function(){data.notes=n.value;queueSave()});
  $('#savenow').onclick=function(){data.notes=n.value;clearTimeout(saveT);encryptSave().then(function(){toast('Saved')})};
