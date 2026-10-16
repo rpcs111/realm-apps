@@ -55,7 +55,7 @@ function dictate(n,btn,ta){const SR=window.SpeechRecognition||window.webkitSpeec
  rec.onresult=e=>{const t=e.results[0][0].transcript;/* voice only ever appends text; it cannot delete or skip the PIN */ta.value=(ta.value?ta.value+' ':'')+t;n.note=ta.value;save()};
  rec.onend=()=>{btn.classList.remove('on');rec=null};rec.start()}
 function list(){const L=document.getElementById('list');L.innerHTML='';S.nodes.forEach(n=>{const c=document.createElement('div');c.className='card';c.id='c_'+n.id;
- c.innerHTML=`<b contenteditable="true"></b>${n.link?`<a target="_blank" rel="noopener"></a>`:''}<button class="mic" title="Dictate a note">&#127908;</button><button class="clr">Clear note</button><textarea placeholder="Notes"></textarea>`;
+ c.innerHTML=`<b contenteditable="true"></b>${n.link?`<a target="_blank" rel="noopener"></a>`:''}<button class="mic" title="Dictate a note" aria-label="Dictate a note"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="8.25" y="2.5" width="7.5" height="12.5" rx="3.75" fill="currentColor"/><path d="M5.25 11.25a6.75 6.75 0 0 0 13.5 0M12 18v3.25" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg></button><button class="clr">Clear note</button><textarea placeholder="Notes"></textarea>`;
  const b=c.querySelector('b'),ta=c.querySelector('textarea');b.textContent=(n.n?n.n+'. ':'')+n.title+' · '+n.tool;ta.value=n.note||'';
  if(n.link){const a=c.querySelector('a');a.href=n.link;a.textContent='open'}
  b.onblur=()=>{const v=b.textContent.replace(/^\d+\.\s*/,'');const i=v.indexOf(' · ');n.title=(i<0?v:v.slice(0,i)).trim()||n.title;if(i>=0)n.tool=v.slice(i+3).trim();save();draw()};
@@ -67,6 +67,6 @@ draw();list();
 /* PIN gate removed 15 Oct 2026 (rule 43: opens with one click, no login). Deletes still need two confirms. */
 window.gate=function(q){return Promise.resolve(confirm(q)&&confirm("Are you sure? This can't be undone."))};
 </script>
-<script src="voice.js"></script>
-<script src="js/realm-sync.js?v=20261016a"></script>
+<script src="voice.js?v=20261016v5"></script>
+<script src="js/realm-sync.js?v=20261016v5"></script>
 </body></html>
