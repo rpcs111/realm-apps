@@ -1,0 +1,31 @@
+{
+ "id": "/realm-apps/notes-app",
+ "name": "Notes",
+ "short_name": "Notes",
+ "description": "Notes - saves on this device and syncs to your other devices (gold check = the current one)",
+ "start_url": "./notes.html",
+ "scope": "./notes.html",
+ "display": "standalone",
+ "background_color": "#062B20",
+ "theme_color": "#062B20",
+ "icons": [
+  {
+   "src": "pwa/notes-app-v1.svg?v=20261016n",
+   "sizes": "192x192",
+   "type": "image/svg+xml",
+   "purpose": "any"
+  },
+  {
+   "src": "pwa/notes-app-v1.svg?v=20261016n",
+   "sizes": "512x512",
+   "type": "image/svg+xml",
+   "purpose": "any"
+  },
+  {
+   "src": "pwa/notes-app-v1-maskable.svg?v=20261016n",
+   "sizes": "512x512",
+   "type": "image/svg+xml",
+   "purpose": "maskable"
+  }
+ ]
+}
