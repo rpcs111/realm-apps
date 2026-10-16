@@ -11,7 +11,9 @@
   var ios=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1);
   var android=/Android/.test(ua),edge=/Edg\//.test(ua),firefox=/Firefox|FxiOS/.test(ua);
   var chrome=/Chrome|CriOS/.test(ua)&&!edge,safari=/Safari/.test(ua)&&!/Chrome|CriOS|FxiOS|EdgiOS|Edg\//.test(ua);
-  function standalone(){try{return ['standalone','minimal-ui','window-controls-overlay','fullscreen'].some(function(m){return matchMedia('(display-mode: '+m+')').matches})||navigator.standalone===true}catch(e){return false}}
+  /* Running as an installed app on THIS device only: the page's own display mode (never synced/server state, never getInstalledRelatedApps).
+     A normal browser tab matches display-mode: browser, so it always gets the Install button. */
+  function standalone(){try{if(navigator.standalone===true)return true;var mm=function(m){return matchMedia('(display-mode: '+m+')').matches};if(mm('browser'))return false;if(mm('fullscreen')&&document.fullscreenElement)return false;return mm('standalone')||mm('minimal-ui')||mm('fullscreen')||mm('window-controls-overlay')}catch(e){return false}}
   function saved(){try{return localStorage.getItem(KEY)==='1'}catch(e){return false}}
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
   var css='#araSave{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 16px;font-weight:800!important;border-radius:999px;border:1px solid #22d3ee;background:#000;color:#e6fbff;font:600 11px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;white-space:nowrap;box-shadow:0 0 10px rgba(34,211,238,.25);-webkit-tap-highlight-color:transparent}'+
@@ -23,7 +25,7 @@
   function tipHtml(){
     var n='<b>'+esc(name)+'</b>';
     if(ios)return '<div class="h">Save app</div>'+(safari?'':'Open this page in <b>Safari</b>, then: ')+'tap <b>Share</b> &#x2191;&#xFE0E; &rsaquo; <b>Add to Home Screen</b> &rsaquo; <b>Add</b>.';
-    if(android)return '<div class="h">Save app</div>Tap <b>&#8942;</b> (top right) &rsaquo; <b>Install app</b> (or <b>Add to Home screen</b>) &rsaquo; <b>Install</b>.<br><br>Already saved? Open '+n+' from your home screen.';
+    if(android)return '<div class="h">Install this app</div>Tap <b>&#8942;</b> (top right) &rsaquo; <b>Install app</b> (or <b>Add to Home screen</b>) &rsaquo; <b>Install</b>. Being installed on your computer does not count for this phone.<br><br>Already saved? Open '+n+' from your home screen.';
     if(firefox)return '<div class="h">Save app</div>Firefox can\'t save web apps. Open this page in <b>Chrome</b> and tap Save app there.';
     if(safari)return '<div class="h">Save app</div>In Safari: <b>File</b> &rsaquo; <b>Add to Dock</b>.';
     var how=edge?'Click <b>&middot;&middot;&middot;</b> &rsaquo; <b>Apps</b> &rsaquo; <b>Install this site as an app</b>.':'Click <b>&#8942;</b> &rsaquo; <b>Cast, save and share</b> &rsaquo; <b>Install page as app</b> (or <b>Create shortcut</b> and tick <b>Open as window</b>).';
@@ -34,7 +36,7 @@
   function showTip(){if(!tip){tip=document.createElement('div');tip.id='araTip';tip.setAttribute('role','dialog');document.body.appendChild(tip)}
     tip.innerHTML='<button class="x" type="button" aria-label="Close">&times;</button>'+tipHtml();tip.hidden=false;
     tip.querySelector('.x').onclick=function(){tip.hidden=true}}
-  function label(){if(!btn)return;var open=!dp&&saved()&&!ios&&!android;
+  function label(){if(!btn)return;var open=false;
     btn.lastChild.textContent=open?'Open app':'Install this app';btn.title=open?'Open '+name+' as an app':'Save '+name+' as an app'}
   function badge(){var b=document.getElementById('araInstalled');if(!standalone()){if(b)b.hidden=true;return}if(!b){b=document.createElement('div');b.id='araInstalled';b.setAttribute('role','status');b.textContent='Installed as an app \u2713';b.style.cssText='position:fixed;top:calc(8px + env(safe-area-inset-top));right:calc(8px + env(safe-area-inset-right));z-index:2147483000;background:#16a34a;color:#fff;font:700 13px system-ui,sans-serif;padding:6px 12px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.5);pointer-events:none';document.body.appendChild(b)}b.hidden=false}
   function refresh(){badge();if(!btn)return;btn.hidden=standalone();if(btn.hidden&&tip)tip.hidden=true;label()}
