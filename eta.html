@@ -29,7 +29,7 @@ a{color:#67e8f9}footer{color:var(--ara-mute,#a9c1cc);font-size:12px;padding:0 16
 <main class="rui-main"><div class="rui-status" id="upd"></div><div class="rui-list" id="g"></div>
 <footer class="rui-status" style="margin-top:12px">ETAs are Ara's estimates, not promises. Source of truth: <a href="https://github.com/rpcs111/realm-apps/blob/main/HANDOFF.md">HANDOFF.md §7 Live job log</a>. This page is updated when a job lands.</footer></main></div>
 <script>
-var UPDATED="Fri 16 Oct, 7:15pm Melbourne";
+var UPDATED="16 Oct (no live time on this page; current status is on the Build Map)";
 var ITEMS=[
 {n:"Overnight: every app on one dense layout",s:"running",eta:"Tonight",left:"Done: Search Studio, Notes, Flow Map, Cert Studio test page, Layers. Next: ETA, Nova, Realm Apps, Queue, Mapper, then Prism clean-out. Each app gets its own install tile with the Ara icon and refreshes itself when a new version lands (no more stale pages).",u:"https://github.com/rpcs111/realm-apps/blob/main/HANDOFF.md"},
 {n:"1. Search Studio",s:"waiting",eta:"Your test",left:"Rebuilt tonight (7pm) on the new dense layout: results as rows with Register / Calendar / Drive / WhatsApp tabs, small mic in the search bar, ARA button in the top bar. Every button tested on phone + laptop. Old R tile on your phone: remove it, then Save app again from Search Studio.",u:"search.html"},
@@ -43,7 +43,7 @@ var ITEMS=[
 {n:"Blocker: clasp sign-in",s:"done",eta:"Restored 12:50pm",left:"clasp signed in again as info@realmpcs.com (verified). Cert Studio test push done.",u:""},
 {n:"Cert Studio (Ara test copy)",s:"waiting",eta:"Your one-time Allow",left:"Build 2 pushed 12:50pm to the TEST copy only (deployment AKfycby3… @2). Address bar now pulls from Drive (type \"10 high\", pick a match). Also fixed: dates were a day behind before 11am, 29 Feb expiry, no-address cert not offered back, warning bar covering the steps. Undo, save, redo panel, two tabs, PDF all checked (22/22 on the test bench). The link shows \"Access denied\" until info@ opens it once in Chrome and presses Allow. Live v6 untouched.",u:"https://script.google.com/macros/s/AKfycby3McZaB4HcAOtf3IcFnerMP2nSCZKTZm9cxYoNWdT1cTQ_FwSMvgD1ydaXOWRd7X2QOQ/exec?authuser=info@realmpcs.com"}
 ];
-document.getElementById('upd').textContent="Updated "+UPDATED;
+document.getElementById('upd').innerHTML="Updated "+UPDATED+" · <a href=\"build-map.html\">Build Map</a>";
 var L={running:"Running",progress:"In progress",waiting:"Waiting",done:"Done",notstarted:"Not started"};
 function grp(st){return st==='progress'?'running':st==='notstarted'?'waiting':st}
 document.getElementById('g').innerHTML=ITEMS.map(function(i){return '<section data-k="'+grp(i.s)+'"><div class="card eta-row '+i.s+'"><span class="rui-t">'+(i.u?'<a href="'+i.u+'">'+i.n+'</a>':i.n)+' <span class="eta-when">· '+i.eta+'</span></span><span class="chip">'+(L[i.s]||i.s)+'</span><span class="rui-x">'+i.left+'</span></div></section>'}).join('');
