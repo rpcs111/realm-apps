@@ -30,4 +30,4 @@ if(/[?&]go=1/.test(location.search)){location.replace(CS_URL)}
 var dp=null,help=document.getElementById("help");
 window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e});
 document.getElementById("save").onclick=function(){if(dp){dp.prompt();dp.userChoice.then(function(){dp=null})}else{help.style.display="block"}};
-</script><script src="js/saveapp.js" data-hide="#save,#help"></script></body></html>
+</script><script src="js/saveapp.js?v=20261016v5" data-hide="#save,#help"></script></body></html>

@@ -55,7 +55,7 @@ h2.cap-h i{font-style:normal;background:rgba(255,255,255,.06);border-radius:999p
   <textarea id="dump" aria-label="Brain dump" placeholder="Dump it all here, bro. Talk or type: tasks, feelings, ideas, jobs, things to buy… one per sentence or line."></textarea>
   <div id="interim" aria-live="polite"></div>
   <div class="cap-bar">
-   <button id="mic" class="cap-mic" type="button" aria-pressed="false" aria-label="Talk to Ara"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span id="micL">Talk</span></button>
+   <button id="mic" class="cap-mic" type="button" aria-pressed="false" aria-label="Talk to Ara"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="8.25" y="2.5" width="7.5" height="12.5" rx="3.75" fill="currentColor"/><path d="M5.25 11.25a6.75 6.75 0 0 0 13.5 0M12 18v3.25" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg><span id="micL">Talk</span></button>
    <button id="clear" class="cap-clear" type="button">Clear</button>
    <button id="save" class="cap-save" type="button" disabled>Save&nbsp;<span id="saveN"></span></button>
   </div>
@@ -204,7 +204,7 @@ setTimeout(function(){sync(true)},1200);
 window.AraCaptureApp={parse:parse,save:save,sync:sync,queue:queue,items:function(){return items}};
 })();
 </script>
-<script src="js/saveapp.js" data-mount="header .nav" defer></script>
+<script src="js/saveapp.js?v=20261016v5" data-mount="header .nav" defer></script>
 <script src="js/realm-ui.js?v=20261016b" defer></script>
 <script src="js/ara-version.js" defer></script>
 </body></html>
