@@ -1,1 +1,4 @@
-self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('fetch',()=>{});
+/* Hub service worker (v5, 16 Oct 2026): no caching at all, takes over at once and clears any old ara-app-* caches it can see. */
+self.addEventListener('install',function(){self.skipWaiting()});
+self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return /^ara-app-/.test(k)&&k!=='ara-app-v5'}).map(function(k){return caches.delete(k)}))}).catch(function(){}).then(function(){return self.clients.claim()}))});
+self.addEventListener('fetch',function(){});
