@@ -7,6 +7,7 @@
 <style>
 /* Realm Vault PROTOTYPE (16 Oct 2026). Demo data only. No network calls, nothing stored off this page. */
 :root{--ok:#4ade80;--warn:#fbbf24;--bad:#f87171;--card:rgba(6,22,34,.82)}
+.vlt-mark{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305131f'/%3E%3Crect x='16' y='28' width='32' height='24' rx='5' fill='none' stroke='%2322d3ee' stroke-width='4'/%3E%3Cpath d='M22 28v-6a10 10 0 0 1 20 0v6' fill='none' stroke='%2322d3ee' stroke-width='4'/%3E%3Ccircle cx='32' cy='40' r='3.5' fill='%2322d3ee'/%3E%3C/svg%3E") center/contain no-repeat}
 .vlt-banner{margin:0;padding:8px 12px;background:#3b2a05;color:#fde68a;border-bottom:1px solid #a16207;font-size:13px;font-weight:600;text-align:center;letter-spacing:.02em}
 .vlt{max-width:1240px;margin:0 auto;padding:10px 10px calc(28px + env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr;gap:12px}
 @media(min-width:1000px){.vlt{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:16px;padding:14px 16px 32px}.vlt-pane{position:sticky;top:calc(var(--rui-top) + 10px);align-self:start;max-height:calc(100vh - var(--rui-top) - 20px);overflow:auto}}
@@ -91,7 +92,7 @@ body.lock .otp code{color:var(--ara-mute)}
 .toast.on{opacity:1}
 </style></head>
 <body class="rui">
-<header class="rui-top"><span class="rui-mark" style="background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305131f'/%3E%3Crect x='16' y='28' width='32' height='24' rx='5' fill='none' stroke='%2322d3ee' stroke-width='4'/%3E%3Cpath d='M22 28v-6a10 10 0 0 1 20 0v6' fill='none' stroke='%2322d3ee' stroke-width='4'/%3E%3Ccircle cx='32' cy='40' r='3.5' fill='%2322d3ee'/%3E%3C/svg%3E") center/contain no-repeat" role="img" aria-label="Realm Vault"></span><b class="rui-title">Realm Vault</b><nav class="nav"><a href="./index.html">‹ Apps</a></nav></header>
+<header class="rui-top"><span class="rui-mark vlt-mark" role="img" aria-label="Realm Vault"></span><b class="rui-title">Realm Vault</b><nav class="nav"><a href="./index.html">‹ Apps</a></nav></header>
 <p class="vlt-banner" role="note">PROTOTYPE — demo data, does nothing real</p>
 <div class="vlt">
  <div class="vlt-list">
