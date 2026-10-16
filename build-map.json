@@ -8,7 +8,7 @@
    "name": "Notes",
    "status": "green",
    "elon_verified": true,
-   "note": "Live, own icon, scope fixed. Needs a real-phone test.",
+   "note": "Live, own icon, scope fixed. Big ELON / IVOR / ARA / NOVA buttons pass Elon's 390x844 test (17 Oct). Notes save on the phone; syncing waits on Ange's Engine Allow tap. Needs a real-phone test.",
    "verified_date": "2026-10-16T12:47Z",
    "verified_how": "Elon re-test, /workspace/buildmap_check"
   },
@@ -17,8 +17,10 @@
    "group": "APPS",
    "name": "Notes: ELON / IVOR / ARA / NOVA buttons",
    "status": "amber",
-   "elon_verified": false,
-   "note": "Built, awaiting Elon test. One tap saves the note and queues it for that helper; lands in ARA CAPTURE INBOX sheet only after Ange's Engine Allow tap (until then: 'Saved on phone, waiting for Allow')."
+   "elon_verified": true,
+   "note": "PASS (Elon, 17 Oct). One tap saves the note and queues it for that helper; lands in ARA CAPTURE INBOX sheet only after Ange's Engine Allow tap (until then: 'Saved on phone, waiting for Allow'). Polish done in v2026.10.17-6: all four buttons equal size, one status line, install tip is a slim top bar.",
+   "verified_date": "2026-10-16T15:20Z",
+   "verified_how": "Elon 390x844 re-test (v2026.10.17-4), /workspace/notes_test2/REPORT.md: all 4 buttons save, tag and flash; 10 rapid notes survive reload"
   },
   {
    "id": "search",
@@ -84,7 +86,7 @@
    "name": "Flow Map",
    "status": "amber",
    "elon_verified": false,
-   "note": "Completed 17 Oct (f0fa648): 26 nodes, every one opens something. 21 live (incl. Notes + Search Studio amber, waiting on Allow), Engine sync waiting on Allow, 3 planned (1300 line, Julie, Ara button) open the Build Map. Box test 390x844 ?d=fold8: 26/26 tap, no JS errors except the known Engine CORS. Awaiting Elon check + real-phone test."
+   "note": "26 nodes, every one opens something. Legend counts are worked out from the bubbles on screen: 18 live, 4 live but waiting on Ange (Notes, Search Studio, Ara button, Engine sync), 2 planned (1300 line, Julie), plus 2 hubs (Calendar, Register). Elon check 17 Oct: PASS with corrections; fixed in v2026.10.17-6 (Ara button amber, '1300' off step 1, subtitles wrap instead of cut off, install tip no longer covers bubbles). Awaiting Elon re-check + real-phone test."
   },
   {
    "id": "scribe",

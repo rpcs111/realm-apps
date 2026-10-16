@@ -27,10 +27,10 @@ li{display:flex;gap:12px;padding:12px 2px;border-bottom:1px solid #171717;align-
 .th{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:28px 0 8px}.th h2{margin:0}.gt{flex:none;border:1px solid var(--c);color:#fff;background:#000;border-radius:999px;padding:9px 16px;min-height:40px;display:inline-flex;align-items:center;font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;box-shadow:0 0 14px rgba(34,211,238,.25)}.gt:hover{background:rgba(34,211,238,.12)}
 .addt{display:inline-flex;align-items:center;gap:4px;margin-top:6px;min-height:34px;padding:4px 12px;border-radius:999px;border:1px solid #22d3ee;background:#000;color:#e0f2fe;font:600 12px system-ui,sans-serif;cursor:pointer;text-decoration:none}.addt.q{border-color:#f59e0b;color:#fcd34d}.addt.ok{border-color:#22c55e;color:#86efac}
 .cnt{font-size:12px;color:#a1a1aa;letter-spacing:.04em;text-transform:none}.empty{color:#a1a1aa;padding:12px 2px}
-.who{display:grid;grid-template-columns:1fr 1fr 1fr .78fr;gap:6px;max-width:860px;margin:0 auto 6px}
+.who{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;max-width:860px;margin:0 auto 6px}
 .who button{all:unset;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-height:56px;border-radius:16px;font:800 17px/1 system-ui,sans-serif;letter-spacing:.06em;text-align:center;cursor:pointer;color:#0b0b0b;-webkit-tap-highlight-color:transparent;touch-action:manipulation;box-shadow:0 4px 14px rgba(0,0,0,.45)}
 .who button:active{transform:scale(.96)}.who button:focus-visible{outline:3px solid #fff;outline-offset:2px}
-.who .w-elon{background:#fb923c}.who .w-ivor{background:#4ade80}.who .w-ara{background:#a78bfa}.who .w-nova{background:#38bdf8;font-size:14px}
+.who .w-elon{background:#fb923c}.who .w-ivor{background:#4ade80}.who .w-ara{background:#a78bfa}.who .w-nova{background:#38bdf8}
 .who button.done{background:#fff!important;color:#065f46}
 #micMsg{font-size:15px;font-weight:700;color:#fff;text-align:center;background:#111827;border:1px solid #374151;border-radius:999px;padding:7px 14px;width:max-content;max-width:100%;margin:0 auto 6px}#arbBtn{display:none!important}
 .rlab{display:inline-block;margin:6px 6px 0 0;padding:3px 10px;border-radius:999px;font:700 12px system-ui,sans-serif;border:1px solid #3f3f46;color:#e4e4e7}.rlab.ok{border-color:#22c55e;color:#86efac}.rlab.q{border-color:#f59e0b;color:#fcd34d}
@@ -84,6 +84,8 @@ $("save").onclick=function(){saveNote("")};
 Array.prototype.forEach.call(document.querySelectorAll(".who button"),function(b){var lab=b.textContent;b.onclick=function(){if(!saveNote(b.getAttribute("data-who")))return;b.textContent="Saved \u2713";b.classList.add("done");clearTimeout(b._t);b._t=setTimeout(function(){b.textContent=lab;b.classList.remove("done")},1200)}});
 function relayLabs(n){var out=[],r=n.relay||{};Object.keys(r).forEach(function(w){if(!WHO[w])return;var ok=r[w]==="ok";out.push(mk("span","rlab "+(ok?"ok":"q"),ok?"\u2713 "+WHO[w]+" has it":WHO[w]+" \u00b7 saved on phone, waiting for Allow"))});return out}
 if(window.NoteRelay)NoteRelay.onChange(function(ev){if(ev.state==="landed"&&ev.landed.length){var ch=0;ev.landed.forEach(function(x){var c=noteById(x.noteId);if(c){c.relay=c.relay||{};c.relay[x.who]="ok";ch=1}});if(ch){lsSet(NK,notes);drawNotes()}$("micMsg").textContent="Saved \u2713"+(ev.pending?" \u2013 "+ev.pending+" more sending\u2026":(lastWho?" \u2013 "+WHO[lastWho]+" has it":""))}else if(ev.state==="waiting"||ev.state==="offline"){$("micMsg").textContent=ev.state==="offline"?"Saved on phone, sends when you're back online":"Saved on phone, waiting for Allow"}});
+/* 17 Oct (Elon verdict): ONE status line only. While the line above the buttons has something to say, the top sync line hides; when it is empty, the top line shows. */
+(function(){var m=$("micMsg"),st=document.querySelector(".rui-main .rui-status");if(!m||!st)return;function f(){st.style.display=m.textContent.trim()?"none":""}try{new MutationObserver(f).observe(m,{childList:true,characterData:true,subtree:true})}catch(e){}f()})();
 function csvq(s){s=String(s==null?"":s);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
 $("exp").onclick=function(){var rows=[["sheet_row","title","due","linked_scope","source","snapshot_status","notes","ticked_here","ticked_at"]];TASKS.forEach(function(t){var tk=ticks[t.id]||{};rows.push([t.row||t.id,t.title,t.due,t.scope,t.src,t.snap,t.notes,tk.done?"yes":"no",tk.at||""])});
 var csv="\ufeff"+rows.map(function(r){return r.map(csvq).join(",")}).join("\r\n");var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="realm_tasks_ticks_"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove()};
@@ -122,7 +124,7 @@ function ruiCounts(){if(!window.RealmUI)return;var t=TASKS.length,n=notes.length
 ["save"].forEach(function(id){$(id).addEventListener("click",function(){setTimeout(ruiCounts,0)})});$("notes").addEventListener("click",function(){setTimeout(ruiCounts,0)});document.querySelector(".who").addEventListener("click",function(){setTimeout(ruiCounts,0)});
 $("expM").onclick=function(){$("exp").click()};
 </script><script src="voice.js?v=20261016v5"></script>
-<script src="js/saveapp.js?v=20261016v5" data-mount="header .nav"></script><script src="js/realm-ui.js?v=20261016b"></script>
+<script src="js/saveapp.js?v=20261017h" data-mount="header .nav"></script><script src="js/realm-ui.js?v=20261016b"></script>
 <script src="js/ara-version.js" defer></script>
 <script>ruiCounts();RealmUI.tabs(document.getElementById("rail"),document.getElementById("list"))</script>
 </body></html>

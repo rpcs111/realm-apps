@@ -50,10 +50,20 @@
   function label(){if(!btn)return;var open=false;
     btn.lastChild.textContent=open?'Open app':'Install this app';btn.title=open?'Open '+name+' as an app':'Save '+name+' as an app'}
   function badge(){var b=document.getElementById('araInstalled');if(!standalone()||!ownWindow()){if(b)b.hidden=true;return}if(!b){b=document.createElement('div');b.id='araInstalled';b.setAttribute('role','status');b.textContent='Installed as an app \u2713';b.style.cssText='position:fixed;top:calc(8px + env(safe-area-inset-top));right:calc(8px + env(safe-area-inset-right));z-index:2147483000;background:#16a34a;color:#fff;font:700 13px system-ui,sans-serif;padding:6px 12px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.5);pointer-events:none';document.body.appendChild(b)}b.hidden=false}
-  var hint,hintGone=0;function hintTxt(){return ios?'Tap Share, then Add to Home Screen':android?'Tap the three dots \u22ee, then Install app':'Or: browser menu \u22ee, then Install app'}
-  function paintHint(){if(!btn)return;var show=!standalone()&&!dp;if(standalone()&&!ownWindow()){show=true}
-    if(!hint){hint=document.createElement('div');hint.id='araHint';hint.setAttribute('role','note');hint.style.cssText='position:fixed;top:calc(54px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right));z-index:2147482999;max-width:min(260px,calc(100vw - 20px));background:#000;color:#e6fbff;border:1px solid #22d3ee;border-radius:12px;padding:8px 12px;font:600 12px/1.35 system-ui,-apple-system,Roboto,sans-serif;text-align:left;box-shadow:0 4px 16px rgba(0,0,0,.6);cursor:pointer';hint.title='Tap to hide';hint.onclick=function(){hintGone=1;hint.style.display='none'};setTimeout(function(){hintGone=1;if(hint)hint.style.display='none'},15000);document.body.appendChild(hint)}
-    hint.textContent=(standalone()&&!ownWindow())?'This opened inside an older app. Tap Open in Chrome, then Install app':hintTxt();if(hintGone||(tip&&!tip.hidden))show=false;hint.hidden=!show;hint.style.display=show?'':'none'}
+  /* 17 Oct (Elon verdict): the install hint is a slim in-flow bar at the very TOP of the page. It pushes the page down,
+     never floats over the header, filters or bubbles. One tap on x hides it for good on this device; it also goes by itself after 12s. */
+  var hint,HK='ara_install_hint_gone',hintGone=0;try{hintGone=localStorage.getItem(HK)?1:0}catch(e){}
+  function hintTxt(){return ios?'Tap Share, then Add to Home Screen':android?'Tap the three dots \u22ee, then Install app':'Or: browser menu \u22ee, then Install app'}
+  function hintBye(){hintGone=1;try{localStorage.setItem(HK,String(Date.now()))}catch(e){}if(hint&&hint.parentNode)hint.parentNode.removeChild(hint);hint=null}
+  function paintHint(){if(!btn)return;var odd=standalone()&&!ownWindow(),show=odd||(!standalone()&&!dp);if((hintGone&&!odd)||(tip&&!tip.hidden))show=false;
+    if(!show){if(hint)hint.style.display='none';return}
+    if(!hint){hint=document.createElement('div');hint.id='araHint';hint.setAttribute('role','note');
+      hint.style.cssText='position:relative;z-index:1;display:flex;align-items:center;gap:8px;margin:0;min-height:34px;padding:4px 6px 4px 12px;background:#04161a;color:#e6fbff;border-bottom:1px solid #22d3ee;font:600 12.5px/1.3 system-ui,-apple-system,Roboto,sans-serif;text-align:left;box-sizing:border-box;width:100%';
+      hint.innerHTML='<span style="flex:1 1 auto;min-width:0"></span><button type="button" aria-label="Hide this tip" style="all:unset;box-sizing:border-box;flex:0 0 auto;min-width:36px;min-height:30px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;color:#a1a1aa;font:400 20px/1 system-ui,sans-serif;cursor:pointer">&times;</button>';
+      hint.querySelector('button').onclick=hintBye;
+      var bd=document.body,first=bd.firstChild,oi=document.getElementById('ara-openin');bd.insertBefore(hint,oi?oi.nextSibling:first);
+      if(!odd)setTimeout(hintBye,12000)}
+    hint.firstChild.textContent=odd?'This opened inside an older app. Tap Open in Chrome, then Install app':hintTxt();hint.style.display='flex'}
   function refresh(){badge();if(!btn)return;btn.hidden=standalone()&&ownWindow();if(standalone()&&!ownWindow()){btn.lastChild.textContent='Open in Chrome to install';btn.hidden=false;paintHint();return}if(btn.hidden&&tip)tip.hidden=true;label();paintHint()}
   window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;try{localStorage.removeItem(KEY)}catch(x){}refresh()});
   window.addEventListener('appinstalled',function(){dp=null;try{localStorage.setItem(KEY,'1')}catch(x){}if(btn)btn.hidden=true;if(tip)tip.hidden=true;if(hint)hint.style.display='none'});
