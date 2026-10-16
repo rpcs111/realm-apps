@@ -1,7 +1,7 @@
 # HANDOFF — Ara's Daily Loop
 
 **Owner:** Ange Barlas (Andrew Barlas, Realm PCS, Melbourne UTC+11)
-**Last updated:** 2026-10-16
+**Last updated:** 2026-10-17
 **Rule:** Every new session (box, phone app, voice, any Ara) reads this file FIRST, before touching anything. No rebuilding, no guessing URLs, no new deployments without Ange's yes.
 
 ## Where this lives (one brain)
@@ -53,7 +53,7 @@ Format: `# | ask | first asked (Melb) | times asked | status | proof link`. "Fir
 
 | # | Ask | First asked | Times asked | Status | Proof link |
 |---|---|---|---|---|---|
-| 1 | Fold 8 app links that open and install (Notes, Search Studio, Cert Studio, ETA, Nova, Flow Map, hub, Build Map) | ≤9:39pm 16 Oct | 14 | OPEN. Gospel list sent. Elon headless phone check 17 Oct ~1:50am: 5 pass (search, cert, eta, nova, hub), 3 fail (notes + map: Engine CORS noise until Allow; build-map: not installable, fix pushed 17 Oct, re-check pending). Not confirmed on Ange's real phone | box `/workspace/fold8_check/TABLE.md` |
+| 1 | Fold 8 app links that open and install (Notes, Search Studio, Cert Studio, ETA, Nova, Flow Map, hub, Build Map) | ≤9:39pm 16 Oct | 14 | OPEN. Gospel list sent. Build Map PASS 17 Oct (Elon headless 390x844, commit f10f54e, installable). Also pass: search, cert, eta, nova, hub. Notes + Flow Map: Engine CORS until Allow. Not confirmed on Ange's real phone | box `/workspace/fold8_check/TABLE.md` |
 | 2 | Nova prompt text box (standing "never stop" prompt) | ≤7:11pm 16 Oct | 6 | WAITING ANGE: paste in Gemini + daily 7am "go". Nova stalled | https://rpcs111.github.io/realm-apps/build-map.html (ange-nova-paste) |
 | 3 | Old R icon gone from home screen | ≤10:13pm 16 Oct | 3 | WAITING ANGE: remove old tiles, reinstall from each page in Chrome Beta | https://rpcs111.github.io/realm-apps/build-map.html (ange-reinstall) |
 | 4 | Frankie and Henry store | ≤10:03pm 16 Oct | ≥1 | OPEN, no owner. Site returns error 525 (re-checked 17 Oct ~1:55am Melb). Name renewal only was handled | Build Map `fh-store` |
@@ -96,7 +96,7 @@ Format: `# | ask | first asked (Melb) | times asked | status | proof link`. "Fir
 | 41 | Gmail filters (receipts + stop noise emails) | 9:58pm 16 Oct | ≥2 | WAITING ANGE'S YES | Build Map `gmail-filters` |
 | 42 | WhatsApp link for Ara (office chats) | 11:23am 15 Oct | ≥2 | PLANNED | Build Map `whatsapp-link` |
 | 43 | Staff app links for iPhone (no Chrome Beta) | 10:11pm 16 Oct | 1 | PLANNED for Wed | Build Map `staff-ios-links` |
-| 44 | Claude handover linked into HANDOFF | 1:32am 17 Oct | ≥1 | PARTIAL | Build Map `claude-handover` |
+| 44 | Claude handover linked into HANDOFF | 1:32am 17 Oct | ≥1 | PARTIAL: links added 17 Oct; zip still not uploaded (Ange) | Build Map `claude-handover` |
 | 45 | Julie follow-up sheet (review, share, name) | ≤7:25pm 16 Oct | ≥1 | WAITING ANGE | Build Map `julie-followup` |
 | 46 | Test the apps on the Mac | 6:40pm 16 Oct | 1 | PLANNED | Build Map `mac-test` |
 | 47 | Private gateway page JS error | ≤8:28pm 16 Oct | ≥1 | PLANNED | Build Map `ange-js-error` |
@@ -122,6 +122,18 @@ Sources of truth (sheets):
 - REALM OPEN REGISTER sheet `1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM`
 - ORION_HANDOFF sheet `1x1xLYJnr3k4z91lBiS40eCzKY5GQbdN2eNWzQ9K82uY`
 - Zoho CRM = truth for invoices.
+
+### Claude / Orion handover (linked 17 Oct, Elon check)
+- Export index (186 memory files; 119 in Drive docs, 67 private on box only): https://docs.google.com/spreadsheets/d/1gpINEUzFaEombfFnn3B_UcDDmmTc1mnkIVAJX9N2rlU/edit
+- Orion Front Page A (start here): https://docs.google.com/document/d/16HrFH6onTxxKH8pMO4e1YYIoUV9H1aYgVUThEWjL3lc/edit
+- ORION_HANDOFF sheet: https://docs.google.com/spreadsheets/d/1x1xLYJnr3k4z91lBiS40eCzKY5GQbdN2eNWzQ9K82uY/edit
+- REALM HANDBACK for Orion (14 Oct): https://docs.google.com/document/d/1VRfexXIQNshrdRg-GJqQPwzBGGCOjVRqy1eE9a1UKcs/edit
+- FRANKY AND HENRY folder: https://drive.google.com/drive/folders/1LqDgMGwwoFZX8RClNOz8ppq3M63ZCvBj
+- F&H Shopify reconnect handover (3 Oct): https://docs.google.com/document/d/1RAbKkN42uZ7M1LrI8ttjFNRWje8AIRSVWunjKccy6oA/edit
+- ANGE private index (personal topics; details stay off this public file): https://docs.google.com/document/d/1BDBtXwHkMnV8vhPcjPFMDScEM8sJSmWT6QPsVhuEjSA/edit
+- Private side-venture index (details stay off this public file): https://docs.google.com/document/d/17vyBFPkLaMldh-6c7R_0XaSyYdmH_y3LGCTllrChDtY/edit
+- Claude Export 14 Oct folder: EMPTY. Ange to upload the claude.ai export zip: https://drive.google.com/drive/folders/1hi-h5Gnxlj177Qi9_GjGD42hQjjQcAqJ
+- Private export (67 files) stays on box only: `/workspace/zip287/ORION_EXPORT_PART6_PRIVATE_13Oct2026.md`
 
 ## 3. Current State (as of 2026-10-16)
 
@@ -185,6 +197,7 @@ Backup first: box `backups/handover_20261016_0915/` (HANDOVER.md, CHASE_DRAFT.md
 
 Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINISHES (or fails), not just at session end. Any session — phone, laptop, voice, Nova, routines — reads this file first and picks up from the newest line. A RUNNING line with no matching DONE means the job may have been cut off: check its output before redoing it. Format: `time (Melb) | STATUS | job | result / where it is`.
 
+- 2:15am 17 Oct | DONE | Claude/Orion handover links into HANDOFF §2 + §1b rows 1 and 44 | §2: new 'Claude / Orion handover' with 10 Drive/box pointers (2 personal lines reworded for public: ANGE private index + side-venture index; no After Dark / trading / Harley / PROJECT X names). §1b #1: Build Map PASS 17 Oct (headless 390x844, f10f54e). §1b #44: PARTIAL links added, zip still Ange. §7 append only. Backup box /workspace/backups/HANDOFF.md.main.20261016T151545Z.bak. No deploys, sends or deletes
 - 2:25am 17 Oct | DONE (awaiting Elon test) | Grok How-To (Ange via Elon 15:06 UTC: Grok how-to infographic + Julie's phone with her own login) | gh-pages 6913d68 (version 2026.10.17-4): new https://rpcs111.github.io/realm-apps/grok-howto.html (own manifest grok-howto.webmanifest, id /realm-apps/grok-howto). Illustrated sections: Grok app vs Grok Bot, six things to try, Julie's iPhone 6 steps (App Store Grok AI, iOS 17+, Sign in with Apple on her own Apple ID), Fold 8 / Flip 6 steps (Google Play), Grok in 8 stops (AI Master tutorial chapters, Elon-checked), use-it-properly prompts, bots section, 3 video cards. ?d=julie puts Julie's section first; ?d=fold8/flip6 highlights the Android section. Headless test 390x844 + iPhone UA: 0 JS errors, no sideways scroll. Build Map row grok-howto added, elon_verified:false. Not tested on a real phone yet.
 - 2:13am 17 Oct | DONE (awaiting Elon test) | Flow Map completed (Ange: every node live, apps building on) | gh-pages f0fa648 (map.html + version 2026.10.17-2) + 13e432a (Build Map flowmap row -> amber, elon_verified:false). Before: 14 nodes, 12 live, 2 blank placeholders (Ara, Nova had no link), 0 broken. After: 26 nodes, all tap to something real: 10 job steps + Calendar + Register (Google/Zoho/Deputy targets need the info@ sign-in; Deputy look-only), Ara -> Ara chat, Nova -> nova.html, new 'Realm apps' orbit (Home, Notes, Search Studio, Cert Studio, ETA, Nova, Build Map, Layers), and dashed bubbles that open the Build Map: 1300 line, Julie, Ara button (planned) + Engine sync (waits on Allow). Tap = Open sheet; live / waiting / planned legend; saved notes kept, links always fresh. Box test 390x844 ?d=fold8: 26/26 nodes respond, no JS errors except the known Engine CORS (clears after Ange's Allow). Backup: box /workspace/backups/flowmap_20261016T150156Z. Next: Elon check + real Fold 8 tap test.
 - 2:12am 17 Oct | DONE (awaiting Elon test) | Notes: ELON / IVOR / ARA / NOVA buttons + Chrome Beta hint fix | gh-pages 56f2901 (version 2026.10.17-3): notes.html has one row of big buttons (one tap = save the note + send it to that helper; box clears at once; 'Saved ✓', or 'Saved on phone, waiting for Allow' while the Engine is blocked), new js/note-relay.js (queue kept on the phone, batches of 50, retries 10s→5 min, dedupes by id), floating TELL ARA hidden on Notes only, js/ara-account.js Chrome Beta hint is now a slim bar at the top that hides itself after 12s (all apps). Lands in ARA CAPTURE INBOX, see §2. Box headless 390x844 test: 53 rapid taps (50 ELON + IVOR/ARA/NOVA) in 2.7s, all 53 saved and cleared; Engine blocked: 53/53 queued; Engine mocked OK: 53/53 landed, 0 left; failing twice then OK: 53/53 landed after retry; banner overlaps input: no. Real Engine still 403, so nothing reaches the sheet until Ange's Allow. Build Map `notes-elon-relay` amber, elon_verified false. Backups box /workspace/backups/notes_elon_*
