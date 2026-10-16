@@ -30,7 +30,7 @@ body.hub{padding:0 0 calc(24px + env(safe-area-inset-bottom))!important}
 @media(max-width:380px){#grid{grid-template-columns:1fr 1fr}}
 </style>
 
-</head><body class="hub">
+<script src="js/ara-account.js?v=20261016a" defer></script></head><body class="hub">
 <header class="rui-top hub-top"><span class="rui-mark" style="background:url(pwa/hub-ara-48.svg?v=20261016a) center/contain no-repeat" role="img" aria-label="Ara"></span><h1 class="rui-title">Realm Apps</h1><div class="nav" data-rl-pill></div></header>
 <a id="st" href="./status.html"><b>TONIGHT STATUS</b><span>Done, in progress, needed from you</span></a>
 <div id="grid"><div class="load">Loading tiles&hellip;</div></div>
@@ -41,7 +41,7 @@ var COLORS=["#2563eb","#16a34a","#dc2626","#9333ea","#ea580c","#0891b2","#db2777
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function fix(name,url){var n=name.toUpperCase();
  if(/REALM DESK/.test(n))return "./desk.html";
- if(/CERT STUDIO/.test(n))return "https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec";
+ if(/CERT STUDIO/.test(n))return "https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com.au";
  if(/SCRIBE/.test(n))return "./scribe.html";
  return url}
 var BAD=/orion|elon|grok|claude/i;
@@ -57,7 +57,7 @@ function araFallback(msg){var g=document.getElementById("grid");var t=[{name:"NO
  t=t.map(function(x){var s=String(x.title).replace(/^\s*\u2605\s*/,"").split(/\s+\u2014\s+/);var name=s[0],sub=s[1]||"",badge="";if(BAD.test(sub))sub="";
    var u=fix(name,x.url);
    if(/^REALM DESK/i.test(name))name="REALM DESK";
-   if(/^NOVA$/i.test(name)){u="https://gemini.google.com/gem/aa2550627d15";sub="Gemini"}
+   if(/^NOVA$/i.test(name)){u="https://gemini.google.com/gem/aa2550627d15?authuser=info@realmpcs.com.au";sub="Gemini"}
    if(/^(STATUS|QUOTES TONIGHT)$/i.test(name))badge="old app";
    if(/docs\.google\.com/.test(u))badge="needs sign-in";
    return {name:name,sub:sub,u:u,badge:badge,reg:/regist/i.test(name+" "+sub)}});
@@ -70,7 +70,7 @@ function araFallback(msg){var g=document.getElementById("grid");var t=[{name:"NO
  t=t.concat(ARA_APPS.filter(function(x){return !t.some(function(y){return y.u===x.u||y.name===x.name})}));
  t=t.filter(function(x){return x.u==="./metatron3.html"||!/FLOW MAP|^STATUS$|REALM LAUNCHER|DESK V3/i.test(x.name)});
  t.sort(function(a,b){return (b.reg?1:0)-(a.reg?1:0)});
- var fi=-1;t.forEach(function(x,k){if(/^FLOW MAP$/i.test(x.name))fi=k});t.splice(fi>=0?fi+1:t.length,0,{name:"FLOW MAP (24 SEP)",sub:"Original Apps Script",u:"https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec",badge:"",reg:false});
+ var fi=-1;t.forEach(function(x,k){if(/^FLOW MAP$/i.test(x.name))fi=k});t.splice(fi>=0?fi+1:t.length,0,{name:"FLOW MAP (24 SEP)",sub:"Original Apps Script",u:"https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec?authuser=info@realmpcs.com.au",badge:"",reg:false});
  var si=-1;t.forEach(function(x,k){if(/^SCRIBE/i.test(x.name))si=k});var sc=si>=0?t.splice(si,1)[0]:{};sc.name="NOTES";sc.sub="You Got Me Bro";sc.u="./scribe.html";sc.badge="";sc.reg=true;t.unshift(sc);
  g.innerHTML=t.map(function(x,i){
    return '<a href="'+esc(x.u)+'" target="_self" class="'+(x.reg?'reg':'')+'" style="background:'+(x.reg?'#047857':(x.c||COLORS[i%COLORS.length]))+'">'+(x.badge?'<i>'+esc(x.badge)+'</i>':'')+'<b>'+esc(x.name)+'</b><span>'+esc(x.sub)+'</span></a>'}).join("");
