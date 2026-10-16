@@ -1,0 +1,210 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><meta name="theme-color" content="#000000"><meta name="color-scheme" content="dark"><meta name="application-name" content="Ara Capture"><meta name="apple-mobile-web-app-title" content="Ara Capture"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<title>Ara Capture</title>
+<link rel="manifest" href="ara-capture.webmanifest?v=20261016a">
+<link rel="icon" type="image/svg+xml" href="pwa/hub-ara-48.svg?v=20261016a"><link rel="apple-touch-icon" href="pwa/hub-ara-192.svg?v=20261016a">
+<link rel="stylesheet" href="css/ara-theme.css"><link rel="stylesheet" href="css/realm-ui.css?v=20261016b">
+<style>
+body.rui{background:#000;min-height:100vh}
+.rui-mark{background-image:url("pwa/hub-ara-48.svg?v=20261016a")}
+.cap{max-width:860px;margin:0 auto;padding:10px 12px calc(28px + env(safe-area-inset-bottom))}
+.cap-in{position:relative;border:1px solid rgba(148,197,214,.28);background:#0b141c;border-radius:18px;padding:10px 10px 8px;box-shadow:0 6px 24px rgba(0,0,0,.45)}
+.cap-in:focus-within{border-color:var(--rui-ac)}
+#dump{display:block;width:100%;min-height:34vh;max-height:60vh;border:0;outline:0;background:transparent;color:#fff;font:inherit;font-size:18px;line-height:1.45;resize:vertical;padding:4px 4px 8px}
+#dump::placeholder{color:#7d97a3}
+#interim{min-height:0;color:#8fb3c1;font-style:italic;font-size:14px;padding:0 4px 6px}#interim:empty{display:none}
+.cap-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cap-mic{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:52px;min-width:52px;padding:0 18px 0 14px;border-radius:26px;border:1px solid rgba(34,211,238,.6);color:#e6fbff;font-weight:600;font-size:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.cap-mic svg{width:24px;height:24px;flex:none}
+.cap-mic.on{background:rgba(34,211,238,.18);color:#22d3ee;box-shadow:0 0 0 4px rgba(34,211,238,.22);animation:capP 1.4s infinite}@keyframes capP{50%{box-shadow:0 0 0 8px rgba(34,211,238,.08)}}
+.cap-save{all:unset;box-sizing:border-box;margin-left:auto;display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 22px;border-radius:26px;background:#fff;color:#000;font-weight:700;font-size:15px;cursor:pointer}
+.cap-save:disabled,.cap-save[aria-disabled=true]{opacity:.45;cursor:default}
+.cap-save:hover:not(:disabled),.cap-save:focus-visible{background:#cffafe}
+.cap-clear{all:unset;cursor:pointer;color:var(--rui-mute);font-size:13px;padding:10px 8px;border-radius:8px}.cap-clear:hover{color:#fff}
+.cap-msg{font-size:13px;color:var(--rui-mute);margin:8px 2px 0;min-height:18px}
+.cap-msg b{color:#cffafe}.cap-msg.warn b{color:#fde68a}
+h2.cap-h{display:flex;align-items:center;gap:8px;margin:18px 2px 6px;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--rui-mute)}
+h2.cap-h i{font-style:normal;background:rgba(255,255,255,.06);border-radius:999px;padding:1px 8px;letter-spacing:0}
+.chips{display:flex;flex-direction:column;gap:6px}
+.chip{display:flex;flex-wrap:wrap;align-items:flex-start;gap:6px 8px;padding:8px 8px 8px 10px;border:1px solid var(--rui-line);border-left:3px solid var(--rui-ac);border-radius:12px;background:var(--rui-row)}
+.chip .ctl{flex:none;display:flex;align-items:center;gap:2px}
+.chip .tx{flex:1 1 0;min-width:0;color:#fff;font-size:14.5px;overflow-wrap:anywhere;padding-top:4px}
+.chip .cat{all:unset;box-sizing:border-box;flex:none;display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 10px;border-radius:999px;border:1px solid rgba(148,197,214,.3);font-size:12.5px;color:#e6f7fb;cursor:pointer;white-space:nowrap}
+.chip .cat:hover,.chip .cat:focus-visible{border-color:var(--rui-ac)}
+.chip .del{all:unset;flex:none;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;color:var(--rui-mute);font-size:18px;cursor:pointer}.chip .del:hover{color:#fff;background:rgba(255,255,255,.06)}
+.chip.q{border-left-color:#fbbf24}
+.chip .ask{flex:1 0 100%;font-size:13px;color:#fde68a}
+.chip .opts{flex:1 0 100%;display:none;flex-wrap:wrap;gap:6px}
+.chip.q .opts,.chip.pick .opts{display:flex}
+.chip .opts button{all:unset;box-sizing:border-box;height:34px;padding:0 12px;border-radius:999px;border:1px solid rgba(148,197,214,.3);font-size:13px;color:#e6f7fb;cursor:pointer}
+.chip .opts button:hover,.chip .opts button:focus-visible{border-color:var(--rui-ac);background:rgba(34,211,238,.1)}
+.chip .opts button.on{background:rgba(34,211,238,.2);border-color:var(--rui-ac)}
+.c-Task{border-left-color:#22d3ee}.c-Note{border-left-color:#a1a1aa}.c-Idea{border-left-color:#facc15}.c-Feeling{border-left-color:#f472b6}.c-Job{border-left-color:#60a5fa}.c-Purchase{border-left-color:#34d399}.c-Calendar{border-left-color:#e6f7fb}.c-Nova{border-left-color:#818cf8}.c-Build{border-left-color:#fb923c}
+.empty{color:var(--rui-mute);font-size:13px;padding:6px 2px}
+.recent li{display:flex;gap:8px;align-items:baseline;padding:6px 4px;border-bottom:1px solid var(--rui-line);font-size:13px}
+.recent ul{list-style:none;margin:0;padding:0}
+.recent .rc{flex:none;color:var(--rui-mute);min-width:84px;font-size:12px}
+.recent .rt{flex:1;min-width:0;color:#e6f7fb;overflow-wrap:anywhere}
+.recent .rs{flex:none;font-size:11px;color:var(--rui-mute)}.recent .rs.ok{color:#86efac}
+.tips{font-size:12px;color:var(--rui-mute);margin:16px 2px 0;line-height:1.5}
+.tips kbd{font:inherit;border:1px solid var(--rui-line);border-radius:4px;padding:0 4px}
+</style></head>
+<body class="rui">
+<header class="rui-top"><span class="rui-mark" role="img" aria-label="Ara"></span><b class="rui-title">Ara Capture</b><nav class="nav"><a href="./index.html">‹ Apps</a><a href="./scribe.html">Notes ›</a></nav></header>
+<main class="cap">
+ <div class="cap-in">
+  <textarea id="dump" aria-label="Brain dump" placeholder="Dump it all here, bro. Talk or type: tasks, feelings, ideas, jobs, things to buy… one per sentence or line."></textarea>
+  <div id="interim" aria-live="polite"></div>
+  <div class="cap-bar">
+   <button id="mic" class="cap-mic" type="button" aria-pressed="false" aria-label="Talk to Ara"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span id="micL">Talk</span></button>
+   <button id="clear" class="cap-clear" type="button">Clear</button>
+   <button id="save" class="cap-save" type="button" disabled>Save&nbsp;<span id="saveN"></span></button>
+  </div>
+ </div>
+ <div class="cap-msg" id="msg" aria-live="polite"></div>
+ <h2 class="cap-h">Ara sorted it <i id="nItems">0</i></h2>
+ <div class="chips" id="chips"><div class="empty">Each sentence or line becomes its own item here. Tap a label to change it.</div></div>
+ <section class="recent"><h2 class="cap-h">Saved <i id="nSaved">0</i> <span id="syncState" style="letter-spacing:0;text-transform:none;font-weight:400"></span></h2><ul id="recent"></ul></section>
+ <p class="tips">Saved items stay on this device first, so nothing is lost offline, then sync to Ara's inbox. <kbd>Ctrl</kbd>+<kbd>Enter</kbd> saves, <kbd>Esc</kbd> stops the mic.</p>
+</main>
+<script src="js/ara-capture-rules.js?v=20261016a"></script>
+<script>
+(function(){
+'use strict';
+var A=window.AraCapture;
+/* Backend: Ara Engine web app (deployment @1, module "capture"). Append-only, no secret (this repo is public).
+   Override on a device with localStorage 'ara_capture_api' (or ?api=...); 'off' disables sync. */
+var API_DEFAULT='https://script.google.com/macros/s/AKfycbxzrPy359CBlkbrYuR0-5xJB4GLXIQ6xNDIE6EFEb2xvnoY0n5sodcnljN4Ohqf4nWa/exec';
+var KQ='ara_capture_v1',KD='ara_capture_draft',KO='ara_capture_overrides',KA='ara_capture_api';
+var $=function(id){return document.getElementById(id)};
+var dump=$('dump'),chipsEl=$('chips'),msg=$('msg'),saveB=$('save'),micB=$('mic');
+var qs=new URLSearchParams(location.search);
+function lsGet(k,d){try{var v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
+if(qs.get('api')){lsSet(KA,qs.get('api'))}
+function api(){var a=lsGet(KA,null);if(a==='off')return '';return a||API_DEFAULT}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function norm(s){return String(s).toLowerCase().replace(/\s+/g,' ').trim()}
+function uid(){return 'c_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8)}
+
+/* ---------- live split + categorise ---------- */
+var overrides=lsGet(KO,{}),items=[];
+function parse(){
+  items=A.split(dump.value).map(function(t){var o=overrides[norm(t)];return{text:t,cat:o||A.guess(t),manual:!!o}});
+  render();
+}
+function catBtns(sel){return A.CATS.map(function(c){return '<button type="button" data-set="'+c.k+'"'+(c.k===sel?' class="on"':'')+'>'+c.e+' '+esc(c.l)+'</button>'}).join('')}
+function render(){
+  $('nItems').textContent=items.length;
+  saveB.disabled=!items.length;$('saveN').textContent=items.length?'('+items.length+')':'';
+  if(!items.length){chipsEl.innerHTML='<div class="empty">Each sentence or line becomes its own item here. Tap a label to change it.</div>';return}
+  chipsEl.innerHTML=items.map(function(it,i){var q=it.cat==='?';
+    return '<div class="chip c-'+it.cat+(q?' q':'')+'" data-i="'+i+'"><span class="tx">'+esc(it.text)+'</span>'+
+      '<span class="ctl"><button type="button" class="cat" data-pick="'+i+'" aria-label="Category: '+esc(A.label(it.cat))+'. Tap to change">'+A.emoji(it.cat)+' '+esc(q?'?':A.label(it.cat).split(' /')[0])+'</button>'+
+      '<button type="button" class="del" data-del="'+i+'" aria-label="Remove this item">&times;</button></span>'+
+      (q?'<div class="ask">where should I put this, bro?</div>':'')+
+      '<div class="opts">'+catBtns(it.cat)+'</div></div>'}).join('');
+}
+chipsEl.addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b)return;var chip=b.closest('.chip'),i=+chip.getAttribute('data-i'),it=items[i];if(!it)return;
+  if(b.hasAttribute('data-pick')){chip.classList.toggle('pick');return}
+  if(b.hasAttribute('data-del')){removeLine(it.text);return}
+  if(b.hasAttribute('data-set')){overrides[norm(it.text)]=b.getAttribute('data-set');lsSet(KO,trimOverrides(overrides));parse()}
+});
+function trimOverrides(o){var k=Object.keys(o);if(k.length>300)k.slice(0,k.length-300).forEach(function(x){delete o[x]});return o}
+function removeLine(t){var v=dump.value,ix=v.indexOf(t);if(ix<0)return;dump.value=(v.slice(0,ix)+v.slice(ix+t.length)).replace(/^[\s.!?;]+/,'').replace(/\n{3,}/g,'\n\n');saveDraft();parse()}
+var pt=0;function soon(){clearTimeout(pt);pt=setTimeout(parse,180)}
+function saveDraft(){lsSet(KD,dump.value)}
+dump.addEventListener('input',function(){saveDraft();soon()});
+
+/* ---------- save: localStorage first, then sync ---------- */
+function queue(){return lsGet(KQ,[])}
+function setQueue(q){if(q.length>2000)q=q.slice(q.length-2000);return lsSet(KQ,q)}
+function save(){
+  if(!items.length)return;
+  if(items.some(function(it){return it.cat==='?'})&&!save.ok){save.ok=1;setTimeout(function(){save.ok=0},6000);
+    note('warn','Some items have no home yet (<b>?</b>). Pick one, or tap Save again to keep them as <b>?</b>.');return}
+  save.ok=0;var now=new Date().toISOString(),q=queue();
+  items.forEach(function(it){q.push({id:uid(),text:it.text,category:it.cat,ts:now,sync:'pending'})});
+  if(!setQueue(q)){note('warn','<b>Could not save on this device</b> (storage full or blocked). Copy your text before closing.');return}
+  var n=items.length;dump.value='';saveDraft();parse();renderRecent();
+  note('','<b>Saved '+n+' on this device.</b> Syncing to Ara…');
+  sync(true);
+  if(!listening)dump.focus();
+}
+saveB.addEventListener('click',save);
+$('clear').addEventListener('click',function(){if(dump.value&&!confirm('Clear the box?'))return;dump.value='';saveDraft();parse();dump.focus()});
+document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();save()}if(e.key==='Escape'&&listening)stopMic()});
+function note(cls,h){msg.className='cap-msg '+cls;msg.innerHTML=h}
+
+var syncing=false,nextTry=0,fails=0;
+function sync(force){
+  var url=api(),q=queue(),pend=q.filter(function(x){return x.sync!=='synced'});
+  renderSyncState(pend.length);
+  if(!pend.length||!url||syncing)return;
+  if(!force&&Date.now()<nextTry)return;
+  if(navigator.onLine===false){afterFail(pend.length,'offline');return}
+  syncing=true;var batch=pend.slice(0,50);
+  fetch(url,{method:'POST',mode:'cors',redirect:'follow',credentials:'omit',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({app:'capture',items:batch.map(function(x){return{id:x.id,text:x.text,category:x.category,ts:x.ts}})})})
+  .then(function(r){return r.json()})
+  .then(function(j){
+    if(!j||!j.ok)throw new Error((j&&j.error)||'not ok');
+    var done={};(j.saved||[]).concat(j.dupes||[]).forEach(function(id){done[id]=1});
+    var q2=queue();q2.forEach(function(x){if(done[x.id])x.sync='synced'});setQueue(q2);
+    fails=0;nextTry=0;syncing=false;
+    var left=q2.filter(function(x){return x.sync!=='synced'}).length;
+    note('','<b>Synced to Ara\u2019s inbox.</b>'+(left?' '+left+' still to go…':''));renderRecent();
+    if(left)setTimeout(function(){sync(true)},800);
+  })
+  .catch(function(){syncing=false;afterFail(pend.length)});
+}
+function afterFail(n,why){fails++;nextTry=Date.now()+Math.min(5*60000,15000*Math.pow(2,Math.min(fails,5)));
+  note('warn','<b>Saved on phone, will sync</b> ('+n+' waiting'+(why==='offline'?', offline':'')+'). Ara\u2019s inbox opens once Ange taps the one Allow on the Ara Engine.');renderSyncState(n)}
+function renderSyncState(n){$('syncState').textContent=n?'· '+n+' waiting to sync':(queue().length?'· all synced':'')}
+addEventListener('online',function(){sync(true)});
+document.addEventListener('visibilitychange',function(){if(!document.hidden)sync(false)});
+setInterval(function(){if(!document.hidden)sync(false)},30000);
+
+function renderRecent(){var q=queue();$('nSaved').textContent=q.length;
+  var last=q.slice(-30).reverse();
+  $('recent').innerHTML=last.length?last.map(function(x){var ok=x.sync==='synced';
+    return '<li><span class="rc">'+A.emoji(x.category)+' '+esc(x.category==='?'?'?':A.label(x.category).split(' /')[0])+'</span><span class="rt">'+esc(x.text)+'</span><span class="rs'+(ok?' ok':'')+'">'+(ok?'synced':'on phone')+'</span></li>'}).join(''):'<li class="empty">Nothing saved yet.</li>';
+  renderSyncState(q.filter(function(x){return x.sync!=='synced'}).length)}
+
+/* ---------- voice: Web Speech API, continuous, auto-restart; falls back to typing ---------- */
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,listening=false,wantMic=false,restarts=0,lastStart=0;
+function setMicUI(on){listening=on;micB.classList.toggle('on',on);micB.setAttribute('aria-pressed',on?'true':'false');$('micL').textContent=on?'Listening… tap to stop':'Talk'}
+function appendText(t){t=t.trim();if(!t)return;var v=dump.value;var sep=!v||/\n\s*$/.test(v)?'':(/[.!?]\s*$/.test(v)?' ':'. ');
+  t=t.charAt(0).toUpperCase()+t.slice(1);dump.value=v+sep+t;saveDraft();parse();dump.scrollTop=dump.scrollHeight}
+function startMic(auto){
+  if(!SR){note('warn','<b>Voice isn\u2019t available in this browser.</b> Type instead (or use the keyboard mic).');dump.focus();return}
+  wantMic=true;if(listening)return;
+  try{rec=new SR();rec.lang=(navigator.language&&/^en/i.test(navigator.language))?navigator.language:'en-AU';rec.continuous=true;rec.interimResults=true;rec.maxAlternatives=1;
+    rec.onstart=function(){setMicUI(true);lastStart=Date.now();if(!dump.value)note('','Listening. Say it all; Ara splits it. Say <b>"next thing"</b> to start a new item.')};
+    rec.onresult=function(e){var interim='';for(var i=e.resultIndex;i<e.results.length;i++){var r=e.results[i];if(r.isFinal)appendText(r[0].transcript);else interim+=r[0].transcript}$('interim').textContent=interim};
+    rec.onerror=function(e){var er=e&&e.error;
+      if(er==='not-allowed'||er==='service-not-allowed'){wantMic=false;note('warn',auto?'<b>Tap Talk to start the mic</b> (or just type).':'<b>Mic is blocked.</b> Allow the microphone for this app, or type instead.');dump.focus()}
+      else if(er==='audio-capture'){wantMic=false;note('warn','<b>No microphone found.</b> Type instead.')}
+      else if(er==='network'){wantMic=false;note('warn','<b>Voice needs internet.</b> Type it in and it saves on the phone.');dump.focus()}};
+    rec.onend=function(){setMicUI(false);$('interim').textContent='';
+      if(wantMic&&!document.hidden){restarts=(Date.now()-lastStart<1500)?restarts+1:0;if(restarts<5)setTimeout(function(){if(wantMic)startMic(false)},250);else{wantMic=false;note('warn','Mic keeps stopping. Tap Talk again, or type.')}}};
+    rec.start();
+  }catch(err){wantMic=false;setMicUI(false);note('warn','<b>Could not start the mic.</b> Tap Talk, or type.');dump.focus()}
+}
+function stopMic(){wantMic=false;if(/Listening/.test(msg.textContent))note('','');try{rec&&rec.stop()}catch(e){}setMicUI(false)}
+micB.addEventListener('click',function(){if(listening||wantMic)stopMic();else startMic(false)});
+document.addEventListener('visibilitychange',function(){if(document.hidden&&listening){try{rec.stop()}catch(e){}}});
+
+/* ---------- boot ---------- */
+dump.value=lsGet(KD,'')||'';parse();renderRecent();
+if(qs.get('mic')==='1'&&!qs.get('type'))startMic(true);
+else{dump.focus()}
+if(!SR&&qs.get('mic')==='1')dump.focus();
+setTimeout(function(){sync(true)},1200);
+window.AraCaptureApp={parse:parse,save:save,sync:sync,queue:queue,items:function(){return items}};
+})();
+</script>
+<script src="js/saveapp.js" data-mount="header .nav" defer></script>
+<script src="js/realm-ui.js?v=20261016b" defer></script>
+<script src="js/ara-version.js" defer></script>
+</body></html>
