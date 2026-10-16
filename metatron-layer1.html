@@ -29,7 +29,7 @@ input,textarea,select{width:100%;font:inherit;background:#05070d;color:#fff;bord
 .nd{cursor:pointer}.nd text{pointer-events:none}
 .src{font-size:12px;color:#c4b5fd;white-space:pre-wrap}
 footer{font-size:11px;color:#6b7a99;padding:8px 10px}
-</style><script src="js/ara-account.js?v=20261016a" defer></script></head><body>
+</style><script src="js/ara-account.js?v=20261016b" defer></script></head><body>
 <header><h1>METATRON - LAYER 1</h1>
 <button id="bEdit" type="button">Edit</button>
 <button id="bStatus" type="button">Status</button>
@@ -60,7 +60,7 @@ footer{font-size:11px;color:#6b7a99;padding:8px 10px}
 var KEY="realm_metatron_layer1_v4",C=650,R1=180,R2=360,NS="http://www.w3.org/2000/svg";
 function pt(r,deg){var a=deg*Math.PI/180;return[Math.round(C+r*Math.cos(a)),Math.round(C+r*Math.sin(a))]}
 var ANG={gmail:-90,tasks:-30,drive:30,zoho:90,wa:150,deputy:210};
-var L={deputy:"https://www.deputy.com/",chat:"https://app.2chat.io/",cal:"https://calendar.google.com/calendar/r?authuser=info@realmpcs.com.au",gmail:"https://mail.google.com/mail/?authuser=info@realmpcs.com.au#inbox",tasks:"https://tasks.google.com/?authuser=info@realmpcs.com.au",drive:"https://drive.google.com/drive/folders/1XmP4QkPiL85SDaYbTutYWgW5zZpW8inr?authuser=info@realmpcs.com.au",zoho:"https://books.zoho.com/app",wa:"https://web.whatsapp.com",apps:"https://rpcs111.github.io/realm-apps/",certs:"https://drive.google.com/drive/search?q=%22ANCHOR%20ROOF%20TEST%22&authuser=info@realmpcs.com.au",cert:"https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com.au",desk:"https://script.google.com/macros/s/AKfycbzK3mUQipb81VLvLoMfUTY5tGNOimafh_Ljr17VX1OA63bztP1ZqXFEsXUQECe5VkZcyA/exec?authuser=info@realmpcs.com.au",reg:"https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com.au",inv:"https://books.zoho.com/app#/invoices"};
+var L={deputy:"https://www.deputy.com/",chat:"https://app.2chat.io/",cal:"https://calendar.google.com/calendar/r?authuser=info@realmpcs.com",gmail:"https://mail.google.com/mail/?authuser=info@realmpcs.com#inbox",tasks:"https://tasks.google.com/?authuser=info@realmpcs.com",drive:"https://drive.google.com/drive/folders/1XmP4QkPiL85SDaYbTutYWgW5zZpW8inr?authuser=info@realmpcs.com",zoho:"https://books.zoho.com/app",wa:"https://web.whatsapp.com",apps:"https://rpcs111.github.io/realm-apps/",certs:"https://drive.google.com/drive/search?q=%22ANCHOR%20ROOF%20TEST%22&authuser=info@realmpcs.com",cert:"https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com",desk:"https://script.google.com/macros/s/AKfycbzK3mUQipb81VLvLoMfUTY5tGNOimafh_Ljr17VX1OA63bztP1ZqXFEsXUQECe5VkZcyA/exec?authuser=info@realmpcs.com",reg:"https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com",inv:"https://books.zoho.com/app#/invoices"};
 function H(id,t,k,img,link,src){var p=k<0?[C,C]:pt(R2,ANG[k]);return{id:id,t:t,d:"",kind:"hub",x:p[0],y:p[1],r:78,img:img,link:link,st:"",src:src,fixed:true}}
 function I(id,t,d,k,link,src,st,hub){var p=pt(R1,ANG[k]);return{id:id,t:t,d:d,kind:"inner",x:p[0],y:p[1],r:60,link:link||"",st:st||"",src:src,hub:hub}}
 function S_(id,t,d,r,deg,link,src,st,hub,g){return{id:id,t:t,d:d,link:link||"",st:st||"",src:src,hub:hub,g:g}}
