@@ -82,11 +82,9 @@
    "id": "flowmap",
    "group": "APPS",
    "name": "Flow Map",
-   "status": "green",
-   "elon_verified": true,
-   "note": "Live v-25, now installable.",
-   "verified_date": "2026-10-16T12:51Z",
-   "verified_how": "Elon re-test + bug fixes v-26"
+   "status": "amber",
+   "elon_verified": false,
+   "note": "Completed 17 Oct (f0fa648): 26 nodes, every one opens something. 21 live (incl. Notes + Search Studio amber, waiting on Allow), Engine sync waiting on Allow, 3 planned (1300 line, Julie, Ara button) open the Build Map. Box test 390x844 ?d=fold8: 26/26 tap, no JS errors except the known Engine CORS. Awaiting Elon check + real-phone test."
   },
   {
    "id": "scribe",
