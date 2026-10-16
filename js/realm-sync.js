@@ -15,6 +15,12 @@
     /^realm_metatron[A-Za-z0-9_]*$/, /^realm_prism_v\d+$/, /^realm_amends$/, /^realm_video_recent$/, /^realmCrew(Idea|Tree)$/,
     /^realm_setup_[A-Za-z0-9_\-]+$/, /^realm-cert-items$/];
   var CUR = document.currentScript, LS = window.localStorage, SP = Storage.prototype, rawSet = SP.setItem, rawRemove = SP.removeItem;
+  /* Opt-in per page (17 Oct 2026, Search Studio first): <script src="js/realm-sync.js" data-backoff data-allow-text="...">
+     data-backoff: while the Engine can't be reached (Allow not done yet / blocked), back off 1, 2, 4 ... 30 min instead of
+     retrying every minute and on every focus. A tap on the status line still retries at once. Pages without it behave as before.
+     data-allow-text: friendlier wording for the 'allow' state. */
+  var BO = !!(CUR && CUR.hasAttribute('data-backoff')), boN = 0, boUntil = 0;
+  var ALLOW_TXT = CUR && CUR.getAttribute('data-allow-text');
   function inScope(k) { if (!k || k.length > 80 || !/^[A-Za-z0-9_\-]+$/.test(k)) return false; for (var i = 0; i < INC.length; i++) if (INC[i].test(k)) return true; return false; }
   function rd(k) { try { return LS.getItem(k); } catch (e) { return null; } }
   function wr(k, v) { try { if (v == null) rawRemove.call(LS, k); else rawSet.call(LS, k, v); return true; } catch (e) { return false; } }
@@ -30,7 +36,7 @@
     return false;
   }
   grab();
-  window.addEventListener('hashchange', function () { if (grab()) soon(0); });
+  window.addEventListener('hashchange', function () { if (grab()) { boN = 0; boUntil = 0; soon(0); } });
   var dev = rd(DEVK); if (!dev) { dev = (/Android|iPhone|iPad/i.test(navigator.userAgent) ? 'phone-' : 'desktop-') + Math.random().toString(36).slice(2, 8); wr(DEVK, dev); }
 
   // ---- watch local saves (timestamps for last-write-wins + quick push) ----
@@ -91,7 +97,7 @@
   var TXT = {
     synced: function () { return '\u2713 Synced with your other devices' + (st.at ? ' \u00b7 ' + new Date(st.at).toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit' }) : ''); },
     syncing: function () { return 'Saved on this device \u00b7 syncing\u2026'; },
-    allow: function () { return 'Saved on this device \u2014 waiting for Ara Engine Allow'; },
+    allow: function () { return ALLOW_TXT || 'Saved on this device \u2014 waiting for Ara Engine Allow'; },
     nokey: function () { return 'Saved on this device \u2014 open the sync link from Ara once on this device'; },
     badkey: function () { return 'Saved on this device \u2014 sync link not accepted, ask Ara for the new one'; },
     offline: function () { return 'Saved on this device \u2014 offline, syncs when back online'; },
@@ -107,14 +113,16 @@
         document.body.appendChild(el);
       }
       el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite'); el.title = 'Tap to sync now';
-      el.addEventListener('click', function () { cycle(); });
+      el.addEventListener('click', function () { cycle(true); });
       if (el.tagName !== 'BUTTON') el.style.cursor = 'pointer';
     }
     el.textContent = (TXT[st.state] || TXT.error)();
     el.setAttribute('data-sync-state', st.state);
     if (el.id === 'realmSyncPill') el.style.color = st.state === 'synced' ? '#86efac' : (st.state === 'syncing' ? '#cbd5e1' : '#fcd34d');
   }
-  function set(s, msg) { st.state = s; st.msg = msg || ''; if (s === 'synced') st.at = Date.now(); paint(); statusFns.forEach(function (f) { try { f(st.state); } catch (e) {} }); }
+  function set(s, msg) {
+    if (BO) { if (s === 'allow') { boUntil = Date.now() + Math.min(60000 * Math.pow(2, boN), 1800000); boN++; } else if (s === 'synced' || s === 'nokey') { boN = 0; boUntil = 0; } }
+    st.state = s; st.msg = msg || ''; if (s === 'synced') st.at = Date.now(); paint(); statusFns.forEach(function (f) { try { f(st.state); } catch (e) {} }); }
 
   // ---- talk to the Engine ----
   function post(body, ms) {
@@ -142,8 +150,9 @@
       base[k] = { v: R.v == null ? null : R.v, r: R.r || 0 };
     });
   }
-  function cycle() {
+  function cycle(force) {
     if (busy) { again = true; return Promise.resolve(); }
+    if (BO && force !== true && boUntil && Date.now() < boUntil) return Promise.resolve(); // backing off: Engine not reachable yet
     var k = rd(TOK);
     if (navigator.onLine === false) { set('offline'); return Promise.resolve(); }
     busy = true;
@@ -214,6 +223,6 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
   document.addEventListener('visibilitychange', function () { if (!document.hidden) soon(200); });
   window.addEventListener('focus', function () { soon(200); });
-  window.addEventListener('online', function () { soon(200); });
+  window.addEventListener('online', function () { boN = 0; boUntil = 0; soon(200); });
   setInterval(function () { if (!document.hidden) cycle(); }, 60000);
 })();
