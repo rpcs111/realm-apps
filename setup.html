@@ -1,35 +1,83 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Setup - Apps Script API</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#000000">
+<title>Set up this device</title>
+<link rel="manifest" href="realm-apps-v3.webmanifest?v=20261016c">
+<link rel="icon" type="image/svg+xml" href="pwa/hub-ara-v3-192.svg?v=20261016c">
 <style>
-body{margin:0;background:#000;color:#e8fff0;font:20px/1.5 -apple-system,system-ui,sans-serif;padding:16px}
-h1{font-size:24px;color:#22c55e;margin:8px 0 16px}
-details{border:2px solid #22c55e;border-radius:14px;margin:0 0 14px;background:#06140b}
-summary{padding:18px 16px;font-size:22px;font-weight:700;cursor:pointer;list-style:none}
-summary::-webkit-details-marker{display:none}
-summary:before{content:'+ ';color:#22c55e}
-details[open] summary:before{content:'- '}
-.b{padding:0 16px 18px}
-a.btn{display:block;text-align:center;background:#22c55e;color:#000;font-weight:800;padding:16px;border-radius:12px;text-decoration:none;margin-top:10px}
-label{display:flex;gap:12px;align-items:center;font-size:18px;margin-top:10px}
-input[type=checkbox]{width:28px;height:28px}
-.f{font-size:14px;color:#7a9;margin-top:20px}
-</style><script src="js/ara-account.js?v=20261016b" defer></script></head><body>
-<h1>Connect Ara: 5 steps on your phone</h1>
+*{box-sizing:border-box}body{margin:0;background:#000;color:#e4e4e7;font:18px/1.45 system-ui,-apple-system,sans-serif;padding:16px 16px 40px;max-width:640px;margin:0 auto}
+h1{font-size:24px;margin:6px 0 4px;color:#fff}.sub{color:#94a3b8;font-size:15px;margin:0 0 14px}
+.row{display:flex;align-items:center;gap:12px;border:1px solid #1f2937;border-radius:14px;padding:12px;margin:0 0 10px;background:#05080f}
+.ck{flex:0 0 34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;border:2px solid #475569;color:#475569}
+.ck.on{border-color:#22c55e;background:#22c55e;color:#000}.ck.wait{border-color:#f59e0b;color:#f59e0b}
+.row .t{flex:1;min-width:0}.row b{display:block;color:#fff}.row small{color:#94a3b8;font-size:13px}
+.row img{width:40px;height:40px;border-radius:10px;flex:0 0 40px}
+a.go{flex:0 0 auto;display:inline-flex;align-items:center;min-height:48px;padding:0 18px;border-radius:12px;background:#0e7490;color:#fff;font-weight:700;text-decoration:none}
+#install{display:block;width:100%;min-height:64px;border:0;border-radius:16px;background:#22c55e;color:#000;font:800 20px system-ui,sans-serif;margin:6px 0 8px;cursor:pointer}
+#install[disabled]{background:#334155;color:#cbd5e1;cursor:default}
+#how{color:#cbd5e1;font-size:15px;margin:0 0 16px;min-height:1em}
+#keyIn{display:none;gap:8px;margin-top:8px}#keyIn input{flex:1;min-width:0;min-height:44px;font:15px monospace;padding:8px;border-radius:10px;border:1px solid #334155;background:#000;color:#fff}
+#keyIn button{min-height:44px;padding:0 14px;border-radius:10px;border:0;background:#0e7490;color:#fff;font-weight:700}
+.f{color:#64748b;font-size:13px;margin-top:18px}
+</style></head><body>
+<h1>Set up this device</h1>
+<p class="sub">Open this page once on the phone (Chrome Beta) and once on the desktop (Chrome), both signed in as info@realmpcs.com.</p>
 
-<details open><summary>1. Add info@ to Chrome Beta</summary><div class="b">Open Chrome Beta. Tap your profile picture (top right). Tap <b>Add account</b> and sign in as <b>info@realmpcs.com</b>.<label><input type="checkbox" data-k="s1">Done</label></div></details>
+<button id="install" type="button">Install Realm Apps</button>
+<p id="how"></p>
 
-<details><summary>2. Switch to that account</summary><div class="b">Tap the profile picture again and pick <b>info@realmpcs.com</b> so Chrome Beta is using it.<label><input type="checkbox" data-k="s2">Done</label></div></details>
+<div class="row"><div class="ck" id="ckKey">1</div><div class="t"><b>Realm key saved</b><small id="keyMsg">Checking…</small>
+<form id="keyIn"><input id="keyBox" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Paste the Realm key"><button type="submit">Save</button></form></div></div>
 
-<details><summary>3. Open Apps Script settings</summary><div class="b">Tap the button below. If it shows a cramped layout, tap the three dots and turn on <b>Desktop site</b>.<a class="btn" href="https://script.google.com/home/usersettings?authuser=info@realmpcs.com" target="_blank" rel="noopener">Open Apps Script settings</a><label><input type="checkbox" data-k="s3">Done</label></div></details>
+<div class="row"><div class="ck" id="ckSync">2</div><div class="t"><b>Sync between phone and desktop</b><small id="syncMsg" data-realm-sync>Checking…</small></div></div>
 
-<details><summary>4. Switch on the API</summary><div class="b">Find <b>Google Apps Script API</b> and flip the switch to <b>On</b>.<label><input type="checkbox" data-k="s4">Done</label></div></details>
+<div class="row"><img src="pwa/notes-app-v1.svg?v=20261016n" alt=""><div class="t"><b>Notes</b><small>Notes, ticks, Add to Tasks</small></div><a class="go" href="notes.html">Open</a></div>
+<div class="row"><img src="pwa/search.svg" alt=""><div class="t"><b>Search Studio</b><small>Search everything</small></div><a class="go" href="search.html">Open</a></div>
+<div class="row"><img src="pwa/cert-gospel.svg" alt=""><div class="t"><b>Cert Studio</b><small>Opens live Cert Studio</small></div><a class="go" href="cert.html">Open</a></div>
+<div class="row"><img src="pwa/hub-ara-v3-192.svg?v=20261016c" alt=""><div class="t"><b>Realm Apps (hub)</b><small>Every app in one place</small></div><a class="go" href="index.html">Open</a></div>
 
-<details><summary>5. Tell Ara</summary><div class="b">Say or type <b>"API on"</b> to Ara. Ara then starts the deploy login and hands you one Google approval.<label><input type="checkbox" data-k="s5">Done</label></div></details>
+<p class="f">Each app installs as its own icon: open it, then tap <b>Save app</b> at the top. Keys stay on this device only and are never in the website code. Old checklist: <a href="setup-api.html" style="color:#22d3ee">Apps Script API steps</a>.</p>
 
-<div class="f">Ticks save on this phone only. Built by Ara.</div>
 <script>
-document.querySelectorAll('input[data-k]').forEach(function(c){var k='realm_setup_'+c.dataset.k;c.checked=localStorage.getItem(k)==='1';c.addEventListener('change',function(){localStorage.setItem(k,c.checked?'1':'0');if(c.checked){var d=c.closest('details');d.open=false;var n=d.nextElementSibling;if(n&&n.tagName==='DETAILS')n.open=true;}});});
+(function(){
+  'use strict';
+  function rd(k){try{return localStorage.getItem(k)||''}catch(e){return''}}
+  function wr(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}}
+  // One-click link: setup.html#k=REALM-KEY (and/or &sync=SYNCKEY). The # part never leaves this device; wiped straight away.
+  var got={};
+  try{
+    var h=(location.hash||'').replace(/^#/,'');
+    h.split('&').forEach(function(p){var i=p.indexOf('=');if(i<1)return;var n=p.slice(0,i),v=decodeURIComponent(p.slice(i+1)).trim();
+      if(n==='sync'&&/^[A-Za-z0-9]{32,128}$/.test(v)){wr('realm_sync_token',v);got.sync=1}
+      else if(n==='k'&&/^[0-9a-f]{64}$/.test(v)){wr('realm_sync_token',v);got.sync=1}
+      else if(n==='k'&&/^[A-Za-z0-9-]{20,}$/.test(v)){wr('realm_key',v.toUpperCase());got.key=1}});
+    if(h)history.replaceState(null,'',location.pathname+location.search);
+  }catch(e){}
+  var $=function(i){return document.getElementById(i)};
+  function paintKey(){var k=rd('realm_key');$('ckKey').className='ck'+(k?' on':' wait');$('ckKey').textContent=k?'\u2713':'1';
+    $('keyMsg').textContent=k?(got.key?'Saved just now for every Realm app on this device.':'Saved on this device.'):'Not on this device yet. Open the setup link from Ara, or paste the key here.';
+    $('keyIn').style.display=k?'none':'flex'}
+  $('keyIn').onsubmit=function(e){e.preventDefault();var v=$('keyBox').value.trim().toUpperCase();if(v.replace(/[^A-Z0-9]/g,'').length<20){$('keyMsg').textContent='That looks too short. Check it and try again.';return}wr('realm_key',v);$('keyBox').value='';paintKey()};
+  function paintSync(s){var on=s==='synced';$('ckSync').className='ck'+(on?' on':' wait');$('ckSync').textContent=on?'\u2713':'2'}
+  paintKey();paintSync('');
+  window.__setupSync=paintSync;
+  // Install: Chrome / Chrome Beta give a real Install prompt; iPhone/iPad Safari needs Share > Add to Home Screen.
+  var ua=navigator.userAgent||'',ios=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1),android=/Android/.test(ua),dp=null,btn=$('install'),how=$('how');
+  function standalone(){try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}}
+  function hint(){
+    if(standalone()){btn.disabled=true;btn.textContent='\u2713 Installed';how.textContent='';return}
+    if(dp){btn.disabled=false;btn.textContent='Install Realm Apps';how.textContent='';return}
+    if(ios){btn.textContent='How to install on iPhone';how.innerHTML='In <b>Safari</b>: tap <b>Share</b> \u2191 \u203a <b>Add to Home Screen</b> \u203a <b>Add</b>.';return}
+    how.innerHTML=android?'If no Install box pops up: tap <b>\u22ee</b> (top right) \u203a <b>Install app</b> or <b>Add to Home screen</b>.':'If no Install box pops up: click the install icon at the right end of the address bar, or <b>\u22ee</b> \u203a <b>Cast, save and share</b> \u203a <b>Install</b>.'}
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;hint()});
+  window.addEventListener('appinstalled',function(){dp=null;btn.disabled=true;btn.textContent='\u2713 Installed';how.textContent='Realm Apps is on this device. Now open Notes, Search Studio and Cert Studio below and tap Save app on each.'});
+  btn.onclick=function(){if(dp){var p=dp;dp=null;p.prompt();(p.userChoice||Promise.resolve({})).then(function(){hint()})}else{how.style.color='#fff';hint()}};
+  hint();
+})();
 </script>
+<script src="js/realm-sync.js?v=20261016a"></script>
+<script>if(window.RealmSync)RealmSync.onStatus(function(s){window.__setupSync&&__setupSync(s)});</script>
+<script src="js/ara-version.js" defer></script>
 </body></html>
