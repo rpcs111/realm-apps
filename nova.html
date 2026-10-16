@@ -1,0 +1,79 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nova · Realm PCS</title><link rel="icon" href="icon.svg"><meta name="theme-color" content="#000000">
+<!-- NOVA page. Static only: no API keys, no backend, no network calls. Built by Ara 16 Oct 2026. -->
+<style>
+:root{--a:#8a7dff;--ink:#e8eefc;--mute:#8f9bb8;--line:rgba(255,255,255,.09);--ok:#2ecc71;--tbc:#ff9f1c;--od:#ff5a5a}
+*{box-sizing:border-box}html,body{background:#000;margin:0}body{color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.w{max-width:760px;margin:0 auto;padding:18px 14px 40px}
+h1{margin:6px 0 2px;font-size:28px;color:var(--a);letter-spacing:.5px}h2{font-size:15px;text-transform:uppercase;letter-spacing:1.5px;color:var(--mute);margin:26px 0 10px}
+.sub{color:var(--mute);margin:0 0 14px}a{color:var(--a)}
+.card{background:#07070a;border:1px solid var(--line);border-left:4px solid var(--a);border-radius:14px;padding:12px 14px;margin:0 0 10px}
+.card h3{margin:0 0 6px;font-size:16px}.kv{display:grid;grid-template-columns:110px 1fr;gap:4px 10px;font-size:14px}.kv b{color:var(--mute);font-weight:500}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:700;border:1px solid}
+.ns{color:var(--od);border-color:var(--od)}.rd{color:var(--ok);border-color:var(--ok)}.sp{color:var(--mute);border-color:var(--mute)}
+.btn{display:block;text-align:center;text-decoration:none;padding:12px;border-radius:999px;margin:8px 0;font-weight:600;border:1px solid var(--a);color:var(--a)}
+.btn.pri{background:var(--a);color:#000;border:0}
+ul{margin:4px 0;padding-left:18px}.note{font-size:13px;color:var(--mute)}
+.old{opacity:.7;border-left-color:#444}
+</style></head><body><div class="w">
+<a href="./" class="note">← Realm apps</a>
+<h1>✦ NOVA</h1>
+<p class="sub">Gemini backend partner for Realm PCS. Status: <span class="pill ns">SLEEPING · waiting for Ara's wake-up</span></p>
+
+<h2>Read first</h2>
+<a class="btn pri" href="https://docs.google.com/document/d/1YBoG-M9sPP46Gr4BiS19Q9YJedRF_FdlzhNvByn4kfo">1 · Master HANDOFF (Google Doc mirror)</a>
+<a class="btn" href="https://github.com/rpcs111/realm-apps/blob/main/HANDOFF.md">2 · Master HANDOFF.md (GitHub)</a>
+<a class="btn" href="https://docs.google.com/document/d/1nH48bu2yt3WXMJ5DBBpHs0Dpt-nmW5JPQW3TaN0Kl6M">3 · Ara–Nova channel doc (rules + asks)</a>
+<p class="note">Gemini reads the Google Doc through Drive. The GitHub copy is the master; the Doc is kept identical by Ara's sync.</p>
+
+<h2>Nova's chats</h2>
+<a class="btn pri" href="https://gemini.google.com/app/3e45a7ccb0d9d08a">Ara ↔ Nova chat (Gemini)</a>
+<a class="btn" href="https://gemini.google.com/app/a1c6dd24abdcbabf">Nova's Task Assessment and Updates</a>
+<p class="note">Opens signed in as info@. Keep messages to Nova short: long ones make Gemini error.</p>
+
+<h2>Role</h2>
+<div class="card"><ul>
+<li>Works inside Google: reads Drive and Gmail, creates new Docs and Sheets.</li>
+<li>Audits the back end (rule 12) and reports. Ara briefs; Nova does the Google side.</li>
+<li>Can't edit existing Docs or Sheets, no Apps Script console, no Tasks writes yet (stated by Nova, 14 Oct). Replies go in a new doc: 00_NOVA_REPLY_<date>_<n>.</li>
+</ul></div>
+
+<h2>Pipelines (planned 13 Oct · REALM HANDOFF sheet)</h2>
+<div class="card"><h3>1 · Receipts label filter</h3><div class="kv">
+<b>Input</b><span>Gmail info@: anthropic.com, x.ai, Google payments, Stripe</span>
+<b>Output</b><span>Gmail label "Receipts". No archiving or deleting until Ange says yes.</span>
+<b>Schedule</b><span>Always on (Gmail filter)</span>
+<b>Status</b><span><span class="pill rd">READY</span> spec done · creating the filter needs Ange's yes</span></div></div>
+
+<div class="card"><h3>2 · Desk: remove Orion tile + "Chat with Orion" button</h3><div class="kv">
+<b>Input</b><span>Realm Desk v9 Apps Script (…6SwARGw)</span>
+<b>Output</b><span>Code change written by Nova; Ange pastes and deploys</span>
+<b>Schedule</b><span>One-off build</span>
+<b>Status</b><span><span class="pill ns">NOT STARTED</span> deploy needs Ange's yes</span></div></div>
+
+<div class="card"><h3>3 · Desk doPost: API_KEY check</h3><div class="kv">
+<b>Input</b><span>Realm Desk v9 doPost</span>
+<b>Output</b><span>Reject requests without the API_KEY Script Property; never print the key</span>
+<b>Schedule</b><span>One-off build</span>
+<b>Status</b><span><span class="pill ns">NOT STARTED</span> deploy needs Ange's yes</span></div></div>
+
+<div class="card"><h3>4 · Gmail REALM/IN → Scribe → Task → HANDOFF</h3><div class="kv">
+<b>Input</b><span>Gmail label REALM/IN</span>
+<b>Output</b><span>Scribe note → Google Task → REALM HANDOFF row. <b style="color:var(--od)">No Calendar</b> (Calendar rule, 15 Oct).</span>
+<b>Schedule</b><span>Every 15 min (Apps Script time trigger)</span>
+<b>Status</b><span><span class="pill ns">NOT STARTED</span> trigger needs Ange's yes · Apps Script API switch is off</span></div></div>
+
+<h2>Rules Nova follows</h2>
+<div class="card"><ul>
+<li><b>Rule 42:</b> Nova does nothing without Ara authorising it first.</li>
+<li><b>Calendar:</b> Nova never adds Google Calendar entries (no events, reminders, notes) unless Ange asks for that exact entry. Calendar is Ange's source of truth.</li>
+<li><b>Clean</b> = sort and flag. No deleting without Ange's yes.</li>
+<li>No duplicate data. No API keys in code or docs. Never delete or overwrite certs.</li>
+<li>Deputy and Xero look-only. Banned: Zapier, Make, n8n, Fireflies, scribehow.</li>
+<li>No sends, spends, deletes, deploys or go-lives without Ange's yes. DONE only with a link.</li>
+</ul></div>
+
+<h2>Superseded</h2>
+<div class="card old"><p class="note">Nova's own 13 Oct "SHARED_BRAIN V2" pipelines (receipt archiving, scribehow → Tasks, Claude → xAI reroute, bus sheet → Tasks) are <b>not used</b>: they archive receipts, put a key field in code and treat Scribe as scribehow. Ara's HANDOFF sheet rows above replace them.</p></div>
+<p class="note">Static page. No keys, no backend. Updated 16 Oct 2026 by Ara.</p>
+</div></body></html>
