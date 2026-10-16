@@ -99,3 +99,15 @@ Backup first: box `backups/handover_20261016_0915/` (HANDOVER.md, CHASE_DRAFT.md
 - Task 4 DRAFTED (PI cert): text in PI_DRAFT.md; renewal cert already sent to The Knight 30 Jul 2026; draft asks them to update records. Attachments in /workspace/pi_cert/. Ange to confirm EOS invoice 47262 paid. Backup: backups/handover_20261015_221935/.
 - Nothing sent, deleted, deployed or diarised this session (no Gmail drafts created).
 - Handoff unified (Ara): GitHub main HANDOFF.md made the single master; Google Doc and box HANDOVER.md now mirrors. Backups of all three pre-merge copies: box `backups/handoff_unify_20261016_010906/`.
+
+## 7. Live job log — written the moment a job starts or finishes (newest first)
+
+Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINISHES (or fails), not just at session end. Any session — phone, laptop, voice, Nova, routines — reads this file first and picks up from the newest line. A RUNNING line with no matching DONE means the job may have been cut off: check its output before redoing it. Format: `time (Melb) | STATUS | job | result / where it is`.
+
+- 12:26pm 16 Oct | RUNNING | layers.html visual layer map (layers 1–3, overlay, connectors, Mend on every item) | building on gh-pages, new files only
+- 12:24pm 16 Oct | WAITING ANGE | clasp re-sign-in as info@ (token expired, invalid_rapt) | sign-in link sent in chat; needs the localhost:45763 address back. Blocks clasp push/run.
+- 12:17pm 16 Oct | RUNNING | Cert Studio (Ara) test copy full check: Drive address lookup fix, undo, save, 12-month redo, two-places-open, unfinished cert always saves | test project 1dVHQt4X…; live v6 untouched; clasp steps queued until sign-in
+- 12:17pm 16 Oct | DONE | Nova wake-up prep | page live https://rpcs111.github.io/realm-apps/nova.html (commit e173fd8); wake-up text in box /workspace/nova/WAKEUP_DRAFT.md, given to Ange to paste; Nova still asleep until she replies
+- 12:16pm 16 Oct | DONE | Grok app tools audit + PayPal/Acrobat check | reported in chat; nothing connected
+- 12:15pm 16 Oct | RUNNING | queue.html base layer finish + mapper.html live paste page | gh-pages; shared board key realm_queue_v1
+- 12:11pm 16 Oct | DONE | Handoff unified + 2-hourly mirror sync (7am–9pm Melb) | commit ba1fc48; Doc + box HANDOVER.md mirror this file
