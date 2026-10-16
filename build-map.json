@@ -1,6 +1,6 @@
 {
  "title": "Build Map",
- "updated": "2026-10-16T12:51:11Z",
+ "updated": "2026-10-16T14:51:00Z",
  "items": [
   {
    "id": "notes",
@@ -104,19 +104,17 @@
    "id": "stream-check",
    "group": "SYSTEMS & LAYERS",
    "name": "Weekend stream check",
-   "status": "green",
+   "status": "amber",
    "elon_verified": false,
-   "note": "Every 3h until Mon 9am: links, Nova, misses logged."
+   "note": "Every 3h until Mon 9am: links, Nova, misses logged. Was green without an Elon check; amber until verified (Standards v2 Fix H, 17 Oct)."
   },
   {
    "id": "handoff",
    "group": "SYSTEMS & LAYERS",
    "name": "Handoff log",
-   "status": "green",
-   "elon_verified": true,
-   "note": "Updated tonight.",
-   "verified_date": "2026-10-16T12:47Z",
-   "verified_how": "Elon re-test, /workspace/buildmap_check"
+   "status": "amber",
+   "elon_verified": false,
+   "note": "HANDOFF §7 went quiet after 12:20 UTC 16 Oct while work continued (Elon audit). Amber until Elon re-checks the heartbeat (Standards v2 Fix G/H, 17 Oct). Previous Elon check: 2026-10-16T12:47Z."
   },
   {
    "id": "engine-sync",
@@ -233,6 +231,150 @@
    "status": "grey",
    "elon_verified": false,
    "note": "Planned."
+  },
+  {
+   "id": "siptalk-karen",
+   "group": "1300 / COMMS",
+   "name": "AI receptionist (Karen / SipTalk)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Business 1300 line. Existing SipTalk persona Cedar, unassigned. Script: greet→address→who→name→contact→estimate/WO/invoice→enquiry. VIP straight-through; spam cut-offs. Source: AREAS Realm 13, 23 Sep + 1 Oct.",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "call-backs-tile",
+   "group": "1300 / COMMS",
+   "name": "Call Backs tile (Claim / Call / Close)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Top of Realm Desk. Sheet=record, Tasks=trigger, Desk=window. Claim locks owner; Call dials via 1300 softphone; Close needs reason. Spam never reaches tile. Spec approved 23 Sep.",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "callback-1300-btn",
+   "group": "1300 / COMMS",
+   "name": "Call-back-on-1300 button",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Button next to enquiry/quote so outbound uses 1300 and logs against the job. Stops Julie using personal mobile. 1 Oct still open.",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "call-log-jobs",
+   "group": "1300 / COMMS",
+   "name": "Log 1300 calls against jobs",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "SipTalk call log → job COMMS tab via Nova. Outcome becomes STATUS on the job, not another email. 2 Oct build line.",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "siptalk-ring-groups",
+   "group": "1300 / COMMS",
+   "name": "SipTalk ring groups (RG1 Julie → RG2 Ange)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Current: 1300 rings Julie then Ange. Plan: bot answers; live transfer to Ange (RG1) only when stuck or VIP. Distinct from Build Map ring-group (Ara→Fold).",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "siptalk-sms-vm",
+   "group": "1300 / COMMS",
+   "name": "SipTalk SMS + voicemail",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "1 Oct: SipTalk still to finish (SMS and voicemail through it).",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "fh-store",
+   "group": "DROPPED / UNBUILT",
+   "name": "Frankie and Henry store",
+   "status": "red",
+   "elon_verified": false,
+   "note": "frankieandhenry.com and .com.au return error 525 (re-checked 17 Oct ~1:55am Melb). No owner since Claude cut. Name renewal only was handled 16 Oct. Evening/Saturday item in Orion daily-sweep.",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "bills-superloop",
+   "group": "DROPPED / UNBUILT",
+   "name": "Bills log + Superloop double-pay follow-up",
+   "status": "amber",
+   "elon_verified": false,
+   "note": "Tech bills sheet built 16 Oct (private, info@ Drive). Superloop credit applied twice (Jul+Oct) still needs Ange decision. Was listed as dropped from Build Map.",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "zoho-todo",
+   "group": "DROPPED / UNBUILT",
+   "name": "Zoho To Do list",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Asked 16 Oct; not on Build Map or HANDOFF §7 as a tracked job.",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "zoho-books-crm-pull",
+   "group": "DROPPED / UNBUILT",
+   "name": "Zoho Books / CRM pull",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Nova CRM export authorised 15 Oct; Zoho MCP once lived on Proxmox. Live pull into Realm apps still unbuilt.",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "flip6-apps",
+   "group": "DROPPED / UNBUILT",
+   "name": "Flip 6 apps",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Asked 16 Oct; not on Build Map / HANDOFF. Exact scope not found beyond the ask — confirm with Ange.",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "pomodoro-s26",
+   "group": "DROPPED / UNBUILT",
+   "name": "Pomodoro + S26 checklist",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Pomodoro day pattern (20 min Realm + 5 min lanes) in Orion 4 Oct notes. S26 WhatsApp eSIM hand-back still open (HANDOFF NEXT #4).",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "remove-claude-app",
+   "group": "DROPPED / UNBUILT",
+   "name": "Remove Claude app (Mac / phone)",
+   "status": "red",
+   "elon_verified": false,
+   "note": "Cutover OPEN: revoke claude.ai connectors on Mac; billing toggles. HANDOFF Security section. Not on Build Map.",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "security-app",
+   "group": "SECURITY",
+   "name": "SECURITY APP / pen-testing app",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "3 Oct ask: pen-test considered across platform + marked on flow maps; wants pen-testing app ASAP. Vault/Proxmox tile still shows pen-test results as never delivered.",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "cli-token-hygiene",
+   "group": "SECURITY",
+   "name": "CLI token hygiene after password change",
+   "status": "red",
+   "elon_verified": false,
+   "note": "Gap Ange named 17 Oct ~1:45am Melb: 'when the CLI breaks the password'. Saved CLI logins can outlive a password change. Defensive only: revoke + re-authorise CLI logins after any password change, review Google third-party access, turn on 2SV.",
+   "source": "Elon overnight audit 16/17 Oct"
+  },
+  {
+   "id": "security-skillset",
+   "group": "SECURITY",
+   "name": "SECURITY SKILL SET on every build",
+   "status": "amber",
+   "elon_verified": false,
+   "note": "1 Oct standing rule: threat-detection / pen-test / lockdown applied to every build. Not enforced as a pre-build checklist tonight.",
+   "source": "Elon overnight audit 16/17 Oct"
   }
  ]
 }
