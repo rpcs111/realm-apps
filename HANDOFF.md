@@ -107,6 +107,7 @@ Backup first: box `backups/handover_20261016_0915/` (HANDOVER.md, CHASE_DRAFT.md
 
 Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINISHES (or fails), not just at session end. Any session — phone, laptop, voice, Nova, routines — reads this file first and picks up from the newest line. A RUNNING line with no matching DONE means the job may have been cut off: check its output before redoing it. Format: `time (Melb) | STATUS | job | result / where it is`.
 
+- 9:38pm 16 Oct | RUNNING | Build 3: (1) Notes + Google Tasks page check/improve, (2) non-destructive pen test of gh-pages + public repo, (3) Search Studio leftover audit | side branches only; report box /workspace/pentest/; backup box /workspace/backups/build3_20261016_2137. No sends, no deletes, live Cert Studio v6 untouched
 - 9:22pm 16 Oct (Melb) | DONE | Sheets duplicate audit | 1,835 Sheets + 234 xlsx scanned read-only; 254 near-duplicate groups (177 exact / 60 near / 17 numbered series); nothing changed. Report on box: /workspace/cleanup/SHEETS_DUPLICATES_16OCT.md
 - 9:19pm 16 Oct | DONE | Mishap count doc | https://docs.google.com/document/d/19vPN-1cmUNTqBPk9h-zoII_yg8FFOc9oT0CQi-mSuwk/edit
 - 9:07pm 16 Oct | DONE | Xenon SOP v1 draft | https://docs.google.com/document/d/1bAJe1tPHpQYfmupISMwBJp6LWUJk5zHhQ88Mx10Z57I/edit (private Google Doc, owner info@realmpcs.com, not shared). Xenon is PLANNED, not built - waiting on Ange's yes
