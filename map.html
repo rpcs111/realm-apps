@@ -18,14 +18,14 @@ button{border:0;border-radius:10px;padding:8px 12px;font:600 14px system-ui;back
 <div id="links"><b>Links</b>
 <a href="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec?authuser=info@realmpcs.com" target="_blank" rel="noopener">Realm Desk v9</a>
 <a href="https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com" target="_blank" rel="noopener">Cert Studio</a>
-<a href="./scribe.html">You Got Me Bro</a>
+<a href="./notes.html">You Got Me Bro</a>
 <a href="https://calendar.google.com/calendar/r?authuser=info@realmpcs.com" target="_blank" rel="noopener">Google Calendar (source of truth)</a>
 <a href="https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com" target="_blank" rel="noopener">REALM OPEN REGISTER</a>
 <a href="https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec?authuser=info@realmpcs.com" target="_blank" rel="noopener">24 Sep original</a>
 <button id="wipe" style="margin-top:12px">Reset map to defaults</button></div>
 <script>
 const KEY='realm_flow_map_v3',NS='http://www.w3.org/2000/svg';let MEM=null;
-const DESK='https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec?authuser=info@realmpcs.com',CERT='https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com',YGMB='./scribe.html',BOOKS='https://books.zoho.com/app',CAL='https://calendar.google.com/calendar/r?authuser=info@realmpcs.com',REG='https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com';
+const DESK='https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec?authuser=info@realmpcs.com',CERT='https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com',YGMB='./notes.html',BOOKS='https://books.zoho.com/app',CAL='https://calendar.google.com/calendar/r?authuser=info@realmpcs.com',REG='https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com';
 function defaults(){const s=[['Enquiry','Gmail · 1300 SipTalk · WhatsApp','https://mail.google.com/mail/?authuser=info@realmpcs.com#inbox'],['Log','You Got Me Bro',YGMB],['Quote','Zoho Books',BOOKS+'#/quotes'],['Follow-up','You Got Me Bro',YGMB],['Book','Google Calendar',CAL],['Roster','Deputy (look-only)','https://once.deputy.com'],['Job day','Desk v9',DESK],['Cert','Cert Studio',CERT],['Invoice','Zoho Books',BOOKS+'#/invoices'],['Close','Open Register',REG]];
  return {nodes:s.map((x,i)=>({id:'s'+(i+1),n:i+1,title:x[0],tool:x[1],link:x[2],note:''})).concat([{id:'ara',n:0,title:'Ara',tool:'head · reads logs',link:'',note:''},{id:'nova',n:0,title:'Nova',tool:'writes code · own log',link:'',note:''}])}}
 function load(){let d=null;try{d=JSON.parse(localStorage.getItem(KEY))}catch(e){d=MEM}return d&&Array.isArray(d.nodes)?d:defaults()}
@@ -68,4 +68,5 @@ draw();list();
 window.gate=function(q){return Promise.resolve(confirm(q)&&confirm("Are you sure? This can't be undone."))};
 </script>
 <script src="voice.js"></script>
+<script src="js/realm-sync.js?v=20261016a"></script>
 </body></html>

@@ -212,4 +212,5 @@ $("bConn").onclick=function(){if(!sel){alert("Tap the first circle, then press C
 $("bExport").onclick=function(){var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:"application/json"}));a.download="metatron_layer1.json";document.body.appendChild(a);a.click();a.remove()};
 $("bReset").onclick=function(){if(confirm("Reset this map to the default layout? Your edits in this browser are cleared. Export first to keep them.")){S=defaults();save();sel=null;draw();panel()}};
 drawCube();draw();panel();
-</script></body></html>
+</script><script src="js/realm-sync.js?v=20261016a"></script>
+</body></html>
