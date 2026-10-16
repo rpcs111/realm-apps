@@ -1,6 +1,6 @@
 {
  "title": "Build Map",
- "updated": "2026-10-16T12:39:04Z",
+ "updated": "2026-10-16T12:42:29Z",
  "items": [
   {
    "group": "APPS",
@@ -14,9 +14,9 @@
   {
    "group": "APPS",
    "name": "Search Studio",
-   "status": "amber",
+   "status": "green",
    "elon_verified": false,
-   "note": "Live. Fixing three fails now: slow-search error, phone banner overlap, sync waits gracefully."
+   "note": "Live v-25. Slow-search error and phone banner fixed; sync waits on Allow."
   },
   {
    "group": "APPS",
@@ -46,23 +46,23 @@
   {
    "group": "APPS",
    "name": "ETA board",
-   "status": "amber",
+   "status": "green",
    "elon_verified": false,
-   "note": "Moving onto tonight's install setup."
+   "note": "Live v-25, own install."
   },
   {
    "group": "APPS",
    "name": "Nova page",
-   "status": "amber",
+   "status": "green",
    "elon_verified": false,
-   "note": "Moving onto tonight's install setup."
+   "note": "Live v-25, own install."
   },
   {
    "group": "APPS",
    "name": "Flow Map",
-   "status": "amber",
+   "status": "green",
    "elon_verified": false,
-   "note": "Adding install file so it becomes an app."
+   "note": "Live v-25, now installable."
   },
   {
    "group": "APPS",
