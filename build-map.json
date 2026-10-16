@@ -1,6 +1,6 @@
 {
  "title": "Build Map",
- "updated": "2026-10-16T20:45:00Z",
+ "updated": "2026-10-16T21:15:00Z",
  "items": [
   {
    "id": "notes",
@@ -316,7 +316,8 @@
    "note": "frankieandhenry.com and .com.au return error 525 (re-checked 17 Oct ~1:55am Melb). No owner since Claude cut. Name renewal only was handled 16 Oct. Evening/Saturday item in Orion daily-sweep.",
    "source": "Elon overnight audit 16/17 Oct",
    "owner": "Ara",
-   "next": "Read-only check of the hosting/SSL setup behind the 525 on .com, .com.au and www, then one fix for Ange to approve."
+   "next": "Read-only check of the hosting/SSL setup behind the 525 on .com, .com.au and www, then one fix for Ange to approve.",
+   "label": "Broken · 525"
   },
   {
    "id": "bills-superloop",
