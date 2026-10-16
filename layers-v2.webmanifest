@@ -1,12 +1,1 @@
-{
- "id": "./layers.html",
- "name": "Realm Layers",
- "short_name": "Layers",
- "description": "Realm build as clickable layers, by Ara",
- "start_url": "./layers.html",
- "scope": "./layers.html",
- "display": "standalone",
- "background_color": "#000000",
- "theme_color": "#000000",
- "icons": [{"src": "layers-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}]
-}
+{"id":"/realm-apps/layers","name":"Realm Layers","short_name":"Layers","description":"Realm Layers, by Ara","start_url":"./layers.html","scope":"./layers.html","display":"standalone","background_color":"#000000","theme_color":"#000000","icons":[{"src":"pwa/layers.svg","sizes":"192x192 512x512","type":"image/svg+xml","purpose":"any"},{"src":"pwa/layers.svg","sizes":"192x192 512x512","type":"image/svg+xml","purpose":"maskable"}]}
