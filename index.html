@@ -22,7 +22,7 @@ h1{margin:0 0 4px;font-size:26px;letter-spacing:.04em}.sub{color:#6b7280;font-si
 <script>
 var EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";
 var COLORS=["#2563eb","#16a34a","#dc2626","#9333ea","#ea580c","#0891b2","#db2777","#4f46e5","#65a30d","#b45309"];
-function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&","<":"<",">":">",'"':"""}[c]})}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function fix(name,url){var n=name.toUpperCase();
  if(/REALM DESK/.test(n))return "./desk.html";
  if(/CERT STUDIO/.test(n))return "https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec";
