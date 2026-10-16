@@ -13,7 +13,7 @@ var CAL='https://calendar.google.com/calendar/r?authuser=info@realmpcs.com';
 var STEPS=[
  {id:'step_enquiry',name:'Enquiry',url:'https://mail.google.com/mail/?authuser=info@realmpcs.com#inbox',note:'Email / work order / call / WhatsApp comes in.',kw:['enquiry','enquire','work order','workorder','wo ','request','new client','lead','call from']},
  {id:'step_quote',name:'Quote',url:'https://books.zoho.com/app#/quotes',note:'Estimate in Zoho Books (EST-).',kw:['quote','estimate','est-','pricing','price']},
- {id:'step_followup',name:'Follow-up',url:'./scribe.html',note:'Chase the quote / re-quote.',kw:['follow up','follow-up','followup','chase quote','re-quote','requote','no reply']},
+ {id:'step_followup',name:'Follow-up',url:'./notes.html',note:'Chase the quote / re-quote.',kw:['follow up','follow-up','followup','chase quote','re-quote','requote','no reply']},
  {id:'step_booking',name:'Booking',url:CAL,note:'Booked into Google Calendar (the centre). Statuses: keys / booked / awaiting / confirmed / van / staff.',kw:['booking','book in','booked','date','reschedule','moved to','diary']},
  {id:'step_roster',name:'Rostering',url:'',note:'Deputy roster, look-only. Nobody edits shifts (one-touch payroll).',kw:['roster','rostering','shift','deputy','crew','who is on']},
  {id:'step_0',name:'Job',url:'',note:'Job card / job day (calendar notes template: hours, site contact, scope, access, equipment, parking, last INV, WhatsApp, last cert).',kw:['job card','job day','on site','onsite','scope','access','parking','completed','job sheet']},
