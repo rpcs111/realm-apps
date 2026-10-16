@@ -11,20 +11,22 @@ header{padding:18px 16px 6px}h1{margin:0;font-size:22px;letter-spacing:.5px}.sub
 .n{font-weight:700;font-size:17px}.chip{font-size:12px;padding:3px 9px;border-radius:999px;font-weight:700;text-transform:uppercase;white-space:nowrap}
 .running .chip{background:#083344;color:#67e8f9}.waiting .chip{background:#451a03;color:#fcd34d}.done .chip{background:#052e16;color:#86efac}.notstarted .chip{background:#450a0a;color:#fca5a5}
 .eta{font-size:26px;font-weight:800;margin:8px 0 2px}.left{color:#bbb;font-size:14px}
-a{color:#67e8f9}footer{color:#666;font-size:12px;padding:0 16px 20px}
-</style></head><body>
+a{color:#67e8f9}footer{color:var(--ara-mute,#a9c1cc);font-size:12px;padding:0 16px 20px}
+</style><link rel="stylesheet" href="css/ara-theme.css">
+</head><body>
 <header><h1>Realm ETA board</h1><div class="sub" id="upd"></div></header>
 <div class="grid" id="g"></div>
 <footer>ETAs are Ara's estimates, not promises. Source of truth: <a href="https://github.com/rpcs111/realm-apps/blob/main/HANDOFF.md">HANDOFF.md §7 Live job log</a>. This page is updated when a job lands.</footer>
 <script>
-var UPDATED="Fri 16 Oct, 12:55pm Melbourne";
+var UPDATED="Fri 16 Oct, 1:45pm Melbourne";
 var ITEMS=[
 {n:"1. Search Studio",s:"waiting",eta:"Your test",left:"Mic fix + phone fixes went live 15 Oct (live words, tap to stop, Notes repeat-words fix). Not yet checked by you on phone + laptop. Ara re-tests after the current builds.",u:"search.html"},
 {n:"2. Side panel",s:"waiting",eta:"Your sign-off",left:"Built (apps down the side in Queue, sidebar in Prism). Needs your OK.",u:"queue.html"},
 {n:"3. Base layer + nodes",s:"done",eta:"Live 12:40pm",left:"<a href=\"queue.html\">Queue</a>: editable Job/Cert/Invoice/Outstanding/P&L/Close, 6 booking-status buttons, apps down the side. <a href=\"mapper.html\">Mapper</a>: tap a node, paste, it lands there (same board). Commit b88ef0f. Both installable as their own app tiles.",u:"queue.html"},
 {n:"4. Nova",s:"waiting",eta:"After her reply",left:"Page live. Wake-up message is with you to paste. Then pipeline 1 (Receipts label) first; 2–4 need your yes for deploys. Data clean-up: sort and flag only.",u:"nova.html"},
-{n:"5. Links, memory + Claude clean-out",s:"notstarted",eta:"~3pm",left:"Handover unified and live job log done. Still to do: strip Claude/Orion nodes and references from Prism, Flow Map and yesterday's step pages. Starts after item 3 lands.",u:"https://github.com/rpcs111/realm-apps/blob/main/HANDOFF.md"},
+{n:"5. Links, memory + old-bot clean-out",s:"progress",eta:"Prism next",left:"Handover unified and live job log done. Old-bot nodes and wording now gone from <a href=\"metatron3.html\">Flow Map</a>, <a href=\"layers.html\">Layers</a>, <a href=\"nova.html\">Nova</a> and the <a href=\"queue.html\">Queue</a> apps panel (Ara pass, 16 Oct). Still to do: Prism and yesterday's step pages.",u:"https://github.com/rpcs111/realm-apps/blob/main/HANDOFF.md"},
 {n:"6. Layer map + Mend",s:"done",eta:"Live 12:29pm",left:"95 items across layers 1–3, overlay and connectors, Mend on every one. Layers 2 and 3 named from the queue footer and Prism. Mend them if wrong.",u:"layers.html"},
+{n:"Ara pass (all 11 tiles)",s:"done",eta:"Live 1:45pm",left:"Every button and link on Notes, Queue, Mapper, Layers, ETA, Nova, Search, Flow Map, Cert Studio launcher, Private and Realm Apps clicked at phone and laptop size. One Ara colour theme on all of them (navy + cyan, readable on a phone). Fixed: Queue dry-run sheet blocking clicks, Layers/Cert Studio icons, launcher missing the new apps, faint grey text. Removed: old Install button and help box on Realm Apps, old-bot nodes and wording. PIN and saved data untouched.",u:"index.html"},
 {n:"App tiles (one per app)",s:"done",eta:"Live 12:40pm",left:"Notes, Search Studio, Flow Map, Cert Studio, Queue, Mapper, Layers, ETA, Nova, Private, Realm Apps: each installs as its own app. Remove the old R tile, then install each one from its page.",u:"scribe.html"},
 {n:"Blocker: clasp sign-in",s:"done",eta:"Restored 12:50pm",left:"clasp signed in again as info@realmpcs.com (verified). Cert Studio test push done.",u:""},
 {n:"Cert Studio (Ara test copy)",s:"waiting",eta:"Your one-time Allow",left:"Build 2 pushed 12:50pm to the TEST copy only (deployment AKfycby3… @2). Address bar now pulls from Drive (type \"10 high\", pick a match). Also fixed: dates were a day behind before 11am, 29 Feb expiry, no-address cert not offered back, warning bar covering the steps. Undo, save, redo panel, two tabs, PDF all checked (22/22 on the test bench). The link shows \"Access denied\" until info@ opens it once in Chrome and presses Allow. Live v6 untouched.",u:"https://script.google.com/macros/s/AKfycby3McZaB4HcAOtf3IcFnerMP2nSCZKTZm9cxYoNWdT1cTQ_FwSMvgD1ydaXOWRd7X2QOQ/exec"}
