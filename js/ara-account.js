@@ -3,6 +3,7 @@
    - script.google.com/macros web apps go through Google's AccountChooser (Email=info@...) so Chrome switches to / signs in info@ first
    - rewrites <a href> on load + for links added later, and window.open(); never touches fetch/XHR/JSONP calls
    - one-time "Open in" hint: Android -> Chrome Beta, desktop -> Chrome (a web page cannot change the default browser)
+     17 Oct: now a slim bar at the top that pushes the page down (was a fixed box over the bottom input); hides itself after 12s.
    Safe to include twice. No data stored except one localStorage flag. */
 (function(){
  if(window.AraAccount)return;
@@ -63,10 +64,12 @@
    msg='Best in <b>Chrome</b> signed in as <b>'+EMAIL+'</b>';
   }
   var d=document.createElement('div');d.id='ara-openin';d.setAttribute('role','status');
-  d.innerHTML='<style>#ara-openin{position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));z-index:2147483000;background:#0b1b33;color:#fff;border:1px solid #00e5ff;border-radius:12px;padding:10px 12px;font:14px/1.35 system-ui,sans-serif;display:flex;gap:8px;align-items:center;flex-wrap:wrap;box-shadow:0 6px 24px rgba(0,0,0,.45);max-width:560px;margin:0 auto}#ara-openin span{flex:1 1 200px}#ara-openin a.aa-go,#ara-openin button{font:inherit;border-radius:8px;padding:6px 10px;cursor:pointer;text-decoration:none}#ara-openin a.aa-go{background:#00e5ff;color:#001018;font-weight:600}#ara-openin button{background:transparent;color:#fff;border:1px solid #7de9ff}</style>'
+  d.innerHTML='<style>#ara-openin{position:relative;z-index:1;background:#0b1b33;color:#fff;border-bottom:1px solid #00e5ff;padding:6px 12px;padding-top:calc(6px + env(safe-area-inset-top));font:13px/1.3 system-ui,sans-serif;display:flex;gap:8px;align-items:center;flex-wrap:nowrap;margin:0}#ara-openin span{flex:1 1 auto;min-width:0}#ara-openin a.aa-go,#ara-openin button{font:inherit;border-radius:8px;padding:6px 10px;cursor:pointer;text-decoration:none}#ara-openin a.aa-go{background:#00e5ff;color:#001018;font-weight:600}#ara-openin button{background:transparent;color:#fff;border:1px solid #7de9ff}</style>'
    +'<span>'+msg+'</span>'+btn+'<button type="button" aria-label="Dismiss">'+(and&&chrome?'Got it':'&times;')+'</button>';
   d.querySelector('button').onclick=function(){try{localStorage.setItem(KEY,String(Date.now()))}catch(e){}d.remove()};
-  (document.body||document.documentElement).appendChild(d);
+  /* 17 Oct: slim bar at the very TOP that pushes the page down (never covers the note box / inputs) and goes by itself after 12s */
+  var bd=document.body||document.documentElement;bd.insertBefore(d,bd.firstChild);
+  setTimeout(function(){if(d.parentNode){try{localStorage.setItem(KEY,String(Date.now()))}catch(e){}d.remove()}},12000);
  }
  window.AraAccount={email:EMAIL,hint:hint,link:link,fixAll:fixAll};
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
