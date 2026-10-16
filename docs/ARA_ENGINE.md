@@ -17,11 +17,12 @@ Built 16 Oct 2026. Editor link and deployment status: see HANDOFF.md §7 (not re
 | core | `Engine.js` | Router, registry, `run()`, `engine_selfTest()` | live |
 | certTest | `certTest_*.js` + UI html files | Copy of the Cert Studio (Ara) **TEST** project. Web UI at `?app=cert` | copy, not live |
 | tasksSync | `tasksSync_Code.js` | Copy of REALM TASKS SYNC (Ara): Google Tasks (read only) → sheet → Notes page. Feed at `?app=tasks&k=<token>` | copy, no trigger installed |
+| capture | `capture_Code.js` | Ara Quick Capture inbox for https://rpcs111.github.io/realm-apps/capture.html . POST `{"app":"capture","items":[{id,text,category,ts}]}` appends rows (timestamp, text, category, status, id, captured_at) to the sheet **ARA CAPTURE INBOX** (created on first post, id in Script Properties). Append-only, no secret (public page), max 50 items/post, 2000 chars/item, unknown category → `?`, duplicate ids ignored, formula-start text escaped. Nothing is read back. `run('capture.setup')` / `run('capture.status')` | live from version 2 (16 Oct), waits on the one Allow |
 
 The original Cert test and Tasks sync projects keep running unchanged until Ange approves moving over.
 
 ## Entry points
-- Web app (one URL): `?app=status` (default, JSON), `?app=cert`, `?app=tasks&k=…` (a bare `?k=` also routes to tasks, same as the old script). POST `{"app":"tasks","k":"…"}`.
+- Web app (one URL): `?app=status` (default, JSON), `?app=cert`, `?app=tasks&k=…` (a bare `?k=` also routes to tasks, same as the old script). POST `{"app":"tasks","k":"…"}`, POST `{"app":"capture","items":[…]}` (GET `?app=capture` = health only).
 - `run('module.function')` for the editor Run button and the Apps Script API, e.g. `run('tasksSync.syncTasks')`, `run('core.selfTest')`.
 
 ## Scopes (plain English)
