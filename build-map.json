@@ -105,9 +105,11 @@
    "group": "APPS",
    "name": "Grok How-To",
    "status": "green",
-   "elon_verified": false,
+   "elon_verified": true,
    "note": "Built 17 Oct: illustrated Grok guide with Julie's iPhone setup (her own login), Fold 8 / Flip 6 steps, Grok in 8 stops (official xAI sources only, no YouTube); Install button 44px and scrolls away, no longer pinned over cards. Headless test 390x844 and iPhone UA: 0 JS errors, no sideways scroll. Waiting for Elon's check. https://rpcs111.github.io/realm-apps/grok-howto.html",
-   "source": "Ange via Elon 15:06 UTC 16 Oct: Grok how-to infographic + Julie's phone"
+   "source": "Ange via Elon 15:06 UTC 16 Oct: Grok how-to infographic + Julie's phone",
+   "verified_date": "2026-10-17",
+   "verified_how": "Elon independent re-check v7 (version 2026.10.17-8), 390x844 Android, ?d=fold8 and ?d=julie: PASS. Report: /workspace/notes_test2/grokhowto_v7_elon/REPORT.md"
   },
   {
    "id": "nova-queue",
