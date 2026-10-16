@@ -1,0 +1,258 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Realm Vault (prototype)</title>
+<meta name="application-name" content="Realm Vault"><meta name="theme-color" content="#000000"><meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305131f'/%3E%3Crect x='16' y='28' width='32' height='24' rx='5' fill='none' stroke='%2322d3ee' stroke-width='4'/%3E%3Cpath d='M22 28v-6a10 10 0 0 1 20 0v6' fill='none' stroke='%2322d3ee' stroke-width='4'/%3E%3Ccircle cx='32' cy='40' r='3.5' fill='%2322d3ee'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/ara-theme.css">
+<link rel="stylesheet" href="css/realm-ui.css?v=20261016b">
+<script src="js/realm-ui.js?v=20261016b"></script>
+<style>
+/* Realm Vault PROTOTYPE (16 Oct 2026). Demo data only. No network calls, nothing stored off this page. */
+:root{--ok:#4ade80;--warn:#fbbf24;--bad:#f87171;--card:rgba(6,22,34,.82)}
+.vlt-banner{margin:0;padding:8px 12px;background:#3b2a05;color:#fde68a;border-bottom:1px solid #a16207;font-size:13px;font-weight:600;text-align:center;letter-spacing:.02em}
+.vlt{max-width:1240px;margin:0 auto;padding:10px 10px calc(28px + env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:1000px){.vlt{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:16px;padding:14px 16px 32px}.vlt-pane{position:sticky;top:calc(var(--rui-top) + 10px);align-self:start;max-height:calc(100vh - var(--rui-top) - 20px);overflow:auto}}
+@media(max-width:999px){.vlt-pane{display:none}body.pane-open .vlt-pane{display:block}body.pane-open .vlt-list{display:none}.vlt-pane .vlt-idle{display:none}}
+.card{background:var(--card);border:1px solid var(--ara-line);border-radius:14px;padding:14px}
+.vlt h2{margin:0 0 8px;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ara-mute)}
+/* status + master switch */
+.vlt-status{display:flex;flex-direction:column;gap:12px}
+.vlt-big{display:flex;align-items:center;gap:12px}
+.vlt-dot{width:16px;height:16px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 6px rgba(74,222,128,.15);flex:none}
+body.warn .vlt-dot{background:var(--warn);box-shadow:0 0 0 6px rgba(251,191,36,.16)}
+body.lock .vlt-dot{background:var(--bad);box-shadow:0 0 0 6px rgba(248,113,113,.18)}
+.vlt-big b{display:block;font-size:22px;line-height:1.2;color:#fff}
+.vlt-big span{display:block;color:var(--ara-mute);font-size:13px}
+.vlt-switch{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:14px;width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(148,197,214,.3);background:#08141d;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.vlt-switch:hover{border-color:var(--ara-accent)}
+.vlt-switch .tr{position:relative;width:58px;height:32px;border-radius:999px;background:#334155;flex:none;transition:background .2s}
+.vlt-switch .tr::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;transition:left .2s}
+.vlt-switch[aria-checked="true"]{border-color:var(--bad);background:#1c0b0b}
+.vlt-switch[aria-checked="true"] .tr{background:#dc2626}.vlt-switch[aria-checked="true"] .tr::after{left:29px}
+.vlt-switch .lb b{display:block;font-size:16px;color:#fff}.vlt-switch .lb span{display:block;font-size:12.5px;color:var(--ara-mute)}
+.vlt-what{display:none;margin:0;padding:10px 12px;border-radius:10px;background:#1c0b0b;border:1px solid #7f1d1d;color:#fecaca;font-size:13px}
+body.lock .vlt-what{display:block}
+.vlt-what ul{margin:6px 0 0;padding-left:18px}.vlt-what li{margin:3px 0}
+.vlt-acts{display:flex;gap:8px;flex-wrap:wrap}
+.btn{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0 14px;border-radius:10px;border:1px solid rgba(148,197,214,.3);color:#e6f7fb;font-size:13.5px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.btn:hover,.btn:focus-visible{border-color:var(--ara-accent);background:rgba(34,211,238,.08)}
+.btn.pri{background:#22d3ee;color:#00151c;border-color:#22d3ee}.btn.pri:hover{background:#67e8f9}
+.btn.sm{min-height:34px;padding:0 10px;font-size:12.5px}
+.btn.done,.btn.done:hover,.btn.pri.done,.btn.pri.done:hover{background:rgba(74,222,128,.14);border-color:var(--ok);color:#bbf7d0}
+/* account list */
+.vlt-row{all:unset;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center;width:100%;padding:10px 8px;border-bottom:1px solid var(--rui-line);cursor:pointer;border-left:3px solid transparent}
+.vlt-row:hover,.vlt-row:focus-visible{background:var(--rui-rowh)}
+.vlt-row.sel{background:rgba(34,211,238,.10);border-left-color:var(--ara-accent)}
+.vlt-row .nm{font-weight:600;color:#fff;font-size:14.5px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
+.vlt-row .mt{color:var(--ara-mute);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vlt-row .mt.pw{letter-spacing:.06em}
+.chip{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;padding:1px 8px;border-radius:999px;border:1px solid}
+.chip.ok{color:#bbf7d0;border-color:rgba(74,222,128,.55)}.chip.reused,.chip.old{color:#fde68a;border-color:rgba(251,191,36,.6)}.chip.exposed{color:#fecaca;border-color:rgba(248,113,113,.7)}
+.chip.lk{display:none;color:#fecaca;border-color:rgba(248,113,113,.7)}body.lock .chip.lk{display:inline-block}
+.otp{grid-row:1 / span 3;grid-column:2;display:flex;align-items:center;gap:6px}
+.otp code{font:600 19px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:#cffafe;letter-spacing:.06em;min-width:76px;text-align:right}
+body.lock .otp code{color:var(--ara-mute)}
+.ring{width:26px;height:26px;flex:none}.ring circle{fill:none;stroke-width:4}.ring .bg{stroke:rgba(148,197,214,.2)}.ring .fg{stroke:#22d3ee;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%}
+.ring.low .fg{stroke:var(--warn)}
+.cp{all:unset;box-sizing:border-box;width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;color:var(--ara-mute);cursor:pointer}
+.cp:hover,.cp:focus-visible{background:rgba(255,255,255,.07);color:#fff}.cp svg{width:18px;height:18px}
+/* pane / stepper */
+.vlt-idle{color:var(--ara-mute);font-size:14px;padding:30px 10px;text-align:center}
+.pane-hd{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.pane-hd b{font-size:17px;color:#fff;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.back{all:unset;box-sizing:border-box;min-height:36px;padding:0 10px;border-radius:8px;color:#67e8f9;font-size:13.5px;cursor:pointer;flex:none}
+.back:hover,.back:focus-visible{background:rgba(255,255,255,.06)}
+.prog{height:8px;border-radius:999px;background:rgba(148,197,214,.16);overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#22d3ee,#2dd4bf);transition:width .25s}
+.stepn{display:flex;justify-content:space-between;color:var(--ara-mute);font-size:12px;margin:6px 0 12px}
+.step h3{margin:0 0 4px;font-size:19px;color:#fff}
+.step .say{margin:0 0 12px;color:#d4e4ea;font-size:14.5px;line-height:1.45}
+.step .note{font-size:12.5px;color:var(--ara-mute);margin:10px 0 0}
+.box{border:1px solid var(--rui-line);border-radius:12px;padding:12px;background:rgba(2,6,12,.5);margin:8px 0}
+.face{width:92px;height:92px;margin:6px auto 10px;border-radius:50%;border:3px dashed rgba(148,197,214,.45);display:flex;align-items:center;justify-content:center;font-size:36px;color:#a9c1cc}
+.face.scan{border-color:#22d3ee;animation:spin 1.2s linear infinite}.face.ok{border:3px solid var(--ok);color:var(--ok);animation:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.newpw{font:600 18px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;color:#fff;word-break:break-all;letter-spacing:.03em}
+.meter{display:flex;gap:4px;margin:10px 0 4px}.meter i{flex:1;height:6px;border-radius:3px;background:rgba(148,197,214,.2)}
+.meter.s4 i{background:var(--ok)}.meter.s3 i:nth-child(-n+3){background:#a3e635}.meter.s2 i:nth-child(-n+2){background:var(--warn)}
+.row2{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.qr{width:148px;height:148px;display:grid;grid-template-columns:repeat(21,1fr);background:#fff;padding:8px;border-radius:8px;margin:4px 0}
+.qr i{background:#fff}.qr i.b{background:#000}
+.deps{list-style:none;margin:0;padding:0}
+.deps li{display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--rui-line)}
+.deps li .d{flex:1;min-width:0}.deps li .d b{display:block;color:#fff;font-size:14px}.deps li .d span{display:block;color:var(--ara-mute);font-size:12px}
+.tk{width:24px;height:24px;border-radius:50%;border:2px solid #52525b;flex:none;display:flex;align-items:center;justify-content:center;font-size:14px;color:#00150a}
+.tk.on{background:var(--ok);border-color:var(--ok)}
+.nav2{display:flex;justify-content:space-between;gap:8px;margin-top:16px;padding-top:12px;border-top:1px solid var(--rui-line)}
+.prompt{min-height:20px;margin-top:8px;font-size:13px;color:#fde68a}
+.log{list-style:none;margin:0;padding:0;font-size:12.5px;color:#d4e4ea}.log li{padding:5px 2px;border-bottom:1px solid var(--rui-line)}.log li span{color:var(--ara-mute)}
+.kit li{align-items:flex-start}
+.codes{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 12px;font:600 14px ui-monospace,Menlo,monospace;color:#cffafe;margin:6px 0}
+.foot{grid-column:1/-1;color:var(--ara-mute);font-size:12.5px;line-height:1.5;border-top:1px solid var(--rui-line);padding-top:12px}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#0b141c;border:1px solid var(--ara-accent);color:#fff;padding:10px 16px;border-radius:12px;font-size:13.5px;z-index:90;opacity:0;pointer-events:none;transition:opacity .2s;max-width:92vw}
+.toast.on{opacity:1}
+</style></head>
+<body class="rui">
+<header class="rui-top"><span class="rui-mark" style="background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305131f'/%3E%3Crect x='16' y='28' width='32' height='24' rx='5' fill='none' stroke='%2322d3ee' stroke-width='4'/%3E%3Cpath d='M22 28v-6a10 10 0 0 1 20 0v6' fill='none' stroke='%2322d3ee' stroke-width='4'/%3E%3Ccircle cx='32' cy='40' r='3.5' fill='%2322d3ee'/%3E%3C/svg%3E") center/contain no-repeat" role="img" aria-label="Realm Vault"></span><b class="rui-title">Realm Vault</b><nav class="nav"><a href="./index.html">‹ Apps</a></nav></header>
+<p class="vlt-banner" role="note">PROTOTYPE — demo data, does nothing real</p>
+<div class="vlt">
+ <div class="vlt-list">
+  <section class="card vlt-status" aria-live="polite">
+   <div class="vlt-big"><span class="vlt-dot"></span><div><b id="stT">All good</b><span id="stS">8 accounts · 4 need attention · 2FA on all</span></div></div>
+   <button class="vlt-switch" id="lockSw" role="switch" aria-checked="false"><span class="tr"></span><span class="lb"><b>Travel / Lockdown mode</b><span id="lockSub">Off. Flick on if you're travelling or lose a device.</span></span></button>
+   <div class="vlt-what" id="lockWhat"><b>Lockdown is ON (demo). In the real version this would:</b>
+    <ul><li>Sign out every other device: Fold, Yoga, Mac, iPad (this one stays in).</li><li>Require 2FA on the next login to every account.</li><li>Mark all sessions "locked" and stop autofill until you unlock with your passkey.</li><li>Tell Ara to PAUSE the Realm apps (read only, no writes).</li></ul></div>
+   <div class="vlt-acts"><button class="btn" id="overBtn">Overseas / lost access</button><button class="btn" id="fixBtn">Fix the worst one</button></div>
+  </section>
+  <section class="card" style="margin-top:12px;padding:8px 8px 4px"><h2 style="margin:6px 6px 4px">Accounts</h2><div id="list" role="list"></div></section>
+  <section class="card" style="margin-top:12px"><h2>Activity (this page only)</h2><ul class="log" id="log"></ul></section>
+ </div>
+ <aside class="vlt-pane card" id="pane" aria-live="polite"><div class="vlt-idle">Pick an account to change its password and 2FA, step by step.<br>Or open <b>Overseas / lost access</b>.</div></aside>
+ <p class="foot">Real version would sit on top of a proper vault (1Password or Bitwarden), which already combines passwords and 2FA codes and works on phone + laptop + web when travelling.<br>This page is a mock-up: fake accounts, fake passwords, 2FA codes made from a demo secret on this device. Nothing is sent anywhere.</p>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(function(){
+'use strict';
+/* ---------- tiny SHA-1 + HMAC + TOTP (RFC 6238), demo secrets only ---------- */
+function sha1(m){var H=[0x67452301,0xEFCDAB89,0x98BADCFE,0x10325476,0xC3D2E1F0],l=m.length,n=((l+8>>6)+1)*16,w=new Array(n).fill(0),i;
+ for(i=0;i<l;i++)w[i>>2]|=m[i]<<(24-(i%4)*8);w[l>>2]|=0x80<<(24-(l%4)*8);w[n-1]=l*8;
+ for(var b=0;b<n;b+=16){var W=new Array(80),a=H[0],bb=H[1],c=H[2],d=H[3],e=H[4];
+  for(i=0;i<80;i++){W[i]=i<16?w[b+i]:((W[i-3]^W[i-8]^W[i-14]^W[i-16])<<1|(W[i-3]^W[i-8]^W[i-14]^W[i-16])>>>31);
+   var f=i<20?(bb&c|~bb&d)+0x5A827999:i<40?(bb^c^d)+0x6ED9EBA1:i<60?(bb&c|bb&d|c&d)+0x8F1BBCDC:(bb^c^d)+0xCA62C1D6;
+   var t=((a<<5|a>>>27)+f+e+W[i])|0;e=d;d=c;c=bb<<30|bb>>>2;bb=a;a=t}
+  H[0]=H[0]+a|0;H[1]=H[1]+bb|0;H[2]=H[2]+c|0;H[3]=H[3]+d|0;H[4]=H[4]+e|0}
+ var o=[];H.forEach(function(h){o.push(h>>>24&255,h>>>16&255,h>>>8&255,h&255)});return o}
+function hmac(k,m){if(k.length>64)k=sha1(k);var ip=[],op=[];for(var i=0;i<64;i++){var x=k[i]||0;ip.push(x^0x36);op.push(x^0x5c)}return sha1(op.concat(sha1(ip.concat(m))))}
+function bytes(s){return Array.from(new TextEncoder().encode(s))}
+function totp(sec,t){var c=Math.floor(t/30),m=[0,0,0,0,c>>>24&255,c>>>16&255,c>>>8&255,c&255],h=hmac(sec,m),o=h[19]&15;
+ var v=((h[o]&127)<<24|h[o+1]<<16|h[o+2]<<8|h[o+3])%1e6;v=String(v).padStart(6,'0');return v.slice(0,3)+' '+v.slice(3)}
+/* ---------- demo data (fake) ---------- */
+var A=[
+ {id:'gws',name:'Google Workspace (info@)',login:'i•••@r••••••.com.au',health:'ok',changed:'12 Sep 2026',site:'Google account → Security → Password',
+  deps:[['Fold (Chrome Beta)','Phone sign-in'],['Yoga laptop (Chrome)','Laptop sign-in'],['Mac (Chrome)','Mac sign-in'],['Ara Engine Allow','Apps Script permission'],['clasp','Command-line login'],['Ara Capture','Sync to Capture inbox']]},
+ {id:'dep',name:'Deputy (accounts@)',login:'a•••••••@r••••••.com.au',health:'old',changed:'3 Feb 2025',site:'Deputy → My profile → Password',deps:[['Deputy app (Fold)','Rostering app'],['Julie\u2019s Deputy login','Shared roster view'],['Payroll export','Weekly export']]},
+ {id:'zoh',name:'Zoho',login:'i•••@r••••••.com.au',health:'reused',changed:'20 Jun 2026',site:'Zoho Accounts → Security',deps:[['Zoho CRM (web)','Browser session'],['Zoho mobile app','Phone app'],['Zoho tunnel link','Server connector']]},
+ {id:'uni',name:'UniFi',login:'r•••-a•••n',health:'ok',changed:'28 Aug 2026',site:'UniFi account → Security',deps:[['UniFi app (Fold)','Network app'],['Site controller','Factory network']]},
+ {id:'tsc',name:'Tailscale',login:'i•••@r••••••.com.au',health:'old',changed:'9 Mar 2025',site:'Tailscale admin → Account',deps:[['Fold','Tailnet device'],['Yoga laptop','Tailnet device'],['Mac','Tailnet device'],['Server','Tailnet node']]},
+ {id:'pmx',name:'Proxmox',login:'r••t@p••',health:'exposed',changed:'14 Jan 2025',site:'Proxmox → Datacenter → Users',deps:[['Proxmox web console','Admin page'],['Backup job','Nightly backup'],['Tailnet access','Admin over Tailscale']]},
+ {id:'xer',name:'Xero',login:'a•••••••@r••••••.com.au',health:'ok',changed:'2 Oct 2026',site:'Xero → Account → Password',deps:[['Xero app (Fold)','Phone app'],['Bank feeds','Bank connection'],['P&L report','Monthly report']]},
+ {id:'amz',name:'Amazon',login:'i•••@r••••••.com.au',health:'reused',changed:'30 Jul 2025',site:'Amazon → Login & security',deps:[['Amazon app (Fold)','Phone app'],['Amazon Business orders','Ordering']]}
+];
+A.forEach(function(a){a.sec=bytes('realm-vault-DEMO-only-'+a.id)});
+var HL={ok:'OK',reused:'Reused',old:'Old',exposed:'Exposed'},RANK={exposed:0,reused:1,old:2,ok:3};
+var $=function(s,r){return (r||document).querySelector(s)},el=function(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+var CP='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+var R=2*Math.PI*10;
+function melb(){try{return new Date().toLocaleTimeString('en-AU',{timeZone:'Australia/Melbourne',hour:'numeric',minute:'2-digit'})}catch(e){return new Date().toLocaleTimeString()}}
+function log(t){var li=el('li');li.appendChild(el('span',null,melb()+' · '));li.appendChild(document.createTextNode(t));var L=$('#log');L.insertBefore(li,L.firstChild)}
+var tt;function toast(t){var x=$('#toast');x.textContent=t;x.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){x.classList.remove('on')},2200)}
+function copy(t,what){var ok=function(){toast('Copied '+what+' (demo)')};try{navigator.clipboard.writeText(t).then(ok,ok)}catch(e){ok()}}
+/* ---------- list ---------- */
+function render(){var L=$('#list');L.textContent='';
+ A.slice().sort(function(a,b){return RANK[a.health]-RANK[b.health]}).forEach(function(a){
+  var r=el('div','vlt-row');r.setAttribute('role','button');r.tabIndex=0;r.dataset.id=a.id;if(cur&&cur.id===a.id)r.classList.add('sel');
+  r.setAttribute('aria-label',a.name+', health '+HL[a.health]+'. Open to change password');
+  var nm=el('span','nm',a.name);nm.appendChild(el('span','chip '+a.health,HL[a.health]));nm.appendChild(el('span','chip lk','Locked'));
+  var otp=el('span','otp');otp.innerHTML='<code></code><svg class="ring" viewBox="0 0 26 26" aria-hidden="true"><circle class="bg" cx="13" cy="13" r="10"/><circle class="fg" cx="13" cy="13" r="10" stroke-dasharray="'+R+'"/></svg>';
+  var b=el('button','cp');b.innerHTML=CP;b.setAttribute('aria-label','Copy 2FA code for '+a.name);b.dataset.copy=a.id;otp.appendChild(b);
+  r.appendChild(nm);r.appendChild(otp);r.appendChild(el('span','mt',a.login+'  ·  pw ••••••••••'));r.appendChild(el('span','mt','Changed '+a.changed));
+  L.appendChild(r)});
+ tick();status()}
+function tick(){var now=Date.now()/1000,left=30-Math.floor(now%30);
+ document.querySelectorAll('.vlt-row').forEach(function(r){var a=byId(r.dataset.id);$('code',r).textContent=document.body.classList.contains('lock')?'••• •••':totp(a.sec,now);
+  var fg=$('.fg',r);fg.style.strokeDashoffset=String(R*(1-left/30));$('.ring',r).classList.toggle('low',left<=5);$('.ring',r).setAttribute('aria-label',left+' seconds left')});
+ var nc=$('#newCode');if(nc&&step4.sec)nc.textContent=totp(step4.sec,now)}
+function byId(id){for(var i=0;i<A.length;i++)if(A[i].id===id)return A[i]}
+function status(){var bad=A.filter(function(a){return a.health!=='ok'}).length,lk=document.body.classList.contains('lock');document.body.classList.toggle('warn',bad>0);
+ $('#stT').textContent=lk?'Lockdown on':(bad?bad+' to fix':'All good');
+ $('#stS').textContent=lk?'All '+A.length+' accounts locked · 2FA needed on next login (demo)':A.length+' accounts · '+(bad?bad+' need attention':'nothing to fix')+' · 2FA on all'}
+$('#list').addEventListener('click',function(e){var c=e.target.closest('[data-copy]');if(c){e.stopPropagation();var a=byId(c.dataset.copy);
+  if(document.body.classList.contains('lock')){toast('Locked: turn Lockdown off first (demo)');return}copy(totp(a.sec,Date.now()/1000).replace(' ',''),'2FA code for '+a.name);return}
+ var r=e.target.closest('.vlt-row');if(r)open(byId(r.dataset.id))});
+$('#list').addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('vlt-row')){e.preventDefault();open(byId(e.target.dataset.id))}});
+/* ---------- master switch ---------- */
+$('#lockSw').addEventListener('click',function(){var on=this.getAttribute('aria-checked')!=='true';this.setAttribute('aria-checked',String(on));document.body.classList.toggle('lock',on);
+ $('#lockSub').textContent=on?'ON. All sessions marked locked. Flick off to unlock (passkey in real version).':'Off. Flick on if you\u2019re travelling or lose a device.';
+ log(on?'Lockdown ON: 4 other devices would be signed out, 2FA required on next login (demo)':'Lockdown OFF: sessions unlocked (demo)');toast(on?'Lockdown on (demo, nothing real changed)':'Lockdown off');status();tick()});
+$('#fixBtn').addEventListener('click',function(){var w=A.slice().sort(function(a,b){return RANK[a.health]-RANK[b.health]})[0];open(w)});
+$('#overBtn').addEventListener('click',over);
+/* ---------- stepper ---------- */
+var cur=null,st=0,S={},step4={};
+var STEPS=['Verify it\u2019s you','New password','Change it on the site','2FA','Reconnect','Done'];
+function closePane(){cur=null;document.body.classList.remove('pane-open');var p=$('#pane');p.innerHTML='<div class="vlt-idle">Pick an account to change its password and 2FA, step by step.<br>Or open <b>Overseas / lost access</b>.</div>';render();window.scrollTo(0,0)}
+function open(a){cur=a;st=0;S={verified:false,pw:'',len:20,changed:false,tfa:null,tfaOk:false,rc:{}};step4={};document.body.classList.add('pane-open');render();draw();if(innerWidth<1000)window.scrollTo(0,0)}
+function head(p,title){var h=el('div','pane-hd'),b=el('button','back','‹ Accounts');b.id='paneBack';b.addEventListener('click',closePane);h.appendChild(b);h.appendChild(el('b',null,title));p.appendChild(h)}
+function genPw(n){var cs='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*-_=+?',r=new Uint32Array(n),o='';crypto.getRandomValues(r);for(var i=0;i<n;i++)o+=cs[r[i]%cs.length];return o}
+function strength(n){var bits=n*Math.log2(70);return bits>=110?[4,'Very strong · '+Math.round(bits)+' bits']:bits>=90?[3,'Strong · '+Math.round(bits)+' bits']:[2,'OK · '+Math.round(bits)+' bits']}
+function draw(){var p=$('#pane'),a=cur;p.textContent='';head(p,a.name);
+ var pg=el('div','prog');var bar=el('i');bar.style.width=((st+1)/STEPS.length*100)+'%';pg.appendChild(bar);pg.setAttribute('role','progressbar');pg.setAttribute('aria-valuenow',st+1);pg.setAttribute('aria-valuemax',STEPS.length);p.appendChild(pg);
+ var sn=el('div','stepn');sn.appendChild(el('span',null,'Step '+(st+1)+' of '+STEPS.length));sn.appendChild(el('span',null,STEPS[st]));p.appendChild(sn);
+ var s=el('div','step');s.id='step'+(st+1);p.appendChild(s);
+ var pr=el('div','prompt');pr.id='prompt';
+ if(st===0){s.appendChild(el('h3',null,'First, check it\u2019s you'));s.appendChild(el('p','say','Use your face or passkey on this phone. Nobody can change a password without this.'));
+  var f=el('div','face'+(S.verified?' ok':''),S.verified?'✓':'☺');s.appendChild(f);
+  var b=el('button','btn pri'+(S.verified?' done':''),S.verified?'Verified':'Use face / passkey');b.id='verifyBtn';b.addEventListener('click',function(){if(S.verified)return toast('Already verified');f.className='face scan';b.textContent='Checking…';setTimeout(function(){S.verified=true;log(a.name+': identity verified (mock passkey)');draw()},900)});
+  var w=el('div','row2');w.appendChild(b);s.appendChild(w);
+  if(document.body.classList.contains('lock'))s.appendChild(el('p','note','Lockdown is on, so the real version would also ask for a 2FA code here.'))}
+ if(st===1){if(!S.pw)S.pw=genPw(S.len);s.appendChild(el('h3',null,'Here\u2019s your new password'));s.appendChild(el('p','say','I made a strong one. You don\u2019t need to remember it, the vault keeps it. Copy it for the next step.'));
+  var bx=el('div','box');var pw=el('div','newpw',S.pw);pw.id='newPw';bx.appendChild(pw);var m=el('div','meter');var sg=strength(S.pw.length);m.className='meter s'+sg[0];for(var i=0;i<4;i++)m.appendChild(el('i'));bx.appendChild(m);bx.appendChild(el('span','mt',sg[1]+' · '+S.pw.length+' characters'));s.appendChild(bx);
+  var w2=el('div','row2');var c=el('button','btn pri','Copy password');c.id='copyPw';c.addEventListener('click',function(){S.copied=true;copy(S.pw,'new password');c.classList.add('done');c.textContent='Copied'});
+  var g=el('button','btn','New one');g.id='regenPw';g.addEventListener('click',function(){S.pw=genPw(S.len);S.copied=false;draw()});
+  var ln=el('button','btn',S.len+' → '+(S.len>=28?16:S.len+4)+' chars');ln.id='lenPw';ln.addEventListener('click',function(){S.len=S.len>=28?16:S.len+4;S.pw=genPw(S.len);draw()});
+  w2.appendChild(c);w2.appendChild(g);w2.appendChild(ln);s.appendChild(w2);s.appendChild(el('p','note','Demo: made on this device, never saved or sent.'))}
+ if(st===2){s.appendChild(el('h3',null,'Change it on '+a.name.replace(/ \(.*/,'')));s.appendChild(el('p','say','Tap the button to open the change-password page. Paste the new password there, save it, then come back and tap "I\u2019ve changed it".'));
+  var bx2=el('div','box');bx2.appendChild(el('span','mt','Goes to: '+a.site));s.appendChild(bx2);
+  var w3=el('div','row2');var o=el('button','btn','Open site ↗');o.id='openSite';o.addEventListener('click',function(){S.opened=true;o.classList.add('done');toast('Demo: would open '+a.site+' (nothing opened)');log(a.name+': opened change-password page (mock)')});
+  var ok=el('button','btn pri'+(S.changed?' done':''),S.changed?'Changed ✓':'I\u2019ve changed it');ok.id='changedBtn';ok.addEventListener('click',function(){S.changed=!S.changed;draw()});
+  w3.appendChild(o);w3.appendChild(ok);s.appendChild(w3)}
+ if(st===3){s.appendChild(el('h3',null,'Do the 2FA codes need updating?'));s.appendChild(el('p','say','Most sites keep the same 2FA after a password change. Only reset it if the site asks, or if this account was exposed.'));
+  if(a.health==='exposed')s.appendChild(el('p','note','This one is marked Exposed, so a new 2FA is recommended.'));
+  var w4=el('div','row2');var k=el('button','btn'+(S.tfa==='keep'?' done':''),'Keep current 2FA');k.id='tfaKeep';k.addEventListener('click',function(){S.tfa='keep';S.tfaOk=true;step4={};draw()});
+  var n=el('button','btn'+(S.tfa==='new'?' done':''),'Set up new 2FA');n.id='tfaNew';n.addEventListener('click',function(){S.tfa='new';S.tfaOk=false;step4={sec:bytes('realm-vault-DEMO-new-'+a.id+'-'+Date.now())};draw()});
+  w4.appendChild(k);w4.appendChild(n);s.appendChild(w4);
+  if(S.tfa==='new'){var bx3=el('div','box');bx3.appendChild(el('span','mt','The site shows a QR code. The vault reads it, no second app needed. (Placeholder, not a real QR.)'));
+   var q=el('div','qr');q.setAttribute('aria-label','QR code placeholder');var seed=step4.sec.reduce(function(x,y){return x*31+y>>>0},7);for(var y=0;y<21;y++)for(var x=0;x<21;x++){var fin=(x<7&&y<7)||(x>13&&y<7)||(x<7&&y>13);var on=fin?((x%6===0||y%6===0||(x>13&&(x-14)%6===0)||(y>13&&(y-14)%6===0))||((x%7>1&&x%7<5)&&(y%7>1&&y%7<5))):((seed=(seed*1103515245+12345)>>>0)>>>16)&1;q.appendChild(el('i',on?'b':''))}
+   bx3.appendChild(q);var nc=el('div','row2');nc.appendChild(el('span','mt','New code:'));var cd=el('code','','');cd.id='newCode';cd.style.cssText='font:600 20px ui-monospace,Menlo,monospace;color:#cffafe';nc.appendChild(cd);bx3.appendChild(nc);
+   var cf=el('button','btn pri'+(S.tfaOk?' done':''),S.tfaOk?'Code confirmed ✓':'Type code into site & confirm');cf.id='tfaConfirm';cf.addEventListener('click',function(){S.tfaOk=true;log(a.name+': new 2FA set up (demo secret)');draw()});var w5=el('div','row2');w5.appendChild(cf);bx3.appendChild(w5);s.appendChild(bx3)}}
+ if(st===4){s.appendChild(el('h3',null,'Reconnect what uses this login'));s.appendChild(el('p','say','These will stop working until they sign in again with the new password. Tap each one, or reconnect all.'));
+  var ul=el('ul','deps');a.deps.forEach(function(d,i){var li=el('li');var t=el('span','tk'+(S.rc[i]?' on':''),S.rc[i]?'✓':'');var dd=el('span','d');dd.appendChild(el('b',null,d[0]));dd.appendChild(el('span',null,d[1]));
+   var b=el('button','btn sm'+(S.rc[i]?' done':''),S.rc[i]?'Connected':'Reconnect');b.dataset.dep=i;b.addEventListener('click',function(){if(S.rc[i])return toast(d[0]+' already reconnected');b.textContent='Signing in…';setTimeout(function(){S.rc[i]=true;log(a.name+': '+d[0]+' reconnected (mock)');draw()},500)});
+   li.appendChild(t);li.appendChild(dd);li.appendChild(b);ul.appendChild(li)});s.appendChild(ul);
+  var all=el('button','btn','Reconnect all');all.id='rcAll';all.addEventListener('click',function(){a.deps.forEach(function(_,i){S.rc[i]=true});log(a.name+': all '+a.deps.length+' reconnected (mock)');draw()});var w6=el('div','row2');w6.appendChild(all);s.appendChild(w6)}
+ if(st===5){var n2=Object.keys(S.rc).length;s.appendChild(el('h3',null,'Done ✓'));s.appendChild(el('p','say',a.name+' has a new password'+(S.tfa==='new'?' and new 2FA':'')+'. '+n2+' of '+a.deps.length+' things reconnected.'));
+  var bx4=el('div','box');bx4.appendChild(el('span','mt','Log line: '+S.logLine));s.appendChild(bx4);
+  var w7=el('div','row2');var bk=el('button','btn pri','Back to accounts');bk.id='doneBack';bk.addEventListener('click',closePane);w7.appendChild(bk);s.appendChild(w7)}
+ s.appendChild(pr);
+ var nv=el('div','nav2');var bb=el('button','btn','‹ Back');bb.id='stepBack';bb.addEventListener('click',function(){if(st===0){closePane();return}st--;draw()});
+ nv.appendChild(bb);if(st<5){var nx=el('button','btn pri',st===4?'Finish':'Next ›');nx.id='stepNext';nx.addEventListener('click',next);nv.appendChild(nx)}p.appendChild(nv);tick()}
+function next(){var a=cur,msg='';
+ if(st===0&&!S.verified)msg='Tap "Use face / passkey" first.';
+ if(st===1&&!S.copied)msg='Tap "Copy password" so you can paste it on the site.';
+ if(st===2&&!S.changed)msg='Change it on the site, then tap "I\u2019ve changed it".';
+ if(st===3&&!S.tfa)msg='Pick "Keep current 2FA" or "Set up new 2FA".';
+ if(st===3&&S.tfa==='new'&&!S.tfaOk)msg='Type the new code into the site, then tap confirm.';
+ if(st===4&&Object.keys(S.rc).length<a.deps.length)msg=(a.deps.length-Object.keys(S.rc).length)+' still to reconnect. Tap them, or "Reconnect all".';
+ if(msg){var p=$('#prompt');p.textContent=msg;return}
+ if(st===4){a.health='ok';a.changed='Today '+melb();S.logLine=melb()+' | DONE | '+a.name+' | password changed, 2FA '+(S.tfa==='new'?'reset':'kept')+', '+Object.keys(S.rc).length+'/'+a.deps.length+' reconnected (demo)';log(a.name+': password changed, all reconnected (demo)');render()}
+ st++;draw()}
+/* ---------- overseas / lost access ---------- */
+var K={};
+function over(){cur=null;document.body.classList.add('pane-open');render();var p=$('#pane');p.textContent='';head(p,'Overseas / lost access');
+ p.appendChild(el('p','say','If you\u2019re overseas and normal sign-in breaks, or your phone is lost, work down this list. (Mock: nothing here is real.)'));
+ var items=[
+  ['codes','Backup codes','10 one-time codes for info@. Each works once, even with no phone.','Show codes'],
+  ['dev','Trusted second device','Yoga laptop is set as a trusted device. It can approve sign-ins if the Fold is gone.','Test prompt'],
+  ['julie','Emergency contact: Julie','Julie can request access to the vault. You get 48 hours to refuse before it opens.','Test request'],
+  ['copy','Offline encrypted copy','Encrypted export on the standalone laptop. Needs your master password to open.','Make copy'],
+  ['lock','Lost phone?','Flick Travel / Lockdown on. It signs out every other device and asks for 2FA next time.','Flick Lockdown']];
+ var ul=el('ul','deps kit');items.forEach(function(it){var li=el('li');var t=el('span','tk'+(K[it[0]]?' on':''),K[it[0]]?'✓':'');var d=el('span','d');d.appendChild(el('b',null,it[1]));d.appendChild(el('span',null,it[2]));
+  if(it[0]==='codes'&&K.codes){var cg=el('div','codes');for(var i=0;i<10;i++)cg.appendChild(el('span',null,'DEMO-'+String((i*7919+1234)%10000).padStart(4,'0')));d.appendChild(cg)}
+  var b=el('button','btn sm'+(K[it[0]]?' done':''),K[it[0]]?'Done':it[3]);b.dataset.kit=it[0];b.addEventListener('click',function(){
+   if(it[0]==='lock'){if($('#lockSw').getAttribute('aria-checked')!=='true')$('#lockSw').click()}
+   K[it[0]]=!K[it[0]];if(K[it[0]])log('Emergency kit: '+it[1]+' checked (mock)');toast(it[0]==='julie'?'Demo: nothing sent to Julie':it[1]+(K[it[0]]?' ticked':' unticked')+' (demo)');over()});
+  li.appendChild(t);li.appendChild(d);li.appendChild(b);ul.appendChild(li)});p.appendChild(ul);
+ p.appendChild(el('p','note','Real version: 1Password Emergency Kit or Bitwarden emergency access + recovery codes. Works from any browser at the vault\u2019s website when travelling.'));
+ if(innerWidth<1000)window.scrollTo(0,0)}
+render();log('Vault opened (prototype, demo data)');setInterval(tick,1000);
+})();
+</script>
+</body></html>
