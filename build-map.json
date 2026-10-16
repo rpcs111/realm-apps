@@ -1,6 +1,6 @@
 {
  "title": "Build Map",
- "updated": "2026-10-16T15:30:00Z",
+ "updated": "2026-10-16T20:45:00Z",
  "items": [
   {
    "id": "notes",
@@ -85,11 +85,11 @@
    "group": "APPS",
    "name": "Flow Map",
    "status": "amber",
-   "elon_verified": true,
-   "note": "26 nodes, every one opens something. Legend counts are worked out from the bubbles on screen: 18 live, 4 live but waiting on Ange (Notes, Search Studio, Ara button, Engine sync), 2 planned (1300 line, Julie), plus 2 hubs (Calendar, Register). Elon check 17 Oct: PASS with corrections; fixed in v2026.10.17-6 (Ara button amber, '1300' off step 1, subtitles wrap instead of cut off, install tip no longer covers bubbles). PASS (Elon re-check 17 Oct, v2026.10.17-6). Real-phone test still to do.",
-   "verified_date": "2026-10-17",
-   "verified_how": "Elon 390x844 re-check of gh-pages bfbb56a (v2026.10.17-6): 18 live / 4 waiting / 2 planned / 2 hubs, Ara amber, no 1300 in step 1, subtitles wrap, all app links 200. Report: /workspace/notes_test2/v6/REPORT.md"
- },
+   "elon_verified": false,
+   "note": "Updated 17 Oct from Elon's cross-check: 33 bubbles, every status honest. Amber now = waiting or partly working: Log + Follow-up (waiting on Ara Engine Allow), Enquiry (no WhatsApp route yet), Quote + Invoice (opens Zoho sign-in only), Roster (Deputy look-only, general sign-in page), Ara (opens the ARA button in Notes; no direct chat link exists). Job day now opens Realm Desk (desk.html); \"Desk v9\" removed. New: Grok How-To (live), Ara Capture (waits on Allow), F&H store (red, 525), Reorder, Xenon, Vault (side branch, not live), Bills log (private sheet). Legend counts are still worked out from the bubbles on screen. Waiting for Elon to re-check.",
+   "owner": "Elon",
+   "next": "Elon re-checks map.html?d=fold8 at 390x844."
+  },
   {
    "id": "scribe",
    "group": "APPS",
@@ -314,7 +314,9 @@
    "status": "red",
    "elon_verified": false,
    "note": "frankieandhenry.com and .com.au return error 525 (re-checked 17 Oct ~1:55am Melb). No owner since Claude cut. Name renewal only was handled 16 Oct. Evening/Saturday item in Orion daily-sweep.",
-   "source": "Elon overnight audit 16/17 Oct"
+   "source": "Elon overnight audit 16/17 Oct",
+   "owner": "Ara",
+   "next": "Read-only check of the hosting/SSL setup behind the 525 on .com, .com.au and www, then one fix for Ange to approve."
   },
   {
    "id": "bills-superloop",
@@ -323,7 +325,9 @@
    "status": "amber",
    "elon_verified": false,
    "note": "Tech bills sheet built 16 Oct (private, info@ Drive). Superloop credit applied twice (Jul+Oct) still needs Ange decision. Was listed as dropped from Build Map.",
-   "source": "Elon overnight audit 16/17 Oct"
+   "source": "Elon overnight audit 16/17 Oct",
+   "owner": "Ange",
+   "next": "Yes/no: chase Superloop about the credit applied twice (Jul + Oct). Ara drafts the email only after a yes."
   },
   {
    "id": "zoho-todo",
@@ -332,7 +336,9 @@
    "status": "grey",
    "elon_verified": false,
    "note": "Asked 16 Oct; not on Build Map or HANDOFF §7 as a tracked job.",
-   "source": "Elon overnight audit 16/17 Oct"
+   "source": "Elon overnight audit 16/17 Oct",
+   "owner": "Nova",
+   "next": "Starts once Ange pastes \"go\" and Nova's queue restarts."
   },
   {
    "id": "zoho-books-crm-pull",
@@ -341,16 +347,20 @@
    "status": "grey",
    "elon_verified": false,
    "note": "Nova CRM export authorised 15 Oct; Zoho MCP once lived on Proxmox. Live pull into Realm apps still unbuilt.",
-   "source": "Elon overnight audit 16/17 Oct"
+   "source": "Elon overnight audit 16/17 Oct",
+   "owner": "Ara",
+   "next": "Compare Nova's CRM export against the Register (export-and-compare only, no Zoho changes)."
   },
   {
    "id": "flip6-apps",
    "group": "DROPPED / UNBUILT",
-   "name": "Flip 6 apps",
+   "name": "Flip 6 apps: meaning unconfirmed, ask Ange",
    "status": "grey",
    "elon_verified": false,
    "note": "Asked 16 Oct; not on Build Map / HANDOFF. Exact scope not found beyond the ask — confirm with Ange.",
-   "source": "Elon overnight audit 16/17 Oct"
+   "source": "Elon overnight audit 16/17 Oct",
+   "owner": "Ange",
+   "next": "Ara asks Ange at the 9am wake what \"Flip 6 apps\" means. Nothing gets built until he answers."
   },
   {
    "id": "pomodoro-s26",
@@ -359,7 +369,9 @@
    "status": "grey",
    "elon_verified": false,
    "note": "Pomodoro day pattern (20 min Realm + 5 min lanes) in Orion 4 Oct notes. S26 WhatsApp eSIM hand-back still open (HANDOFF NEXT #4).",
-   "source": "Elon overnight audit 16/17 Oct"
+   "source": "Elon overnight audit 16/17 Oct",
+   "owner": "Ara",
+   "next": "Add a reverse-Pomodoro timer (5 Elon / 20 business / 20 guitar) to Notes. The S26 hand-back stays with Ange."
   },
   {
    "id": "remove-claude-app",
@@ -368,7 +380,9 @@
    "status": "red",
    "elon_verified": false,
    "note": "Cutover OPEN: revoke claude.ai connectors on Mac; billing toggles. HANDOFF Security section. Not on Build Map.",
-   "source": "Elon overnight audit 16/17 Oct"
+   "source": "Elon overnight audit 16/17 Oct",
+   "owner": "Ange",
+   "next": "Ange removes the claude.ai connectors on the Mac. Ara sends the 3 steps at the 9am wake."
   },
   {
    "id": "security-app",
@@ -630,6 +644,50 @@
    "elon_verified": false,
    "note": "Ange 8:42pm 16 Oct mentioned it for the website. What it is not confirmed.",
    "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
+  },
+  {
+   "id": "anthropic-chase",
+   "group": "MISSED ASKS (Elon cross-check 17 Oct)",
+   "name": "Anthropic refund / credit chase",
+   "status": "grey",
+   "elon_verified": false,
+   "owner": "Elon",
+   "next": "Elon writes a push-back draft for Ange to review. Nothing gets sent without Ange's yes.",
+   "note": "Planned. Missed from the 17 Oct sweep.",
+   "source": "Elon cross-check 17 Oct"
+  },
+  {
+   "id": "trading-tracker",
+   "group": "MISSED ASKS (Elon cross-check 17 Oct)",
+   "name": "Trading project + ideas tracker",
+   "status": "grey",
+   "elon_verified": false,
+   "owner": "Ara",
+   "next": "Ange says where it should live. Private, so the details stay off this public page.",
+   "note": "Planned. Private.",
+   "source": "Elon cross-check 17 Oct"
+  },
+  {
+   "id": "realm-keep-doc",
+   "group": "MISSED ASKS (Elon cross-check 17 Oct)",
+   "name": "REALM KEEP doc",
+   "status": "red",
+   "elon_verified": false,
+   "owner": "Nova",
+   "next": "Blocked until Ange pastes \"go\" to restart Nova. Then Nova builds it.",
+   "note": "Blocked on Nova (stalled since 11:54 UTC 16 Oct).",
+   "source": "Elon cross-check 17 Oct"
+  },
+  {
+   "id": "phone-alert",
+   "group": "MISSED ASKS (Elon cross-check 17 Oct)",
+   "name": "Phone-call alert when the system breaks",
+   "status": "grey",
+   "elon_verified": false,
+   "owner": "Ara",
+   "next": "Ange says yes or no to Pushover (US$4.99 one-off). Each sign-up or spend needs his yes.",
+   "note": "Planned. Options are written up: Pushover emergency alert first, a Twilio call for real outages, and quiet before 9am Melbourne unless it's a full outage. Checks every 5 min and only alerts after 2 failures in a row. Related to \"Ring group\".",
+   "source": "Elon cross-check 17 Oct"
   }
  ]
 }
