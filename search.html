@@ -8,10 +8,28 @@ button{min-height:40px;min-width:40px;padding:6px 12px;border-radius:999px;borde
 button.on{background:rgba(34,211,238,.12);box-shadow:0 0 0 3px rgba(34,211,238,.25)}
 .m{color:var(--m);font-size:12px}#vMic{display:none!important}
 </style><link rel="stylesheet" href="css/ara-theme.css"><link rel="stylesheet" href="css/realm-ui.css?v=20261016b">
+<style>/* Search Studio phone fixes (17 Oct, after Elon's 412x915 test) */
+.srch-tips:empty{display:none}.srch-tips{display:flex;flex-direction:column;gap:6px;margin:4px 0 8px}
+.srch-tips #ara-openin{position:static!important;margin:0!important;max-width:none!important;box-shadow:none!important;padding:6px 10px!important;font-size:12.5px!important;border-color:rgba(34,211,238,.45)!important;background:rgba(8,24,36,.7)!important}
+.srch-tips #ara-openin span{flex:1 1 160px!important}
+.srch-tips #araHint{position:static!important;max-width:none!important;box-shadow:none!important;font-size:12px!important;padding:6px 10px!important;border-color:rgba(34,211,238,.45)!important;background:rgba(8,24,36,.7)!important}
+.sync-chip{display:inline-flex;align-items:center;gap:6px;max-width:100%;margin:0 2px 8px;padding:2px 10px;border-radius:999px;border:1px solid rgba(148,197,214,.18);background:rgba(255,255,255,.03);color:#a9c1cc;font-size:11px;line-height:1.6;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sync-chip:empty{display:none}.sync-chip::before{content:"";width:6px;height:6px;border-radius:50%;background:#64748b;flex:none}
+.sync-chip[data-sync-state=synced]{color:#86efac}.sync-chip[data-sync-state=synced]::before{background:#22c55e}.sync-chip[data-sync-state=syncing]::before{background:#22d3ee}
+.srch-err{display:flex;flex-direction:column;gap:4px;align-items:flex-start;background:rgba(8,24,36,.7)!important;border:1px solid rgba(34,211,238,.35)!important;color:#e6f7fb!important}
+.srch-err span{color:#a9c1cc;font-size:13px}.srch-err .srch-retry{margin-top:6px;border-color:#22d3ee;color:#e6fbff;box-shadow:0 0 10px rgba(34,211,238,.25)}
+@media(max-width:899px){.rui-rail{flex-wrap:wrap;overflow:visible;gap:4px;padding:6px}.rui-tab{flex:0 1 auto;gap:4px;padding:4px 7px;font-size:12px}.rui-tab i{min-width:16px;padding:1px 4px;font-size:10px}.rui-list h2{top:calc(var(--rui-top) + var(--rail-h,45px) + env(safe-area-inset-top))}}
+</style>
 <script src="js/ara-account.js?v=20261016b" defer></script></head><body class="rui">
 <header class="rui-top"><span class="rui-mark" role="img" aria-label="Ara"></span><b class="rui-title">Search Studio</b><div class="nav" data-rl-pill><button id="ara" class="rui-ara" type="button" title="Call Ara on this job" aria-label="Call Ara on this job"><span class="rui-mark" aria-hidden="true"></span>ARA</button><a href="./index.html">‹ Apps</a><a id="toNotes" href="./notes.html">Notes ›</a></div></header>
 <div class="rui-shell"><aside class="rui-rail" id="rail" role="tablist" aria-label="Filter results"><button type="button" class="rui-tab on" data-k="all" role="tab" aria-selected="true">All <i>0</i></button><button type="button" class="rui-tab" data-k="reg" role="tab">Register <i>0</i></button><button type="button" class="rui-tab" data-k="ev" role="tab">Calendar <i>0</i></button><button type="button" class="rui-tab" data-k="file" role="tab">Drive <i>0</i></button><button type="button" class="rui-tab" data-k="wa" role="tab">WhatsApp <i>0</i></button><h3>Sources</h3><div class="rui-src" id="src"><span>Register</span><span>Calendar</span><span>Drive</span><span>WhatsApp links</span><span class="no">Invoices – needs backend deploy</span><span class="no">Notes – needs backend deploy</span><span class="no">Gmail – needs backend deploy</span></div></aside>
-<main class="rui-main"><div class="rui-status" id="msg">Type or tap the mic, then Go. Data comes live from Realm Desk.</div><div class="rui-status" data-realm-sync style="font-size:11px;margin-top:-4px"></div><div class="rui-list" id="out"></div></main></div>
+<main class="rui-main"><div id="tips" class="srch-tips"></div><div class="rui-status" id="msg">Type or tap the mic, then Go. Data comes live from Realm Desk.</div><div class="sync-chip" data-realm-sync role="status"></div><div class="rui-list" id="out"></div></main></div>
+<script>/* keep the one-time banners in the page flow, never over the search box / tabs */
+(function(){var slot=document.getElementById("tips"),ids=["ara-openin","araHint"];
+ function pull(){ids.forEach(function(i){var e=document.getElementById(i);if(e&&e.parentNode!==slot)slot.appendChild(e)})}
+ try{new MutationObserver(pull).observe(document.body,{childList:true})}catch(e){}pull();
+ var rail=document.getElementById("rail");function rh(){try{document.documentElement.style.setProperty("--rail-h",rail.offsetHeight+"px")}catch(e){}}
+ rh();window.addEventListener("resize",rh);try{new ResizeObserver(rh).observe(rail)}catch(e){}})();</script>
 <form class="rui-composer" id="f"><div class="rui-box"><input id="q" placeholder="Address, client or keyword" autocomplete="off" enterkeyhint="search" aria-label="Search"><button type="button" class="rui-ib" id="mic" title="Speak" aria-label="Speak a search"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="8.25" y="2.5" width="7.5" height="12.5" rx="3.75" fill="currentColor"/><path d="M5.25 11.25a6.75 6.75 0 0 0 13.5 0M12 18v3.25" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg></button><button class="rui-send" type="submit" id="goBtn">Go</button></div></form>
 <script src="js/reconnect.js"></script><script src="js/realm-ui.js?v=20261016b"></script>
 <script>
@@ -19,12 +37,33 @@ var EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"\x26amp;","<":"\x26lt;",">":"\x26gt;",'"':"\x26quot;"}[c]})}
 function txt(h){/* DOMParser: inert, no scripts or onerror run (pen test 16 Oct) */var d=new DOMParser().parseFromString(String(h||"").replace(/<(br|\/p)[^>]*>/gi,"\n"),"text/html").body;return (d.textContent||"").replace(/\n{3,}/g,"\n\n").trim()}
 function key(){try{return localStorage.getItem("realm_key")||""}catch(e){return""}}
-function call(fn,args){var tmo=new Promise(function(_,rej){setTimeout(function(){rej(new Error("no answer after 90s – check signal and tap Go again"))},90000)});return Promise.race([tmo,callRaw(fn,args)])}
-function callRaw(fn,args){return (window.RealmLine?RealmLine.fetch:fetch)(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args||[],key:key()})}).then(function(r){return r.json()}).then(function(j){if(!j||!j.ok)throw new Error((j&&j.error)||(fn+" failed"));return j.result})}
+/* Desk calls (17 Oct, after Elon's test): each try has its own timeout (12s, then 25s) and is aborted when it runs out.
+   The answer is read as text and parsed in try/catch, so an HTML error page (e.g. a 404 from the googleusercontent
+   redirect) never reaches the screen as "Unexpected token <". Timeouts, network drops and bad answers retry once on
+   their own; a real Desk answer like "Realm key needed" does not. opt.retry=false for calls that write (addNote). */
+var TRY_MS=[12000,25000];
+function deskErr(msg,kind){var e=new Error(msg);e.kind=kind;return e}
+function callOnce(fn,args,ms){var ctl=window.AbortController?new AbortController():null,timer=0;
+ var tmo=new Promise(function(_,rej){timer=setTimeout(function(){try{ctl&&ctl.abort()}catch(x){}rej(deskErr("timeout","timeout"))},ms)});
+ var req=fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args||[],key:key()}),signal:ctl?ctl.signal:undefined})
+  .then(function(r){return r.text().then(function(t){var j;try{j=JSON.parse(t)}catch(x){throw deskErr("bad answer (http "+r.status+")","bad")}try{window.RealmLine&&RealmLine.ok()}catch(x){}return j})},
+   function(e){if(e&&e.kind)throw e;throw deskErr(navigator.onLine===false?"offline":"network","net")})
+  .then(function(j){if(!j||!j.ok)throw deskErr(String((j&&j.error)||(fn+" failed")).slice(0,200),"app");return j.result});
+ return Promise.race([tmo,req]).then(function(v){clearTimeout(timer);return v},function(e){clearTimeout(timer);throw e})}
+function call(fn,args,opt){opt=opt||{};var n=0;
+ function attempt(){return callOnce(fn,args,TRY_MS[Math.min(n,TRY_MS.length-1)]).catch(function(e){
+  if(opt.retry!==false&&e.kind!=="app"&&n<1&&navigator.onLine!==false){n++;try{opt.onRetry&&opt.onRetry(e)}catch(x){}return attempt()}throw e})}
+ return attempt()}
+/* plain words for the screen: never a raw parser or browser error */
+function friendly(e){var k=e&&e.kind;
+ if(navigator.onLine===false||(e&&e.message==="offline"))return {t:"You're offline",s:"Check your signal, then tap to retry."};
+ if(k==="timeout")return {t:"Search took too long, tap to retry",s:"Realm Desk didn't answer in time."};
+ if(k==="app")return {t:"Realm Desk said: "+e.message,s:/key/i.test(e.message)?"Add the Realm key once on this device, then retry.":"Tap to retry."};
+ return {t:"Search didn't come back properly, tap to retry",s:"Realm Desk sent a bad answer. It usually works on the next go."}}
 function setSrc(live){var s=document.getElementById("src").children;var names=["Register","Calendar","Drive","WhatsApp links"];for(var i=0;i<4;i++){s[i].className=live?"live":"no";s[i].textContent=names[i]+(live?" – live":" – no answer")}}
-var lastGo=0;function go(q){q=(q||"").trim();var o=document.getElementById("out"),m=document.getElementById("msg");if(!q){m.textContent="Type or say an address, client or keyword first, then Go.";try{document.getElementById("q").focus()}catch(e){}return}var nowT=Date.now();if(q===go.lastQ&&nowT-lastGo<800)return;lastGo=nowT;go.lastQ=q;try{document.getElementById("q").blur()}catch(e){}o.innerHTML="";var gb=document.getElementById("goBtn"),t0=Date.now();function tick(){if(mySeq!==go.seq)return;var sec=Math.round((Date.now()-t0)/1000);m.textContent="Searching “"+q+"”… "+sec+"s (Desk usually takes 10–30s)"}var mySeq=go.seq=(go.seq||0)+1;clearInterval(go.iv);tick();go.iv=setInterval(tick,1000);gb.classList.add("busy");gb.textContent="…";function done(){if(mySeq!==go.seq)return;clearInterval(go.iv);gb.classList.remove("busy");gb.textContent="Go"}
+var lastGo=0;function go(q){q=(q||"").trim();var o=document.getElementById("out"),m=document.getElementById("msg");if(!q){m.textContent="Type or say an address, client or keyword first, then Go.";try{document.getElementById("q").focus()}catch(e){}return}var nowT=Date.now();if(q===go.lastQ&&nowT-lastGo<800)return;lastGo=nowT;go.lastQ=q;try{document.getElementById("q").blur()}catch(e){}o.innerHTML="";var gb=document.getElementById("goBtn"),t0=Date.now();var again=false;function tick(){if(mySeq!==go.seq)return;var sec=Math.round((Date.now()-t0)/1000);m.textContent="Searching “"+q+"”… "+sec+"s"+(again?" · slow answer, trying again":"")}var mySeq=go.seq=(go.seq||0)+1;clearInterval(go.iv);tick();go.iv=setInterval(tick,1000);gb.classList.add("busy");gb.textContent="…";function done(){if(mySeq!==go.seq)return;clearInterval(go.iv);gb.classList.remove("busy");gb.textContent="Go"}
  try{history.replaceState(null,"","?q="+encodeURIComponent(q))}catch(e){}
- call("searchAll",[q]).then(function(r){if(mySeq!==go.seq)return;done();setSrc(true);var h="";
+ call("searchAll",[q],{onRetry:function(){if(mySeq!==go.seq)return;again=true;tick()}}).then(function(r){if(mySeq!==go.seq)return;done();setSrc(true);var h="";
   var reg=r.register||[],ev=r.events||[],fl=r.files||[],wa=r.wa||{};
   m.textContent=reg.length+" register · "+ev.length+" calendar · "+fl.length+" Drive · "+Object.keys(wa).length+" WhatsApp"+(r.firstSeen?" · first "+r.firstSeen+", last "+r.lastSeen:"");
   RealmUI.counts({all:reg.length+ev.length+fl.length+Object.keys(wa).length,reg:reg.length,ev:ev.length,file:fl.length,wa:Object.keys(wa).length});
@@ -34,7 +73,9 @@ var lastGo=0;function go(q){q=(q||"").trim();var o=document.getElementById("out"
   var wk=Object.keys(wa);if(wk.length){h+='<section data-k="wa"><h2>WHATSAPP · '+wk.length+'</h2>'+wk.map(function(u){return '<div class="card wa"><span class="rui-t"><a href="'+esc(u)+'" target="_blank">'+esc(u)+'</a></span><span class="rui-m">seen on '+wa[u]+' cards</span></div>'}).join("")+'</section>'}
   if(r.invErr)h+='<section data-k="inv"><h2>INVOICES</h2><div class="card"><span class="rui-m">Not searched: '+esc(r.invErr)+' – needs Search Studio backend deploy.</span></div></section>';
   o.innerHTML=h||'<div class="card"><span class="rui-t">Nothing found. Try just the street number and name.</span></div>';
- }).catch(function(e){if(mySeq!==go.seq)return;done();setSrc(false);m.textContent="";o.innerHTML='<div class="err">Realm Desk did not answer: '+esc(e.message)+'</div>'})}
+ }).catch(function(e){if(mySeq!==go.seq)return;done();setSrc(false);m.textContent="";var f=friendly(e);
+  o.innerHTML='<div class="err srch-err" role="alert"><b>'+esc(f.t)+'</b><span>'+esc(f.s)+'</span><button type="button" class="srch-retry">&#8635; Retry</button></div>';
+  o.querySelector(".srch-retry").onclick=function(){go.lastQ=null;go(q)}})}
 function goNow(e){if(e&&e.preventDefault)e.preventDefault();go(document.getElementById("q").value);return false}
 document.getElementById("f").onsubmit=goNow;
 /* phone-safe: Go fires on its own click, not only via form submit; Enter/keyboard Search key also fire */
@@ -81,7 +122,7 @@ function openAmend(c){if(c.querySelector(".amb"))return;var w=document.createEle
  function save(then){var v=ta.value.trim();if(!v){m.textContent="Type or say the amend first.";return}var ctx=ctxOf(c),q=document.getElementById("q").value;var a={t:Date.now(),q:q,ctx:ctx,text:v,saved:false};var all=lsj("realm_amends",[]);all.push(a);lss("realm_amends",all);
   var n=lsj("realm_notes",[]);n.push({t:a.t,text:"Amend ["+q+"] "+v+" — re: "+ctx.slice(0,120),who:localStorage.getItem("realm_who")||"ange",page:"search.html"});lss("realm_notes",n);LAST=a;
   m.textContent="Saved on this phone. Sending to Desk…";
-  call("addNote",["AMEND (Search Studio) q="+q+" | "+v+" | re: "+ctx.slice(0,300),"search-amend"]).then(function(){a.saved=true;lss("realm_amends",all.map(function(x){return x.t===a.t?a:x}));m.textContent="✓ Saved to Desk notes (FLOW_NOTES) and this phone."}).catch(function(e){m.textContent="Saved on this phone only (local) – Desk did not take it: "+e.message});
+  call("addNote",["AMEND (Search Studio) q="+q+" | "+v+" | re: "+ctx.slice(0,300),"search-amend"],{retry:false}).then(function(){a.saved=true;lss("realm_amends",all.map(function(x){return x.t===a.t?a:x}));m.textContent="✓ Saved to Desk notes (FLOW_NOTES) and this phone."}).catch(function(e){m.textContent="Saved on this phone only (local) – Desk did not take it: "+friendly(e).t.replace(/, tap to retry$/,"")});
   var d=c.querySelector(".amd")||c.appendChild(Object.assign(document.createElement("div"),{className:"amd"}));d.textContent="Amended: "+v;if(then)then(a)}
  bs[0].onclick=function(){save()};bs[2].onclick=function(){save(function(a){openAra(a)})}}
 function openAra(a){a=a||LAST||lsj("realm_amends",[]).slice(-1)[0];var c=document.getElementById("araC");c.textContent=a?("Job: "+a.ctx.slice(0,300)+"\nAmend: "+a.text):("Search: "+(document.getElementById("q").value||"(none)"));c.dataset.a=a?JSON.stringify(a):"";document.getElementById("araS").classList.add("on");document.getElementById("araT").focus()}
@@ -97,5 +138,5 @@ new MutationObserver(decorate).observe(document.getElementById("out"),{childList
 </script>
 <script>/* bot line reconnect hooks (see js/reconnect.js) */
 (function(){if(!window.RealmLine)return;RealmLine.line({name:'Desk v9 (Search)',ping:function(){return RealmLine.pingExec(EXEC)}});RealmLine.drafts(['q','araT']);})();</script>
-<script src="voice.js?v=20261016v5"></script><script src="js/saveapp.js?v=20261016v5" data-mount="header .nav"></script><script>RealmUI.tabs(document.getElementById("rail"),document.getElementById("out"))</script><script src="js/ara-version.js" defer></script><script src="js/realm-sync.js?v=20261016v5"></script>
+<script src="voice.js?v=20261016v5"></script><script src="js/saveapp.js?v=20261016v5" data-mount="header .nav"></script><script>RealmUI.tabs(document.getElementById("rail"),document.getElementById("out"))</script><script src="js/ara-version.js" defer></script><script src="js/realm-sync.js?v=20261016v6" data-backoff data-allow-text="Sync: needs one-time setup on laptop"></script>
 </body></html>
