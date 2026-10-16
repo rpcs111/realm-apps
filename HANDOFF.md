@@ -172,3 +172,18 @@ Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINIS
 - 12:16pm 16 Oct | DONE | Grok app tools audit + PayPal/Acrobat check | reported in chat; nothing connected (restored by Handoff mirror sync at 9:02pm 16 Oct: first written in main 41171fd https://github.com/rpcs111/realm-apps/commit/41171fd, then dropped by a later overwrite in 6117f05)
 - 12:15pm 16 Oct | RUNNING | queue.html base layer finish + mapper.html live paste page | gh-pages; shared board key realm_queue_v1 (restored by Handoff mirror sync at 9:02pm 16 Oct: first written in main 41171fd https://github.com/rpcs111/realm-apps/commit/41171fd, then dropped by a later overwrite in 6117f05)
 - 12:11pm 16 Oct | DONE | Handoff unified + 2-hourly mirror sync (7am–9pm Melb) | commit ba1fc48; Doc + box HANDOVER.md mirror this file (restored by Handoff mirror sync at 9:02pm 16 Oct: first written in main 41171fd https://github.com/rpcs111/realm-apps/commit/41171fd, then dropped by a later overwrite in 6117f05)
+
+### 2026-10-16 ~12:20 UTC (11:20pm Melb) — Ara
+
+- Log gap: nothing logged between 11:35 UTC and now. This entry covers that gap.
+- Fold 8 app links resent (gh-pages version 2026.10.16-24). Not confirmed on a real device yet. No "works" claim until Ange sees it on his phone.
+- Search Studio headless test by Elon. PASS: load, manifest/icons, SW, installability, tabs, mic, panels. FAIL: (a) one in seven searches showed raw "not valid JSON" after a ~21s 404 redirect, so it needs a friendly retry; (b) on a 412px phone the Chrome Beta banner covers the search box/mic and the tab row overflows; (c) the sync Engine still returns 403 until Ange's Allow steps. Fixes for (a) and (b) await Ange's yes.
+- Deputy cross-reference planned for 17 Oct (not started). Elon's design: match by date + site + staff; one row per timesheet with links only; buckets matched / unconfirmed / unbilled / duplicates; this week + next, re-check at the end of next week; incomplete jobs plus an invoice cross-check with clone-invoice flags. Deputy read-only. Open question: which system holds the invoices.
+- Unsaved certs (~20) in two office WhatsApp chats. Ara has no WhatsApp access. Proposed Drive folder: "WhatsApp Exports — Certs (Ara)" in the main Workspace Drive. Export steps for Ange on Android: open the chat > ⋮ > More > Export chat > Include media > save to Drive > that folder.
+- Planned change: abolish the manual "send and save" step and replace it with a proactive "you haven't saved it" flag routed to Realm Height Safety (exact routing to be confirmed by Ange).
+- Nova item 20 (reorder trigger phrases) is delivered but not actioned. Reorder app not built.
+- Nova queue: items 18–100 overnight/weekend plus priority item 101 (contacts cleanup sheet, personal vs business). Nova at item 26 as of 11:54 UTC.
+- The realm daily email isn't stopped yet. It needs Ange's tap before Sat 5:55pm Melb.
+- Security: sign-in help alerts and a recovery link on the Workspace account; 2SV off. Flagged to Ange.
+- Ring group (Ara calls Ange's phones): Ara has no telephony. Research options/cost on 17 Oct.
+- Inbox triage done: unread since Monday counted, ~72% noise. Details are private and kept off this repo.
