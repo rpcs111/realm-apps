@@ -1,0 +1,175 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Realm Mapper — live paste</title>
+<meta name="application-name" content="Realm Mapper"><meta name="theme-color" content="#000000">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="mapper.webmanifest"><link rel="icon" href="pwa/mapper.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="pwa/mapper.svg">
+<!--
+  REALM MAPPER (Ara, 16 Oct 2026) — live paste onto the Realm Queue board.
+  - Same board as queue.html: localStorage "realm_queue_v1" via js/realm-board.js. Change it here, it shows there (and back).
+  - Tap any node -> paste box. Text lands in that node's notes with a timestamp.
+  - Smart paste (top): paste anything, it suggests the node (job name / address / step keyword), one tap files it.
+  - No network calls, no backends, no keys. Nothing leaves this browser.
+-->
+<style>
+*{box-sizing:border-box}html,body{background:#000}
+body{margin:0;color:#e6fbff;font:15px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+a{color:#22d3ee}
+header{padding:calc(10px + env(safe-area-inset-top)) 14px 4px}h1{margin:0;font-size:21px;letter-spacing:.01em}h1 small{color:#71717a;font-weight:500;font-size:14px}
+header p{margin:3px 0 0;color:#a1a1aa;font-size:13px}
+.bar{display:flex;flex-wrap:wrap;gap:6px;padding:6px 14px;align-items:center}
+button,.btn,input,select,textarea{font:14px system-ui,-apple-system,sans-serif;border-radius:10px;border:1px solid rgba(34,211,238,.35);background:#000;color:#e6fbff;padding:8px 11px;min-height:40px}
+button,.btn{cursor:pointer}.btn{text-decoration:none;display:inline-flex;align-items:center}
+button.pri{background:#22d3ee;color:#001318;border-color:#22d3ee;font-weight:700}
+button.warn{border-color:rgba(248,113,113,.55);color:#fecaca}
+button:active{transform:scale(.98)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 10px 30px}
+.card{border:1px solid rgba(34,211,238,.28);border-radius:16px;padding:12px;margin:8px 4px;background:#000}
+.card h2{font-size:13px;margin:0 0 8px;color:#22d3ee;text-transform:uppercase;letter-spacing:.12em}
+textarea{width:100%;min-height:96px;resize:vertical;line-height:1.4}
+#sp{min-height:84px}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.muted{color:#a1a1aa;font-size:12.5px}
+#sugg .sg{display:flex;width:100%;text-align:left;justify-content:space-between;align-items:center;gap:8px;margin:5px 0;border-color:rgba(34,211,238,.5)}
+#sugg .sg:first-child{border-color:#22d3ee;box-shadow:0 0 12px rgba(34,211,238,.35)}
+#sugg .sg b{font-size:15px}#sugg .sg span{font-size:11.5px;color:#a1a1aa;white-space:nowrap}
+#toast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#04161a;border:1px solid #22d3ee;color:#e6fbff;border-radius:12px;padding:10px 14px;font-size:14px;z-index:60;display:none;width:max-content;max-width:92vw;box-shadow:0 0 18px rgba(34,211,238,.4)}
+#toast.on{display:flex;gap:10px;align-items:center}#toast button{min-height:32px;padding:4px 10px}
+.grp{margin:14px 4px 4px;font-size:12px;color:#22d3ee;text-transform:uppercase;letter-spacing:.14em;display:flex;justify-content:space-between}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin:0 4px}
+.node{all:unset;box-sizing:border-box;cursor:pointer;display:block;border:2px solid #27272a;border-radius:14px;padding:10px 12px;background:#000;min-height:74px;-webkit-tap-highlight-color:transparent}
+.node:focus-visible,.node:hover{box-shadow:0 0 14px rgba(34,211,238,.35)}
+.node .t{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#a1a1aa}
+.node .n{font-weight:700;font-size:15px;word-break:break-word;margin-top:2px}
+.node .l{font-size:12px;color:#a1a1aa;margin-top:4px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word}
+.node .pc{font-size:11px;color:#86efac;margin-top:3px}
+.node.job{border-color:#22d3ee}.node.task{border-color:#a78bfa}.node.staff{border-color:#f472b6}.node.step{border-color:#fbbf24}
+.node.system{border-color:#71717a}.node.centre{border-color:#22d3ee;border-width:3px;box-shadow:0 0 18px rgba(34,211,238,.45)}.node.app{border-color:#34d399}.node.action{border-color:#60a5fa}
+.node.flash{animation:fl 1.2s}@keyframes fl{0%{background:#0e7490}100%{background:#000}}
+.chips{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}
+.chip{font-size:10.5px;padding:2px 6px;border-radius:999px;color:#04121f;font-weight:700;white-space:nowrap}
+.st-keys{background:#f59e0b}.st-await{background:#fb923c}.st-booked{background:#60a5fa}.st-conf{background:#34d399}.st-van{background:#c084fc}.st-staff{background:#f472b6}
+.schip{border:2px solid transparent;opacity:.45;color:#04121f;font-weight:700;border-radius:999px;padding:6px 10px;min-height:36px;margin:0 4px 6px 0}
+.schip.on{opacity:1;border-color:#fff}
+#sheet{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;align-items:flex-end;justify-content:center;z-index:50}
+#sheet.on{display:flex}
+#sheet .box{background:#000;border:1px solid #22d3ee;border-radius:18px 18px 0 0;width:100%;max-width:640px;max-height:92vh;overflow:auto;padding:14px 14px calc(14px + env(safe-area-inset-bottom));box-shadow:0 0 30px rgba(34,211,238,.35)}
+@media (min-width:700px){#sheet{align-items:center}#sheet .box{border-radius:18px}}
+.hist{font-size:13px;border-left:2px solid #22d3ee;padding:4px 0 4px 8px;margin:6px 0;white-space:pre-wrap;word-break:break-word}
+.hist i{color:#a1a1aa;font-style:normal;font-size:11.5px;display:block}
+pre.note{white-space:pre-wrap;word-break:break-word;font:13px/1.4 system-ui;background:#09090b;border-radius:10px;padding:8px;margin:6px 0;max-height:220px;overflow:auto}
+#flt{flex:1;min-width:160px}
+footer{padding:10px 18px 24px;color:#71717a;font-size:12.5px}
+</style></head><body>
+<header><h1>Realm Mapper <small>· live paste</small></h1>
+<p>Tap any step, job or app and paste. It lands in that node's notes with the time, on the same board as the <a href="queue.html">Queue</a>.</p></header>
+<div class="bar">
+ <a class="btn" href="queue.html">← Queue (board)</a>
+ <button id="addJob">+ Job</button>
+ <button id="expBtn">Export JSON</button><button id="impBtn">Import JSON</button><input type="file" id="impFile" accept="application/json,.json" hidden>
+</div>
+<div class="wrap">
+ <section class="card" id="smart"><h2>Smart paste</h2>
+  <textarea id="sp" placeholder="Paste anything here: an email, a WhatsApp, a note. I'll suggest where it goes."></textarea>
+  <div class="row"><button id="spClip">📋 Paste from clipboard</button><button id="spClear">Clear</button><span class="muted" id="spMsg"></span></div>
+  <div id="sugg"></div>
+  <div class="row" id="other" hidden><select id="spAny"></select><button id="spAnyGo">File here</button></div>
+ </section>
+ <div class="bar" style="padding:6px 4px"><input id="flt" type="search" placeholder="Find a node…"></div>
+ <div id="nodes"></div>
+</div>
+<div id="sheet"><div class="box" id="sbox" role="dialog" aria-modal="true"></div></div>
+<div id="toast"><span id="tmsg"></span><button id="undo">Undo</button></div>
+<footer>Saved on this device only, in the same board as the Queue (<code>realm_queue_v1</code>). No network calls. Export to move it to another device.</footer>
+<script src="js/realm-board.js"></script>
+<script>
+(function(){
+'use strict';
+var RB=window.RealmBoard,KEY=RB.KEY,LOGKEY='realm_queue_dryrun_v1';
+var S=RB.load(),lastSaved=localStorage.getItem(KEY),open=null,undoSnap=null,tmr=null;
+var SN={};RB.STAT.forEach(function(s){SN[s[0]]=s});
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return '&#'+c.charCodeAt(0)+';'})}
+function save(){RB.save(S);lastSaved=localStorage.getItem(KEY)}
+function byId(id){return RB.byId(S,id)}
+var ORDER={};RB.STEPS.forEach(function(d,i){ORDER[d.id]=i});
+var GROUPS=[['step','Core steps · flow order'],['centre','Centre'],['job','Jobs'],['task','Tasks'],['staff','Staff'],['system','Systems'],['app','Apps'],['action','App buttons']];
+function last(n){var p=n.pastes&&n.pastes[n.pastes.length-1];if(p)return p.text;return n.note||''}
+function card(n){
+ var h='<button class="node '+esc(n.type)+'" data-id="'+esc(n.id)+'"><div class="t">'+esc(RB.TYPES[n.type]||n.type)+(n.app?' · '+esc(n.app):'')+'</div><div class="n">'+esc(n.name)+'</div>';
+ if(n.status&&n.status.length)h+='<div class="chips">'+n.status.map(function(s){var z=SN[s];return z?'<span class="chip '+z[2]+'">'+esc(z[1])+'</span>':''}).join('')+'</div>';
+ var l=last(n);if(l)h+='<div class="l">'+esc(l)+'</div>';
+ if(n.pastes&&n.pastes.length)h+='<div class="pc">'+n.pastes.length+' pasted · last '+esc(RB.stamp(new Date(n.pastes[n.pastes.length-1].t)))+'</div>';
+ return h+'</button>';
+}
+function render(){
+ var q=($('flt').value||'').toLowerCase(),h='';
+ GROUPS.forEach(function(g){
+  var L=S.nodes.filter(function(n){return(n.type===g[0]||(g[0]==='system'&&GROUPS.every(function(x){return x[0]!==n.type})))&&(!q||(n.name+' '+(n.note||'')).toLowerCase().indexOf(q)>=0)});
+  if(g[0]==='step')L.sort(function(a,b){return(ORDER[a.id]==null?99:ORDER[a.id])-(ORDER[b.id]==null?99:ORDER[b.id])});
+  if(!L.length)return;
+  h+='<div class="grp"><span>'+esc(g[1])+'</span><span>'+L.length+'</span></div><div class="grid">'+L.map(card).join('')+'</div>';
+ });
+ $('nodes').innerHTML=h||'<p class="muted">No match.</p>';
+ var o='<option value="">Other node…</option>';GROUPS.forEach(function(g){var L=S.nodes.filter(function(n){return n.type===g[0]});if(L.length)o+='<optgroup label="'+esc(g[1])+'">'+L.map(function(n){return'<option value="'+esc(n.id)+'">'+esc(n.name)+'</option>'}).join('')+'</optgroup>'});
+ var cur=$('spAny').value;$('spAny').innerHTML=o;$('spAny').value=cur;
+}
+$('flt').oninput=render;
+$('nodes').addEventListener('click',function(e){var b=e.target.closest('.node');if(b)openSheet(b.dataset.id)});
+// ---- filing ----
+function snap(n){return{id:n.id,note:n.note,pastes:JSON.parse(JSON.stringify(n.pastes||[]))}}
+function fileTo(id,text,src){S=RB.load();var n=byId(id);if(!n||!String(text||'').trim())return null;undoSnap=snap(n);RB.file(S,id,text,src);save();render();toast('Filed into '+n.name+' · '+RB.stamp());flash(id);return n}
+function flash(id){var e=document.querySelector('.node[data-id="'+(window.CSS&&CSS.escape?CSS.escape(id):id)+'"]');if(e){e.classList.remove('flash');void e.offsetWidth;e.classList.add('flash')}}
+function toast(t){$('tmsg').textContent=t;$('toast').classList.add('on');$('undo').hidden=!undoSnap;clearTimeout(tmr);tmr=setTimeout(function(){$('toast').classList.remove('on')},6000)}
+$('undo').onclick=function(){if(!undoSnap)return;S=RB.load();var n=byId(undoSnap.id);if(n){n.note=undoSnap.note;n.pastes=undoSnap.pastes;save();render();if(open===n.id)openSheet(n.id)}undoSnap=null;toast('Undone.')};
+function clip(cb){if(!navigator.clipboard||!navigator.clipboard.readText){cb(null,'This browser blocks the clipboard button. Long-press (or Ctrl+V) in the box to paste.');return}
+ navigator.clipboard.readText().then(function(t){cb(t)},function(){cb(null,'Clipboard not allowed here. Long-press (or Ctrl+V) in the box to paste.')})}
+// ---- smart paste ----
+function suggestNow(){var t=$('sp').value,L=RB.suggest(S,t,5);
+ if(!t.trim()){$('sugg').innerHTML='';$('other').hidden=true;$('spMsg').textContent='';return}
+ $('sugg').innerHTML=L.length?L.map(function(s){return'<button class="sg" data-sid="'+esc(s.id)+'"><b>File into '+esc(s.name)+'</b><span>'+esc(RB.TYPES[s.type]||s.type)+' · '+esc(s.why)+'</span></button>'}).join(''):'<p class="muted">No obvious match. Pick a node below or tap one in the list.</p>';
+ $('other').hidden=false;$('spMsg').textContent=L.length?'Best match first. One tap files it.':'';}
+var deb;$('sp').addEventListener('input',function(){clearTimeout(deb);deb=setTimeout(suggestNow,150)});
+$('sp').addEventListener('paste',function(){setTimeout(suggestNow,0)});
+$('spClip').onclick=function(){clip(function(t,err){if(err){$('spMsg').textContent=err;$('sp').focus();return}$('sp').value=t||'';suggestNow()})};
+$('spClear').onclick=function(){$('sp').value='';suggestNow()};
+$('sugg').addEventListener('click',function(e){var b=e.target.closest('[data-sid]');if(!b)return;if(fileTo(b.dataset.sid,$('sp').value,'smart')){$('sp').value='';suggestNow()}});
+$('spAnyGo').onclick=function(){var id=$('spAny').value;if(!id){$('spMsg').textContent='Pick a node first.';return}if(fileTo(id,$('sp').value,'smart')){$('sp').value='';suggestNow()}};
+// ---- node paste box ----
+function openSheet(id){S=RB.load();var n=byId(id);if(!n)return;open=id;
+ var h='<div class="t muted" style="text-transform:uppercase;letter-spacing:.1em;font-size:11px">'+esc(RB.TYPES[n.type]||n.type)+'</div><h2 style="margin:2px 0 8px;font-size:20px">'+esc(n.name)+'</h2>';
+ if(n.type==='job')h+='<div>'+RB.STAT.map(function(s){return'<button class="schip '+s[2]+((n.status||[]).indexOf(s[0])>=0?' on':'')+'" data-s="'+s[0]+'">'+esc(s[1])+'</button>'}).join('')+'</div>';
+ h+='<textarea id="pb" placeholder="Paste here, then tap File it. (Ctrl+Enter files it.)"></textarea>';
+ h+='<div class="row"><button class="pri" id="pbGo">File it</button><button id="pbClip">📋 Paste & file</button>'+(n.url?'<a class="btn" href="'+esc(n.url)+'" target="_blank" rel="noopener">Open ↗</a>':'')+'<button id="pbClose">Close</button></div><div class="muted" id="pbMsg" style="margin-top:6px"></div>';
+ var P=(n.pastes||[]).slice(-5).reverse();
+ if(P.length)h+='<h3 class="muted" style="margin:12px 0 2px;font-size:12px;text-transform:uppercase;letter-spacing:.1em">Latest pastes</h3>'+P.map(function(p){return'<div class="hist"><i>'+esc(RB.stamp(new Date(p.t)))+' · '+esc(p.src)+'</i>'+esc(p.text)+'</div>'}).join('');
+ if(n.note)h+='<details style="margin-top:8px"><summary class="muted">Full notes</summary><pre class="note">'+esc(n.note)+'</pre></details>';
+ $('sbox').innerHTML=h;$('sheet').classList.add('on');
+ try{history.replaceState(null,'','#'+encodeURIComponent(id))}catch(e){}
+ Array.prototype.forEach.call($('sbox').querySelectorAll('.schip'),function(b){b.onclick=function(){S=RB.load();var m=byId(id);if(!m)return;m.status=m.status||[];var i=m.status.indexOf(b.dataset.s);if(i>=0)m.status.splice(i,1);else m.status.push(b.dataset.s);save();b.classList.toggle('on',i<0);render()}});
+ function go(){var t=$('pb').value;if(!t.trim()){$('pbMsg').textContent='Nothing to file yet. Paste into the box first.';return}if(fileTo(id,t,'mapper'))openSheet(id)}
+ $('pbGo').onclick=go;
+ $('pb').addEventListener('keydown',function(e){if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();go()}});
+ $('pbClip').onclick=function(){clip(function(t,err){if(err||!t||!t.trim()){$('pbMsg').textContent=err||'The clipboard is empty.';$('pb').focus();return}$('pb').value=t;go()})};
+ $('pbClose').onclick=closeSheet;
+ if(window.innerWidth>700)setTimeout(function(){$('pb')&&$('pb').focus()},30);
+}
+function closeSheet(){$('sheet').classList.remove('on');open=null;try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}
+$('sheet').addEventListener('click',function(e){if(e.target.id==='sheet')closeSheet()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&open)closeSheet()});
+// ---- add / export / import ----
+$('addJob').onclick=function(){var nm=prompt('Job name or address');if(!nm||!nm.trim())return;S=RB.load();var id='job_'+Date.now().toString(36)+((S.seq=(S.seq||1)+1));
+ S.nodes.push({id:id,type:'job',name:nm.trim(),x:60+Math.round(Math.random()*600),y:600+Math.round(Math.random()*300),url:'',status:[],note:'',src:'mapper'});save();render();openSheet(id)};
+$('expBtn').onclick=function(){var lg=[];try{lg=JSON.parse(localStorage.getItem(LOGKEY))||[]}catch(e){}var b=new Blob([JSON.stringify({queue:S,dryRunLog:lg,exported:new Date().toISOString()},null,1)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='realm_queue_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)};
+$('impBtn').onclick=function(){$('impFile').click()};
+$('impFile').onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var o=JSON.parse(r.result);var q=o.queue||o;if(!q.nodes||!q.edges)throw 0;if(!confirm('Replace the board (Queue + Mapper) with this file?'))return;S=RB.migrate(q);delete S._changed;save();if(o.dryRunLog)localStorage.setItem(LOGKEY,JSON.stringify(o.dryRunLog));render();toast('Imported.')}catch(e){alert('That file is not a Realm Queue export.')}};r.readAsText(f);this.value=''};
+// ---- stay in step with the Queue (other tab / other page) ----
+function reloadShared(){var raw=localStorage.getItem(KEY);if(raw===lastSaved)return;S=RB.load();lastSaved=localStorage.getItem(KEY);render();if(open){var ae=document.activeElement;if(!(ae&&ae.id==='pb'&&ae.value))openSheet(open)}}
+window.addEventListener('storage',function(e){if(e.key===KEY)reloadShared()});
+document.addEventListener('visibilitychange',function(){if(!document.hidden)reloadShared()});
+window.addEventListener('pageshow',function(e){if(e.persisted)reloadShared()});
+render();
+function fromHash(){var hid='';try{hid=decodeURIComponent((location.hash||'').slice(1))}catch(e){}if(hid&&hid!==open&&byId(hid))openSheet(hid)}
+fromHash();window.addEventListener('hashchange',fromHash);
+window.__realmMapper={state:function(){return S}};
+})();
+</script>
+<script src="js/saveapp.js" data-mount="header" data-mode="float"></script></body></html>

@@ -1,8 +1,12 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Realm Queue — Layer 1</title>
-<link rel="icon" href="icon.svg">
+<meta name="application-name" content="Realm Queue"><meta name="theme-color" content="#000000">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="queue.webmanifest"><link rel="icon" href="pwa/queue.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="pwa/queue.svg">
 <!--
   REALM QUEUE · LAYER 1 (foundation layer — everything else overlays onto this)
-  - Board: Job / Task / Staff nodes + core steps + separate system nodes. Drag, rename, add, link, delete.
+  - Board: Job / Task / Staff nodes + core steps (Enquiry → Quote → Follow-up → Booking → Rostering → Job → Cert → Invoice → Outstanding → Remittance → P&L → Close → Rebook)
+    + Google Calendar as the single centre + separate system nodes. Drag, rename, note, link URL, add, link, delete.
+  - Shared model: js/realm-board.js (same board as mapper.html, live paste). v1 boards are migrated in place, never wiped.
   - Saved in this browser only: localStorage "realm_queue_v1". Dry-run log: localStorage "realm_queue_dryrun_v1".
   - Side panel: every app in rpcs111/realm-apps with every button/action (JSON block id="q-apps").
   - DRY RUN = show what a button would do + log it. NO network calls, nothing sent, nothing written outside this browser.
@@ -24,8 +28,8 @@ button.warn{border-color:rgba(248,113,113,.5);color:#fecaca}
 .panel{background:rgba(12,20,42,.85);border:1px solid rgba(125,233,255,.15);border-radius:14px;overflow:auto;padding:10px}
 .panel h2{font-size:14px;margin:0 0 8px;color:#7de9ff;text-transform:uppercase;letter-spacing:.06em}
 #boardwrap{position:relative;overflow:auto;border-radius:14px;border:1px solid rgba(125,233,255,.15);background:rgba(5,9,22,.6);touch-action:pan-x pan-y}
-#board{position:relative;width:1400px;height:900px;background-image:radial-gradient(rgba(125,233,255,.10) 1px,transparent 1px);background-size:28px 28px}
-#edges{position:absolute;left:0;top:0;width:1400px;height:900px;overflow:visible}
+#board{position:relative;width:1900px;height:1050px;background-image:radial-gradient(rgba(125,233,255,.10) 1px,transparent 1px);background-size:28px 28px}
+#edges{position:absolute;left:0;top:0;width:1900px;height:1050px;overflow:visible}
 #edges line{stroke:#7de9ff;stroke-width:2.5;opacity:.7;cursor:pointer}
 #edges line.sel{stroke:#fbbf24;opacity:1;stroke-width:4}
 #edges line.hit{stroke:transparent;stroke-width:16;opacity:1}
@@ -36,6 +40,10 @@ button.warn{border-color:rgba(248,113,113,.5);color:#fecaca}
 .node.linkfrom{outline:3px dashed #22d3ee;outline-offset:2px}
 .node.job{border-color:#22d3ee}.node.task{border-color:#a78bfa}.node.staff{border-color:#f472b6}
 .node.step{border-color:#fbbf24;background:#1c1a0f}.node.system{border-color:#94a3b8;background:#111827}
+.node.centre{border-color:#22d3ee;background:#04161a;border-width:3px;padding:14px 18px;min-width:170px;box-shadow:0 0 22px rgba(34,211,238,.45)}.node.centre .n{font-size:17px}
+.node .pc{font-size:10px;color:#86efac;margin-top:3px}
+.qapps{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}.qapp{display:flex;align-items:stretch;border:1px solid #34d399;border-radius:10px;background:#0c1f1a;overflow:hidden}.qapp button{border:0;border-radius:0;background:transparent;min-height:34px;padding:5px 8px;font-size:12.5px;color:#d1fae5}.qapp a{display:flex;align-items:center;padding:0 8px;border-left:1px solid rgba(52,211,153,.35);text-decoration:none;color:#34d399}.qapp.on{background:#134e3a}
+.chk{display:flex;gap:8px;align-items:center;font-size:13px;padding:5px 0;cursor:pointer}.field .chk input,.chk input{min-height:0;width:20px;height:20px;flex:0 0 20px;padding:0;margin:0}
 .node.app{border-color:#34d399;background:#0c1f1a}.node.action{border-color:#60a5fa;background:#0d1a33;font-size:12px}
 .chips{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}
 .chip{font-size:10.5px;padding:2px 6px;border-radius:999px;color:#04121f;font-weight:700;white-space:nowrap}
@@ -80,12 +88,14 @@ footer{padding:6px 14px 14px;color:#94a3b8;font-size:12.5px}
  <button id="notesBtn">Load next-week notes</button>
  <button id="expBtn">Export JSON</button><button id="impBtn">Import JSON</button><input type="file" id="impFile" accept="application/json,.json" hidden>
  <button id="resetBtn" class="warn">Reset</button>
+ <a class="btn" id="mapperLink" href="mapper.html">Live mapper (paste) →</a>
 </div>
 <div id="hint"></div>
 <div class="tabs"><button data-t="board" class="on">Board</button><button data-t="apps">Apps</button></div>
 <div class="layout t-board" id="layout">
  <aside class="panel" id="side"><h2>Apps · buttons and actions</h2>
   <input id="search" type="search" placeholder="Search apps or buttons…">
+  <div class="muted" style="margin-bottom:5px">Apps as nodes · tap a name to put it on the board (or jump to it), ↗ opens it.</div><div class="qapps" id="qapps"></div>
   <div class="muted" id="appsum" style="margin-bottom:8px"></div>
   <div id="apps"></div></aside>
  <div id="boardwrap"><div id="board"><svg id="edges"></svg></div></div>
@@ -94,29 +104,22 @@ footer{padding:6px 14px 14px;color:#94a3b8;font-size:12.5px}
   <button id="clrLog" class="warn" style="margin:6px 0">Clear log</button><div id="log"></div></aside>
 </div>
 <div id="dry"><div class="box" id="drybox"></div></div>
-<footer>Layer 1: queue only. Triggers, flow, voice and rules come next. · Deputy stays Deputy (look-only), Google Tasks stays Google Tasks. · Storage: <code>realm_queue_v1</code></footer>
+<footer>Layer 1: queue only. Paste into any node from the <a href="mapper.html">live mapper</a> (same board). Triggers, flow, voice and rules come next. · Deputy stays Deputy (look-only), Google Tasks stays Google Tasks. · Storage: <code>realm_queue_v1</code></footer>
+<script src="js/realm-board.js"></script>
 <script>
 (function(){
 'use strict';
+var RB=window.RealmBoard;
 var KEY='realm_queue_v1',LOGKEY='realm_queue_dryrun_v1';
 var APPS=JSON.parse(document.getElementById('q-apps').textContent);
-var STAT=[['keys','Waiting for keys','st-keys'],['await','Awaiting confirmation','st-await'],['booked','Booked','st-booked'],['conf','Confirmed','st-conf'],['van','Assigned van','st-van'],['staff','Assigned staff','st-staff']];
+var STAT=RB.STAT;
 var SN={};STAT.forEach(function(s){SN[s[0]]=s});
-var TYPES={job:'Job',task:'Task',staff:'Staff',step:'Core step',system:'System',app:'App',action:'App button'};
-var REG='https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit';
-function seed(){
- var n=[],x=40;
- [['Job',''],['Cert','https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec'],['Invoice','https://books.zoho.com/'],['Outstanding',REG],['P&L','https://docs.google.com/spreadsheets/d/1HXLRRgHZJDHSj0p_dp3WHgHO-6-Rxg8s/edit'],['Close','']].forEach(function(s,i){
-  n.push({id:'step_'+i,type:'step',name:s[0],x:40+i*170,y:40,url:s[1],status:[],note:''});});
- n.push({id:'sys_deputy',type:'system',name:'Deputy (look-only)',x:40,y:130,url:'https://www.deputy.com/',status:[],note:'Look-only. Its own system — not merged with Google Tasks.'});
- n.push({id:'sys_gtasks',type:'system',name:'Google Tasks',x:250,y:130,url:'https://tasks.google.com/',status:[],note:'Its own system — not merged with Deputy.'});
- n.push({id:'sys_overlay',type:'system',name:'Google Tasks overlay (reference)',x:430,y:130,url:'https://docs.google.com/spreadsheets/d/1JXjBlr019zrZpNmEpI_a1ZqZ3EFwc5O0HOKbXae2hsg/edit',status:[],note:'Reference sheet only. Not merged into Google Tasks.'});
- n.push({id:'job_example',type:'job',name:'New job (rename me)',x:40,y:230,url:'',status:['await'],note:''});
- return {v:1,nodes:n,edges:[],seq:1};
-}
+var TYPES=RB.TYPES;
+function seed(){return RB.seed()}
 var S,sel=null,selEdge=null,linkMode=false,linkFrom=null;
-function load(){try{S=JSON.parse(localStorage.getItem(KEY));}catch(e){S=null}if(!S||!S.nodes)S=seed();}
-function save(){localStorage.setItem(KEY,JSON.stringify(S));}
+function load(){S=RB.load()}
+function save(){RB.save(S);lastSaved=localStorage.getItem(KEY)}
+var lastSaved=null;
 function logs(){try{return JSON.parse(localStorage.getItem(LOGKEY))||[]}catch(e){return[]}}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return '&'+'#'+c.charCodeAt(0)+';'})}
 function $(id){return document.getElementById(id)}
@@ -130,10 +133,12 @@ function render(){
   var d=document.createElement('div');d.className='node '+n.type+(sel===n.id?' sel':'')+(linkFrom===n.id?' linkfrom':'');d.dataset.id=n.id;
   d.style.left=n.x+'px';d.style.top=n.y+'px';
   var h='<div class="t">'+esc(TYPES[n.type]||n.type)+(n.app?' · '+esc(n.app):'')+'</div><div class="n">'+esc(n.name)+'</div>';
+  if(n.pastes&&n.pastes.length)h+='<div class="pc">'+n.pastes.length+' pasted</div>';
   if(n.status&&n.status.length){h+='<div class="chips">'+n.status.map(function(s){var z=SN[s];return z?'<span class="chip '+z[2]+'">'+esc(z[1])+'</span>':''}).join('')+'</div>'}
   d.innerHTML=h;board.appendChild(d);bindDrag(d,n);
  });
  drawEdges();
+ if($('qapps'))qapps();
 }
 function center(id){var e=board.querySelector('.node[data-id="'+id+'"]');var n=byId(id);if(!e||!n)return null;return[n.x+e.offsetWidth/2,n.y+e.offsetHeight/2]}
 function drawEdges(){
@@ -148,7 +153,7 @@ function bindDrag(d,n){
  var sx,sy,ox,oy,moved=false,pid=null;
  d.addEventListener('pointerdown',function(ev){pid=ev.pointerId;d.setPointerCapture(pid);sx=ev.clientX;sy=ev.clientY;ox=n.x;oy=n.y;moved=false;d.style.cursor='grabbing';});
  d.addEventListener('pointermove',function(ev){if(pid!==ev.pointerId)return;var dx=ev.clientX-sx,dy=ev.clientY-sy;if(!moved&&Math.abs(dx)+Math.abs(dy)<5)return;moved=true;
-  n.x=Math.max(0,Math.min(1400-60,ox+dx));n.y=Math.max(0,Math.min(900-30,oy+dy));d.style.left=n.x+'px';d.style.top=n.y+'px';drawEdges();});
+  n.x=Math.max(0,Math.min(RB.W-60,ox+dx));n.y=Math.max(0,Math.min(RB.H-30,oy+dy));d.style.left=n.x+'px';d.style.top=n.y+'px';drawEdges();});
  function up(ev){if(pid!==ev.pointerId)return;pid=null;d.style.cursor='';if(moved){save();}else{tap(n.id)}}
  d.addEventListener('pointerup',up);d.addEventListener('pointercancel',up);
 }
@@ -172,8 +177,11 @@ function showSel(){
  if(['job','task','staff'].indexOf(n.type)>=0){h+='<div class="field"><label>Type</label><select id="fType">'+['job','task','staff'].map(function(t){return'<option value="'+t+'"'+(t===n.type?' selected':'')+'>'+TYPES[t]+'</option>'}).join('')+'</select></div>'}
  else h+='<div class="kv"><b>Type</b>'+esc(TYPES[n.type])+(n.app?' · '+esc(n.app):'')+'</div>';
  if(n.type==='job'){h+='<div class="field"><label>Booking status (tap to toggle)</label><div>'+STAT.map(function(s){return'<button class="schip '+s[2]+((n.status||[]).indexOf(s[0])>=0?' on':'')+'" data-s="'+s[0]+'">'+esc(s[1])+'</button>'}).join('')+'</div></div>'}
- h+='<div class="field"><label>Note</label><textarea id="fNote">'+esc(n.note||'')+'</textarea></div>';
- if(n.url)h+='<p><a class="btn" href="'+esc(n.url)+'" target="_blank" rel="noopener">Open ↗</a></p>';
+ if(n.type==='job'){var sv=RB.SERVICES;h+='<div class="field"><label>Service (steps from the job-card sheet)</label><select id="fSvc"><option value="">—</option>'+Object.keys(sv).map(function(k){return'<option'+(n.service===k?' selected':'')+'>'+esc(k)+'</option>'}).join('')+'</select></div>';
+  if(n.service&&sv[n.service]){var ck=n.checks||{};h+='<details class="field"'+(Object.keys(ck).length?' open':'')+'><summary class="muted">Checklist · '+Object.keys(ck).filter(function(k){return ck[k]}).length+'/'+sv[n.service].length+' ticked</summary>'+sv[n.service].map(function(it,i){return'<label class="chk"><input type="checkbox" data-ck="'+i+'"'+(ck[it]?' checked':'')+'>'+esc(it)+'</label>'}).join('')+'</details>'}}
+ h+='<div class="field"><label>Note (pastes from the mapper land here, timestamped)</label><textarea id="fNote" rows="5">'+esc(n.note||'')+'</textarea></div>';
+ h+='<div class="field"><label>Link URL</label><input id="fUrl" type="url" inputmode="url" placeholder="https://…" value="'+esc(n.url||'')+'"></div>';
+ h+='<p id="fOpenP"'+(n.url?'':' hidden')+'><a class="btn" id="fOpen" href="'+esc(n.url||'#')+'" target="_blank" rel="noopener">Open ↗</a> <a class="btn" href="mapper.html#'+encodeURIComponent(n.id)+'">Paste into this node →</a></p>';
  if(n.type==='action')h+='<p><button id="fDry">Dry run this button</button></p>';
  var ln=S.edges.filter(function(e){return e.a===n.id||e.b===n.id}).map(function(e){return byId(e.a===n.id?e.b:e.a)}).filter(Boolean);
  h+='<div class="kv"><b>Linked to</b>'+(ln.length?ln.map(function(x){return esc(x.name)}).join(', '):'<span class="muted">nothing yet</span>')+'</div>';
@@ -182,12 +190,17 @@ function showSel(){
  $('fName').oninput=function(){n.name=this.value;save();var e=board.querySelector('.node[data-id="'+n.id+'"] .n');if(e)e.textContent=n.name;drawEdges()};
  if($('fType'))$('fType').onchange=function(){n.type=this.value;if(n.type!=='job')n.status=[];save();render();showSel()};
  $('fNote').oninput=function(){n.note=this.value;save()};
+ $('fUrl').oninput=function(){n.url=this.value.trim();save();$('fOpenP').hidden=!n.url;$('fOpen').href=n.url||'#'};
+ if($('fSvc'))$('fSvc').onchange=function(){n.service=this.value;save();showSel()};
+ Array.prototype.forEach.call($('sel').querySelectorAll('[data-ck]'),function(c){c.onchange=function(){var it=RB.SERVICES[n.service][+c.dataset.ck];n.checks=n.checks||{};if(c.checked)n.checks[it]=true;else delete n.checks[it];save();var sm=$('sel').querySelector('details summary');if(sm)sm.textContent='Checklist · '+Object.keys(n.checks).filter(function(k){return n.checks[k]}).length+'/'+RB.SERVICES[n.service].length+' ticked'}});
  Array.prototype.forEach.call($('sel').querySelectorAll('.schip'),function(b){b.onclick=function(){var s=b.dataset.s;n.status=n.status||[];var i=n.status.indexOf(s);if(i>=0)n.status.splice(i,1);else n.status.push(s);save();render();showSel()}});
  if($('fDry'))$('fDry').onclick=function(){dry(n.ai[0],n.ai[1])};
  $('fLink').onclick=function(){setLink(true);linkFrom=n.id;hint('Link: now tap the second node.');render()};
  $('fDel').onclick=delSel;
  tab('insp');
+ if(window.innerWidth<=900&&!linkMode&&!noScroll)try{$('insp').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}
 }
+var noScroll=false;
 function delSel(){
  if(selEdge!=null){var e=S.edges[selEdge];if(e&&confirm('Delete this link?')){S.edges.splice(selEdge,1);selEdge=null;save();render();$('sel').innerHTML='<p class="muted">Link deleted.</p>'}return}
  var n=byId(sel);if(!n){hint('Tap a node (or a link) first, then Delete.');return}
@@ -212,7 +225,7 @@ $('notesBtn').onclick=function(){
 };
 $('expBtn').onclick=function(){var b=new Blob([JSON.stringify({queue:S,dryRunLog:logs(),exported:new Date().toISOString()},null,1)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='realm_queue_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)};
 $('impBtn').onclick=function(){$('impFile').click()};
-$('impFile').onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var o=JSON.parse(r.result);var q=o.queue||o;if(!q.nodes||!q.edges)throw 0;if(!confirm('Replace the board with this file?'))return;S=q;save();if(o.dryRunLog)localStorage.setItem(LOGKEY,JSON.stringify(o.dryRunLog));sel=null;render();showSel();renderLog();hint('Imported.')}catch(e){alert('That file is not a Realm Queue export.')}};r.readAsText(f);this.value=''};
+$('impFile').onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var o=JSON.parse(r.result);var q=o.queue||o;if(!q.nodes||!q.edges)throw 0;if(!confirm('Replace the board with this file?'))return;S=RB.migrate(q);delete S._changed;save();if(o.dryRunLog)localStorage.setItem(LOGKEY,JSON.stringify(o.dryRunLog));sel=null;render();showSel();renderLog();hint('Imported.')}catch(e){alert('That file is not a Realm Queue export.')}};r.readAsText(f);this.value=''};
 $('resetBtn').onclick=function(){if(!confirm('Reset the board to the starting nodes? Your changes on this device will be lost.'))return;if(!confirm('Are you sure? This cannot be undone (Export first if you want a copy).'))return;S=seed();sel=null;save();render();showSel();hint('Board reset.')};
 // ---- apps panel ----
 function appsHTML(q){
@@ -229,6 +242,12 @@ function appsHTML(q){
  $('apps').innerHTML=h||'<p class="muted">No match.</p>';
  return tot;
 }
+function qapps(){var on={};S.nodes.forEach(function(n){if(n.type==='app')on[n.name]=n.id});
+ $('qapps').innerHTML=APPS.map(function(ap,ai){return'<span class="qapp'+(on[ap.n]?' on':'')+'"><button data-qa="'+ai+'" title="'+(on[ap.n]?'On the board · tap to jump to it':'Tap to place on the board')+'">'+esc(ap.n)+'</button><a href="'+esc(ap.u)+'" target="_blank" rel="noopener" title="Open '+esc(ap.n)+'">↗</a></span>'}).join('')}
+$('qapps').addEventListener('click',function(ev){var b=ev.target.closest('[data-qa]');if(!b)return;var ap=APPS[+b.dataset.qa];var ex=S.nodes.filter(function(n){return n.type==='app'&&n.name===ap.n})[0];
+ if(ex){sel=ex.id;selEdge=null;render();tab('board');var e=board.querySelector('.node[data-id="'+ex.id+'"]');if(e&&e.scrollIntoView)e.scrollIntoView({block:'center',inline:'center'});showSel();hint('On the board: '+ap.n)}
+ else{add('app',ap.n,{url:ap.u,note:ap.p+' · '+ap.a.length+' actions'});tab('board');showSel();hint('Placed app: '+ap.n)}
+ qapps()});
 var TOTAL=APPS.reduce(function(s,a){return s+a.a.length},0);
 $('appsum').textContent=APPS.length+' apps · '+TOTAL+' buttons/actions. Dry run = preview only, no network calls.';
 appsHTML('');
@@ -278,6 +297,11 @@ window.addEventListener('pagehide',keep);
 document.addEventListener('visibilitychange',function(){if(document.hidden)keep()});
 window.addEventListener('pageshow',function(e){if(!e.persisted)return;load();if(sel&&!byId(sel))sel=null;render();renderLog();showSel()});
 try{var ks=JSON.parse(localStorage.getItem(SELKEY)||'null');if(ks&&ks.sel&&byId(ks.sel)&&Date.now()-ks.t<864e5){sel=ks.sel;render();showSel()}}catch(e){}
+// shared board: pick up changes made in mapper.html (or another tab) straight away
+function reloadShared(){var raw=localStorage.getItem(KEY);if(raw===lastSaved)return;load();lastSaved=raw;if(sel&&!byId(sel))sel=null;render();var ae=document.activeElement;if(!(ae&&$('sel').contains(ae)&&/INPUT|TEXTAREA|SELECT/.test(ae.tagName))){noScroll=true;showSel();noScroll=false}}
+window.addEventListener('storage',function(e){if(e.key===KEY)reloadShared()});
+document.addEventListener('visibilitychange',function(){if(!document.hidden)reloadShared()});
 window.__realmQueue={state:function(){return S},apps:APPS};
 })();
-</script></body></html>
+</script>
+<script src="js/saveapp.js" data-mount="header" data-mode="float"></script></body></html>
