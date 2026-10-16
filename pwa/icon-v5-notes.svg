@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<defs>
+<radialGradient id="bgnotesv5" cx="50%" cy="38%" r="75%"><stop offset="0" stop-color="#141b2e"/><stop offset=".55" stop-color="#080b14"/><stop offset="1" stop-color="#020306"/></radialGradient>
+<linearGradient id="lgnotesv5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#86efac"/><stop offset="1" stop-color="#10b981"/></linearGradient>
+<linearGradient id="rimnotesv5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".18"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+<linearGradient id="goldnotesv5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
+<filter id="glnotesv5" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>
+<filter id="shnotesv5" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity=".7"/></filter>
+</defs>
+<rect width="512" height="512" rx="112" fill="url(#bgnotesv5)"/>
+<rect width="512" height="512" rx="112" fill="url(#rimnotesv5)"/>
+<g transform="translate(256 256) scale(1.0) translate(-256 -256)">
+<ellipse cx="256" cy="268" rx="150" ry="140" fill="#34d399" opacity=".22" filter="url(#glnotesv5)"/>
+<path d="M190 144 H322 A30 30 0 0 1 352 174 V338 A30 30 0 0 1 322 368 H190 A30 30 0 0 1 160 338 V174 A30 30 0 0 1 190 144 Z M206 214 H306 M206 262 H306 M206 310 H256" fill="none" stroke="#34d399" stroke-width="60" stroke-linecap="round" stroke-linejoin="round" opacity=".55" filter="url(#glnotesv5)"/>
+<path d="M190 144 H322 A30 30 0 0 1 352 174 V338 A30 30 0 0 1 322 368 H190 A30 30 0 0 1 160 338 V174 A30 30 0 0 1 190 144 Z M206 214 H306 M206 262 H306 M206 310 H256" transform="translate(0 10)" fill="none" stroke="#000" stroke-opacity=".75" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M190 144 H322 A30 30 0 0 1 352 174 V338 A30 30 0 0 1 322 368 H190 A30 30 0 0 1 160 338 V174 A30 30 0 0 1 190 144 Z M206 214 H306 M206 262 H306 M206 310 H256" fill="none" stroke="url(#lgnotesv5)" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M190 144 H322 A30 30 0 0 1 352 174 V338 A30 30 0 0 1 322 368 H190 A30 30 0 0 1 160 338 V174 A30 30 0 0 1 190 144 Z M206 214 H306 M206 262 H306 M206 310 H256" transform="translate(-3 -4)" fill="none" stroke="#ffffff" stroke-opacity=".45" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<g filter="url(#shnotesv5)"><circle cx="352" cy="352" r="50" fill="url(#goldnotesv5)" stroke="#0b0f16" stroke-width="10"/><path d="M332 353 l14 14 l27 -29" fill="none" stroke="#1a1204" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></g>
+</g>
+<rect x="3" y="3" width="506" height="506" rx="109" fill="none" stroke="#34d399" stroke-opacity=".35" stroke-width="6"/>
+</svg>
