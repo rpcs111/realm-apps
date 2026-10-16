@@ -12,30 +12,32 @@ h1{margin:0 0 4px;font-size:26px;letter-spacing:.04em}.sub{color:#6b7280;font-si
 #grid a{display:flex;flex-direction:column;justify-content:flex-end;min-height:118px;padding:14px;border-radius:18px;color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.12)}
 #grid a{position:relative}#grid a.reg{grid-column:1/-1;min-height:130px}#grid a.reg b{font-size:24px}#grid a i{position:absolute;top:10px;right:10px;font-style:normal;font-size:11px;font-weight:700;background:rgba(255,255,255,.9);color:#111827;padding:2px 7px;border-radius:999px}#grid a b{font-size:18px;overflow-wrap:anywhere}@media(max-width:380px){body{padding-left:10px;padding-right:10px}#grid{gap:8px}#grid a{min-height:100px;padding:11px}#grid a b{font-size:16px}}#grid a span{font-size:13px;opacity:.9}
 .err{grid-column:1/-1;background:#fee2e2;color:#991b1b;padding:14px;border-radius:12px}.load{grid-column:1/-1;color:#6b7280}
-</style></head><body>
+</style><style>/* Ara theme for the launcher (16 Oct) */body{color:var(--ara-ink)}.sub,.load{color:var(--ara-mute)}h1{color:#fff}#st{background:var(--ara-card);border:1px solid var(--ara-line);box-shadow:none}#grid a{background:linear-gradient(160deg,#0d3a4e 0%,#071b29 100%)!important;border:1px solid var(--ara-line);box-shadow:0 0 0 1px rgba(0,0,0,.2)}#grid a:hover,#grid a:focus-visible{border-color:var(--ara-accent)}#grid a.reg{background:linear-gradient(160deg,#0f5566 0%,#06222f 100%)!important}#grid a b{color:#fff}#grid a span{color:#cfe9f1;opacity:1}#grid a i{background:var(--ara-accent);color:#02060c}.err{background:#3a1010;color:#fecaca;border:1px solid #7f1d1d}</style>
+<link rel="stylesheet" href="css/ara-theme.css">
+</head><body>
 <h1>REALM APPS</h1><div class="sub">Tap a tile to open.</div>
-<button id="install">&#11015; Save as app</button>
-<div id="help">On Android Chrome: tap <b>&#8942;</b> (top right) &rsaquo; <b>Add to Home screen</b> (or <b>Install app</b>) &rsaquo; <b>Install</b>.</div>
 <a id="st" href="./status.html"><b>TONIGHT STATUS</b><span>Done, in progress, needed from you</span></a>
 <div id="grid"><div class="load">Loading tiles&hellip;</div></div>
 <script src="js/reconnect.js"></script>
 <script>
 var EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";
 var COLORS=["#2563eb","#16a34a","#dc2626","#9333ea","#ea580c","#0891b2","#db2777","#4f46e5","#65a30d","#b45309"];
-function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&","<":"<",">":">",'"':"""}[c]})}
 function fix(name,url){var n=name.toUpperCase();
  if(/REALM DESK/.test(n))return "./desk.html";
  if(/CERT STUDIO/.test(n))return "https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec";
  if(/SCRIBE/.test(n))return "./scribe.html";
  return url}
 var BAD=/orion|elon|grok|claude/i;
+var ARA_APPS=[{name:"QUEUE",sub:"Layer 1 board",u:"./queue.html"},{name:"REALM FLOW MAP",sub:"Programs + bridges",u:"./metatron3.html"},{name:"LAYERS",sub:"The build, layer by layer",u:"./layers.html"},{name:"ETA BOARD",sub:"What's running",u:"./eta.html"},{name:"NOVA",sub:"Pipelines + rules",u:"./nova.html"},{name:"CERT STUDIO",sub:"Anchor certs",u:"./certstudio.html"},{name:"PRIVATE",sub:"PIN-locked",u:"./private.html"}].map(function(x){x.badge="";x.reg=false;return x});
+function araFallback(msg){var g=document.getElementById("grid");var t=[{name:"SCRIBE",sub:"Notes",u:"./scribe.html",badge:"",reg:true},{name:"REALM SEARCH STUDIO",sub:"Register · Calendar · Drive",u:"./search.html",badge:"",reg:false},{name:"REALM MAPPER",sub:"Live paste",u:"./mapper.html",badge:"",reg:false}].concat(ARA_APPS);g.innerHTML='<div class="err">'+esc(msg)+' Showing the built-in tiles.</div>'+t.map(function(x){return '<a href="'+esc(x.u)+'" target="_self" class="'+(x.reg?'reg':'')+'">'+'<b>'+esc(x.name)+'</b><span>'+esc(x.sub)+'</span></a>'}).join("")}
 (window.RealmLine?RealmLine.fetch:fetch)(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:"getLinks",args:[],key:(function(){try{return localStorage.getItem("realm_key")||""}catch(e){return""}})()})})
 .then(function(r){return r.json()}).then(function(j){
  if(!j||!j.ok)throw new Error((j&&j.error)||"getLinks failed");
  var seen={},t=(j.result||[]).filter(function(x){var k=String(x.title)+" "+String(x.url);
    if(!/^\s*\u2605/.test(String(x.title))||/orion/i.test(k)||seen[x.title])return false;seen[x.title]=1;return true});
  var g=document.getElementById("grid");
- if(!t.length){g.innerHTML='<div class="err">No tiles found in REALM_LINKS.</div>';return}
+ if(!t.length){araFallback('No tiles found in REALM_LINKS.');return}
  t=t.map(function(x){var s=String(x.title).replace(/^\s*\u2605\s*/,"").split(/\s+\u2014\s+/);var name=s[0],sub=s[1]||"",badge="";if(BAD.test(sub))sub="";
    var u=fix(name,x.url);
    if(/^REALM DESK/i.test(name))name="REALM DESK";
@@ -49,20 +51,16 @@ var BAD=/orion|elon|grok|claude/i;
  t.push({name:"FINDINGS",sub:"What changed",u:"./findings.html",badge:"",reg:false});
  t.push({name:"TEAM",sub:"Ara + coworkers",u:"./team.html",badge:"",reg:false});
  t.push({name:"REALM MAPPER",sub:"Live paste",u:"./mapper.html",badge:"",reg:false});
+ t=t.concat(ARA_APPS.filter(function(x){return !t.some(function(y){return y.u===x.u})}));
  t=t.filter(function(x){return !/FLOW MAP|^STATUS$|REALM LAUNCHER|DESK V3/i.test(x.name)});
  t.sort(function(a,b){return (b.reg?1:0)-(a.reg?1:0)});
  var fi=-1;t.forEach(function(x,k){if(/^FLOW MAP$/i.test(x.name))fi=k});t.splice(fi>=0?fi+1:t.length,0,{name:"REALM FLOW MAP",sub:"24 Sep original",u:"https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec",badge:"",reg:false});
  var si=-1;t.forEach(function(x,k){if(/^SCRIBE/i.test(x.name))si=k});var sc=si>=0?t.splice(si,1)[0]:{};sc.name="SCRIBE";sc.sub="You Got Me Bro";sc.u="./scribe.html";sc.badge="";sc.reg=true;t.unshift(sc);
  g.innerHTML=t.map(function(x,i){
    return '<a href="'+esc(x.u)+'" target="_self" class="'+(x.reg?'reg':'')+'" style="background:'+(x.reg?'#047857':(x.c||COLORS[i%COLORS.length]))+'">'+(x.badge?'<i>'+esc(x.badge)+'</i>':'')+'<b>'+esc(x.name)+'</b><span>'+esc(x.sub)+'</span></a>'}).join("");
-}).catch(function(e){document.getElementById("grid").innerHTML='<div class="err">Could not load tiles: '+esc(e.message)+'</div>'});
-var dp=null,btn=document.getElementById("install"),help=document.getElementById("help");
-window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e});
-btn.onclick=function(){if(dp){dp.prompt();dp.userChoice.then(function(){dp=null})}else{help.style.display="block"}};
-window.addEventListener("appinstalled",function(){btn.textContent="Saved as app \u2713"});
-if(window.matchMedia("(display-mode: standalone)").matches)btn.style.display="none";
-if(navigator.standalone)btn.style.display="none";
+}).catch(function(e){araFallback('Could not load tiles: '+e.message+'.')});
+
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js");
 </script><script>/* bot line reconnect hooks (see js/reconnect.js) */
 (function(){if(!window.RealmLine)return;RealmLine.line({name:'Desk v9 (tiles)',ping:function(){return RealmLine.pingExec(EXEC)},onUp:function(){if(document.querySelector('#grid .err'))location.reload()}});})();</script><script src="voice.js"></script>
-<script src="js/saveapp.js" data-hide="#install,#help"></script></body></html>
+<script src="js/saveapp.js"></script></body></html>
