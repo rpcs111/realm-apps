@@ -14,7 +14,7 @@
   function standalone(){try{return ['standalone','minimal-ui','window-controls-overlay','fullscreen'].some(function(m){return matchMedia('(display-mode: '+m+')').matches})||navigator.standalone===true}catch(e){return false}}
   function saved(){try{return localStorage.getItem(KEY)==='1'}catch(e){return false}}
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-  var css='#araSave{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:999px;border:1px solid #22d3ee;background:#000;color:#e6fbff;font:600 11px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;white-space:nowrap;box-shadow:0 0 10px rgba(34,211,238,.25);-webkit-tap-highlight-color:transparent}'+
+  var css='#araSave{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 16px;font-weight:800!important;border-radius:999px;border:1px solid #22d3ee;background:#000;color:#e6fbff;font:600 11px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;white-space:nowrap;box-shadow:0 0 10px rgba(34,211,238,.25);-webkit-tap-highlight-color:transparent}'+
    '#araSave:hover,#araSave:focus-visible{background:#04161a;color:#fff;box-shadow:0 0 14px rgba(34,211,238,.5)}#araSave svg{width:13px;height:13px;flex:0 0 13px}'+
    '#araSave.fx{position:fixed;top:calc(10px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right));z-index:2147483000}'+
    '#araSave.fl{float:right;margin:0 0 6px 10px}#araSave.ap{margin-left:auto;flex:0 0 auto}#araSave[hidden],#araTip[hidden]{display:none!important}'+
@@ -35,8 +35,9 @@
     tip.innerHTML='<button class="x" type="button" aria-label="Close">&times;</button>'+tipHtml();tip.hidden=false;
     tip.querySelector('.x').onclick=function(){tip.hidden=true}}
   function label(){if(!btn)return;var open=!dp&&saved()&&!ios&&!android;
-    btn.lastChild.textContent=open?'Open app':'Save app';btn.title=open?'Open '+name+' as an app':'Save '+name+' as an app'}
-  function refresh(){if(!btn)return;btn.hidden=standalone();if(btn.hidden&&tip)tip.hidden=true;label()}
+    btn.lastChild.textContent=open?'Open app':'Install this app';btn.title=open?'Open '+name+' as an app':'Save '+name+' as an app'}
+  function badge(){var b=document.getElementById('araInstalled');if(!standalone()){if(b)b.hidden=true;return}if(!b){b=document.createElement('div');b.id='araInstalled';b.setAttribute('role','status');b.textContent='Installed as an app \u2713';b.style.cssText='position:fixed;top:calc(8px + env(safe-area-inset-top));right:calc(8px + env(safe-area-inset-right));z-index:2147483000;background:#16a34a;color:#fff;font:700 13px system-ui,sans-serif;padding:6px 12px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.5);pointer-events:none';document.body.appendChild(b)}b.hidden=false}
+  function refresh(){badge();if(!btn)return;btn.hidden=standalone();if(btn.hidden&&tip)tip.hidden=true;label()}
   window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;try{localStorage.removeItem(KEY)}catch(x){}refresh()});
   window.addEventListener('appinstalled',function(){dp=null;try{localStorage.setItem(KEY,'1')}catch(x){}if(btn)btn.hidden=true;if(tip)tip.hidden=true});
   function init(){

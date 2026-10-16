@@ -35,7 +35,9 @@ h1{margin-top:18px;font-size:22px;font-weight:600;letter-spacing:.02em}
  var a=document.getElementById("go");a.setAttribute("href",target());
  var sa=false;try{sa=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true}catch(e){}
  /* installed app (start_url ?go=1) or explicit ?go=1: go straight to the live v6 web app, top-level */
- if(/[?&]go=1/.test(location.search)||sa){location.replace(target())}
+ if(sa){var b=document.createElement("div");b.id="araInstalled";b.setAttribute("role","status");b.textContent="Installed as an app \u2713";b.style.cssText="position:fixed;top:calc(8px + env(safe-area-inset-top));right:calc(8px + env(safe-area-inset-right));z-index:2147483000;background:#16a34a;color:#fff;font:700 13px system-ui,sans-serif;padding:6px 12px;border-radius:999px;pointer-events:none";document.body.appendChild(b)}
+ /* installed: show the green badge ~1.5s first, then open live v6 */
+ if(/[?&]go=1/.test(location.search)||sa){setTimeout(function(){location.replace(target())},sa?1500:0)}
 })();
 </script>
 <script src="js/saveapp.js"></script>
