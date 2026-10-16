@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2A4FB8"/><stop offset="1" stop-color="#0B1747"/></linearGradient></defs><rect width="512" height="512" fill="url(#bg)"/><g transform="translate(256 256) scale(.74) translate(-256 -262)"><g id="glyph">
+<rect x="112" y="124" width="290" height="236" rx="22" fill="#FFFFFF"/>
+<rect x="128" y="140" width="258" height="204" rx="12" fill="none" stroke="#C9D3F0" stroke-width="6"/>
+<rect x="176" y="172" width="162" height="22" rx="11" fill="#1D3C8F"/>
+<rect x="160" y="214" width="194" height="12" rx="6" fill="#9AA8D1"/>
+<rect x="160" y="240" width="160" height="12" rx="6" fill="#9AA8D1"/>
+<rect x="160" y="266" width="120" height="12" rx="6" fill="#9AA8D1"/>
+<path d="M186 318 l-22 74 l26 -12 l16 22 l14 -70z" fill="#D94841"/>
+<path d="M214 318 l22 74 l-26 -12 l-16 22 l-14 -70z" fill="#B23A34"/>
+<circle cx="200" cy="312" r="34" fill="#F5C542" stroke="#ffffff" stroke-width="6"/>
+<circle cx="200" cy="312" r="20" fill="none" stroke="#B8860B" stroke-width="4"/>
+</g><g id="gospel">
+<circle cx="372" cy="380" r="86" fill="#F5C542" stroke="#ffffff" stroke-width="12"/>
+<circle cx="372" cy="380" r="68" fill="none" stroke="#B8860B" stroke-width="4" stroke-dasharray="6 7"/>
+<path d="M334 382 l26 27 l50 -56" fill="none" stroke="#13296E" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+</g></g></svg>
