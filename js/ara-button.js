@@ -8,6 +8,7 @@
   var API = 'https://script.google.com/macros/s/AKfycbxzrPy359CBlkbrYuR0-5xJB4GLXIQ6xNDIE6EFEb2xvnoY0n5sodcnljN4Ohqf4nWa/exec';
   var OUT = 'ara_button_outbox', S = document.currentScript;
   var appName = (document.querySelector('meta[name="application-name"]') || {}).content || document.title || location.pathname.split('/').pop();
+  function devTag() { try { return localStorage.getItem('realm_device') || ''; } catch (e) { return ''; } }
   function rd() { try { var a = JSON.parse(localStorage.getItem(OUT) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
   function wr(a) { try { localStorage.setItem(OUT, JSON.stringify(a.slice(-200))); return true; } catch (e) { return false; } }
   var css = '#arbBtn{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 14px;border-radius:999px;border:1px solid #a78bfa;background:#000;color:#ede9fe;font:800 12px/1 system-ui,sans-serif;letter-spacing:.08em;cursor:pointer;flex:0 0 auto;margin-left:8px}' +
@@ -61,7 +62,7 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) close(); });
     sheet.querySelector('form').addEventListener('submit', function (e) {
       e.preventDefault(); var t = ta.value.trim(); if (!t) { say('Type something for Ara first.'); return; }
-      var q = rd(); q.push({ id: 'ara_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7), text: ('[' + appName + '] ' + t).slice(0, 2000), ts: new Date().toISOString() });
+      var q = rd(); q.push({ id: 'ara_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7), text: ('[' + appName + (devTag() ? ' \u00b7 ' + devTag() : '') + '] ' + t).slice(0, 2000), dev: devTag(), ts: new Date().toISOString() });
       if (!wr(q)) { say('This browser is not saving (private mode?).'); return; }
       ta.value = ''; count(); say('Saved on this device. Sending\u2026'); flush();
     });
