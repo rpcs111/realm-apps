@@ -13,12 +13,13 @@ button{min-height:46px;min-width:46px;padding:8px 12px;border-radius:999px;borde
 #mic{display:flex;align-items:center;justify-content:center;width:46px;padding:0;border-color:var(--ac)}
 #mic.on,button.on{background:rgba(34,211,238,.12);box-shadow:0 0 0 3px rgba(34,211,238,.25),0 0 22px rgba(34,211,238,.45)}
 main{padding:10px;max-width:680px;margin:auto}.card{background:#0a0a0a;border:1px solid #1c1c1c;border-left:3px solid var(--ac);border-radius:14px;padding:12px 14px;margin:0 0 8px;overflow-wrap:anywhere}
-.card.reg{border-left-color:#22d3ee}.card.file{border-left-color:#71717a}.card.ev{border-left-color:#fff}
+.card.reg{border-left-color:#22d3ee}.card.file{border-left-color:#a1a1aa}.card.ev{border-left-color:#fff}
 h2{font-size:12px;font-weight:500;letter-spacing:.24em;color:var(--m);margin:18px 0 8px}.m{color:var(--m);font-size:13px}a{color:#67e8f9}
-.src{display:flex;flex-wrap:wrap;gap:6px;margin:8px auto 0;max-width:680px}.src span{font-size:11px;padding:3px 9px;border-radius:999px;background:#111;color:var(--m);border:1px solid #1f1f1f}.src .live{color:#67e8f9;border-color:rgba(34,211,238,.4)}.src .no{color:#71717a}
+.src{display:flex;flex-wrap:wrap;gap:6px;margin:8px auto 0;max-width:680px}.src span{font-size:11px;padding:3px 9px;border-radius:999px;background:#111;color:var(--m);border:1px solid #1f1f1f}.src .live{color:#67e8f9;border-color:rgba(34,211,238,.4)}.src .no{color:#a1a1aa}
 .msg{color:var(--m);font-size:14px;min-height:18px;margin:6px 0}.err{background:#140808;border:1px solid #3f1d1d;color:#fecaca;padding:10px;border-radius:12px}
 #vMic{background:#000 var(--mic) center/28px no-repeat!important;border:1px solid var(--ac)!important;font-size:0!important;color:transparent!important}#vMic.on{background-color:rgba(34,211,238,.15)!important;box-shadow:0 0 22px rgba(34,211,238,.6)!important}
-</style></head><body>
+</style><link rel="stylesheet" href="css/ara-theme.css">
+</head><body>
 <header><div class="nav" data-rl-pill><a href="./index.html">‹ Apps</a><a id="toNotes" href="./scribe.html">Notes ›</a></div>
 <div class="brand"><span class="mark" role="img" aria-label="Ara"></span><h1>Realm Search Studio</h1></div>
 <form class="bar" id="f"><input id="q" placeholder="Address, client or keyword" autocomplete="off" enterkeyhint="search"><button type="button" id="mic" title="Speak" aria-label="Speak a search"><span class="micI" aria-hidden="true"></span></button><button class="pri" type="submit" id="goBtn">Go</button></form>
