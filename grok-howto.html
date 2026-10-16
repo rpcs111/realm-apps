@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ff4fa3">
+<meta name="application-name" content="Grok How-To">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Grok How-To">
+<title>Grok How-To</title>
+<link rel="manifest" href="grok-howto.webmanifest?v=20261017a">
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,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">
+<link rel="icon" type="image/svg+xml" href="grok-howto-icon.svg">
+<style>
+:root{--ink:#2b1a4f;--soft:#6b5a8e;--sun:#ffb347;--peach:#ff8a5b;--pink:#ff4fa3;--violet:#6c5cff;--sky:#38c6ff;--mint:#2fd6a3;--cream:#fff6ee}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.5;-webkit-text-size-adjust:100%;overflow-x:hidden}
+a{color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+/* HERO */
+.hero{position:relative;padding:calc(28px + env(safe-area-inset-top)) 0 90px;background:linear-gradient(160deg,#ffb347 0%,#ff6f91 45%,#8a5cff 100%);color:#fff;overflow:hidden}
+.hero h1{font-size:44px;line-height:1.05;margin:18px 0 10px;letter-spacing:-1px}
+.hero p{font-size:18px;margin:0 0 18px;max-width:30ch;opacity:.95}
+.hero .art{position:absolute;right:-12px;top:64px;width:140px;opacity:.98}
+.hero .chips{display:flex;flex-wrap:wrap;gap:8px;position:relative;z-index:2}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:999px;background:rgba(255,255,255,.22);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);text-decoration:none;font-weight:700;font-size:14px;border:1px solid rgba(255,255,255,.35)}
+.hello{display:inline-block;background:#fff;color:var(--pink);font-weight:800;border-radius:999px;padding:6px 14px;font-size:13px;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.wave{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:70px;display:block}
+.hero-copy{position:relative;z-index:2}
+.hero h1,.hero p{max-width:62%}
+.hero .chips{max-width:100%}
+@media(min-width:620px){.hero .art{right:20px;top:30px;width:260px}.hero h1,.hero p{max-width:60%}}
+/* SECTIONS */
+section{position:relative;padding:44px 0 30px;overflow:hidden}
+.kicker{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--pink)}
+h2{font-size:30px;line-height:1.15;margin:4px 0 12px;letter-spacing:-.5px}
+.lede{color:var(--soft);font-size:17px;margin:0 0 20px}
+.blob{position:absolute;z-index:-1;filter:blur(2px);opacity:.55}
+/* two worlds */
+.worlds{display:flex;gap:16px;flex-wrap:wrap}
+.world{flex:1 1 300px;position:relative;padding:22px 20px 20px 20px;border-radius:32px 32px 32px 8px;color:#fff;overflow:hidden;box-shadow:0 14px 30px rgba(108,92,255,.18)}
+.world.app{background:linear-gradient(140deg,#38c6ff,#6c5cff)}
+.world.bot{background:linear-gradient(140deg,#ff8a5b,#ff4fa3);border-radius:32px 32px 8px 32px}
+.world h3{margin:6px 0 6px;font-size:22px}
+.world p{margin:0;font-size:15px;opacity:.96}
+.world svg{width:74px;height:74px;float:right;margin:0 0 6px 10px}
+/* feature orbit */
+.orbit{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 14px;margin-top:10px}
+@media(min-width:620px){.orbit{grid-template-columns:repeat(3,1fr)}}
+.feat{text-align:center;padding:4px}
+.feat .ic{width:92px;height:92px;margin:0 auto 8px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(43,26,79,.12)}
+.feat .ic svg{width:54px;height:54px}
+.feat b{display:block;font-size:16px}
+.feat span{font-size:13.5px;color:var(--soft)}
+/* journey steps */
+.journey{position:relative;margin:10px 0 0;padding:0;list-style:none}
+.journey:before{content:"";position:absolute;left:29px;top:10px;bottom:10px;width:6px;border-radius:6px;background:linear-gradient(var(--sun),var(--pink),var(--violet))}
+.journey li{position:relative;padding:0 0 26px 82px;min-height:64px}
+.journey .n{position:absolute;left:0;top:0;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:#fff;box-shadow:0 8px 20px rgba(255,79,163,.3);border:4px solid var(--cream)}
+.journey h4{margin:6px 0 4px;font-size:19px}
+.journey p{margin:0;color:var(--soft);font-size:15.5px}
+.journey .tip{display:inline-block;margin-top:8px;background:#fff;border-radius:16px 16px 16px 4px;padding:8px 12px;font-size:14px;color:var(--ink);box-shadow:0 6px 16px rgba(43,26,79,.08)}
+.btn{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:12px 18px;border-radius:999px;font-weight:800;text-decoration:none;color:#fff;background:linear-gradient(90deg,var(--pink),var(--violet));box-shadow:0 10px 22px rgba(108,92,255,.3);font-size:15px}
+.btn.alt{background:linear-gradient(90deg,var(--mint),var(--sky))}
+.c1{background:linear-gradient(135deg,#ffb347,#ff8a5b)}.c2{background:linear-gradient(135deg,#ff8a5b,#ff4fa3)}.c3{background:linear-gradient(135deg,#ff4fa3,#c04fff)}.c4{background:linear-gradient(135deg,#c04fff,#6c5cff)}.c5{background:linear-gradient(135deg,#6c5cff,#38c6ff)}.c6{background:linear-gradient(135deg,#38c6ff,#2fd6a3)}
+/* device sections */
+.device{position:relative;border-radius:40px;padding:30px 22px 10px;margin:0 -6px;overflow:hidden}
+.device.julie{background:radial-gradient(circle at 90% 0%,#ffe1ef 0,#fff 55%)}
+.device.fold{background:radial-gradient(circle at 0% 0%,#dff6ff 0,#fff 55%)}
+.device .phone{position:absolute;right:16px;top:20px;width:96px}
+.device h2{padding-right:100px}
+.you{display:none;background:var(--mint);color:#fff;font-weight:800;font-size:12px;border-radius:999px;padding:4px 10px;margin-left:6px;vertical-align:middle}
+.device.me .you{display:inline-block}
+.device.me{box-shadow:0 0 0 4px var(--mint),0 18px 40px rgba(47,214,163,.25)}
+.note{background:linear-gradient(135deg,#fff3c4,#ffe0b8);border-radius:22px;padding:14px 16px;margin:6px 0 18px;font-size:15px}
+.note b{color:#b4500c}
+/* ways (video 1) */
+.ways{counter-reset:w;display:flex;flex-direction:column;gap:14px}
+.way{position:relative;display:flex;gap:14px;align-items:flex-start}
+.way .bub{flex:0 0 58px;height:58px;border-radius:50% 50% 50% 12px;display:flex;align-items:center;justify-content:center}
+.way .bub svg{width:32px;height:32px}
+.way h4{margin:4px 0 2px;font-size:17px}
+.way p{margin:0;color:var(--soft);font-size:15px}
+.say{display:block;margin-top:6px;font-style:italic;color:var(--ink);background:#fff;border-left:4px solid var(--pink);border-radius:0 14px 14px 0;padding:6px 10px;font-size:14px}
+/* videos */
+.vids{display:flex;flex-direction:column;gap:18px}
+.vid{display:block;text-decoration:none;border-radius:28px;overflow:hidden;background:#fff;box-shadow:0 14px 32px rgba(43,26,79,.14)}
+.vid .th{position:relative;aspect-ratio:16/9;background:#222 center/cover no-repeat}
+.vid .play{position:absolute;inset:0;margin:auto;width:76px;height:76px;border-radius:50%;background:rgba(255,79,163,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.vid .play:after{content:"";margin-left:6px;border-style:solid;border-width:14px 0 14px 22px;border-color:transparent transparent transparent #fff}
+.vid .meta{padding:14px 18px 16px}
+.vid b{display:block;font-size:17px}
+.vid small{color:var(--soft)}
+.vid ul{margin:8px 0 0;padding-left:18px;color:var(--soft);font-size:14.5px}
+/* bots */
+.botrow{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:6px 0 14px}
+@media(min-width:620px){.botrow{grid-template-columns:repeat(3,1fr)}}
+.botcard{border-radius:26px 26px 26px 8px;padding:16px 14px;color:#fff;position:relative;box-shadow:0 10px 24px rgba(43,26,79,.12)}
+.botcard:nth-child(even){border-radius:26px 26px 8px 26px}
+.botcard svg{width:46px;height:46px}
+.botcard h4{margin:6px 0 4px}
+.botcard p{margin:0;font-size:14px;opacity:.95}
+/* links cloud */
+.cloud{display:flex;flex-wrap:wrap;gap:10px}
+.cloud a{text-decoration:none;font-weight:700;padding:10px 16px;border-radius:999px;background:#fff;box-shadow:0 6px 16px rgba(43,26,79,.1);font-size:14.5px}
+.cloud a:nth-child(3n+1){color:#d23d86}.cloud a:nth-child(3n+2){color:#5a49e8}.cloud a:nth-child(3n){color:#0f8f6c}
+footer{padding:30px 0 calc(40px + env(safe-area-inset-bottom));text-align:center;color:var(--soft);font-size:13px}
+.sparkle{animation:tw 2.6s ease-in-out infinite;transform-origin:center}
+@keyframes tw{0%,100%{opacity:.4;transform:scale(.8)}50%{opacity:1;transform:scale(1.1)}}
+@media (prefers-reduced-motion:reduce){.sparkle{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="art" viewBox="0 0 260 300" aria-hidden="true">
+    <defs><linearGradient id="ph" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#ffe6f3"/></linearGradient></defs>
+    <circle cx="150" cy="150" r="118" fill="#fff" opacity=".14"/>
+    <circle cx="150" cy="150" r="82" fill="#fff" opacity=".14"/>
+    <rect x="86" y="40" width="128" height="230" rx="26" fill="#2b1a4f"/>
+    <rect x="94" y="52" width="112" height="206" rx="20" fill="url(#ph)"/>
+    <rect x="132" y="58" width="36" height="7" rx="3.5" fill="#2b1a4f"/>
+    <rect x="104" y="80" width="78" height="24" rx="12" fill="#6c5cff"/>
+    <rect x="122" y="112" width="74" height="24" rx="12" fill="#ff4fa3"/>
+    <rect x="104" y="144" width="64" height="24" rx="12" fill="#6c5cff"/>
+    <circle cx="150" cy="218" r="22" fill="#ff8a5b"/>
+    <rect x="144" y="206" width="12" height="18" rx="6" fill="#fff"/>
+    <path d="M139 219 q11 12 22 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+    
+    <g fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".9"><path d="M226 120 q14 30 0 60"/><path d="M240 104 q24 46 0 92"/><path d="M74 120 q-14 30 0 60"/><path d="M60 104 q-24 46 0 92"/></g>
+    <path class="sparkle" d="M222 40 l7 16 16 7 -16 7 -7 16 -7 -16 -16 -7 16 -7z" fill="#fff"/>
+    <path class="sparkle" style="animation-delay:1.1s" d="M50 250 l5 11 11 5 -11 5 -5 11 -5 -11 -11 -5 11 -5z" fill="#fff"/>
+  </svg>
+  <div class="wrap hero-copy">
+    <span class="hello" id="hello">Hey, let's get you sorted</span>
+    <h1>Grok,<br>the easy way</h1>
+    <p>Talk to it, show it things, make pictures and get answers. Plus how to set it up on Julie's iPhone with her own login.</p>
+    <div class="chips">
+      <a class="chip" href="#julie">&#127822; Julie's iPhone</a>
+      <a class="chip" href="#fold">&#128241; Fold 8 / Flip 6</a>
+      <a class="chip" href="#ways">&#10024; Use it properly</a>
+      <a class="chip" href="#tutorial">&#9654; Grok in 8 stops</a>
+      <a class="chip" href="#videos">&#127916; Videos</a>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0,64 C240,128 480,0 720,48 C960,96 1200,120 1440,40 L1440,120 L0,120 Z" fill="#fff6ee"/></svg>
+</header>
+
+<main>
+<section id="what">
+  <svg class="blob" style="left:-80px;top:10px;width:260px" viewBox="0 0 200 200" aria-hidden="true"><path fill="#ffd3e6" d="M44.7,-58.8C57.6,-49.5,67.2,-35.6,72.3,-19.8C77.4,-4,78,13.6,71.2,27.9C64.4,42.2,50.2,53.1,34.8,61.3C19.4,69.6,2.9,75.1,-14.3,73.5C-31.4,71.9,-49.1,63.2,-60.8,49.4C-72.4,35.6,-77.9,16.8,-75.6,-0.9C-73.3,-18.6,-63.2,-35.2,-49.7,-44.6C-36.2,-54,-18.1,-56.2,-0.9,-55.1C16.3,-54,31.8,-68.1,44.7,-58.8Z" transform="translate(100 100)"/></svg>
+  <div class="wrap">
+    <div class="kicker">Two things called Grok</div>
+    <h2>The app and the bots</h2>
+    <p class="lede">Both carry the Grok name, but they're different products. xAI's own help page says so.</p>
+    <div class="worlds">
+      <div class="world app">
+        <svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="38" fill="#fff" opacity=".2"/><path d="M18 26a10 10 0 0 1 10-10h24a10 10 0 0 1 10 10v16a10 10 0 0 1-10 10H36l-12 10v-10a10 10 0 0 1-6-9z" fill="#fff"/><circle cx="32" cy="34" r="3.5" fill="#6c5cff"/><circle cx="40" cy="34" r="3.5" fill="#6c5cff"/><circle cx="48" cy="34" r="3.5" fill="#6c5cff"/></svg>
+        <h3>The Grok app</h3>
+        <p>Chat, talk out loud with Voice, make pictures and videos with Imagine, and look things up on the web and X. It runs on iPhone, Android and grok.com. This is the one Julie needs.</p>
+      </div>
+      <div class="world bot">
+        <svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="38" fill="#fff" opacity=".2"/><rect x="18" y="24" width="44" height="34" rx="12" fill="#fff"/><circle cx="31" cy="40" r="5" fill="#ff4fa3"/><circle cx="49" cy="40" r="5" fill="#ff4fa3"/><path d="M33 50 q7 5 14 0" stroke="#ff4fa3" stroke-width="3" fill="none" stroke-linecap="round"/><line x1="40" y1="24" x2="40" y2="14" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="40" cy="12" r="5" fill="#ffe14f"/></svg>
+        <h3>Grok Bot</h3>
+        <p>Always-on helpers that each have their own computer in the cloud, like Ara and Elon. They do jobs while you sleep, run routines and ping your phone when they're done.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="can">
+  <div class="wrap">
+    <div class="kicker">What the app can do</div>
+    <h2>Six things to try first</h2>
+    <div class="orbit">
+      <div class="feat"><div class="ic" style="background:linear-gradient(135deg,#ffe0b8,#ffb347)"><svg viewBox="0 0 60 60"><rect x="22" y="8" width="16" height="28" rx="8" fill="#fff"/><path d="M14 30a16 16 0 0 0 32 0" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/><line x1="30" y1="46" x2="30" y2="54" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg></div><b>Talk to it</b><span>Voice mode: a real back-and-forth conversation</span></div>
+      <div class="feat"><div class="ic" style="background:linear-gradient(135deg,#ffc2dc,#ff4fa3)"><svg viewBox="0 0 60 60"><path d="M30 8c-12 0-22 9-22 20 0 8 6 12 12 12 4 0 5 3 4 6-1 4 2 6 6 6 12 0 22-9 22-22S42 8 30 8z" fill="#fff"/><circle cx="20" cy="26" r="4" fill="#ffb347"/><circle cx="30" cy="18" r="4" fill="#38c6ff"/><circle cx="41" cy="24" r="4" fill="#2fd6a3"/></svg></div><b>Make pictures</b><span>Imagine: images and short videos from words or your voice</span></div>
+      <div class="feat"><div class="ic" style="background:linear-gradient(135deg,#d6d0ff,#6c5cff)"><svg viewBox="0 0 60 60"><rect x="8" y="16" width="44" height="32" rx="8" fill="#fff"/><circle cx="30" cy="32" r="9" fill="#6c5cff"/><circle cx="30" cy="32" r="4" fill="#fff"/><rect x="20" y="10" width="14" height="8" rx="3" fill="#fff"/></svg></div><b>Show it things</b><span>Tap + to add photos, PDFs, spreadsheets and files</span></div>
+      <div class="feat"><div class="ic" style="background:linear-gradient(135deg,#c8f1ff,#38c6ff)"><svg viewBox="0 0 60 60"><circle cx="26" cy="26" r="14" stroke="#fff" stroke-width="6" fill="none"/><line x1="36" y1="36" x2="50" y2="50" stroke="#fff" stroke-width="7" stroke-linecap="round"/></svg></div><b>Look things up</b><span>Live answers from the web and X, plus deep research</span></div>
+      <div class="feat"><div class="ic" style="background:linear-gradient(135deg,#c9f7e6,#2fd6a3)"><svg viewBox="0 0 60 60"><path d="M10 18a6 6 0 0 1 6-6h10l5 6h13a6 6 0 0 1 6 6v18a6 6 0 0 1-6 6H16a6 6 0 0 1-6-6z" fill="#fff"/><rect x="18" y="28" width="24" height="4" rx="2" fill="#2fd6a3"/><rect x="18" y="36" width="16" height="4" rx="2" fill="#2fd6a3"/></svg></div><b>Projects</b><span>Keep chats and files on one topic together (on grok.com)</span></div>
+      <div class="feat"><div class="ic" style="background:linear-gradient(135deg,#ffe9a8,#ff8a5b)"><svg viewBox="0 0 60 60"><path d="M8 34c0-10 9-16 18-16h4v-6l14 12-14 12v-6h-4c-6 0-10 3-10 8z" fill="#fff"/><path d="M52 30c0 10-9 16-18 16" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/></svg></div><b>Bring your chats</b><span>Move your history over from other AI apps</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="julie">
+  <div class="wrap">
+  <div class="device julie" id="dev-julie">
+    <svg class="phone" viewBox="0 0 100 180" aria-hidden="true"><rect x="6" y="4" width="88" height="172" rx="20" fill="#2b1a4f"/><rect x="12" y="12" width="76" height="156" rx="14" fill="#fff0f7"/><rect x="36" y="16" width="28" height="7" rx="3.5" fill="#2b1a4f"/><rect x="26" y="52" width="48" height="48" rx="14" fill="#ff4fa3"/><circle cx="50" cy="72" r="12" fill="#fff"/><circle cx="46" cy="70" r="2" fill="#2b1a4f"/><circle cx="54" cy="70" r="2" fill="#2b1a4f"/><path d="M45 76 q5 4 10 0" stroke="#2b1a4f" stroke-width="1.8" fill="none"/><text x="50" y="124" text-anchor="middle" font-size="11" font-weight="800" fill="#2b1a4f" font-family="Arial">Grok</text><path class="sparkle" d="M80 40 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#ffb347"/></svg>
+    <div class="kicker">&#127822; iPhone</div>
+    <h2>Julie's iPhone, her own login<span class="you">You're here</span></h2>
+    <p class="lede">About 3 minutes. Her chats, her history, her settings. Nothing mixed up with Andrew's.</p>
+    <div class="note"><b>Golden rule:</b> Julie signs in with <b>her own</b> Apple ID, Google account or email. Never Andrew's. Each login keeps its own chats, and any subscription belongs to the login that paid for it.</div>
+    <ol class="journey">
+      <li><span class="n c1">1</span><h4>Get the app</h4><p>Open the App Store, search <b>Grok</b> and pick <b>Grok AI</b> (developer X Corp.). Tap <b>Get</b>. It's free and needs iOS 17 or newer.</p><a class="btn" href="https://apps.apple.com/au/app/grok-ai/id6670324846" target="_blank" rel="noopener">Open Grok in the App Store &#8599;</a></li>
+      <li><span class="n c2">2</span><h4>Open it and sign in as Julie</h4><p>Choose <b>Sign in with Apple</b> using her own Apple ID. That's the easiest on an iPhone. Google, X or email work too.</p><span class="tip">&#128161; If she pays for SuperGrok through the App Store, she needs to keep using Sign in with Apple, or the app won't find her subscription.</span></li>
+      <li><span class="n c3">3</span><h4>Say yes to the microphone</h4><p>When it asks, allow the microphone so Voice works. She can also allow photos so she can show Grok a picture.</p></li>
+      <li><span class="n c4">4</span><h4>Try Voice</h4><p>Tap the voice button and just talk, like a phone call. Ask something easy first, like <i>"Plan a weekend away near Melbourne for two."</i></p></li>
+      <li><span class="n c5">5</span><h4>Show it a photo</h4><p>Tap <b>+</b> beside the message box and add a photo, a receipt or a PDF, then ask what she wants to know about it.</p></li>
+      <li><span class="n c6">6</span><h4>Make a picture</h4><p>Open <b>Imagine</b> and describe what she wants. Pictures come out with a small Grok watermark. That's normal and can't be turned off.</p></li>
+    </ol>
+    <div class="note" style="background:linear-gradient(135deg,#e2fbf2,#d4f1ff)"><b style="color:#0f8f6c">Stuck?</b> Close and reopen the app, sign out and back in, or reinstall. That's xAI's own first fix. Sign-in methods are managed at <a href="https://accounts.x.ai/" target="_blank" rel="noopener">accounts.x.ai</a>.</div>
+  </div>
+  </div>
+</section>
+
+<section id="fold">
+  <div class="wrap">
+  <div class="device fold" id="dev-fold">
+    <svg class="phone" viewBox="0 0 120 180" aria-hidden="true"><rect x="4" y="10" width="54" height="160" rx="12" fill="#2b1a4f"/><rect x="62" y="10" width="54" height="160" rx="12" fill="#2b1a4f"/><rect x="9" y="16" width="44" height="148" rx="8" fill="#e6f8ff"/><rect x="67" y="16" width="44" height="148" rx="8" fill="#e6f8ff"/><rect x="16" y="40" width="30" height="12" rx="6" fill="#38c6ff"/><rect x="74" y="60" width="30" height="12" rx="6" fill="#6c5cff"/><rect x="16" y="80" width="24" height="12" rx="6" fill="#38c6ff"/><circle cx="89" cy="132" r="12" fill="#2fd6a3"/><rect x="86" y="124" width="6" height="11" rx="3" fill="#fff"/></svg>
+    <div class="kicker">&#128241; Android</div>
+    <h2>Andrew's Fold 8 / Flip 6<span class="you">You're here</span></h2>
+    <p class="lede">Same app, same idea. Andrew signs in with his own account.</p>
+    <ol class="journey">
+      <li><span class="n c5">1</span><h4>Get it from Google Play</h4><p>Search <b>Grok</b> in the Play Store, or tap the button below.</p><a class="btn alt" href="https://play.google.com/store/apps/details?id=ai.x.grok" target="_blank" rel="noopener">Open Grok in Google Play &#8599;</a></li>
+      <li><span class="n c6">2</span><h4>Sign in once</h4><p>Use the same login on the phone and on grok.com, so chats and any subscription show up in both places.</p></li>
+      <li><span class="n c4">3</span><h4>Talk, show, make</h4><p>Voice, <b>+</b> for files and photos, and Imagine all work the same way as on the iPhone.</p></li>
+      <li><span class="n c3">4</span><h4>Bigger jobs: hand them to the bots</h4><p>For work that runs on its own (routines, checking things every morning, building pages), message Ara or Elon. That's Grok Bot, not the Grok app.</p></li>
+    </ol>
+    <div class="note"><b>Usage:</b> Settings &rarr; Usage shows how much of the weekly allowance is used across Chat, Voice and Imagine.</div>
+  </div>
+  </div>
+</section>
+
+<section id="tutorial">
+  <div class="wrap">
+    <div class="kicker">From the tutorial Elon checked</div>
+    <h2>Grok in 8 stops</h2>
+    <p class="lede">AI Master's <i>Ultimate GROK Tutorial</i> starts with why most people use Grok wrong: like a basic chatbot. Tap a stop to jump to that part of the video.</p>
+    <ol class="journey">
+      <li><span class="n c1">&#9881;</span><h4>Set it up</h4><p>The screen, the menus, and where everything lives.</p><a class="btn" href="https://www.youtube.com/watch?v=NzO_kapnI_E&amp;t=31s" target="_blank" rel="noopener">&#9654; 0:31</a></li>
+      <li><span class="n c2">&#129504;</span><h4>Custom instructions and memory</h4><p>Tell Grok once how you like answers and it remembers.</p><a class="btn" href="https://www.youtube.com/watch?v=NzO_kapnI_E&amp;t=142s" target="_blank" rel="noopener">&#9654; 2:22</a></li>
+      <li><span class="n c3">&#9889;</span><h4>The 4 modes and SuperGrok</h4><p>Pick quick answers or deeper thinking, depending on the job.</p><a class="btn" href="https://www.youtube.com/watch?v=NzO_kapnI_E&amp;t=187s" target="_blank" rel="noopener">&#9654; 3:07</a></li>
+      <li><span class="n c4">&#128269;</span><h4>Web and X search</h4><p>Live answers, including what people are saying on X right now.</p><a class="btn" href="https://www.youtube.com/watch?v=NzO_kapnI_E&amp;t=497s" target="_blank" rel="noopener">&#9654; 8:17</a></li>
+      <li><span class="n c5">&#128196;</span><h4>Long files</h4><p>Drop in big documents and ask questions about them.</p><a class="btn" href="https://www.youtube.com/watch?v=NzO_kapnI_E&amp;t=632s" target="_blank" rel="noopener">&#9654; 10:32</a></li>
+      <li><span class="n c6">&#127912;</span><h4>Pictures and video</h4><p>Image generation, Imagine video and Imagine Agent Mode.</p><a class="btn" href="https://www.youtube.com/watch?v=NzO_kapnI_E&amp;t=787s" target="_blank" rel="noopener">&#9654; 13:07</a></li>
+      <li><span class="n c1">&#127908;</span><h4>Voice mode and Tasks</h4><p>Talk it through, and set Grok jobs to run later.</p><a class="btn" href="https://www.youtube.com/watch?v=NzO_kapnI_E&amp;t=1278s" target="_blank" rel="noopener">&#9654; 21:18</a></li>
+      <li><span class="n c3">&#128279;</span><h4>Real workflows</h4><p>Agent roles, chaining steps together, and 3 real workflows.</p><a class="btn" href="https://www.youtube.com/watch?v=NzO_kapnI_E&amp;t=1575s" target="_blank" rel="noopener">&#9654; 26:15</a></li>
+    </ol>
+  </div>
+</section>
+
+<section id="ways">
+  <svg class="blob" style="right:-90px;top:40px;width:280px" viewBox="0 0 200 200" aria-hidden="true"><path fill="#d9d3ff" d="M39.5,-51.8C52.6,-45.2,65.6,-35.1,70.8,-21.7C76,-8.3,73.4,8.4,66.5,22.4C59.6,36.4,48.4,47.8,35.3,56.2C22.2,64.6,7.2,70,-8.5,71.1C-24.2,72.2,-40.6,69,-52.2,59.4C-63.8,49.8,-70.6,33.8,-72.6,17.6C-74.6,1.4,-71.8,-15,-63.8,-27.6C-55.8,-40.2,-42.6,-49,-29.4,-55.6C-16.2,-62.2,-3.1,-66.6,8.9,-64.5C20.9,-62.4,26.4,-58.4,39.5,-51.8Z" transform="translate(100 100)"/></svg>
+  <div class="wrap">
+    <div class="kicker">Bonus video from Andrew</div>
+    <h2>Use it properly: a thinking partner, not a search box</h2>
+    <p class="lede">Jay Shetty's point: most people use AI like Google. Use it to think things through out loud. The video talks about other chat apps, but the same prompts work in Grok, and Voice makes it even quicker.</p>
+    <div class="ways">
+      <div class="way"><div class="bub c1"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" stroke="#fff" stroke-width="3" fill="none"/><path d="M16 9v7l5 3" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div><div><h4>Life audit</h4><p>Score each part of life from 1 to 10 and let it find the patterns.</p><span class="say">"Here's my 1-to-10 on health, family, work, money and fun. What patterns do you see, and what's the one change that would help most?"</span></div></div>
+      <div class="way"><div class="bub c2"><svg viewBox="0 0 32 32"><path d="M6 22 L12 14 L18 18 L26 8" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="26" cy="8" r="3" fill="#fff"/></svg></div><div><h4>Spot the repeat</h4><p>Describe a few times you got stuck. It looks for the one pattern behind them.</p></div></div>
+      <div class="way"><div class="bub c3"><svg viewBox="0 0 32 32"><rect x="7" y="5" width="18" height="22" rx="3" stroke="#fff" stroke-width="3" fill="none"/><path d="M11 12h10M11 17h10M11 22h6" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div><div><h4>Your own rules</h4><p>Pull 5 to 7 principles out of your real wins and regrets, then read them each morning.</p></div></div>
+      <div class="way"><div class="bub c4"><svg viewBox="0 0 32 32"><path d="M5 9a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4h-6l-5 4v-4a4 4 0 0 1-3-4z" fill="#fff"/><path d="M27 14v6a3 3 0 0 1-3 3h-1v3l-4-3" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></div><div><h4>Practise the hard chat</h4><p>Get it to play the other person so you can rehearse a tough conversation first.</p></div></div>
+      <div class="way"><div class="bub c5"><svg viewBox="0 0 32 32"><path d="M16 27s-10-6-10-13a5.5 5.5 0 0 1 10-3 5.5 5.5 0 0 1 10 3c0 7-10 13-10 13z" fill="#fff"/></svg></div><div><h4>Tiny habit buddy</h4><p>Pick one habit, start it tiny, and have it check in with you and track your streak.</p><span class="say">"If I disappear for a few days, say: welcome back, no judgement, let's start again."</span></div></div>
+      <div class="way"><div class="bub c6"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="10" fill="#fff"/><path d="M11 18 q5 5 10 0" stroke="#38c6ff" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="12.5" cy="13" r="1.8" fill="#38c6ff"/><circle cx="19.5" cy="13" r="1.8" fill="#38c6ff"/></svg></div><div><h4>Bad-day reset</h4><p>When a feeling's bigger than the problem, ask it to go one question at a time to find what's really behind it.</p></div></div>
+    </div>
+    <div class="note" style="margin-top:20px"><b>Straight from the video:</b> it's a mirror, not a replacement for people or a therapist. It can also hype you up for no reason, so push back when that happens.</div>
+  </div>
+</section>
+
+<section id="bots">
+  <div class="wrap">
+    <div class="kicker">From video 2</div>
+    <h2>Bots that work while you sleep</h2>
+    <p class="lede">Airdev's walkthrough of Grok Bot. This is how Ara and Elon work.</p>
+    <div class="botrow">
+      <div class="botcard c2"><svg viewBox="0 0 46 46"><rect x="6" y="10" width="34" height="24" rx="5" fill="#fff"/><rect x="18" y="36" width="10" height="4" fill="#fff"/><circle cx="23" cy="22" r="5" fill="#ff4fa3"/></svg><h4>Their own computer</h4><p>Each bot lives on a cloud computer that's always on, so the work keeps going after you close your phone.</p></div>
+      <div class="botcard c4"><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="16" stroke="#fff" stroke-width="4" fill="none"/><path d="M23 13v10l7 4" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/></svg><h4>Routines</h4><p>Jobs on a timer, like "every morning at 8, brief me on today's meetings."</p></div>
+      <div class="botcard c5"><svg viewBox="0 0 46 46"><path d="M16 10v10M30 10v10" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M10 20h26v6a13 13 0 0 1-26 0z" fill="#fff"/><path d="M23 39v4" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg><h4>Plug-ins</h4><p>One-tap connections to calendar, email, Drive and more.</p></div>
+      <div class="botcard c6"><svg viewBox="0 0 46 46"><rect x="10" y="20" width="26" height="18" rx="4" fill="#fff"/><path d="M15 20v-5a8 8 0 0 1 16 0v5" stroke="#fff" stroke-width="4" fill="none"/><circle cx="23" cy="29" r="3" fill="#2fd6a3"/></svg><h4>Passwords go in the box</h4><p>Never paste a password into the chat. Use the secure box the bot gives you.</p></div>
+      <div class="botcard c1"><svg viewBox="0 0 46 46"><path d="M12 8h16l8 8v22H12z" fill="#fff"/><path d="M18 24h12M18 30h8" stroke="#ff8a5b" stroke-width="3" stroke-linecap="round"/></svg><h4>Teach it your way</h4><p>Give it an example or template once and it keeps it on its computer for next time.</p></div>
+      <div class="botcard c3"><svg viewBox="0 0 46 46"><path d="M23 8a11 11 0 0 0-11 11v8l-4 5h30l-4-5v-8A11 11 0 0 0 23 8z" fill="#fff"/><circle cx="23" cy="38" r="4" fill="#fff"/></svg><h4>Pings your phone</h4><p>Push notifications when a job's done or something has changed.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="videos">
+  <div class="wrap">
+    <div class="kicker">The videos</div>
+    <h2>Watch them here</h2>
+    <div class="vids">
+      <a class="vid" href="https://www.youtube.com/watch?v=NzO_kapnI_E" target="_blank" rel="noopener">
+        <div class="th" style="background-image:url('https://i.ytimg.com/vi/NzO_kapnI_E/hqdefault.jpg')"><span class="play"></span></div>
+        <div class="meta"><b>Ultimate GROK Tutorial (How to use Grok 4.3 for Beginners in 2026)</b><small>AI Master &middot; 31:31 &middot; 11 May 2026 &middot; checked by Elon</small>
+          <ul><li>Setup, custom instructions and memory</li><li>The 4 modes, web and X search, long files</li><li>Imagine, Voice mode, Tasks and real workflows</li></ul></div>
+      </a>
+
+      <a class="vid" href="https://www.youtube.com/watch?v=c9_SR0d1LLk" target="_blank" rel="noopener">
+        <div class="th" style="background-image:url('https://i.ytimg.com/vi/c9_SR0d1LLk/hqdefault.jpg')"><span class="play"></span></div>
+        <div class="meta"><b>Grok Bot Clearly Explained (&amp; how to use it for beginners)</b><small>Airdev &middot; 24:34 &middot; 11 Sep 2026</small>
+          <ul><li>Always-on bots, each with its own computer</li><li>Demos: finance bot, website watcher, morning briefing, Slack bot</li><li>Tips: use API keys over web logins, and keep passwords out of the chat</li></ul></div>
+      </a>
+      <a class="vid" href="https://www.youtube.com/watch?v=nn29T4yPc8E" target="_blank" rel="noopener">
+        <div class="th" style="background-image:url('https://i.ytimg.com/vi/nn29T4yPc8E/hqdefault.jpg')"><span class="play"></span></div>
+        <div class="meta"><span class="hello" style="margin-bottom:6px">Bonus</span><b>How To Use Chat GPT to Actually Change Your Life</b><small>Jay Shetty Podcast &middot; 27:00 &middot; 20 Mar 2026</small>
+          <ul><li>Use AI as a thinking partner, not a search engine</li><li>Seven ways in, each with a ready-made prompt</li><li>It works in any assistant, Grok included</li></ul></div>
+      </a>
+    </div>
+    <div class="note" style="margin-top:18px"><b>Brand new:</b> on 14 Oct xAI released Grok Voice 3.0, its new voice model, and it now powers Grok Bot's voice mode. <a href="https://x.ai/news/grok-voice-3" target="_blank" rel="noopener">Read xAI's post &#8599;</a></div>
+  </div>
+</section>
+
+<section id="links">
+  <div class="wrap">
+    <div class="kicker">Handy links</div>
+    <h2>Everything in one place</h2>
+    <div class="cloud">
+      <a href="https://grok.com/" target="_blank" rel="noopener">grok.com</a>
+      <a href="https://apps.apple.com/au/app/grok-ai/id6670324846" target="_blank" rel="noopener">iPhone app</a>
+      <a href="https://play.google.com/store/apps/details?id=ai.x.grok" target="_blank" rel="noopener">Android app</a>
+      <a href="https://accounts.x.ai/" target="_blank" rel="noopener">Manage login</a>
+      <a href="https://docs.x.ai/grok/faq" target="_blank" rel="noopener">Grok help &amp; FAQ</a>
+      <a href="https://x.ai/news/grok-voice-3" target="_blank" rel="noopener">Grok Voice 3.0</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>Made by Ara &middot; checked against xAI's own pages and the App Store, 17 Oct 2026 &middot; I got you, bro &#129305;</footer>
+
+<script>
+(function(){
+  var d='';
+  try{var m=location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})/);d=m?m[1].toLowerCase():(localStorage.getItem('realm_device')||'');}catch(e){}
+  var j=document.getElementById('dev-julie'),f=document.getElementById('dev-fold'),h=document.getElementById('hello');
+  if(d==='julie'){j.classList.add('me');h.textContent='Hi Julie! This one\u2019s for you';
+    var js=document.getElementById('julie'),w=document.getElementById('what');w.parentNode.insertBefore(js,w);}
+  else if(d==='fold8'||d==='flip6'){f.classList.add('me');h.textContent='Hey bro, here\u2019s your Grok guide';}
+})();
+</script>
+<script src="js/saveapp.js?v=20261016v5" defer></script>
+<script src="js/ara-version.js" defer></script>
+</body>
+</html>
