@@ -175,7 +175,7 @@
       items[k] = { v: L, t: meta.t[k] || Date.now(), base: bb ? bb.r : 0 }; any = true;
     });
     if (!any) return Promise.resolve();
-    return call({ op: 'push', items: items, dev: dev }).then(function (j) {
+    return call({ op: 'push', items: items, dev: (rd('realm_device') ? rd('realm_device') + '/' : '') + dev }).then(function (j) {
       if (!j || !j.ok) throw new Error(j && j.error || 'push failed');
       Object.keys(j.accepted || {}).forEach(function (k) { base[k] = { v: items[k].v, r: j.accepted[k] }; });
       var c = j.conflicts || {};
