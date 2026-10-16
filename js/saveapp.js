@@ -8,9 +8,14 @@
   /* Device tag: install links carry ?d=flip6|fold8|phone|desktop|julie. Saved on this device once (localStorage realm_device),
      sent with sync + Ara messages so Ara can see which device did what. Never changes manifest id/scope. */
   try{var dm=location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})(?:&|$)/);if(dm){localStorage.setItem('realm_device',dm[1].toLowerCase());var q=location.search.replace(/([?&])d=[^&]*&?/,'$1').replace(/[?&]$/,'');history.replaceState(null,'',location.pathname+q+location.hash)}}catch(e){}
-  /* Which window is this? sessionStorage is per app window/tab: the first Realm page opened in it is that window's own app. */
-  var home=path;try{home=sessionStorage.getItem('ara_win_home');if(!home){home=path;sessionStorage.setItem('ara_win_home',path)}}catch(e){home=path}
-  function ownWindow(){var p=path.replace(/scribe\.html$/,'notes.html'),h=String(home).replace(/scribe\.html$/,'notes.html');return p===h}
+  /* Which installed app is this window? Each manifest start_url carries ?app=<tag> (notes|search|cert|hub|...). An app launched
+     from its own home-screen icon opens with that marker; we keep it in sessionStorage (per window) and wipe it from the address bar.
+     A page that is standalone WITHOUT the marker was swallowed by some OTHER (older, wide-scope) installed app via link capture:
+     no badge there, the button offers "Open in Chrome to install" instead. */
+  var APPTAG={'notes.html':'notes','scribe.html':'notes','search.html':'search','cert.html':'cert','index.html':'hub','layers.html':'layers'};
+  var file=path.split('/').pop(),mine=APPTAG[file]||file.replace(/\.html$/,'');
+  try{var am=location.search.match(/[?&]app=([A-Za-z0-9_-]{2,20})(?:&|$)/);if(am){sessionStorage.setItem('ara_win_app',am[1].toLowerCase());var q2=location.search.replace(/([?&])app=[^&]*&?/,'$1').replace(/[?&]$/,'');history.replaceState(null,'',location.pathname+q2+location.hash)}}catch(e){}
+  function ownWindow(){try{return sessionStorage.getItem('ara_win_app')===mine}catch(e){return false}}
   var KEY='ara_saved:'+path,dp=null,btn,tip;
   var name=(document.querySelector('meta[name="application-name"]')||{}).content||document.title||'this app';
   var ua=navigator.userAgent||'';
@@ -19,7 +24,7 @@
   var chrome=/Chrome|CriOS/.test(ua)&&!edge,safari=/Safari/.test(ua)&&!/Chrome|CriOS|FxiOS|EdgiOS|Edg\//.test(ua);
   /* Running as an installed app on THIS device only: the page's own display mode (never synced/server state, never getInstalledRelatedApps).
      A normal browser tab matches display-mode: browser, so it always gets the Install button. */
-  function standalone(){try{if(navigator.standalone===true)return true;var mm=function(m){return matchMedia('(display-mode: '+m+')').matches};if(mm('browser'))return false;if(mm('fullscreen')&&document.fullscreenElement)return false;return mm('standalone')||mm('minimal-ui')||mm('fullscreen')||mm('window-controls-overlay')}catch(e){return false}}
+  function standalone(){try{if(navigator.standalone===true)return true;var mm=function(m){return matchMedia('(display-mode: '+m+')').matches};if(mm('browser'))return false;return mm('standalone')||mm('minimal-ui')||mm('fullscreen')||mm('window-controls-overlay')}catch(e){return false}}
   function saved(){try{return localStorage.getItem(KEY)==='1'}catch(e){return false}}
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
   var css='#araSave{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 16px;font-weight:800!important;border-radius:999px;border:1px solid #22d3ee;background:#000;color:#e6fbff;font:600 11px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;white-space:nowrap;box-shadow:0 0 10px rgba(34,211,238,.25);-webkit-tap-highlight-color:transparent}'+
@@ -40,14 +45,18 @@
     return '<div class="h">Save app</div>'+how+'<br><br>Already saved? '+open;
   }
   function showTip(){if(!tip){tip=document.createElement('div');tip.id='araTip';tip.setAttribute('role','dialog');document.body.appendChild(tip)}
-    tip.innerHTML='<button class="x" type="button" aria-label="Close">&times;</button>'+tipHtml();tip.hidden=false;
+    tip.innerHTML='<button class="x" type="button" aria-label="Close">&times;</button>'+tipHtml();tip.hidden=false;if(hint)hint.style.display='none';
     tip.querySelector('.x').onclick=function(){tip.hidden=true}}
   function label(){if(!btn)return;var open=false;
     btn.lastChild.textContent=open?'Open app':'Install this app';btn.title=open?'Open '+name+' as an app':'Save '+name+' as an app'}
   function badge(){var b=document.getElementById('araInstalled');if(!standalone()||!ownWindow()){if(b)b.hidden=true;return}if(!b){b=document.createElement('div');b.id='araInstalled';b.setAttribute('role','status');b.textContent='Installed as an app \u2713';b.style.cssText='position:fixed;top:calc(8px + env(safe-area-inset-top));right:calc(8px + env(safe-area-inset-right));z-index:2147483000;background:#16a34a;color:#fff;font:700 13px system-ui,sans-serif;padding:6px 12px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.5);pointer-events:none';document.body.appendChild(b)}b.hidden=false}
-  function refresh(){badge();if(!btn)return;btn.hidden=standalone()&&ownWindow();if(standalone()&&!ownWindow()){btn.lastChild.textContent='Open in Chrome to install';btn.hidden=false;return}if(btn.hidden&&tip)tip.hidden=true;label()}
+  var hint,hintGone=0;function hintTxt(){return ios?'Tap Share, then Add to Home Screen':android?'Tap the three dots \u22ee, then Install app':'Or: browser menu \u22ee, then Install app'}
+  function paintHint(){if(!btn)return;var show=!standalone()&&!dp;if(standalone()&&!ownWindow()){show=true}
+    if(!hint){hint=document.createElement('div');hint.id='araHint';hint.setAttribute('role','note');hint.style.cssText='position:fixed;top:calc(54px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right));z-index:2147482999;max-width:min(260px,calc(100vw - 20px));background:#000;color:#e6fbff;border:1px solid #22d3ee;border-radius:12px;padding:8px 12px;font:600 12px/1.35 system-ui,-apple-system,Roboto,sans-serif;text-align:left;box-shadow:0 4px 16px rgba(0,0,0,.6);cursor:pointer';hint.title='Tap to hide';hint.onclick=function(){hintGone=1;hint.style.display='none'};setTimeout(function(){hintGone=1;if(hint)hint.style.display='none'},15000);document.body.appendChild(hint)}
+    hint.textContent=(standalone()&&!ownWindow())?'This opened inside an older app. Tap Open in Chrome, then Install app':hintTxt();if(hintGone||(tip&&!tip.hidden))show=false;hint.hidden=!show;hint.style.display=show?'':'none'}
+  function refresh(){badge();if(!btn)return;btn.hidden=standalone()&&ownWindow();if(standalone()&&!ownWindow()){btn.lastChild.textContent='Open in Chrome to install';btn.hidden=false;paintHint();return}if(btn.hidden&&tip)tip.hidden=true;label();paintHint()}
   window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;try{localStorage.removeItem(KEY)}catch(x){}refresh()});
-  window.addEventListener('appinstalled',function(){dp=null;try{localStorage.setItem(KEY,'1')}catch(x){}if(btn)btn.hidden=true;if(tip)tip.hidden=true});
+  window.addEventListener('appinstalled',function(){dp=null;try{localStorage.setItem(KEY,'1')}catch(x){}if(btn)btn.hidden=true;if(tip)tip.hidden=true;if(hint)hint.style.display='none'});
   function init(){
     if(document.getElementById('araSave'))return;
     var st=document.createElement('style');st.id='araSaveCss';st.textContent=css;document.head.appendChild(st);
@@ -68,10 +77,10 @@
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
   /* Ara button on every app that loads this file (installed apps pick it up on next open) */
-  try{if(!document.getElementById('araBtnJs')){var ab=document.createElement('script');ab.id='araBtnJs';ab.src=new URL('ara-button.js?v=20261016a',(S&&S.src)?S.src:new URL('js/',location.href)).href;(document.head||document.documentElement).appendChild(ab)}}catch(e){}
+  try{if(!document.getElementById('araBtnJs')){var ab=document.createElement('script');ab.id='araBtnJs';ab.src=new URL('ara-button.js?v=20261016v5',(S&&S.src)?S.src:new URL('js/',location.href)).href;(document.head||document.documentElement).appendChild(ab)}}catch(e){}
 
   if('serviceWorker' in navigator&&location.protocol!=='file:'){
     var base=(S&&S.src)?new URL('../',S.src):new URL('./',location.href);
-    navigator.serviceWorker.register(new URL('app-sw.js',base).href,{scope:new URL(path,location.href).href}).catch(function(){});
+    navigator.serviceWorker.register(new URL('app-sw.js?v=20261016v5',base).href,{scope:new URL(path,location.href).href,updateViaCache:'none'}).then(function(r){try{r.update()}catch(e){}}).catch(function(){});
   }
 })();
