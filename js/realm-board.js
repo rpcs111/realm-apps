@@ -7,29 +7,29 @@ var KEY='realm_queue_v1';
 /* Booking status buttons, in Ange's order. Ids unchanged from Layer 1 so old boards keep their chips. */
 var STAT=[['keys','Waiting for keys','st-keys'],['booked','Booked','st-booked'],['await','Awaiting confirmation','st-await'],['conf','Confirmed','st-conf'],['van','Assigned van','st-van'],['staff','Assigned staff','st-staff']];
 var TYPES={job:'Job',task:'Task',staff:'Staff',step:'Core step',system:'System',centre:'Centre',app:'App',action:'App button'};
-var REG='https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com.au';
-var CAL='https://calendar.google.com/calendar/r?authuser=info@realmpcs.com.au';
+var REG='https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com';
+var CAL='https://calendar.google.com/calendar/r?authuser=info@realmpcs.com';
 /* Core steps, in flow order. src = where the step was found (15 Oct sources). kw = smart-paste keywords. */
 var STEPS=[
- {id:'step_enquiry',name:'Enquiry',url:'https://mail.google.com/mail/?authuser=info@realmpcs.com.au#inbox',note:'Email / work order / call / WhatsApp comes in.',kw:['enquiry','enquire','work order','workorder','wo ','request','new client','lead','call from']},
+ {id:'step_enquiry',name:'Enquiry',url:'https://mail.google.com/mail/?authuser=info@realmpcs.com#inbox',note:'Email / work order / call / WhatsApp comes in.',kw:['enquiry','enquire','work order','workorder','wo ','request','new client','lead','call from']},
  {id:'step_quote',name:'Quote',url:'https://books.zoho.com/app#/quotes',note:'Estimate in Zoho Books (EST-).',kw:['quote','estimate','est-','pricing','price']},
  {id:'step_followup',name:'Follow-up',url:'./scribe.html',note:'Chase the quote / re-quote.',kw:['follow up','follow-up','followup','chase quote','re-quote','requote','no reply']},
  {id:'step_booking',name:'Booking',url:CAL,note:'Booked into Google Calendar (the centre). Statuses: keys / booked / awaiting / confirmed / van / staff.',kw:['booking','book in','booked','date','reschedule','moved to','diary']},
  {id:'step_roster',name:'Rostering',url:'',note:'Deputy roster, look-only. Nobody edits shifts (one-touch payroll).',kw:['roster','rostering','shift','deputy','crew','who is on']},
  {id:'step_0',name:'Job',url:'',note:'Job card / job day (calendar notes template: hours, site contact, scope, access, equipment, parking, last INV, WhatsApp, last cert).',kw:['job card','job day','on site','onsite','scope','access','parking','completed','job sheet']},
- {id:'step_1',name:'Cert',url:'https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com.au',note:'',kw:['cert','certificate','recert','re cert','anchor test','load test','inspection due']},
+ {id:'step_1',name:'Cert',url:'https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com',note:'',kw:['cert','certificate','recert','re cert','anchor test','load test','inspection due']},
  {id:'step_2',name:'Invoice',url:'https://books.zoho.com/',note:'',kw:['invoice','inv-','bill ','billed','raise inv']},
  {id:'step_3',name:'Outstanding',url:REG,note:'',kw:['outstanding','overdue','owed','owing','statement','balance','debtor','chase']},
  {id:'step_remit',name:'Remittance',url:'',note:'Payment / remittance in info@ closes the invoice.',kw:['remittance','remit','paid','payment received','eft','deposit']},
- {id:'step_4',name:'P&L',url:'https://docs.google.com/spreadsheets/d/1HXLRRgHZJDHSj0p_dp3WHgHO-6-Rxg8s/edit?authuser=info@realmpcs.com.au',note:'',kw:['p&l','pnl','profit','margin','labour cost','cost']},
+ {id:'step_4',name:'P&L',url:'https://docs.google.com/spreadsheets/d/1HXLRRgHZJDHSj0p_dp3WHgHO-6-Rxg8s/edit?authuser=info@realmpcs.com',note:'',kw:['p&l','pnl','profit','margin','labour cost','cost']},
  {id:'step_5',name:'Close',url:'',note:'',kw:['close','closed','close out','close-out','done','finished']},
  {id:'step_rebook',name:'Rebook',url:'',note:'Next due date / recurring rebook (not built yet).',kw:['rebook','next due','recurring','annual','12 months','next year']}
 ];
 var SYS=[
  {id:'sys_gcal',type:'centre',name:'Google Calendar',url:CAL,note:'The single centre and source of truth. Bookings live here.',kw:['calendar','gcal','diary']},
  {id:'sys_deputy',type:'system',name:'Deputy (look-only)',url:'https://www.deputy.com/',note:'Look-only. Its own system, not merged with Google Tasks.',kw:[]},
- {id:'sys_gtasks',type:'system',name:'Google Tasks',url:'https://tasks.google.com/?authuser=info@realmpcs.com.au',note:'Its own system, not merged with Deputy.',kw:['google task','gtask','to do','todo']},
- {id:'sys_overlay',type:'system',name:'Google Tasks overlay (reference)',url:'https://docs.google.com/spreadsheets/d/1JXjBlr019zrZpNmEpI_a1ZqZ3EFwc5O0HOKbXae2hsg/edit?authuser=info@realmpcs.com.au',note:'Reference sheet only. Not merged into Google Tasks.',kw:[]}
+ {id:'sys_gtasks',type:'system',name:'Google Tasks',url:'https://tasks.google.com/?authuser=info@realmpcs.com',note:'Its own system, not merged with Deputy.',kw:['google task','gtask','to do','todo']},
+ {id:'sys_overlay',type:'system',name:'Google Tasks overlay (reference)',url:'https://docs.google.com/spreadsheets/d/1JXjBlr019zrZpNmEpI_a1ZqZ3EFwc5O0HOKbXae2hsg/edit?authuser=info@realmpcs.com',note:'Reference sheet only. Not merged into Google Tasks.',kw:[]}
 ];
 /* Chain + centre links */
 var EDGES=[['step_enquiry','step_quote'],['step_quote','step_followup'],['step_followup','step_booking'],['step_booking','sys_gcal'],['sys_gcal','step_roster'],['step_roster','sys_deputy'],['sys_gcal','step_0'],['step_roster','step_0'],['step_0','step_1'],['step_1','step_2'],['step_2','step_3'],['step_3','step_remit'],['step_remit','step_4'],['step_4','step_5'],['step_5','step_rebook']];
