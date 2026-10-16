@@ -32,5 +32,5 @@ input[type=checkbox]{width:28px;height:28px}
 <script>
 document.querySelectorAll('input[data-k]').forEach(function(c){var k='realm_setup_'+c.dataset.k;c.checked=localStorage.getItem(k)==='1';c.addEventListener('change',function(){localStorage.setItem(k,c.checked?'1':'0');if(c.checked){var d=c.closest('details');d.open=false;var n=d.nextElementSibling;if(n&&n.tagName==='DETAILS')n.open=true;}});});
 </script>
-<script src="js/realm-sync.js?v=20261016a"></script>
+<script src="js/realm-sync.js?v=20261016v5"></script>
 </body></html>
