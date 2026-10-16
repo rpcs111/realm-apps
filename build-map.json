@@ -1,49 +1,57 @@
 {
  "title": "Build Map",
- "updated": "2026-10-16T12:42:29Z",
+ "updated": "2026-10-16T12:48:47Z",
  "items": [
   {
+   "id": "notes",
    "group": "APPS",
    "name": "Notes",
    "status": "green",
    "elon_verified": true,
    "note": "Live, own icon, scope fixed. Needs a real-phone test.",
-   "verified_date": "16 Oct",
-   "verified_how": "code check"
+   "verified_date": "2026-10-16T12:47Z",
+   "verified_how": "Elon re-test, /workspace/buildmap_check"
   },
   {
+   "id": "search",
    "group": "APPS",
    "name": "Search Studio",
-   "status": "green",
+   "status": "amber",
    "elon_verified": false,
-   "note": "Live v-25. Slow-search error and phone banner fixed; sync waits on Allow."
+   "note": "Fails 2 & 4 fixed; real results untested (no key); Engine still 403."
   },
   {
+   "id": "cert",
    "group": "APPS",
    "name": "Cert Studio",
    "status": "green",
    "elon_verified": true,
    "note": "Live, own icon.",
-   "verified_date": "16 Oct",
-   "verified_how": "code check"
+   "verified_date": "2026-10-16T12:47Z",
+   "verified_how": "Elon re-test, /workspace/buildmap_check"
   },
   {
+   "id": "hub",
    "group": "APPS",
    "name": "Realm Apps hub",
    "status": "green",
    "elon_verified": true,
    "note": "Live. The \"need sign in\" message has been removed.",
-   "verified_date": "16 Oct",
-   "verified_how": "code check"
+   "verified_date": "2026-10-16T12:47Z",
+   "verified_how": "Elon re-test, /workspace/buildmap_check"
   },
   {
+   "id": "layers",
    "group": "APPS",
    "name": "Layers",
    "status": "green",
-   "elon_verified": false,
-   "note": "Live, installs."
+   "elon_verified": true,
+   "note": "Live, installs.",
+   "verified_date": "2026-10-16T12:47Z",
+   "verified_how": "Elon re-test, /workspace/buildmap_check"
   },
   {
+   "id": "eta",
    "group": "APPS",
    "name": "ETA board",
    "status": "green",
@@ -51,6 +59,7 @@
    "note": "Live v-25, own install."
   },
   {
+   "id": "nova-page",
    "group": "APPS",
    "name": "Nova page",
    "status": "green",
@@ -58,6 +67,7 @@
    "note": "Live v-25, own install."
   },
   {
+   "id": "flowmap",
    "group": "APPS",
    "name": "Flow Map",
    "status": "green",
@@ -65,20 +75,27 @@
    "note": "Live v-25, now installable."
   },
   {
+   "id": "scribe",
    "group": "APPS",
    "name": "Scribe",
    "status": "grey",
-   "elon_verified": false,
-   "note": "Retired. The old link opens Notes."
+   "elon_verified": true,
+   "note": "Retired. The old link opens Notes.",
+   "verified_date": "2026-10-16T12:47Z",
+   "verified_how": "Elon re-test, /workspace/buildmap_check"
   },
   {
+   "id": "nova-queue",
    "group": "SYSTEMS & LAYERS",
    "name": "Nova queue (Gemini)",
-   "status": "green",
-   "elon_verified": false,
-   "note": "Items 18–101 loaded. Needs Ange's one paste of the standing command."
+   "status": "amber",
+   "elon_verified": true,
+   "note": "Replies 18–26 done (11:54 UTC); nothing since. Daily 7am 'go' still needs Ange.",
+   "verified_date": "2026-10-16T12:47Z",
+   "verified_how": "Elon re-test, /workspace/buildmap_check"
   },
   {
+   "id": "stream-check",
    "group": "SYSTEMS & LAYERS",
    "name": "Weekend stream check",
    "status": "green",
@@ -86,34 +103,47 @@
    "note": "Every 3h until Mon 9am: links, Nova, misses logged."
   },
   {
+   "id": "handoff",
    "group": "SYSTEMS & LAYERS",
    "name": "Handoff log",
    "status": "green",
-   "elon_verified": false,
-   "note": "Updated tonight."
+   "elon_verified": true,
+   "note": "Updated tonight.",
+   "verified_date": "2026-10-16T12:47Z",
+   "verified_how": "Elon re-test, /workspace/buildmap_check"
   },
   {
+   "id": "engine-sync",
    "group": "SYSTEMS & LAYERS",
    "name": "Ara Engine sync",
    "status": "red",
-   "elon_verified": false,
-   "note": "Waiting on Ange's one-time Allow on the laptop."
+   "elon_verified": true,
+   "note": "Waiting on Ange's one-time Allow on the laptop.",
+   "verified_date": "2026-10-16T12:47Z",
+   "verified_how": "Elon re-test, /workspace/buildmap_check"
   },
   {
+   "id": "ara-capture",
    "group": "SYSTEMS & LAYERS",
    "name": "Ara button → capture inbox",
    "status": "red",
-   "elon_verified": false,
-   "note": "Waiting on the same Allow."
+   "elon_verified": true,
+   "note": "Waiting on the same Allow.",
+   "verified_date": "2026-10-16T12:47Z",
+   "verified_how": "Elon re-test, /workspace/buildmap_check"
   },
   {
+   "id": "tasks-notes",
    "group": "SYSTEMS & LAYERS",
    "name": "Google Tasks → Notes sync",
    "status": "red",
-   "elon_verified": false,
-   "note": "Waiting on the same Allow."
+   "elon_verified": true,
+   "note": "Waiting on the same Allow.",
+   "verified_date": "2026-10-16T12:47Z",
+   "verified_how": "Elon re-test, /workspace/buildmap_check"
   },
   {
+   "id": "ange-nova-paste",
    "group": "WAITING ON ANGE",
    "name": "Paste Nova standing command",
    "status": "red",
@@ -121,6 +151,7 @@
    "note": "One paste in Gemini, then set a daily 7am \"go\"."
   },
   {
+   "id": "ange-stop-email",
    "group": "WAITING ON ANGE",
    "name": "Stop daily email",
    "status": "red",
@@ -128,6 +159,7 @@
    "note": "One tap in the Studio flow before Sat 5:55pm."
   },
   {
+   "id": "ange-2sv",
    "group": "WAITING ON ANGE",
    "name": "Turn on 2-step verification (Workspace)",
    "status": "red",
@@ -135,13 +167,17 @@
    "note": "Security alerts on the account."
   },
   {
+   "id": "ange-whatsapp-export",
    "group": "WAITING ON ANGE",
    "name": "Export the two office WhatsApp chats",
    "status": "red",
-   "elon_verified": false,
-   "note": "~20 unsaved certs. Export with media to Drive."
+   "elon_verified": true,
+   "note": "~20 unsaved certs. Export with media to Drive.",
+   "verified_date": "2026-10-16T12:47Z",
+   "verified_how": "Elon re-test, /workspace/buildmap_check"
   },
   {
+   "id": "ange-reinstall",
    "group": "WAITING ON ANGE",
    "name": "Uninstall old icons, then install new",
    "status": "red",
@@ -149,15 +185,17 @@
    "note": "On each phone, in Chrome Beta."
   },
   {
+   "id": "deputy-xref",
    "group": "PLANNED",
    "name": "Deputy cross-reference",
    "status": "grey",
    "elon_verified": true,
    "note": "Sat. Read-only, Elon's design.",
-   "verified_date": "16 Oct",
-   "verified_how": "design reviewed"
+   "verified_date": "2026-10-16T12:47Z",
+   "verified_how": "Elon re-test, /workspace/buildmap_check"
   },
   {
+   "id": "unsaved-cert-flag",
    "group": "PLANNED",
    "name": "Unsaved-cert flag (replaces send & save)",
    "status": "grey",
@@ -165,13 +203,17 @@
    "note": "Will flag \"you haven't saved it\"."
   },
   {
+   "id": "reorder",
    "group": "PLANNED",
    "name": "Reorder app",
    "status": "grey",
-   "elon_verified": false,
-   "note": "Voice phrases are ready (Nova item 20)."
+   "elon_verified": true,
+   "note": "Voice phrases are ready (Nova item 20).",
+   "verified_date": "2026-10-16T12:47Z",
+   "verified_how": "Elon re-test, /workspace/buildmap_check"
   },
   {
+   "id": "ring-group",
    "group": "PLANNED",
    "name": "Ring group (Ara calls your phone)",
    "status": "grey",
@@ -179,6 +221,7 @@
    "note": "Options + price on Sat."
   },
   {
+   "id": "xenon",
    "group": "PLANNED",
    "name": "Xenon checker",
    "status": "grey",
