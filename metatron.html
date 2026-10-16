@@ -11,7 +11,7 @@ header{padding:12px 14px}h1{margin:0;font-size:22px}header p{margin:4px 0 0;colo
 .ni{font:24px system-ui;text-anchor:middle;dominant-baseline:central;pointer-events:none}
 .nt{font:600 15px system-ui;fill:#fff;text-anchor:middle;pointer-events:none}.ns{font:12px system-ui;fill:#cbd5e1;text-anchor:middle;pointer-events:none}
 g.node a{cursor:pointer}
-</style></head><body>
+</style><script src="js/ara-account.js?v=20261016a" defer></script></head><body>
 <header><h1>Realm Flow Map — Metatron's Cube</h1><p>Everything loops through Google Calendar. Inner ring = storage, outer ring = the outside world. <a href="./map.html">&#8592; back to the flow map</a></p></header>
 <div class="legend">
 <span><i class="sw" style="background:#4285f4"></i>Google & devices</span>
@@ -26,7 +26,7 @@ g.node a{cursor:pointer}
 var NS='http://www.w3.org/2000/svg',svg=document.getElementById('map'),C=500,D=170;
 function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e}
 function pt(r,deg){var a=deg*Math.PI/180;return [C+r*Math.cos(a),C+r*Math.sin(a)]}
-var CAL='https://calendar.google.com/calendar/u/0/r',GM='https://mail.google.com/mail/u/0/#inbox',GD='https://drive.google.com/drive/my-drive',GT='https://tasks.google.com/';
+var CAL='https://calendar.google.com/calendar/r?authuser=info@realmpcs.com.au',GM='https://mail.google.com/mail/?authuser=info@realmpcs.com.au#inbox',GD='https://drive.google.com/drive/my-drive?authuser=info@realmpcs.com.au',GT='https://tasks.google.com/?authuser=info@realmpcs.com.au';
 /* nodes: [id,name,sub,icon,colour,ring,angle,link] */
 var centre={id:'cal',name:'Google Calendar',sub:'source of truth',sub2:'bookings & scopes',icon:'\u{1F4C5}',col:'#1a73e8',p:[C,C],r:80,link:CAL};
 var inner=[
