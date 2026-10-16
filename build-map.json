@@ -1,0 +1,189 @@
+{
+ "title": "Build Map",
+ "updated": "2026-10-16T12:39:04Z",
+ "items": [
+  {
+   "group": "APPS",
+   "name": "Notes",
+   "status": "green",
+   "elon_verified": true,
+   "note": "Live, own icon, scope fixed. Needs a real-phone test.",
+   "verified_date": "16 Oct",
+   "verified_how": "code check"
+  },
+  {
+   "group": "APPS",
+   "name": "Search Studio",
+   "status": "amber",
+   "elon_verified": false,
+   "note": "Live. Fixing three fails now: slow-search error, phone banner overlap, sync waits gracefully."
+  },
+  {
+   "group": "APPS",
+   "name": "Cert Studio",
+   "status": "green",
+   "elon_verified": true,
+   "note": "Live, own icon.",
+   "verified_date": "16 Oct",
+   "verified_how": "code check"
+  },
+  {
+   "group": "APPS",
+   "name": "Realm Apps hub",
+   "status": "green",
+   "elon_verified": true,
+   "note": "Live. The \"need sign in\" message has been removed.",
+   "verified_date": "16 Oct",
+   "verified_how": "code check"
+  },
+  {
+   "group": "APPS",
+   "name": "Layers",
+   "status": "green",
+   "elon_verified": false,
+   "note": "Live, installs."
+  },
+  {
+   "group": "APPS",
+   "name": "ETA board",
+   "status": "amber",
+   "elon_verified": false,
+   "note": "Moving onto tonight's install setup."
+  },
+  {
+   "group": "APPS",
+   "name": "Nova page",
+   "status": "amber",
+   "elon_verified": false,
+   "note": "Moving onto tonight's install setup."
+  },
+  {
+   "group": "APPS",
+   "name": "Flow Map",
+   "status": "amber",
+   "elon_verified": false,
+   "note": "Adding install file so it becomes an app."
+  },
+  {
+   "group": "APPS",
+   "name": "Scribe",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Retired. The old link opens Notes."
+  },
+  {
+   "group": "SYSTEMS & LAYERS",
+   "name": "Nova queue (Gemini)",
+   "status": "green",
+   "elon_verified": false,
+   "note": "Items 18–101 loaded. Needs Ange's one paste of the standing command."
+  },
+  {
+   "group": "SYSTEMS & LAYERS",
+   "name": "Weekend stream check",
+   "status": "green",
+   "elon_verified": false,
+   "note": "Every 3h until Mon 9am: links, Nova, misses logged."
+  },
+  {
+   "group": "SYSTEMS & LAYERS",
+   "name": "Handoff log",
+   "status": "green",
+   "elon_verified": false,
+   "note": "Updated tonight."
+  },
+  {
+   "group": "SYSTEMS & LAYERS",
+   "name": "Ara Engine sync",
+   "status": "red",
+   "elon_verified": false,
+   "note": "Waiting on Ange's one-time Allow on the laptop."
+  },
+  {
+   "group": "SYSTEMS & LAYERS",
+   "name": "Ara button → capture inbox",
+   "status": "red",
+   "elon_verified": false,
+   "note": "Waiting on the same Allow."
+  },
+  {
+   "group": "SYSTEMS & LAYERS",
+   "name": "Google Tasks → Notes sync",
+   "status": "red",
+   "elon_verified": false,
+   "note": "Waiting on the same Allow."
+  },
+  {
+   "group": "WAITING ON ANGE",
+   "name": "Paste Nova standing command",
+   "status": "red",
+   "elon_verified": false,
+   "note": "One paste in Gemini, then set a daily 7am \"go\"."
+  },
+  {
+   "group": "WAITING ON ANGE",
+   "name": "Stop daily email",
+   "status": "red",
+   "elon_verified": false,
+   "note": "One tap in the Studio flow before Sat 5:55pm."
+  },
+  {
+   "group": "WAITING ON ANGE",
+   "name": "Turn on 2-step verification (Workspace)",
+   "status": "red",
+   "elon_verified": false,
+   "note": "Security alerts on the account."
+  },
+  {
+   "group": "WAITING ON ANGE",
+   "name": "Export the two office WhatsApp chats",
+   "status": "red",
+   "elon_verified": false,
+   "note": "~20 unsaved certs. Export with media to Drive."
+  },
+  {
+   "group": "WAITING ON ANGE",
+   "name": "Uninstall old icons, then install new",
+   "status": "red",
+   "elon_verified": false,
+   "note": "On each phone, in Chrome Beta."
+  },
+  {
+   "group": "PLANNED",
+   "name": "Deputy cross-reference",
+   "status": "grey",
+   "elon_verified": true,
+   "note": "Sat. Read-only, Elon's design.",
+   "verified_date": "16 Oct",
+   "verified_how": "design reviewed"
+  },
+  {
+   "group": "PLANNED",
+   "name": "Unsaved-cert flag (replaces send & save)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Will flag \"you haven't saved it\"."
+  },
+  {
+   "group": "PLANNED",
+   "name": "Reorder app",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Voice phrases are ready (Nova item 20)."
+  },
+  {
+   "group": "PLANNED",
+   "name": "Ring group (Ara calls your phone)",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Options + price on Sat."
+  },
+  {
+   "group": "PLANNED",
+   "name": "Xenon checker",
+   "status": "grey",
+   "elon_verified": false,
+   "note": "Planned."
+  }
+ ]
+}

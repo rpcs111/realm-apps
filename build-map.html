@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<title>Build Map</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;overflow-x:hidden}
+html{background:#070a16}
+body{min-height:100dvh;background:radial-gradient(120% 60% at 50% 0%,#1b2550 0%,#0b1020 55%,#070a16 100%) no-repeat #070a16;color:#e8ecf8;font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:calc(16px + env(safe-area-inset-top)) 14px calc(32px + env(safe-area-inset-bottom))}
+.wrap{max-width:980px;margin:0 auto}
+header h1{margin:0;font-size:30px;letter-spacing:.02em;background:linear-gradient(90deg,#7ee8fa,#eec0c6 50%,#ffd36e);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:#9aa6c7;font-size:13px;margin:4px 0 12px}
+.sub b{color:#e8ecf8;font-weight:600}
+.legend,.counts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:13px}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.counts .chip{font-weight:700;font-size:15px;padding:8px 14px}
+.counts .chip small{font-weight:500;color:#9aa6c7;font-size:12px}
+.g{--c:#34d399}.a{--c:#fbbf24}.r{--c:#f87171}.x{--c:#94a3b8}
+.dot{background:var(--c);box-shadow:0 0 8px var(--c)}
+section{margin-top:20px}
+section h2{font-size:13px;letter-spacing:.14em;color:#b9c3e4;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+section h2 span{font-size:11px;letter-spacing:0;background:rgba(255,255,255,.08);padding:2px 8px;border-radius:999px;color:#cfd7f2}
+.grid{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:600px){.grid{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.grid{grid-template-columns:1fr 1fr 1fr}}
+.card{position:relative;border-radius:18px;padding:14px 14px 13px 18px;background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.08);box-shadow:0 6px 18px rgba(0,0,0,.25);overflow:hidden}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c)}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.name{font-weight:700;font-size:16.5px;overflow-wrap:anywhere}
+.card.v .name{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:#34d399}
+.pill{flex:none;font-size:11.5px;font-weight:800;letter-spacing:.04em;padding:4px 10px;border-radius:999px;background:var(--c);color:#0b1020;text-transform:uppercase}
+.note{margin-top:6px;color:#c7cfea;font-size:14px}
+.badge{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:#0b1020;background:linear-gradient(90deg,#6ee7b7,#7ee8fa);padding:3px 9px;border-radius:999px}
+.badge small{font-weight:600;opacity:.8}
+.err{background:#3a1010;border:1px solid #7f1d1d;color:#fecaca;padding:12px;border-radius:12px;margin-top:12px;display:none}
+.foot{margin-top:24px;color:#6f7ba0;font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Build Map</h1>
+  <div class="sub">Last updated: <b id="upd">loading&hellip;</b> &middot; refreshes every 60s</div>
+  <div class="legend" aria-label="Legend">
+    <span class="chip g"><i class="dot"></i>Live</span>
+    <span class="chip a"><i class="dot"></i>Building now</span>
+    <span class="chip r"><i class="dot"></i>Blocked / waiting on Ange</span>
+    <span class="chip x"><i class="dot"></i>Planned</span>
+    <span class="chip"><s>Name</s>&nbsp;= &#10003; Elon checked</span>
+  </div>
+  <div class="counts" id="counts"></div>
+</header>
+<div class="err" id="err"></div>
+<main id="main"></main>
+<div class="foot">Data: build-map.json &middot; page checked <span id="chk">-</span></div>
+</div>
+<script>
+(function(){
+  var MAP={green:{k:"g",t:"Live"},amber:{k:"a",t:"Building"},red:{k:"r",t:"Waiting"},grey:{k:"x",t:"Planned"},gray:{k:"x",t:"Planned"}};
+  var ORDER=["APPS","SYSTEMS & LAYERS","WAITING ON ANGE","PLANNED"];
+  function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+  function fmt(iso){try{var d=new Date(iso);if(isNaN(d))return esc(iso);return d.toLocaleString(undefined,{weekday:"short",day:"numeric",month:"short",hour:"numeric",minute:"2-digit"});}catch(e){return esc(iso);}}
+  function render(data){
+    var items=(data&&data.items)||[];
+    document.getElementById("upd").textContent=data&&data.updated?fmt(data.updated):"unknown";
+    var c={g:0,a:0,r:0,x:0};
+    items.forEach(function(it){var m=MAP[(it.status||"").toLowerCase()]||MAP.grey;c[m.k]++;});
+    document.getElementById("counts").innerHTML=
+      '<span class="chip g"><i class="dot"></i>'+c.g+' <small>live</small></span>'+
+      '<span class="chip a"><i class="dot"></i>'+c.a+' <small>building</small></span>'+
+      '<span class="chip r"><i class="dot"></i>'+c.r+' <small>waiting</small></span>'+
+      '<span class="chip x"><i class="dot"></i>'+c.x+' <small>planned</small></span>';
+    var groups={};
+    items.forEach(function(it){var g=it.group||"OTHER";(groups[g]=groups[g]||[]).push(it);});
+    var names=ORDER.filter(function(g){return groups[g];}).concat(Object.keys(groups).filter(function(g){return ORDER.indexOf(g)<0;}));
+    var html="";
+    names.forEach(function(g){
+      html+='<section><h2>'+esc(g)+' <span>'+groups[g].length+'</span></h2><div class="grid">';
+      groups[g].forEach(function(it){
+        var m=MAP[(it.status||"").toLowerCase()]||MAP.grey;var v=it.elon_verified===true;
+        html+='<div class="card '+m.k+(v?' v':'')+'"><div class="top"><div class="name">'+esc(it.name)+'</div><span class="pill">'+m.t+'</span></div>'+
+          '<div class="note">'+esc(it.note)+'</div>'+
+          (v?'<span class="badge">&#10003; Elon checked'+(it.verified_date?' &middot; '+esc(it.verified_date):'')+(it.verified_how?' <small>('+esc(it.verified_how)+')</small>':'')+'</span>':'')+
+          '</div>';
+      });
+      html+='</div></section>';
+    });
+    document.getElementById("main").innerHTML=html;
+  }
+  function load(){
+    fetch("build-map.json?t="+Date.now(),{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+    .then(function(d){render(d);var e=document.getElementById("err");e.style.display="none";document.getElementById("chk").textContent=new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});})
+    .catch(function(){var e=document.getElementById("err");e.textContent="Couldn't refresh the map just now. Trying again in a minute.";e.style.display="block";});
+  }
+  load();setInterval(load,60000);
+})();
+</script>
+</body>
+</html>
