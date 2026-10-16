@@ -90,8 +90,38 @@ body.lock .otp code{color:var(--ara-mute)}
 .foot{grid-column:1/-1;color:var(--ara-mute);font-size:12.5px;line-height:1.5;border-top:1px solid var(--rui-line);padding-top:12px}
 .toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#0b141c;border:1px solid var(--ara-accent);color:#fff;padding:10px 16px;border-radius:12px;font-size:13.5px;z-index:90;opacity:0;pointer-events:none;transition:opacity .2s;max-width:92vw}
 .toast.on{opacity:1}
+/* ---- prototype lock screen (16 Oct 2026) ---- */
+body.vlocked>*:not(#vlock){display:none!important}
+#vlock{display:none}
+body.vlocked #vlock{display:flex;position:fixed;inset:0;z-index:2147483600;align-items:center;justify-content:center;padding:20px;background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 70%);overflow:auto}
+.vl-box{width:100%;max-width:380px;background:var(--card);border:1px solid var(--ara-line,rgba(0,229,255,.35));border-radius:16px;padding:20px 18px;text-align:center;color:#e8eefc}
+.vl-ico{width:56px;height:56px;margin:0 auto 8px;border-radius:14px;background:#05131f;display:flex;align-items:center;justify-content:center}
+.vl-box h1{font-size:20px;margin:4px 0 2px;color:#fff}.vl-sub{color:#b9c6d8;font-size:14px;margin:0 0 14px;min-height:20px}
+.vl-pin{all:unset;box-sizing:border-box;width:100%;font:600 26px/1 ui-monospace,monospace;letter-spacing:.5em;text-align:center;padding:12px 8px 12px 18px;border:1px solid rgba(148,197,214,.45);border-radius:12px;background:#0f1830;color:#fff}
+.vl-pin:focus{border-color:#22d3ee;box-shadow:0 0 0 3px rgba(34,211,238,.25)}
+.vl-pin:disabled{opacity:.45}
+.vl-row{display:flex;gap:8px;margin-top:12px}.vl-row .btn{flex:1}
+.vl-bio{width:100%;margin-top:12px;background:#22d3ee!important;color:#001018!important;font-weight:700;border-color:#22d3ee!important}
+.vl-msg{min-height:20px;margin:10px 0 0;font-size:14px;color:#fbbf24}.vl-msg.bad{color:#fca5a5}
+.vl-note{margin:16px 0 0;font-size:12.5px;line-height:1.45;color:#b9c6d8;border-top:1px solid rgba(148,197,214,.25);padding-top:12px}
+.vl-reset{all:unset;cursor:pointer;margin-top:10px;font-size:12.5px;color:#7de9ff;text-decoration:underline}
+#vLockBtn{margin-left:auto}
+.vl-box [hidden]{display:none!important}
+.vl-forgot{margin:8px 0 0;font-size:12px;color:#94a3b8}
 </style></head>
-<body class="rui">
+<body class="rui vlocked">
+<div id="vlock" role="dialog" aria-modal="true" aria-labelledby="vlT"><div class="vl-box">
+ <div class="vl-ico" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 64 64"><rect x="14" y="28" width="36" height="26" rx="5" fill="none" stroke="#22d3ee" stroke-width="4"/><path d="M22 28v-6a10 10 0 0 1 20 0v6" fill="none" stroke="#22d3ee" stroke-width="4"/></svg></div>
+ <h1 id="vlT">Realm Vault is locked</h1><p class="vl-sub" id="vlS">Enter your 6-digit PIN</p>
+ <form id="vlF" autocomplete="off"><label for="vlP" class="sr-only" style="position:absolute;left:-9999px">PIN</label><input id="vlP" class="vl-pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" aria-describedby="vlM">
+ <div class="vl-row"><button type="submit" class="btn" id="vlGo">Unlock</button></div></form>
+ <button type="button" class="btn vl-bio" id="vlBio" hidden>Unlock with fingerprint / face</button>
+ <button type="button" class="btn vl-bio" id="vlBioSet" hidden>Turn on fingerprint / face</button>
+ <p class="vl-msg" id="vlM" role="status" aria-live="polite"></p>
+ <p class="vl-note">Prototype lock — the real lock is 1Password's own (Face/fingerprint + Secret Key + master password). Demo data only.</p>
+ <p class="vl-forgot">Forgot the PIN? Prototype only: clear this site’s data in Chrome settings, then set a new PIN.</p>
+</div></div>
+
 <header class="rui-top"><span class="rui-mark vlt-mark" role="img" aria-label="Realm Vault"></span><b class="rui-title">Realm Vault</b><nav class="nav"><a href="./index.html">‹ Apps</a></nav></header>
 <p class="vlt-banner" role="note">PROTOTYPE — demo data, does nothing real</p>
 <div class="vlt">
@@ -128,9 +158,9 @@ function totp(sec,t){var c=Math.floor(t/30),m=[0,0,0,0,c>>>24&255,c>>>16&255,c>>
  var v=((h[o]&127)<<24|h[o+1]<<16|h[o+2]<<8|h[o+3])%1e6;v=String(v).padStart(6,'0');return v.slice(0,3)+' '+v.slice(3)}
 /* ---------- demo data (fake) ---------- */
 var A=[
- {id:'gws',name:'Google Workspace (info@)',login:'i•••@r••••••.com.au',health:'ok',changed:'12 Sep 2026',site:'Google account → Security → Password',
+ {id:'gws',name:'Google Workspace (info@)',login:'i•••@r••••••.com',health:'ok',changed:'12 Sep 2026',site:'Google account → Security → Password',
   deps:[['Fold (Chrome Beta)','Phone sign-in'],['Yoga laptop (Chrome)','Laptop sign-in'],['Mac (Chrome)','Mac sign-in'],['Ara Engine Allow','Apps Script permission'],['clasp','Command-line login'],['Ara Capture','Sync to Capture inbox']]},
- {id:'dep',name:'Deputy (accounts@)',login:'a•••••••@r••••••.com.au',health:'old',changed:'3 Feb 2025',site:'Deputy → My profile → Password',deps:[['Deputy app (Fold)','Rostering app'],['Julie\u2019s Deputy login','Shared roster view'],['Payroll export','Weekly export']]},
+ {id:'dep',name:'Deputy (accounts@)',login:'a•••••••@r••••••.com',health:'old',changed:'3 Feb 2025',site:'Deputy → My profile → Password',deps:[['Deputy app (Fold)','Rostering app'],['Julie\u2019s Deputy login','Shared roster view'],['Payroll export','Weekly export']]},
  {id:'zoh',name:'Zoho',login:'i•••@r••••••.com.au',health:'reused',changed:'20 Jun 2026',site:'Zoho Accounts → Security',deps:[['Zoho CRM (web)','Browser session'],['Zoho mobile app','Phone app'],['Zoho tunnel link','Server connector']]},
  {id:'uni',name:'UniFi',login:'r•••-a•••n',health:'ok',changed:'28 Aug 2026',site:'UniFi account → Security',deps:[['UniFi app (Fold)','Network app'],['Site controller','Factory network']]},
  {id:'tsc',name:'Tailscale',login:'i•••@r••••••.com.au',health:'old',changed:'9 Mar 2025',site:'Tailscale admin → Account',deps:[['Fold','Tailnet device'],['Yoga laptop','Tailnet device'],['Mac','Tailnet device'],['Server','Tailnet node']]},
@@ -254,6 +284,75 @@ function over(){cur=null;document.body.classList.add('pane-open');render();var p
  p.appendChild(el('p','note','Real version: 1Password Emergency Kit + recovery codes. Works from any browser at 1password.com when travelling.'));
  if(innerWidth<1000)window.scrollTo(0,0)}
 render();log('Vault opened (prototype, demo data)');setInterval(tick,1000);
+})();
+</script>
+<script>
+/* Realm Vault prototype lock: WebAuthn platform authenticator (fingerprint/face) + 6-digit PIN fallback.
+   Stores only: credential id, PIN salt + SHA-256 hash, wrong-try count, lockout time. No secrets leave the device. */
+(function(){
+'use strict';
+var K={cred:'rv_lock_cred',salt:'rv_lock_salt',hash:'rv_lock_hash',fails:'rv_lock_fails',until:'rv_lock_until'};
+var IDLE_MS=120000,MAX_FAILS=5,LOCKOUT_MS=300000;
+var b=document.body,$=function(i){return document.getElementById(i)};
+var P=$('vlP'),S=$('vlS'),M=$('vlM'),F=$('vlF'),BIO=$('vlBio'),BIOSET=$('vlBioSet'),T=$('vlT');
+var mode='unlock',first='',idleT=null,tick=null;
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
+function hex(buf){return Array.prototype.map.call(new Uint8Array(buf),function(x){return('0'+x.toString(16)).slice(-2)}).join('')}
+function unhex(h){var a=new Uint8Array(h.length/2);for(var i=0;i<a.length;i++)a[i]=parseInt(h.substr(i*2,2),16);return a}
+function b64u(buf){var s='',a=new Uint8Array(buf);for(var i=0;i<a.length;i++)s+=String.fromCharCode(a[i]);return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function unb64u(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';var r=atob(s),a=new Uint8Array(r.length);for(var i=0;i<r.length;i++)a[i]=r.charCodeAt(i);return a}
+function rnd(n){var a=new Uint8Array(n);crypto.getRandomValues(a);return a}
+function hashPin(pin,salt){var p=new TextEncoder().encode(pin),d=new Uint8Array(salt.length+p.length);d.set(salt);d.set(p,salt.length);return crypto.subtle.digest('SHA-256',d).then(hex)}
+function msg(t,bad){M.textContent=t||'';M.className='vl-msg'+(bad?' bad':'')}
+function lockedOut(){var u=+ls(K.until)||0;return u>Date.now()?u:0}
+function showLockout(){var u=lockedOut();clearInterval(tick);
+ if(!u){P.disabled=false;$('vlGo').disabled=false;if(M.dataset.lo){msg('');delete M.dataset.lo}return false}
+ P.disabled=true;$('vlGo').disabled=true;M.dataset.lo=1;
+ var f=function(){var s=Math.ceil((u-Date.now())/1000);if(s<=0){clearInterval(tick);ls(K.until,null);ls(K.fails,null);showLockout();msg('You can try again now.');P.focus();return}
+  msg('Too many wrong PINs. Try again in '+Math.floor(s/60)+':'+('0'+s%60).slice(-2)+'.',true)};
+ f();tick=setInterval(f,1000);return true}
+function bioAvail(){return window.PublicKeyCredential&&PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable?PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable().catch(function(){return false}):Promise.resolve(false)}
+function setMode(m){mode=m;P.value='';
+ if(m==='set1'){T.textContent='Set up the vault lock';S.textContent='Choose a 6-digit PIN';$('vlGo').textContent='Next'}
+ else if(m==='set2'){S.textContent='Type the same PIN again';$('vlGo').textContent='Save PIN'}
+ else{T.textContent='Realm Vault is locked';S.textContent=ls(K.cred)?'Use fingerprint / face, or your PIN':'Enter your 6-digit PIN';$('vlGo').textContent='Unlock'}
+ refreshBio()}
+function refreshBio(){BIO.hidden=true;BIOSET.hidden=true;if(mode!=='unlock')return;
+ bioAvail().then(function(ok){if(!ok)return;if(ls(K.cred))BIO.hidden=false;else if(ls(K.hash))BIOSET.hidden=false})}
+function lock(why){if(b.classList.contains('vlocked'))return;b.classList.add('vlocked');clearTimeout(idleT);setMode(ls(K.hash)?'unlock':'set1');
+ msg(why||'');showLockout();setTimeout(function(){if(!P.disabled)P.focus()},30)}
+function unlock(){ls(K.fails,null);ls(K.until,null);b.classList.remove('vlocked');msg('');P.value='';armIdle()}
+function armIdle(){clearTimeout(idleT);if(b.classList.contains('vlocked'))return;idleT=setTimeout(function(){lock('Locked after 2 minutes idle.')},IDLE_MS)}
+['pointerdown','keydown','wheel','touchstart','scroll','mousemove'].forEach(function(ev){document.addEventListener(ev,armIdle,{passive:true,capture:true})});
+document.addEventListener('visibilitychange',function(){if(document.hidden)lock('Locked when you left the page.')});
+window.addEventListener('pagehide',function(){lock()});
+F.addEventListener('submit',function(e){e.preventDefault();var v=P.value.trim();
+ if(!/^\d{6}$/.test(v)){msg('The PIN is 6 digits.',true);return}
+ if(mode==='set1'){first=v;setMode('set2');msg('');P.focus();return}
+ if(mode==='set2'){if(v!==first){first='';setMode('set1');msg('The PINs didn\u2019t match. Start again.',true);return}
+  var salt=rnd(16);hashPin(v,salt).then(function(h){ls(K.salt,hex(salt));ls(K.hash,h);first='';msg('');
+   bioAvail().then(function(ok){if(ok){setMode('unlock');unlock();toastish('PIN saved. You can turn on fingerprint / face on the lock screen.')}else{setMode('unlock');unlock()}})});return}
+ if(showLockout())return;
+ hashPin(v,unhex(ls(K.salt)||'')).then(function(h){
+  if(h===ls(K.hash)){unlock();return}
+  var n=(+ls(K.fails)||0)+1;ls(K.fails,String(n));P.value='';
+  if(n>=MAX_FAILS){ls(K.until,String(Date.now()+LOCKOUT_MS));showLockout()}else msg('Wrong PIN. '+(MAX_FAILS-n)+' tr'+(MAX_FAILS-n===1?'y':'ies')+' left before a 5-minute lockout.',true)})});
+P.addEventListener('input',function(){P.value=P.value.replace(/\D/g,'').slice(0,6)});
+BIOSET.addEventListener('click',function(){
+ navigator.credentials.create({publicKey:{challenge:rnd(32),rp:{name:'Realm Vault (prototype)',id:location.hostname},
+  user:{id:rnd(16),name:'realm-vault-prototype',displayName:'Realm Vault prototype'},
+  pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],
+  authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'discouraged'},timeout:60000,attestation:'none'}})
+ .then(function(c){ls(K.cred,b64u(c.rawId));msg('Fingerprint / face turned on.');setMode('unlock')})
+ .catch(function(e){msg('Fingerprint / face not set up ('+(e&&e.name||'error')+'). Use your PIN.',true)})});
+BIO.addEventListener('click',function(){if(showLockout())return;var id=ls(K.cred);if(!id)return;
+ navigator.credentials.get({publicKey:{challenge:rnd(32),rpId:location.hostname,allowCredentials:[{type:'public-key',id:unb64u(id),transports:['internal']}],userVerification:'required',timeout:60000}})
+ .then(function(a){if(a&&b64u(a.rawId)===id)unlock();else msg('That wasn\u2019t the saved fingerprint / face.',true)})
+ .catch(function(e){msg('Fingerprint / face cancelled ('+(e&&e.name||'error')+'). Use your PIN.',true)})});
+function toastish(t){var x=$('toast');if(x){x.textContent=t;x.classList.add('on');setTimeout(function(){x.classList.remove('on')},2600)}}
+var lb=document.createElement('button');lb.type='button';lb.className='btn';lb.id='vLockBtn';lb.textContent='Lock';lb.setAttribute('aria-label','Lock the vault now');
+lb.addEventListener('click',function(){lock('Locked.')});var hdr=document.querySelector('.rui-top');if(hdr)hdr.appendChild(lb);
+b.classList.remove('vlocked');lock();
 })();
 </script>
 </body></html>
