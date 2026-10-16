@@ -107,7 +107,7 @@ body.lock .otp code{color:var(--ara-mute)}
   <section class="card" style="margin-top:12px"><h2>Activity (this page only)</h2><ul class="log" id="log"></ul></section>
  </div>
  <aside class="vlt-pane card" id="pane" aria-live="polite"><div class="vlt-idle">Pick an account to change its password and 2FA, step by step.<br>Or open <b>Overseas / lost access</b>.</div></aside>
- <p class="foot">Real version would sit on top of a proper vault (1Password or Bitwarden), which already combines passwords and 2FA codes and works on phone + laptop + web when travelling.<br>This page is a mock-up: fake accounts, fake passwords, 2FA codes made from a demo secret on this device. Nothing is sent anywhere.</p>
+ <p class="foot">Real version would sit on top of 1Password, which already combines passwords and 2FA codes and works on phone + laptop + web when travelling.<br>This page is a mock-up: fake accounts, fake passwords, 2FA codes made from a demo secret on this device. Nothing is sent anywhere.</p>
 </div>
 <div class="toast" id="toast" role="status"></div>
 <script>
@@ -251,7 +251,7 @@ function over(){cur=null;document.body.classList.add('pane-open');render();var p
    if(it[0]==='lock'){if($('#lockSw').getAttribute('aria-checked')!=='true')$('#lockSw').click()}
    K[it[0]]=!K[it[0]];if(K[it[0]])log('Emergency kit: '+it[1]+' checked (mock)');toast(it[0]==='julie'?'Demo: nothing sent to Julie':it[1]+(K[it[0]]?' ticked':' unticked')+' (demo)');over()});
   li.appendChild(t);li.appendChild(d);li.appendChild(b);ul.appendChild(li)});p.appendChild(ul);
- p.appendChild(el('p','note','Real version: 1Password Emergency Kit or Bitwarden emergency access + recovery codes. Works from any browser at the vault\u2019s website when travelling.'));
+ p.appendChild(el('p','note','Real version: 1Password Emergency Kit + recovery codes. Works from any browser at 1password.com when travelling.'));
  if(innerWidth<1000)window.scrollTo(0,0)}
 render();log('Vault opened (prototype, demo data)');setInterval(tick,1000);
 })();
