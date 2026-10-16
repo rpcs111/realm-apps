@@ -27,12 +27,12 @@
   function standalone(){try{if(navigator.standalone===true)return true;var mm=function(m){return matchMedia('(display-mode: '+m+')').matches};if(mm('browser'))return false;return mm('standalone')||mm('minimal-ui')||mm('fullscreen')||mm('window-controls-overlay')}catch(e){return false}}
   function saved(){try{return localStorage.getItem(KEY)==='1'}catch(e){return false}}
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-  var css='#araSave{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 16px;font-weight:800!important;border-radius:999px;border:1px solid #22d3ee;background:#000;color:#e6fbff;font:600 11px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;white-space:nowrap;box-shadow:0 0 10px rgba(34,211,238,.25);-webkit-tap-highlight-color:transparent}'+
+  var css='#araSave{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:6px;height:44px;min-height:44px;min-width:44px;padding:0 16px;font-weight:800!important;border-radius:999px;border:1px solid #22d3ee;background:#000;color:#e6fbff;font:600 11px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;white-space:nowrap;box-shadow:0 0 10px rgba(34,211,238,.25);-webkit-tap-highlight-color:transparent}'+
    '#araSave:hover,#araSave:focus-visible{background:#04161a;color:#fff;box-shadow:0 0 14px rgba(34,211,238,.5)}#araSave svg{width:13px;height:13px;flex:0 0 13px}'+
-   '#araSave.fx{position:fixed;top:calc(10px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right));z-index:2147483000}'+
+   '#araSaveRow{display:flex;justify-content:flex-end;box-sizing:border-box;width:100%;padding:6px calc(10px + env(safe-area-inset-right)) 6px 10px;margin:0;position:relative;z-index:1}#araSave.fx{position:static}'+
    '#araSave.fl{float:right;margin:0 0 6px 10px}#araSave.ap{margin-left:auto;flex:0 0 auto}#araSave[hidden],#araTip[hidden]{display:none!important}'+
-   '#araTip{position:fixed;top:calc(48px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right));z-index:2147483001;max-width:min(300px,calc(100vw - 20px));background:#000;color:#e4e4e7;border:1px solid #22d3ee;border-radius:12px;padding:12px 14px;font:13px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.6);text-align:left;letter-spacing:normal;text-transform:none}'+
-   '#araTip b{color:#fff}#araTip .h{color:#22d3ee;font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}#araTip .x{all:unset;float:right;cursor:pointer;color:#a1a1aa;font-size:16px;line-height:1;padding:0 0 4px 8px}';
+   '#araTip{position:absolute;top:calc(60px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right));z-index:2147483001;max-width:min(300px,calc(100vw - 20px));background:#000;color:#e4e4e7;border:1px solid #22d3ee;border-radius:12px;padding:12px 14px;font:13px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.6);text-align:left;letter-spacing:normal;text-transform:none}'+
+   '#araTip b{color:#fff}#araTip .h{color:#22d3ee;font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}#araTip .x{all:unset;box-sizing:border-box;float:right;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;margin:-10px -12px 0 4px;cursor:pointer;color:#a1a1aa;font-size:20px;line-height:1}';
   function tipHtml(){
     var n='<b>'+esc(name)+'</b>';
     if(ios)return '<div class="h">Save app</div>'+(safari?'':'Open this page in <b>Safari</b>, then: ')+'tap <b>Share</b> &#x2191;&#xFE0E; &rsaquo; <b>Add to Home Screen</b> &rsaquo; <b>Add</b>.';
@@ -45,7 +45,7 @@
     return '<div class="h">Save app</div>'+how+'<br><br>Already saved? '+open;
   }
   function showTip(){if(!tip){tip=document.createElement('div');tip.id='araTip';tip.setAttribute('role','dialog');document.body.appendChild(tip)}
-    tip.innerHTML='<button class="x" type="button" aria-label="Close">&times;</button>'+tipHtml();tip.hidden=false;if(hint)hint.style.display='none';
+    tip.innerHTML='<button class="x" type="button" aria-label="Close">&times;</button>'+tipHtml();tip.hidden=false;if(hint)hint.style.display='none';place();
     tip.querySelector('.x').onclick=function(){tip.hidden=true}}
   function label(){if(!btn)return;var open=false;
     btn.lastChild.textContent=open?'Open app':'Install this app';btn.title=open?'Open '+name+' as an app':'Save '+name+' as an app'}
@@ -54,16 +54,21 @@
      never floats over the header, filters or bubbles. One tap on x hides it for good on this device; it also goes by itself after 12s. */
   var hint,HK='ara_install_hint_gone',hintGone=0;try{hintGone=localStorage.getItem(HK)?1:0}catch(e){}
   function hintTxt(){return ios?'Tap Share, then Add to Home Screen':android?'Tap the three dots \u22ee, then Install app':'Or: browser menu \u22ee, then Install app'}
-  function hintBye(){hintGone=1;try{localStorage.setItem(HK,String(Date.now()))}catch(e){}if(hint&&hint.parentNode)hint.parentNode.removeChild(hint);hint=null}
+  function hintBye(){hintGone=1;try{localStorage.setItem(HK,String(Date.now()))}catch(e){}if(hint&&hint.parentNode)hint.parentNode.removeChild(hint);hint=null;place()}
   function paintHint(){if(!btn)return;var odd=standalone()&&!ownWindow(),show=odd||(!standalone()&&!dp);if((hintGone&&!odd)||(tip&&!tip.hidden))show=false;
-    if(!show){if(hint)hint.style.display='none';return}
+    if(!show){if(hint)hint.style.display='none';place();return}
     if(!hint){hint=document.createElement('div');hint.id='araHint';hint.setAttribute('role','note');
-      hint.style.cssText='position:relative;z-index:1;display:flex;align-items:center;gap:8px;margin:0;min-height:34px;padding:4px 6px 4px 12px;background:#04161a;color:#e6fbff;border-bottom:1px solid #22d3ee;font:600 12.5px/1.3 system-ui,-apple-system,Roboto,sans-serif;text-align:left;box-sizing:border-box;width:100%';
-      hint.innerHTML='<span style="flex:1 1 auto;min-width:0"></span><button type="button" aria-label="Hide this tip" style="all:unset;box-sizing:border-box;flex:0 0 auto;min-width:36px;min-height:30px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;color:#a1a1aa;font:400 20px/1 system-ui,sans-serif;cursor:pointer">&times;</button>';
+      hint.style.cssText='position:relative;z-index:1;display:flex;align-items:center;gap:8px;margin:0;min-height:44px;padding:0 0 0 12px;background:#04161a;color:#e6fbff;border-bottom:1px solid #22d3ee;font:600 12.5px/1.3 system-ui,-apple-system,Roboto,sans-serif;text-align:left;box-sizing:border-box;width:100%';
+      hint.innerHTML='<span style="flex:1 1 auto;min-width:0"></span><button type="button" aria-label="Hide this tip" style="all:unset;box-sizing:border-box;flex:0 0 auto;min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;color:#a1a1aa;font:400 20px/1 system-ui,sans-serif;cursor:pointer">&times;</button>';
       hint.querySelector('button').onclick=hintBye;
       var bd=document.body,first=bd.firstChild,oi=document.getElementById('ara-openin');bd.insertBefore(hint,oi?oi.nextSibling:first);
       if(!odd)setTimeout(hintBye,12000)}
-    hint.firstChild.textContent=odd?'This opened inside an older app. Tap Open in Chrome, then Install app':hintTxt();hint.style.display='flex'}
+    hint.firstChild.textContent=odd?'This opened inside an older app. Tap Open in Chrome, then Install app':hintTxt();hint.style.display='flex';place()}
+  /* 17 Oct (Elon FAIL 2): the Install button is no longer pinned to the screen. With no mount it sits in its own right-aligned
+     row at the top of the page (in the flow, under the hint bar), so it scrolls away and never covers text. The tip opens just under it
+     (position:absolute, page coordinates) and scrolls away too. */
+  function place(){try{
+    if(tip&&!tip.hidden&&btn){var b=btn.getBoundingClientRect();tip.style.top=Math.round(b.bottom+(window.scrollY||0)+6)+'px'}}catch(e){}}
   function refresh(){badge();if(!btn)return;btn.hidden=standalone()&&ownWindow();if(standalone()&&!ownWindow()){btn.lastChild.textContent='Open in Chrome to install';btn.hidden=false;paintHint();return}if(btn.hidden&&tip)tip.hidden=true;label();paintHint()}
   window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;try{localStorage.removeItem(KEY)}catch(x){}refresh()});
   window.addEventListener('appinstalled',function(){dp=null;try{localStorage.setItem(KEY,'1')}catch(x){}if(btn)btn.hidden=true;if(tip)tip.hidden=true;if(hint)hint.style.display='none'});
@@ -75,7 +80,7 @@
     var m=cfg.mount&&document.querySelector(cfg.mount);
     if(m&&cfg.mode==='float'){btn.className='fl';m.insertBefore(btn,m.firstChild)}
     else if(m){btn.className='ap';m.appendChild(btn)}
-    else{btn.className='fx';document.body.appendChild(btn)}
+    else{btn.className='fx';var row=document.createElement('div');row.id='araSaveRow';row.appendChild(btn);var bd=document.body,oi=document.getElementById('ara-openin'),hn=document.getElementById('araHint'),ref=hn||oi;bd.insertBefore(row,ref?ref.nextSibling:bd.firstChild)}
     if(cfg.hide)try{document.querySelectorAll(cfg.hide).forEach(function(el){el.style.display='none'})}catch(e){}
     btn.addEventListener('click',function(){
       if(standalone()&&!ownWindow()){var u=location.href.split('#')[0];if(android){location.href='intent://'+u.replace(/^https?:\/\//,'')+'#Intent;scheme=https;package=com.chrome.beta;S.browser_fallback_url='+encodeURIComponent(u)+';end'}else window.open(u,'_blank','noopener');return}
@@ -84,6 +89,7 @@
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&tip)tip.hidden=true});
     ['standalone','minimal-ui','window-controls-overlay'].forEach(function(mm){try{var q=matchMedia('(display-mode: '+mm+')');q.addEventListener?q.addEventListener('change',refresh):q.addListener(refresh)}catch(e){}});
     refresh();
+    window.addEventListener('resize',place);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
   /* Ara button on every app that loads this file (installed apps pick it up on next open) */

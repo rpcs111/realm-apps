@@ -104,7 +104,7 @@
    "name": "Grok How-To",
    "status": "green",
    "elon_verified": false,
-   "note": "Built 17 Oct: illustrated Grok guide with Julie's iPhone setup (her own login), Fold 8 / Flip 6 steps, Grok in 8 stops and 3 videos. Headless test 390x844 and iPhone UA: 0 JS errors, no sideways scroll. Waiting for Elon's check. https://rpcs111.github.io/realm-apps/grok-howto.html",
+   "note": "Built 17 Oct: illustrated Grok guide with Julie's iPhone setup (her own login), Fold 8 / Flip 6 steps, Grok in 8 stops (official xAI sources only, no YouTube); Install button 44px and scrolls away, no longer pinned over cards. Headless test 390x844 and iPhone UA: 0 JS errors, no sideways scroll. Waiting for Elon's check. https://rpcs111.github.io/realm-apps/grok-howto.html",
    "source": "Ange via Elon 15:06 UTC 16 Oct: Grok how-to infographic + Julie's phone"
   },
   {
