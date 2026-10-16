@@ -1,0 +1,31 @@
+{
+ "id": "/realm-apps/cert-gospel",
+ "name": "Realm Cert Studio",
+ "short_name": "Certs",
+ "description": "Realm Cert Studio - the trusted current Cert Studio (live v6). Gold check = gospel",
+ "start_url": "./cert.html?go=1",
+ "scope": "./cert.html",
+ "display": "standalone",
+ "background_color": "#0B1747",
+ "theme_color": "#0B1747",
+ "icons": [
+  {
+   "src": "pwa/cert-gospel.svg?v=20261016g",
+   "sizes": "192x192",
+   "type": "image/svg+xml",
+   "purpose": "any"
+  },
+  {
+   "src": "pwa/cert-gospel.svg?v=20261016g",
+   "sizes": "512x512",
+   "type": "image/svg+xml",
+   "purpose": "any"
+  },
+  {
+   "src": "pwa/cert-gospel-maskable.svg?v=20261016g",
+   "sizes": "512x512",
+   "type": "image/svg+xml",
+   "purpose": "maskable"
+  }
+ ]
+}

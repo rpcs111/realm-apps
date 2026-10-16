@@ -1,0 +1,31 @@
+{
+ "id": "/realm-apps/notes-gospel",
+ "name": "Realm Notes",
+ "short_name": "Notes",
+ "description": "Realm Notes - the trusted current Notes app (gold check = gospel)",
+ "start_url": "./scribe.html",
+ "scope": "./scribe.html",
+ "display": "standalone",
+ "background_color": "#062B20",
+ "theme_color": "#062B20",
+ "icons": [
+  {
+   "src": "pwa/notes-gospel.svg?v=20261016g",
+   "sizes": "192x192",
+   "type": "image/svg+xml",
+   "purpose": "any"
+  },
+  {
+   "src": "pwa/notes-gospel.svg?v=20261016g",
+   "sizes": "512x512",
+   "type": "image/svg+xml",
+   "purpose": "any"
+  },
+  {
+   "src": "pwa/notes-gospel-maskable.svg?v=20261016g",
+   "sizes": "512x512",
+   "type": "image/svg+xml",
+   "purpose": "maskable"
+  }
+ ]
+}
