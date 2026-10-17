@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><script>/* v17: catch Chrome's install prompt before any other script */window.__araBIP=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__araBIP=e});</script><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff"><title>Tonight Status</title>
-<link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg">
+<link rel="manifest" href="status.webmanifest?v=20261017"><link rel="icon" href="icon.svg">
 <style>
 *{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:rgba(14,22,44,.72);color:#e8eefc;font:16px/1.45 system-ui,-apple-system,Roboto,sans-serif;padding:20px 16px 40px}
 .top{display:flex;gap:8px;margin-bottom:14px}.top a,.top button{flex:1;padding:12px;border:0;border-radius:12px;font:700 15px sans-serif;text-align:center;text-decoration:none}
@@ -12,7 +12,7 @@ h2{margin:0 0 6px;font-size:15px;letter-spacing:.05em}ul{margin:0;padding-left:1
 a{color:#2563eb}.d{border-color:#16a34a}.p{border-color:#ea580c}.n{border-color:#dc2626}.b{border-color:#6b7280}.v{border-color:#9333ea}.r{border-color:#0891b2}
 #help{display:none;background:rgba(14,22,44,.72);border-radius:12px;padding:12px;font-size:14px;margin-bottom:12px}
 @media(max-width:380px){body{padding-left:10px;padding-right:10px}}
-</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style><script src="js/ara-account.js?v=20261016b" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017a"><meta name="ara-build" content="2026.10.17-18"></head><body>
+</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style><script src="js/ara-account.js?v=20261016b" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017c"><meta name="ara-build" content="2026.10.17-19"><style id="v19s">#install{display:none!important}/* shared Install button replaces the old Save as app */</style></head><body>
 <div class="top"><a href="./">&larr; Apps</a><button id="install">&#11015; Save as app</button></div>
 <div id="help">Tap <b>&#8942;</b> (top right) &rsaquo; <b>Add to Home screen</b> &rsaquo; <b>Install</b>.</div>
 <h1>TONIGHT STATUS</h1>
@@ -43,4 +43,4 @@ btn.onclick=function(){if(dp){dp.prompt();dp.userChoice.then(function(){dp=null}
 window.addEventListener("appinstalled",function(){btn.textContent="Saved as app \u2713"});
 if(window.matchMedia("(display-mode: standalone)").matches||navigator.standalone)btn.style.display="none";
 </script><script src="voice.js?v=20261016v5"></script>
-<script src="js/ara-install.js?v=20261017b" defer></script></body></html>
+<script src="js/ara-install.js?v=20261017c" defer></script><script src="js/ara-version.js" defer></script><script src="js/saveapp.js?v=20261017h" defer></script></body></html>
