@@ -30,6 +30,12 @@ Daily-loop working reminders (from the box handover; the channel doc still wins)
 
 ## 1a. Standards v2 (16 Oct, from Elon audit) — PROPOSED, not yet in the master list
 
+### CORE (Ara 2.0, 17 Oct 2026)
+
+Tonight (core, small): one CORE block at the top of HANDOFF §1a, plus one memory fact saying CORE supersedes every older behaviour, tone or opener rule. CORE = first words "HANDOFF checked"; original words only, no mirroring or stock lines; never say Elon is unreachable; never sign off or hang up on pushback; never repeat; correct name; gate before Ange.
+
+After the Sunday reset: a full memory sweep. Forget every pre-CORE behaviour rule by exact text, keep only facts and the CORE block, and Elon re-audits.
+
 Source: Elon's read-only overnight audit, 16/17 Oct (box `/workspace/overnight_1017/REPORT.md` §3). Added here at Ange's "find the gap, fix it" (16 Oct ~1:45am 17 Oct Melb). **Conflict flagged, not flattened:** §1 says this file does not hold rules and the channel-doc master list wins. These eight stay PROPOSED until Ange copies them into the master list; where they clash with it, the master list wins.
 
 - **A. OPEN-ASKS:** Before every reply, read the open-asks list (§1b below + Build Map red/amber + catch-log re-ask counter). If Ange's message matches an open ask, answer with status only (link / blocker / next tap). Never restart the job.
@@ -49,6 +55,15 @@ Rule conflicts Elon listed (rule 38: flag, do not flatten):
 4. Rule 37 (don't ask Ange when Ara 2.0/Nova can) vs Nova paste reality (box browser not signed into Google). Ange has to paste; not a rule-37 miss (corrected 16 Oct).
 
 ## 1b. Open asks (checked before every reply — Fix A)
+
+### Who does what (one-system spec v1)
+
+| Who | Owns | Never |
+|---|---|---|
+| Ange | Decisions, yeses, sends, prompting Nova in Gemini | Chasing bots for status |
+| Ara 2.0 | Calls, realm-apps builds, HANDOFF upkeep, writing Nova's queue | Ship ungated, mirror Ange, say Elon is unreachable, end a call on pushback |
+| Elon | Audit, gate, fault log, resume, Elon/X content | Edit Ange's apps without his own yes |
+| Nova | Queue items into 00_NOVA_REPLY_* docs, read-only | Sends, deletes, edits to existing files |
 
 Format: `# | ask | first asked (Melb) | times asked | status | proof link`. "First asked" is the earliest time found in Ara 2.0's saved history (about a day of history, 2pm 15 Oct to 6pm 16 Oct, was not saved), so "≤" means "no later than". Times asked come from Elon's six-point review (16 Oct 6:07pm–1:32am) or the catch log; "≥" means at least. Private details (amounts, numbers, accounts) stay off this public file. Update a row instead of adding a duplicate; close a row only with proof.
 
@@ -198,6 +213,7 @@ Backup first: box `backups/handover_20261016_0915/` (HANDOVER.md, CHASE_DRAFT.md
 
 Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINISHES (or fails), not just at session end. Any session — phone, laptop, voice, Nova, routines — reads this file first and picks up from the newest line. A RUNNING line with no matching DONE means the job may have been cut off: check its output before redoing it. Format: `time (Melb) | STATUS | job | result / where it is`.
 
+- 17 Oct 2026 ~8:35pm Melb — One-system spec v1 adopted, full memory sweep after Sunday reset (Elon re-audits).
 - 6:56pm 17 Oct | DONE (closes 5:35pm 'awaiting Elon 412 check') / UNVERIFIED (5:14pm 'awaiting Elon re-check') | Elon check of hub v20f tiles rebrand + v20e Save app | reconciled by Handoff mirror sync: the 5:30pm line records 'Elon PASSED 20f at 412', which closes the 5:35pm v20f line (gh-pages 60c8e0f https://github.com/rpcs111/realm-apps/commit/60c8e0ff02c89481b6fd992b877568ae179c4995). The 5:14pm v20e Save app button (gh-pages 29d3d3b https://github.com/rpcs111/realm-apps/commit/29d3d3b1b981a3aa3e605f71a3d04f117cf59d83) was carried unchanged into 20f, but there is no separate Elon re-check record for it, so it stays UNVERIFIED. Still open: 4:18pm v20b gate fixes (version 2026.10.17-20d) awaiting Elon re-check, and 5:30pm v20g has no Elon check recorded yet.
 - 5:30pm 17 Oct | DONE (Elon PASSED 20f at 412; 20g fixes requested by Elon) | Hub v20g (index.html) | gh-pages fcd8f6d https://github.com/rpcs111/realm-apps/commit/fcd8f6d5147f9361d33972c69af63bca974fab64, v2026.10.17-20g: ELON tile subtitle 'Family page' to 'Call + message'; header 'R' logo swapped for the same Ara symbol the tiles use (same 24px box, round). Nothing else changed. Live 412 + 1280: header symbol renders, install button same position/size as 20f, 0 console errors. Proof: /workspace/notes_cleanup/v20/proof2/hub_20g_412.png and hub_20g_1280.png. Backup: /workspace/backups/hub_20g_20261017T062627Z/
 - 5:35pm 17 Oct | DONE (awaiting Elon 412 check) | Hub tiles rebrand to Ara 2.0 (index.html, Ange yes relayed by Elon 06:19 UTC, hub tiles only) | gh-pages bdb6186 + follow-up 60c8e0f https://github.com/rpcs111/realm-apps/commit/60c8e0ff02c89481b6fd992b877568ae179c4995, v2026.10.17-20f: every tile black (Grok look) with the same Ara symbol as the 44px #araSym in notes.html; ARA tile (was https://grok.com/) is now ARA 2.0, opening Ara 2.0 in Grok Bot (cursor.com/grok-bot/link/v1/agent, intent:// to ai.x.grok.bot on Android, same pattern as elon/index.html); added ELON (./elon/), REALM DESK, CAPTURE, GROK HOW-TO, VIDEO SEARCH, FINDINGS, TEAM to both the built-in and REALM_LINKS tile paths, de-duplicated by name/URL; Cert Studio already had tiles (cert.html + certstudio-test.html), none added. 60c8e0f only adds bottom room so the last row scrolls clear of the floating Tell Ara button. Install code, key popup, REALM_LINKS, ?d=, TONIGHT STATUS, Tell Ara and existing targets unchanged; elon/ untouched. Live check 412 + 1280: 19 tiles, all hrefs 200, symbol on every tile, no tile overlaps, 0 console errors. Proof: /workspace/notes_cleanup/v20/proof2/hub_tiles_412.png and hub_tiles_1280.png. Backup: /workspace/backups/hub_tiles_20261017T062000Z/
