@@ -116,6 +116,7 @@ label.ckl input{width:22px!important;height:22px;margin:0;accent-color:#22d3ee}
 details.nlist{margin-top:10px}details.nlist>summary{min-height:44px;display:flex;align-items:center;color:var(--mut);cursor:pointer}
 i.ei{display:inline-flex;font-style:normal;vertical-align:-4px;margin-right:2px}
 #tab-tasks{display:none!important}
+@media(max-width:599px){.fsub{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;overflow:visible}.fsub button{flex-direction:column;gap:2px;padding:4px 2px!important;font-size:11.5px!important;min-width:0;justify-content:center}.fsub button svg.si{margin:0!important}}
 </style></head><body>
 <header><button class="hb" id="spBtn" aria-label="Menu" onclick="spOpen(1)">&#9776;</button><a class="hb" href="./index.html">&larr; Apps</a><h1>REALM <b>DESK</b></h1><button class="hb" id="saveApp">&#11015; Save as app</button><span class="who" id="who" data-rl-pill></span></header><div class="rk-line" id="rkLine" hidden>Desk needs the Realm key on this phone. <button type="button" id="rkAdd">Add key</button></div>
 <div id="appHelp" style="display:none;margin:8px 14px;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line);font-size:13px">On Android Chrome: tap <b>&#8942;</b> &rsaquo; <b>Add to Home screen</b> (or <b>Install app</b>) &rsaquo; <b>Install</b>.</div>
@@ -163,13 +164,10 @@ i.ei{display:inline-flex;font-style:normal;vertical-align:-4px;margin-right:2px}
       <div style="height:6px"></div><div style="display:flex;gap:6px"><select id="cWhere" style="flex:1"><option>side panel</option><option>web</option><option>desk</option></select><button class="btn p" onclick="newChat()">Open &amp; log</button></div></div>
     <div id="chats"></div>
   </section>
-  <section class="tab" id="tab-notes"><div class="bar"><h2>Notes &amp; Tasks</h2><button class="btn ib" aria-label="Refresh tasks" onclick="load('tasks',true)">&#8635;</button></div>
-    <div class="card"><textarea id="note" placeholder="Type a note&hellip;"></textarea><div style="height:8px"></div>
-    <div class="nrow"><select id="noteTag" aria-label="Note tag"><option>desk</option><option>flow</option><option>idea</option><option>julie</option><option>park</option></select><button class="btn p" onclick="saveNote()">Save note</button></div>
-    <div style="height:10px"></div><div class="nrow"><input id="tTitle" placeholder="New Google task&hellip;" onkeydown="if(event.key==='Enter')addTk()"></div><div style="height:6px"></div><div class="nrow"><select id="tList" aria-label="Task list"><option>Ange to do</option><option>Realm Daily</option><option>Realm Quotes</option><option>JP to do</option><option>LINKS ACCESS</option></select><button class="btn p" onclick="addTk()">Add task</button></div></div>
+  <section class="tab" id="tab-notes"><div class="bar"><h2>Tasks</h2><button class="btn ib" aria-label="Refresh tasks" onclick="load('tasks',true)">&#8635;</button></div>
+    <div class="card"><div class="nrow"><input id="tTitle" placeholder="New Google task&hellip;" onkeydown="if(event.key==='Enter')addTk()"></div><div style="height:6px"></div><div class="nrow"><select id="tList" aria-label="Task list"><option>Ange to do</option><option>Realm Daily</option><option>Realm Quotes</option><option>JP to do</option><option>LINKS ACCESS</option></select><button class="btn p" onclick="addTk()">Add task</button></div></div>
     <div class="bar"><h2>Google Tasks</h2></div><div id="tasks" class="tcols"><div class="sk"></div></div>
-    <details class="nlist"><summary>Recent notes</summary><div id="notes"><div class="sk"></div></div></details>
-    <div class="m" style="margin:10px 2px 18px">Full notes with photos and drawing: <a href="./notes.html">open Notes</a>.</div></section>
+    <div class="m" style="margin:10px 2px 18px">Notes (with photos and drawing) live in the Notes app: <a href="./notes.html">open Notes</a>.</div></section>
   <section class="tab" id="tab-links"><div class="bar"><h2>Links</h2></div><div id="links"></div></section>
 </main>
 <style>
@@ -453,7 +451,7 @@ function fvNewVeh(){var v=prompt('Vehicle name (e.g. Hilux, Trailer)');if(!v)ret
   <button onclick="go('desk',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg></span>Desk</button>
   <button onclick="go('tasks',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8.2 12.3l2.6 2.6 5-5.2"/></svg></span>Tasks</button>
   <button onclick="go('chats',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5.5h15v10h-8l-4.5 3.5v-3.5h-2.5z"/></svg></span>Chats</button>
-  <button onclick="go('notes',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h8.5L18 7v13.5H6z"/><path d="M14.5 3.5V7H18M9 11h6M9 14.5h6M9 18h4"/></svg></span>Notes</button>
+  <button data-tab="notes" onclick="location.href='./notes.html'"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h8.5L18 7v13.5H6z"/><path d="M14.5 3.5V7H18M9 11h6M9 14.5h6M9 18h4"/></svg></span>Notes</button>
   <button onclick="go('links',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.2 1.2"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.2-1.2"/></svg></span>Links</button>
   <button id="navMore" type="button" onclick="navMore()" aria-haspopup="true"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="18.5" cy="12" r="1.4"/></svg></span>More</button>
 </nav>
@@ -467,7 +465,7 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return
 function q1(s){return esc(s).replace(/'/g,"\\'")}
 function toggle(id){var e=document.getElementById(id);e.style.display=e.style.display==='none'?'block':'none'}
 function sk(id,n){document.getElementById(id).innerHTML=new Array((n||4)+1).join('<div class="sk"></div>')}
-function go(name,btn){if(name==='tasks'){name='notes';btn=document.querySelector('nav button[onclick*="\'notes\'"]')||btn}document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById('tab-'+name).classList.add('on');document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');load(name)}
+function go(name,btn){if(name==='tasks'||name==='notes'){name='notes';btn=document.getElementById('navMore')||btn}document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById('tab-'+name).classList.add('on');document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');load(name)}
 function run(fn,args,cb){google.script.run.withSuccessHandler(cb).withFailureHandler(function(e){toast('Error: '+e.message)})[fn].apply(null,args||[])}
  
 function chatOpen(topic,context,where){run('logChat',[topic,context,where||'desk'],function(){toast('Chat logged')});window.open(CFG.grok+'?q='+encodeURIComponent(topic+(context?' — '+context:'')),'_blank')}
@@ -481,7 +479,7 @@ function load(name,force){if(loaded[name]&&!force)return;loaded[name]=true;
   if(name==='desk'){sk('desk');run('getRegister',[document.getElementById('showClosed').checked],renderReg)}
   if(name==='tasks'){sk('tasks');run('getTasks',[],renderTasks)}
   if(name==='chats'){sk('chats',3);run('getChats',[document.getElementById('showFiled').checked],renderChats)}
-  if(name==='notes'){sk('notes',2);run('getNotes',[],renderNotes);load('tasks',force)}
+  if(name==='notes'){load('tasks',force)}
   if(name==='links'){sk('links');run('getLinks',[],renderLinks)}
   if(name==='flow'){flowLoad(force)}}
 function shiftDay(d){dayOff=d===0?0:dayOff+d;load('today',true)}
@@ -616,9 +614,9 @@ function fix(root){try{var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT
  [].forEach.call((root.querySelectorAll?root:document).querySelectorAll('a[href*="scribe.html"]'),function(a){a.setAttribute('href',a.getAttribute('href').replace(/scribe\.html/,'notes.html'))})}catch(e){}}
 function go(){fix(document.body);try{new MutationObserver(function(ms){ms.forEach(function(m){[].forEach.call(m.addedNodes,function(x){if(x.nodeType===1)fix(x);else if(x.nodeType===3&&x.parentNode)fix(x.parentNode)})})}).observe(document.body,{childList:true,subtree:true})}catch(e){}}
 if(document.body)go();else document.addEventListener('DOMContentLoaded',go)})();</script><div id="moreSheet" hidden role="menu" aria-label="More"></div>
-<script>/* v20: More menu for the tabs that left the bottom bar: Search, Register (Desk), Chats, Links. Tasks now lives inside the Notes tab (v20 Batch B) */
+<script>/* v20: More menu for the tabs that left the bottom bar: Search, Register (Desk), Chats, Links. Tasks (Google Tasks columns) opens from More; the Notes tile opens notes.html (v20 fix) */
 function navMore(){var m=document.getElementById('moreSheet');if(!m.hidden){m.hidden=true;return}
- if(!m.children.length){[['search','Search'],['desk','Register'],['chats','Chats'],['links','Links']].forEach(function(x){var src=document.querySelector('nav button[onclick*="\''+x[0]+'\'"]');if(!src)return;var b=document.createElement('button');b.type='button';b.setAttribute('role','menuitem');var ic=src.querySelector('.ni');b.innerHTML=(ic?ic.innerHTML:'')+'<span>'+x[1]+'</span>';b.onclick=function(){m.hidden=true;go(x[0],src);document.getElementById('navMore').classList.add('on')};m.appendChild(b)})}
+ if(!m.children.length){[['search','Search'],['desk','Register'],['tasks','Tasks'],['chats','Chats'],['links','Links']].forEach(function(x){var src=document.querySelector('nav button[onclick*="\''+x[0]+'\'"]');if(!src)return;var b=document.createElement('button');b.type='button';b.setAttribute('role','menuitem');var ic=src.querySelector('.ni');b.innerHTML=(ic?ic.innerHTML:'')+'<span>'+x[1]+'</span>';b.onclick=function(){m.hidden=true;go(x[0],src);document.getElementById('navMore').classList.add('on')};m.appendChild(b)})}
  m.hidden=false}
 document.addEventListener('click',function(e){var m=document.getElementById('moreSheet');if(m&&!m.hidden&&!e.target.closest('#moreSheet,#navMore'))m.hidden=true},true);
 /* locked state: no Realm key on this device -> one clear line instead of grey skeleton cards that never fill */
