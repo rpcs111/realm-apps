@@ -19,6 +19,11 @@
    '#araPop{position:fixed;z-index:2147483200;width:min(300px,calc(100vw - 16px));box-sizing:border-box;background:#04161a;color:#e6fbff;border:1px solid #22d3ee;border-radius:12px;padding:10px 44px 10px 12px;font:600 13px/1.4 system-ui,-apple-system,Roboto,sans-serif;box-shadow:0 8px 28px rgba(0,0,0,.6);text-align:left;letter-spacing:normal;text-transform:none}'+
    '#araPop[hidden]{display:none!important}#araPop b{color:#fff}#araPop .x{all:unset;position:absolute;top:0;right:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#a1a1aa;font:400 20px/1 system-ui,sans-serif;cursor:pointer}';
   (document.head||document.documentElement).appendChild(st);
+  /* v20 (Ange, 17 Oct): already running as an installed app (standalone / window-controls-overlay / minimal-ui / fullscreen, or iOS navigator.standalone)
+     -> no Install button, no 'Open in Chrome' button, no install popover, on every page. */
+  var sa=document.createElement('style');sa.textContent='html.ara-standalone #araSave,html.ara-standalone #araPop,html.ara-standalone #araHint,html.ara-standalone #ara-openin,html.ara-standalone #araTip{display:none!important}';(document.head||document.documentElement).appendChild(sa);
+  function mark(){var on=standalone();document.documentElement.classList.toggle('ara-standalone',on);if(on){var pp=document.getElementById('araPop');if(pp)pp.hidden=true}}
+  mark();['standalone','window-controls-overlay','minimal-ui','fullscreen'].forEach(function(m){try{var q=matchMedia('(display-mode: '+m+')');q.addEventListener?q.addEventListener('change',mark):q.addListener(mark)}catch(e){}});
   var pop=null;
   function steps(){
     if(standalone()&&!own())return 'This page opened inside another saved app. Tap <b>&#8942;</b> &rsaquo; <b>Open in Chrome</b>, then <b>&#8942;</b> (top right) &rsaquo; <b>Add to home screen</b> &rsaquo; <b>Install</b>.';
@@ -35,6 +40,7 @@
   document.addEventListener('click',function(e){
     var btn=e.target&&e.target.closest&&e.target.closest('#araSave');
     if(!btn){if(pop&&!pop.hidden&&!e.target.closest('#araPop'))hide();return}
+    if(standalone()){e.preventDefault();e.stopPropagation();hide();return}
     e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();
     if(pop&&!pop.hidden){hide();return}
     var p=window.__araBIP;

@@ -9,7 +9,7 @@ document.head.appendChild(css);
 var toastEl=document.createElement('div');toastEl.id='vToast';document.body.appendChild(toastEl);var tt;
 function toast(m){toastEl.textContent=m;toastEl.style.display='block';clearTimeout(tt);tt=setTimeout(function(){toastEl.style.display='none'},3500)}
 function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
-var APPS={'you got me bro':'scribe.html',scribe:'scribe.html',notes:'scribe.html',tasks:'scribe.html',desk:'desk.html',launcher:'index.html',apps:'index.html',home:'index.html','flow map':'map.html',map:'map.html',flow:'map.html',status:'status.html',video:'video.html',youtube:'video.html',findings:'findings.html','clean up':'cleanup.html',cleanup:'cleanup.html',audit:'cleanup.html',search:'desk.html#search='};
+var APPS={'you got me bro':'notes.html',scribe:'notes.html',notes:'notes.html',tasks:'notes.html',desk:'desk.html',launcher:'index.html',apps:'index.html',home:'index.html','flow map':'map.html',map:'map.html',flow:'map.html',status:'status.html',video:'video.html',youtube:'video.html',findings:'findings.html','clean up':'cleanup.html',cleanup:'cleanup.html',audit:'cleanup.html',search:'desk.html#search='};
 function norm(s){return String(s||'').toLowerCase().replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim()}
 function openApp(x){x=norm(x);if(APPS[x]){location.href='./'+APPS[x];return}
  var best=null;document.querySelectorAll('a[href]').forEach(function(a){if(!best&&norm(a.textContent).indexOf(x)>=0)best=a});
@@ -25,7 +25,7 @@ function edToggle(on){edOn=on==null?!edOn:on;edEls().forEach(function(e){if(edOn
 function edFind(t){if(!edOn)edToggle(true);var x=norm(t),hit=null;edEls().forEach(function(e){if(!hit&&norm(e.textContent).indexOf(x)>=0)hit=e});if(hit){hit.focus();hit.scrollIntoView({block:'center'});toast('Editing: '+hit.textContent.slice(0,40))}else toast('Not found: '+t)}
 /* ---- page hooks ---- */
 var H={};
-function toScribe(t){location.href='./scribe.html#add='+encodeURIComponent(t)}
+function toScribe(t){location.href='./notes.html#add='+encodeURIComponent(t)}
 function deskSearch(t){location.href='./desk.html#search='+encodeURIComponent(t)}
 var last=null;function L(){if(!last)return null;var id=last.id;var f=(window.items||[]).filter(function(x){return x.id===id})[0];if(f)last=f;return f||null}
 if(page==='search'){H.search=function(t){var q=$('#q');if(!q)return;q.value=t;if(typeof go==='function')go(t);toast('Searching: '+t)};H.fallback=H.search}

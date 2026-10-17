@@ -76,7 +76,21 @@ img,iframe,svg,canvas,table{max-width:100%}
 pre{overflow-x:auto}
 .mic{margin-top:6px}
 @media(max-width:380px){main{padding:0 8px}header{padding-left:8px;padding-right:8px;gap:6px}.quick{padding:8px}.apps{grid-template-columns:repeat(2,1fr)}.btn{padding:7px 9px}header h1{font-size:15px}}
-</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style><script src="js/ara-account.js?v=20261016b" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017d"><meta name="ara-build" content="2026.10.17-20"><style id="v19d">#saveApp,#appHelp{display:none!important}header #araSave{margin-left:auto}#rlPill{position:static!important}.rk-line{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 14px 0;font-size:13px;color:var(--mut,#94a3b8)}.rk-line[hidden]{display:none!important}#rkAdd{all:unset;cursor:pointer;color:#67e8f9;font-weight:700;padding:0 12px;min-height:44px;display:inline-flex;align-items:center;border:1px solid rgba(103,232,249,.4);border-radius:999px}</style></head><body>
+</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style><script src="js/ara-account.js?v=20261016b" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017d"><meta name="ara-build" content="2026.10.17-20"><style id="v19d">#saveApp,#appHelp{display:none!important}header #araSave{margin-left:auto}#rlPill{position:static!important}.rk-line{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 14px 0;font-size:13px;color:var(--mut,#94a3b8)}.rk-line[hidden]{display:none!important}#rkAdd{all:unset;cursor:pointer;color:#67e8f9;font-weight:700;padding:0 12px;min-height:44px;display:inline-flex;align-items:center;border:1px solid rgba(103,232,249,.4);border-radius:999px}</style><style id="v20d">/* v20 Desk (Ange 17 Oct): search.html-style top bar, one Ara symbol, line-icon bottom nav, no floating voice button */
+#vMic,#vEd{display:none!important}
+header{position:sticky!important;top:0;z-index:50!important;display:flex!important;flex-wrap:nowrap!important;align-items:center;gap:4px!important;min-height:calc(56px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 8px 0 8px!important;background:rgba(2,6,12,.92)!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid rgba(148,197,214,.16)!important}
+header h1{font-size:15px!important;font-weight:600;letter-spacing:.06em!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:0 1 auto;margin:0 4px 0 2px!important}
+header .hb{all:unset;box-sizing:border-box;min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0 8px;border-radius:12px;color:#a1a1aa;font:500 13px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.04em;cursor:pointer;white-space:nowrap;flex:none}
+header .hb:hover{color:#fff}header #spBtn{font-size:20px;color:#e6f7fb;order:9}
+header #arbBtn{position:relative!important;right:auto!important;bottom:auto!important;margin:0!important;flex:none;order:-1;box-shadow:none!important}
+header .who{margin-left:auto!important;flex:none;display:inline-flex;align-items:center}
+header #araSave{margin-left:0!important;flex:none;position:relative;height:44px!important;min-height:44px!important;padding:0 10px!important;font-size:10.5px!important;letter-spacing:.08em!important;background:transparent!important;border-color:transparent!important;box-shadow:none!important}
+header #araSave::before{content:"";position:absolute;left:0;right:0;top:7px;bottom:7px;border:1px solid #22d3ee;border-radius:999px;pointer-events:none}
+header .who #rlPill{min-height:44px;min-width:44px;justify-content:center}@media(max-width:520px){header .who #rlPill{font-size:0!important;gap:0!important;padding:0!important;width:44px}header #araSave svg{display:none}header #araSave{padding:0 8px!important}header h1{font-size:0!important;margin:0 2px!important}header h1 b{font-size:15px}header .hb{padding:0 4px}}
+nav button{gap:3px!important}nav button .ni{display:flex;align-items:center;justify-content:center;width:24px;height:24px;font-size:0!important;color:#67e8f9;opacity:.72}
+nav button .ni svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+nav button.on .ni{color:#22d3ee;opacity:1;filter:drop-shadow(0 0 4px rgba(34,211,238,.55))}nav button.on{color:#22d3ee!important}
+</style></head><body>
 <header><button class="hb" id="spBtn" aria-label="Menu" onclick="spOpen(1)">&#9776;</button><a class="hb" href="./index.html">&larr; Apps</a><h1>REALM <b>DESK</b></h1><button class="hb" id="saveApp">&#11015; Save as app</button><span class="who" id="who" data-rl-pill></span></header><div class="rk-line" id="rkLine" hidden>Desk needs the Realm key on this phone. <button type="button" id="rkAdd">Add key</button></div>
 <div id="appHelp" style="display:none;margin:8px 14px;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line);font-size:13px">On Android Chrome: tap <b>&#8942;</b> &rsaquo; <b>Add to Home screen</b> (or <b>Install app</b>) &rsaquo; <b>Install</b>.</div>
 <div class="quick">
@@ -402,17 +416,17 @@ function fvClear(){run('clearVanTicks',[fvCur],function(n){toast(n+' ticks clear
 function fvNewVeh(){var v=prompt('Vehicle name (e.g. Hilux, Trailer)');if(!v)return;v=v.trim();if(FV.vehicles.indexOf(v)<0)FV.vehicles.push(v);fvCur=v;fvDraw()}
 </script>
 <nav>
-  <button class="on" onclick="go('start',this)"><span>&#127919;</span>Start</button>
-  <button onclick="go('flow',this)"><span>&#10036;</span>Flow</button>
-  <button onclick="go('search',this)"><span>&#128269;</span>Search</button>
-  <button onclick="go('today',this)"><span>&#9728;</span>Today</button>
-  <button onclick="go('certs',this)"><span>&#128994;</span>Certs</button>
-  <button onclick="go('quotes',this)"><span>&#128993;</span>Quotes</button>
-  <button onclick="go('desk',this)"><span>&#128450;</span>Desk</button>
-  <button onclick="go('tasks',this)"><span>&#9989;</span>Tasks</button>
-  <button onclick="go('chats',this)"><span>&#128172;</span>Chats</button>
-  <button onclick="go('notes',this)"><span>&#128221;</span>Notes</button>
-  <button onclick="go('links',this)"><span>&#128279;</span>Links</button>
+  <button class="on" onclick="go('start',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg></span>Start</button>
+  <button onclick="go('flow',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8.5 6h7M7.2 8.2l3.6 7.6M16.8 8.2l-3.6 7.6"/></svg></span>Flow</button>
+  <button onclick="go('search',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4L20.5 20.5"/></svg></span>Search</button>
+  <button onclick="go('today',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg></span>Today</button>
+  <button onclick="go('certs',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M8.6 12.2l2.4 2.4 4.6-4.8"/></svg></span>Certs</button>
+  <button onclick="go('quotes',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3h11v18l-2.75-1.6L12 21l-2.75-1.6L6.5 21z"/><path d="M9.5 8h5M9.5 11.5h5M9.5 15h3"/></svg></span>Quotes</button>
+  <button onclick="go('desk',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg></span>Desk</button>
+  <button onclick="go('tasks',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8.2 12.3l2.6 2.6 5-5.2"/></svg></span>Tasks</button>
+  <button onclick="go('chats',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5.5h15v10h-8l-4.5 3.5v-3.5h-2.5z"/></svg></span>Chats</button>
+  <button onclick="go('notes',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h8.5L18 7v13.5H6z"/><path d="M14.5 3.5V7H18M9 11h6M9 14.5h6M9 18h4"/></svg></span>Notes</button>
+  <button onclick="go('links',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.2 1.2"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.2-1.2"/></svg></span>Links</button>
 </nav>
 <div class="toast" id="toast"></div>
 <script>
@@ -566,4 +580,11 @@ RealmLine.drafts(['nItem','nNext','nLink','tTitle','cTopic','note','fpad','fwIn'
 RealmLine.onBack(function(ev){if(ev!=='leave')return;try{var a=document.querySelector('.tab.on');if(a)localStorage.setItem('realm_desk_tab',JSON.stringify({n:a.id.replace('tab-',''),t:Date.now()}))}catch(e){}});
 })();</script>
 <script src="voice.js?v=20261016v5"></script>
-<script src="js/ara-install.js?v=20261017d" defer></script><script src="js/ara-version.js" defer></script><script src="js/saveapp.js?v=20261017h" data-mount="header" defer></script><script>/* v19: inline Add key line instead of the popup; key lock unchanged */(function(){var l=document.getElementById("rkLine"),b=document.getElementById("rkAdd");function has(){return !!(window.RealmKey&&RealmKey.get())}if(l&&!has())l.hidden=false;addEventListener("realmkey-needed",function(){if(l&&!has())l.hidden=false});if(b)b.onclick=function(){if(window.RealmKey)RealmKey.ask("")}})()</script></body></html>
+<script src="js/ara-install.js?v=20261017d" defer></script><script src="js/ara-version.js" defer></script><script src="js/saveapp.js?v=20261017h" data-mount="header" defer></script><script>/* v19: inline Add key line instead of the popup; key lock unchanged */(function(){var l=document.getElementById("rkLine"),b=document.getElementById("rkAdd");function has(){return !!(window.RealmKey&&RealmKey.get())}if(l&&!has())l.hidden=false;addEventListener("realmkey-needed",function(){if(l&&!has())l.hidden=false});if(b)b.onclick=function(){if(window.RealmKey)RealmKey.ask("")}})()</script><script>/* v20 Desk: the one Ara symbol lives in the top bar (not floating); 'Scribe' is shown as 'Notes' in any loaded tile/link */
+(function(){function mv(){var b=document.getElementById('arbBtn'),h=document.querySelector('header');if(!b||!h)return false;if(b.parentNode!==h){b.classList.remove('fx');h.insertBefore(b,h.firstChild)}return true}
+var n=0,iv=setInterval(function(){if(mv()||++n>40)clearInterval(iv)},150);
+var RX=/\bScribe\b(?!how)/g,RXU=/\bSCRIBE\b(?!HOW)/g;
+function fix(root){try{var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null),t;while(t=w.nextNode()){var v=t.nodeValue;if(v&&/scribe/i.test(v)&&!(t.parentNode&&/^(SCRIPT|STYLE)$/.test(t.parentNode.nodeName))){var nv=v.replace(RX,'Notes').replace(RXU,'NOTES');if(nv!==v)t.nodeValue=nv}}
+ [].forEach.call((root.querySelectorAll?root:document).querySelectorAll('a[href*="scribe.html"]'),function(a){a.setAttribute('href',a.getAttribute('href').replace(/scribe\.html/,'notes.html'))})}catch(e){}}
+function go(){fix(document.body);try{new MutationObserver(function(ms){ms.forEach(function(m){[].forEach.call(m.addedNodes,function(x){if(x.nodeType===1)fix(x);else if(x.nodeType===3&&x.parentNode)fix(x.parentNode)})})}).observe(document.body,{childList:true,subtree:true})}catch(e){}}
+if(document.body)go();else document.addEventListener('DOMContentLoaded',go)})();</script></body></html>
