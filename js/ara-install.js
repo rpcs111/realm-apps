@@ -46,5 +46,20 @@
   window.addEventListener('appinstalled',done);
   window.addEventListener('resize',function(){var b=document.getElementById('araSave');if(pop&&!pop.hidden&&b)place(b)});
   window.addEventListener('scroll',function(){var b=document.getElementById('araSave');if(pop&&!pop.hidden&&b)place(b)},{passive:true});
+
+  /* 44px pass (v18): any visible tappable thing under 44px gets a bigger hit area. Inline text links get padding with matching
+     negative margin (layout unchanged); other controls get min-height/min-width 44px. Skips SVG, hidden things and realm-ui
+     pills (css/ara-clean.css already handles those). Re-runs when the page adds things. */
+  var SEL='button,a[href],[role=button],input[type=button],input[type=submit],input[type=text],input[type=search],input[type=url],input[type=email],input[type=password],input:not([type]),select,summary';
+  function hit(){try{var n=document.querySelectorAll(SEL);for(var i=0;i<n.length;i++){var e=n[i];if(e.closest('svg')||e.closest('[hidden]')||e.closest('#araPop'))continue;
+    var r=e.getBoundingClientRect();if(r.width<1||r.height<1)continue;if(r.height>=44&&r.width>=44)continue;var cs=getComputedStyle(e);
+    if(cs.display==='inline'){e.classList.add('ara-hit');if(r.width<44){e.style.setProperty('min-width','44px','important');e.style.setProperty('text-align','center')}continue}
+    if(r.height<44)e.style.setProperty('min-height','44px','important');if(r.width<44)e.style.setProperty('min-width','44px','important');
+    if(r.height<44&&/^(inline-)?block$/.test(cs.display)&&e.tagName!=='INPUT'&&e.tagName!=='SELECT'&&e.tagName!=='SUMMARY'){e.style.setProperty('display',cs.display==='block'?'flex':'inline-flex');e.style.setProperty('align-items','center');if(cs.textAlign==='center')e.style.setProperty('justify-content','center')}
+    if(e.tagName==='SUMMARY'&&r.height<44){e.style.setProperty('display','flex');e.style.setProperty('align-items','center')}}}catch(x){}}
+  var ht=0;function soon(){clearTimeout(ht);ht=setTimeout(hit,150)}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',soon);else soon();
+  window.addEventListener('load',soon);
+  try{new MutationObserver(soon).observe(document.documentElement,{childList:true,subtree:true})}catch(x){}
   window.AraInstall={show:function(){var b=document.getElementById('araSave');if(b)show(b)},hasPrompt:function(){return !!window.__araBIP}};
 })();

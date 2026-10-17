@@ -1,0 +1,23 @@
+/* ara-clean.css (Ara, 17 Oct 2026 v17): shared clean-up for every Realm app that links it.
+   One compact Install button (no stacked bars), the big floating helper buttons stripped, one small Ara symbol,
+   every tap target >= 44px (invisible hit areas where the visible control stays small). Cosmetic only - no logic. */
+#ara-openin,#araHint,#araTip{display:none!important}
+#vEd,#vMic{display:none!important}
+#arbBtn{position:relative;font-size:0!important;gap:0!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;padding:0!important;border-radius:50%!important;border:1.5px solid #a78bfa!important;background:#0b0f1a url(../pwa/hub-ara-v3-192.svg) center/30px no-repeat!important;box-shadow:0 2px 10px rgba(0,0,0,.5)!important;letter-spacing:0!important}
+#arbBtn i{position:absolute;top:-5px;right:-5px;font-size:10px!important}
+/* realm-ui pages: pills keep their ~30px look inside a 44px hit area */
+
+.rui .rui-tab,.rui .rui-inline-links a,.rui .rui-inline-links button,.rui #araSave,.rui .addt,.rui .showd,.rui .rui-list li .gt,.rui #rlPill,.rui .rui-top .nav a,.rui #rkAdd{position:relative!important;box-sizing:border-box!important;min-height:44px!important;min-width:44px!important;height:auto!important;display:inline-flex!important;align-items:center!important;justify-content:center;background:transparent!important;border-color:transparent!important;box-shadow:none!important;-webkit-tap-highlight-color:transparent}
+.rui .rui-tab::before,.rui .rui-inline-links a::before,.rui .rui-inline-links button::before,.rui #araSave::before,.rui .addt::before,.rui .showd::before,.rui .rui-list li .gt::before,.rui #rlPill::before,.rui .rui-top .nav a::before,.rui #rkAdd::before{content:"";position:absolute;left:0;right:0;top:50%;height:30px;transform:translateY(-50%);border:1px solid rgba(148,197,214,.28);border-radius:999px;pointer-events:none;box-sizing:border-box}
+.rui .rui-tab.on::before{background:rgba(34,211,238,.14);border-color:rgba(34,211,238,.55)}
+.rui #araSave::before{border-color:#22d3ee}.rui .addt::before{border-color:#22d3ee}.rui .addt.q::before{border-color:#f59e0b}.rui .addt.ok::before{border-color:#22c55e}
+.rui .rui-top .nav a::before,.rui .showd::before{border:0}
+.rui #rlPill{position:relative!important}
+.rui .rui-ib,.rui .rui-send{min-width:44px!important;min-height:44px!important;width:44px;height:44px}.rui .rui-send.wide{width:auto}
+.rui .rui-box{min-height:54px}
+@media(max-width:899px){.rui .rui-rail{padding:0 10px!important;gap:2px!important}.rui .rui-tab{padding:0 10px!important}.rui .rui-list h2{top:calc(var(--rui-top) + 45px + env(safe-area-inset-top))}}
+
+.rui .rui-top .nav a{margin-top:0;margin-bottom:0;padding-top:0!important;padding-bottom:0!important}
+.ara-hit{display:inline-block!important;padding-top:14px!important;padding-bottom:14px!important;margin-top:-14px!important;margin-bottom:-14px!important}
+.rui #araSave{font-size:11px!important;gap:5px!important;padding:0 10px!important;letter-spacing:.06em!important}
+@media(max-width:400px){.rui #araSave{font-size:10px!important;padding:0 6px!important;letter-spacing:0!important}.rui .rui-top .rui-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
