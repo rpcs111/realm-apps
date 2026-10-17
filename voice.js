@@ -55,7 +55,7 @@ if(page==='desk'){
 }
 if(page==='video'){H.search=function(t){$('#q').value=t;$('#f').requestSubmit?$('#f').requestSubmit():$('#f').onsubmit(new Event('submit'))}}
 if(EDSEL[page]){edRestore();H.edit=H.edit||edFind;H.confirm=H.confirm||function(){if(edOn)edToggle(false);else toast('Nothing to confirm')};H.cancel=H.cancel||function(){if(edOn){edOn=true;edToggle(false)}else toast('Nothing open')};
- var eb=document.createElement('button');eb.id='vEd';eb.type='button';eb.setAttribute('aria-label','Edit page');eb.innerHTML='&#9998;';eb.onclick=function(){edToggle()};document.body.appendChild(eb)}
+ var eb=document.createElement('button');eb.id='vEd';eb.type='button';eb.setAttribute('aria-label','Edit page');eb.innerHTML='&#9998;';eb.onclick=function(){edToggle()};void 0}
 /* ---- command parser ---- */
 function run(raw){var s=norm(raw);toast('Heard: "'+raw+'"');var m;
  if(/\b(delete|remove|clear|wipe|erase)\b/.test(s)){setTimeout(function(){toast("Voice can't delete. Use the Delete button: two confirms + your PIN.")},900);return 'blocked'}
@@ -72,7 +72,7 @@ function run(raw){var s=norm(raw);toast('Heard: "'+raw+'"');var m;
  toast('Try: open, back, add, edit, done, assign to, search, confirm, cancel');return 'unknown'}
 window.realmVoice=run;
 var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return;
-var b=document.createElement('button');b.id='vMic';b.type='button';b.setAttribute('aria-label','Voice');b.innerHTML='<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="8.25" y="2.5" width="7.5" height="12.5" rx="3.75" fill="currentColor"/><path d="M5.25 11.25a6.75 6.75 0 0 0 13.5 0M12 18v3.25" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg>';document.body.appendChild(b);
+var b=document.createElement('button');b.id='vMic';b.type='button';b.setAttribute('aria-label','Voice');b.innerHTML='<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="8.25" y="2.5" width="7.5" height="12.5" rx="3.75" fill="currentColor"/><path d="M5.25 11.25a6.75 6.75 0 0 0 13.5 0M12 18v3.25" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg>';/* v20 (Ange 17 Oct): no floating voice button on any page */
 var rec=null;function RL(){return window.RealmLine}b.onclick=function(){if(rec){RL()&&RL().micStop('voice');rec.stop();return}try{rec=new SR()}catch(e){b.style.display='none';return}rec.lang='en-AU';rec.interimResults=false;rec.maxAlternatives=1;RL()&&RL().mic('voice',function(){if(!rec)b.onclick()});rec.onstart=function(){RL()&&RL().micLive('voice')};
  rec.onresult=function(e){RL()&&RL().micStop('voice');run(e.results[0][0].transcript)};rec.onerror=function(e){toast(e.error==='not-allowed'?'Mic blocked: allow it in Chrome settings':'Didn\'t catch that')};rec.onend=function(){rec=null;b.classList.remove('on');RL()&&RL().micEnd('voice')};
  b.classList.add('on');toast('Listening…');try{rec.start()}catch(e){rec=null;b.classList.remove('on')}};

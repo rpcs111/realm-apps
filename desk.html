@@ -77,7 +77,8 @@ pre{overflow-x:auto}
 .mic{margin-top:6px}
 @media(max-width:380px){main{padding:0 8px}header{padding-left:8px;padding-right:8px;gap:6px}.quick{padding:8px}.apps{grid-template-columns:repeat(2,1fr)}.btn{padding:7px 9px}header h1{font-size:15px}}
 </style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style><script src="js/ara-account.js?v=20261016b" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017d"><meta name="ara-build" content="2026.10.17-20"><style id="v19d">#saveApp,#appHelp{display:none!important}header #araSave{margin-left:auto}#rlPill{position:static!important}.rk-line{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 14px 0;font-size:13px;color:var(--mut,#94a3b8)}.rk-line[hidden]{display:none!important}#rkAdd{all:unset;cursor:pointer;color:#67e8f9;font-weight:700;padding:0 12px;min-height:44px;display:inline-flex;align-items:center;border:1px solid rgba(103,232,249,.4);border-radius:999px}</style><style id="v20d">/* v20 Desk (Ange 17 Oct): search.html-style top bar, one Ara symbol, line-icon bottom nav, no floating voice button */
-#vMic,#vEd{display:none!important}
+#vMic,#vEd{display:none!important}#fv-pad{display:none!important}
+.fsub button{display:inline-flex!important;align-items:center;gap:6px;min-height:44px}.fsub button .si{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
 header{position:sticky!important;top:0;z-index:50!important;display:flex!important;flex-wrap:nowrap!important;align-items:center;gap:4px!important;min-height:calc(56px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 8px 0 8px!important;background:rgba(2,6,12,.92)!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid rgba(148,197,214,.16)!important}
 header h1{font-size:15px!important;font-weight:600;letter-spacing:.06em!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:0 1 auto;margin:0 4px 0 2px!important}
 header .hb{all:unset;box-sizing:border-box;min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0 8px;border-radius:12px;color:#a1a1aa;font:500 13px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.04em;cursor:pointer;white-space:nowrap;flex:none}
@@ -139,7 +140,7 @@ nav button.on .ni{color:#22d3ee;opacity:1;filter:drop-shadow(0 0 4px rgba(34,211
       <div style="height:6px"></div><div style="display:flex;gap:6px"><select id="cWhere" style="flex:1"><option>side panel</option><option>web</option><option>desk</option></select><button class="btn p" onclick="newChat()">Open &amp; log</button></div></div>
     <div id="chats"></div>
   </section>
-  <section class="tab" id="tab-notes"><div class="bar"><h2>Notepad</h2></div>
+  <section class="tab" id="tab-notes"><div class="bar"><h2>Notes</h2></div>
     <div class="card"><textarea id="note" placeholder="Type or dictate&hellip; (mic on your keyboard)"></textarea><div style="height:8px"></div>
     <div style="display:flex;gap:6px"><select id="noteTag" style="flex:1"><option>desk</option><option>flow</option><option>idea</option><option>julie</option><option>park</option></select><button class="btn p" onclick="saveNote()">Save</button></div></div>
     <div id="notes"></div></section>
@@ -191,12 +192,11 @@ nav button.on .ni{color:#22d3ee;opacity:1;filter:drop-shadow(0 0 4px rgba(34,211
 <section class="tab" id="tab-flow">
   <div class="bar"><h2>Realm Flow Map</h2><span class="pill" id="fWhen"></span><button class="btn" onclick="flowLoad(true)">&#8635;</button></div>
   <div class="fsub" id="fsub">
-    <button class="on" onclick="fGo('map',this)">&#10036; Map</button>
-    <button onclick="fGo('list',this)">&#9776; List</button>
-    <button id="fsubVans" onclick="fGo('vans',this)">&#128656; Vans</button>
-    <button onclick="fGo('pad',this)">&#128221; Notepad</button>
-    <button onclick="fGo('wfki',this)">&#127942; We Fucking Killed It</button>
-    <button onclick="fGo('health',this)">&#129658; Health</button>
+    <button class="on" onclick="fGo('map',this)"><svg class="si" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8.5 6h7M7.2 8.2l3.6 7.6M16.8 8.2l-3.6 7.6"/></svg>Map</button>
+    <button onclick="fGo('list',this)"><svg class="si" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="4.8" cy="6.5" r="1"/><circle cx="4.8" cy="12" r="1"/><circle cx="4.8" cy="17.5" r="1"/></svg>List</button>
+    <button id="fsubVans" onclick="fGo('vans',this)"><svg class="si" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>Vans</button>
+    <button onclick="fGo('wfki',this)"><svg class="si" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.5 5.2 5.7.8-4.1 4 1 5.6L12 16.4l-5.1 2.7 1-5.6-4.1-4 5.7-.8z"/></svg>Nirvana</button>
+    <button onclick="fGo('health',this)"><svg class="si" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>Health</button>
   </div>
   <div class="fview on" id="fv-map">
     <div id="fmapWrap">
@@ -220,7 +220,7 @@ nav button.on .ni{color:#22d3ee;opacity:1;filter:drop-shadow(0 0 4px rgba(34,211
     <div id="fpadList"></div>
   </div>
   <div class="fview" id="fv-wfki">
-    <div class="card"><div class="m">What did we close today?</div><div style="height:6px"></div><div style="display:flex;gap:6px"><input id="fwIn" placeholder="e.g. Cert Studio live on the phone" onkeydown="if(event.key==='Enter')fWfkiAdd()"><button class="btn p" onclick="fWfkiAdd()">Killed it</button></div>
+    <div class="card"><div class="m">What did we close today?</div><div style="height:6px"></div><div style="display:flex;gap:6px"><input id="fwIn" placeholder="e.g. Cert Studio live on the phone" onkeydown="if(event.key==='Enter')fWfkiAdd()"><button class="btn p" onclick="fWfkiAdd()">Add to Nirvana</button></div>
     <div class="m" style="margin-top:6px">Register items ticked Done land here by themselves.</div></div>
     <div id="fwList"></div>
   </div>
@@ -301,7 +301,7 @@ var fCur=null;
 function fNode(id){var n=FB[id];if(!n)return;fCur={t:'node',id:id,status:n.status};
   var ins=F.paths.filter(function(p){return p.to===id||p.from===id});
   var btn='';if(n.button==='roster')btn='<button class="btn p" onclick="fRoster(0)">&#128119; Who&rsquo;s rostered today</button> <button class="btn" onclick="fRoster(1)">Tomorrow</button><div id="fRos"></div>';
-  if(n.button==='getpaid')btn='<a class="btn p" style="display:inline-block;background:var(--green);border-color:var(--green)" href="https://books.zoho.com/app#/invoices" target="_blank">&#128176; Get paid &mdash; open unpaid invoices</a> <button class="btn" onclick="fKill(\'Chased / got paid: \')">&#127942; Log a payment in</button>';
+  if(n.button==='getpaid')btn='<a class="btn p" style="display:inline-block;background:var(--green);border-color:var(--green)" href="https://books.zoho.com/app#/invoices" target="_blank">&#128176; Get paid &mdash; open unpaid invoices</a> <button class="btn" onclick="fKill(\'Chased / got paid: \')">Log a payment in Nirvana</button>';
   if(n.button==='vans')btn='<button class="btn p" onclick="fClose();fGo(\'vans\',document.getElementById(\'fsubVans\'))">&#128656; Open the van kit lists</button>';
   if(n.button==='rebook')btn='<a class="btn p" style="display:inline-block" href="https://books.zoho.com/app#/invoices" target="_blank">&#128257; Rebook &mdash; open last invoice to clone</a><div class="m" style="margin-top:6px">Auto-clone + price check is <b style="color:var(--red)">not built</b> yet (Zoho is read-only).</div>';
   var h='<input id="fnName" value="'+esc(n.name)+'" style="font-size:18px;font-weight:700;margin:0 30px 6px 0;width:calc(100% - 30px)">'+
@@ -373,11 +373,11 @@ function fExport(){var box=document.getElementById('fExp');if(box)box.innerHTML=
  
 function fPadSave(){var t=fVal('fpad').trim();if(!t)return;run('addMapNote',[t],function(){toast('Saved');document.getElementById('fpad').value='';run('getMapNotes',[],fPadRender)})}
 function fPadRender(r){document.getElementById('fpadList').innerHTML=(r||[]).map(function(n){return '<div class="card"><div class="m">'+esc(n.when)+' · '+esc(n.by)+'</div><div style="white-space:pre-wrap">'+esc(n.note)+'</div></div>'}).join('')||'<div class="empty">No notes yet.</div>'}
-function fWfkiAdd(){var t=fVal('fwIn').trim();if(!t)return;run('addWfki',[t,''],function(){toast('We fucking killed it');document.getElementById('fwIn').value='';run('getWfki',[],fWfkiRender)})}
-function fKill(prefix){var t=prompt('What did we close?',prefix||'');if(!t)return;run('addWfki',[t,''],function(){toast('Logged to We Fucking Killed It')})}
+function fWfkiAdd(){var t=fVal('fwIn').trim();if(!t)return;run('addWfki',[t,''],function(){toast('Added to Nirvana');document.getElementById('fwIn').value='';run('getWfki',[],fWfkiRender)})}
+function fKill(prefix){var t=prompt('What did we close?',prefix||'');if(!t)return;run('addWfki',[t,''],function(){toast('Logged to Nirvana')})}
 function fWfkiRender(r){var today=new Date().toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'});var by={},order=[];(r||[]).forEach(function(x){if(!by[x.day]){by[x.day]=[];order.push(x.day)}by[x.day].push(x)});
   var tc=(r||[]).filter(function(x){return x.day===order[0]}).length;
-  document.getElementById('fwList').innerHTML=(order.length?'<div class="card"><div class="big">'+tc+'</div><div class="m">closed on '+esc(order[0])+'</div></div>':'')+order.map(function(d){return '<div class="wday">'+esc(d)+' · '+by[d].length+'</div>'+by[d].map(function(x){return '<div class="card" style="border-left-color:var(--green)"><div class="t">&#127942; '+esc(x.what)+'</div><div class="m">'+esc(x.time)+' · '+esc(x.by)+'</div></div>'}).join('')}).join('')||'<div class="empty">Nothing closed yet today. Go kill something.</div>'}
+  document.getElementById('fwList').innerHTML=(order.length?'<div class="card"><div class="big">'+tc+'</div><div class="m">closed on '+esc(order[0])+'</div></div>':'')+order.map(function(d){return '<div class="wday">'+esc(d)+' · '+by[d].length+'</div>'+by[d].map(function(x){return '<div class="card" style="border-left-color:var(--green)"><div class="t">'+esc(x.what)+'</div><div class="m">'+esc(x.time)+' · '+esc(x.by)+'</div></div>'}).join('')}).join('')||'<div class="empty">Nothing closed yet today. Go kill something.</div>'}
 function fHealth(){document.getElementById('fhSum').textContent='Checking every link on every node…';run('runHealth',[],function(s){document.getElementById('fhSum').innerHTML='<span class="pill pass">'+s.ok+' ok</span><span class="pill partial">'+s.amber+' amber</span><span class="pill fail">'+s.red+' red</span> · web links '+esc(s.web)+' · '+esc(s.when);flowLoad(true);setTimeout(fHealthRender,2500)})}
 function fHealthRender(){if(!F.loaded){setTimeout(fHealthRender,800);return}var ns=F.nodes.slice().sort(function(a,b){var o={red:0,amber:1,ok:2};return (o[a.health]!=null?o[a.health]:3)-(o[b.health]!=null?o[b.health]:3)});
   document.getElementById('fhList').innerHTML=ns.map(function(n){return '<div class="card" style="border-left-color:'+(HC[String(n.health)]||'#475569')+'"><div class="t">'+esc(n.name)+' <span class="pill">'+esc(n.health||'unchecked')+'</span></div><pre>'+esc(n.health_detail||'not checked yet')+'</pre></div>'}).join('')}
