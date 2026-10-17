@@ -109,12 +109,45 @@ html.ned-open,html.ned-open body{overflow:hidden!important}
 .tadd-r{display:flex;gap:6px}.tadd-r select{flex:1;min-width:0}
 #tAdd{flex:0 0 auto;min-height:44px;padding:0 16px;border-radius:10px;border:0;background:#22d3ee;color:#04121a;font-weight:700;font-size:14px;cursor:pointer}#tAdd[disabled]{opacity:.6}
 .tmsg{font-size:13px;color:#a9c1cc;min-height:0}.tmsg:empty{display:none}
+</style><style id="v21">/* v21 Grokified (Ange, 17 Oct): pure black, quiet grey lines, white accent; like-for-like v17 structure (rail All / My notes / Tasks, MY NOTES, TASKS as Google Tasks columns, one composer). Data and save logic unchanged. */
+:root{--rui-ac:#fff;--rui-ink:#ececec;--rui-mute:#8a8a8f;--rui-line:rgba(255,255,255,.09);--rui-row:#0a0a0a;--rui-rowh:#141414}
+html,body,body.rui,.rui-shell,.rui-main{background:#000!important;background-image:none!important}
+.rui-top,.rui-rail,.rui-list h2{background:rgba(0,0,0,.94)!important;border-color:var(--rui-line)!important}
+.rui-list h2{font-size:10.5px!important;color:#6b6b70!important}
+.rui-tab{color:#9a9a9f!important;border-color:var(--rui-line)!important}
+.rui-tab.on{background:transparent!important;color:#fff!important}
+.rui-tab i{background:transparent!important;color:#8a8a8f!important}
+.rui-status{color:#6b6b70!important;font-size:12px!important}
+html body #araSave{background:#000!important;color:#fff!important;border:1px solid rgba(255,255,255,.3)!important;box-shadow:none!important}
+html body.rui .rui-tab.on::before{background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.22)!important}
+html body.rui .rui-tab::before,html body.rui .rui-inline-links a::before,html body.rui .rui-inline-links button::before{border-color:rgba(255,255,255,.12)!important}
+html body.rui #araSave::before{border-color:rgba(255,255,255,.3)!important;box-shadow:none!important}
+html body.rui .addt{border-color:transparent!important;color:#d4d4d8!important}html body.rui .addt::before{border-color:rgba(255,255,255,.2)!important}html body.rui .addt.q::before{border-color:#f59e0b!important}html body.rui .addt.ok::before{border-color:#22c55e!important}
+html body.rui .showd{color:#a1a1aa!important}
+.rui-links a,.rui-links button,.rui-inline-links a,.rui-inline-links button{color:#b4b4b8!important;border-color:var(--rui-line)!important;background:transparent!important}
+.rui-note{border-left-color:#333!important;color:#6b6b70!important}
+.gcol{background:#0a0a0a!important;border-color:var(--rui-line)!important}
+.rui-list li{border-color:var(--rui-line)!important}
+.rui .rui-list .tick.d::before{background:#fff!important;border-color:#fff!important}
+.rui-composer{background:linear-gradient(180deg,rgba(0,0,0,0),#000 35%)!important}
+.rui-box{background:#0d0d0d!important;border-color:rgba(255,255,255,.14)!important;box-shadow:none!important}
+#save{background:#fff!important;color:#000!important}
+#araSym::before{border-color:rgba(255,255,255,.22)!important;box-shadow:none!important}
+#araSym.ok::before{border-color:#22c55e!important}
+/* no big clunky buttons: "+ New note" off (the composer makes notes; tap a note for photo/drawing), Google task add = one slim row */
+#newNote{display:none!important}
+#tAddBox{display:flex!important;flex-direction:row!important;flex-wrap:wrap;align-items:center;gap:6px!important;padding:0!important;margin:8px 0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+#tAddBox #tTitle{flex:1 1 140px;width:auto!important;min-width:0;height:44px!important;min-height:44px!important;box-sizing:border-box;background:#0d0d0d!important;border:1px solid var(--rui-line)!important;border-radius:10px!important;color:#ececec!important;padding:0 12px!important;font-size:14px!important}
+#tAddBox .tadd-r{display:flex!important;flex:0 0 auto;gap:6px!important;margin:0!important}
+#tAddBox #tList{width:auto!important;max-width:118px;height:44px!important;min-height:44px!important;background:#0d0d0d!important;border:1px solid var(--rui-line)!important;border-radius:10px!important;color:#b4b4b8!important;font-size:13px!important;padding:0 6px!important}
+#tAddBox #tAdd{width:auto!important;min-width:44px;height:44px!important;min-height:44px!important;padding:0 12px!important;background:transparent!important;color:#fff!important;border:1px solid rgba(255,255,255,.22)!important;border-radius:10px!important;font-size:13px!important;font-weight:600!important;box-shadow:none!important}
+#tAddBox .tmsg{flex:1 0 100%}#tAddBox .tmsg:empty{display:none}
 </style></head><body class="rui">
 <header class="rui-top top"><span class="rui-mark" role="img" aria-label="Ara"></span><b class="rui-title">Notes</b><div class="nav"><a href="./index.html">‹ Apps</a><a id="toSearch" href="./search.html">Search ›</a></div></header>
 <div class="rui-shell"><aside class="rui-rail" id="rail" role="tablist" aria-label="Show"><button type="button" class="rui-tab on" data-k="all" role="tab" aria-selected="true">All <i id="acnt">0</i></button><button type="button" class="rui-tab" data-k="notes" role="tab">My notes <i id="ncntT">0</i></button><button type="button" class="rui-tab" data-k="tasks" role="tab">Tasks <i id="tcntT">0</i></button><h3>Google Tasks</h3><div class="rui-links"><a class="gt" id="gTasks" href="https://tasks.google.com/tasks/?authuser=info@realmpcs.com" target="_blank" rel="noopener">Google Tasks ↗</a><button id="exp" type="button">CSV</button></div></aside>
 <main class="rui-main"><div class="rui-status" data-realm-sync>Saved on this device.</div><div class="rui-list" id="list">
 <section data-k="notes"><h2>MY NOTES <span class="cnt" id="ncnt"></span><button type="button" class="nnew" id="newNote" aria-label="New note">+ New note</button></h2><ul id="notes"></ul><button type="button" class="showd" id="showdN" hidden></button></section>
-<section data-k="tasks"><h2>TASKS <span class="cnt" id="tcnt"></span></h2><div class="tadd" id="tAddBox"><input id="tTitle" type="text" placeholder="New Google task&hellip;" aria-label="New Google task" autocomplete="off"><div class="tadd-r"><select id="tList" aria-label="Task list"><option>Ange to do</option><option>Realm Daily</option><option>Realm Quotes</option><option>JP to do</option><option>LINKS ACCESS</option></select><button id="tAdd" type="button">Add task</button></div><div class="tmsg" id="tMsg" role="status"></div></div><div class="rui-note" id="tsrc" title="Tap to read all"></div><div class="rui-inline-links"><a href="https://tasks.google.com/tasks/?authuser=info@realmpcs.com" target="_blank" rel="noopener">Google Tasks ↗</a><button id="expM" type="button">CSV</button></div><div class="gcols" id="tasks"></div><button type="button" class="showd" id="showdT" hidden></button></section>
+<section data-k="tasks"><h2>TASKS <span class="cnt" id="tcnt"></span></h2><div class="tadd" id="tAddBox"><input id="tTitle" type="text" placeholder="New Google task&hellip;" aria-label="New Google task" autocomplete="off"><div class="tadd-r"><select id="tList" aria-label="Task list"><option>Ange to do</option><option>Realm Daily</option><option>Realm Quotes</option><option>JP to do</option><option>LINKS ACCESS</option></select><button id="tAdd" type="button">Add</button></div><div class="tmsg" id="tMsg" role="status"></div></div><div class="rui-note" id="tsrc" title="Tap to read all"></div><div class="rui-inline-links"><a href="https://tasks.google.com/tasks/?authuser=info@realmpcs.com" target="_blank" rel="noopener">Google Tasks ↗</a><button id="expM" type="button">CSV</button></div><div class="gcols" id="tasks"></div><button type="button" class="showd" id="showdT" hidden></button></section>
 </div></main></div>
 <div class="rui-composer"><div class="rui-cmsg" id="micMsg" aria-live="polite"></div><div class="rui-box"><textarea id="nt" data-autogrow rows="1" placeholder="Type a note, or tap the mic" aria-label="Note"></textarea><button id="mic" class="rui-ib" type="button" aria-label="Dictate a note"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="8.25" y="2.5" width="7.5" height="12.5" rx="3.75" fill="currentColor"/><path d="M5.25 11.25a6.75 6.75 0 0 0 13.5 0M12 18v3.25" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg><span class="ml rui-sr">Mic</span></button><button id="araSym" type="button" aria-label="Send to Ara" title="Send to Ara"></button><button id="save" class="rui-send wide" type="button">Save</button></div></div>
 <script src="js/reconnect.js"></script>
@@ -170,7 +203,7 @@ if(!ul.children.length)ul.appendChild(mk("li","empty","All done \u2713"));c.appe
 if(!cols.length)U.appendChild(mk("div","empty","No tasks yet."));
 $("tcnt").textContent=(TASKS.length-done)+" open";doneBtn("showdT","t",done)}
 function drawNotes(){var U=$("notes");U.textContent="";var nd=notes.filter(function(n){return n.done}).length;doneBtn("showdN","n",nd);var a=notes.slice().filter(function(n){return showDone.n||!n.done}).sort(function(x,y){return(x.done-y.done)||((y.mt||y.ts||0)-(x.mt||x.ts||0))});$("ncnt").textContent=notes.filter(function(n){return!n.done}).length+" open";
-if(!a.length){U.appendChild(mk("li","empty",nd?"All done \u2713":"No notes yet. Tap + New note, or type below and Save."));return}
+if(!a.length){U.appendChild(mk("li","empty",nd?"All done \u2713":"No notes yet. Type below and Save."));return}
 a.forEach(function(n){var li=mk("li",n.done?"d":"");var b=mk("button","tick"+(n.done?" d":""),n.done?"\u2713":"");b.type="button";b.setAttribute("aria-label","Done");b.onclick=function(){n.done=!n.done;persist();drawNotes();ruiCounts()};
 /* v20: iCloud-style row = title, date + first words, photo thumbnail; tap the row to open the full-screen editor */
 var imgs=(n.att||[]).filter(function(x){return x.k==="img"});var bd=mk("div","b nop");bd.setAttribute("role","button");bd.tabIndex=0;bd.setAttribute("aria-label","Open note: "+(n.title||"untitled"));
@@ -352,7 +385,7 @@ NotesV20.booting=boot();
 })();</script>
 <script src="voice.js?v=20261016v5"></script>
 <script src="js/saveapp.js?v=20261017h" data-mount="header .nav"></script><script src="js/realm-ui.js?v=20261016b"></script>
-<script src="js/ara-version.js" defer></script>
+<script src="js/ara-version.js" defer></script><script src="js/nirvana.js?v=20261017a" data-app="notes" data-name="Notes" defer></script>
 <script>ruiCounts();RealmUI.tabs(document.getElementById("rail"),document.getElementById("list"))</script>
 <script>/* v16: a tap anywhere on the input bar (not on a button) focuses the text box */(function(){var b=document.querySelector(".rui-box");if(!b)return;b.addEventListener("click",function(e){if(e.target.closest("button,a,input,textarea"))return;var f=b.querySelector("textarea,input");if(f)f.focus()})})()</script><script src="js/ara-install.js?v=20261017c" defer></script><script>/* v20b: "New Google task" adds straight to the chosen Google Tasks list, with the same call Desk used (addTask on the Desk engine, Realm key from this device). One tap = one task; the button is off while it sends. */
 (function(){var U="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";
