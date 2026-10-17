@@ -101,7 +101,7 @@ h2{margin:12px 0 6px;font-size:11px}
 <div class="strip" id="strip"></div>
 <main id="view"></main>
 <div class="tools">
- <button id="bExp">⬇ Export JSON</button>
+ <button id="bExp"><svg class="li20" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:4px"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>Export JSON</button>
  <label class="btn" for="fImp" style="cursor:pointer">⬆ Import JSON</label><input type="file" id="fImp" accept=".json,application/json" hidden>
  <button id="bCopyAll">Copy all amends for Ara</button>
  <button class="warn" id="bReset">↺ Reset to built state</button>
@@ -132,12 +132,12 @@ function lnk(u){return u?'<a class="btn" href="'+esc(u)+'" target="_blank" rel="
 function counts(L){var c={};L.groups.forEach(function(g){g.items.forEach(function(it){var s=cur(it.id).status;c[s]=(c[s]||0)+1})});
  var order=L.id==='CN'?CONN:BUILD;return order.filter(function(s){return c[s]}).map(function(s){return'<span class="chip" style="--k:'+col(s)+'">'+c[s]+' '+esc(ST[s][0])+'</span>'}).join(' ')}
 function nItems(L){return L.groups.reduce(function(a,g){return a+g.items.length},0)}
-function strip(){$('strip').innerHTML=D.open.map(function(it){var c=cur(it.id);return'<button class="oi" data-mend="'+it.id+'"><b>'+esc(c.name)+(c.edited?' ✎':'')+'</b><span>'+esc(c.note)+'</span></button>'}).join('')}
+function strip(){$('strip').innerHTML=D.open.map(function(it){var c=cur(it.id);return'<button class="oi" data-mend="'+it.id+'"><b>'+esc(c.name)+(c.edited?' (edited)':'')+'</b><span>'+esc(c.note)+'</span></button>'}).join('')}
 function home(){
  var h='<h2>Layers · tap to open</h2><div class="stack">';
  D.layers.forEach(function(L){var c=cur(L.id);
   h+='<div class="band" role="button" tabindex="0" data-go="'+L.id+'" style="--c:'+L.color+'"><div class="num">'+esc(L.n)+'</div>'+
-  '<button class="mend" data-mend="'+L.id+'">✎ Mend</button>'+
+  '<button class="mend" data-mend="'+L.id+'"><svg class="li20" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:4px"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/></svg>Mend</button>'+
   '<div class="tag">'+esc(L.tag)+' · '+nItems(L)+' items '+chip(c.status)+(c.edited?'<span class="ed">edited</span>':'')+'</div>'+
   '<div class="nm">'+esc(c.name)+'</div><div class="ds">'+esc(c.note)+'</div><div class="counts">'+counts(L)+'</div></div>'});
  h+='</div><h2>Key</h2><div class="legend">'+BUILD.map(function(s){return chip(s)}).join(' ')+'</div><div class="legend">'+CONN.filter(function(s){return s!=='planned'}).map(function(s){return chip(s)}).join(' ')+'</div>';
@@ -148,13 +148,13 @@ function layer(id){var L=IDX[id].o,c=cur(id);
  '<div class="lhead" style="--c:'+L.color+'"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><div class="nm">'+esc(c.name)+'</div><div>'+chip(c.status,1)+(c.edited?'<span class="ed">edited</span>':'')+'</div></div>'+
  '<div class="n" style="color:#c9d2e8;font-size:14px;margin:4px 0">'+esc(c.note)+'</div>'+(c.amend?'<div class="am" style="color:#ffd166;font-size:13px">Amend: '+esc(c.amend)+'</div>':'')+
  '<div class="s" style="font-size:11px;color:var(--mute);margin:4px 0">Source: '+esc(c.src)+'</div><div class="counts" style="margin:6px 0">'+counts(L)+'</div>'+
- '<div style="display:flex;gap:6px;flex-wrap:wrap">'+lnk(c.link)+'<button data-mend="'+id+'">✎ Mend layer</button><button data-copy="'+id+'">Copy for Ara</button></div></div>';
+ '<div style="display:flex;gap:6px;flex-wrap:wrap">'+lnk(c.link)+'<button data-mend="'+id+'"><svg class="li20" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:4px"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/></svg>Mend layer</button><button data-copy="'+id+'">Copy for Ara</button></div></div>';
  L.groups.forEach(function(g){h+='<h2>'+esc(g.name)+' · '+g.items.length+'</h2><div class="grid">';
   g.items.forEach(function(it){var x=cur(it.id);
    h+='<div class="card'+(x.status==='banned'?' banned':'')+'" style="--k:'+col(x.status)+'" id="c_'+it.id+'"><div class="t"><span class="x">'+esc(x.name)+'</span>'+chip(x.status)+'</div>'+
    (x.note?'<div class="n">'+esc(x.note)+'</div>':'')+(x.amend?'<div class="am">Amend: '+esc(x.amend)+'</div>':'')+
    '<div class="s">'+(x.src?'Source: '+esc(x.src):'')+(x.edited?'<span class="ed">edited '+esc((x.ts||'').replace('T',' ').slice(0,16))+'</span>':'')+'</div>'+
-   '<div class="row">'+lnk(x.link)+'<button data-mend="'+it.id+'">✎ Mend</button><button data-copy="'+it.id+'">Copy</button></div></div>'});
+   '<div class="row">'+lnk(x.link)+'<button data-mend="'+it.id+'"><svg class="li20" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:4px"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/></svg>Mend</button><button data-copy="'+it.id+'">Copy</button></div></div>'});
   h+='</div>'});
  $('view').innerHTML=h;window.scrollTo(0,0);
 }
@@ -168,7 +168,7 @@ function copy(t,ok){function fb(){var a=document.createElement('textarea');a.val
  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(function(){toast(ok||'Copied')},fb)}else fb()}
 var open=null;
 function mend(id){open=id;var x=cur(id),m=IDX[id],opts=(m.kind==='conn'?CONN:BUILD);if(opts.indexOf(x.status)<0)opts=opts.concat([x.status]);
- $('sheet').innerHTML='<h3>✎ Mend</h3><div class="s" style="font-size:12px;color:var(--mute)">'+esc(m.kind==='layer'?'Layer':(m.layer?cur(m.layer.id).name+' › ':'')+(m.group||''))+(x.ts?' · last saved '+esc(x.ts.replace('T',' ').slice(0,16)):'')+'</div>'+
+ $('sheet').innerHTML='<h3><svg class="li20" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:4px"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/></svg>Mend</h3><div class="s" style="font-size:12px;color:var(--mute)">'+esc(m.kind==='layer'?'Layer':(m.layer?cur(m.layer.id).name+' › ':'')+(m.group||''))+(x.ts?' · last saved '+esc(x.ts.replace('T',' ').slice(0,16)):'')+'</div>'+
  '<div class="f"><label>Name</label><input id="mName" value="'+esc(x.name)+'"></div>'+
  '<div class="f"><label>Status</label><select id="mSt">'+opts.map(function(s){return'<option value="'+s+'"'+(s===x.status?' selected':'')+'>'+esc(ST[s]?ST[s][0]:s)+'</option>'}).join('')+'</select></div>'+
  '<div class="f"><label>Note</label><textarea id="mNote">'+esc(x.note)+'</textarea></div>'+

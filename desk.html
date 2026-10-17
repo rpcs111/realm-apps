@@ -91,7 +91,7 @@ header .who #rlPill{min-height:44px;min-width:44px;justify-content:center}@media
 nav button{gap:3px!important}nav button .ni{display:flex;align-items:center;justify-content:center;width:24px;height:24px;font-size:0!important;color:#67e8f9;opacity:.72}
 nav button .ni svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 nav button.on .ni{color:#22d3ee;opacity:1;filter:drop-shadow(0 0 4px rgba(34,211,238,.55))}nav button.on{color:#22d3ee!important}
-</style><script>window.ARA_SYM_HEADER=1</script><style id="v20d2">/* v20 (Elon baseline): 7 bottom tiles (Start Flow Today Certs Quotes Notes More), header logo-title-pill-Apps-Install, no hamburger, locked state instead of endless skeletons */
+</style><style id="v20d2">/* v20 (Elon baseline): 7 bottom tiles (Start Flow Today Certs Quotes Notes More), header logo-title-pill-Apps-Install, no hamburger, locked state instead of endless skeletons */
 nav button[onclick*="'search'"],nav button[onclick*="'desk'"],nav button[onclick*="'tasks'"],nav button[onclick*="'chats'"],nav button[onclick*="'links'"]{display:none!important}
 nav{overflow-x:hidden!important}nav button{flex:1 1 0!important;min-width:44px!important}
 header #spBtn{display:none!important}header h1{order:0}header .who{order:1;margin-left:auto!important}header a.hb{order:2}header #araSave{order:3}header #arbBtn{order:-1}
@@ -115,7 +115,9 @@ label.ckl input{width:22px!important;height:22px;margin:0;accent-color:#22d3ee}
 .tcols{display:block}@media(min-width:900px){.tcols{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0 14px;align-items:start}}
 details.nlist{margin-top:10px}details.nlist>summary{min-height:44px;display:flex;align-items:center;color:var(--mut);cursor:pointer}
 i.ei{display:inline-flex;font-style:normal;vertical-align:-4px;margin-right:2px}
-#tab-tasks{display:none!important}
+#tab-tasks,#tab-notes{display:none!important}
+html body #arbBtn{bottom:calc(70px + env(safe-area-inset-bottom))!important}/* bottom-right like every page, lifted just above the Desk bottom bar so it never covers More */
+#fLock{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(340px,86%);box-sizing:border-box;padding:20px 18px;border-radius:14px;background:#0b1220;border:1px solid rgba(103,232,249,.45);text-align:center;display:flex;flex-direction:column;gap:8px;color:#e8eefc;font-size:16px;line-height:1.4;z-index:2}#fLock>b{font-size:18px;color:#fff}#fLock span{color:#cbd5e1}#fmapWrap:has(#fLock) .fleg,#fmapWrap:has(#fLock) .fzoom{display:none}
 @media(max-width:599px){.fsub{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;overflow:visible}.fsub button{flex-direction:column;gap:2px;padding:4px 2px!important;font-size:11.5px!important;min-width:0;justify-content:center}.fsub button svg.si{margin:0!important}}
 </style></head><body>
 <header><button class="hb" id="spBtn" aria-label="Menu" onclick="spOpen(1)">&#9776;</button><a class="hb" href="./index.html">&larr; Apps</a><h1>REALM <b>DESK</b></h1><button class="hb" id="saveApp">&#11015; Save as app</button><span class="who" id="who" data-rl-pill></span></header><div class="rk-line" id="rkLine" hidden>Desk needs the Realm key on this phone. <button type="button" id="rkAdd">Add key</button></div>
@@ -164,10 +166,7 @@ i.ei{display:inline-flex;font-style:normal;vertical-align:-4px;margin-right:2px}
       <div style="height:6px"></div><div style="display:flex;gap:6px"><select id="cWhere" style="flex:1"><option>side panel</option><option>web</option><option>desk</option></select><button class="btn p" onclick="newChat()">Open &amp; log</button></div></div>
     <div id="chats"></div>
   </section>
-  <section class="tab" id="tab-notes"><div class="bar"><h2>Tasks</h2><button class="btn ib" aria-label="Refresh tasks" onclick="load('tasks',true)">&#8635;</button></div>
-    <div class="card"><div class="nrow"><input id="tTitle" placeholder="New Google task&hellip;" onkeydown="if(event.key==='Enter')addTk()"></div><div style="height:6px"></div><div class="nrow"><select id="tList" aria-label="Task list"><option>Ange to do</option><option>Realm Daily</option><option>Realm Quotes</option><option>JP to do</option><option>LINKS ACCESS</option></select><button class="btn p" onclick="addTk()">Add task</button></div></div>
-    <div class="bar"><h2>Google Tasks</h2></div><div id="tasks" class="tcols"><div class="sk"></div></div>
-    <div class="m" style="margin:10px 2px 18px">Notes (with photos and drawing) live in the Notes app: <a href="./notes.html">open Notes</a>.</div></section>
+  <section class="tab" id="tab-notes" aria-hidden="true"></section>
   <section class="tab" id="tab-links"><div class="bar"><h2>Links</h2></div><div id="links"></div></section>
 </main>
 <style>
@@ -263,7 +262,7 @@ function fGo(v,b){document.querySelectorAll('.fview').forEach(function(x){x.clas
   if(v==='pad')run('getMapNotes',[],fPadRender);if(v==='wfki')run('getWfki',[],fWfkiRender);if(v==='health')fHealthRender();if(v==='list')fList();if(v==='vans')fVans()}
 function fHasKey(){try{return !!(window.RealmKey&&RealmKey.get())}catch(e){return false}}
 function fMsg(t){return '<div class="empty lk">'+t+'</div>'}
-function flowLoad(force){if(F.loaded&&!force)return;if(!fHasKey()){document.getElementById('fvp').innerHTML='<text x="0" y="0" fill="#8ea0c2" font-size="28" text-anchor="middle">Locked: add the Realm key to load the map</text>';fList();return}clearTimeout(window._fTo);window._fTo=setTimeout(function(){if(!F.loaded){var l=document.getElementById('flist');if(l)l.innerHTML=fMsg('The map is taking too long. Tap &#8635; at the top to try again.')}},25000);document.getElementById('fvp').innerHTML='<text x="0" y="0" fill="#8ea0c2" font-size="28" text-anchor="middle">loading the map&hellip;</text>';
+function flowLoad(force){if(F.loaded&&!force)return;if(!fHasKey()){document.getElementById('fvp').innerHTML='';var w=document.getElementById('fmapWrap');if(w&&!document.getElementById('fLock')){var d=document.createElement('div');d.id='fLock';d.innerHTML='<b>The Flow Map is locked on this device</b><span>Tap <b>Add key</b> at the top of Desk, then come back here.</span>';w.appendChild(d)}fList();return}var fl=document.getElementById('fLock');if(fl)fl.remove();clearTimeout(window._fTo);window._fTo=setTimeout(function(){if(!F.loaded){var l=document.getElementById('flist');if(l)l.innerHTML=fMsg('The map is taking too long. Tap &#8635; at the top to try again.')}},25000);document.getElementById('fvp').innerHTML='<text x="0" y="0" fill="#8ea0c2" font-size="28" text-anchor="middle">loading the map&hellip;</text>';
   run('getFlow',[CFG.v||''],function(r){var first=!F.loaded;F=r;F.loaded=true;FB={};r.nodes.forEach(function(n){FB[n.id]=n});if(first)setTimeout(fPhoneFit,50);document.getElementById('fWhen').textContent=r.nodes.length+' nodes · '+r.when+(r.openChanges?' · '+r.openChanges+' changes':'');fDraw();if(document.getElementById('fv-list').classList.contains('on'))fList()})}
 function fP(n){if(!n||n.kind==='core')return{x:0,y:0};var a=Number(n.a)*Math.PI/180,r=Number(n.r);return{x:r*Math.cos(a),y:r*Math.sin(a)}}
 var NS='http://www.w3.org/2000/svg';
@@ -465,7 +464,7 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return
 function q1(s){return esc(s).replace(/'/g,"\\'")}
 function toggle(id){var e=document.getElementById(id);e.style.display=e.style.display==='none'?'block':'none'}
 function sk(id,n){document.getElementById(id).innerHTML=new Array((n||4)+1).join('<div class="sk"></div>')}
-function go(name,btn){if(name==='tasks'||name==='notes'){name='notes';btn=document.getElementById('navMore')||btn}document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById('tab-'+name).classList.add('on');document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');load(name)}
+function go(name,btn){if(name==='tasks'||name==='notes'){location.href='./notes.html';return}document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById('tab-'+name).classList.add('on');document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');load(name)}
 function run(fn,args,cb){google.script.run.withSuccessHandler(cb).withFailureHandler(function(e){toast('Error: '+e.message)})[fn].apply(null,args||[])}
  
 function chatOpen(topic,context,where){run('logChat',[topic,context,where||'desk'],function(){toast('Chat logged')});window.open(CFG.grok+'?q='+encodeURIComponent(topic+(context?' — '+context:'')),'_blank')}
@@ -477,9 +476,9 @@ function load(name,force){if(loaded[name]&&!force)return;loaded[name]=true;
   if(name==='certs'){sk('certs');run('getCerts',[],function(r){renderEvents('certs',r,true)})}
   if(name==='quotes'){sk('quotes');run('getQuotes',[],function(r){renderEvents('quotes',r,false)})}
   if(name==='desk'){sk('desk');run('getRegister',[document.getElementById('showClosed').checked],renderReg)}
-  if(name==='tasks'){sk('tasks');run('getTasks',[],renderTasks)}
+  
   if(name==='chats'){sk('chats',3);run('getChats',[document.getElementById('showFiled').checked],renderChats)}
-  if(name==='notes'){load('tasks',force)}
+  
   if(name==='links'){sk('links');run('getLinks',[],renderLinks)}
   if(name==='flow'){flowLoad(force)}}
 function shiftDay(d){dayOff=d===0?0:dayOff+d;load('today',true)}
@@ -544,7 +543,7 @@ function saveNote(){var n=document.getElementById('note').value.trim();if(!n)ret
 function renderNotes(r){document.getElementById('notes').innerHTML=r.length?r.map(function(n){return '<div class="card"><div class="m">'+esc(n.when)+' &middot; '+esc(n.tag)+'</div><div>'+esc(n.note)+'</div></div>'}).join(''):'<div class="empty">No notes yet.</div>'}
 function renderLinks(r){r=(r||[]).filter(function(x){return !/orion/i.test(String(x.title)+' '+String(x.url))});document.getElementById('links').innerHTML=r.length?r.map(function(l){return '<a class="card" style="display:block;text-decoration:none;color:inherit" href="'+esc(l.url)+'" target="_blank"><div class="t">'+esc(l.title)+'</div><div class="m">'+esc(l.url).slice(0,70)+'</div></a>'}).join(''):'<div class="empty">REALM_LINKS is empty.</div>'}
 run('whoami',[],function(w){document.getElementById('who').textContent=w});
-try{var _rt=JSON.parse(localStorage.getItem('realm_desk_tab')||'null');if(!CFG.tab&&!location.hash&&_rt&&_rt.n&&TABIX[_rt.n]!=null&&_rt.n!=='search'&&Date.now()-_rt.t<4*36e5)CFG.tab=_rt.n}catch(_e){}
+try{var _rt=JSON.parse(localStorage.getItem('realm_desk_tab')||'null');if(!CFG.tab&&!location.hash&&_rt&&_rt.n&&TABIX[_rt.n]!=null&&_rt.n!=='search'&&_rt.n!=='notes'&&_rt.n!=='tasks'&&Date.now()-_rt.t<4*36e5)CFG.tab=_rt.n}catch(_e){}
 if(CFG.tab&&TABIX[CFG.tab]!=null){go(CFG.tab,document.querySelectorAll('nav button')[TABIX[CFG.tab]])}else load('start');
 </script>
 <script>
@@ -606,17 +605,17 @@ RealmLine.drafts(['nItem','nNext','nLink','tTitle','cTopic','note','fpad','fwIn'
 RealmLine.onBack(function(ev){if(ev!=='leave')return;try{var a=document.querySelector('.tab.on');if(a)localStorage.setItem('realm_desk_tab',JSON.stringify({n:a.id.replace('tab-',''),t:Date.now()}))}catch(e){}});
 })();</script>
 <script src="voice.js?v=20261016v5"></script>
-<script src="js/ara-install.js?v=20261017d" defer></script><script src="js/ara-version.js" defer></script><script src="js/saveapp.js?v=20261017h" data-mount="header" defer></script><script>/* v19: inline Add key line instead of the popup; key lock unchanged */(function(){var l=document.getElementById("rkLine"),b=document.getElementById("rkAdd");function has(){return !!(window.RealmKey&&RealmKey.get())}if(l&&!has())l.hidden=false;addEventListener("realmkey-needed",function(){if(l&&!has())l.hidden=false});if(b)b.onclick=function(){if(window.RealmKey)RealmKey.ask("")}})()</script><script>/* v20 Desk: the one Ara symbol lives in the top bar (not floating); 'Scribe' is shown as 'Notes' in any loaded tile/link */
+<script src="js/ara-install.js?v=20261017d" defer></script><script src="js/ara-version.js" defer></script><script src="js/saveapp.js?v=20261017h" data-mount="header" defer></script><script>/* v19: inline Add key line instead of the popup; key lock unchanged */(function(){var l=document.getElementById("rkLine"),b=document.getElementById("rkAdd");function has(){return !!(window.RealmKey&&RealmKey.get())}if(l&&!has())l.hidden=false;addEventListener("realmkey-needed",function(){if(l&&!has())l.hidden=false});if(b)b.onclick=function(){if(window.RealmKey)RealmKey.ask("")}})()</script><script>/* v20 Desk: (v20b) the one Ara symbol is bottom-right like every page; 'Scribe' is shown as 'Notes' in any loaded tile/link */
 (function(){function mv(){var b=document.getElementById('arbBtn'),h=document.querySelector('header');if(!b||!h)return false;if(b.parentNode!==h){b.classList.remove('fx');h.insertBefore(b,h.firstChild)}return true}
-var n=0,iv=setInterval(function(){if(mv()||++n>40)clearInterval(iv)},150);
+/* v20b: the Ara symbol now sits bottom-right like every other page (ara-install.js sym()); mv() kept but not run */
 var RX=/\bScribe\b(?!how)/g,RXU=/\bSCRIBE\b(?!HOW)/g;
 function fix(root){try{var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null),t;while(t=w.nextNode()){var v=t.nodeValue;if(v&&/scribe/i.test(v)&&!(t.parentNode&&/^(SCRIPT|STYLE)$/.test(t.parentNode.nodeName))){var nv=v.replace(RX,'Notes').replace(RXU,'NOTES');if(nv!==v)t.nodeValue=nv}}
  [].forEach.call((root.querySelectorAll?root:document).querySelectorAll('a[href*="scribe.html"]'),function(a){a.setAttribute('href',a.getAttribute('href').replace(/scribe\.html/,'notes.html'))})}catch(e){}}
 function go(){fix(document.body);try{new MutationObserver(function(ms){ms.forEach(function(m){[].forEach.call(m.addedNodes,function(x){if(x.nodeType===1)fix(x);else if(x.nodeType===3&&x.parentNode)fix(x.parentNode)})})}).observe(document.body,{childList:true,subtree:true})}catch(e){}}
 if(document.body)go();else document.addEventListener('DOMContentLoaded',go)})();</script><div id="moreSheet" hidden role="menu" aria-label="More"></div>
-<script>/* v20: More menu for the tabs that left the bottom bar: Search, Register (Desk), Chats, Links. Tasks (Google Tasks columns) opens from More; the Notes tile opens notes.html (v20 fix) */
+<script>/* v20: More menu for the tabs that left the bottom bar: Search, Register (Desk), Chats, Links. Tasks live in Notes > Tasks (notes.html); the Notes tile opens notes.html (v20b) */
 function navMore(){var m=document.getElementById('moreSheet');if(!m.hidden){m.hidden=true;return}
- if(!m.children.length){[['search','Search'],['desk','Register'],['tasks','Tasks'],['chats','Chats'],['links','Links']].forEach(function(x){var src=document.querySelector('nav button[onclick*="\''+x[0]+'\'"]');if(!src)return;var b=document.createElement('button');b.type='button';b.setAttribute('role','menuitem');var ic=src.querySelector('.ni');b.innerHTML=(ic?ic.innerHTML:'')+'<span>'+x[1]+'</span>';b.onclick=function(){m.hidden=true;go(x[0],src);document.getElementById('navMore').classList.add('on')};m.appendChild(b)})}
+ if(!m.children.length){[['search','Search'],['desk','Register'],['chats','Chats'],['links','Links']].forEach(function(x){var src=document.querySelector('nav button[onclick*="\''+x[0]+'\'"]');if(!src)return;var b=document.createElement('button');b.type='button';b.setAttribute('role','menuitem');var ic=src.querySelector('.ni');b.innerHTML=(ic?ic.innerHTML:'')+'<span>'+x[1]+'</span>';b.onclick=function(){m.hidden=true;go(x[0],src);document.getElementById('navMore').classList.add('on')};m.appendChild(b)})}
  m.hidden=false}
 document.addEventListener('click',function(e){var m=document.getElementById('moreSheet');if(m&&!m.hidden&&!e.target.closest('#moreSheet,#navMore'))m.hidden=true},true);
 /* locked state: no Realm key on this device -> one clear line instead of grey skeleton cards that never fill */
