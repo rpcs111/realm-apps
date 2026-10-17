@@ -36,7 +36,7 @@
   function tipHtml(){
     var n='<b>'+esc(name)+'</b>';
     if(ios)return '<div class="h">Save app</div>'+(safari?'':'Open this page in <b>Safari</b>, then: ')+'tap <b>Share</b> &#x2191;&#xFE0E; &rsaquo; <b>Add to Home Screen</b> &rsaquo; <b>Add</b>.';
-    if(android)return '<div class="h">Install this app</div>Tap <b>&#8942;</b> (top right) &rsaquo; <b>Install app</b> (or <b>Add to Home screen</b>) &rsaquo; <b>Install</b>. Being installed on your computer does not count for this phone.<br><br>Already saved? Open '+n+' from your home screen.';
+    if(android)return '<div class="h">Save app</div>Tap <b>&#8942;</b> (top right) &rsaquo; <b>Install app</b> (or <b>Add to Home screen</b>) &rsaquo; <b>Install</b>. Being installed on your computer does not count for this phone.<br><br>Already saved? Open '+n+' from your home screen.';
     if(firefox)return '<div class="h">Save app</div>Firefox can\'t save web apps. Open this page in <b>Chrome</b> and tap Save app there.';
     if(safari)return '<div class="h">Save app</div>In Safari: <b>File</b> &rsaquo; <b>Add to Dock</b>.';
     var how=edge?'Click <b>&middot;&middot;&middot;</b> &rsaquo; <b>Apps</b> &rsaquo; <b>Install this site as an app</b>.':'Click <b>&#8942;</b> &rsaquo; <b>Cast, save and share</b> &rsaquo; <b>Install page as app</b> (or <b>Create shortcut</b> and tick <b>Open as window</b>).';
@@ -48,7 +48,7 @@
     tip.innerHTML='<button class="x" type="button" aria-label="Close">&times;</button>'+tipHtml();tip.hidden=false;if(hint)hint.style.display='none';place();
     tip.querySelector('.x').onclick=function(){tip.hidden=true}}
   function label(){if(!btn)return;var open=false;
-    btn.lastChild.textContent=open?'Open app':'Install this app';btn.title=open?'Open '+name+' as an app':'Save '+name+' as an app'}
+    btn.lastChild.textContent=open?'Open app':'Save app';btn.title=open?'Open '+name+' as an app':'Save '+name+' as an app'}
   function badge(){var b=document.getElementById('araInstalled');if(!standalone()||!ownWindow()){if(b)b.hidden=true;return}if(!b){b=document.createElement('div');b.id='araInstalled';b.setAttribute('role','status');b.textContent='Installed as an app \u2713';b.style.cssText='position:fixed;top:calc(8px + env(safe-area-inset-top));right:calc(8px + env(safe-area-inset-right));z-index:2147483000;background:#16a34a;color:#fff;font:700 13px system-ui,sans-serif;padding:6px 12px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.5);pointer-events:none';document.body.appendChild(b)}b.hidden=false}
   /* 17 Oct (Elon verdict): the install hint is a slim in-flow bar at the very TOP of the page. It pushes the page down,
      never floats over the header, filters or bubbles. One tap on x hides it for good on this device; it also goes by itself after 12s. */
