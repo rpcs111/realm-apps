@@ -47,7 +47,7 @@ h2.cap-h i{font-style:normal;background:rgba(255,255,255,.06);border-radius:999p
 .recent .rs{flex:none;font-size:11px;color:var(--rui-mute)}.recent .rs.ok{color:#86efac}
 .tips{font-size:12px;color:var(--rui-mute);margin:16px 2px 0;line-height:1.5}
 .tips kbd{font:inherit;border:1px solid var(--rui-line);border-radius:4px;padding:0 4px}
-</style><script src="js/ara-account.js?v=20261016b" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017c"><meta name="ara-build" content="2026.10.17-19"><style id="v19c">/* one Ara entry point here: the page's own Talk to Ara mic */#arbBtn{display:none!important}</style></head>
+</style><script src="js/ara-account.js?v=20261016b" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017d"><meta name="ara-build" content="2026.10.17-20"><style id="v19c">/* v20 Batch B: the one small Ara symbol shows here too (fixed bottom-right, same as every page); keyboard hint only on devices with a keyboard */@media (hover:none),(pointer:coarse){.tips .kb{display:none}}</style></head>
 <body class="rui">
 <header class="rui-top"><span class="rui-mark" role="img" aria-label="Ara"></span><b class="rui-title">Ara Capture</b><nav class="nav"><a href="./index.html">‹ Apps</a><a href="./notes.html">Notes ›</a></nav></header>
 <main class="cap">
@@ -64,7 +64,7 @@ h2.cap-h i{font-style:normal;background:rgba(255,255,255,.06);border-radius:999p
  <h2 class="cap-h">Ara sorted it <i id="nItems">0</i></h2>
  <div class="chips" id="chips"><div class="empty">Each sentence or line becomes its own item here. Tap a label to change it.</div></div>
  <section class="recent"><h2 class="cap-h">Saved <i id="nSaved">0</i> <span id="syncState" style="letter-spacing:0;text-transform:none;font-weight:400"></span></h2><ul id="recent"></ul></section>
- <p class="tips">Saved items stay on this device first, so nothing is lost offline, then sync to Ara's inbox. <kbd>Ctrl</kbd>+<kbd>Enter</kbd> saves, <kbd>Esc</kbd> stops the mic.</p>
+ <p class="tips">Saved items stay on this device first, so nothing is lost offline, then sync to Ara's inbox. <span class="kb"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> saves, <kbd>Esc</kbd> stops the mic.</span></p>
 </main>
 <script src="js/ara-capture-rules.js?v=20261016a"></script>
 <script>
@@ -207,4 +207,4 @@ window.AraCaptureApp={parse:parse,save:save,sync:sync,queue:queue,items:function
 <script src="js/saveapp.js?v=20261016v5" data-mount="header .nav" defer></script>
 <script src="js/realm-ui.js?v=20261016b" defer></script>
 <script src="js/ara-version.js" defer></script>
-<script src="js/ara-install.js?v=20261017c" defer></script></body></html>
+<script src="js/ara-install.js?v=20261017d" defer></script></body></html>

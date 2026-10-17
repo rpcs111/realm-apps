@@ -99,19 +99,36 @@ header #spBtn{display:none!important}header h1{order:0}header .who{order:1;margi
 #moreSheet[hidden]{display:none!important}#moreSheet button{all:unset;box-sizing:border-box;min-height:48px;padding:0 14px;display:flex;align-items:center;gap:12px;color:#e6f7fb;font:500 15px system-ui,sans-serif;border-radius:10px;cursor:pointer}#moreSheet button:hover,#moreSheet button:focus-visible{background:rgba(34,211,238,.12)}
 #moreSheet svg{width:22px;height:22px;fill:none;stroke:#67e8f9;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .empty.lk{display:block!important;padding:16px;border:1px dashed rgba(148,197,214,.3);border-radius:12px;color:#94a3b8;font-size:14px;text-align:center}
+</style><style id="v20dB">/* v20 Batch B (Elon baseline): line icons instead of emoji, 44px tap targets, Notes & Tasks */
+svg.li{width:18px;height:18px;flex:0 0 18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:-4px}
+.quick a{display:inline-flex!important;align-items:center;gap:7px;min-height:44px;box-sizing:border-box}.quick a svg.li{color:#67e8f9}
+.spl svg.li{color:#67e8f9;width:20px;height:20px;flex-basis:20px}
+.btn,.chip,.fsub button,.stsel,select,#tab-notes input,#tab-flow input{min-height:44px;box-sizing:border-box}
+.btn,.chip{display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
+.card .acts .btn{min-height:44px;padding:0 11px}
+.btn.ib{min-width:44px;padding:0 10px}
+.fzoom button{width:44px!important;height:44px!important;display:flex;align-items:center;justify-content:center;padding:0}
+#fpanel .x{min-width:44px;min-height:44px}.vrow .vx{min-width:44px;min-height:44px}.vrow input[type=checkbox]{width:44px!important;height:28px;flex:0 0 44px!important;margin:0}
+label.ckl{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 6px;font-size:13px;color:var(--mut);cursor:pointer}
+label.ckl input{width:22px!important;height:22px;margin:0;accent-color:#22d3ee}
+.nrow{display:flex;gap:6px;align-items:stretch}.nrow select,.nrow input{flex:1;min-width:0}.nrow .btn{flex:0 0 auto}
+.tcols{display:block}@media(min-width:900px){.tcols{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0 14px;align-items:start}}
+details.nlist{margin-top:10px}details.nlist>summary{min-height:44px;display:flex;align-items:center;color:var(--mut);cursor:pointer}
+i.ei{display:inline-flex;font-style:normal;vertical-align:-4px;margin-right:2px}
+#tab-tasks{display:none!important}
 </style></head><body>
 <header><button class="hb" id="spBtn" aria-label="Menu" onclick="spOpen(1)">&#9776;</button><a class="hb" href="./index.html">&larr; Apps</a><h1>REALM <b>DESK</b></h1><button class="hb" id="saveApp">&#11015; Save as app</button><span class="who" id="who" data-rl-pill></span></header><div class="rk-line" id="rkLine" hidden>Desk needs the Realm key on this phone. <button type="button" id="rkAdd">Add key</button></div>
 <div id="appHelp" style="display:none;margin:8px 14px;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line);font-size:13px">On Android Chrome: tap <b>&#8942;</b> &rsaquo; <b>Add to Home screen</b> (or <b>Install app</b>) &rsaquo; <b>Install</b>.</div>
 <div class="quick">
-  <a id="qTel">&#128222; 1300 358 500</a>
-  <a id="qWa" target="_blank">&#128994; Office WhatsApp</a>
-  <a href="https://calendar.google.com/?authuser=info@realmpcs.com" target="_blank">&#128197; Diary</a>
-  <a href="https://books.zoho.com" target="_blank">&#129534; Zoho Books</a>
-  <a href="https://once.deputy.com" target="_blank">&#128119; Deputy</a>
+  <a id="qTel"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h3l1.5 4-2 1.5a11 11 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16.5 16.5 0 0 1 4.5 5.5a2 2 0 0 1 2-2z"/></svg>1300 358 500</a>
+  <a id="qWa" target="_blank"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.8L3.5 20.5l4.3-1.1A8.5 8.5 0 1 0 12 3.5z"/><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5"/></svg>Office WhatsApp</a>
+  <a href="https://calendar.google.com/?authuser=info@realmpcs.com" target="_blank"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>Diary</a>
+  <a href="https://books.zoho.com" target="_blank"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3h11v18l-2.75-1.6L12 21l-2.75-1.6L6.5 21z"/><path d="M9.5 8h5M9.5 11.5h5M9.5 15h3"/></svg>Zoho Books</a>
+  <a href="https://once.deputy.com" target="_blank"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2c3 .2 5.5 2.4 5.5 5.8"/></svg>Deputy</a>
 </div>
 <main>
   <section class="tab on" id="tab-start">
-<div class="appsbar"><h2>My apps</h2><a class="btn" target="_blank" href="https://docs.google.com/spreadsheets/d/144xzuFR9madhVHr5RUVhCn-zZvhyCVBK6yuZfH2xlds/edit?authuser=info@realmpcs.com">&#9998; Edit tiles</a></div>
+<div class="appsbar"><h2>My apps</h2><a class="btn" target="_blank" href="https://docs.google.com/spreadsheets/d/144xzuFR9madhVHr5RUVhCn-zZvhyCVBK6yuZfH2xlds/edit?authuser=info@realmpcs.com"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/></svg>Edit tiles</a></div>
 <div id="apps" class="apps"></div>
     <div class="bar"><h2>Where do I start</h2><span class="pill" id="startWhen"></span><button class="btn" onclick="load('start',true)">&#8635;</button></div>
     <div id="start"></div>
@@ -122,13 +139,13 @@ header #spBtn{display:none!important}header h1{order:0}header .who{order:1;margi
     <div id="search"></div>
   </section>
   <section class="tab" id="tab-today">
-    <div class="bar"><h2 id="dayLabel">Today</h2><button class="btn" onclick="shiftDay(-1)">&#9664;</button><button class="btn" onclick="shiftDay(0)">Today</button><button class="btn" onclick="shiftDay(1)">&#9654;</button></div>
+    <div class="bar"><h2 id="dayLabel">Today</h2><button class="btn ib" aria-label="Previous day" onclick="shiftDay(-1)"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg></button><button class="btn" onclick="shiftDay(0)">Today</button><button class="btn ib" aria-label="Next day" onclick="shiftDay(1)"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5"/></svg></button></div>
     <div id="today"></div>
   </section>
-  <section class="tab" id="tab-certs"><div class="bar"><h2>Certs &mdash; ANCHOR TESTING</h2><button class="btn" onclick="load('certs',true)">&#8635;</button></div><div id="certs"></div></section>
+  <section class="tab" id="tab-certs"><div class="bar"><h2>Certs</h2><button class="btn" onclick="load('certs',true)">&#8635;</button></div><div id="certs"></div></section>
   <section class="tab" id="tab-quotes"><div class="bar"><h2>Quotes &mdash; yellow calendar</h2><button class="btn" onclick="load('quotes',true)">&#8635;</button></div><div id="quotes"></div></section>
   <section class="tab" id="tab-desk">
-    <div class="bar"><h2>Open register</h2><label style="font-size:12px;color:var(--mut)"><input type="checkbox" id="showClosed" style="width:auto" onchange="load('desk',true)"> closed</label><button class="btn p" onclick="toggle('addRow')">+ Add</button></div>
+    <div class="bar"><h2>Open register</h2><label class="ckl"><input type="checkbox" id="showClosed" onchange="load('desk',true)"> closed</label><button class="btn p" onclick="toggle('addRow')">+ Add</button></div>
     <div id="addRow" style="display:none" class="card">
       <input id="nItem" placeholder="What is it?"><div style="height:6px"></div>
       <div style="display:flex;gap:6px"><select id="nType"><option>task</option><option>build</option><option>flow</option><option>cert</option><option>quote</option><option>idea</option></select><select id="nOwner"><option>Ange</option><option>Julie</option></select></div><div style="height:6px"></div>
@@ -138,20 +155,21 @@ header #spBtn{display:none!important}header h1{order:0}header .who{order:1;margi
     </div>
     <div id="desk"></div>
   </section>
-  <section class="tab" id="tab-tasks"><div class="bar"><h2>Google Tasks</h2><button class="btn" onclick="load('tasks',true)">&#8635;</button></div>
-    <div class="card"><input id="tTitle" placeholder="New task…"><div style="height:6px"></div><div style="display:flex;gap:6px"><select id="tList"><option>Ange to do</option><option>Realm Daily</option><option>Realm Quotes</option><option>JP to do</option><option>LINKS ACCESS</option></select><button class="btn p" onclick="addTk()">Add</button></div></div>
-    <div id="tasks"></div></section>
+  <section class="tab" id="tab-tasks" aria-hidden="true"></section>
   <section class="tab" id="tab-chats">
-    <div class="bar"><h2>Chats &mdash; roll in, file away</h2><label style="font-size:12px;color:var(--mut)"><input type="checkbox" id="showFiled" style="width:auto" onchange="load('chats',true)"> filed</label><button class="btn" onclick="fileAll()">File all</button></div>
-    <div class="card"><div class="m">Every &#128172; button in this app logs the chat here the moment you tap it &mdash; side panel or web. Nothing rolls away unfiled.</div>
+    <div class="bar"><h2>Chats &mdash; roll in, file away</h2><label class="ckl"><input type="checkbox" id="showFiled" onchange="load('chats',true)"> filed</label><button class="btn" onclick="fileAll()">File all</button></div>
+    <div class="card"><div class="m">Every Chat button in this app logs the chat here the moment you tap it &mdash; side panel or web. Nothing rolls away unfiled.</div>
       <div style="height:8px"></div><input id="cTopic" placeholder="Start a chat about…" onkeydown="if(event.key==='Enter')newChat()">
       <div style="height:6px"></div><div style="display:flex;gap:6px"><select id="cWhere" style="flex:1"><option>side panel</option><option>web</option><option>desk</option></select><button class="btn p" onclick="newChat()">Open &amp; log</button></div></div>
     <div id="chats"></div>
   </section>
-  <section class="tab" id="tab-notes"><div class="bar"><h2>Notes</h2></div>
-    <div class="card"><textarea id="note" placeholder="Type or dictate&hellip; (mic on your keyboard)"></textarea><div style="height:8px"></div>
-    <div style="display:flex;gap:6px"><select id="noteTag" style="flex:1"><option>desk</option><option>flow</option><option>idea</option><option>julie</option><option>park</option></select><button class="btn p" onclick="saveNote()">Save</button></div></div>
-    <div id="notes"></div></section>
+  <section class="tab" id="tab-notes"><div class="bar"><h2>Notes &amp; Tasks</h2><button class="btn ib" aria-label="Refresh tasks" onclick="load('tasks',true)">&#8635;</button></div>
+    <div class="card"><textarea id="note" placeholder="Type a note&hellip;"></textarea><div style="height:8px"></div>
+    <div class="nrow"><select id="noteTag" aria-label="Note tag"><option>desk</option><option>flow</option><option>idea</option><option>julie</option><option>park</option></select><button class="btn p" onclick="saveNote()">Save note</button></div>
+    <div style="height:10px"></div><div class="nrow"><input id="tTitle" placeholder="New Google task&hellip;" onkeydown="if(event.key==='Enter')addTk()"></div><div style="height:6px"></div><div class="nrow"><select id="tList" aria-label="Task list"><option>Ange to do</option><option>Realm Daily</option><option>Realm Quotes</option><option>JP to do</option><option>LINKS ACCESS</option></select><button class="btn p" onclick="addTk()">Add task</button></div></div>
+    <div class="bar"><h2>Google Tasks</h2></div><div id="tasks" class="tcols"><div class="sk"></div></div>
+    <details class="nlist"><summary>Recent notes</summary><div id="notes"><div class="sk"></div></div></details>
+    <div class="m" style="margin:10px 2px 18px">Full notes with photos and drawing: <a href="./notes.html">open Notes</a>.</div></section>
   <section class="tab" id="tab-links"><div class="bar"><h2>Links</h2></div><div id="links"></div></section>
 </main>
 <style>
@@ -214,14 +232,14 @@ header #spBtn{display:none!important}header h1{order:0}header .who{order:1;margi
         <marker id="aR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0L10,5L0,10z" fill="#ef4444"/></marker>
       </defs><g id="fvp"></g></svg>
       <div class="fleg"><i style="background:#22c55e"></i>built<i style="background:#f59e0b"></i>partial<i style="background:#ef4444"></i>not built / broken<br>inner = status &middot; outer ring = health check &middot; &sect; = standing rules</div>
-      <div class="fzoom"><button onclick="fZoom(.8)">+</button><button onclick="fZoom(1.25)">&minus;</button><button onclick="fFit()">&#9678;</button><button onclick="fExport()" title="Download PDF &#43; picture &#43; CSV">&#11015;</button></div>
+      <div class="fzoom"><button onclick="fZoom(.8)">+</button><button onclick="fZoom(1.25)">&minus;</button><button aria-label="Fit" onclick="fFit()"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="2"/></svg></button><button aria-label="Download" onclick="fExport()" title="Download PDF &#43; picture &#43; CSV"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg></button></div>
     </div>
-    <div class="m" style="margin:6px 2px;color:var(--mut);font-size:12px">Tap a node for its links, folder, status and notes. Pinch or drag to move. Edits save to the sheet. &#11015; saves the map (PDF + picture + CSV) to REALM TOOL LINKS.</div><div id="fExp"></div>
+    <div class="m" style="margin:6px 2px;color:var(--mut);font-size:12px">Tap a node for its links, folder, status and notes. Pinch or drag to move. Edits save to the sheet. Download saves the map (PDF + picture + CSV) to REALM TOOL LINKS.</div><div id="fExp"></div>
   </div>
   <div class="fview" id="fv-list"><div id="fExpL"></div><div id="flist"></div></div>
   <div class="fview" id="fv-vans">
     <div class="chips" id="fvVeh" style="margin-bottom:10px"></div>
-    <div id="fvBody"><div class="sk"></div></div>
+    <div id="fvBody"></div>
   </div>
   <div class="fview" id="fv-pad">
     <div class="card"><textarea id="fpad" placeholder="Map notepad — type or dictate."></textarea><div style="height:8px"></div><button class="btn p" onclick="fPadSave()">Save</button></div>
@@ -233,7 +251,7 @@ header #spBtn{display:none!important}header h1{order:0}header .who{order:1;margi
     <div id="fwList"></div>
   </div>
   <div class="fview" id="fv-health">
-    <div class="card"><button class="btn p" onclick="fHealth()">&#129658; Run health check now</button><div class="m" id="fhSum" style="margin-top:8px"></div></div>
+    <div class="card"><button class="btn p" onclick="fHealth()"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>Run health check now</button><div class="m" id="fhSum" style="margin-top:8px"></div></div>
     <div id="fhList"></div>
   </div>
 </section>
@@ -245,7 +263,9 @@ function fCol(n){if(n.kind==='person')return '#a78bfa';return SC[String(n.status
 function fEff(n){return String(n.health)==='red'?'#ef4444':fCol(n)}
 function fGo(v,b){document.querySelectorAll('.fview').forEach(function(x){x.classList.remove('on')});document.getElementById('fv-'+v).classList.add('on');document.querySelectorAll('#fsub button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
   if(v==='pad')run('getMapNotes',[],fPadRender);if(v==='wfki')run('getWfki',[],fWfkiRender);if(v==='health')fHealthRender();if(v==='list')fList();if(v==='vans')fVans()}
-function flowLoad(force){if(F.loaded&&!force)return;document.getElementById('fvp').innerHTML='<text x="0" y="0" fill="#8ea0c2" font-size="28" text-anchor="middle">loading the map&hellip;</text>';
+function fHasKey(){try{return !!(window.RealmKey&&RealmKey.get())}catch(e){return false}}
+function fMsg(t){return '<div class="empty lk">'+t+'</div>'}
+function flowLoad(force){if(F.loaded&&!force)return;if(!fHasKey()){document.getElementById('fvp').innerHTML='<text x="0" y="0" fill="#8ea0c2" font-size="28" text-anchor="middle">Locked: add the Realm key to load the map</text>';fList();return}clearTimeout(window._fTo);window._fTo=setTimeout(function(){if(!F.loaded){var l=document.getElementById('flist');if(l)l.innerHTML=fMsg('The map is taking too long. Tap &#8635; at the top to try again.')}},25000);document.getElementById('fvp').innerHTML='<text x="0" y="0" fill="#8ea0c2" font-size="28" text-anchor="middle">loading the map&hellip;</text>';
   run('getFlow',[CFG.v||''],function(r){var first=!F.loaded;F=r;F.loaded=true;FB={};r.nodes.forEach(function(n){FB[n.id]=n});if(first)setTimeout(fPhoneFit,50);document.getElementById('fWhen').textContent=r.nodes.length+' nodes · '+r.when+(r.openChanges?' · '+r.openChanges+' changes':'');fDraw();if(document.getElementById('fv-list').classList.contains('on'))fList()})}
 function fP(n){if(!n||n.kind==='core')return{x:0,y:0};var a=Number(n.a)*Math.PI/180,r=Number(n.r);return{x:r*Math.cos(a),y:r*Math.sin(a)}}
 var NS='http://www.w3.org/2000/svg';
@@ -351,8 +371,8 @@ function fCard(n){var c=fEff(n);return '<div class="card" style="border-left-col
   '<div class="m"><span class="dot" style="background:'+(HC[String(n.health)]||'#475569')+'"></span>health '+esc(n.health||'unchecked')+(n.kind==='child'?' · under '+esc((FB[n.parent]||{}).name||''):'')+'</div>'+
   '<input style="margin-top:6px;font-size:13px" value="'+esc(n.notes||'')+'" placeholder="notes" onchange="fQuick(\'node\',\''+q1(n.id)+'\',{notes:this.value})">'+
   '<div class="acts"><button class="btn" onclick="fNode(\''+q1(n.id)+'\')">Open &rsaquo;</button></div></div>'}
-function fList(){if(!F.loaded)return;var c={g:0,a:0,r:0};F.nodes.filter(function(n){return n.kind!=='person'}).forEach(function(n){var e=fEff(n);if(e==='#22c55e')c.g++;else if(e==='#f59e0b')c.a++;else c.r++});
-  var h='<div class="card"><button class="btn" style="float:right" onclick="fExport()">&#11015; Download</button><span class="pill pass">'+c.g+' green</span><span class="pill partial">'+c.a+' amber</span><span class="pill fail">'+c.r+' red</span>'+(F.openChanges?'<span class="pill">'+F.openChanges+' changes waiting</span>':'')+'</div>';
+function fList(){var L=document.getElementById('flist');if(!F.loaded){if(L&&!L._busy)L.innerHTML=fHasKey()?fMsg('Loading the list&hellip;'):fMsg('Locked &mdash; tap <b>Add key</b> at the top of Desk to load the Flow list.');return}var c={g:0,a:0,r:0};F.nodes.filter(function(n){return n.kind!=='person'}).forEach(function(n){var e=fEff(n);if(e==='#22c55e')c.g++;else if(e==='#f59e0b')c.a++;else c.r++});
+  var h='<div class="card"><button class="btn" style="float:right" onclick="fExport()">Download</button><span class="pill pass">'+c.g+' green</span><span class="pill partial">'+c.a+' amber</span><span class="pill fail">'+c.r+' red</span>'+(F.openChanges?'<span class="pill">'+F.openChanges+' changes waiting</span>':'')+'</div>';
   h+='<div class="bar"><h2>The loop &mdash; starts at Rebook</h2></div>';
   var ch=fChain();ch.forEach(function(id,i){h+=fCard(FB[id]);var nx=ch[i+1]||ch[0];var p=F.paths.filter(function(x){return x.from===id&&x.to===nx})[0];
     if(p)h+='<div class="rulerow"><span class="dot" style="background:'+(SC[String(p.status).toLowerCase()]||'#475569')+'"></span><b>&sect; '+esc(FB[id].name)+' &rarr; '+esc(FB[nx].name)+'</b> '+fSel('path',p.id,p.status)+'<input value="'+esc(p.rules||'')+'" placeholder="standing rules at this handoff" onchange="fQuick(\'path\',\''+q1(p.id)+'\',{rules:this.value})"></div>'});
@@ -392,11 +412,11 @@ function fHealthRender(){if(!F.loaded){setTimeout(fHealthRender,800);return}var 
 
  
 var FV={vehicles:[],items:[]},fvCur='Kangoo';
-function fVans(){run('getVanKit',[],function(r){FV=r;if(FV.vehicles.indexOf(fvCur)<0)fvCur=FV.vehicles[0];fvDraw()})}
+function fVans(){if(!fHasKey()){document.getElementById('fvVeh').innerHTML='';document.getElementById('fvBody').innerHTML=fMsg('Locked &mdash; tap <b>Add key</b> at the top of Desk to load the van kit lists.');return}document.getElementById('fvBody').innerHTML=fMsg('Loading the van kit lists&hellip;');run('getVanKit',[],function(r){FV=r||{};FV.vehicles=FV.vehicles||[];FV.items=FV.items||[];if(FV.vehicles.indexOf(fvCur)<0)fvCur=FV.vehicles[0]||'';fvDraw()})}
 function fvPick(v){fvCur=v;fvDraw()}
-function fvDraw(){
+function fvDraw(){if(!fvCur){document.getElementById('fvVeh').innerHTML='<button class="chip" onclick="fvNewVeh()">+ vehicle</button>';document.getElementById('fvBody').innerHTML=fMsg('No vans set up yet. Tap <b>+ vehicle</b> to start a kit list.');return}
   document.getElementById('fvVeh').innerHTML=FV.vehicles.map(function(v){var its=FV.items.filter(function(i){return i.vehicle===v}),d=its.filter(function(i){return i.packed}).length;
-    return '<button class="chip'+(v===fvCur?' on built':'')+'" onclick="fvPick(\''+q1(v)+'\')">&#128656; '+esc(v)+(its.length?' · '+d+'/'+its.length:'')+'</button>'}).join('')+
+    return '<button class="chip'+(v===fvCur?' on built':'')+'" onclick="fvPick(\''+q1(v)+'\')">'+esc(v)+(its.length?' · '+d+'/'+its.length:'')+'</button>'}).join('')+
     '<button class="chip" onclick="fvNewVeh()">+ vehicle</button>';
   var its=FV.items.filter(function(i){return i.vehicle===fvCur}),done=its.filter(function(i){return i.packed}).length,groups={},order=[];
   its.forEach(function(i){var g=i.job_type||'Every job';if(!groups[g]){groups[g]=[];order.push(g)}groups[g].push(i)});
@@ -447,7 +467,7 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return
 function q1(s){return esc(s).replace(/'/g,"\\'")}
 function toggle(id){var e=document.getElementById(id);e.style.display=e.style.display==='none'?'block':'none'}
 function sk(id,n){document.getElementById(id).innerHTML=new Array((n||4)+1).join('<div class="sk"></div>')}
-function go(name,btn){document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById('tab-'+name).classList.add('on');document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');load(name)}
+function go(name,btn){if(name==='tasks'){name='notes';btn=document.querySelector('nav button[onclick*="\'notes\'"]')||btn}document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById('tab-'+name).classList.add('on');document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');load(name)}
 function run(fn,args,cb){google.script.run.withSuccessHandler(cb).withFailureHandler(function(e){toast('Error: '+e.message)})[fn].apply(null,args||[])}
  
 function chatOpen(topic,context,where){run('logChat',[topic,context,where||'desk'],function(){toast('Chat logged')});window.open(CFG.grok+'?q='+encodeURIComponent(topic+(context?' — '+context:'')),'_blank')}
@@ -461,7 +481,7 @@ function load(name,force){if(loaded[name]&&!force)return;loaded[name]=true;
   if(name==='desk'){sk('desk');run('getRegister',[document.getElementById('showClosed').checked],renderReg)}
   if(name==='tasks'){sk('tasks');run('getTasks',[],renderTasks)}
   if(name==='chats'){sk('chats',3);run('getChats',[document.getElementById('showFiled').checked],renderChats)}
-  if(name==='notes'){sk('notes',2);run('getNotes',[],renderNotes)}
+  if(name==='notes'){sk('notes',2);run('getNotes',[],renderNotes);load('tasks',force)}
   if(name==='links'){sk('links');run('getLinks',[],renderLinks)}
   if(name==='flow'){flowLoad(force)}}
 function shiftDay(d){dayOff=d===0?0:dayOff+d;load('today',true)}
@@ -487,7 +507,7 @@ function renderChats(r){var h=r.length?r.map(function(c){
   return '<div class="card" style="border-left-color:'+col+'"><div class="t">'+esc(c.topic)+'</div><div class="m"><span class="pill">'+esc(c.where)+'</span>'+esc(c.when)+' &middot; '+esc(c.status)+(c.outcome?' &middot; '+esc(c.outcome):'')+'</div>'+
   '<div class="acts"><button class="btn p" onclick="chatOpen(\''+q1(c.topic)+'\',\'picking this back up\',\''+q1(c.where)+'\')">&#128172; Reopen</button>'+
   (/FILED/i.test(c.status)?'':'<button class="btn g" onclick="fileIt('+c.row+',false)">&#10004; File away</button><button class="btn b" onclick="fileIt('+c.row+',true)">&#10133; File to register</button>')+
-  '</div></div>'}).join(''):'<div class="empty">No chats logged. Every &#128172; button files one here.</div>';document.getElementById('chats').innerHTML=h}
+  '</div></div>'}).join(''):'<div class="empty">No chats logged. Every Chat button files one here.</div>';document.getElementById('chats').innerHTML=h}
 function fileIt(row,toReg){var o=prompt('What came out of it? (one line, optional)','');run('fileChat',[row,o||'',toReg],function(m){toast(m);load('chats',true);load('start',true)})}
 function fileAll(){if(!confirm('File away every open chat?'))return;run('fileAllChats',[],function(n){toast(n+' filed');load('chats',true);load('start',true)})}
 function renderReg(r){var h=r.rows.length?r.rows.map(function(x){var st=(x.status||'').toUpperCase();var col=/CLOSED|DONE/.test(st)?'var(--green)':/BLOCK|WAIT/.test(st)?'var(--red)':/PROG|BUILD/.test(st)?'var(--amber)':'var(--blue)';
@@ -519,7 +539,7 @@ function renderSearch(r){if(r.err){document.getElementById('search').innerHTML='
 function push(row){var d=prompt('Push back how many days? (1 = tomorrow, 7 = next week)','1');if(d===null)return;var n=prompt('Why / what needs to happen first? (optional)','');run('pushBack',[row,d,n||''],function(w){toast('Pushed to '+w);load('desk',true);load('start',true)})}
 function upd(row,patch){run('updateRegister',[row,patch],function(){toast('Saved');if(patch.status)load('desk',true)})}
 function addReg(){var i=document.getElementById('nItem').value.trim();if(!i)return;run('addRegister',[i,document.getElementById('nType').value,document.getElementById('nOwner').value,document.getElementById('nNext').value,document.getElementById('nLink').value],function(id){toast('Register #'+id);document.getElementById('nItem').value='';toggle('addRow');load('desk',true)})}
-function renderTasks(r){var h=r.err?'<div class="err">'+esc(r.err)+'</div>':'';r.lists.forEach(function(l){if(!l.tasks.length)return;h+='<div class="bar"><h2>'+esc(l.title)+' <span class="pill">'+l.tasks.length+'</span></h2></div>';h+=l.tasks.map(function(t){return '<div class="card" style="border-left-color:var(--purple)"><div class="t">'+esc(t.title)+'</div>'+(t.notes?'<div class="m">'+esc(t.notes.slice(0,160))+'</div>':'')+(t.due?'<div class="m">due '+esc(t.due)+'</div>':'')+'<div class="acts"><button class="btn g" onclick="done(\''+l.id+'\',\''+t.id+'\')">&#10004; Done</button><button class="btn" onclick="chatOpen(\'task: '+q1(t.title)+'\',\'task\',\'desk\')">&#128172; Chat</button></div></div>'}).join('')});document.getElementById('tasks').innerHTML=h||'<div class="empty">No open tasks.</div>'}
+function renderTasks(r){var h=r.err?'<div class="err">'+esc(r.err)+'</div>':'';r.lists.forEach(function(l){if(!l.tasks.length)return;h+='<div class="tcol"><div class="bar"><h2>'+esc(l.title)+' <span class="pill">'+l.tasks.length+'</span></h2></div>';h+=l.tasks.map(function(t){return '<div class="card" style="border-left-color:var(--purple)"><div class="t">'+esc(t.title)+'</div>'+(t.notes?'<div class="m">'+esc(t.notes.slice(0,160))+'</div>':'')+(t.due?'<div class="m">due '+esc(t.due)+'</div>':'')+'<div class="acts"><button class="btn g" onclick="done(\''+l.id+'\',\''+t.id+'\')">&#10004; Done</button><button class="btn" onclick="chatOpen(\'task: '+q1(t.title)+'\',\'task\',\'desk\')">&#128172; Chat</button></div></div>'}).join('')+'</div>'});document.getElementById('tasks').innerHTML=h||'<div class="empty">No open tasks.</div>'}
 function done(l,t){run('completeTask',[l,t],function(){toast('Ticked');load('tasks',true)})}
 function addTk(){var t=document.getElementById('tTitle').value.trim();if(!t)return;run('addTask',[document.getElementById('tList').value,t,''],function(l){toast('Added to '+l);document.getElementById('tTitle').value='';load('tasks',true)})}
 function saveNote(){var n=document.getElementById('note').value.trim();if(!n)return;run('addNote',[n,document.getElementById('noteTag').value],function(){toast('Saved');document.getElementById('note').value='';load('notes',true)})}
@@ -557,11 +577,11 @@ if(matchMedia("(display-mode: standalone)").matches||navigator.standalone)b.styl
 addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e});
 addEventListener("appinstalled",function(){b.style.display="none"});
 b.onclick=function(){if(dp){dp.prompt();dp.userChoice.then(function(){dp=null})}else h.style.display=h.style.display==="none"?"block":"none"};
-var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-function addMic(ta){if(ta.dataset.mic)return;ta.dataset.mic=1;var m=document.createElement("button");m.className="btn mic";m.type="button";m.textContent="\uD83C\uDFA4 Dictate";ta.insertAdjacentElement("afterend",m);var r=null;
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var MIC='<svg class="li" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>',STOP='<svg class="li" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>';
+function addMic(ta){if(ta.dataset.mic)return;ta.dataset.mic=1;var m=document.createElement("button");m.className="btn mic";m.type="button";m.innerHTML=MIC+"Dictate";ta.insertAdjacentElement("afterend",m);var r=null;
  var mk="dictate:"+(ta.id||Math.random().toString(36).slice(2,7));m.onclick=function(){if(r){window.RealmLine&&RealmLine.micStop(mk);r.stop();return}r=new SR();r.onstart=function(){window.RealmLine&&RealmLine.micLive(mk)};window.RealmLine&&RealmLine.mic(mk,function(){if(!r)m.onclick()});r.lang="en-AU";r.interimResults=false;r.continuous=true;
   r.onresult=function(e){for(var i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal)ta.value+=(ta.value&&!/\s$/.test(ta.value)?" ":"")+e.results[i][0].transcript.trim()};
-  r.onend=function(){r=null;m.textContent="\uD83C\uDFA4 Dictate";window.RealmLine&&RealmLine.micEnd(mk)};r.onerror=function(e){toast("Mic: "+e.error)};try{r.start()}catch(x){r=null;return}m.textContent="\u23F9 Stop"}}
+  r.onend=function(){r=null;m.innerHTML=MIC+"Dictate";window.RealmLine&&RealmLine.micEnd(mk)};r.onerror=function(e){toast("Mic: "+e.error)};try{r.start()}catch(x){r=null;return}m.innerHTML=STOP+"Stop"}}
 if(SR){Array.prototype.forEach.call(document.querySelectorAll("textarea"),addMic);
  new MutationObserver(function(){Array.prototype.forEach.call(document.querySelectorAll("textarea:not([data-mic])"),addMic)}).observe(document.body,{childList:true,subtree:true})}
 })();
@@ -569,15 +589,14 @@ if(SR){Array.prototype.forEach.call(document.querySelectorAll("textarea"),addMic
 <div id="spBg" onclick="spOpen(0)" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:60"></div>
 <aside id="sp" style="position:fixed;top:0;bottom:0;left:0;width:min(280px,82vw);background:rgba(14,22,44,.55);border-right:1px solid #24324d;z-index:61;transform:translateX(-105%);transition:transform .2s;padding:calc(14px + env(safe-area-inset-top)) 12px 20px;overflow-y:auto">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b style="letter-spacing:.08em">MENU</b><button onclick="spOpen(0)" style="background:none;border:0;color:#fff;font-size:24px;min-width:44px;min-height:44px">&times;</button></div>
-<a class="spl" href="./notes.html">&#128221; Notes</a>
-<a class="spl" href="./index.html">&#127968; Launcher tiles</a>
-<a class="spl" href="#" onclick="spTab('flow');return false">&#10036; Flow</a>
-<a class="spl" href="#" onclick="spTab('certs');return false">&#128994; Certs</a>
-<a class="spl" href="#" onclick="spTab('tasks');return false">&#9989; Tasks</a>
-<a class="spl" href="./status.html">&#128200; Tonight Status</a>
-<a class="spl" href="https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec?authuser=info@realmpcs.com">&#128506; Realm Flow Map</a>
-<a class="spl" href="./video.html">&#127909; Video search</a>
-<a class="spl" href="./findings.html">&#128221; Findings</a>
+<a class="spl" href="./notes.html"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h8.5L18 7v13.5H6z"/><path d="M14.5 3.5V7H18M9 11h6M9 14.5h6"/></svg>Notes</a>
+<a class="spl" href="./index.html"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg>Launcher tiles</a>
+<a class="spl" href="#" onclick="spTab('flow');return false"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8.5 6h7M7.2 8.2l3.6 7.6M16.8 8.2l-3.6 7.6"/></svg>Flow</a>
+<a class="spl" href="#" onclick="spTab('certs');return false"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M8.6 12.2l2.4 2.4 4.6-4.8"/></svg>Certs</a>
+<a class="spl" href="./status.html"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>Tonight Status</a>
+<a class="spl" href="https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec?authuser=info@realmpcs.com"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6l5.5-2.5 6 2.5 5.5-2.5v14.5L15 20.5 9 18l-5.5 2.5z"/><path d="M9 3.5V18M15 6v14.5"/></svg>Realm Flow Map</a>
+<a class="spl" href="./video.html"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10.5l5-3v9l-5-3"/></svg>Video search</a>
+<a class="spl" href="./findings.html"><svg class="li" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4L20.5 20.5"/></svg>Findings</a>
 </aside>
 <style>.spl{display:flex;align-items:center;gap:10px;min-height:48px;padding:10px 12px;margin:4px 0;border-radius:10px;background:#16213a;color:#e5e7eb;text-decoration:none;font-size:15px}#sp.open{transform:none!important}</style>
 <script>function spOpen(o){document.getElementById('sp').classList.toggle('open',!!o);document.getElementById('spBg').style.display=o?'block':'none'}
@@ -597,9 +616,9 @@ function fix(root){try{var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT
  [].forEach.call((root.querySelectorAll?root:document).querySelectorAll('a[href*="scribe.html"]'),function(a){a.setAttribute('href',a.getAttribute('href').replace(/scribe\.html/,'notes.html'))})}catch(e){}}
 function go(){fix(document.body);try{new MutationObserver(function(ms){ms.forEach(function(m){[].forEach.call(m.addedNodes,function(x){if(x.nodeType===1)fix(x);else if(x.nodeType===3&&x.parentNode)fix(x.parentNode)})})}).observe(document.body,{childList:true,subtree:true})}catch(e){}}
 if(document.body)go();else document.addEventListener('DOMContentLoaded',go)})();</script><div id="moreSheet" hidden role="menu" aria-label="More"></div>
-<script>/* v20: More menu for the tabs that left the bottom bar (nothing removed: Search, Register (Desk), Tasks, Chats, Links) */
+<script>/* v20: More menu for the tabs that left the bottom bar: Search, Register (Desk), Chats, Links. Tasks now lives inside the Notes tab (v20 Batch B) */
 function navMore(){var m=document.getElementById('moreSheet');if(!m.hidden){m.hidden=true;return}
- if(!m.children.length){[['search','Search'],['desk','Register'],['tasks','Tasks'],['chats','Chats'],['links','Links']].forEach(function(x){var src=document.querySelector('nav button[onclick*="\''+x[0]+'\'"]');if(!src)return;var b=document.createElement('button');b.type='button';b.setAttribute('role','menuitem');var ic=src.querySelector('.ni');b.innerHTML=(ic?ic.innerHTML:'')+'<span>'+x[1]+'</span>';b.onclick=function(){m.hidden=true;go(x[0],src);document.getElementById('navMore').classList.add('on')};m.appendChild(b)})}
+ if(!m.children.length){[['search','Search'],['desk','Register'],['chats','Chats'],['links','Links']].forEach(function(x){var src=document.querySelector('nav button[onclick*="\''+x[0]+'\'"]');if(!src)return;var b=document.createElement('button');b.type='button';b.setAttribute('role','menuitem');var ic=src.querySelector('.ni');b.innerHTML=(ic?ic.innerHTML:'')+'<span>'+x[1]+'</span>';b.onclick=function(){m.hidden=true;go(x[0],src);document.getElementById('navMore').classList.add('on')};m.appendChild(b)})}
  m.hidden=false}
 document.addEventListener('click',function(e){var m=document.getElementById('moreSheet');if(m&&!m.hidden&&!e.target.closest('#moreSheet,#navMore'))m.hidden=true},true);
 /* locked state: no Realm key on this device -> one clear line instead of grey skeleton cards that never fill */
@@ -608,4 +627,16 @@ function lock(){if(k())return;[].forEach.call(document.querySelectorAll('.sk'),f
 var t=0;function soon(){clearTimeout(t);t=setTimeout(lock,60)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',soon);else soon();
 try{new MutationObserver(soon).observe(document.body,{childList:true,subtree:true})}catch(e){}})();
-</script></body></html>
+</script><script>/* v20 Batch B: emoji on Desk buttons/cards (rendered from data) become thin line icons; nothing else changes */
+(function(){var S=function(b){return '<svg class="li" viewBox="0 0 24 24" aria-hidden="true">'+b+'</svg>'};
+var M={'\uD83D\uDCAC':S('<path d="M4.5 5.5h15v10h-8l-4.5 3.5v-3.5h-2.5z"/>'),'\uD83D\uDCC5':S('<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/>'),'\uD83D\uDFE2':S('<circle cx="12" cy="12" r="6"/>'),'\uD83D\uDFE1':S('<circle cx="12" cy="12" r="6"/>'),'\uD83D\uDCC4':S('<path d="M6 3.5h8.5L18 7v13.5H6z"/><path d="M14.5 3.5V7H18"/>'),'\uD83D\uDDFA':S('<path d="M3.5 6l5.5-2.5 6 2.5 5.5-2.5v14.5L15 20.5 9 18l-5.5 2.5z"/>'),'\uD83D\uDCE3':S('<path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17.5 9.5a3.5 3.5 0 0 1 0 5"/>'),'\u2795':S('<path d="M12 5v14M5 12h14"/>'),'\u2714':S('<path d="M5 12.5l4.5 4.5L19 7.5"/>'),'\u23F8':S('<path d="M9 5.5v13M15 5.5v13"/>'),'\u25B6':S('<path d="M8 5l11 7-11 7z"/>'),'\uD83D\uDD17':S('<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.2 1.2"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.2-1.2"/>'),'\uD83D\uDCC1':S('<path d="M3.5 6.5h6l2 2h9v10h-17z"/>'),'\uD83D\uDDBC':S('<rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M3.5 16l5-5 4 4 3-3 5 5"/>'),'\uD83D\uDCB0':S('<circle cx="12" cy="12" r="8"/><path d="M14.5 9.5c-.5-1-1.5-1.5-2.5-1.5-1.5 0-2.5.8-2.5 2s1 1.7 2.5 2 2.5.8 2.5 2-1 2-2.5 2c-1 0-2-.5-2.5-1.5M12 6.5v11"/>'),'\uD83D\uDC77':S('<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2c3 .2 5.5 2.4 5.5 5.8"/>'),'\uD83D\uDD01':S('<path d="M4 11V9a3 3 0 0 1 3-3h12l-3-3M20 13v2a3 3 0 0 1-3 3H5l3 3"/>'),'\uD83D\uDE90':S('<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/>'),'\uD83D\uDDC2':S('<path d="M3.5 6.5h6l2 2h9v10h-17z"/>'),'\u2705':S('<path d="M5 12.5l4.5 4.5L19 7.5"/>'),'\u2600':S('<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/>'),'\uD83C\uDFA4':S('<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>'),'\u2B07':S('<path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/>'),'\u25C0':S('<path d="M14.5 5.5L8 12l6.5 6.5"/>'),'\uD83E\uDE7A':S('<path d="M3 12h4l2-5 4 10 2-5h6"/>'),'\uD83D\uDD0D':S('<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4L20.5 20.5"/>')};
+var keys=Object.keys(M).sort(function(a,b){return b.length-a.length}).map(function(k){return k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')});
+var RX=new RegExp('('+keys.join('|')+')\uFE0F?','g'),SVGRX=/[\uD83C-\uD83E][\uDC00-\uDFFF]\uFE0F?\s?/g;
+function fix(root){try{var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null),t,L=[];while(t=w.nextNode()){if(t.nodeValue&&(RX.test(t.nodeValue)||SVGRX.test(t.nodeValue)))L.push(t);RX.lastIndex=0;SVGRX.lastIndex=0}
+ L.forEach(function(t){var p=t.parentNode;if(!p||/^(SCRIPT|STYLE|TEXTAREA|OPTION|TITLE)$/.test(p.nodeName))return;
+  if(p.namespaceURI==='http://www.w3.org/2000/svg'){t.nodeValue=t.nodeValue.replace(SVGRX,'');return}
+  var parts=t.nodeValue.split(RX);if(parts.length<2)return;var f=document.createDocumentFragment();
+  for(var i=0;i<parts.length;i++){if(i%2){var e=document.createElement('i');e.className='ei';e.innerHTML=M[parts[i]];f.appendChild(e)}else if(parts[i])f.appendChild(document.createTextNode(i>0?parts[i].replace(/^\uFE0F/,''):parts[i]))}
+  p.replaceChild(f,t)})}catch(e){}}
+function go(){fix(document.body);try{new MutationObserver(function(ms){ms.forEach(function(m){[].forEach.call(m.addedNodes,function(x){if(x.nodeType===1)fix(x);else if(x.nodeType===3&&x.parentNode)fix(x.parentNode)})})}).observe(document.body,{childList:true,subtree:true})}catch(e){}}
+if(document.body)go();else document.addEventListener('DOMContentLoaded',go)})();</script></body></html>
