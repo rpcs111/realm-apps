@@ -23,3 +23,7 @@
 @media(max-width:400px){.rui #araSave{font-size:10px!important;padding:0 6px!important;letter-spacing:0!important}.rui .rui-top .rui-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
 /* v19: floating sync pill shows for ~3s when its text changes, then hides (never sits over cards) */
 #realmSyncPill{transition:opacity .25s}#realmSyncPill:not(.ara-show){opacity:0!important;visibility:hidden!important;pointer-events:none!important}#realmSyncPill.ara-gone{display:none!important}
+
+/* v20 (Elon baseline 04:35): floating sync pill gone on every page; Ara symbol in ONE place (bottom-right) at phone and desktop widths */
+#realmSyncPill{display:none!important}
+#arbBtn{position:fixed!important;right:calc(12px + env(safe-area-inset-right))!important;bottom:calc(14px + env(safe-area-inset-bottom))!important;left:auto!important;top:auto!important;margin:0!important;z-index:2147482500!important}

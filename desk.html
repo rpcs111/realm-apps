@@ -9,7 +9,7 @@
 <link rel="icon" href="icon.svg"><link rel="manifest" href="desk.webmanifest?v=20261017">
 <script src="js/reconnect.js"></script>
 <script>
-(function(){var U="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";window.__deskExec=U;function call(fn,args,ok,fail){var n=0,note=null,nt=setTimeout(function(){note=document.createElement("div");note.textContent="still loading\u2026";note.id="deskLoading";note.style.cssText="position:fixed;top:auto;bottom:calc(128px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);pointer-events:none;background:#333;color:#fff;font:13px sans-serif;padding:4px 10px;border-radius:12px;z-index:99999;opacity:.85";document.body&&document.body.appendChild(note)},8000);function done(){clearTimeout(nt);if(note&&note.parentNode)note.parentNode.removeChild(note)}function go(){var ac=window.AbortController?new AbortController():null,to=setTimeout(function(){ac&&ac.abort()},45000);fetch(U,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args,key:(function(){try{return localStorage.getItem("realm_key")||""}catch(e){return""}})()}),signal:ac?ac.signal:undefined}).then(function(r){return r.text()}).then(function(t){clearTimeout(to);var j;try{j=JSON.parse(t)}catch(e){throw new Error("Not JSON")}done();window.RealmLine&&RealmLine.ok();if(j&&j.ok)ok&&ok(j.result);else fail&&fail(new Error((j&&j.error)||"Request failed"))}).catch(function(e){clearTimeout(to);var RL=window.RealmLine;if(RL&&(document.hidden||!navigator.onLine)&&RL.park(go,e))return;if(n++<3){setTimeout(go,1000*n)}else if(RL&&RL.isNet(e)&&RL.park(go,e)){return}else{done();RL&&RL.fail(e,/Not JSON/.test(e&&e.message));fail&&fail(e)}})}go()}
+(function(){var U="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";window.__deskExec=U;function call(fn,args,ok,fail){var n=0,note=null,nt=setTimeout(function(){note=document.createElement("div");note.textContent="still loading\u2026";note.id="deskLoading";note.style.cssText="position:fixed;top:auto;bottom:calc(128px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);pointer-events:none;background:#333;color:#fff;font:13px sans-serif;padding:4px 10px;border-radius:12px;z-index:99999;opacity:.85";/* v20: no still-loading toast */},8000);function done(){clearTimeout(nt);if(note&&note.parentNode)note.parentNode.removeChild(note)}function go(){var ac=window.AbortController?new AbortController():null,to=setTimeout(function(){ac&&ac.abort()},45000);fetch(U,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args,key:(function(){try{return localStorage.getItem("realm_key")||""}catch(e){return""}})()}),signal:ac?ac.signal:undefined}).then(function(r){return r.text()}).then(function(t){clearTimeout(to);var j;try{j=JSON.parse(t)}catch(e){throw new Error("Not JSON")}done();window.RealmLine&&RealmLine.ok();if(j&&j.ok)ok&&ok(j.result);else fail&&fail(new Error((j&&j.error)||"Request failed"))}).catch(function(e){clearTimeout(to);var RL=window.RealmLine;if(RL&&(document.hidden||!navigator.onLine)&&RL.park(go,e))return;if(n++<3){setTimeout(go,1000*n)}else if(RL&&RL.isNet(e)&&RL.park(go,e)){return}else{done();RL&&RL.fail(e,/Not JSON/.test(e&&e.message));fail&&fail(e)}})}go()}
 function mk(ok,fail){return new Proxy({},{get:function(_,k){if(k==="withSuccessHandler")return function(f){return mk(f,fail)};if(k==="withFailureHandler")return function(f){return mk(ok,f)};return function(){call(k,[].slice.call(arguments),ok,fail||function(e){console.error(e)})}}})}
 window.google={script:{run:mk(null,null)}};})();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js?v=20261016v5",{updateViaCache:"none"});
@@ -91,6 +91,14 @@ header .who #rlPill{min-height:44px;min-width:44px;justify-content:center}@media
 nav button{gap:3px!important}nav button .ni{display:flex;align-items:center;justify-content:center;width:24px;height:24px;font-size:0!important;color:#67e8f9;opacity:.72}
 nav button .ni svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 nav button.on .ni{color:#22d3ee;opacity:1;filter:drop-shadow(0 0 4px rgba(34,211,238,.55))}nav button.on{color:#22d3ee!important}
+</style><style id="v20d2">/* v20 (Elon baseline): 7 bottom tiles (Start Flow Today Certs Quotes Notes More), header logo-title-pill-Apps-Install, no hamburger, locked state instead of endless skeletons */
+nav button[onclick*="'search'"],nav button[onclick*="'desk'"],nav button[onclick*="'tasks'"],nav button[onclick*="'chats'"],nav button[onclick*="'links'"]{display:none!important}
+nav{overflow-x:hidden!important}nav button{flex:1 1 0!important;min-width:44px!important}
+header #spBtn{display:none!important}header h1{order:0}header .who{order:1;margin-left:auto!important}header a.hb{order:2}header #araSave{order:3}header #arbBtn{order:-1}
+#moreSheet{position:fixed;right:8px;bottom:calc(64px + env(safe-area-inset-bottom));z-index:60;background:#0b1220;border:1px solid rgba(148,197,214,.25);border-radius:14px;padding:6px;display:flex;flex-direction:column;min-width:200px;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+#moreSheet[hidden]{display:none!important}#moreSheet button{all:unset;box-sizing:border-box;min-height:48px;padding:0 14px;display:flex;align-items:center;gap:12px;color:#e6f7fb;font:500 15px system-ui,sans-serif;border-radius:10px;cursor:pointer}#moreSheet button:hover,#moreSheet button:focus-visible{background:rgba(34,211,238,.12)}
+#moreSheet svg{width:22px;height:22px;fill:none;stroke:#67e8f9;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.empty.lk{display:block!important;padding:16px;border:1px dashed rgba(148,197,214,.3);border-radius:12px;color:#94a3b8;font-size:14px;text-align:center}
 </style></head><body>
 <header><button class="hb" id="spBtn" aria-label="Menu" onclick="spOpen(1)">&#9776;</button><a class="hb" href="./index.html">&larr; Apps</a><h1>REALM <b>DESK</b></h1><button class="hb" id="saveApp">&#11015; Save as app</button><span class="who" id="who" data-rl-pill></span></header><div class="rk-line" id="rkLine" hidden>Desk needs the Realm key on this phone. <button type="button" id="rkAdd">Add key</button></div>
 <div id="appHelp" style="display:none;margin:8px 14px;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line);font-size:13px">On Android Chrome: tap <b>&#8942;</b> &rsaquo; <b>Add to Home screen</b> (or <b>Install app</b>) &rsaquo; <b>Install</b>.</div>
@@ -110,7 +118,7 @@ nav button.on .ni{color:#22d3ee;opacity:1;filter:drop-shadow(0 0 4px rgba(34,211
   </section>
   <section class="tab" id="tab-search">
     <div class="bar"><h2>One place &mdash; search a site</h2></div>
-    <div class="card"><a class="btn p" href="./search.html" style="display:block;text-align:center;font-size:17px;padding:14px">&#128269; Open Search Studio</a></div>
+    
     <div id="search"></div>
   </section>
   <section class="tab" id="tab-today">
@@ -427,6 +435,7 @@ function fvNewVeh(){var v=prompt('Vehicle name (e.g. Hilux, Trailer)');if(!v)ret
   <button onclick="go('chats',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5.5h15v10h-8l-4.5 3.5v-3.5h-2.5z"/></svg></span>Chats</button>
   <button onclick="go('notes',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h8.5L18 7v13.5H6z"/><path d="M14.5 3.5V7H18M9 11h6M9 14.5h6M9 18h4"/></svg></span>Notes</button>
   <button onclick="go('links',this)"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.2 1.2"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.2-1.2"/></svg></span>Links</button>
+  <button id="navMore" type="button" onclick="navMore()" aria-haspopup="true"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="18.5" cy="12" r="1.4"/></svg></span>More</button>
 </nav>
 <div class="toast" id="toast"></div>
 <script>
@@ -587,4 +596,16 @@ var RX=/\bScribe\b(?!how)/g,RXU=/\bSCRIBE\b(?!HOW)/g;
 function fix(root){try{var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null),t;while(t=w.nextNode()){var v=t.nodeValue;if(v&&/scribe/i.test(v)&&!(t.parentNode&&/^(SCRIPT|STYLE)$/.test(t.parentNode.nodeName))){var nv=v.replace(RX,'Notes').replace(RXU,'NOTES');if(nv!==v)t.nodeValue=nv}}
  [].forEach.call((root.querySelectorAll?root:document).querySelectorAll('a[href*="scribe.html"]'),function(a){a.setAttribute('href',a.getAttribute('href').replace(/scribe\.html/,'notes.html'))})}catch(e){}}
 function go(){fix(document.body);try{new MutationObserver(function(ms){ms.forEach(function(m){[].forEach.call(m.addedNodes,function(x){if(x.nodeType===1)fix(x);else if(x.nodeType===3&&x.parentNode)fix(x.parentNode)})})}).observe(document.body,{childList:true,subtree:true})}catch(e){}}
-if(document.body)go();else document.addEventListener('DOMContentLoaded',go)})();</script></body></html>
+if(document.body)go();else document.addEventListener('DOMContentLoaded',go)})();</script><div id="moreSheet" hidden role="menu" aria-label="More"></div>
+<script>/* v20: More menu for the tabs that left the bottom bar (nothing removed: Search, Register (Desk), Tasks, Chats, Links) */
+function navMore(){var m=document.getElementById('moreSheet');if(!m.hidden){m.hidden=true;return}
+ if(!m.children.length){[['search','Search'],['desk','Register'],['tasks','Tasks'],['chats','Chats'],['links','Links']].forEach(function(x){var src=document.querySelector('nav button[onclick*="\''+x[0]+'\'"]');if(!src)return;var b=document.createElement('button');b.type='button';b.setAttribute('role','menuitem');var ic=src.querySelector('.ni');b.innerHTML=(ic?ic.innerHTML:'')+'<span>'+x[1]+'</span>';b.onclick=function(){m.hidden=true;go(x[0],src);document.getElementById('navMore').classList.add('on')};m.appendChild(b)})}
+ m.hidden=false}
+document.addEventListener('click',function(e){var m=document.getElementById('moreSheet');if(m&&!m.hidden&&!e.target.closest('#moreSheet,#navMore'))m.hidden=true},true);
+/* locked state: no Realm key on this device -> one clear line instead of grey skeleton cards that never fill */
+(function(){function k(){try{return !!(window.RealmKey&&RealmKey.get())}catch(e){return false}}
+function lock(){if(k())return;[].forEach.call(document.querySelectorAll('.sk'),function(x){var p=x.parentNode;if(!p||p._lk)return;if([].every.call(p.children,function(c){return c.classList.contains('sk')})){p._lk=1;p.innerHTML='<div class="empty lk">Locked \u2014 tap <b>Add key</b> at the top of Desk to load this.</div>'}})}
+var t=0;function soon(){clearTimeout(t);t=setTimeout(lock,60)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',soon);else soon();
+try{new MutationObserver(soon).observe(document.body,{childList:true,subtree:true})}catch(e){}})();
+</script></body></html>
