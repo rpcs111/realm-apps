@@ -1,0 +1,15 @@
+---
+description: Standing rules for the public realm-apps repo
+globs: ["**/*"]
+alwaysApply: true
+---
+
+Read HANDOFF.md on the main branch before editing. Follow it.
+
+This repo is public. Never commit keys, codes, phone numbers, money figures, client or people names, or server addresses. Do not fake a run when a secret is missing.
+
+Do not touch private.html, cert.html, certstudio.html, search-grok.html, or search.webmanifest. Keep js/nirvana.js, js/saveapp.js, and js/ara-install.js working.
+
+Deputy is read-only. Use Desk’s existing roster call and show its real result. Do not write to Deputy and do not invent a shift check.
+
+Use a branch and a pull request against gh-pages. Do not change a data source or backend URL.

@@ -93,10 +93,10 @@
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
   /* Ara button on every app that loads this file (installed apps pick it up on next open) */
-  try{if(!document.getElementById('araBtnJs')){var ab=document.createElement('script');ab.id='araBtnJs';ab.src=new URL('ara-button.js?v=20261016v5',(S&&S.src)?S.src:new URL('js/',location.href)).href;(document.head||document.documentElement).appendChild(ab)}}catch(e){}
+  try{if(!document.getElementById('araBtnJs')){var ab=document.createElement('script');ab.id='araBtnJs';ab.src=new URL('ara-button.js?v=20261017-24',(S&&S.src)?S.src:new URL('js/',location.href)).href;(document.head||document.documentElement).appendChild(ab)}}catch(e){}
 
   if('serviceWorker' in navigator&&location.protocol!=='file:'){
     var base=(S&&S.src)?new URL('../',S.src):new URL('./',location.href);
-    navigator.serviceWorker.register(new URL('app-sw.js?v=20261016v5',base).href,{scope:new URL(path,location.href).href,updateViaCache:'none'}).then(function(r){try{r.update()}catch(e){}}).catch(function(){});
+    navigator.serviceWorker.register(new URL('app-sw.js?v=20261017-24',base).href,{scope:new URL(path,location.href).href,updateViaCache:'none'}).then(function(r){try{r.update()}catch(e){}}).catch(function(){});
   }
 })();

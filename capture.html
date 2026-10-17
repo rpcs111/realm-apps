@@ -1,11 +1,11 @@
 <!doctype html><html lang="en"><head><script>/* v17: catch Chrome's install prompt before any other script */window.__araBIP=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__araBIP=e});</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><meta name="theme-color" content="#000000"><meta name="color-scheme" content="dark"><meta name="application-name" content="Ara Capture"><meta name="apple-mobile-web-app-title" content="Ara Capture"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <title>Ara Capture</title>
-<link rel="manifest" href="ara-capture.webmanifest?v=20261016a">
-<link rel="icon" type="image/svg+xml" href="pwa/hub-ara-48.svg?v=20261016a"><link rel="apple-touch-icon" href="pwa/hub-ara-192.svg?v=20261016a">
-<link rel="stylesheet" href="css/ara-theme.css"><link rel="stylesheet" href="css/realm-ui.css?v=20261016b">
+<link rel="manifest" href="ara-capture.webmanifest?v=20261017-24">
+<link rel="icon" type="image/svg+xml" href="pwa/hub-ara-48.svg?v=20261017-24"><link rel="apple-touch-icon" href="pwa/hub-ara-192.svg?v=20261017-24">
+<link rel="stylesheet" href="css/ara-theme.css"><link rel="stylesheet" href="css/realm-ui.css?v=20261017-24">
 <style>
 body.rui{background:#000;min-height:100vh}
-.rui-mark{background-image:url("pwa/hub-ara-48.svg?v=20261016a")}
+.rui-mark{background-image:url("pwa/hub-ara-48.svg?v=20261017-24")}
 .cap{max-width:860px;margin:0 auto;padding:10px 12px calc(28px + env(safe-area-inset-bottom))}
 .cap-in{position:relative;border:1px solid rgba(148,197,214,.28);background:#0b141c;border-radius:18px;padding:10px 10px 8px;box-shadow:0 6px 24px rgba(0,0,0,.45)}
 .cap-in:focus-within{border-color:var(--rui-ac)}
@@ -47,7 +47,7 @@ h2.cap-h i{font-style:normal;background:rgba(255,255,255,.06);border-radius:999p
 .recent .rs{flex:none;font-size:11px;color:var(--rui-mute)}.recent .rs.ok{color:#86efac}
 .tips{font-size:12px;color:var(--rui-mute);margin:16px 2px 0;line-height:1.5}
 .tips kbd{font:inherit;border:1px solid var(--rui-line);border-radius:4px;padding:0 4px}
-</style><script src="js/ara-account.js?v=20261016b" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017d"><meta name="ara-build" content="2026.10.17-20"><style id="v19c">/* v20 Batch B: the one small Ara symbol shows here too (fixed bottom-right, same as every page); keyboard hint only on devices with a keyboard */@media (hover:none),(pointer:coarse){.tips .kb{display:none}}</style><style id="v20m1">/* v20 fix (Elon gate): one Ara symbol per page, the 44px button bottom-right; no extra header mark */.rui-mark{display:none!important}</style><style id="v20c2">/* v20 (Elon): header matches Notes/Search exactly */.rui-top .nav a{padding:8px 6px!important}</style></head>
+</style><script src="js/ara-account.js?v=20261017-24" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017-24"><meta name="ara-build" content="2026.10.17-24"><style id="v19c">/* v20 Batch B: the one small Ara symbol shows here too (fixed bottom-right, same as every page); keyboard hint only on devices with a keyboard */@media (hover:none),(pointer:coarse){.tips .kb{display:none}}</style><style id="v20m1">/* v20 fix (Elon gate): one Ara symbol per page, the 44px button bottom-right; no extra header mark */.rui-mark{display:none!important}</style><style id="v20c2">/* v20 (Elon): header matches Notes/Search exactly */.rui-top .nav a{padding:8px 6px!important}</style></head>
 <body class="rui">
 <header class="rui-top"><span class="rui-mark" role="img" aria-label="Ara"></span><b class="rui-title">Ara Capture</b><nav class="nav"><a href="./index.html">‹ Apps</a><a href="./notes.html">Notes ›</a></nav></header>
 <main class="cap">
@@ -66,7 +66,7 @@ h2.cap-h i{font-style:normal;background:rgba(255,255,255,.06);border-radius:999p
  <section class="recent"><h2 class="cap-h">Saved <i id="nSaved">0</i> <span id="syncState" style="letter-spacing:0;text-transform:none;font-weight:400"></span></h2><ul id="recent"></ul></section>
  <p class="tips">Saved items stay on this device first, so nothing is lost offline, then sync to Ara's inbox. <span class="kb"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> saves, <kbd>Esc</kbd> stops the mic.</span></p>
 </main>
-<script src="js/ara-capture-rules.js?v=20261016a"></script>
+<script src="js/ara-capture-rules.js?v=20261017-24"></script>
 <script>
 (function(){
 'use strict';
@@ -204,7 +204,7 @@ setTimeout(function(){sync(true)},1200);
 window.AraCaptureApp={parse:parse,save:save,sync:sync,queue:queue,items:function(){return items}};
 })();
 </script>
-<script src="js/saveapp.js?v=20261016v5" data-mount="header .nav" defer></script>
-<script src="js/realm-ui.js?v=20261016b" defer></script>
+<script src="js/saveapp.js?v=20261017-24" data-mount="header .nav" defer></script>
+<script src="js/realm-ui.js?v=20261017-24" defer></script>
 <script src="js/ara-version.js" defer></script>
-<script src="js/ara-install.js?v=20261017d" defer></script></body></html>
+<script src="js/ara-install.js?v=20261017-24" defer></script></body></html>
