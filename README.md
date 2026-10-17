@@ -17,7 +17,7 @@ Realm Desk web app — Ange Barlas / Realm PCS.
 
 ## Repo contents
 
-- `HANDOFF.md` — Ara's rules, URLs, state, daily loop
+- `HANDOFF.md` — Ara 2.0's rules, URLs, state, daily loop
 - `team.html` — crew infograph, editable family tree, daily schedule, Echo checklist
 - `img/family.svg`, `img/umbrella.svg` — crew visuals
 - Deployed via GitHub Pages (`gh-pages` branch). 39 successful deploys as of 14 Oct 2026.

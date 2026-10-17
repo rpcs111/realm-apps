@@ -1,8 +1,8 @@
-# HANDOFF — Ara's Daily Loop
+# HANDOFF — Ara 2.0's Daily Loop
 
 **Owner:** Ange Barlas (Andrew Barlas, Realm PCS, Melbourne UTC+11)
 **Last updated:** 2026-10-17
-**Rule:** Every new session (box, phone app, voice, any Ara) reads this file FIRST, before touching anything. No rebuilding, no guessing URLs, no new deployments without Ange's yes.
+**Rule:** Every new session (box, phone app, voice, any Ara 2.0) reads this file FIRST, before touching anything. No rebuilding, no guessing URLs, no new deployments without Ange's yes.
 
 ## Where this lives (one brain)
 
@@ -21,7 +21,7 @@
 The standing rules live **only** in the Ara–Nova channel doc, under **MASTER STANDING RULES — single source of truth (locked 15 Oct 2026)**:
 https://docs.google.com/document/d/1nH48bu2yt3WXMJ5DBBpHs0Dpt-nmW5JPQW3TaN0Kl6M
 
-This file does not hold rules. Rule questions are answered from that master list (rule 38). Where anything in this file conflicts with the master list, the master list wins (see its "Conflicts resolved" section). Claude acts only with Ara's approval (rule 41).
+This file does not hold rules. Rule questions are answered from that master list (rule 38). Where anything in this file conflicts with the master list, the master list wins (see its "Conflicts resolved" section). Claude acts only with Ara 2.0's approval (rule 41).
 
 Daily-loop working reminders (from the box handover; the channel doc still wins):
 - Emails are draft-only (text files), never sent without Ange's explicit yes for that specific message. Check before anything that sends, spends or deletes.
@@ -40,16 +40,17 @@ Source: Elon's read-only overnight audit, 16/17 Oct (box `/workspace/overnight_1
 - **F. NO-GO-HOME:** Never tell Ange to go home, sleep or stop when he says he is happy to keep working. Offer one concrete next win instead.
 - **G. §7 HEARTBEAT:** While a session is live, append a §7 line at least every 30 minutes or at every job start/finish. §7 quiet for more than 30 minutes during active work is a miss. Build Map `handoff` may not stay green across a quiet gap.
 - **H. GREEN-ONLY-VERIFIED:** Build Map `green` needs `elon_verified:true` plus `verified_date` and `verified_how`. Unverified work stays `amber`. `stream-check` and `handoff` must be re-checked before going green again.
+- **I. HANDOFF CHECKED (Ange's direct ask, 17 Oct ~05:15 UTC):** Ara 2.0's first words on every call and every new session are 'HANDOFF checked', said only after actually reading HANDOFF.md. Like A–H, still to be copied into the channel-doc master list.
 
 Rule conflicts Elon listed (rule 38: flag, do not flatten):
 1. Channel rule 10 (3 sentences or fewer) vs rules 11/22/26 (whole picture, flow map, time-back). Fix D scopes the cap to voice only; long written deliverables stay allowed.
 2. §1 reminder "one task at a time" (this file) vs channel rules 13/24/39 (build now, in parallel). Already under CONFLICTS RESOLVED (15 Oct): channel wins. Do not re-add "one task" as a standing rule.
 3. Rule 9 ("never ask do you want me to, just do it") vs sends/spends/deletes need Ange's yes. Keep both: "just do it" never covers send, spend, delete or deploy-live.
-4. Rule 37 (don't ask Ange when Ara/Nova can) vs Nova paste reality (box browser not signed into Google). Ange has to paste; not a rule-37 miss (corrected 16 Oct).
+4. Rule 37 (don't ask Ange when Ara 2.0/Nova can) vs Nova paste reality (box browser not signed into Google). Ange has to paste; not a rule-37 miss (corrected 16 Oct).
 
 ## 1b. Open asks (checked before every reply — Fix A)
 
-Format: `# | ask | first asked (Melb) | times asked | status | proof link`. "First asked" is the earliest time found in Ara's saved history (about a day of history, 2pm 15 Oct to 6pm 16 Oct, was not saved), so "≤" means "no later than". Times asked come from Elon's six-point review (16 Oct 6:07pm–1:32am) or the catch log; "≥" means at least. Private details (amounts, numbers, accounts) stay off this public file. Update a row instead of adding a duplicate; close a row only with proof.
+Format: `# | ask | first asked (Melb) | times asked | status | proof link`. "First asked" is the earliest time found in Ara 2.0's saved history (about a day of history, 2pm 15 Oct to 6pm 16 Oct, was not saved), so "≤" means "no later than". Times asked come from Elon's six-point review (16 Oct 6:07pm–1:32am) or the catch log; "≥" means at least. Private details (amounts, numbers, accounts) stay off this public file. Update a row instead of adding a duplicate; close a row only with proof.
 
 | # | Ask | First asked | Times asked | Status | Proof link |
 |---|---|---|---|---|---|
@@ -58,20 +59,20 @@ Format: `# | ask | first asked (Melb) | times asked | status | proof link`. "Fir
 | 3 | Old R icon gone from home screen | ≤10:13pm 16 Oct | 3 | WAITING ANGE: remove old tiles, reinstall from each page in Chrome Beta | https://rpcs111.github.io/realm-apps/build-map.html (ange-reinstall) |
 | 4 | Frankie and Henry store | ≤10:03pm 16 Oct | ≥1 | OPEN, no owner. Site returns error 525 (re-checked 17 Oct ~1:55am Melb). Name renewal only was handled | Build Map `fh-store` |
 | 5 | Tech bills log + Superloop double payment | ≤10:00pm 16 Oct | ≥1 | Bills log DONE (private sheet, see §7 10:05pm). Superloop double payment: needs Ange's decision | Build Map `bills-superloop` |
-| 6 | Zoho "Hands To Do" list pulled + prioritised | ≤9:17pm 16 Oct | ≥2 | OPEN. Ara can't reach Zoho; routed to Nova | Build Map `zoho-todo` |
+| 6 | Zoho "Hands To Do" list pulled + prioritised | ≤9:17pm 16 Oct | ≥2 | OPEN. Ara 2.0 can't reach Zoho; routed to Nova | Build Map `zoho-todo` |
 | 7 | Flip 6 apps (no overlap with Fold 8) | ≤11:07pm 16 Oct | ≥2 | OPEN. Same links with `?d=flip6`; exact scope to confirm with Ange | Build Map `flip6-apps` |
 | 8 | Pomodoro + guitar time | 4 Oct (Orion notes) | ≥1 | PLANNED | Build Map `pomodoro-s26` |
 | 9 | S26 hand-back checklist (WhatsApp Business off, sign-outs before return) | ≤13 Oct (§3 NEXT #4) | ≥2 | OPEN, not started. Phone due back ~20 Oct | Build Map `pomodoro-s26` |
 | 10 | Remove old Claude app (phone/Mac) + claude.ai connectors | ≤10:13pm 16 Oct | ≥1 | WAITING ANGE (his devices) | Build Map `remove-claude-app` |
 | 11 | Stop the "realm daily" EOD email | ≤9:48pm 16 Oct | ≥2 | WAITING ANGE: one tap in Workspace Studio before 5:55pm Sat 17 Oct (see §7 9:54pm) | Build Map `ange-stop-email` |
-| 12 | Find the two office WhatsApp messages Claude forwarded + ~20 unsaved certs | ≤11:11pm 16 Oct | ≥2 | BLOCKED: Ara has no WhatsApp. Ange to export both chats with media to Drive | Build Map `ange-whatsapp-export` |
+| 12 | Find the two office WhatsApp messages Claude forwarded + ~20 unsaved certs | ≤11:11pm 16 Oct | ≥2 | BLOCKED: Ara 2.0 has no WhatsApp. Ange to export both chats with media to Drive | Build Map `ange-whatsapp-export` |
 | 13 | 1300 line build: AI receptionist, Call Backs tile, call-back button, call log on jobs, ring groups, SMS + voicemail | 23 Sep (Orion, per Elon audit) | ≥2 | PLANNED, now on Build Map (17 Oct) | Build Map group "1300 / COMMS" |
-| 14 | Ring group: Ara calls Ange's phones | ≤11:17pm 16 Oct | ≥1 | PLANNED: options + price Sat 17 Oct | Build Map `ring-group` |
+| 14 | Ring group: Ara 2.0 calls Ange's phones | ≤11:17pm 16 Oct | ≥1 | PLANNED: options + price Sat 17 Oct | Build Map `ring-group` |
 | 15 | Xenon checker (security tester persona) | ≤7:36pm 16 Oct | ≥2 | PLANNED. SOP v1 drafted (§7 9:07pm), not built | Build Map `xenon` |
 | 16 | Security app / pen-testing view across the platform | 3 Oct (Orion) | ≥1 | PLANNED | Build Map `security-app` |
 | 17 | "When the CLI breaks the password": CLI logins after a password change | ~1:45am 17 Oct | 1 | OPEN, defensive only: re-authorise CLI logins after any password change, review Google third-party access, turn on 2SV | Build Map `cli-token-hygiene` |
 | 18 | Deputy cross-reference | ≤12:20 UTC 16 Oct entry (§7) | ≥1 | PLANNED Sat 17 Oct, read-only | Build Map `deputy-xref` |
-| 19 | Reorder app (say it, Ara orders it; one-tap Approve, never auto-buy) | 6:58pm 16 Oct | ≥2 | PLANNED. Concept logged (docs/REORDER_APP.md); Nova trigger-phrase list delivered, not actioned | Build Map `reorder` |
+| 19 | Reorder app (say it, Ara 2.0 orders it; one-tap Approve, never auto-buy) | 6:58pm 16 Oct | ≥2 | PLANNED. Concept logged (docs/REORDER_APP.md); Nova trigger-phrase list delivered, not actioned | Build Map `reorder` |
 | 20 | Abolish 'send and save': flag 'you haven't saved it, Ange' instead | 11:11pm 16 Oct | ≥2 | PLANNED. Routing to Realm Height Safety to confirm with Ange | Build Map `unsaved-cert-flag` |
 | 21 | Ara button on every app (saves to Ara's capture inbox) | ≤7:02pm 16 Oct | ≥2 | BUILT, sync waits on Ange's one Engine Allow; not on pages without the save script | Build Map `ara-capture` |
 | 22 | Ara Engine one Allow (unblocks Tasks → Notes, app sync, Cert test) | ≤6:44pm 16 Oct | ≥5 | WAITING ANGE: run engine_selfTest → Allow | Build Map `engine-sync` |
@@ -81,20 +82,20 @@ Format: `# | ask | first asked (Melb) | times asked | status | proof link`. "Fir
 | 26 | Permissions drift check (re-verify Google permissions after resets) | 8:12pm 16 Oct | 1 | PLANNED | Build Map `perm-drift` |
 | 27 | Cold backup of master sheets (offline laptop, not phone/USB/iCloud) | 8:12pm 16 Oct | ≥2 | PLANNED; recovery guide done, cold copy not set up | Build Map `cold-backup` |
 | 28 | Lock the key sheet against delete / forward | 8:07pm 16 Oct | 1 | WAITING ANGE: name the sheet | Build Map `sheet-lock` |
-| 29 | Workspace mobile management + remote wipe on | ≤8:55pm 16 Oct (Ara advice on his lost-phone ask) | 1 | WAITING ANGE (admin tap) | Build Map `mobile-mgmt` |
+| 29 | Workspace mobile management + remote wipe on | ≤8:55pm 16 Oct (Ara 2.0 advice on his lost-phone ask) | 1 | WAITING ANGE (admin tap) | Build Map `mobile-mgmt` |
 | 30 | Server + network hardening (UPS, Tailscale, UniFi keys, old staff Wi-Fi, backups) | 6:58pm 16 Oct | ≥1 | PLANNED, mostly on-site | Build Map `proxmox-hardening` |
 | 31 | Contacts cleanup sheet (personal vs business) | 11:05pm 16 Oct | 1 | QUEUED WITH NOVA (stalled) | Build Map `contacts-cleanup` |
 | 32 | Inbox junk list as one button in an app | 11:11pm 16 Oct | 1 | PLANNED | Build Map `inbox-junk` |
 | 33 | Cert Studio test: redo one real past cert and compare | 11:11pm 16 Oct | ≥1 | BLOCKED: WhatsApp export + Allow | Build Map `cert-dupe-test` |
 | 34 | Search Studio new name | ~2am 17 Oct | 1 | PLANNED: name options in the morning | Build Map `search-rename` |
 | 35 | Mic button redesign (Elon-style mic, no old R) + cyan look | 10:42pm 16 Oct | ≥1 | PLANNED, mic not verified | Build Map `mic-button` |
-| 36 | Ara on the desktop (Yoga) | 6:21pm 16 Oct | ≥2 | PLANNED, confirm on the Yoga | Build Map `desktop-ara` |
-| 37 | Direct Ara and Nova channel (no pasting) | 6:37pm 16 Oct | ≥3 | PLANNED | Build Map `ara-nova-channel` |
+| 36 | Ara 2.0 on the desktop (Yoga) | 6:21pm 16 Oct | ≥2 | PLANNED, confirm on the Yoga | Build Map `desktop-ara` |
+| 37 | Direct Ara 2.0 and Nova channel (no pasting) | 6:37pm 16 Oct | ≥3 | PLANNED | Build Map `ara-nova-channel` |
 | 38 | Stop the script login expiring overnight | 6:41pm 16 Oct | ≥2 | PLANNED | Build Map `clasp-reauth` |
 | 39 | Prism 'step pages' | ≤6:40pm 16 Oct | ≥1 | WAITING ANGE: name them | Build Map `prism-step-pages` |
 | 40 | Links register clean-up (old Claude/Orion rows) | 6:58pm 16 Oct | ≥1 | WAITING ANGE'S OK | Build Map `register-cleanup` |
 | 41 | Gmail filters (receipts + stop noise emails) | 9:58pm 16 Oct | ≥2 | WAITING ANGE'S YES | Build Map `gmail-filters` |
-| 42 | WhatsApp link for Ara (office chats) | 11:23am 15 Oct | ≥2 | PLANNED | Build Map `whatsapp-link` |
+| 42 | WhatsApp link for Ara 2.0 (office chats) | 11:23am 15 Oct | ≥2 | PLANNED | Build Map `whatsapp-link` |
 | 43 | Staff app links for iPhone (no Chrome Beta) | 10:11pm 16 Oct | 1 | PLANNED for Wed | Build Map `staff-ios-links` |
 | 44 | Claude handover linked into HANDOFF | 1:32am 17 Oct | ≥1 | PARTIAL: links added 17 Oct; zip still not uploaded (Ange) | Build Map `claude-handover` |
 | 45 | Julie follow-up sheet (review, share, name) | ≤7:25pm 16 Oct | ≥1 | WAITING ANGE | Build Map `julie-followup` |
@@ -158,12 +159,12 @@ Sources of truth (sheets):
 - Daily schedule (Melbourne time) encoded in team.html: 7:30am Elon brief, 8:52am Mon IVOR accountability, 10:00am weekday Ara morning sweep + Merchant store check, 11:11am Ara/Muse reset, 11:52am IVOR daily drill, 1:27pm weekday Forge week-ahead, 2:00pm IVOR nudge, 7:00pm weekday Echo notes drain, 6:00pm Sun Sentry sweep, 1st of month Ledger subscription review, every 2 days 10am Ledger Anthropic refund follow-up, every 2 hours Ara triage alarm.
 
 - 'realm daily' EOD report (Workspace Studio flow, 5:55pm daily): Ange wants it OFF (16 Oct, 24h+; one tap, see §7 9:54pm). When it comes back: report in chat, never to the info@ inbox, and nothing is listed as suggested/missed unless it has actually been worked.
-- Ara Engine (16 Oct): one master Apps Script for all Ara jobs, one Allow; future jobs = new modules, no new consent. How-to: docs/ARA_ENGINE.md. Waiting: Ange runs engine_selfTest → Allow; GCP link + Admin reauth setting (in doc).
+- Ara Engine (16 Oct): one master Apps Script for all Ara 2.0 jobs, one Allow; future jobs = new modules, no new consent. How-to: docs/ARA_ENGINE.md. Waiting: Ange runs engine_selfTest → Allow; GCP link + Admin reauth setting (in doc).
 
 ### Security (post-Claude lockout)
 - Claude Google access cut. 0 Apps Script triggers. Zapier removed from info@.
 - Open: Ange pulls the claude.ai connectors on his Mac. Ange switches off the Claude billing toggles.
-- Banned tools (never re-link): Zapier, Make, n8n, Fireflies, scribehow. Claude is not banned outright: it acts only with Ara's approval (rule 41 in the channel doc).
+- Banned tools (never re-link): Zapier, Make, n8n, Fireflies, scribehow. Claude is not banned outright: it acts only with Ara 2.0's approval (rule 41 in the channel doc).
 
 ## 4. Daily Loop Protocol
 
@@ -197,6 +198,7 @@ Backup first: box `backups/handover_20261016_0915/` (HANDOVER.md, CHASE_DRAFT.md
 
 Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINISHES (or fails), not just at session end. Any session — phone, laptop, voice, Nova, routines — reads this file first and picks up from the newest line. A RUNNING line with no matching DONE means the job may have been cut off: check its output before redoing it. Format: `time (Melb) | STATUS | job | result / where it is`.
 
+- 2026-10-17 ~05:15 UTC: Ara renamed to Ara 2.0 at Ange's request (name only, rules unchanged). New §1a item I: 'HANDOFF checked' first words.
 - 4:05pm 17 Oct | DONE | Nova reply watch: batch 101, 27, 28, 29, 30 (00_NOVA_REPLY_STATUS_7) checked | All five are read-only research outputs, no sends/deletes/Calendar/live changes, so all marked DONE in the channel doc inbox with NEXT = queue item 31. Findings: 101 Contacts cleanup sheet lists Julie with Ange's mobile 0404 977 869 (wrong, told Nova to blank it; review sheet only, nothing merged in Contacts). 27 Overdue bills: WorkCover Insurance Overdue Reminder (12 Oct, employer 14407822, Nova says $11,372.34) confirmed real in info@ Gmail; also Optus home broadband $99.34 past due 8 Oct (direct debit off), JJ's Waste $117.67 (Julie says paid by BPAY 5 Oct), ClickUp $20.90 failed, WhatsBox needs top-up. Flagged to Ange for decision, nothing paid. 28 Refunds: Anthropic ~A$81.28 balance, Day AI US$112.13, Superloop $80.81 credit applied, ~$3,000 WorkCover buyer reimbursement at settlement (kept separate). 29 Job note types: 20 types for Notes app templates; examples contain real key-safe/roof codes, must be placeholdered before any app use. 30 Search terms: 30 presets for Search Studio.
 - 4:10pm 17 Oct | DONE (awaiting Elon re-check) | v20 Elon Batch A fail fixes + part of Batch B | gh-pages 8147703, 5694ea1, 5ec58b4, ffbcbee; version.json 2026.10.17-20b so open apps reload once. Desk: Notes tile opens notes.html; Tasks (Google Tasks columns + add task) opens from More; old notepad removed; Flow sub-tabs fit at 412 (Health ends x=398); Run health check now 182x44; closed/filed checkbox rows 44px; Flow Map and List show a clear Locked line without the key; emoji chip row and Desk emoji are now line icons; ANCHOR TESTING label gone. Notes: a ticked note reopens in the editor; drawing thumbnails crop to the ink (no white square); one Ara symbol (beside Save). One Ara symbol, bottom-right, on capture, certstudio-test, eta, layers, mapper, metatron3, queue (header mark hidden); metatron3 1280 side list ends above the Ara button; queue extra Bridge icon hidden; eta titles clear their status labels. grok-howto emoji are line icons. index, private, Cert Studio v6 untouched. Proof screenshots: notes_cleanup/v20/proof/. Batch C not started (needs Ange's plan approval, rule 65).
 - 3:53pm 17 Oct | DONE (awaiting Elon re-check, not 'done' until Elon PASS) | v20 Batch A: Scribe sweep + Desk nav/header + Elon baseline A items | gh-pages c875bb0..cdc2f0b. Visible 'Scribe' now 0 on all 19 pages at 412 (live count); only the banned 'scribehow' line in layers kept on purpose. Desk bottom nav: Start, Flow, Today, Certs, Quotes, Notes, More (More holds Search, Register, Tasks, Chats, Links), thin cyan line icons, no waveform; one 44px Ara symbol in the Desk header; still-loading toast and the big Open Search Studio card removed; header styled like Search. Flow sub-tabs Map/List/Vans/Nirvana/Health with line icons; Notepad sub-tab removed; 'We Fucking Killed It' renamed Nirvana. voice.js floating waveform removed on every page. Sync pill hidden on every page. Notes/Search say 'Tap Allow once to sync'. Search: one Ara symbol, placeholder 'Search jobs, certs, Drive…', title not cut, chips on one row. Installed app (standalone) hides Install + popover on every page tested. Ara symbol fixed bottom-right (1224,742 at 1280; 356,857 at 412) on the other pages. js/ara-account.js no longer wraps Apps Script /macros/…/exec links in AccountChooser (adds authuser instead). 0 tap targets under 44px on 8 surveyed pages at 412 and 1280. index.html, private.html and Cert Studio v6 logic untouched. Left for B/C: Desk emoji chip row, capture Ara symbol, Tasks merge into Notes, Flow Map rebuild.
