@@ -82,7 +82,7 @@ header.m-top{padding:0 10px}header.m-top h1{font-size:15px;margin:0;white-space:
 <div class="wrap">
  <section class="card" id="smart"><h2>Smart paste</h2>
   <textarea id="sp" placeholder="Paste anything here: an email, a WhatsApp, a note. I'll suggest where it goes."></textarea>
-  <div class="row"><button id="spClip">📋 Paste from clipboard</button><button id="spClear">Clear</button><span class="muted" id="spMsg"></span></div>
+  <div class="row"><button id="spClip"><svg class="li20" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:4px"><rect x="6" y="4.5" width="12" height="16" rx="2"/><path d="M9.5 4.5V3h5v1.5M9 10h6M9 13.5h6M9 17h4"/></svg>Paste from clipboard</button><button id="spClear">Clear</button><span class="muted" id="spMsg"></span></div>
   <div id="sugg"></div>
   <div class="row" id="other" hidden><select id="spAny"></select><button id="spAnyGo">File here</button></div>
  </section>
@@ -151,7 +151,7 @@ function openSheet(id){S=RB.load();var n=byId(id);if(!n)return;open=id;
  var h='<div class="t muted" style="text-transform:uppercase;letter-spacing:.1em;font-size:11px">'+esc(RB.TYPES[n.type]||n.type)+'</div><h2 style="margin:2px 0 8px;font-size:20px">'+esc(n.name)+'</h2>';
  if(n.type==='job')h+='<div>'+RB.STAT.map(function(s){return'<button class="schip '+s[2]+((n.status||[]).indexOf(s[0])>=0?' on':'')+'" data-s="'+s[0]+'">'+esc(s[1])+'</button>'}).join('')+'</div>';
  h+='<textarea id="pb" placeholder="Paste here, then tap File it. (Ctrl+Enter files it.)"></textarea>';
- h+='<div class="row"><button class="pri" id="pbGo">File it</button><button id="pbClip">📋 Paste & file</button>'+(n.url?'<a class="btn" href="'+esc(n.url)+'" target="_blank" rel="noopener">Open ↗</a>':'')+'<button id="pbClose">Close</button></div><div class="muted" id="pbMsg" style="margin-top:6px"></div>';
+ h+='<div class="row"><button class="pri" id="pbGo">File it</button><button id="pbClip"><svg class=\'li20\' viewBox=\'0 0 24 24\' aria-hidden=\'true\' style=\'width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:4px\'><rect x=\'6\' y=\'4.5\' width=\'12\' height=\'16\' rx=\'2\'/><path d=\'M9.5 4.5V3h5v1.5M9 10h6M9 13.5h6M9 17h4\'/></svg>Paste & file</button>'+(n.url?'<a class="btn" href="'+esc(n.url)+'" target="_blank" rel="noopener">Open ↗</a>':'')+'<button id="pbClose">Close</button></div><div class="muted" id="pbMsg" style="margin-top:6px"></div>';
  var P=(n.pastes||[]).slice(-5).reverse();
  if(P.length)h+='<h3 class="muted" style="margin:12px 0 2px;font-size:12px;text-transform:uppercase;letter-spacing:.1em">Latest pastes</h3>'+P.map(function(p){return'<div class="hist"><i>'+esc(RB.stamp(new Date(p.t)))+' · '+esc(p.src)+'</i>'+esc(p.text)+'</div>'}).join('');
  if(n.note)h+='<details style="margin-top:8px"><summary class="muted">Full notes</summary><pre class="note">'+esc(n.note)+'</pre></details>';
