@@ -1,6 +1,6 @@
 /* ara-account.js - Realm apps: open every Google link as info@realmpcs.com
    - adds authuser=info@realmpcs.com to Google links (docs/sheets/drive/mail/calendar/tasks/keep/gemini/admin/script editor)
-   - script.google.com/macros web apps go through Google's AccountChooser (Email=info@...) so Chrome switches to / signs in info@ first
+   - script.google.com/macros web apps: authuser=info@ only (AccountChooser wrap removed 17 Oct v20)
    - rewrites <a href> on load + for links added later, and window.open(); never touches fetch/XHR/JSONP calls
    - one-time "Open in" hint: Android -> Chrome Beta, desktop -> Chrome (a web page cannot change the default browser)
      17 Oct: now a slim bar at the top that pushes the page down (was a fixed box over the bottom input); hides itself after 12s.
@@ -22,7 +22,7 @@
  /* final href for a link the user opens */
  function link(u){
   var x=parse(u);if(!x||!HOSTS.test(x.hostname||''))return u;
-  var h=hint(u);return isMacro(x)?chooser(h):h;
+  var h=hint(u);return h; /* v20 (17 Oct, Elon Allow hunt): web-app (/macros/.../exec) links are NOT wrapped in AccountChooser any more - on Android it could end in the Gmail app. They keep authuser=info@realmpcs.com. chooser() kept for reference, unused. */
  }
  function fixA(a){
   var raw=a.getAttribute('href');if(!raw||raw.indexOf('google.com')<0)return;
