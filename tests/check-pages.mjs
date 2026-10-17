@@ -78,6 +78,17 @@ async function checkCertRules(page) {
     if (api.incorrect(allDay)) problems.push('weekday all-day tagged');
     const score = api.scoreCert('12 smith street', { title: 'Anchor test', where: '12 Smith Street', cal: 'Anchor Testing' });
     if (score < 2) problems.push('address match failed');
+    const timed = { title: 'Anchor', where: '12 Smith Street', start: '2026-10-19T15:30', cal: 'Anchor' };
+    const allDayCert = { title: 'Anchor', where: '12 Smith Street', start: '2026-10-19', cal: 'Anchor' };
+    if (!api.shiftMatch(timed, ['3:30 pm 12 Smith Street'])) problems.push('string diary miss');
+    if (api.shiftMatch(timed, ['9:00 am 12 Smith Street'])) problems.push('far clock matched');
+    if (!api.shiftMatch(allDayCert, ['Smith Street roof'])) problems.push('all-day site miss');
+    if (api.shiftMatch(allDayCert, ['Other place'])) problems.push('all-day wrong site');
+    if (api.deputyLabel(timed, { err: 'no access' }).t !== 'Deputy not checked') problems.push('roster err checked');
+    if (api.deputyLabel(timed, { diary: ['9:00 am Other place'], staff: [] }).t !== 'Not built: no Deputy shift') problems.push('clean miss');
+    if (api.deputyLabel(timed, { diary: [], staff: ['15:30 12 Smith Street'] }).t !== 'Deputy shift matched') problems.push('staff string miss');
+    if (api.deputyLabel(timed, { diary: [{ start: '2026-10-19T15:30:00', area: '12 Smith Street' }] }).t !== 'Deputy shift matched') problems.push('object diary miss');
+    if (api.deputyLabel(timed, { diary: [{ start: '2026-10-19T15:30:00', area: '12 Smith Street', leave: true }] }).t !== 'Not built: no Deputy shift') problems.push('leave matched');
     return problems.join('; ');
   });
 }

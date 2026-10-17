@@ -8,7 +8,7 @@ button{min-height:40px;min-width:40px;padding:6px 12px;border-radius:999px;borde
 button.on{background:rgba(34,211,238,.12);box-shadow:0 0 0 3px rgba(34,211,238,.25)}
 .m{color:var(--m);font-size:12px}#vMic{display:none!important}
 </style><link rel="stylesheet" href="css/ara-theme.css"><link rel="stylesheet" href="css/realm-ui.css?v=20261017-24">
-<style>/* Search Studio phone fixes (17 Oct, after Elon's 412x915 test) */
+<style>/* Cert Studio phone fixes (17 Oct, after the 412x915 test) */
 .srch-tips:empty{display:none}.srch-tips{display:flex;flex-direction:column;gap:6px;margin:4px 0 8px}
 .srch-tips #ara-openin{position:static!important;margin:0!important;max-width:none!important;box-shadow:none!important;padding:6px 10px!important;font-size:12.5px!important;border-color:rgba(34,211,238,.45)!important;background:rgba(8,24,36,.7)!important}
 .srch-tips #ara-openin span{flex:1 1 160px!important}
@@ -42,32 +42,58 @@ button.on{background:rgba(34,211,238,.12);box-shadow:0 0 0 3px rgba(34,211,238,.
 @media(max-width:899px){.rui .rui-rail{flex-wrap:nowrap!important;overflow-x:auto!important;scrollbar-width:none}.rui .rui-rail::-webkit-scrollbar{display:none}.rui .rui-rail{gap:3px!important;padding:0 6px!important}.rui .rui-tab{flex:none;padding:0 6px!important;font-size:12px}.rui .rui-tab i{margin-left:3px}}
 .rui-top .rui-title{white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;flex:none!important;font-size:14px}
 @media(max-width:520px){.rui-top #toNotes{display:none!important}}</style><style id="v20s3">/* v20 (Elon): the sync line wraps instead of running off the edge at 412 */.sync-chip{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;text-align:left;line-height:1.35!important;padding:4px 10px!important;border-radius:12px!important}html body header #rlPill{margin-right:6px!important}</style><style id="v23s">/* v23: hide the sync chip until sync is actually on (Search keeps nothing to sync on most devices) */.sync-chip[data-sync-state=nokey],.sync-chip[data-sync-state=local],.sync-chip:empty{display:none!important}</style><style id="cert-grok">
-/* Cert Studio surface, from the Grok preview look. One Ara symbol, bottom-right, covering nothing. */
-:root{--ara:url("pwa/hub-ara-v3-192.svg")}
-body.rui{background:#000!important;color:#fff!important;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif!important}
-.rui-top{background:#000!important;border-bottom:1px solid #27272a!important;padding-right:12px!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-.rui-title{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif!important;font-weight:600!important;letter-spacing:-.02em!important}
-.rui-top .nav a,.rui #araSave{border:1px solid #3f3f46!important;background:#000!important;color:#fff!important;border-radius:999px!important}
-.rui-status,.sync-chip{color:#a1a1aa!important}
-.rui-box{background:#000!important;border-top:1px solid #27272a!important}
-.rui-box textarea,.rui-box input,.rui-box select{background:#09090b!important;border:1px solid #3f3f46!important;color:#fff!important;border-radius:12px!important}
-.rui-box button{background:#fff!important;color:#000!important;border:0!important;border-radius:999px!important;font-weight:600!important}
-.rui-card,.card{background:#09090b!important;border:1px solid #27272a!important;border-radius:16px!important}
-.rui-tab{border:1px solid #3f3f46!important;background:#000!important;color:#fff!important;border-radius:999px!important}
-.rui-tab.on{background:#fff!important;color:#000!important}
+/* Cert Studio surface: Grok preview block, minus the Preview badge. One Ara symbol, bottom-right. */
+:root{--bg:#000;--m:#a1a1aa;--l:#262626;--ac:#3f3f46;--accent:#fff;--ara:url("pwa/hub-ara-v3-192.svg")}
+html,body,body.rui{background:#000!important;background-image:none!important;color:#fff!important}
+body,body *{font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif!important}
+body *::before,body *::after{text-shadow:none!important}
+.rui-top{background:#000!important;border-bottom:1px solid #262626!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.rui-top .rui-title{color:#fff!important;font-weight:600!important;letter-spacing:-.01em}
+.rui-top .nav a{color:#d4d4d8!important;min-height:44px;display:inline-flex;align-items:center}
+.rui-shell,.rui-main,.rui-rail{background:#000!important;background-image:none!important}
+.rui-rail{border-color:#262626!important}
+.rui-rail h3{color:#71717a!important}
+.rui-src span{color:#a1a1aa!important}.rui-src span::before{background:#52525b!important}
+.rui-tab{background:#000!important;color:#d4d4d8!important;border:1px solid #262626!important;box-shadow:none!important;min-height:44px!important}
+.rui-tab.on,.rui-tab[aria-selected=true]{background:#fff!important;color:#000!important;border-color:#fff!important}
+.rui-tab i{background:#18181b!important;color:#a1a1aa!important;font-style:normal}
+.rui-tab.on i{background:#e4e4e7!important;color:#000!important}
+.rui-status,.rk-line{color:#a1a1aa!important}
+.rui #rkAdd{color:#fff!important;border:1px solid #3f3f46!important;border-radius:999px!important;min-height:44px!important;display:inline-flex!important;align-items:center}
+.sync-chip{background:#0a0a0a!important;border:1px solid #262626!important;color:#a1a1aa!important}
+.rui-list .card,#out .card,#out>*{background:#0a0a0a!important;border:1px solid #262626!important;border-radius:12px!important;box-shadow:none!important;color:#fff!important}
+#out a{color:#fff!important;text-decoration:underline;text-decoration-color:#52525b}
+.am,.amb button,#araS button{min-height:44px!important;background:#000!important;border:1px solid #3f3f46!important;color:#fff!important;border-radius:999px!important}
+.amb textarea,#araS textarea{background:#000!important;border-color:#262626!important}
+.amd{color:#d4d4d8!important}
+#araS{background:#000!important;border-top:1px solid #262626!important}
+.rui-composer{background:linear-gradient(transparent,#000 40%)!important}
+.rui-box{background:#0a0a0a!important;border:1px solid #2a2a2a!important;box-shadow:none!important}
+.rui-box input{color:#fff!important}
+.rui-send{background:#fff!important;color:#000!important;min-width:44px;min-height:44px}
+.rui-ib{color:#d4d4d8!important;min-width:44px;min-height:44px}
+html body header #rlPill{background:#000!important;border:1px solid #262626!important;color:#d4d4d8!important;box-shadow:none!important}
+.rui #araSave{background:#000!important;color:#fff!important;border:1px solid #3f3f46!important;box-shadow:none!important;min-height:44px!important}
+.rui #araSave svg{display:none!important}
+@media (display-mode:standalone){.rui #araSave,#ara-openin,#araHint,.ara-install,[data-ara-install]{display:none!important}}
+.rui-top #ara{position:fixed!important;order:0!important;right:calc(12px + env(safe-area-inset-right))!important;bottom:calc(78px + env(safe-area-inset-bottom))!important;left:auto!important;top:auto!important;z-index:2147482500!important;margin:0!important;width:44px!important;height:44px!important;background:none!important;border:0!important;border-radius:50%!important;box-shadow:none!important;font-size:0!important;color:transparent!important}
+.rui-top #ara::before{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--ara) center/cover no-repeat;border:1.5px solid rgba(255,255,255,.22);box-sizing:border-box}
+.rui-top .rui-title{margin-left:0!important}
+.rui-list{padding-bottom:140px!important;padding-right:calc(60px + env(safe-area-inset-right))!important}
+#arbBtn,.rui-mark{display:none!important}
+body.rui button::before,body.rui button::after,body.rui a::before,body.rui a::after{box-shadow:none!important;border-color:#333!important;background-color:transparent!important;filter:none!important}
+body.rui button,body.rui a{box-shadow:none!important;outline:none}
+body.rui button:focus-visible,body.rui a:focus-visible{outline:2px solid #fff!important;outline-offset:2px}
+.rui-top #ara::before{border-color:rgba(255,255,255,.22)!important;background:var(--ara) center/cover no-repeat!important}
 .rui-main{padding-right:calc(64px + env(safe-area-inset-right))!important}
-.rui-list{padding-bottom:calc(var(--rui-comp, 64px) + 28px)!important}
 #vMic,#vEd{display:none!important}
-.rui-top #ara{position:fixed!important;right:max(12px,env(safe-area-inset-right))!important;bottom:calc(var(--rui-comp, 64px) + 14px)!important;left:auto!important;top:auto!important;z-index:30!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;border-radius:50%!important;border:1.5px solid #fff!important;background:none!important;order:0!important;margin:0!important}
-.rui-top #ara::before{content:""!important;position:absolute!important;left:6px!important;top:6px!important;width:30px!important;height:30px!important;border-radius:50%!important;background:var(--ara) center/30px no-repeat!important;display:block!important}
-.rui-top #ara .rui-mark,#arbBtn,.rui-mark{display:none!important}
 a.cal-line{display:flex;align-items:center;min-height:44px;margin-top:6px;padding:0 2px;font-size:14px;font-weight:600;color:#fff;text-decoration:underline}
 .weeks,.amend-path{margin:0 0 14px}
 .weeks h2,.amend-path h2{margin:0;font-size:15px;font-weight:600;letter-spacing:-.02em}
 .weeks-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .weeks-bar h2{flex:1 1 140px;min-width:0}
-.weeks-bar button{position:relative;min-height:44px;min-width:44px;padding:0 14px;border:1px solid #3f3f46;background:#000;color:#fff;border-radius:999px;font:600 14px/1 Inter,-apple-system,sans-serif;cursor:pointer}
-.weeks-bar button::before{display:none!important}
+.weeks-bar button,.wk-retry{position:relative;min-height:44px;min-width:44px;padding:0 14px;border:1px solid #3f3f46;background:#000;color:#fff;border-radius:999px;font:600 14px/1 Inter,-apple-system,sans-serif;cursor:pointer}
+.weeks-bar button::before,.weeks-bar button::after,.wk-retry::before,.wk-retry::after{display:none!important;content:none!important}
 #sayJob.on{background:#fff;color:#000}
 .weeks-note{margin:8px 0 0;color:#a1a1aa;font-size:13px;min-height:1.2em}
 .weeks-cols{display:flex;gap:10px;align-items:flex-start;margin-top:10px}
@@ -81,7 +107,6 @@ a.cal-line{display:flex;align-items:center;min-height:44px;margin-top:6px;paddin
 .dep{display:block;margin-top:6px;font-size:12px;color:#d4d4d8}
 .dep.ok{color:#86efac}.dep.miss{color:#fcd34d}.dep.unk{color:#a1a1aa}
 .wk-empty,.amend-path p{margin:8px 0 0;color:#a1a1aa;font-size:13px}
-.wk-retry{min-height:44px;padding:0 16px;border:1px solid #3f3f46;background:#000;color:#fff;border-radius:999px;font-weight:600}
 @media(max-width:340px){.weeks-cols{flex-direction:column}.wk-col{width:100%}}
 </style>
 </head><body class="rui">
@@ -293,32 +318,73 @@ var AMEND_PATH_URL = '';
   }
   function dayOffset(key){return Math.round((Date.parse(key+'T00:00:00Z')-Date.parse(todayKey()+'T00:00:00Z'))/86400000)}
   function norm(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
-  function shiftMatch(cert,diary){
+  function clockOptions(text){
+    var out=[], s=String(text||''), re=/(\d{1,2})[:.](\d{2})\s*(am|pm)?/ig, m;
+    function add(h,mi){if(h<0||h>23||mi<0||mi>59)return;var v=h*60+mi;if(out.indexOf(v)<0)out.push(v)}
+    while((m=re.exec(s))){
+      var hh=+m[1], mi=+m[2], ap=(m[3]||'').toLowerCase();
+      if(mi>59||hh>23)continue;
+      if(ap==='pm'&&hh<12)hh+=12;
+      if(ap==='am'&&hh===12)hh=0;
+      if(ap){add(hh,mi);continue}
+      add(hh,mi);
+      if(hh>0&&hh<12)add(hh+12,mi);
+      if(hh===12)add(0,mi);
+    }
+    return out;
+  }
+  function lineBlob(sh){
+    if(sh==null)return '';
+    if(typeof sh!=='object')return String(sh);
+    var bits=[];
+    ['area','company','name','note','where','title','start','end','employee'].forEach(function(k){
+      if(sh[k]!=null&&typeof sh[k]!=='object')bits.push(String(sh[k]));
+    });
+    return bits.join(' ');
+  }
+  function rosterLines(r){
+    if(!r||r.err)return null;
+    var saw=false, out=[];
+    ['diary','staff'].forEach(function(k){
+      if(!Array.isArray(r[k]))return;
+      saw=true;
+      r[k].forEach(function(item){out.push(item)});
+    });
+    return saw?out:null;
+  }
+  function shiftMatch(cert,lines){
     var info=parseStart(cert.start);
-    if(!info||info.allDay||info.mins==null)return false;
-    var site=norm(cert.where||cert.title);
-    var words=site.split(' ').filter(function(w){return w.length>2});
-    for(var i=0;i<diary.length;i++){
-      var sh=diary[i]; if(!sh||sh.leave)continue;
-      var st=String(sh.start||'');
-      var hm=st.match(/T(\d{2}):(\d{2})/);
-      if(!hm)continue;
-      var mins=(+hm[1])*60+(+hm[2]);
-      if(Math.abs(mins-info.mins)>30)continue;
-      var area=norm((sh.area||'')+' '+(sh.company||''));
-      if(!words.length)return true;
-      if(words.some(function(w){return area.indexOf(w)>=0||site.indexOf(norm(sh.area))>=0&&norm(sh.area).length>2}))return true;
+    if(!info||!lines||!lines.length)return false;
+    var words=norm(cert.where||cert.title||'').split(' ').filter(function(w){return w.length>2});
+    var hasClock=!info.allDay&&info.mins!=null;
+    for(var i=0;i<lines.length;i++){
+      var sh=lines[i];
+      if(!sh||(typeof sh==='object'&&sh.leave))continue;
+      var blob=lineBlob(sh), area=norm(blob);
+      var siteHit=words.some(function(w){return area.indexOf(w)>=0});
+      var clocks=clockOptions(blob);
+      if(hasClock&&clocks.length){
+        var near=clocks.some(function(m){return Math.abs(m-info.mins)<=30});
+        if(!near)continue;
+        if(!words.length||siteHit)return true;
+        continue;
+      }
+      if(siteHit)return true;
     }
     return false;
+  }
+  function deputyLabel(cert,r){
+    var info=parseStart(cert.start);
+    if(!info||!r)return {t:'Deputy not checked',c:'unk'};
+    var lines=rosterLines(r);
+    if(!lines)return {t:'Deputy not checked',c:'unk'};
+    if(shiftMatch(cert,lines))return {t:'Deputy shift matched',c:'ok'};
+    return {t:'Not built: no Deputy shift',c:'miss'};
   }
   function deputyText(cert){
     var info=parseStart(cert.start);
     if(!info)return {t:'Deputy not checked',c:'unk'};
-    var r=roster[info.key];
-    if(!r)return {t:'Deputy not checked',c:'unk'};
-    if(r.err||!Array.isArray(r.diary))return {t:'Deputy not checked',c:'unk'};
-    if(shiftMatch(cert,r.diary))return {t:'Deputy shift matched',c:'ok'};
-    return {t:'Not built: no Deputy shift',c:'miss'};
+    return deputyLabel(cert,roster[info.key]);
   }
   function note(t){var n=document.getElementById('wkNote');if(n)n.textContent=t||''}
   function showDown(){
@@ -421,7 +487,7 @@ var AMEND_PATH_URL = '';
   renderPath();
   render();
   load();
-  window.__certWeeks={parseStart:parseStart,incorrect:incorrect,mondayKey:mondayKey,scoreCert:scoreCert,addDaysKey:addDaysKey};
+  window.__certWeeks={parseStart:parseStart,incorrect:incorrect,mondayKey:mondayKey,scoreCert:scoreCert,addDaysKey:addDaysKey,shiftMatch:shiftMatch,deputyLabel:deputyLabel};
 })();
 </script>
 </body></html>
