@@ -21,3 +21,5 @@
 .ara-hit{display:inline-block!important;padding-top:14px!important;padding-bottom:14px!important;margin-top:-14px!important;margin-bottom:-14px!important}
 .rui #araSave{font-size:11px!important;gap:5px!important;padding:0 10px!important;letter-spacing:.06em!important}
 @media(max-width:400px){.rui #araSave{font-size:10px!important;padding:0 6px!important;letter-spacing:0!important}.rui .rui-top .rui-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+/* v19: floating sync pill shows for ~3s when its text changes, then hides (never sits over cards) */
+#realmSyncPill{transition:opacity .4s}#realmSyncPill:not(.ara-show){opacity:0!important;visibility:hidden!important;pointer-events:none!important}

@@ -23,7 +23,7 @@ a{color:#67e8f9}footer{color:var(--ara-mute,#a9c1cc);font-size:12px;padding:0 16
 </style>
 
 <script src="js/realm-ui.js?v=20261016b"></script>
-<script src="js/ara-account.js?v=20261016b" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017a"><meta name="ara-build" content="2026.10.17-18"></head><body class="rui">
+<script src="js/ara-account.js?v=20261016b" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017c"><meta name="ara-build" content="2026.10.17-19"></head><body class="rui">
 <header class="rui-top"><span class="rui-mark" style="background:url(pwa/hub-ara-48.svg?v=20261016a) center/contain no-repeat" role="img" aria-label="Ara"></span><b class="rui-title">ETA board</b><div class="nav"><a href="./index.html">‹ Apps</a></div></header>
 <div class="rui-shell"><aside class="rui-rail" id="rail" role="tablist" aria-label="Show"><button type="button" class="rui-tab on" data-k="all" role="tab" aria-selected="true">All <i>0</i></button><button type="button" class="rui-tab" data-k="waiting" role="tab">Waiting <i>0</i></button><button type="button" class="rui-tab" data-k="running" role="tab">Running <i>0</i></button><button type="button" class="rui-tab" data-k="done" role="tab">Done <i>0</i></button></aside>
 <main class="rui-main"><div class="rui-status" id="upd"></div><div class="rui-list" id="g"></div>
@@ -49,4 +49,4 @@ function grp(st){return st==='progress'?'running':st==='notstarted'?'waiting':st
 document.getElementById('g').innerHTML=ITEMS.map(function(i){return '<section data-k="'+grp(i.s)+'"><div class="card eta-row '+i.s+'"><span class="rui-t">'+(i.u?'<a href="'+i.u+'">'+i.n+'</a>':i.n)+' <span class="eta-when">· '+i.eta+'</span></span><span class="chip">'+(L[i.s]||i.s)+'</span><span class="rui-x">'+i.left+'</span></div></section>'}).join('');
 var C={all:ITEMS.length,waiting:0,running:0,done:0};ITEMS.forEach(function(i){C[grp(i.s)]=(C[grp(i.s)]||0)+1});RealmUI.counts(C);RealmUI.tabs(document.getElementById('rail'),document.getElementById('g'));
 </script><script src="js/ara-version.js" defer></script>
-<script src="js/ara-install.js?v=20261017b" defer></script></body></html>
+<script src="js/ara-install.js?v=20261017c" defer></script></body></html>
