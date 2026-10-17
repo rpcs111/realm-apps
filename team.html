@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html lang="en"><head><script>/* v17: catch Chrome's install prompt before any other script */window.__araBIP=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__araBIP=e});</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Realm Crew</title>
 <style>
 body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;background:linear-gradient(135deg,#fff7d6,#ffe3f1 45%,#dff4ff);color:#e8eefc}
@@ -16,7 +16,7 @@ button,.btn{background:#4fd1ff;color:#e8eefc;border:0;border-radius:14px;padding
 button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 #tree{background:rgba(14,22,44,.72);border-radius:22px;padding:12px;margin-top:12px;overflow:auto}
 .imgs img{width:100%;border-radius:18px;background:rgba(14,22,44,.72)}
-</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style><script src="js/ara-account.js?v=20261016b" defer></script></head><body>
+</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style><script src="js/ara-account.js?v=20261016b" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017a"><meta name="ara-build" content="2026.10.17-18"></head><body>
 <header><h1>Realm Crew</h1><p>Ange's AI family: who does what</p><a class="back" href="index.html">&larr; Back to Realm home</a></header>
 <main>
 <h2>Family tree (edit me)</h2>
@@ -164,4 +164,4 @@ idea.addEventListener('input',()=>{localStorage.setItem('realmCrewIdea',idea.val
 function copyIdea(){navigator.clipboard.writeText(idea.value);document.getElementById('saved').textContent=' Copied'}
 render();
 </script><script src="js/realm-sync.js?v=20261016v5"></script>
-</body></html>
+<script src="js/ara-install.js?v=20261017b" defer></script></body></html>
