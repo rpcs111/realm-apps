@@ -246,6 +246,7 @@ var AMEND_PATH_URL = '';
   function addDaysKey(key,n){var d=new Date(key+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.getUTCFullYear()+'-'+pad(d.getUTCMonth()+1)+'-'+pad(d.getUTCDate())}
   function weekdayNum(key){return new Date(key+'T00:00:00Z').getUTCDay()}
   function mondayKey(key){var wd=weekdayNum(key);return addDaysKey(key,wd===0?-6:1-wd)}
+  var MONTHS={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
   function parseStart(s){
     s=String(s||'').trim();if(!s)return null;
     var m=s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
@@ -260,11 +261,33 @@ var AMEND_PATH_URL = '';
       if(ap==='pm'&&hh<12)hh+=12;if(ap==='am'&&hh===12)hh=0;
       return {key:key,allDay:false,mins:hh*60+mi};
     }
+    m=s.match(/^(?:(?:mon|tue|wed|thu|fri|sat|sun)[a-z]*[,.]?\s+)?(\d{1,2})(?:st|nd|rd|th)?\s+([a-z]{3,9})\.?(?:[,.]?\s+(\d{4}))?(?:[,.]?\s+(\d{1,2})[:.](\d{2})(?::\d{2})?(?:\s*(am|pm))?)?$/i);
+    if(m){
+      var mon=MONTHS[String(m[2]||'').toLowerCase().slice(0,3)], day=+m[1];
+      if(mon&&day>=1&&day<=31){
+        var year=m[3]?+m[3]:0, hr=null, mn=0, ap2=(m[6]||'').toLowerCase();
+        if(m[4]!=null){hr=+m[4];mn=+(m[5]||0);if(ap2==='pm'&&hr<12)hr+=12;if(ap2==='am'&&hr===12)hr=0}
+        if(hr==null||(hr<=23&&mn<=59)){
+          if(!year){
+            year=+todayKey().slice(0,4);
+            var trial=year+'-'+pad(mon)+'-'+pad(day);
+            if(trial<addDaysKey(todayKey(),-183))year+=1;
+          }
+          var named=year+'-'+pad(mon)+'-'+pad(day);
+          if(hr==null)return {key:named,allDay:true,mins:null};
+          return {key:named,allDay:false,mins:hr*60+mn};
+        }
+      }
+    }
     var d=new Date(s);
     if(isNaN(d.getTime()))return null;
     var hasTime=/T\d|\d:\d{2}|\b(am|pm)\b/i.test(s);
     var p=melbParts(d);
     return {key:p.year+'-'+p.month+'-'+p.day,allDay:!hasTime,mins:hasTime?((+p.hour)*60+(+p.minute)):null};
+  }
+  function whenOf(c){
+    if(c&&c.startIso){var iso=parseStart(c.startIso);if(iso)return iso}
+    return parseStart(c&&c.start);
   }
   function incorrect(info){
     if(!info)return false;
@@ -353,7 +376,7 @@ var AMEND_PATH_URL = '';
     return saw?out:null;
   }
   function shiftMatch(cert,lines){
-    var info=parseStart(cert.start);
+    var info=whenOf(cert);
     if(!info||!lines||!lines.length)return false;
     var words=norm(cert.where||cert.title||'').split(' ').filter(function(w){return w.length>2});
     var hasClock=!info.allDay&&info.mins!=null;
@@ -374,7 +397,7 @@ var AMEND_PATH_URL = '';
     return false;
   }
   function deputyLabel(cert,r){
-    var info=parseStart(cert.start);
+    var info=whenOf(cert);
     if(!info||!r)return {t:'Deputy not checked',c:'unk'};
     var lines=rosterLines(r);
     if(!lines)return {t:'Deputy not checked',c:'unk'};
@@ -382,7 +405,7 @@ var AMEND_PATH_URL = '';
     return {t:'Not built: no Deputy shift',c:'miss'};
   }
   function deputyText(cert){
-    var info=parseStart(cert.start);
+    var info=whenOf(cert);
     if(!info)return {t:'Deputy not checked',c:'unk'};
     return deputyLabel(cert,roster[info.key]);
   }
@@ -395,11 +418,11 @@ var AMEND_PATH_URL = '';
     note('');
   }
   function cardHtml(c){
-    var info=parseStart(c.start);
+    var info=whenOf(c);
     var bad=incorrect(info);
     var dep=deputyText(c);
     var cal=c.url||c.link||'';
-    return '<article class="wk-card" data-id="'+esc(idOf(c))+'"><span class="rui-t">'+esc(c.title||'(no title)')+(bad?' <span class="tag-bad">Incorrect</span>':'')+'</span><span class="rui-m">'+esc(whenLabel(info,c.start))+(c.where?' · '+esc(c.where):'')+'</span><span class="dep '+dep.c+'">'+esc(dep.t)+'</span>'+(cal?'<a class="cal-line" href="'+esc(cal)+'" target="_blank" rel="noopener">Open in Calendar</a>':'')+'</article>';
+    return '<article class="wk-card" data-id="'+esc(idOf(c))+'"><span class="rui-t">'+esc(c.title||'(no title)')+(bad?' <span class="tag-bad">Incorrect</span>':'')+'</span><span class="rui-m">'+esc(whenLabel(info,c.start||c.startIso))+(c.where?' · '+esc(c.where):'')+'</span><span class="dep '+dep.c+'">'+esc(dep.t)+'</span>'+(cal?'<a class="cal-line" href="'+esc(cal)+'" target="_blank" rel="noopener">Open in Calendar</a>':'')+'</article>';
   }
   function render(){
     var wins=windows();
@@ -410,12 +433,12 @@ var AMEND_PATH_URL = '';
     var html='';
     wins.forEach(function(monday){
       var list=rows.filter(function(c){
-        var info=parseStart(c.start);
+        var info=whenOf(c);
         if(!inWeek(info,monday))return false;
         if(filterId&&idOf(c)!==filterId)return false;
         return true;
       });
-      var nbad=list.filter(function(c){return incorrect(parseStart(c.start))}).length;
+      var nbad=list.filter(function(c){return incorrect(whenOf(c))}).length;
       html+='<div class="wk-col"><div class="wk-head">'+esc(weekName(monday))+' · <span class="bad">'+nbad+' incorrect</span></div>';
       html+=list.length?list.map(cardHtml).join(''):'<p class="wk-empty">No anchor certs this week.</p>';
       html+='</div>';
@@ -430,7 +453,7 @@ var AMEND_PATH_URL = '';
   }
   function needDays(){
     var set={};
-    rows.forEach(function(c){var info=parseStart(c.start);if(info)set[info.key]=1});
+    rows.forEach(function(c){var info=whenOf(c);if(info)set[info.key]=1});
     return Object.keys(set);
   }
   function loadRoster(){
@@ -442,21 +465,26 @@ var AMEND_PATH_URL = '';
       var batch=days.slice(i,i+4);i+=4;
       return Promise.all(batch.map(function(k){
         return call('getRoster',[dayOffset(k)]).then(function(r){roster[k]=r||{err:'empty'}}).catch(function(){roster[k]={err:'down'}});
-      })).then(next);
+      })).then(function(){render();return next()});
     }
     return next();
   }
+  var loadGen=0;
   function load(){
+    var gen=++loadGen;
     note('Loading anchor certs…');
-    document.getElementById('wkBody').innerHTML='';
     if(!key()){document.getElementById('wkBody').innerHTML='<p class="wk-empty">Search needs the Realm key on this phone.</p>';note('');return}
-    call('getCerts',[]).then(function(r){
+    var timer=setTimeout(function(){if(gen!==loadGen)return;showDown()},15000);
+    call('getCerts',[],{retry:false}).then(function(r){
+      if(gen!==loadGen)return;
+      clearTimeout(timer);
       if(r&&r.err&&!(r.rows&&r.rows.length)){note(String(r.err));document.getElementById('wkBody').innerHTML='<p class="wk-empty">'+esc(String(r.err))+'</p><p><button type="button" class="wk-retry" id="wkRetry">Retry</button></p>';var btn=document.getElementById('wkRetry');if(btn)btn.onclick=function(){load()};return}
       var list=Array.isArray(r)?r:(r&&r.rows)||[];
       rows=anchors(list);
       note(heard?('Heard: '+heard):'');
+      render();
       return loadRoster();
-    }).catch(function(){showDown()});
+    }).catch(function(){if(gen!==loadGen)return;clearTimeout(timer);showDown()});
   }
   function say(){
     var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -470,7 +498,7 @@ var AMEND_PATH_URL = '';
       var best=null,score=0;
       rows.forEach(function(c){var n=scoreCert(said,c);if(n>score){score=n;best=c}});
       if(!best||score<2){filterId='';note('No cert matched “‘'+said+'”.');render();return}
-      var info=parseStart(best.start);
+      var info=whenOf(best);
       if(info)wkShift=shiftFor(info.key);
       filterId=idOf(best);
       note('Heard: '+said);
@@ -487,7 +515,7 @@ var AMEND_PATH_URL = '';
   renderPath();
   render();
   load();
-  window.__certWeeks={parseStart:parseStart,incorrect:incorrect,mondayKey:mondayKey,scoreCert:scoreCert,addDaysKey:addDaysKey,shiftMatch:shiftMatch,deputyLabel:deputyLabel};
+  window.__certWeeks={parseStart:parseStart,whenOf:whenOf,cardHtml:cardHtml,incorrect:incorrect,mondayKey:mondayKey,scoreCert:scoreCert,addDaysKey:addDaysKey,shiftMatch:shiftMatch,deputyLabel:deputyLabel};
 })();
 </script>
 </body></html>
