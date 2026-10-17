@@ -4,11 +4,15 @@
  * that is not a live backend (Desk / engine) refusing the request.
  *
  *   node tests/check-pages.mjs
+ *   BASE_URL=http://127.0.0.1:8765 node tests/check-pages.mjs
  * Needs playwright-core on NODE_PATH and Chrome at /usr/bin/google-chrome.
+ * BASE_URL, when set, loads that site instead of the local server.
+ * index.html and desk.html must match their pre-merge bytes.
  */
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 
@@ -16,6 +20,11 @@ const require = createRequire(import.meta.url);
 const { chromium } = require('playwright-core');
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const baseUrl = (process.env.BASE_URL || '').trim().replace(/\/$/, '');
+const PRE_MERGE = {
+  'index.html': '0e950afba45f95d46103b58ba15250b2d49d027a0cc78cf7d4d22bc9dceb662e',
+  'desk.html': '1c37d2520cd6ccc0da30762cef7de24177181d9857a2cd65dc61b2a73c768de1'
+};
 const SKIP = new Set(['map.backup.html', 'map.v2.backup.html']);
 const MIME = {
   '.html': 'text/html;charset=utf-8', '.js': 'text/javascript;charset=utf-8', '.css': 'text/css;charset=utf-8',
@@ -93,10 +102,53 @@ async function checkCertRules(page) {
   });
 }
 
+function preMergeProblems() {
+  const problems = [];
+  Object.keys(PRE_MERGE).forEach(name => {
+    const got = crypto.createHash('sha256').update(fs.readFileSync(path.join(root, name))).digest('hex');
+    if (got !== PRE_MERGE[name]) problems.push(name + ' differs from the pre-merge file');
+  });
+  return problems;
+}
+
+function sameOrigin(u, port) {
+  if (baseUrl) {
+    try { return new URL(u).origin === new URL(baseUrl).origin; }
+    catch (e) { return false; }
+  }
+  return u.startsWith('http://127.0.0.1:' + port);
+}
+
+function localPath(u, port) {
+  if (!baseUrl) return u.replace('http://127.0.0.1:' + port, '');
+  const prefix = baseUrl + '/';
+  if (u.startsWith(prefix)) return '/' + u.slice(prefix.length);
+  try { return new URL(u).pathname; }
+  catch (e) { return u; }
+}
+
+function pageUrl(pagePath, view, port) {
+  const q = pagePath + '?d=' + view.d;
+  return baseUrl ? (baseUrl + '/' + q) : ('http://127.0.0.1:' + port + '/' + q);
+}
+
 async function run() {
+  const drifted = preMergeProblems();
+  if (drifted.length) {
+    console.error(drifted.join('\n'));
+    process.exit(1);
+  }
+  if (baseUrl) {
+    try { new URL(baseUrl); }
+    catch (e) { console.error('BASE_URL is not a URL'); process.exit(1); }
+  }
   const list = pages();
-  const server = await serve();
-  const port = server.address().port;
+  let server = null;
+  let port = 0;
+  if (!baseUrl) {
+    server = await serve();
+    port = server.address().port;
+  }
   const browser = await chromium.launch({
     executablePath: process.env.CHROME || '/usr/bin/google-chrome',
     args: ['--no-sandbox', '--disable-dev-shm-usage']
@@ -122,11 +174,11 @@ async function run() {
         const u = res.url();
         const status = res.status();
         if (status < 400) return;
-        if (!u.startsWith('http://127.0.0.1:' + port)) { external.push(status + ' ' + u.slice(0, 180)); return; }
+        if (!sameOrigin(u, port)) { external.push(status + ' ' + u.slice(0, 180)); return; }
         if (u.includes('favicon.ico')) return;
-        missing.push(status + ' ' + u.replace('http://127.0.0.1:' + port, ''));
+        missing.push(status + ' ' + localPath(u, port));
       });
-      const url = 'http://127.0.0.1:' + port + '/' + pagePath + '?d=' + view.d;
+      const url = pageUrl(pagePath, view, port);
       let loadError = '';
       try {
         await page.goto(url, { waitUntil: 'load', timeout: 20000 });
@@ -190,7 +242,7 @@ async function run() {
     console.log(mark + '  ' + pagePath);
   }
   await browser.close();
-  server.close();
+  if (server) server.close();
   const lines = ['| Page | 412 fold8 | 412 flip6 | 1280 fold8 | 1280 flip6 | Notes |', '| --- | --- | --- | --- | --- | --- |'];
   for (const row of rows) {
     const cells = row.views.map(v => v.pass ? 'pass' : 'fail');

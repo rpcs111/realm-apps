@@ -442,21 +442,26 @@ var AMEND_PATH_URL = '';
       var batch=days.slice(i,i+4);i+=4;
       return Promise.all(batch.map(function(k){
         return call('getRoster',[dayOffset(k)]).then(function(r){roster[k]=r||{err:'empty'}}).catch(function(){roster[k]={err:'down'}});
-      })).then(next);
+      })).then(function(){render();return next()});
     }
     return next();
   }
+  var loadGen=0;
   function load(){
+    var gen=++loadGen;
     note('Loading anchor certs…');
-    document.getElementById('wkBody').innerHTML='';
     if(!key()){document.getElementById('wkBody').innerHTML='<p class="wk-empty">Search needs the Realm key on this phone.</p>';note('');return}
-    call('getCerts',[]).then(function(r){
+    var timer=setTimeout(function(){if(gen!==loadGen)return;showDown()},15000);
+    call('getCerts',[],{retry:false}).then(function(r){
+      if(gen!==loadGen)return;
+      clearTimeout(timer);
       if(r&&r.err&&!(r.rows&&r.rows.length)){note(String(r.err));document.getElementById('wkBody').innerHTML='<p class="wk-empty">'+esc(String(r.err))+'</p><p><button type="button" class="wk-retry" id="wkRetry">Retry</button></p>';var btn=document.getElementById('wkRetry');if(btn)btn.onclick=function(){load()};return}
       var list=Array.isArray(r)?r:(r&&r.rows)||[];
       rows=anchors(list);
       note(heard?('Heard: '+heard):'');
+      render();
       return loadRoster();
-    }).catch(function(){showDown()});
+    }).catch(function(){if(gen!==loadGen)return;clearTimeout(timer);showDown()});
   }
   function say(){
     var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
