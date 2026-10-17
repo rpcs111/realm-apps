@@ -29,7 +29,7 @@
     w.querySelector('form').onsubmit=function(e){e.preventDefault();var k=inp.value.trim().toUpperCase();if(k.replace(/[^A-Z0-9]/g,'').length<20){w.querySelector('#rkWhy').textContent='That looks too short. Check the key and try again.';return}set(k);close();location.reload()};
   }
   // 2) watch Desk answers: a key error opens the box
-  if(window.fetch){var of=window.fetch;window.fetch=function(u,o){var p=of.apply(this,arguments);try{var url=String(u&&u.url||u);if(DESK.test(url)){p.then(function(r){try{r.clone().text().then(function(t){if(/Realm key needed/.test(t))ask(get()?'That key did not work. Check it and type it again.':'')},function(){})}catch(e){}},function(){})}}catch(e){}return p}}
+  if(window.fetch){var of=window.fetch;window.fetch=function(u,o){var p=of.apply(this,arguments);try{var url=String(u&&u.url||u);if(DESK.test(url)){p.then(function(r){try{r.clone().text().then(function(t){if(/Realm key needed/.test(t)){if(!get()&&window.REALM_KEY_INLINE){try{window.dispatchEvent(new Event('realmkey-needed'))}catch(e){}return}ask(get()?'That key did not work. Check it and type it again.':'')}},function(){})}catch(e){}},function(){})}}catch(e){}return p}}
   // 3) first use: no key yet (17 Oct: a page that sets window.REALM_KEY_INLINE=1 before this script shows its own small 'Add key' line instead of the popup)
   if(!get()&&!window.REALM_KEY_INLINE)ask('');
   window.RealmKey={get:get,ask:ask};

@@ -57,7 +57,11 @@
     if(r.height<44)e.style.setProperty('min-height','44px','important');if(r.width<44)e.style.setProperty('min-width','44px','important');
     if(r.height<44&&/^(inline-)?block$/.test(cs.display)&&e.tagName!=='INPUT'&&e.tagName!=='SELECT'&&e.tagName!=='SUMMARY'){e.style.setProperty('display',cs.display==='block'?'flex':'inline-flex');e.style.setProperty('align-items','center');if(cs.textAlign==='center')e.style.setProperty('justify-content','center')}
     if(e.tagName==='SUMMARY'&&r.height<44){e.style.setProperty('display','flex');e.style.setProperty('align-items','center')}}}catch(x){}}
-  var ht=0;function soon(){clearTimeout(ht);ht=setTimeout(hit,150)}
+
+  /* v19: floating sync pill (#realmSyncPill) shows for 3s whenever its text changes, then hides (css/ara-clean.css). */
+  function pill(){var el=document.getElementById('realmSyncPill');if(!el||el._araW)return;el._araW=1;var t=0;function flash(){el.classList.add('ara-show');clearTimeout(t);t=setTimeout(function(){el.classList.remove('ara-show')},3000)}
+    try{new MutationObserver(flash).observe(el,{childList:true,characterData:true,subtree:true})}catch(x){}flash()}
+  var ht=0;function soon(){clearTimeout(ht);ht=setTimeout(function(){hit();pill()},150)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',soon);else soon();
   window.addEventListener('load',soon);
   try{new MutationObserver(soon).observe(document.documentElement,{childList:true,subtree:true})}catch(x){}
