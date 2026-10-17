@@ -28,7 +28,7 @@
    "purpose": "maskable"
   },
   {
-   "src": "pwa/build-map.svg?v=20261017a",
+   "src": "pwa/build-map.svg?v=20261017-24",
    "sizes": "512x512",
    "type": "image/svg+xml",
    "purpose": "any"

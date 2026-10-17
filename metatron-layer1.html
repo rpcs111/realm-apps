@@ -29,7 +29,7 @@ input,textarea,select{width:100%;font:inherit;background:#05070d;color:#fff;bord
 .nd{cursor:pointer}.nd text{pointer-events:none}
 .src{font-size:12px;color:#c4b5fd;white-space:pre-wrap}
 footer{font-size:11px;color:#6b7a99;padding:8px 10px}
-</style><script src="js/ara-account.js?v=20261016b" defer></script></head><body>
+</style><script src="js/ara-account.js?v=20261017-24" defer></script></head><body>
 <header><h1>METATRON - LAYER 1</h1>
 <button id="bEdit" type="button">Edit</button>
 <button id="bStatus" type="button">Status</button>
@@ -212,5 +212,5 @@ $("bConn").onclick=function(){if(!sel){alert("Tap the first circle, then press C
 $("bExport").onclick=function(){var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:"application/json"}));a.download="metatron_layer1.json";document.body.appendChild(a);a.click();a.remove()};
 $("bReset").onclick=function(){if(confirm("Reset this map to the default layout? Your edits in this browser are cleared. Export first to keep them.")){S=defaults();save();sel=null;draw();panel()}};
 drawCube();draw();panel();
-</script><script src="js/realm-sync.js?v=20261016v5"></script>
+</script><script src="js/realm-sync.js?v=20261017-24"></script>
 </body></html>
