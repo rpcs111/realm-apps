@@ -69,7 +69,9 @@
     function flash(){var tx=(el.textContent||'').trim();if(!first&&tx===last)return;last=tx;var ms=first?Math.max(1500,3800-(window.performance&&performance.now?performance.now():0)):3000;first=false;
       clearTimeout(t);clearTimeout(g);el.classList.remove('ara-gone');el.classList.add('ara-show');t=setTimeout(function(){el.classList.remove('ara-show');g=setTimeout(function(){el.classList.add('ara-gone')},300)},ms)}
     try{new MutationObserver(flash).observe(el,{childList:true,characterData:true,subtree:true})}catch(x){}flash()}
-  var ht=0;function soon(){clearTimeout(ht);ht=setTimeout(function(){hit();pill()},150)}
+  /* v20: the Ara symbol stays in ONE place: a direct child of <body> (a header with backdrop-filter would trap a fixed button off-screen). Desk keeps it as its header logo (window.ARA_SYM_HEADER). */
+  function sym(){var b=document.getElementById('arbBtn');if(!b||window.ARA_SYM_HEADER||b.parentNode===document.body)return;b.classList.add('fx');b.style.marginLeft='';document.body.appendChild(b)}
+  var ht=0;function soon(){clearTimeout(ht);ht=setTimeout(function(){hit();pill();sym()},150)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',soon);else soon();
   window.addEventListener('load',soon);
   try{new MutationObserver(soon).observe(document.documentElement,{childList:true,subtree:true})}catch(x){}
