@@ -4,7 +4,11 @@
  * that is not a live backend (Desk / engine) refusing the request.
  *
  *   node tests/check-pages.mjs
+ *   SHOTS_DIR=./shots node tests/check-pages.mjs
+ *   BASE_URL=https://rpcs111.github.io/realm-apps node tests/check-pages.mjs
  * Needs playwright-core on NODE_PATH and Chrome at /usr/bin/google-chrome.
+ * Cert Studio screenshots go to SHOTS_DIR, or ./test-shots when that is unset.
+ * When BASE_URL is set, pages load from that site instead of a local server.
  */
 import http from 'node:http';
 import fs from 'node:fs';
@@ -16,6 +20,8 @@ const require = createRequire(import.meta.url);
 const { chromium } = require('playwright-core');
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const shotsDir = path.resolve(process.env.SHOTS_DIR || 'test-shots');
+const baseUrl = (process.env.BASE_URL || '').trim().replace(/\/$/, '');
 const SKIP = new Set(['map.backup.html', 'map.v2.backup.html']);
 const MIME = {
   '.html': 'text/html;charset=utf-8', '.js': 'text/javascript;charset=utf-8', '.css': 'text/css;charset=utf-8',
@@ -93,10 +99,39 @@ async function checkCertRules(page) {
   });
 }
 
+function sameOrigin(u, port) {
+  if (baseUrl) {
+    try { return new URL(u).origin === new URL(baseUrl).origin; }
+    catch (e) { return false; }
+  }
+  return u.startsWith('http://127.0.0.1:' + port);
+}
+
+function localPath(u, port) {
+  if (!baseUrl) return u.replace('http://127.0.0.1:' + port, '');
+  const prefix = baseUrl + '/';
+  if (u.startsWith(prefix)) return '/' + u.slice(prefix.length);
+  try { return new URL(u).pathname; }
+  catch (e) { return u; }
+}
+
+function pageUrl(pagePath, view, port) {
+  const q = pagePath + '?d=' + view.d;
+  return baseUrl ? (baseUrl + '/' + q) : ('http://127.0.0.1:' + port + '/' + q);
+}
+
 async function run() {
+  if (baseUrl) {
+    try { new URL(baseUrl); }
+    catch (e) { console.error('BASE_URL is not a URL'); process.exit(1); }
+  }
   const list = pages();
-  const server = await serve();
-  const port = server.address().port;
+  let server = null;
+  let port = 0;
+  if (!baseUrl) {
+    server = await serve();
+    port = server.address().port;
+  }
   const browser = await chromium.launch({
     executablePath: process.env.CHROME || '/usr/bin/google-chrome',
     args: ['--no-sandbox', '--disable-dev-shm-usage']
@@ -122,11 +157,11 @@ async function run() {
         const u = res.url();
         const status = res.status();
         if (status < 400) return;
-        if (!u.startsWith('http://127.0.0.1:' + port)) { external.push(status + ' ' + u.slice(0, 180)); return; }
+        if (!sameOrigin(u, port)) { external.push(status + ' ' + u.slice(0, 180)); return; }
         if (u.includes('favicon.ico')) return;
-        missing.push(status + ' ' + u.replace('http://127.0.0.1:' + port, ''));
+        missing.push(status + ' ' + localPath(u, port));
       });
-      const url = 'http://127.0.0.1:' + port + '/' + pagePath + '?d=' + view.d;
+      const url = pageUrl(pagePath, view, port);
       let loadError = '';
       try {
         await page.goto(url, { waitUntil: 'load', timeout: 20000 });
@@ -163,9 +198,8 @@ async function run() {
         });
       }
       if (pagePath === 'search.html' && view.d === 'fold8' && !loadError) {
-        const dir = '/opt/cursor/artifacts/screenshots';
-        fs.mkdirSync(dir, { recursive: true });
-        await page.screenshot({ path: dir + '/cert-studio-' + view.w + '.png', fullPage: false });
+        fs.mkdirSync(shotsDir, { recursive: true });
+        await page.screenshot({ path: path.join(shotsDir, 'cert-studio-' + view.w + '.png'), fullPage: false });
       }
       let rules = '';
       if (pagePath === 'search.html' && view.w === 412 && view.d === 'fold8' && !loadError) {
@@ -190,7 +224,7 @@ async function run() {
     console.log(mark + '  ' + pagePath);
   }
   await browser.close();
-  server.close();
+  if (server) server.close();
   const lines = ['| Page | 412 fold8 | 412 flip6 | 1280 fold8 | 1280 flip6 | Notes |', '| --- | --- | --- | --- | --- | --- |'];
   for (const row of rows) {
     const cells = row.views.map(v => v.pass ? 'pass' : 'fail');
