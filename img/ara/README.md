@@ -4,7 +4,7 @@
 
 ## Source
 - Path: `/home/box/agent-data/agents/0aca7e2c-756b-4a08-a1c7-d0751a5703bb/avatar.png`
-- Profile: `name=Ara`, `avatarShape=blob`, `avatarColor=black`, `namedBy=user`
+- Profile: `name=Ara 2.0`, `avatarShape=blob`, `avatarColor=black`, `namedBy=user`
 - Identical store copy: attachments `478b64b0206d….jpg` (same SHA-256 `478b64b0206d5a941b244ac3fbafdb3040503091224d469b9ffc12b361de2d2f`)
 - Original: **1280×720**, JPEG bytes in a `.png` filename, ~141 KB
 - No higher-res master found on box, Drive (visible images), Gmail, or this repo
