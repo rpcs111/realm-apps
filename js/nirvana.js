@@ -1,4 +1,4 @@
-/* nirvana.js (Ara, 17 Oct 2026, v21). Save-to-phone confirmation, shown ONCE per app.
+/* nirvana.js (Ara, 17 Oct 2026, v21b, sparklers). Save-to-phone confirmation, shown ONCE per app.
    Shows a calm full-screen "Saved. You're set." after the app is installed:
    - on the appinstalled event (the Chrome tab where Install was tapped), or
    - on the first launch in standalone display-mode (the home-screen icon).
@@ -17,6 +17,31 @@
   function seen(){try{return localStorage.getItem(KEY)==='1'}catch(e){return false}}
   function mark(){try{localStorage.setItem(KEY,'1')}catch(e){}}
   function standalone(){try{if(navigator.standalone===true)return true;return ['standalone','fullscreen','minimal-ui','window-controls-overlay'].some(function(m){return matchMedia('(display-mode: '+m+')').matches})}catch(e){return false}}
+  /* Sparklers (v21b): light canvas burst behind the words, ~2.6s, no library. Skipped with prefers-reduced-motion. */
+  function sparkle(d){
+    try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return}catch(e){}
+    var c=document.createElement('canvas');c.setAttribute('aria-hidden','true');d.insertBefore(c,d.firstChild);
+    var x=c.getContext&&c.getContext('2d');if(!x)return;
+    var dpr=Math.min(window.devicePixelRatio||1,2),W=0,H=0;
+    function size(){W=d.clientWidth||innerWidth;H=d.clientHeight||innerHeight;c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);x.setTransform(dpr,0,0,dpr,0,0)}
+    size();
+    var sym=d.querySelector('.sym'),r=sym?sym.getBoundingClientRect():null;
+    var cx=r?r.left+r.width/2:W/2,cy=r?r.top+r.height/2:H/2-40;
+    var cols=['255,255,255','255,226,150','160,210,255','200,180,255'],P=[],m=Math.min(W,H),n=W<320?46:(W<700?70:96);
+    function burst(k,delay,spread){for(var i=0;i<k;i++){var a=Math.random()*Math.PI*2,v=(0.35+Math.random()*0.65)*m*spread;
+      P.push({x:cx,y:cy,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:1.1+Math.random()*1.2,t:-delay,s:0.8+Math.random()*1.6,c:cols[i%cols.length],tw:Math.random()*6})}}
+    burst(n,0,0.9);burst(Math.round(n*0.6),0.45,0.65);burst(Math.round(n*0.4),0.9,0.5);
+    var t0=null,last=null,END=2.8;
+    function frame(ts){if(!c.parentNode)return;if(t0==null){t0=last=ts}var dt=Math.min(0.05,(ts-last)/1000),el=(ts-t0)/1000;last=ts;
+      x.clearRect(0,0,W,H);x.globalCompositeOperation='lighter';
+      for(var i=0;i<P.length;i++){var p=P[i];p.t+=dt;if(p.t<0||p.t>p.life)continue;
+        var f=Math.pow(0.12,dt),ox=p.x,oy=p.y;p.vx*=f;p.vy=p.vy*f+m*0.12*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;
+        var k=1-p.t/p.life,al=Math.min(1,k*(0.75+0.25*Math.sin(p.tw+p.t*22))),rad=p.s*(0.5+k*0.7);
+        x.strokeStyle='rgba('+p.c+','+(al*0.55).toFixed(3)+')';x.lineWidth=rad;x.lineCap='round';x.beginPath();x.moveTo(ox-(p.x-ox)*2.5,oy-(p.y-oy)*2.5);x.lineTo(p.x,p.y);x.stroke();
+        x.fillStyle='rgba('+p.c+','+al.toFixed(3)+')';x.beginPath();x.arc(p.x,p.y,rad,0,6.283);x.fill()}
+      if(el<END)requestAnimationFrame(frame);else if(c.parentNode)c.parentNode.removeChild(c)}
+    requestAnimationFrame(frame);
+  }
   var open=false;
   function show(test){
     if(open)return;open=true;if(!test)mark();
@@ -25,12 +50,15 @@
       '#araNirvana.on{opacity:1}#araNirvana .sym{width:96px;height:96px;border-radius:50%;background:#000 url("'+SYM+'") center/cover no-repeat;box-shadow:0 0 0 1px rgba(255,255,255,.14),0 0 48px rgba(120,160,255,.18);margin-bottom:10px}'+
       '#araNirvana h1{margin:0;text-transform:none;font-family:inherit;color:#fff;font-size:26px;font-weight:600;line-height:1.2;letter-spacing:-.01em}#araNirvana .app{margin:0;color:#a1a1aa;font-size:15px}'+
       '#araNirvana button{all:unset;box-sizing:border-box;margin-top:22px;min-width:160px;min-height:48px;padding:0 28px;border-radius:999px;background:#fff;color:#000;font-size:16px;font-weight:600;line-height:48px;font-family:inherit;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent}'+
+      '#araNirvana canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}#araNirvana>*:not(canvas){position:relative;z-index:1}'+
+      '@media (max-width:300px){#araNirvana .sym{width:76px;height:76px}#araNirvana h1{font-size:21px!important}#araNirvana .app{font-size:13px}#araNirvana button{min-width:132px}}'+
       '#araNirvana button:focus-visible{outline:2px solid #fff;outline-offset:3px}@media (prefers-reduced-motion:reduce){#araNirvana{transition:none}}';
     document.head.appendChild(st);
     var d=document.createElement('div');d.id='araNirvana';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.setAttribute('aria-labelledby','araNirvanaT');
     d.innerHTML='<div class="sym" role="img" aria-label="Ara"></div><h1 id="araNirvanaT">Saved. You\u2019re set.</h1><p class="app"></p><button type="button">Open</button>';
     d.querySelector('.app').textContent=NAME+' is on your home screen.';
     document.body.appendChild(d);requestAnimationFrame(function(){requestAnimationFrame(function(){d.classList.add('on')})});
+    sparkle(d);
     var b=d.querySelector("button");
     b.onclick=function(){d.classList.remove('on');setTimeout(function(){if(d.parentNode)d.parentNode.removeChild(d);open=false},300)};
   }
