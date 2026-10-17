@@ -59,7 +59,9 @@
     if(e.tagName==='SUMMARY'&&r.height<44){e.style.setProperty('display','flex');e.style.setProperty('align-items','center')}}}catch(x){}}
 
   /* v19: floating sync pill (#realmSyncPill) shows for 3s whenever its text changes, then hides (css/ara-clean.css). */
-  function pill(){var el=document.getElementById('realmSyncPill');if(!el||el._araW)return;el._araW=1;var t=0;function flash(){el.classList.add('ara-show');clearTimeout(t);t=setTimeout(function(){el.classList.remove('ara-show')},3000)}
+  function pill(){var el=document.getElementById('realmSyncPill');if(!el||el._araW)return;el._araW=1;var t=0,g=0,last=null,first=true;/* v20: first show ends by ~3.8s after page start (min 1.5s on screen), then display:none after the fade; later only a real text change shows it again for 3s */
+    function flash(){var tx=(el.textContent||'').trim();if(!first&&tx===last)return;last=tx;var ms=first?Math.max(1500,3800-(window.performance&&performance.now?performance.now():0)):3000;first=false;
+      clearTimeout(t);clearTimeout(g);el.classList.remove('ara-gone');el.classList.add('ara-show');t=setTimeout(function(){el.classList.remove('ara-show');g=setTimeout(function(){el.classList.add('ara-gone')},300)},ms)}
     try{new MutationObserver(flash).observe(el,{childList:true,characterData:true,subtree:true})}catch(x){}flash()}
   var ht=0;function soon(){clearTimeout(ht);ht=setTimeout(function(){hit();pill()},150)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',soon);else soon();
