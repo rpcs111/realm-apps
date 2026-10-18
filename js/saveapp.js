@@ -92,6 +92,87 @@
     window.addEventListener('resize',place);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+  /* Cyan Realm mark. Notes only: the other apps stay clear so the mark cannot cover a control. */
+  var MARK={'notes.html':1};
+  function devLabel(id){if(id==='flip6')return 'FLIP 6';if(id==='fold8')return 'FOLD 8';return String(id||'').toUpperCase()}
+  function paintChrome(){
+    if(!document.body)return;
+    if(MARK[file]&&!document.getElementById('realmWatermark')){
+      var ws=document.createElement('style');ws.id='realmWatermarkCss';
+      ws.textContent='#realmWatermark{position:fixed;left:0;right:0;top:50%;transform:translateY(-50%);margin:0 auto;width:min(84vw,640px);height:auto;opacity:.16;pointer-events:none;z-index:1;user-select:none}#realmWatermark img{display:block;width:100%;height:auto;pointer-events:none}';
+      (document.head||document.documentElement).appendChild(ws);
+      var w=document.createElement('div');w.id='realmWatermark';w.setAttribute('aria-hidden','true');
+      var img=document.createElement('img');img.alt='';img.src=new URL('../pwa/realm-watermark.svg',(S&&S.src)?S.src:location.href).href;w.appendChild(img);
+      document.body.insertBefore(w,document.body.firstChild);
+    }
+    var id='';try{id=localStorage.getItem('realm_device')||''}catch(e){}
+    if(!id||document.getElementById('realmDevTag'))return;
+    var ts=document.createElement('style');ts.id='realmDevTagCss';
+    ts.textContent='#realmDevTag{position:fixed;z-index:2147482400;pointer-events:none;user-select:none;font:700 10px/1.2 system-ui,-apple-system,sans-serif;letter-spacing:.14em;color:#e4e4e7;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:3px 6px;white-space:nowrap}';
+    (document.head||document.documentElement).appendChild(ts);
+    var tag=document.createElement('div');tag.id='realmDevTag';tag.setAttribute('aria-hidden','true');tag.textContent=devLabel(id);document.body.appendChild(tag);
+    function shown(el){
+      if(!el)return null;
+      var cs=getComputedStyle(el);
+      if(cs.display==='none'||cs.visibility==='hidden')return null;
+      var r=el.getBoundingClientRect();
+      if(r.width<20||r.height<20)return null;
+      return r;
+    }
+    function sym(){
+      var ids=['arbBtn','araSym','ara'];
+      for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]),r=shown(el);if(r)return {el:el,r:r}}
+      return null;
+    }
+    function vis(el){
+      var b=el.getBoundingClientRect(),n=el.parentElement;
+      while(n&&n!==document.documentElement){
+        var cs=getComputedStyle(n),oy=cs.overflowY,ox=cs.overflowX,o=cs.overflow;
+        if(oy==='auto'||oy==='scroll'||oy==='hidden'||ox==='auto'||ox==='scroll'||ox==='hidden'||o==='auto'||o==='scroll'||o==='hidden'){
+          var p=n.getBoundingClientRect();
+          var top=Math.max(b.top,p.top),bottom=Math.min(b.bottom,p.bottom),left=Math.max(b.left,p.left),right=Math.min(b.right,p.right);
+          if(bottom-top<2||right-left<2)return null;
+          b={top:top,bottom:bottom,left:left,right:right};
+        }
+        n=n.parentElement;
+      }
+      return b;
+    }
+    function hits(box,s){
+      var tw=tag.offsetWidth||52,th=tag.offsetHeight||18;
+      if(box.l<4||box.t<4||box.l+tw>innerWidth-4||box.t+th>innerHeight-4)return true;
+      var nodes=document.querySelectorAll('a,button,input,textarea,select,.chip,.rui-status,.band,.card,.rui-box');
+      for(var i=0;i<nodes.length;i++){
+        var el=nodes[i];
+        if(el===tag||el===s.el||s.el.contains(el)||el.contains(s.el))continue;
+        var cs=getComputedStyle(el);
+        if(cs.display==='none'||cs.visibility==='hidden'||cs.pointerEvents==='none')continue;
+        var b=vis(el);
+        if(!b||b.bottom<0||b.top>innerHeight||b.right<0||b.left>innerWidth)continue;
+        if(box.l<b.right-1&&box.l+tw>b.left+1&&box.t<b.bottom-1&&box.t+th>b.top+1)return true;
+      }
+      return false;
+    }
+    function place(){
+      var s=sym(),tw=tag.offsetWidth||52,th=tag.offsetHeight||18,gap=8,pick;
+      if(s){
+        var r=s.r,cands=[
+          {l:r.left-gap-tw,t:r.top+(r.height-th)/2},
+          {l:r.right-tw,t:r.top-gap-th},
+          {l:Math.max(4,r.left-gap-tw),t:r.top-gap-th},
+          {l:r.left-gap-tw,t:r.bottom+gap}
+        ];
+        for(var i=0;i<cands.length;i++){if(!hits(cands[i],s)){pick=cands[i];break}}
+        if(!pick)pick=cands[1];
+      }else pick={l:innerWidth-tw-16,t:innerHeight-th-18};
+      tag.style.left=Math.round(pick.l)+'px';
+      tag.style.top=Math.round(pick.t)+'px';
+      tag.style.right='auto';
+      tag.style.bottom='auto';
+    }
+    place();addEventListener('resize',place);var n=0,iv=setInterval(function(){place();if(++n>24)clearInterval(iv)},250);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',paintChrome);else paintChrome();
   /* Ara button on every app that loads this file (installed apps pick it up on next open) */
   try{if(!document.getElementById('araBtnJs')){var ab=document.createElement('script');ab.id='araBtnJs';ab.src=new URL('ara-button.js?v=20261017-24',(S&&S.src)?S.src:new URL('js/',location.href)).href;(document.head||document.documentElement).appendChild(ab)}}catch(e){}
 
