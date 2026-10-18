@@ -375,9 +375,26 @@ function postKind(raw) {
   return { fn: fn, op: op, write: WRITE_FN.test(fn) || WRITE_FN.test(op) };
 }
 
+/* First launch in standalone shows a full-screen "Saved. You're set." sheet (nirvana.js).
+   It covers the page once. A real installed window does this too. Dismiss it, then keep testing. */
+async function dismissFirstRun(page) {
+  const standalone = await page.evaluate(() => {
+    try { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; }
+    catch (e) { return false; }
+  }).catch(() => false);
+  if (!standalone) return false;
+  const sheet = page.locator('#araNirvana');
+  try { await sheet.waitFor({ state: 'visible', timeout: 2000 }); }
+  catch (e) { return false; }
+  await sheet.locator('button').click({ timeout: 4000 });
+  await page.waitForFunction(() => !document.getElementById('araNirvana'), null, { timeout: 4000 });
+  return true;
+}
+
 async function checkSearch(page, errors) {
-  const out = { skipped: [], searchAll: 0, cycles: 0 };
+  const out = { skipped: [], searchAll: 0, cycles: 0, firstRun: false };
   const seen = { searchAll: 0, writes: [] };
+  if (await dismissFirstRun(page)) out.firstRun = true;
   await page.route('**/*', async route => {
     const req = route.request();
     if (req.method() !== 'POST' || !/script\.google/.test(req.url())) {
@@ -620,7 +637,7 @@ async function run() {
       let search = { skipped: [], searchAll: 0 };
       try { search = await checkSearch(page, errors); }
       catch (e) { errors.push(String(e.message || e).slice(0, 200)); }
-      focus.push({ app: 'Search Studio', device: device, engine: engine, pass: errors.length === before, skipped: search.skipped, searchAll: search.searchAll });
+      focus.push({ app: 'Search Studio', device: device, engine: engine, pass: errors.length === before, skipped: search.skipped, searchAll: search.searchAll, firstRun: search.firstRun });
     }
     if (!standalone && pagePath === 'ange.html' && !loadError) {
       const taps = await page.evaluate(() => {
@@ -710,9 +727,15 @@ async function run() {
     const note = (v.errors || []).slice(0, 2).join('; ');
     lines.push('| ' + v.page + ' | ' + v.view + ' | ' + (v.pass ? 'pass' : 'fail') + ' | ' + note + ' |');
   });
-  lines.push('', '## Focus (Chrome Beta)', '', '| App | Device | Engine | Result |', '| --- | --- | --- | --- |');
+  lines.push('', '## Focus (Chrome Beta)', '', '| App | Device | Engine | Result | Detail |', '| --- | --- | --- | --- | --- |');
   focus.forEach(f => {
-    lines.push('| ' + f.app + ' | ' + f.device + ' | ' + f.engine + ' | ' + (f.pass ? 'pass' : 'fail') + ' |');
+    const bits = [];
+    if (f.note) bits.push('notes push ' + f.note);
+    if (f.buttons) bits.push(f.buttons.map(b => b.label + ' ' + (b.pass ? 'pass' : 'fail ' + (b.status || '') + (b.console ? ' ' + b.console : ''))).join('; '));
+    if (f.firstRun) bits.push('dismissed first-run install sheet');
+    if (f.skipped && f.skipped.length) bits.push('skipped: ' + f.skipped.join('; '));
+    if (f.searchAll != null && f.app === 'Search Studio') bits.push('searchAll ' + f.searchAll);
+    lines.push('| ' + f.app + ' | ' + f.device + ' | ' + f.engine + ' | ' + (f.pass ? 'pass' : 'fail') + ' | ' + bits.join('<br>').replace(/\|/g, '/') + ' |');
   });
   const md = lines.join('\n') + '\n';
   fs.writeFileSync(path.join(root, 'tests', 'results.md'), md);
