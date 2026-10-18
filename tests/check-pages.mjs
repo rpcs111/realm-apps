@@ -26,7 +26,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const shotsDir = path.resolve(process.env.SHOTS_DIR || 'test-shots');
 const baseUrl = (process.env.BASE_URL || '').trim().replace(/\/$/, '');
 const PRE_MERGE = {
-  'index.html': 'ea0263820155532f54f0dcc04907eed15d381bb291ab6b2ba7d5f8a0c9513346',
+  'index.html': '7f9d53ef4e3799fdea0d7decb08161f5a4bf19061d362ec93cb9515bd4434b6e',
   'desk.html': '1c37d2520cd6ccc0da30762cef7de24177181d9857a2cd65dc61b2a73c768de1'
 };
 const SKIP = new Set(['map.backup.html', 'map.v2.backup.html']);

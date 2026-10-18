@@ -1,6 +1,7 @@
 | Page | 412 fold8 | 412 flip6 | 1280 fold8 | 1280 flip6 | Notes |
 | --- | --- | --- | --- | --- | --- |
-| ange.html | pass | pass | pass | pass | 412 fold8 external 1 |
+| ange.html | pass | pass | pass | pass |  |
+| brief/2026-10-18.html | pass | pass | pass | pass | 412 fold8 external 1 |
 | build-map.html | pass | pass | pass | pass |  |
 | capture.html | pass | pass | pass | pass |  |
 | cert.html | pass | pass | pass | pass |  |
