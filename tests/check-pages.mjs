@@ -4,10 +4,13 @@
  * that is not a live backend (Desk / engine) refusing the request.
  *
  *   node tests/check-pages.mjs
- *   BASE_URL=http://127.0.0.1:8765 node tests/check-pages.mjs
+ *   SHOTS_DIR=./shots node tests/check-pages.mjs
+ *   BASE_URL=https://rpcs111.github.io/realm-apps node tests/check-pages.mjs
  * Needs playwright-core on NODE_PATH and Chrome at /usr/bin/google-chrome.
- * BASE_URL, when set, loads that site instead of the local server.
- * index.html and desk.html must match their pre-merge bytes.
+ * Cert Studio screenshots go to SHOTS_DIR, or ./test-shots when that is unset.
+ * When BASE_URL is set, pages load from that site instead of a local server.
+ * index.html and desk.html must match the hashes below.
+ * index.html is the restored hub plus the local alert script.
  */
 import http from 'node:http';
 import fs from 'node:fs';
@@ -20,9 +23,10 @@ const require = createRequire(import.meta.url);
 const { chromium } = require('playwright-core');
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const shotsDir = path.resolve(process.env.SHOTS_DIR || 'test-shots');
 const baseUrl = (process.env.BASE_URL || '').trim().replace(/\/$/, '');
 const PRE_MERGE = {
-  'index.html': '0e950afba45f95d46103b58ba15250b2d49d027a0cc78cf7d4d22bc9dceb662e',
+  'index.html': 'bbe584a8547586e4134ea54db072af435872fc25339c80e8311d09ce2d1e1dea',
   'desk.html': '1c37d2520cd6ccc0da30762cef7de24177181d9857a2cd65dc61b2a73c768de1'
 };
 const SKIP = new Set(['map.backup.html', 'map.v2.backup.html']);
@@ -249,9 +253,8 @@ async function run() {
         });
       }
       if (pagePath === 'search.html' && view.d === 'fold8' && !loadError) {
-        const dir = '/opt/cursor/artifacts/screenshots';
-        fs.mkdirSync(dir, { recursive: true });
-        await page.screenshot({ path: dir + '/cert-studio-' + view.w + '.png', fullPage: false });
+        fs.mkdirSync(shotsDir, { recursive: true });
+        await page.screenshot({ path: path.join(shotsDir, 'cert-studio-' + view.w + '.png'), fullPage: false });
       }
       let rules = '';
       if (pagePath === 'search.html' && view.w === 412 && view.d === 'fold8' && !loadError) {

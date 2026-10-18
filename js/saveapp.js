@@ -97,6 +97,6 @@
 
   if('serviceWorker' in navigator&&location.protocol!=='file:'){
     var base=(S&&S.src)?new URL('../',S.src):new URL('./',location.href);
-    navigator.serviceWorker.register(new URL('app-sw.js?v=20261017-24',base).href,{scope:new URL(path,location.href).href,updateViaCache:'none'}).then(function(r){try{r.update()}catch(e){}}).catch(function(){});
+    navigator.serviceWorker.register(new URL('app-sw.js?v=20261018-1',base).href,{scope:new URL(path,location.href).href,updateViaCache:'none'}).then(function(r){try{r.update()}catch(e){}}).catch(function(){});
   }
 })();
