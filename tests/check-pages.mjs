@@ -10,7 +10,7 @@
  * Cert Studio screenshots go to SHOTS_DIR, or ./test-shots when that is unset.
  * When BASE_URL is set, pages load from that site instead of a local server.
  * index.html and desk.html must match the hashes below.
- * index.html is the restored hub plus the local alert script.
+ * index.html is the restored hub plus the local alert script and the Ara R icon.
  */
 import http from 'node:http';
 import fs from 'node:fs';
@@ -26,7 +26,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const shotsDir = path.resolve(process.env.SHOTS_DIR || 'test-shots');
 const baseUrl = (process.env.BASE_URL || '').trim().replace(/\/$/, '');
 const PRE_MERGE = {
-  'index.html': 'bbe584a8547586e4134ea54db072af435872fc25339c80e8311d09ce2d1e1dea',
+  'index.html': 'ea0263820155532f54f0dcc04907eed15d381bb291ab6b2ba7d5f8a0c9513346',
   'desk.html': '1c37d2520cd6ccc0da30762cef7de24177181d9857a2cd65dc61b2a73c768de1'
 };
 const SKIP = new Set(['map.backup.html', 'map.v2.backup.html']);
