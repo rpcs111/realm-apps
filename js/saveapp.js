@@ -99,7 +99,7 @@
     if(!document.body)return;
     if(MARK[file]&&!document.getElementById('realmWatermark')){
       var ws=document.createElement('style');ws.id='realmWatermarkCss';
-      ws.textContent='#realmWatermark{position:fixed;left:0;right:0;top:50%;transform:translateY(-50%);margin:0 auto;width:min(84vw,640px);height:auto;opacity:.16;pointer-events:none;z-index:1;user-select:none}#realmWatermark img{display:block;width:100%;height:auto;pointer-events:none}';
+      ws.textContent='#realmWatermark{position:fixed;left:0;right:0;top:67%;transform:translateY(-50%);margin:0 auto;width:min(68vw,440px);height:auto;opacity:.11;pointer-events:none;z-index:1;user-select:none}#realmWatermark img{display:block;width:100%;height:auto;pointer-events:none}';
       (document.head||document.documentElement).appendChild(ws);
       var w=document.createElement('div');w.id='realmWatermark';w.setAttribute('aria-hidden','true');
       var img=document.createElement('img');img.alt='';img.src=new URL('../pwa/realm-watermark.svg',(S&&S.src)?S.src:location.href).href;w.appendChild(img);
