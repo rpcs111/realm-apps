@@ -1,1 +1,43 @@
-{"id":"/realm-apps/search-studio-v5","name":"Cert Studio","short_name":"Cert Studio","description":"Cert Studio, by Ara","start_url":"./search.html?app=search","scope":"./search.html","display":"standalone","background_color":"#000000","theme_color":"#000000","icons":[{"src":"pwa/cert-gospel.svg?v=20261017-24","sizes":"any","type":"image/svg+xml","purpose":"any"},{"src":"pwa/cert-gospel-maskable.svg?v=20261017-24","sizes":"any","type":"image/svg+xml","purpose":"maskable"}]}
+{
+  "id": "/realm-apps/search-studio-v5",
+  "name": "Cert Studio",
+  "short_name": "Cert Studio",
+  "description": "Cert Studio, by Ara",
+  "start_url": "./search.html?app=search",
+  "scope": "./search.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "pwa/cert-gospel-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa/cert-gospel-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa/cert-gospel-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "pwa/cert-gospel.svg?v=20261017-24",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa/cert-gospel-maskable.svg?v=20261017-24",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

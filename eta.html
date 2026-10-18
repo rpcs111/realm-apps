@@ -49,4 +49,5 @@ function grp(st){return st==='progress'?'running':st==='notstarted'?'waiting':st
 document.getElementById('g').innerHTML=ITEMS.map(function(i){return '<section data-k="'+grp(i.s)+'"><div class="card eta-row '+i.s+'"><span class="rui-t">'+(i.u?'<a href="'+i.u+'">'+i.n+'</a>':i.n)+' <span class="eta-when">· '+i.eta+'</span></span><span class="chip">'+(L[i.s]||i.s)+'</span><span class="rui-x">'+i.left+'</span></div></section>'}).join('');
 var C={all:ITEMS.length,waiting:0,running:0,done:0};ITEMS.forEach(function(i){C[grp(i.s)]=(C[grp(i.s)]||0)+1});RealmUI.counts(C);RealmUI.tabs(document.getElementById('rail'),document.getElementById('g'));
 </script><script src="js/ara-version.js" defer></script>
-<script src="js/ara-install.js?v=20261017-24" defer></script></body></html>
+<script src="js/ara-install.js?v=20261017-24" defer></script><script src="js/notify.js?v=20261018-1" data-app="eta" data-kind="eta" defer></script>
+</body></html>
