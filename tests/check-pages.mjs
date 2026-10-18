@@ -9,10 +9,13 @@
  * Needs playwright-core on NODE_PATH and Chrome at /usr/bin/google-chrome.
  * Cert Studio screenshots go to SHOTS_DIR, or ./test-shots when that is unset.
  * When BASE_URL is set, pages load from that site instead of a local server.
+ * index.html and desk.html must match the hashes below.
+ * index.html is the restored hub plus the local alert script.
  */
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 
@@ -22,6 +25,10 @@ const { chromium } = require('playwright-core');
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const shotsDir = path.resolve(process.env.SHOTS_DIR || 'test-shots');
 const baseUrl = (process.env.BASE_URL || '').trim().replace(/\/$/, '');
+const PRE_MERGE = {
+  'index.html': 'bbe584a8547586e4134ea54db072af435872fc25339c80e8311d09ce2d1e1dea',
+  'desk.html': '1c37d2520cd6ccc0da30762cef7de24177181d9857a2cd65dc61b2a73c768de1'
+};
 const SKIP = new Set(['map.backup.html', 'map.v2.backup.html']);
 const MIME = {
   '.html': 'text/html;charset=utf-8', '.js': 'text/javascript;charset=utf-8', '.css': 'text/css;charset=utf-8',
@@ -95,8 +102,51 @@ async function checkCertRules(page) {
     if (api.deputyLabel(timed, { diary: [], staff: ['15:30 12 Smith Street'] }).t !== 'Deputy shift matched') problems.push('staff string miss');
     if (api.deputyLabel(timed, { diary: [{ start: '2026-10-19T15:30:00', area: '12 Smith Street' }] }).t !== 'Deputy shift matched') problems.push('object diary miss');
     if (api.deputyLabel(timed, { diary: [{ start: '2026-10-19T15:30:00', area: '12 Smith Street', leave: true }] }).t !== 'Not built: no Deputy shift') problems.push('leave matched');
+    const parts = new Intl.DateTimeFormat('en-AU', { timeZone: 'Australia/Melbourne', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+    const bit = t => parts.find(p => p.type === t).value;
+    const today = bit('year') + '-' + bit('month') + '-' + bit('day');
+    function expectNamed(day, mon) {
+      let year = +today.slice(0, 4);
+      let key = year + '-' + mon + '-' + day;
+      if (key < api.addDaysKey(today, -183)) key = (year + 1) + '-' + mon + '-' + day;
+      return key;
+    }
+    const dec = api.parseStart('Tue 1 Dec 13:15');
+    if (!dec || dec.key.indexOf('2001') === 0 || dec.key !== expectNamed('01', '12') || dec.mins !== 13 * 60 + 15 || dec.allDay) problems.push('Tue 1 Dec 13:15 parsed ' + JSON.stringify(dec));
+    const march = api.parseStart('1 Mar 09:00');
+    if (!march || march.key !== expectNamed('01', '03') || march.mins !== 9 * 60) problems.push('1 Mar roll parsed ' + JSON.stringify(march));
+    const kept = api.parseStart('1 Mar 2020 09:00');
+    if (!kept || kept.key !== '2020-03-01' || kept.mins !== 9 * 60) problems.push('explicit year parsed ' + JSON.stringify(kept));
+    const isoCert = { title: 'Anchor', where: '12 Smith Street', start: 'Tue 1 Dec 13:15', startIso: '2026-10-19T15:30:00+11:00', cal: 'Anchor' };
+    const iso = api.whenOf(isoCert);
+    if (!iso || iso.key !== '2026-10-19' || iso.mins !== 15 * 60 + 30) problems.push('startIso unused ' + JSON.stringify(iso));
+    if (!api.incorrect(iso)) problems.push('startIso after 3pm not tagged');
+    if (api.deputyLabel(isoCert, { diary: [{ start: '2026-10-19T15:30:00', area: '12 Smith Street' }] }).t !== 'Deputy shift matched') problems.push('startIso deputy miss');
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    let satKey = today;
+    for (let i = 0; i < 7; i++) {
+      if (new Date(satKey + 'T00:00:00Z').getUTCDay() === 6) break;
+      satKey = api.addDaysKey(satKey, 1);
+    }
+    const satBits = satKey.split('-');
+    const satLabel = (+satBits[2]) + ' ' + months[+satBits[1] - 1] + ' 10:00';
+    const weekend = api.parseStart(satLabel);
+    if (!weekend || weekend.key !== satKey || !api.incorrect(weekend)) problems.push('named Saturday parsed ' + satLabel + ' ' + JSON.stringify(weekend));
+    const lateCard = api.cardHtml(isoCert);
+    const weekCard = api.cardHtml({ title: 'Weekend job', where: 'Site', start: satLabel, cal: 'Anchor' });
+    if (!lateCard || lateCard.indexOf('Incorrect') < 0 || lateCard.indexOf('Deputy not checked') < 0) problems.push('after-3pm card flags');
+    if (!weekCard || weekCard.indexOf('Incorrect') < 0) problems.push('weekend card flag');
     return problems.join('; ');
   });
+}
+
+function preMergeProblems() {
+  const problems = [];
+  Object.keys(PRE_MERGE).forEach(name => {
+    const got = crypto.createHash('sha256').update(fs.readFileSync(path.join(root, name))).digest('hex');
+    if (got !== PRE_MERGE[name]) problems.push(name + ' differs from the pre-merge file');
+  });
+  return problems;
 }
 
 function sameOrigin(u, port) {
@@ -121,6 +171,11 @@ function pageUrl(pagePath, view, port) {
 }
 
 async function run() {
+  const drifted = preMergeProblems();
+  if (drifted.length) {
+    console.error(drifted.join('\n'));
+    process.exit(1);
+  }
   if (baseUrl) {
     try { new URL(baseUrl); }
     catch (e) { console.error('BASE_URL is not a URL'); process.exit(1); }
@@ -205,6 +260,36 @@ async function run() {
       if (pagePath === 'search.html' && view.w === 412 && view.d === 'fold8' && !loadError) {
         rules = await checkCertRules(page);
         if (rules) errors.push('cert rules: ' + rules);
+      }
+      if (pagePath === 'ange.html' && !loadError) {
+        const taps = await page.evaluate(() => {
+          const bad = [];
+          ['nxa', 'mic'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) { bad.push(id + ' missing'); return; }
+            const r = el.getBoundingClientRect();
+            if (r.width < 44 || r.height < 44) bad.push(id + ' ' + Math.round(r.width) + 'x' + Math.round(r.height));
+          });
+          return bad.join('; ');
+        });
+        if (taps) errors.push(taps);
+      }
+      if (pagePath === 'launcher2.html' && !loadError) {
+        const overlap = await page.evaluate(() => {
+          function hit(a, b) {
+            const ar = a.getBoundingClientRect();
+            const br = b.getBoundingClientRect();
+            return ar.left < br.right - 1 && ar.right > br.left + 1 && ar.top < br.bottom - 1 && ar.bottom > br.top + 1;
+          }
+          const ara = document.getElementById('arbBtn');
+          const pill = document.getElementById('realmSyncPill');
+          if (!ara || !pill) return 'missing ' + (!ara ? 'Ara ' : '') + (!pill ? 'sync pill' : '');
+          if (hit(ara, pill)) return 'Ara covers sync pill';
+          const pr = pill.getBoundingClientRect();
+          if (pr.right > innerWidth + 2) return 'sync pill off the right edge';
+          return '';
+        });
+        if (overlap) errors.push(overlap);
       }
       const hard = errors.concat(missing);
       if (loadError) hard.push(loadError);
