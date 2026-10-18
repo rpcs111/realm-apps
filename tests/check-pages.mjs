@@ -416,16 +416,45 @@ async function checkSearch(page, errors) {
   const qVal = await page.inputValue('#q');
   if (qVal !== 'TEST dummy 0000') errors.push('search box did not keep the dummy query');
 
-  await page.click('#ara');
-  await page.waitForFunction(() => document.getElementById('araS').classList.contains('on'));
-  await page.click('#araT');
-  await page.fill('#araT', 'TEST dummy 0000');
-  await page.locator('#araT').evaluate(el => el.blur());
-  const araVal = await page.inputValue('#araT');
-  if (araVal.indexOf('TEST dummy 0000') < 0) errors.push('Ara sheet did not keep the dummy line');
-  await page.click('#araX');
-  await page.waitForFunction(() => !document.getElementById('araS').classList.contains('on'));
-  out.skipped.push('Send to Ara (opens grok.com; not a local save)');
+  /* Search keeps one Ara symbol. The header Call Ara button is hidden, and the
+     floating symbol opens the message sheet. Either control is exercised, not both. */
+  const shown = await page.evaluate(() => {
+    function on(id) {
+      const el = document.getElementById(id);
+      if (!el) return false;
+      const s = getComputedStyle(el);
+      if (s.display === 'none' || s.visibility === 'hidden' || el.hidden) return false;
+      const r = el.getBoundingClientRect();
+      return r.width >= 20 && r.height >= 20;
+    }
+    return { ara: on('ara'), arb: on('arbBtn') };
+  });
+  if (shown.ara === shown.arb) errors.push('Ara symbols ' + (shown.ara ? 'ara and arbBtn' : 'none'));
+  const sheet = shown.arb && !shown.ara
+    ? {
+        open: '#arbBtn', field: '#arbText', close: '#arbX',
+        up: () => { const s = document.getElementById('arbSheet'); return !!(s && !s.hidden); },
+        down: () => { const s = document.getElementById('arbSheet'); return !!(s && s.hidden); }
+      }
+    : {
+        open: '#ara', field: '#araT', close: '#araX',
+        up: () => document.getElementById('araS').classList.contains('on'),
+        down: () => !document.getElementById('araS').classList.contains('on')
+      };
+  if (shown.ara !== shown.arb) {
+    await page.click(sheet.open);
+    await page.waitForFunction(sheet.up);
+    await page.click(sheet.field);
+    await page.fill(sheet.field, 'TEST dummy 0000');
+    await page.locator(sheet.field).evaluate(el => el.blur());
+    const araVal = await page.inputValue(sheet.field);
+    if (araVal.indexOf('TEST dummy 0000') < 0) errors.push('Ara sheet did not keep the dummy line');
+    await page.click(sheet.close);
+    await page.waitForFunction(sheet.down);
+  }
+  out.skipped.push(shown.arb && !shown.ara
+    ? 'Send to Ara (would post the message; not clicked)'
+    : 'Send to Ara (opens grok.com; not a local save)');
 
   const addKey = page.locator('#rkAdd');
   if (await addKey.isVisible().catch(() => false)) {
@@ -439,9 +468,9 @@ async function checkSearch(page, errors) {
   }
 
   const beforeSearch = errors.length;
-  for (let i = 0; i < 5; i++) {
-    await page.click('#ara', { timeout: 4000 });
-    await page.click('#araX', { timeout: 4000 });
+  if (shown.ara !== shown.arb) for (let i = 0; i < 5; i++) {
+    await page.click(sheet.open, { timeout: 4000 });
+    await page.click(sheet.close, { timeout: 4000 });
     await page.fill('#q', 'TEST dummy 0000');
     await page.click('#goBtn', { timeout: 4000 });
     out.cycles++;
@@ -451,12 +480,14 @@ async function checkSearch(page, errors) {
   if (Date.now() - focusMs > 3000) errors.push('search box slow after the cycles');
   const focused = await page.evaluate(() => document.activeElement && document.activeElement.id);
   if (focused !== 'q') errors.push('search box did not focus after the cycles');
-  await page.click('#ara', { timeout: 4000 });
-  const open = await page.evaluate(() => document.getElementById('araS').classList.contains('on'));
-  if (!open) errors.push('Ara sheet did not open after the cycles');
-  await page.click('#araX', { timeout: 4000 });
-  const closed = await page.evaluate(() => !document.getElementById('araS').classList.contains('on'));
-  if (!closed) errors.push('Ara sheet did not close after the cycles');
+  if (shown.ara !== shown.arb) {
+    await page.click(sheet.open, { timeout: 4000 });
+    const open = await page.evaluate(sheet.up);
+    if (!open) errors.push('Ara sheet did not open after the cycles');
+    await page.click(sheet.close, { timeout: 4000 });
+    const closed = await page.evaluate(sheet.down);
+    if (!closed) errors.push('Ara sheet did not close after the cycles');
+  }
   try {
     await page.waitForFunction(() => {
       const b = document.getElementById('goBtn');
