@@ -10,13 +10,14 @@
  * Cert Studio screenshots go to SHOTS_DIR, or ./test-shots when that is unset.
  * When BASE_URL is set, pages load from that site instead of a local server.
  * index.html and desk.html must match the hashes below.
- * index.html is the restored hub plus the local alert script.
- * Browser: Chrome Beta on desktop 1280x800, and Flip 6 emulation (412x915, touch,
- * isMobile, deviceScaleFactor 2.625, Android Chrome Beta UA, ?d=flip6).
- * Flip rows are the Beta engine with a phone profile, not a handset.
+ * index.html is the restored hub plus the local alert script and the Ara R icon.
+ * Browser: Chrome Beta at 412x915 and 1280x800, for ?d=fold8 and ?d=flip6.
+ * Phone rows (412) use touch, isMobile, deviceScaleFactor 2.625, and an Android
+ * Chrome Beta UA. They are the Beta engine with a phone profile, not a handset.
  * Chrome flags drop the back-forward cache and notification prompts so those
  * Beta quirks do not stall a headless run. Each view is its own context, so
  * first-party storage is not split across the panel page and Notes.
+ * Every POST to script.google.com is aborted. Nothing is written to Desk.
  */
 import http from 'node:http';
 import fs from 'node:fs';
@@ -32,7 +33,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const shotsDir = path.resolve(process.env.SHOTS_DIR || 'test-shots');
 const baseUrl = (process.env.BASE_URL || '').trim().replace(/\/$/, '');
 const PRE_MERGE = {
-  'index.html': 'bbe584a8547586e4134ea54db072af435872fc25339c80e8311d09ce2d1e1dea',
+  'index.html': '7f9d53ef4e3799fdea0d7decb08161f5a4bf19061d362ec93cb9515bd4434b6e',
   'desk.html': '1c37d2520cd6ccc0da30762cef7de24177181d9857a2cd65dc61b2a73c768de1'
 };
 const SKIP = new Set(['map.backup.html', 'map.v2.backup.html']);
@@ -74,8 +75,10 @@ function serve() {
 const EXTERNAL = /script\.google\.com|googleapis\.com|gstatic\.com|google\.com|CORS|Failed to fetch|net::ERR_|accounts\.google|youtube\.com|ytimg\.com|ggpht\.com/i;
 
 const VIEWS = [
-  { name: '1280 desktop', w: 1280, h: 800, d: 'desktop', mobile: false },
-  { name: '412 flip6', w: 412, h: 915, d: 'flip6', mobile: true, note: 'Chrome Beta engine, emulated' }
+  { name: '412 fold8', w: 412, h: 915, d: 'fold8', mobile: true, note: 'Chrome Beta engine, emulated' },
+  { name: '1280 fold8', w: 1280, h: 800, d: 'fold8', mobile: false },
+  { name: '412 flip6', w: 412, h: 915, d: 'flip6', mobile: true, note: 'Chrome Beta engine, emulated' },
+  { name: '1280 flip6', w: 1280, h: 800, d: 'flip6', mobile: false }
 ];
 const WRITE_FN = /^(add|set|save|update|delete|complete|append|put|create|remove)/i;
 const EMOJI = /\p{Extended_Pictographic}/u;
@@ -402,13 +405,9 @@ async function checkSearch(page, errors) {
       return;
     }
     const kind = postKind(req.postData());
-    if (kind.write) {
-      seen.writes.push(kind.fn || kind.op || 'write');
-      await route.abort();
-      return;
-    }
+    if (kind.write) seen.writes.push(kind.fn || kind.op || 'write');
     if (kind.fn === 'searchAll') seen.searchAll++;
-    await route.continue();
+    await route.abort();
   });
 
   await page.click('#q');
@@ -555,6 +554,14 @@ async function run() {
   async function oneView(pagePath, view, standalone) {
     const context = await browser.newContext(contextOptions(view, version));
     if (standalone) await context.addInitScript(STANDALONE_SCRIPT);
+    await context.route('**/*', async route => {
+      const req = route.request();
+      if (req.method() === 'POST' && /script\.google/.test(req.url())) {
+        await route.abort();
+        return;
+      }
+      await route.continue();
+    });
     const page = await context.newPage();
     const errors = [];
     const missing = [];
@@ -612,9 +619,9 @@ async function run() {
     }
     if (!standalone && pagePath === 'search.html' && !loadError) {
       fs.mkdirSync(shotsDir, { recursive: true });
-      await page.screenshot({ path: path.join(shotsDir, 'cert-studio-' + view.w + '.png'), fullPage: false, scale: 'css' });
+      await page.screenshot({ path: path.join(shotsDir, 'cert-studio-' + view.w + '-' + view.d + '.png'), fullPage: false, scale: 'css' });
     }
-    if (!standalone && pagePath === 'search.html' && view.w === 412 && view.d === 'flip6' && !loadError) {
+    if (!standalone && pagePath === 'search.html' && view.w === 412 && !loadError) {
       const rules = await checkCertRules(page);
       if (rules) errors.push('cert rules: ' + rules);
     }
@@ -624,7 +631,7 @@ async function run() {
       const before = errors.length;
       let panel = { buttons: [], note: 'fail' };
       try {
-        panel = await checkPanel(page, context, errors, standalone ? '' : (view.mobile ? 'flip6' : 'desktop'), { clickThrough: !standalone });
+        panel = await checkPanel(page, context, errors, standalone ? '' : (view.w + '-' + view.d), { clickThrough: !standalone });
       } catch (e) {
         errors.push(String(e.message || e).slice(0, 200));
       }
