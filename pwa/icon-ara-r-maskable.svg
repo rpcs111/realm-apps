@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>Ara</title>
+  <rect width="512" height="512" fill="#000"/>
+  <g transform="translate(256 256) scale(0.7) translate(-285 -271)" fill="#fff">
+    <path fill-rule="evenodd" d="M150 110H282A110 110 0 0 1 282 330H206V402H150ZM206 166V274H282A54 54 0 0 0 282 166Z"/>
+    <path d="M232 296H302L420 432H350Z"/>
+  </g>
+</svg>
