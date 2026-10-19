@@ -11,7 +11,7 @@
      RealmLine.mic(key, resumeFn) / micLive(key) / micEnd(key) / micStop(key)
      RealmLine.drafts(['fieldId',...])      save these fields on leave, restore them on return
      RealmLine.fetch(url,opts)              fetch that waits for the line instead of failing on a drop
-     RealmLine.pingExec(execUrl)            Promise: Apps Script line answers JSON
+     RealmLine.pingExec(execUrl)            Promise: true = line answers JSON, 'warn' = it answered with an error / key needed
 */
 (function(){
 'use strict';
@@ -27,8 +27,8 @@ function lsSet(k,v){try{if(v==null)localStorage.removeItem(k);else localStorage.
 function log(m){try{(window.__realmLineLog=window.__realmLineLog||[]).push([new Date().toISOString().slice(11,19),m]);if(window.__realmLineLog.length>200)window.__realmLineLog.shift()}catch(e){}}
 
 /* ---------- status pill ---------- */
-var TXT={ok:'Connected',retry:'Reconnecting\u2026',off:'Offline \u00b7 will reconnect',down:'Not answering \u00b7 tap to retry',tap:'Tap to resume \uD83C\uDFA4'};
-var COL={ok:'#16a34a',retry:'#d97706',off:'#64748b',down:'#dc2626',tap:'#2563eb'};
+var TXT={ok:'Connected',warn:'Answering \u00b7 key needed',retry:'Reconnecting\u2026',off:'Offline \u00b7 will reconnect',down:'Not answering \u00b7 tap to retry',tap:'Tap to resume \uD83C\uDFA4'};
+var COL={ok:'#16a34a',warn:'#f59e0b',retry:'#d97706',off:'#64748b',down:'#dc2626',tap:'#2563eb'};
 function ensurePill(){
  if(pill||!document.body)return;
  var css=document.createElement('style');
@@ -57,7 +57,7 @@ function delay(){return Math.min(30000,1000*Math.pow(2,Math.max(0,tries-1)))}
 function schedule(){clearTimeout(timer);if(document.hidden)return;if(!navigator.onLine){setState('off');return}
  if(tries>=MAXTRY){setState('down');return}
  var d=delay();log('retry in '+d+'ms');timer=setTimeout(function(){check('backoff')},d)}
-function up(){var was=state;tries=0;clearTimeout(timer);setState(Object.keys(pending).length?'tap':'ok');
+function up(st){var was=state;tries=0;clearTimeout(timer);setState(Object.keys(pending).length?'tap':(st||'ok'));
  var p=parked.splice(0);if(p.length)log('replaying '+p.length+' parked call(s)');p.forEach(function(f){try{f()}catch(e){}});
  var w=waiters.splice(0);w.forEach(function(f){try{f()}catch(e){}});
  if(was!=='ok'&&was!=='idle'&&L.onUp){try{L.onUp()}catch(e){}}}
@@ -69,7 +69,7 @@ function check(why){
  if(checking)return;checking=true;setState('retry');log('ping ('+why+')');
  var p;try{p=Promise.resolve(L.ping())}catch(e){p=Promise.reject(e)}
  var guard=new Promise(function(_,rej){setTimeout(function(){rej(new Error('ping timeout'))},20000)});
- Promise.race([p,guard]).then(function(ok){checking=false;if(ok===false)down(new Error('ping false'));else up()},function(e){checking=false;down(e)});
+ Promise.race([p,guard]).then(function(ok){checking=false;if(ok===false)down(new Error('ping false'));else if(ok==='warn')up('warn');else up()},function(e){checking=false;down(e)});
 }
 
 /* ---------- mic / speech resume ---------- */
@@ -120,8 +120,9 @@ document.addEventListener('freeze',function(){leaving('freeze')});
 /* ---------- public API ---------- */
 var R={
  line:function(o){o=o||{};L.name=o.name||'Line';L.ping=o.ping||null;L.onUp=o.onUp||null;L.has=true;
-  var go=function(){ensurePill();setState(navigator.onLine?'ok':'off')};if(document.body)go();else document.addEventListener('DOMContentLoaded',go)},
- ok:function(){if(state!=='ok'&&state!=='tap')up()},
+  /* no green until the line has really answered: start amber-checking, then ping once */
+  var go=function(){ensurePill();if(!navigator.onLine){setState('off');return}if(L.ping){tries=0;check('start')}else setState('ok')};if(document.body)go();else document.addEventListener('DOMContentLoaded',go)},
+ ok:function(){if(state!=='ok'&&state!=='tap'&&state!=='warn')up()},
  fail:function(e,hard){if(hard||R.isNet(e)||!navigator.onLine){if(!checking)down(e)}},
  isNet:function(e){if(!navigator.onLine)return true;if(!e)return false;var n=e.name||'',m=String(e.message||e);return n==='TypeError'||n==='AbortError'||/failed to fetch|load failed|network|aborted|timeout/i.test(m)},
  park:function(fn,e){if(document.hidden||!navigator.onLine||R.isNet(e)){parked.push(fn);log('parked call ('+(document.hidden?'hidden':!navigator.onLine?'offline':'network')+')');if(!document.hidden&&L.has&&!checking){down(e)}return true}return false},
@@ -135,8 +136,9 @@ var R={
  saveDrafts:saveDrafts,
  /* fetch that waits for the line to come back instead of dying on a network drop (max 3 waits) */
  fetch:function(u,o){function attempt(k){return fetch(u,o).then(function(r){R.ok();return r},function(e){if(R.isNet(e)&&k<3){R.fail(e);return R.whenBack().then(function(){return attempt(k+1)})}throw e})}return attempt(0)},
- /* ping an Apps Script exec line with its existing read-only whoami call; any JSON answer = alive */
- pingExec:function(u){return fetch(u,{method:'POST',redirect:'follow',credentials:'omit',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn:'whoami',args:[],key:(function(){try{return localStorage.getItem('realm_key')||''}catch(e){return''}})()})}).then(function(r){return r.text()}).then(function(t){JSON.parse(t);return true})},
+ /* ping an Apps Script exec line with its existing read-only whoami call; JSON answer = alive,
+    but an error or key-needed answer shows amber ('warn'), never a green Connected */
+ pingExec:function(u){return fetch(u,{method:'POST',redirect:'follow',credentials:'omit',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn:'whoami',args:[],key:(function(){try{return localStorage.getItem('realm_key')||''}catch(e){return''}})()})}).then(function(r){return r.text()}).then(function(t){var j=JSON.parse(t);if(/key needed/i.test(t)||(j&&typeof j==='object'&&(j.ok===false||j.error)))return 'warn';return true})},
  check:function(){tries=0;check('manual')},
  get state(){return state},
  _log:function(){return (window.__realmLineLog||[]).slice()}

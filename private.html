@@ -101,26 +101,9 @@ dialog label{display:block;font-size:13px;color:var(--mut);margin:8px 0 4px}
    device: PBKDF2-SHA256 (400k iterations, random salt) from your PIN -> AES-GCM 256. PIN never stored. */
 var KEY='realm-private-v1', LOCKK='realm-private-lock-v1', ITER=400000, IDLE=5*60*1000;
 var STATIC=[
- {h:'Rules',items:[
-  ['Ara–Nova channel · master standing rules','00_ARA_NOVA_CHANNEL_14OCT2026 · Doc','https://docs.google.com/document/d/1nH48bu2yt3WXMJ5DBBpHs0Dpt-nmW5JPQW3TaN0Kl6M/edit?usp=drivesdk&authuser=info@realmpcs.com'],
-  ['HANDOFF Doc (mirror of master)','HANDOFF.md — Ara Daily Loop · Doc','https://docs.google.com/document/d/1YBoG-M9sPP46Gr4BiS19Q9YJedRF_FdlzhNvByn4kfo/edit?usp=drivesdk&authuser=info@realmpcs.com'],
-  ['INDEX (Ara)','Doc','https://docs.google.com/document/d/1OGtPFEYsUUwnYPcYLSZJhEBnWb3Yq49sJh2LR7x9EuY/edit?usp=drivesdk&authuser=info@realmpcs.com']]},
- {h:'Spreadsheets',items:[
-  ['P&L FY24–FY26','RPCS Adjusted P&L FY24-FY26.xlsx · shared with your accountants only','https://docs.google.com/spreadsheets/d/1HXLRRgHZJDHSj0p_dp3WHgHO-6-Rxg8s/edit?usp=drivesdk&ouid=110453120502933740420&rtpof=true&sd=true&authuser=info@realmpcs.com'],
-  ['REALM OPEN REGISTER','Sheet','https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?usp=drivesdk&authuser=info@realmpcs.com'],
-  ['REALM HANDOFF','Sheet','https://docs.google.com/spreadsheets/d/1SWCOcN88G3QPpdvTjbSJIIoyW0_z8lyksfbjQwTBga8/edit?usp=drivesdk&authuser=info@realmpcs.com'],
-  ['Services and steps for job card and quotes','Sheet (subtasks)','https://docs.google.com/spreadsheets/d/1731nkVwdGD68fBL2HZWzR8r9B96LWOGXmSlmUuE_yJ0/edit?usp=drivesdk&authuser=info@realmpcs.com'],
-  ['GOOGLE TASKS OVERLAY','Sheet','https://docs.google.com/spreadsheets/d/1JXjBlr019zrZpNmEpI_a1ZqZ3EFwc5O0HOKbXae2hsg/edit?usp=drivesdk&authuser=info@realmpcs.com'],
-  ['LINKS & REGISTERS (Ara) — live','Sheet','https://docs.google.com/spreadsheets/d/1AU2OEzMMsdchRwqua6W2GHCVeguCtkbnUPRcbGAZq2U/edit?usp=drivesdk&authuser=info@realmpcs.com']]},
- {h:'Personal',items:[
-  ['Personal log (11.11)','Sheet','https://docs.google.com/spreadsheets/d/1Hs4PxWhcFUTM0KyPVbZoOeuf9U6ppP8opb4WFU9Ndxk/edit?usp=drivesdk&authuser=info@realmpcs.com'],
-  ['Daily brief log (F&H + markets)','Doc','https://docs.google.com/document/d/1J5e419pKTw3sPWHJ5r4EyEnxN_YW6KCoXtW_-05o3f0/edit?usp=drivesdk&authuser=info@realmpcs.com'],
-  ['iCloud email changes','Sheet','https://docs.google.com/spreadsheets/d/1U8ZxfLWVUJPKN1c6ph9DzxlLx8MQ-DHF6S8jWz4JahM/edit?usp=drivesdk&authuser=info@realmpcs.com'],
-  ['Day trading portfolio (2021)','Word doc','https://docs.google.com/document/d/1xikG75vGle32BGQ4amcR8BlOSuKkqEID/edit?usp=drivesdk&ouid=110453120502933740420&rtpof=true&sd=true&authuser=info@realmpcs.com'],
-  ['Harley Shovelhead service manual','PDF','https://drive.google.com/file/d/13nZXugsnRczoCtMYFUhVMTnZ_3nLncw8/view?usp=drivesdk&authuser=info@realmpcs.com']]},
+ {h:'Links',note:'Links load after unlock. They will be served from the sealed backend once it is live.',items:[]},
  {h:'Private pages',items:[
-  ['Ange gateway','ange.html','./ange.html'],
-  ['$ tile (unlisted)','P&L page','./pnl-f4b99ead9bbc.html']]}
+  ['Ange gateway','ange.html','./ange.html']]}
 ];
 var $=function(s,r){return (r||document).querySelector(s)};
 var enc=new TextEncoder(), dec=new TextDecoder();
@@ -196,7 +179,7 @@ function openApp(){
  var h='<header><div class="k" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="#22d3ee"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="#22d3ee" stroke-width="2.4"/></svg></div><h1>Realm Private</h1><button class="sm" id="lockb">Lock</button></header><main>';
  h+='<section class="wide"><h2>My notes</h2><textarea id="notes" placeholder="Personal notes. Encrypted on this device only." aria-label="Personal notes"></textarea><div class="row" style="margin-top:8px"><button class="pri sm" id="savenow">Save</button><span class="st" id="savest">Encrypted on this device</span></div></section>';
  h+='<section class="wide"><h2>Edits / amend requests</h2><div class="row"><input id="edin" placeholder="What needs fixing or changing?" aria-label="New edit request"><button class="pri sm" id="edadd">Add</button><button class="sm" id="edcopy">Copy all for Ara</button></div><ul class="edits" id="edlist"></ul></section>';
- STATIC.forEach(function(g){h+='<section><h2>'+esc(g.h)+'</h2><ul class="links">'+g.items.map(function(i){return '<li><a href="'+esc(i[2])+'" target="_blank" rel="noopener noreferrer">'+esc(i[0])+'<small>'+esc(i[1])+'</small></a></li>'}).join('')+'</ul></section>'});
+ STATIC.forEach(function(g){h+='<section><h2>'+esc(g.h)+'</h2><ul class="links">'+(g.items.length?'':'<li class="st">'+esc(g.note||'')+'</li>')+g.items.map(function(i){return '<li><a href="'+esc(i[2])+'" target="_blank" rel="noopener noreferrer">'+esc(i[0])+'<small>'+esc(i[1])+'</small></a></li>'}).join('')+'</ul></section>'});
  h+='<section><h2>My links</h2><ul class="links" id="mylinks"></ul><div class="row" style="margin-top:8px"><input id="lname" placeholder="Name" aria-label="Link name"><input id="lurl" placeholder="https://…" aria-label="Link URL" inputmode="url"><button class="pri sm" id="ladd">Add link</button></div><p class="st">Saved encrypted on this device only.</p></section>';
  h+='<section class="wide"><h2>Security &amp; backup</h2><p class="note">A 4–6 digit PIN only guards against casual access on this device. Your notes, links and edits are encrypted and never leave this device unless you export them. The Google files open with your own Google sign-in. Nothing private is stored on the website.</p><div class="row" style="margin-top:10px"><button class="sm" id="chpin">Change PIN</button><button class="sm" id="exp">Export encrypted backup</button><button class="sm" id="imp">Import backup</button><button class="sm warn" id="wipe">Wipe this device</button></div></section>';
  h+='</main>';a.innerHTML=h;
