@@ -1,7 +1,7 @@
 # HANDOFF — Ara 2.0's Daily Loop
 
 **Owner:** Ange Barlas (Andrew Barlas, Realm PCS, Melbourne UTC+11)
-**Last updated:** 2026-10-19
+**Last updated:** 2026-10-20
 **Rule:** Every new session (box, phone app, voice, any Ara 2.0) reads this file FIRST, before touching anything. No rebuilding, no guessing URLs, no new deployments without Ange's yes.
 
 ## Where this lives (one brain)
@@ -171,7 +171,7 @@ Sources of truth (sheets):
 
 
 ### Business priorities
-- **Base P1 Craigieburn (WO 000915, The Base, 650 Hume Hwy) recert expires 22 Oct 2026.** Reply to David Barkla (Leedwell) drafted, booking **Wed 21 Oct 9:00am** and asking for the **24 Riley Rd work order** (Riley Rd P2 passed its 29 Sep due date). To david.barkla@leedwell.com.au, cc Robert.nucifora@leedwell.com.au, reply on Gmail thread 1a0405d4a2d37e2a. Text in box `LEEDWELL_DRAFT.md`. **NOT sent — waiting on Ange's Send + diary entry.** Riley Rd currently diarised Mon 19 Oct 9:45 (Ange to decide whether it moves to Wed 21).
+- **Base P1 Craigieburn (WO 000915, The Base, 650 Hume Hwy) recert expires 22 Oct 2026.** (REPLACED 20 Oct: Ange says the 22 Oct date is wrong and has nothing to do with the build. It is the client's stated date and hasn't been checked.) Reply to David Barkla (Leedwell) drafted, booking **Wed 21 Oct 9:00am** and asking for the **24 Riley Rd work order** (Riley Rd P2 passed its 29 Sep due date). To david.barkla@leedwell.com.au, cc Robert.nucifora@leedwell.com.au, reply on Gmail thread 1a0405d4a2d37e2a. Text in box `LEEDWELL_DRAFT.md`. **NOT sent — waiting on Ange's Send + diary entry.** Riley Rd currently diarised Mon 19 Oct 9:45 (Ange to decide whether it moves to Wed 21).
 - **Oasis (OC 438902Q, 33 Inkerman) real balance $89,086.80** per statement (not $77k/$81k/$80.6k — those are stale). A chase WAS sent 14 Oct to Kev + Darren ($89K, AGM ask); no reply yet. Follow-up text in box `CHASE_DRAFT.md` — **drafted, NOT sent.** Stale 13 Oct Gmail draft ($80,600 to accounts@) to be deleted by Ange.
 - **PI certificate (The Knight compliance):** The Knight's 7 Oct remittance shows PI "expired 06/08/2026". Current PI = EOS / Lloyd's Policy **03 PII 000519 04**, 4pm 6 Aug 2026 to 4pm 6 Aug 2027 (continuous). The renewal cert was **already sent to compliance@theknight.com.au on 30 Jul 2026** (thread 19ef70e5669ea1e0); The Knight likely filed the old RNL25.26 cert sent 29 Jul. Reply asking them to update records is in box `PI_DRAFT.md` — **drafted, NOT sent.** Attachment copies in box `/workspace/pi_cert/`. Ange to confirm EOS premium (invoice 47262) is paid.
 - Selling half of Realm PCS; Julie stepping out. Marijuana dispensary launch in progress.
@@ -230,6 +230,7 @@ Backup first: box `backups/handover_20261016_0915/` (HANDOVER.md, CHASE_DRAFT.md
 
 Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINISHES (or fails), not just at session end. Any session — phone, laptop, voice, Nova, routines — reads this file first and picks up from the newest line. A RUNNING line with no matching DONE means the job may have been cut off: check its output before redoing it. Format: `time (Melb) | STATUS | job | result / where it is`.
 
+- ~6:05am 20 Oct | DONE | 6am thrash: top 5 refreshed + live apps re-verify | desk/notes/certstudio/nirvana Fold8/index all HTTP 200; Engine ping 200 ok:true v1.2.0; Nirvana soft fix (#13) live; correction: apps call their own Apps Script backends, not the Engine URL (all 200). Seal / WCS Send / clasp / Barkla still Ange. Box: daily_loop_1020/LIVE_VERIFY_0603.md, THRASH_TOP5.md. Push pending (box gh not authed).
 - ~2:30am 20 Oct | DONE | Elon RED PR #12 fixes | CORE opener → exact I got you, bro. HANDOFF checked.; Nirvana gate GREEN ~90%/hard 100% + soft-fix draft; scrubbed supplier order # and gtemp email from public HANDOFF (box paths only).
 - ~2:20am 20 Oct | DONE | Fold8+apps live check + Claude ditch + thrash top5 | desk/notes/certstudio/nirvana Fold8 all HTTP 200; Engine ping ok; PR#10 frozen; Claude parked; THRASH_TOP5 on box daily_loop_1020; clasp still Ange one-tap (see box CLASP_ONE_TAP.md).
 - ~2:16am 20 Oct | DONE | Engine Allow verified live | curl/L core.ping → HTTP 200 ok:true Engine v1.2.0; CORS Origin github.io seen on redirect. clasp still wrong identity on box — Ange-only (see CLASP_ONE_TAP.md).
