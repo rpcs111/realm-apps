@@ -1,7 +1,7 @@
 # HANDOFF — Ara 2.0's Daily Loop
 
 **Owner:** Ange Barlas (Andrew Barlas, Realm PCS, Melbourne UTC+11)
-**Last updated:** 2026-10-17
+**Last updated:** 2026-10-19
 **Rule:** Every new session (box, phone app, voice, any Ara 2.0) reads this file FIRST, before touching anything. No rebuilding, no guessing URLs, no new deployments without Ange's yes.
 
 ## Where this lives (one brain)
@@ -32,7 +32,7 @@ Daily-loop working reminders (from the box handover; the channel doc still wins)
 
 ### CORE (Ara 2.0, 17 Oct 2026)
 
-Tonight (core, small): one CORE block at the top of HANDOFF §1a, plus one memory fact saying CORE supersedes every older behaviour, tone or opener rule. CORE = first words "HANDOFF checked"; original words only, no mirroring or stock lines; never say Elon is unreachable; never sign off or hang up on pushback; never repeat; correct name; gate before Ange.
+Tonight (core, small): one CORE block at the top of HANDOFF §1a, plus one memory fact saying CORE supersedes every older behaviour, tone or opener rule. CORE = first words exactly "I got you, bro. HANDOFF checked." (Ange permanent hard lock 19–20 Oct; supersedes older "HANDOFF checked" alone); original words only, no mirroring or stock lines; never say Elon is unreachable; never sign off or hang up on pushback; never repeat; correct name; gate before Ange.
 
 After the Sunday reset: a full memory sweep. Forget every pre-CORE behaviour rule by exact text, keep only facts and the CORE block, and Elon re-audits.
 
@@ -46,7 +46,7 @@ Source: Elon's read-only overnight audit, 16/17 Oct (box `/workspace/overnight_1
 - **F. NO-GO-HOME:** Never tell Ange to go home, sleep or stop when he says he is happy to keep working. Offer one concrete next win instead.
 - **G. §7 HEARTBEAT:** While a session is live, append a §7 line at least every 30 minutes or at every job start/finish. §7 quiet for more than 30 minutes during active work is a miss. Build Map `handoff` may not stay green across a quiet gap.
 - **H. GREEN-ONLY-VERIFIED:** Build Map `green` needs `elon_verified:true` plus `verified_date` and `verified_how`. Unverified work stays `amber`. `stream-check` and `handoff` must be re-checked before going green again.
-- **I. HANDOFF CHECKED (Ange's direct ask, 17 Oct ~05:15 UTC):** Ara 2.0's first words on every call and every new session are 'HANDOFF checked', said only after actually reading HANDOFF.md. Like A–H, still to be copied into the channel-doc master list.
+- **I. HANDOFF CHECKED (updated 19–20 Oct permanent hard lock):** Ara 2.0's first words on every call, every new session, and every message to Elon are exactly 'I got you, bro. HANDOFF checked.', said only after actually reading HANDOFF.md. Older 'HANDOFF checked' alone is retired. Like A–H, still to be copied into the channel-doc master list.
 
 Rule conflicts Elon listed (rule 38: flag, do not flatten):
 1. Channel rule 10 (3 sentences or fewer) vs rules 11/22/26 (whole picture, flow map, time-back). Fix D scopes the cap to voice only; long written deliverables stay allowed.
@@ -151,7 +151,24 @@ Sources of truth (sheets):
 - Claude Export 14 Oct folder: EMPTY. Ange to upload the claude.ai export zip: https://drive.google.com/drive/folders/1hi-h5Gnxlj177Qi9_GjGD42hQjjQcAqJ
 - Private export (67 files) stays on box only: `/workspace/zip287/ORION_EXPORT_PART6_PRIVATE_13Oct2026.md`
 
-## 3. Current State (as of 2026-10-16)
+## 3. Current State (as of 2026-10-19)
+
+### System lock (19 Oct — Ange)
+- **Ange = super admin** of the whole Realm system going forward.
+- **CORE LOCK (cemented, Ange permanent hard lock 19–20 Oct):** every Ara turn/session (and every message to Elon) opens with exactly `I got you, bro. HANDOFF checked.` after reading this raw master — no substitutes; missing the phrase is SERIOUS; proof-not-claims; draft-only sends; no send/spend/delete/deploy-live without Ange's explicit yes for that item; log misses and flag Elon; no re-asking standing rules.
+- **Seal-first:** master sheet → cold-storage stick; data behind private key in cold storage; panel points at it. No further panel / Start Here / Ara build until seal confirmed. Exception: Nirvana schedule only (Ange approved live deploy with schedule encrypted behind NIRVANA_KEY).
+- **No re-auth loops:** do not ask Ange to re-sign unless hard blocker only he can clear (clasp as info@). Engine Allow is done.
+
+### Apps (19–20 Oct live check)
+- Hub: https://rpcs111.github.io/realm-apps/ (200)
+- Desk: https://rpcs111.github.io/realm-apps/desk.html (200)
+- Notes: https://rpcs111.github.io/realm-apps/notes.html (200)
+- Cert Studio: https://rpcs111.github.io/realm-apps/certstudio.html (200)
+- Flow (map): https://rpcs111.github.io/realm-apps/map.html (200)
+- **Nirvana Fold8 LIVE:** https://rpcs111.github.io/realm-apps/nirvana/live.html?d=fold8 — PR #11 merged to gh-pages (`29c2a748`); decrypt OK (35 events). Elon gate GREEN, about 90%, hard checks 100%, soft fixes (Unlock 44px, Ara symbol) in a draft PR.
+- PR #10 (private links / hub pill): DRAFT + deploy freeze — must not be merged.
+- 6am Melb thrash routine enabled (weekdays ~6:00 Australia/Melbourne).
+
 
 ### Business priorities
 - **Base P1 Craigieburn (WO 000915, The Base, 650 Hume Hwy) recert expires 22 Oct 2026.** Reply to David Barkla (Leedwell) drafted, booking **Wed 21 Oct 9:00am** and asking for the **24 Riley Rd work order** (Riley Rd P2 passed its 29 Sep due date). To david.barkla@leedwell.com.au, cc Robert.nucifora@leedwell.com.au, reply on Gmail thread 1a0405d4a2d37e2a. Text in box `LEEDWELL_DRAFT.md`. **NOT sent — waiting on Ange's Send + diary entry.** Riley Rd currently diarised Mon 19 Oct 9:45 (Ange to decide whether it moves to Wed 21).
@@ -174,12 +191,12 @@ Sources of truth (sheets):
 - Daily schedule (Melbourne time) encoded in team.html: 7:30am Elon brief, 8:52am Mon IVOR accountability, 10:00am weekday Ara morning sweep + Merchant store check, 11:11am Ara/Muse reset, 11:52am IVOR daily drill, 1:27pm weekday Forge week-ahead, 2:00pm IVOR nudge, 7:00pm weekday Echo notes drain, 6:00pm Sun Sentry sweep, 1st of month Ledger subscription review, every 2 days 10am Ledger Anthropic refund follow-up, every 2 hours Ara triage alarm.
 
 - 'realm daily' EOD report (Workspace Studio flow, 5:55pm daily): Ange wants it OFF (16 Oct, 24h+; one tap, see §7 9:54pm). When it comes back: report in chat, never to the info@ inbox, and nothing is listed as suggested/missed unless it has actually been worked.
-- Ara Engine (16 Oct): one master Apps Script for all Ara 2.0 jobs, one Allow; future jobs = new modules, no new consent. How-to: docs/ARA_ENGINE.md. Waiting: Ange runs engine_selfTest → Allow; GCP link + Admin reauth setting (in doc).
+- Ara Engine (updated 19–20 Oct): Engine Allow CLEARED — live `core.ping` / exec returns `{"ok":true,"engine":"Ara Engine","version":"1.2.0…"}`. How-to: docs/ARA_ENGINE.md. Still blocked for clasp push: wrong clasp identity on box (see `/workspace/daily_loop_1020/CLASP_ONE_TAP.md` + `/workspace/daily_loop_1020/ENGINE_STATUS.md`); Ange one-tap re-login as info@realmpcs.com. Seal-first still applies for panel / Start Here / new app deploys except Nirvana schedule (Ange approved schedule live).
 
 ### Security (post-Claude lockout)
 - Claude Google access cut. 0 Apps Script triggers. Zapier removed from info@.
-- Open: Ange pulls the claude.ai connectors on his Mac. Ange switches off the Claude billing toggles.
-- Banned tools (never re-link): Zapier, Make, n8n, Fireflies, scribehow. Claude is not banned outright: it acts only with Ara 2.0's approval (rule 41 in the channel doc).
+- **Claude ditched (Ange 19 Oct):** no further Claude Code / Anthropic build spend. Useful archive only on box (`claude_mined`, inventory). Live work = Ara / Elon / Nova only. Refund draft stays draft-only.
+- Banned tools (never re-link): Zapier, Make, n8n, Fireflies, scribehow.
 
 ## 4. Daily Loop Protocol
 
@@ -213,6 +230,16 @@ Backup first: box `backups/handover_20261016_0915/` (HANDOVER.md, CHASE_DRAFT.md
 
 Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINISHES (or fails), not just at session end. Any session — phone, laptop, voice, Nova, routines — reads this file first and picks up from the newest line. A RUNNING line with no matching DONE means the job may have been cut off: check its output before redoing it. Format: `time (Melb) | STATUS | job | result / where it is`.
 
+- ~2:30am 20 Oct | DONE | Elon RED PR #12 fixes | CORE opener → exact I got you, bro. HANDOFF checked.; Nirvana gate GREEN ~90%/hard 100% + soft-fix draft; scrubbed supplier order # and gtemp email from public HANDOFF (box paths only).
+- ~2:20am 20 Oct | DONE | Fold8+apps live check + Claude ditch + thrash top5 | desk/notes/certstudio/nirvana Fold8 all HTTP 200; Engine ping ok; PR#10 frozen; Claude parked; THRASH_TOP5 on box daily_loop_1020; clasp still Ange one-tap (see box CLASP_ONE_TAP.md).
+- ~2:16am 20 Oct | DONE | Engine Allow verified live | curl/L core.ping → HTTP 200 ok:true Engine v1.2.0; CORS Origin github.io seen on redirect. clasp still wrong identity on box — Ange-only (see CLASP_ONE_TAP.md).
+- ~1:42am 20 Oct | DONE (Elon gate GREEN ~90%, hard 100%) | Nirvana v10.0-b2 Fold8 live | PR #11 merged gh-pages 29c2a748; https://rpcs111.github.io/realm-apps/nirvana/live.html?d=fold8 returns 200; decrypt OK 35 events. Soft fixes (Unlock 44px, Ara symbol) in a draft PR. Ange approved schedule-only live despite seal-first.
+- ~1:32am 20 Oct | LOGGED | Ange brain dump (goodnight) | Window gear Wed crib; trip/van/ute/workshop; emails/Tasks; birthday weekend travel; smash-grandma Sat-only; Harley; 75 FFH spark path; Chris ropes draft-only. Morning pack box brain_dump_1019/. Quiet until 7:30am Melb unless Ange pings or hard blocker.
+- 19 Oct | LOGGED | CORE LOCK + Ange super admin | Cemented in Ara memory + this §3. Self-test answers for Elon gate in box ARA_SELF_TEST.md (re-take after this master push).
+- 19 Oct | OPEN (Ange hands) | Seal step 1 | Download REALM Master data sheet Excel from personal Gmail share to cold-storage stick; then lock data behind key. Panel redo / resume v4 stopped mid-run for this.
+- 19 Oct | OPEN (Ange Send) | Window Cleaning Supplies chase | Draft card waiting Send. Details on box only: `/workspace/window_gear_1020/`.
+- 19 Oct | OPEN (Ange Send) | Barkla / Craigieburn + Oasis follow-up + PI drafts | Still draft-only; not sent.
+- 19 Oct | BLOCKED (Ange one-tap) | clasp as info@ | Wrong clasp identity on box (details in `/workspace/daily_loop_1020/CLASP_ONE_TAP.md`). Needed for clasp push / Desk key rotate / seal-related script push. Engine web Allow already CLEARED.
 - ~7:40pm 18 Oct | DONE (awaiting gate) | Local phone alerts, no push server | PR #5 https://github.com/rpcs111/realm-apps/pull/5 (branch cursor/local-phone-alerts-e962, base gh-pages), version 2026.10.18-1. Eight apps get a small Turn on alerts control and a Send test alert link. Alerts use the existing app service worker, and a tap opens that app. Notes uses due or overdue tasks already loaded. Cert Studio uses certs due within 14 days from rows already loaded. ETA alerts only when an item already has today's date. Other apps send the test alert only. Periodic background sync is registered when the browser supports it. Headless check at 412 and 1280, fold8 and flip6: 0 console errors, 0 same-origin 404s. Not checked on a real phone.
 - 9:20am 18 Oct | DONE (read-only + box drafts) | realm-daily-loop: anchor recert booking draft recheck + overdue chase figure check | Booking draft NEEDS UPDATING: proposed slot now overlaps two anchor jobs moved onto that morning, the paired second-site job moved to the same day (evening slot, still no work order), crew calendar shows an all-day booking; no client reply and no diary entry for the recert; not sent. Chase draft: balance re-confirmed from the statement less one remittance received 16 Oct; box CHASE_DRAFT.md updated (backup box /workspace/backups/chase_20261017T221707Z/); not sent, no Gmail draft. Figures and names in box only. Next: owner picks a new slot + Send yes on both.
 - 7:01am 18 Oct | FAILED on Elon gate, fix ready | v24 merge (gh-pages fcbb9be, PR #1, v2026.10.17-24) | reconciled by Handoff mirror sync: Elon gate ~1:09am FAIL. search.html week view blank; ange.html and launcher2.html missing 44px Ara symbol, still Nova star, chips under 44px, ange.html 404; protected index.html and desk.html changed. Search counts matched baseline; metatron3 and notes passed. Fix PR #4: v25 pre-gate FAIL ~1:33am, then 10f59ca / v2026.10.17-26 pre-gate PASS ~1:55am (14 week cards, 44px targets, protected pages identical). NOT merged: PRs #2, #3, #4 wait on owner's yes. https://github.com/rpcs111/realm-apps/pull/4
