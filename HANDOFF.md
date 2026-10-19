@@ -230,7 +230,7 @@ Backup first: box `backups/handover_20261016_0915/` (HANDOVER.md, CHASE_DRAFT.md
 
 Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINISHES (or fails), not just at session end. Any session — phone, laptop, voice, Nova, routines — reads this file first and picks up from the newest line. A RUNNING line with no matching DONE means the job may have been cut off: check its output before redoing it. Format: `time (Melb) | STATUS | job | result / where it is`.
 
-- 2:24am 20 Oct | DONE | HANDOFF master sync to main PR | https://github.com/rpcs111/realm-apps/pull/12 c80b24a6a979df927c4cdf98c35880d96f2d5eb9
+- 2:24am 20 Oct | DONE | HANDOFF master sync to main PR | https://github.com/rpcs111/realm-apps/pull/12 daedae2b83798887b5f959c1e0021c3dc2416828
 - ~2:20am 20 Oct | DONE | Fold8+apps live check + Claude ditch + thrash top5 | desk/notes/certstudio/nirvana Fold8 all HTTP 200; Engine ping ok; PR#10 frozen; Claude parked; THRASH_TOP5 on box daily_loop_1020; clasp still Ange one-tap (gtemp).
 - ~2:16am 20 Oct | DONE | Engine Allow verified live | curl/L core.ping → HTTP 200 ok:true Engine v1.2.0; CORS Origin github.io seen on redirect. clasp still gtemp — Ange-only.
 - ~1:42am 20 Oct | DONE (Elon gating Nirvana live) | Nirvana v10.0-b2 Fold8 live | PR #11 merged gh-pages 29c2a748; https://rpcs111.github.io/realm-apps/nirvana/live.html?d=fold8 returns 200; decrypt OK 35 events. Ange approved schedule-only live despite seal-first.
