@@ -30,7 +30,7 @@ body.locked #lock{display:flex}body.locked .app{visibility:hidden}
 .lk input{width:100%;padding:12px;border-radius:12px;border:1px solid var(--ln);background:var(--bg2);color:var(--tx);font-size:17px;text-align:center;margin-bottom:8px}
 .btn{display:inline-block;border:0;border-radius:12px;padding:11px 16px;background:var(--c);color:#00121c;font-weight:700}
 .btn.g{background:var(--bg3);color:var(--tx);border:1px solid var(--ln)}
-.lk .btn{width:100%}.err{color:var(--red);min-height:20px;font-size:13px;margin-top:6px}
+.lk .btn,#lkB{width:100%;min-height:44px;min-width:44px;box-sizing:border-box}.err{color:var(--red);min-height:20px;font-size:13px;margin-top:6px}
 .top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(11,15,20,.95);border-bottom:1px solid var(--ln);backdrop-filter:blur(8px);min-height:var(--top)}
 .brand{display:flex;align-items:center;gap:7px;font-weight:800;letter-spacing:.14em;font-size:15px;margin:0}
 .brand small{letter-spacing:.06em;font-weight:600;color:var(--mut);font-size:12px}
@@ -78,6 +78,9 @@ main{padding:4px 12px 40px;max-width:900px;margin:0 auto}
 .banner{margin:10px 12px 0;padding:8px 10px;border-radius:10px;font-size:13px;background:#2a2410;color:var(--amb);border:1px solid #5a4710}
 .banner.r{background:#2a1416;color:var(--red);border-color:#5a2025}
 @media(min-width:700px){.tl{margin-left:64px}.ev .tm{left:-78px;width:56px}.now span{left:-66px}}
+#araSym{all:unset;box-sizing:border-box;position:fixed;z-index:2147482500;right:calc(12px + env(safe-area-inset-right));bottom:calc(14px + env(safe-area-inset-bottom));left:auto;top:auto;width:44px;height:44px;min-width:44px;min-height:44px;margin:0;padding:0;border:0;border-radius:50%;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#araSym::before{content:"";position:absolute;inset:4px;border-radius:50%;background:#0b0f1a url(../pwa/hub-ara-v3-192.svg) center/cover no-repeat;border:1.5px solid #a78bfa;box-sizing:border-box}
+#araSym:focus-visible{outline:2px solid #fff;outline-offset:2px}
 </style>
 </head>
 <body class="locked">
@@ -237,5 +240,6 @@ $("fg").onclick=()=>{localStorage.removeItem(LS);location.reload()};
 const saved=localStorage.getItem(LS);if(saved)unlock(saved,true);else $("lkI").focus();
 })();
 </script>
+<button id="araSym" type="button" aria-label="Ara" title="Ara"></button>
 </body>
 </html>
