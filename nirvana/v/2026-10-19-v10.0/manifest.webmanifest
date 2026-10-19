@@ -1,0 +1,37 @@
+{
+ "id": "nirvana-v10",
+ "name": "Nirvana",
+ "short_name": "Nirvana",
+ "description": "Nirvana v10.0 \u00b7 2026-10-19 \u00b7 build 1",
+ "start_url": "./index.html?app=nirvana",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#0b0f14",
+ "theme_color": "#0b0f14",
+ "icons": [
+  {
+   "src": "icons/icon-v10-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icons/icon-v10-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icons/icon-v10-maskable-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "maskable"
+  },
+  {
+   "src": "icons/icon-v10-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0b0f14">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'">
+<title>Nirvana</title>
+<meta name="application-name" content="Nirvana"><meta name="apple-mobile-web-app-title" content="Nirvana">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest?v=2026-10-19-v10.0-b2">
+<link rel="apple-touch-icon" href="icons/icon-v10-180.png"><link rel="icon" href="icons/icon-v10-192.png">
+<style>
+html,body{margin:0;background:#0b0f14;color:#e8eef4;font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;background:radial-gradient(circle at 50% 30%,#0f2130,#0b0f14 70%)}
+.lk{width:100%;max-width:340px;text-align:center}
+.lk img{width:88px;height:88px;border-radius:20px;display:block;margin:0 auto 10px}
+h2{margin:0 0 2px;letter-spacing:.18em;font-size:22px}
+.st{font:700 11px ui-monospace,Menlo,monospace;color:#60ff15;margin:0 0 12px}
+p{color:#8a98a8;margin:0 0 12px}
+input{width:100%;box-sizing:border-box;padding:12px;border-radius:12px;border:1px solid #26313d;background:#121820;color:#e8eef4;font-size:17px;text-align:center;margin-bottom:8px}
+button{width:100%;border:0;border-radius:12px;padding:11px 16px;background:#00aeef;color:#00121c;font:700 15px system-ui;cursor:pointer}
+.err{color:#ff5a5a;min-height:20px;font-size:13px;margin-top:8px}
+.ln{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px}.ln a{color:#00aeef;font-size:12.5px;text-decoration:none;border:1px solid #26313d;border-radius:99px;padding:3px 10px}
+</style></head>
+<body><div class="w"><div class="lk">
+<img src="icons/icon-v10-192.png" alt="">
+<h2>NIRVANA</h2><div class="st">v10.0 · 2026-10-19 · build 2</div>
+<p id="msg">Enter your key once on this phone</p>
+<form id="f" autocomplete="off"><input id="k" type="password" placeholder="Key" autocomplete="current-password" aria-label="Key"><button id="b" type="submit">Unlock</button></form>
+<div class="err" id="e"></div>
+<div class="ln"><a href="index.html">Nirvana</a><a href="flow.html">Flow</a><a href="live.html">Live</a><a href="raw.html">Raw</a><a href="versions.html">Versions</a></div>
+</div></div>
+<script>
+/* Nirvana shared unlock: AES-256-GCM, PBKDF2-SHA256. Key kept on this device only (localStorage). */
+var NVK="nirvana_key_v1";
+function nvB64(s){return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0)})}
+async function nvDec(o,pass){
+  var km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pass),"PBKDF2",false,["deriveKey"]);
+  var k=await crypto.subtle.deriveKey({name:"PBKDF2",hash:"SHA-256",salt:nvB64(o.salt),iterations:o.iter},km,{name:"AES-GCM",length:256},false,["decrypt"]);
+  var pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:nvB64(o.iv)},k,nvB64(o.ct));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+async function nvFetch(src){var r=await fetch(src+(src.indexOf("?")<0?"?":"&")+"t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("Couldn't load ("+r.status+")");return r.json()}
+
+(function(){var MODE="main";
+try{var dm=location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})(?:&|$)/);if(dm){localStorage.setItem("realm_device",dm[1].toLowerCase());var q=location.search.replace(/([?&])d=[^&]*&?/,"$1").replace(/[?&]$/,"");history.replaceState(null,"",location.pathname+q+location.hash)}}catch(_e){}
+async function open(pass,stored){var e=document.getElementById("e"),b=document.getElementById("b");e.textContent="";b.disabled=true;b.textContent="Unlocking…";
+ try{var o=await nvFetch("main.enc.json");var d=await nvDec(o,pass);localStorage.setItem(NVK,pass);
+  if(MODE==="flow")sessionStorage.setItem("nv_open","flow");
+  document.open();document.write(d.html);document.close();
+ }catch(x){b.disabled=false;b.textContent="Unlock";
+  if(x&&x.name==="OperationError"){if(stored)localStorage.removeItem(NVK);e.textContent=stored?"Key changed. Enter the new key.":"Wrong key. Try again."}else e.textContent=x.message||String(x)}}
+document.getElementById("f").onsubmit=function(ev){ev.preventDefault();var v=document.getElementById("k").value;if(v)open(v,false)};
+var s=localStorage.getItem(NVK);if(s)open(s,true);
+})();
+</script></body></html>
