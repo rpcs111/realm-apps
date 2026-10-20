@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#0b0f14">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'; frame-src blob:">
 <title>Flow</title>
 <meta name="application-name" content="Nirvana"><meta name="apple-mobile-web-app-title" content="Nirvana">
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
@@ -30,6 +30,8 @@ html,body{margin:0;background:#0b0f14;color:#e8eef4;font:15px/1.4 system-ui,-app
 #nvWin canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 #nvWin p{position:relative;z-index:1;font:600 22px/1.35 system-ui;max-width:18em}
 #nvWin button{position:relative;z-index:1;width:auto;min-width:88px;margin-top:12px}
+#unlockedFrame{position:fixed;inset:0;z-index:30;width:100%;height:100%;border:0;background:#0b0f14}
+#unlockedFrame[hidden]{display:none}
 .toast{position:fixed;z-index:130;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;border-radius:999px;padding:10px 16px;font-weight:700}
 .toast[hidden]{display:none}
 .lk img{width:88px;height:88px;border-radius:20px;display:block;margin:0 auto 10px}
@@ -61,6 +63,7 @@ button{width:100%;border:0;border-radius:12px;padding:11px 16px;background:#00ae
 </ul>
 <div class="ln"><a href="index.html">Nirvana</a><a href="flow.html">Flow</a><a href="live.html">Live</a><a href="raw.html">Raw</a><a href="versions.html">Versions</a></div>
 </div></div>
+<iframe id="unlockedFrame" title="Unlocked content" sandbox="allow-scripts allow-forms allow-popups" referrerpolicy="no-referrer" hidden></iframe>
 <div id="nvWin" hidden><canvas id="nvWinCv" aria-hidden="true"></canvas><p>Nirvana is live. Ange, you're a genius. The team's a genius.</p><button type="button" id="nvWinClose">Close</button></div>
 <div id="nvKeyToast" class="toast" role="status" hidden></div>
 <script>
@@ -74,6 +77,58 @@ async function nvDec(o,pass){
   return JSON.parse(new TextDecoder().decode(pt));
 }
 async function nvFetch(src){var r=await fetch(src+(src.indexOf("?")<0?"?":"&")+"t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("Couldn't load ("+r.status+")");return r.json()}
+var NVSTORE="nv_frame_store_v1";
+function nvStoreRead(){
+  try{
+    var o=JSON.parse(localStorage.getItem(NVSTORE)||"{}");
+    if(!o||typeof o!=="object")o={};
+    if(!o.local||typeof o.local!=="object")o.local={};
+    if(!o.session||typeof o.session!=="object")o.session={};
+    return o;
+  }catch(e){return {local:{},session:{}}}
+}
+function nvStoreWrite(o){try{localStorage.setItem(NVSTORE,JSON.stringify(o))}catch(e){}}
+function nvFrameListen(){
+  if(nvFrameListen.on)return;
+  nvFrameListen.on=true;
+  window.addEventListener("message",function(ev){
+    var frame=document.getElementById("unlockedFrame");
+    if(!frame||ev.source!==frame.contentWindow)return;
+    var m=ev.data;
+    if(!m||m.nv!=="store"||(m.kind!=="local"&&m.kind!=="session"))return;
+    if(m.op!=="set"&&m.op!=="del"&&m.op!=="clear")return;
+    var box=nvStoreRead();
+    if(m.op==="clear")box[m.kind]={};
+    else if(typeof m.key==="string"){
+      if(m.op==="set")box[m.kind][m.key]=String(m.val);
+      else delete box[m.kind][m.key];
+    }else return;
+    nvStoreWrite(box);
+  });
+}
+function nvPrepare(html){
+  var boot=JSON.stringify(nvStoreRead()).replace(/</g,"\\u003c").replace(/\u2028/g,"\\u2028").replace(/\u2029/g,"\\u2029");
+  var shim='<script>(function(){var boot='+boot+';function make(kind){var data=Object.create(null);var src=boot[kind]||{};Object.keys(src).forEach(function(k){data[k]=String(src[k])});function send(op,key,val){try{parent.postMessage({nv:"store",kind:kind,op:op,key:key,val:val},"*")}catch(e){}}return {getItem:function(k){k=String(k);return Object.prototype.hasOwnProperty.call(data,k)?data[k]:null},setItem:function(k,v){k=String(k);v=String(v);data[k]=v;send("set",k,v)},removeItem:function(k){k=String(k);delete data[k];send("del",k)},clear:function(){Object.keys(data).forEach(function(k){delete data[k]});send("clear")},key:function(i){var ks=Object.keys(data);return ks[i]==null?null:ks[i]},get length(){return Object.keys(data).length}}}function install(name,store){try{Object.defineProperty(window,name,{configurable:true,get:function(){return store}})}catch(e){try{window[name]=store}catch(e2){}}}install("localStorage",make("local"));install("sessionStorage",make("session"));})();<\/script>';
+  var skip='<script>window.__nvKeyGate=1;(function(){function go(){try{if(document.body)document.body.classList.remove("locked")}catch(e){}var l=document.getElementById("lock");if(l){l.hidden=true;l.style.display="none"}if(typeof unlock==="function"){try{unlock()}catch(e){}}window.lock=function(){if(!window.__nvKeyGate)return;try{if(typeof unlock==="function")unlock()}catch(e){}}}go();document.addEventListener("DOMContentLoaded",go);var n=0,iv=setInterval(function(){go();if(++n>25)clearInterval(iv)},100);document.addEventListener("visibilitychange",function(){setTimeout(go,0)});})();<\/script>';
+  html=String(html||"");
+  if(/<head\b[^>]*>/i.test(html))html=html.replace(/<head\b[^>]*>/i,function(m){return m+shim});
+  else html=shim+html;
+  if(/<\/body>/i.test(html))html=html.replace(/<\/body>/i,skip+"</body>");
+  else html+=skip;
+  return html;
+}
+function nvMount(html){
+  var frame=document.getElementById("unlockedFrame");
+  if(!frame)return;
+  nvFrameListen();
+  if(frame.dataset.url)URL.revokeObjectURL(frame.dataset.url);
+  var url=URL.createObjectURL(new Blob([nvPrepare(html)],{type:"text/html"}));
+  frame.dataset.url=url;
+  frame.hidden=false;
+  frame.src=url;
+  var gate=document.querySelector(".w");
+  if(gate)gate.hidden=true;
+}
 
 (function(){var MODE="flow",nvBusy=false,WIN_KEY="nv_win_20261020",deferred=null;
 try{var dm=location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})(?:&|$)/);if(dm){localStorage.setItem("realm_device",dm[1].toLowerCase());var q=location.search.replace(/([?&])d=[^&]*&?/,"$1").replace(/[?&]$/,"");history.replaceState(null,"",location.pathname+q+location.hash)}}catch(_e){}
@@ -97,17 +152,16 @@ function confetti(){
     if(now-t0<3200)requestAnimationFrame(frame);
   })(t0);
 }
-function goWrite(html){document.open();document.write(html);document.close()}
 function afterOk(html){
   toast("Key saved on this phone ✓");
   var seen=false;try{seen=localStorage.getItem(WIN_KEY)==="1"}catch(e){}
-  if(seen){setTimeout(function(){goWrite(html)},600);return}
+  if(seen){setTimeout(function(){nvMount(html)},600);return}
   try{localStorage.setItem(WIN_KEY,"1")}catch(e){}
   var box=document.getElementById("nvWin");
-  if(!box){goWrite(html);return}
+  if(!box){nvMount(html);return}
   box.hidden=false;confetti();
   var done=false;
-  function close(){if(done)return;done=true;goWrite(html)}
+  function close(){if(done)return;done=true;nvMount(html)}
   var btn=document.getElementById("nvWinClose");if(btn)btn.onclick=close;
   setTimeout(close,3000);
 }

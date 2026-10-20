@@ -509,11 +509,52 @@ async function nvDec(o,pass){
   return JSON.parse(new TextDecoder().decode(pt));
 }
 async function nvFetch(src){var r=await fetch(src+(src.indexOf("?")<0?"?":"&")+"t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("Couldn't load ("+r.status+")");return r.json()}
+var NVSTORE="nv_frame_store_v1";
+function nvStoreRead(){
+  try{
+    var o=JSON.parse(localStorage.getItem(NVSTORE)||"{}");
+    if(!o||typeof o!=="object")o={};
+    if(!o.local||typeof o.local!=="object")o.local={};
+    if(!o.session||typeof o.session!=="object")o.session={};
+    return o;
+  }catch(e){return {local:{},session:{}}}
+}
+function nvStoreWrite(o){try{localStorage.setItem(NVSTORE,JSON.stringify(o))}catch(e){}}
+function nvFrameListen(){
+  if(nvFrameListen.on)return;
+  nvFrameListen.on=true;
+  window.addEventListener("message",function(ev){
+    var frame=document.getElementById("unlockedFrame");
+    if(!frame||ev.source!==frame.contentWindow)return;
+    var m=ev.data;
+    if(!m||m.nv!=="store"||(m.kind!=="local"&&m.kind!=="session"))return;
+    if(m.op!=="set"&&m.op!=="del"&&m.op!=="clear")return;
+    var box=nvStoreRead();
+    if(m.op==="clear")box[m.kind]={};
+    else if(typeof m.key==="string"){
+      if(m.op==="set")box[m.kind][m.key]=String(m.val);
+      else delete box[m.kind][m.key];
+    }else return;
+    nvStoreWrite(box);
+  });
+}
+function nvPrepare(html){
+  var boot=JSON.stringify(nvStoreRead()).replace(/</g,"\\u003c").replace(/\u2028/g,"\\u2028").replace(/\u2029/g,"\\u2029");
+  var shim='<script>(function(){var boot='+boot+';function make(kind){var data=Object.create(null);var src=boot[kind]||{};Object.keys(src).forEach(function(k){data[k]=String(src[k])});function send(op,key,val){try{parent.postMessage({nv:"store",kind:kind,op:op,key:key,val:val},"*")}catch(e){}}return {getItem:function(k){k=String(k);return Object.prototype.hasOwnProperty.call(data,k)?data[k]:null},setItem:function(k,v){k=String(k);v=String(v);data[k]=v;send("set",k,v)},removeItem:function(k){k=String(k);delete data[k];send("del",k)},clear:function(){Object.keys(data).forEach(function(k){delete data[k]});send("clear")},key:function(i){var ks=Object.keys(data);return ks[i]==null?null:ks[i]},get length(){return Object.keys(data).length}}}function install(name,store){try{Object.defineProperty(window,name,{configurable:true,get:function(){return store}})}catch(e){try{window[name]=store}catch(e2){}}}install("localStorage",make("local"));install("sessionStorage",make("session"));})();<\/script>';
+  var skip='<script>window.__nvKeyGate=1;(function(){function go(){try{if(document.body)document.body.classList.remove("locked")}catch(e){}var l=document.getElementById("lock");if(l){l.hidden=true;l.style.display="none"}if(typeof unlock==="function"){try{unlock()}catch(e){}}window.lock=function(){if(!window.__nvKeyGate)return;try{if(typeof unlock==="function")unlock()}catch(e){}}}go();document.addEventListener("DOMContentLoaded",go);var n=0,iv=setInterval(function(){go();if(++n>25)clearInterval(iv)},100);document.addEventListener("visibilitychange",function(){setTimeout(go,0)});})();<\/script>';
+  html=String(html||"");
+  if(/<head\b[^>]*>/i.test(html))html=html.replace(/<head\b[^>]*>/i,function(m){return m+shim});
+  else html=shim+html;
+  if(/<\/body>/i.test(html))html=html.replace(/<\/body>/i,skip+"</body>");
+  else html+=skip;
+  return html;
+}
 function nvMount(html){
   var frame=document.getElementById("unlockedFrame");
   if(!frame)return;
+  nvFrameListen();
   if(frame.dataset.url)URL.revokeObjectURL(frame.dataset.url);
-  var url=URL.createObjectURL(new Blob([String(html||"")],{type:"text/html"}));
+  var url=URL.createObjectURL(new Blob([nvPrepare(html)],{type:"text/html"}));
   frame.dataset.url=url;
   frame.src=url;
   location.hash="unlocked";
