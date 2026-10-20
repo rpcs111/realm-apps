@@ -52,6 +52,16 @@ for (const gone of ["Projects", "Amend", "History thread", "1300 follow-ups", "P
 }
 assert.equal(flow.includes("nvMount"), false, "flow must not mount the old board");
 assert.equal(index.includes("nvMount"), false, "home must not mount the old board");
+assert.match(index, /a\.tap\{[^}]*display:\s*inline-flex/);
+assert.match(index, /a\.tap\{[^}]*min-height:\s*44px/);
+assert.equal(index.includes('id="nvLock"'), true);
+assert.match(index, /id="nvLock"[^>]*>Lock</);
+const team = index.slice(index.indexOf('id="sheet-team"'), index.indexOf('id="nvWin"'));
+assert.equal(team.includes("grokbot://app/v1/agent?id=0aca7e2c-756b-4a08-a1c7-d0751a5703bb"), true, "Ara team chat link");
+assert.equal(team.includes("grokbot://app/v1/agent?id=7a2f50df-0230-48ec-855a-33b9e7bfeb71"), true, "Marvin team chat link");
+assert.match(index, /#nvMapToast\{[^}]*position:\s*static/);
+assert.equal(index.includes("localStorage.removeItem(NVK)"), true);
+assert.equal(index.includes("sessionStorage.removeItem(NVK)"), true);
 
 const meta = readFileSync(new URL("./manifest.webmanifest", import.meta.url), "utf8");
 assert.equal(meta.includes("Nirvana · v11 · 2026-10-20"), true);
