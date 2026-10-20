@@ -2,7 +2,7 @@
 <script src="js/realm-key.js?v=20261016a"></script><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#000000"><title>Nirvana</title>
-<link rel="manifest" href="realm-apps-v3.webmanifest?v=20261020t80"><link rel="icon" type="image/svg+xml" sizes="any" href="pwa/icon-ara-r.svg?v=20261018-3"><link rel="icon" type="image/png" sizes="192x192" href="pwa/icon-ara-r-192.png?v=20261018-3"><link rel="apple-touch-icon" sizes="180x180" href="pwa/icon-ara-r-apple-180.png?v=20261018-3"><meta name="application-name" content="Realm Apps"><meta name="apple-mobile-web-app-title" content="Realm Apps">
+<link rel="manifest" href="realm-apps-v3.webmanifest?v=20261020t81"><link rel="icon" type="image/svg+xml" sizes="any" href="pwa/icon-ara-r.svg?v=20261018-3"><link rel="icon" type="image/png" sizes="192x192" href="pwa/icon-ara-r-192.png?v=20261018-3"><link rel="apple-touch-icon" sizes="180x180" href="pwa/icon-ara-r-apple-180.png?v=20261018-3"><meta name="application-name" content="Nirvana"><meta name="apple-mobile-web-app-title" content="Nirvana">
 <style>
 *{box-sizing:border-box}html,body{overflow-x:hidden}body{min-height:100dvh;padding-bottom:calc(40px + env(safe-area-inset-bottom));padding-top:calc(20px + env(safe-area-inset-top));margin:0;background:#fff;color:#111827;font:16px/1.4 system-ui,-apple-system,Roboto,sans-serif;padding:20px 16px 40px}
 h1{margin:0 0 4px;font-size:26px;letter-spacing:.04em}.sub{color:#6b7280;font-size:14px;margin-bottom:16px}
@@ -104,10 +104,10 @@ araFallback("instant");/* built-in tiles show at once; the live list replaces th
    return '<a href="'+esc(x.u)+'" target="'+tileTarget(x)+'" rel="'+tileRel(x)+'" class="'+(x.reg?'reg':'')+'" style="background:'+(x.reg?'#047857':(x.c||COLORS[i%COLORS.length]))+'">'+(x.badge?'<i>'+esc(x.badge)+'</i>':'')+SYM+'<b>'+esc(x.name)+'</b><span>'+esc(x.sub)+'</span></a>'}).join("");
 }).catch(function(e){araFallback('Could not load tiles: '+e.message+'.')});
 
-if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js?v=20261020t80",{updateViaCache:"none"});
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js?v=20261020t81",{updateViaCache:"none"});
 </script><script>/* bot line reconnect hooks (see js/reconnect.js) */
 (function(){if(!window.RealmLine)return;RealmLine.line({name:'Desk v9 (tiles)',ping:function(){return RealmLine.pingExec(EXEC)},onUp:function(){if(document.querySelector('#grid .err'))location.reload()}});})();</script><script src="voice.js?v=20261016v5"></script>
 <script src="js/saveapp.js?v=20261017s" data-mount="header .nav"></script><script src="js/realm-ui.js?v=20261016b"></script>
 <script src="js/ara-version.js" defer></script>
-<script src="js/ara-install.js?v=20261017c" defer></script><script src="js/nirvana.js?v=20261017b" data-app="hub" data-name="Realm Apps" defer></script>
+<script src="js/ara-install.js?v=20261017c" defer></script><script src="js/nirvana.js?v=20261017b" data-app="hub" data-name="Nirvana" defer></script>
 </body></html>
