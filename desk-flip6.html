@@ -463,8 +463,9 @@ function tmsg(t){$("talkMsg").textContent=t}
 function joinFinal(res){var parts=[];for(var i=0;i<res.length;i++){if(!res[i].isFinal)continue;var t=String(res[i][0].transcript||"").trim();if(!t)continue;
   var p=parts.length?parts[parts.length-1]:"";if(p&&t.toLowerCase().indexOf(p.toLowerCase())===0)parts[parts.length-1]=t;else if(p&&p.toLowerCase().indexOf(t.toLowerCase())===0){}else parts.push(t)}
   return parts.join(" ").replace(/\s+/g," ").trim()}
-/* "Sent" only after NoteRelay emits landed for this note. waiting/offline means the relay call failed. */
+/* "Sent" only after NoteRelay emits landed for this note. A failed call stays queued and retries itself. */
 var araPending={},araGen=0,araHooked=false;
+var ARA_RETRY="Not sent yet. It will retry by itself.";
 function araRelayEv(ev){
   if(!ev)return;
   var i,n,item,id,cur;
@@ -478,14 +479,32 @@ function araRelayEv(ev){
       if($("talkIn").value.trim()===item.t)$("talkIn").value="";
     }
   }else if(ev.state==="waiting"||ev.state==="offline"){
-    for(id in araPending){cur=araPending[id];if(cur.gen===araGen)tmsg("Wasn\u2019t sent. Your text is still here.");}
+    for(id in araPending){cur=araPending[id];if(cur.gen!==araGen)continue;
+      tmsg(ARA_RETRY);$("talkIn").value="";}
   }
+}
+function araWaitingId(body){
+  var raw;try{raw=JSON.parse(localStorage.getItem(NoteRelay.OUTBOX)||"[]");}catch(e){return "";}
+  if(!Array.isArray(raw))return "";
+  for(var i=0;i<raw.length;i++){
+    var x=raw[i];if(!x||x.who!=="ara"||typeof x.text!=="string")continue;
+    var nl=x.text.indexOf("\n");
+    if(nl>=0&&x.text.slice(nl+1)===body)return x.noteId||"";
+  }
+  return "";
 }
 function sendAra(t){t=String(t||"").trim();if(!t)return false;var who=document.body.classList.contains("own-julie")?"Julie":"Ange";
   var id="desk_"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-  var body="[Desk · "+DEVL+" · "+who+"] "+t;sent++;window.__araSends=(window.__araSends||0)+1;
+  var body="[Desk · "+DEVL+" · "+who+"] "+t;
   if(!window.NoteRelay){tmsg("Relay not loaded: saved nothing.");return false;}
   if(!araHooked&&typeof NoteRelay.onChange==="function"){NoteRelay.onChange(araRelayEv);araHooked=true;}
+  var waiting=araWaitingId(body);
+  if(waiting){
+    if(!araPending[waiting])araPending[waiting]={t:t,gen:araGen};
+    tmsg(ARA_RETRY);$("talkIn").value="";
+    return true;
+  }
+  sent++;window.__araSends=(window.__araSends||0)+1;
   var gen=++araGen;
   if(!NoteRelay.queue("ara",id,"Desk voice",body)){tmsg("Wasn\u2019t sent. Your text is still here.");return false;}
   araPending[id]={t:t,gen:gen};
