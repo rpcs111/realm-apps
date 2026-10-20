@@ -369,3 +369,5 @@ Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINIS
 - Security: sign-in help alerts and a recovery link on the Workspace account; 2SV off. Flagged to Ange.
 - Ring group (Ara calls Ange's phones): Ara has no telephony. Research options/cost on 17 Oct.
 - Inbox triage done: unread since Monday counted, ~72% noise. Details are private and kept off this repo.
+
+- Driver issues ongoing; 25% of weekly use flogged out in two days (as of 2026-10-20) — flagged as pretty shit, needs fixing.
