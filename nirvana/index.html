@@ -39,9 +39,8 @@ button{font:inherit;color:inherit}
 .lane.ara{border-color:#00aeef;background:linear-gradient(165deg,#0a4666,#062033);color:#e7f7ff}
 .lane.ara .nm{color:#00aeef}
 .lane.ara .role{color:#9ed8f2}
-.lane.tera{border-color:#9c7a1c;background:linear-gradient(160deg,#f6e2a0,#d4af37 48%,#9c7a1c);color:#1a1406}
-.lane.tera .role{color:#3d3112}
-.lane.tera .dot{background:#0b8f55}
+.lane.tera{border-color:#9c7a1c;background:linear-gradient(160deg,#f3d77a,#d4af37 48%,#9c7a1c);color:#0b0f14}
+.lane.tera .nm,.lane.tera .role{color:#0b0f14}
 .lights{width:14px;height:40px;flex:none;display:block}
 .sopc{position:absolute;right:8px;bottom:8px;z-index:2;min-height:28px;min-width:44px;padding:4px 8px;border-radius:999px;border:1px solid #d4af37;background:#0b0f14;color:#d4af37;font:700 10px ui-monospace,Menlo,monospace;cursor:pointer}
 .lane.ara .sopc{border-color:#00aeef;color:#00aeef}
@@ -66,8 +65,8 @@ body.julie-on .tf{display:none}
 .block{background:linear-gradient(165deg,#121820,#0b0f14);border:1px solid #d4af37;border-radius:14px;padding:12px 14px;margin:0 0 10px}
 .block h2{margin:0 0 4px;font-size:16px}
 .draft{margin-top:6px;font:700 12px ui-monospace,Menlo,monospace;color:#d4af37}
-.goldh{background:linear-gradient(160deg,#f6e2a0,#d4af37 48%,#9c7a1c);color:#1a1406;border-radius:14px;padding:12px}
-.goldh h1,.goldh p{color:#1a1406}
+.goldh{background:linear-gradient(160deg,#f3d77a,#d4af37 48%,#9c7a1c);color:#0b0f14;border-radius:14px;padding:12px}
+.goldh h1,.goldh p{color:#0b0f14}
 .cardbox{width:100%;max-width:360px;margin:0 auto;text-align:center}
 .cardbox>img{width:72px;height:72px;display:block;margin:0 auto 8px}
 .dots{display:flex;gap:10px;justify-content:center;margin:0 0 14px}
@@ -111,7 +110,7 @@ body.julie-on .tf{display:none}
 }
 </style></head>
 <body>
-<a class="tf" href="#terafab" aria-label="Terafab"><img src="../pwa/lanes/terafab_gold.svg" width="22" height="22" alt=""></a>
+<a class="tf" href="#terafab" aria-label="Terafab"><img src="../pwa/lanes/terafab.svg" width="22" height="22" alt=""></a>
 <div class="board" id="board"><div class="w"><div class="lk">
 <div class="gate">
 <img src="icons/icon-v10-192.png" width="88" height="88" alt="">
@@ -156,7 +155,7 @@ body.julie-on .tf{display:none}
 <tr><td><img src="../pwa/lanes/ara.svg" width="22" height="22" alt="">Ara 2.1</td><td>Second brain for the four apps.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/marvin_alien.svg" width="22" height="22" alt="">Marvin Musk</td><td>Marvin Musk lane.</td><td>draft</td></tr>
 <tr><td></td><td>Infra — task under Marvin/Bastion.</td><td>draft</td></tr>
-<tr><td><img src="../pwa/lanes/terafab_gold.svg" width="22" height="22" alt="">Terafab</td><td>Money: trades, F&amp;H store, Qantas, pay-it-forward.</td><td>draft</td></tr>
+<tr><td><img src="../pwa/lanes/terafab.svg" width="22" height="22" alt="">Terafab</td><td>Money: trades, F&amp;H store, Qantas, pay-it-forward.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/falcon9.svg" width="22" height="22" alt="">Falcon 9</td><td>Falcon 9 lane.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/neural-mesh.svg" width="22" height="22" alt="">Neuralink</td><td>After Dark gate.</td><td>draft</td></tr>
 </tbody>
@@ -190,7 +189,7 @@ body.julie-on .tf{display:none}
 
 <section id="terafab" class="panel" aria-label="Terafab">
 <div class="wrap">
-<div class="bar goldh"><img src="../pwa/lanes/terafab_gold.svg" width="48" height="48" alt=""><div><h1>TERAFAB</h1><p>2026.10.20-LANES · SOP draft</p></div></div>
+<div class="bar goldh"><img src="../pwa/lanes/terafab.svg" width="48" height="48" alt=""><div><h1>TERAFAB</h1><p>2026.10.20-LANES · SOP draft</p></div></div>
 <p><a class="back" href="#board">Board</a> <button type="button" class="sopc inline" data-sop="terafab">SOP</button></p>
 <section class="block"><h2>Trades</h2><p>The work this lane is tracking.</p><div class="draft">Status: draft</div></section>
 <section class="block"><h2>F&amp;H store</h2><p>Store lane, held as a draft.</p><div class="draft">Status: draft</div></section>
@@ -249,7 +248,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
   var LANES=[
     {id:"ara",name:"Ara 2.1",cls:"ara",icon:"../pwa/lanes/ara.svg",role:"Second brain for the four apps.",bot:"0aca7e2c-756b-4a08-a1c7-d0751a5703bb"},
     {id:"marvin",name:"Marvin Musk",icon:"../pwa/lanes/marvin_alien.svg",role:"Marvin Musk lane."},
-    {id:"terafab",name:"Terafab",cls:"tera",icon:"../pwa/lanes/terafab_gold.svg",role:"Money: trades, F&H store, Qantas, pay-it-forward."},
+    {id:"terafab",name:"Terafab",cls:"tera",icon:"../pwa/lanes/terafab.svg",role:"Money: trades, F&H store, Qantas, pay-it-forward."},
     {id:"falcon",name:"Falcon 9",icon:"../pwa/lanes/falcon9.svg",role:"Falcon 9 lane."},
     {id:"neuralink",name:"Neuralink",icon:"../pwa/lanes/neural-mesh.svg",role:"After Dark gate.",href:"#after-dark"}
   ];
