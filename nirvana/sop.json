@@ -22,7 +22,7 @@
       "id": "terafab",
       "name": "Terafab",
       "icon": "../pwa/lanes/terafab.svg",
-      "does": "Terafab holds the shop, travel, and give-forward jobs.",
+      "does": "Terafab holds trades, the shop, the Qantas claim and pay-it-forward.",
       "helps": "You see those jobs on one gold tile.",
       "saves": ["Goal: cut searching for a job by 80%.", "Goal: keep each job in its own box.", "Goal: show a draft before it is called done."],
       "rules": ["Nothing gets sent without Ange saying yes.", "Proof, not promises.", "Nothing gets deleted."]
