@@ -10,7 +10,7 @@
 <meta name="ara-build" content="2026.10.20-SB1"><meta name="application-name" content="Desk · Fold 8">
 <title>Desk · Fold 8 · Ara 2.1</title>
 <link rel="icon" href="pwa/desk-scratch.svg"><link rel="apple-touch-icon" href="pwa/desk-scratch-512.png">
-<link rel="manifest" href="desk.webmanifest?v=2026.10.20-SB1">
+<link rel="manifest" href="desk.webmanifest?v=2026.10.20-t80u">
 <style>
 :root{--c:#00aeef;--bg:#000;--card:#0b1118;--line:#1d2a36;--tx:#eef6fb;--mut:#8ea3b3;--ok:#22c55e;--pw:300px}
 *{box-sizing:border-box}
@@ -196,6 +196,7 @@ body:not(.locked) #lock{display:none}
 
 <main>
   <section class="view on" id="v-finish" aria-labelledby="fH">
+    <a class="btn" href="https://rpcs111.github.io/realm-apps/nirvana/" style="display:flex;align-items:center;justify-content:center;text-decoration:none;margin:0 0 12px;width:100%">Nirvana</a>
     <form id="talk" autocomplete="off"><button type="button" id="talkMic" aria-label="Talk to Ara"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button><input id="talkIn" placeholder="Ask Ara anything" aria-label="Message for Ara"><button type="submit" id="talkSend">Send</button></form><div id="talkMsg" role="status" aria-live="polite"></div>
     <h2 id="fH">Hey, we need to finish this <small id="fCount"></small></h2>
     <form class="add" id="addForm">
@@ -527,5 +528,5 @@ lock();
 if(/[?&]panel=1/.test(location.search))panel(1);
 })();
 </script>
-<script src="js/note-relay.js?v=2026.10.20-SB1"></script>
+<script src="js/note-relay.js?v=2026.10.20-t80u"></script>
 </body></html>

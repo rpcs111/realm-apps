@@ -1,30 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#121820"/><stop offset="1" stop-color="#0b0f14"/></linearGradient></defs>
-  <rect x="8" y="8" width="496" height="496" rx="96" fill="url(#bg)"/>
-  <rect x="24" y="24" width="464" height="464" rx="84" fill="none" stroke="#d4af37" stroke-width="6"/>
-  <g fill="none" stroke="#d4af37" stroke-linecap="round" stroke-linejoin="round">
-    <!-- huge cranium tapering to small chin -->
-    <path d="M256 92 C352 92 410 150 410 222 C410 282 372 318 330 346 C300 366 284 404 256 404 C228 404 212 366 182 346 C140 318 102 282 102 222 C102 150 160 92 256 92 Z" stroke-width="16"/>
-    <!-- brain folds in the cranium -->
-    <path d="M168 196 C186 168 214 182 226 160 C240 136 274 140 286 162 C298 182 330 168 344 194" stroke-width="10"/>
-    <path d="M196 226 C214 210 236 222 256 208 C276 222 298 210 316 226" stroke-width="8"/>
-    <!-- cracks, about to burst -->
-    <polyline points="256,92 246,118 262,132 250,150" stroke-width="8"/>
-    <polyline points="356,128 338,146 350,162" stroke-width="7"/>
-    <polyline points="156,128 174,146 162,162" stroke-width="7"/>
-    <!-- idea sparks -->
-    <line x1="256" y1="40" x2="256" y2="66" stroke-width="10"/>
-    <line x1="160" y1="64" x2="174" y2="86" stroke-width="10"/>
-    <line x1="352" y1="64" x2="338" y2="86" stroke-width="10"/>
-    <line x1="88" y1="120" x2="110" y2="134" stroke-width="10"/>
-    <line x1="424" y1="120" x2="402" y2="134" stroke-width="10"/>
+  <defs>
+    <linearGradient id="mvHead" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#e0262f"/>
+      <stop offset="0.55" stop-color="#e0262f"/>
+      <stop offset="1" stop-color="#8b0f16"/>
+    </linearGradient>
+    <clipPath id="mvClip">
+      <path d="M256 36C392 36 468 128 468 236C468 332 414 402 346 444C314 470 286 492 256 492C226 492 198 470 166 444C98 402 44 332 44 236C44 128 120 36 256 36Z"/>
+    </clipPath>
+  </defs>
+  <path d="M256 36C392 36 468 128 468 236C468 332 414 402 346 444C314 470 286 492 256 492C226 492 198 470 166 444C98 402 44 332 44 236C44 128 120 36 256 36Z" fill="url(#mvHead)" stroke="#8b0f16" stroke-width="14"/>
+  <g clip-path="url(#mvClip)">
+    <ellipse cx="168" cy="118" rx="108" ry="62" fill="#ffffff" opacity=".22"/>
+    <ellipse cx="360" cy="360" rx="170" ry="190" fill="#8b0f16" opacity=".55"/>
   </g>
-  <!-- big almond eyes, slightly droopy -->
-  <path d="M164 270 C190 244 236 254 240 292 C214 310 176 302 164 270 Z" fill="#d4af37"/>
-  <path d="M348 270 C322 244 276 254 272 292 C298 310 336 302 348 270 Z" fill="#d4af37"/>
-  <path d="M168 262 L236 274" stroke="#0b0f14" stroke-width="8" stroke-linecap="round"/>
-  <path d="M344 262 L276 274" stroke="#0b0f14" stroke-width="8" stroke-linecap="round"/>
-  <!-- small sigh mouth -->
-  <path d="M238 358 C250 350 262 350 274 358" fill="none" stroke="#d4af37" stroke-width="8" stroke-linecap="round"/>
-  <circle cx="440" cy="72" r="20" fill="#22c58b" stroke="#0b0f14" stroke-width="6"/>
+  <path d="M96 214C128 168 188 162 236 204" fill="none" stroke="#8b0f16" stroke-width="16" stroke-linecap="round"/>
+  <path d="M416 214C384 168 324 162 276 204" fill="none" stroke="#8b0f16" stroke-width="16" stroke-linecap="round"/>
+  <g transform="translate(168 286) rotate(-16)">
+    <ellipse cx="0" cy="0" rx="92" ry="64" fill="#0b0f14"/>
+    <ellipse cx="6" cy="10" rx="34" ry="42" fill="#8b0f16"/>
+    <ellipse cx="-22" cy="-16" rx="22" ry="12" fill="#ffffff" opacity=".9"/>
+  </g>
+  <g transform="translate(344 286) rotate(16)">
+    <ellipse cx="0" cy="0" rx="92" ry="64" fill="#0b0f14"/>
+    <ellipse cx="-6" cy="10" rx="34" ry="42" fill="#8b0f16"/>
+    <ellipse cx="22" cy="-16" rx="22" ry="12" fill="#ffffff" opacity=".9"/>
+  </g>
+  <path d="M214 408Q256 448 298 408" fill="none" stroke="#8b0f16" stroke-width="12" stroke-linecap="round"/>
 </svg>

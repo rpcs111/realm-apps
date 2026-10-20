@@ -12,7 +12,7 @@
     {
       "id": "marvin",
       "name": "Marvin Musk",
-      "icon": "../pwa/lanes/marvin.svg",
+      "icon": "../pwa/lanes/marvin.svg?v=20261020t80",
       "does": "Final gate. Checks every build and message before it reaches Ange.",
       "helps": "You get a look before a thing moves.",
       "saves": ["Goal: cut rework by 80%.", "Goal: catch a miss before it goes out.", "Goal: keep one clear yes or no."],
@@ -43,6 +43,14 @@
       "does": "Neuralink keeps brain dumps and ideas in one place, plus the vaults.",
       "helps": "You open that place from this tile.",
       "saves": ["Goal: cut extra steps to the gate by 80%.", "Goal: open the gate and nothing else.", "Goal: keep the lock on this phone."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Marvin checks it first."]
+    },
+    {
+      "id": "nova",
+      "name": "Nova",
+      "does": "The Google lane. Gmail, Drive, Photos and Sheets, sorted in the day.",
+      "helps": "Ara gives Nova her jobs. Falcon 9 sweeps overnight; Nova acts on it in the day.",
+      "saves": ["Goal: cut hunting through Google by 80%.", "Goal: keep Gmail, Drive, Photos and Sheets on one tile.", "Goal: act on the overnight sweep in the day."],
       "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Marvin checks it first."]
     },
     {

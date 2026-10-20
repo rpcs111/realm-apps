@@ -9,7 +9,7 @@
 <title>Nirvana</title>
 <meta name="application-name" content="Nirvana"><meta name="apple-mobile-web-app-title" content="Nirvana">
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
-<link rel="manifest" href="manifest.webmanifest?v=2026-10-19-v10.0-b2">
+<link rel="manifest" href="manifest.webmanifest?v=2026-10-20-t80u">
 <link rel="apple-touch-icon" href="icons/icon-v10-180.png"><link rel="icon" href="icons/icon-v10-192.png">
 <style>
 html,body{margin:0;background:#0b0f14;color:#e8eef4;font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
@@ -46,6 +46,45 @@ img.photo{object-fit:cover;border-radius:8px;border:1px solid #26313d}
 .sopc{position:absolute;right:8px;bottom:8px;z-index:2;box-sizing:border-box;min-height:28px;min-width:44px;padding:4px 8px;border-radius:999px;border:1px solid #d4af37;background:#0b0f14;color:#d4af37;font:700 10px ui-monospace,Menlo,monospace;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
 .pagechip{position:static;margin:0 auto 10px}
 .lane.ara .sopc{border-color:#00aeef;color:#00aeef}
+.lane.marvin{border-color:#e0262f;background:linear-gradient(165deg,#3a0a0e,#140306);color:#ffe8ea}
+.lane.marvin .nm{color:#e0262f}
+.lane.marvin .role{color:#f0b4b8}
+.lane.marvin .sopc{border-color:#e0262f;color:#e0262f}
+.lane.nova{border-color:#a39e93;background:linear-gradient(165deg,#2e2a24,#161410);color:#c2bdb3}
+.lane.nova .nm{color:#c2bdb3}
+.lane.nova .role{color:#a39e93}
+.lane.nova .blurb{color:#c2bdb3}
+.lane.nova .sopc{border-color:#a39e93;color:#a39e93}
+.lane .initial{width:36px;height:36px;border-radius:50%;border:1.5px solid #a39e93;color:#c2bdb3;display:flex;align-items:center;justify-content:center;font:700 16px system-ui;flex:none}
+.lane .blurb{font-size:11.5px;line-height:1.3;overflow-wrap:anywhere}
+.nv-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px 0 10px}
+.nv-stamp,.nv-who{min-height:44px;border-radius:999px;border:1px solid #26313d;background:#121820;color:#c5d0da;padding:8px 12px;cursor:pointer;font:700 12px ui-monospace,Menlo,monospace}
+.nv-who{color:#e8eef4;border-color:#00aeef}
+.mailrules{margin:18px 0 0;text-align:left;border:1px solid #26313d;border-radius:14px;background:rgba(11,15,20,.9);padding:12px}
+.mail-banner{margin:0 0 8px;color:#d4af37;font:700 13px ui-monospace,Menlo,monospace}
+.mailrules h2,.mailrules h3{margin:0 0 8px;letter-spacing:.04em;font-size:16px;text-align:left}
+.mailg{border:1px solid #26313d;border-radius:12px;padding:10px;margin:0 0 8px;background:#121820}
+.mailg h3{margin:0;font-size:14px}
+.mailcount{margin:2px 0 6px;color:#8a98a8;font:700 12px ui-monospace,Menlo,monospace}
+.mailchips{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 8px}
+.mailchip{border:1px solid #26313d;border-radius:999px;padding:2px 8px;color:#9ed8f2;font-size:11px}
+.mailflag{display:inline-block;margin:0 0 8px;padding:2px 8px;border-radius:999px;background:#3a0a0e;color:#e0262f;font:700 11px ui-monospace,Menlo,monospace}
+.mailrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.mailrow label{flex:1;min-width:140px;color:#8a98a8;font-size:12px}
+.mailrow input{margin:4px 0 0;text-align:left}
+.mailmic,.mailok{min-height:44px;border-radius:12px;border:1px solid #26313d;background:#0b0f14;color:#00aeef;padding:8px 12px;cursor:pointer}
+.mailok{background:#00aeef;color:#00121c;border-color:#00aeef;font-weight:700}
+.mailst,.mailnotest{margin:6px 0 0;color:#8a98a8;font-size:12px}
+#mailWait{margin:0;padding-left:18px}
+#mailWait li{margin:4px 0}
+.nv-silence{position:fixed;z-index:80;left:12px;right:12px;bottom:12px;display:flex;justify-content:center}
+.nv-silence[hidden]{display:none}
+.nv-silence-card{width:min(520px,100%);background:#121820;border:1px solid #d4af37;border-radius:16px;padding:12px 14px;text-align:left;box-shadow:0 12px 40px rgba(0,0,0,.45)}
+.nv-silence-card p{margin:0 0 8px;color:#e8eef4;font-weight:700}
+#nvSilenceList{list-style:none;margin:0;padding:0}
+#nvSilenceList li{margin:0 0 6px}
+.nv-q{width:100%;min-height:44px;text-align:left;border-radius:12px;border:1px solid #26313d;background:#0b0f14;color:#e8eef4;padding:8px 10px;cursor:pointer}
+#nvSilenceDismiss{min-height:44px;margin-top:4px;border-radius:12px;border:1px solid #26313d;background:#121820;color:#8a98a8;padding:8px 12px;cursor:pointer}
 .lane.head .sopc{bottom:auto;top:50%;transform:translateY(-50%)}
 #nirvanaHead{user-select:none;-webkit-user-select:none;touch-action:manipulation}
 .mirror{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
@@ -142,7 +181,7 @@ body.julie-on .tf{display:none}
 .panel .sopc.inline{position:static}
 .lanes-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 8px}
 .lanes-top .lanes-k{margin:0}
-.flowpill{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:28px;margin:0 0 8px;padding:2px 12px;border-radius:999px;border:1px solid #26313d;background:#121820;color:#00aeef;font:700 12px ui-monospace,Menlo,monospace;text-decoration:none}
+.flowpill{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:28px;margin:0 8px 8px 0;padding:2px 12px;border-radius:999px;border:1px solid #26313d;background:#121820;color:#00aeef;font:700 12px ui-monospace,Menlo,monospace;text-decoration:none}
 #cue42{position:static;flex:none;box-sizing:border-box;min-width:44px;min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #26313d;background:#121820;color:#8a98a8;font:700 12px ui-monospace,Menlo,monospace;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
 .lane .deskc{left:8px;right:auto}
 .dfilters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
@@ -195,6 +234,10 @@ body.julie-on .tf{display:none}
 <div class="lk">
 <section class="grok" id="grokCenter" aria-label="Nirvana">
 <h2 id="nirvanaHead">Nirvana</h2>
+<div class="nv-bar">
+<button type="button" id="nvStamp" class="nv-stamp">detected</button>
+<button type="button" id="nvWho" class="nv-who">Ange here</button>
+</div>
 <p class="mirror-line">The centre mirror over the whole board.</p>
 <p class="mirror-ari" id="mirrorAri">Let's hug it out. — Ari Gold</p>
 <div class="grok-panel" id="grokPanel">
@@ -212,9 +255,16 @@ body.julie-on .tf{display:none}
 </div>
 </section>
 <section class="lanes" aria-label="Lanes">
-<a class="flowpill" href="../map.html">Flow</a>
+<a class="flowpill" href="../map.html">Flow</a><a class="flowpill" href="infograph.html">Infograph</a>
 <div class="lanes-top"><b class="lanes-k">LANES</b><a id="cue42" href="https://drive.google.com/file/d/1VIle9fAxLoh-y4_x3UZ9nPWIJUnhn-n1/view" target="_blank" rel="noopener">42* guide</a></div>
 <div class="lane-grid" id="laneGrid"></div>
+</section>
+<section class="mailrules" id="mailRules" aria-label="Email rules">
+<p class="mail-banner">Draft. Nothing runs until Ange says yes. No sends.</p>
+<h2>Email rules</h2>
+<div id="mailGroups"></div>
+<h2>Waiting for Ange's yes</h2>
+<ul id="mailWait"></ul>
 </section>
 <div class="mirror-strip" aria-hidden="true">
 <img src="../pwa/mirror/ses-10.jpg" alt="">
@@ -229,7 +279,15 @@ body.julie-on .tf{display:none}
 <li>Mirror. SES-10 Launch. Author: SpaceX. Licence: CC0 1.0. <a href="https://commons.wikimedia.org/wiki/File:SES-10_Launch_-_world%27s_first_reflight_of_an_orbital_class_rocket_(33361035200).jpg" target="_blank" rel="noopener">Commons file</a>.</li>
 </ul>
 </section>
-</div></div></div>
+</div></div>
+<div id="nvSilence" class="nv-silence" hidden>
+<div class="nv-silence-card">
+<p>Ange, approve these?</p>
+<ul id="nvSilenceList"></ul>
+<button type="button" id="nvSilenceDismiss">Not now</button>
+</div>
+</div>
+</div>
 
 <section id="after-dark" class="panel" aria-label="After Dark">
 <div class="wrap cardbox">
@@ -251,7 +309,7 @@ body.julie-on .tf{display:none}
 <thead><tr><th>Lane</th><th>Role</th><th>Status</th></tr></thead>
 <tbody>
 <tr><td><img src="../pwa/lanes/ara.svg" width="22" height="22" alt="">Ara 2.1</td><td>Boss bot. Builds Nirvana and runs the daily loop.</td><td>draft</td></tr>
-<tr><td><img src="../pwa/lanes/marvin.svg" width="22" height="22" alt="Marvin Musk" title="Marvin Musk" aria-label="Marvin Musk">Marvin Musk</td><td>Final gate. Checks every build and message before it reaches Ange.</td><td>draft</td></tr>
+<tr><td><img src="../pwa/lanes/marvin.svg?v=20261020t80" width="22" height="22" alt="Marvin Musk" title="Marvin Musk" aria-label="Marvin Musk">Marvin Musk</td><td>Final gate. Checks every build and message before it reaches Ange.</td><td>draft</td></tr>
 <tr><td>Infra Lead</td><td>Proxmox, Ubiquiti, 1300 line, kill switch. Bastion checks it.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/terafab.svg" width="22" height="22" alt="">Terafab</td><td>Money: trades, F&amp;H store, Qantas, pay-it-forward.</td><td>draft</td></tr>
 <!-- Falcon 9 photo: https://commons.wikimedia.org/wiki/File:Iridium-1_Launch_(32312419215).jpg
@@ -389,10 +447,11 @@ document.getElementById("f").onsubmit=function(ev){ev.preventDefault();var v=doc
 (function(){
   var LANES=[
     {id:"ara",name:"Ara 2.1",cls:"ara",icon:"../pwa/lanes/ara.svg",role:"Boss bot. Builds Nirvana and runs the daily loop.",bot:"0aca7e2c-756b-4a08-a1c7-d0751a5703bb"},
-    {id:"marvin",name:"Marvin Musk",icon:"../pwa/lanes/marvin.svg",role:"Final gate. Checks every build and message before it reaches Ange."},
+    {id:"marvin",name:"Marvin Musk",cls:"marvin",icon:"../pwa/lanes/marvin.svg?v=20261020t80",role:"Final gate. Checks every build and message before it reaches Ange."},
     {id:"terafab",name:"Terafab",cls:"tera",icon:"../pwa/lanes/terafab.svg",role:"Money: trades, F&H store, Qantas, pay-it-forward."},
     {id:"falcon",sop:"falcon9",name:"Falcon 9",icon:"../pwa/lanes/falcon9.jpg",role:"Overnight sweep. Every email, WhatsApp and calendar, swept each night."},
-    {id:"neuralink",name:"Neuralink",icon:"../pwa/lanes/neural-mesh.svg",role:"Brain dumps and ideas in one place, plus the vaults.",href:"#after-dark"}
+    {id:"neuralink",name:"Neuralink",icon:"../pwa/lanes/neural-mesh.svg",role:"Brain dumps and ideas in one place, plus the vaults.",href:"#after-dark"},
+    {id:"nova",name:"Nova",cls:"nova",initial:"N",role:"The Google lane",blurb:"The Google lane. Gmail, Drive, Photos and Sheets, sorted in the day."}
   ];
   var grid=document.getElementById("laneGrid");
   var araId="";
@@ -401,8 +460,12 @@ document.getElementById("f").onsubmit=function(ev){ev.preventDefault();var v=doc
     if(lane.bot){araId=lane.bot;href="https://cursor.com/grok-bot/link/v1/agent?id="+lane.bot}
     else if(lane.href)href=lane.href;
     var mark=lane.name==="Marvin Musk";
-    var photo=lane.icon.indexOf("falcon9.jpg")>=0?' class="photo"':'';
-    var img='<img src="'+lane.icon+'" width="36" height="36"'+photo+' alt="'+(mark?"Marvin Musk":"")+'"'+(mark?' title="Marvin Musk" aria-label="Marvin Musk"':'')+'><span class="nm">'+lane.name+'</span><i class="dot" aria-hidden="true"></i><span class="role">'+lane.role+'</span>';
+    var face;
+    if(lane.icon){
+      var photo=lane.icon.indexOf("falcon9.jpg")>=0?' class="photo"':'';
+      face='<img src="'+lane.icon+'" width="36" height="36"'+photo+' alt="'+(mark?"Marvin Musk":"")+'"'+(mark?' title="Marvin Musk" aria-label="Marvin Musk"':'')+'>';
+    }else face='<span class="initial">'+(lane.initial||"\u00b7")+'</span>';
+    var img=face+'<span class="nm">'+lane.name+'</span><i class="dot" aria-hidden="true"></i><span class="role">'+lane.role+'</span>'+(lane.blurb?'<span class="blurb">'+lane.blurb+'</span>':'');
     var named=mark?' aria-label="Marvin Musk" title="Marvin Musk"':'';
     var go=href?'<a class="go"'+(lane.bot?' id="araLane" rel="noopener"':'')+named+' href="'+href+'">'+img+'</a>':'<button type="button" class="go"'+named+'>'+img+'</button>';
     var desk=lane.id==="ara"?'<a class="sopc deskc" href="#desk">Desk</a>':'';
@@ -782,4 +845,5 @@ document.getElementById("f").onsubmit=function(ev){ev.preventDefault();var v=doc
   window.__nvCue42=run;
 })();
 </script>
+<script src="draft.js?v=20261020t80"></script>
 </body></html>
