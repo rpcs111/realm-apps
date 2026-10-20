@@ -300,8 +300,9 @@ function nvRenderMail() {
     row.appendChild(label);
     var mic = document.createElement("button");
     mic.type = "button";
-    mic.className = "mailmic";
-    mic.textContent = "Speak";
+    mic.className = "mic";
+    mic.setAttribute("aria-label", "Mic");
+    mic.innerHTML = '<svg class="mic" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="8.25" y="2.5" width="7.5" height="12.5" rx="3.75" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M5.25 11.25a6.75 6.75 0 0 0 13.5 0M12 18v3.25" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
     mic.addEventListener("click", function() { nvSpeakInto(g.id, input); });
     row.appendChild(mic);
     if (g.approve) {
@@ -400,6 +401,23 @@ function nvDraftBoot() {
     nvNoteActivity(Date.now());
   }, true);
   setInterval(function() { nvDraftTick(Date.now()); }, 5000);
+  function nvAddSave(parent) {
+    if (!parent || parent.querySelector("[data-nv-save]")) return;
+    var b = document.createElement("button");
+    b.type = "button";
+    b.dataset.nvSave = "1";
+    b.className = "mailok";
+    b.textContent = "Save";
+    b.addEventListener("click", function(ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (window.nvSavedToast) window.nvSavedToast();
+    });
+    parent.appendChild(b);
+  }
+  nvAddSave(document.getElementById("mailRules"));
+  nvAddSave(document.querySelector(".nv-silence-card"));
+  nvAddSave(document.querySelector(".nv-bar"));
 }
 
 if (typeof document !== "undefined") {

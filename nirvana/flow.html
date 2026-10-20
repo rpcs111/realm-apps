@@ -13,7 +13,25 @@
 <style>
 html,body{margin:0;background:#0b0f14;color:#e8eef4;font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 .w{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;background:radial-gradient(circle at 50% 30%,#0f2130,#0b0f14 70%)}
-.lk{width:100%;max-width:340px;text-align:center}
+.lk{width:100%;max-width:420px;text-align:center}
+.krow{display:flex;gap:8px;align-items:center}
+.krow input{flex:1;margin:0}
+#kEye{width:44px;min-width:44px;height:44px;border-radius:999px;border:1px solid #00aeef;background:transparent;color:#00aeef;padding:0}
+#gxWait{color:#00aeef;font-weight:700;margin:8px 0 0}
+.helpers{list-style:none;margin:14px 0 0;padding:0;text-align:left}
+.helpers li{display:flex;align-items:center;gap:10px;min-height:56px;border-bottom:1px solid #26313d}
+.helpers span{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+.helpers b{display:block;color:#e8eef4}
+.helpers i{display:block;color:#8a98a8;font-style:normal;font-size:12px}
+.install{margin-top:10px;width:auto;min-height:44px;border-radius:999px;border:1px solid #00aeef;background:#00aeef;color:#00121c;font-weight:700;padding:0 16px}
+.tip{color:#8a98a8;font-size:13px;margin:8px 0 0}
+#nvWin{position:fixed;inset:0;z-index:120;background:#0b0f14;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+#nvWin[hidden]{display:none}
+#nvWin canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#nvWin p{position:relative;z-index:1;font:600 22px/1.35 system-ui;max-width:18em}
+#nvWin button{position:relative;z-index:1;width:auto;min-width:88px;margin-top:12px}
+.toast{position:fixed;z-index:130;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;border-radius:999px;padding:10px 16px;font-weight:700}
+.toast[hidden]{display:none}
 .lk img{width:88px;height:88px;border-radius:20px;display:block;margin:0 auto 10px}
 h2{margin:0 0 2px;letter-spacing:.18em;font-size:22px}
 .st{font:700 11px ui-monospace,Menlo,monospace;color:#60ff15;margin:0 0 12px}
@@ -27,11 +45,24 @@ button{width:100%;border:0;border-radius:12px;padding:11px 16px;background:#00ae
 <body><div class="w"><div class="lk">
 <img src="icons/icon-v10-192.png" alt="">
 <h2>FLOW</h2><div class="st">v10.0 · 2026-10-19 · build 2</div>
-<p id="msg">Enter your key once on this phone</p>
-<form id="f" autocomplete="off"><input id="k" type="password" placeholder="Key" autocomplete="current-password" aria-label="Key"><button id="b" type="submit">Unlock</button></form>
+<p id="msg">Nirvana key (not your Desk PIN)</p>
+<form id="f" autocomplete="off"><div class="krow"><input id="k" type="password" placeholder="Nirvana key" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Nirvana key"><button type="button" id="kEye" aria-label="Show key" aria-pressed="false">Show</button></div><button id="b" type="submit">Unlock</button></form>
+<p id="gxWait" hidden>Unlocking… takes a few seconds</p>
 <div class="err" id="e"></div>
+<button type="button" class="install" id="nvInstall">Add to home screen</button>
+<p class="tip" id="nvInstallTip" hidden>Tap ⋮ then Add to Home screen</p>
+<ul class="helpers" aria-label="Helpers">
+<li><span style="background:#00aeef;color:#00121c">A</span><div><b>Ara</b><i>Boss</i></div></li>
+<li><span style="background:#e0262f;color:#fff">M</span><div><b>Marvin Musk</b><i>Gate</i></div></li>
+<li><span style="background:#d4af37;color:#0b0f14">T</span><div><b>Terafab</b><i>Money</i></div></li>
+<li><span style="background:#4c6a8a;color:#fff">F</span><div><b>Falcon 9</b><i>Overnight sweep</i></div></li>
+<li><span style="background:#5b8def;color:#fff">Ne</span><div><b>Neuralink</b><i>Brain dump</i></div></li>
+<li><span style="background:#a39e93;color:#111">N</span><div><b>Nova</b><i>The Google lane</i></div></li>
+</ul>
 <div class="ln"><a href="index.html">Nirvana</a><a href="flow.html">Flow</a><a href="live.html">Live</a><a href="raw.html">Raw</a><a href="versions.html">Versions</a></div>
 </div></div>
+<div id="nvWin" hidden><canvas id="nvWinCv" aria-hidden="true"></canvas><p>Nirvana is live. Ange, you're a genius. The team's a genius.</p><button type="button" id="nvWinClose">Close</button></div>
+<div id="nvKeyToast" class="toast" role="status" hidden></div>
 <script>
 /* Nirvana shared unlock: AES-256-GCM, PBKDF2-SHA256. Key kept on this device only (localStorage). */
 var NVK="nirvana_key_v1";
@@ -44,15 +75,68 @@ async function nvDec(o,pass){
 }
 async function nvFetch(src){var r=await fetch(src+(src.indexOf("?")<0?"?":"&")+"t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("Couldn't load ("+r.status+")");return r.json()}
 
-(function(){var MODE="flow";
+(function(){var MODE="flow",nvBusy=false,WIN_KEY="nv_win_20261020",deferred=null;
 try{var dm=location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})(?:&|$)/);if(dm){localStorage.setItem("realm_device",dm[1].toLowerCase());var q=location.search.replace(/([?&])d=[^&]*&?/,"$1").replace(/[?&]$/,"");history.replaceState(null,"",location.pathname+q+location.hash)}}catch(_e){}
-async function open(pass,stored){var e=document.getElementById("e"),b=document.getElementById("b");e.textContent="";b.disabled=true;b.textContent="Unlocking…";
- try{var o=await nvFetch("main.enc.json");var d=await nvDec(o,pass);localStorage.setItem(NVK,pass);
-  if(MODE==="flow")sessionStorage.setItem("nv_open","flow");
-  document.open();document.write(d.html);document.close();
- }catch(x){b.disabled=false;b.textContent="Unlock";
-  if(x&&x.name==="OperationError"){if(stored)localStorage.removeItem(NVK);e.textContent=stored?"Key changed. Enter the new key.":"Wrong key. Try again."}else e.textContent=x.message||String(x)}}
-document.getElementById("f").onsubmit=function(ev){ev.preventDefault();var v=document.getElementById("k").value;if(v)open(v,false)};
+function nvFail(x,stored){
+  if(!(window.crypto&&crypto.subtle))return "This browser can't unlock here. Open Nirvana in Chrome or Safari over HTTPS.";
+  if(x&&x.name==="OperationError")return stored?"Key changed. Enter the new key.":"Wrong key. Try again.";
+  var m=String(x&&x.message||x||"");
+  if(/Couldn't load|HTTP |Failed to fetch|NetworkError|TypeError/i.test(m))return "Couldn't load the file. Check the signal and try again.";
+  return m||"Couldn't unlock.";
+}
+function toast(msg){var t=document.getElementById("nvKeyToast");if(!t)return;t.textContent=msg;t.hidden=false}
+function confetti(){
+  var cv=document.getElementById("nvWinCv");if(!cv||!cv.getContext)return;
+  var ctx=cv.getContext("2d"),w=cv.width=innerWidth,h=cv.height=innerHeight,colors=["#00aeef","#e0262f","#d4af37","#60ff15","#5b8def","#fff"],bits=[],i;
+  for(i=0;i<90;i++)bits.push({x:Math.random()*w,y:-Math.random()*h,w:4+Math.random()*6,h:14+Math.random()*22,vy:2+Math.random()*3.5,vx:-1.2+Math.random()*2.4,r:Math.random()*6,c:colors[i%colors.length]});
+  var t0=performance.now();
+  (function frame(now){
+    var box=document.getElementById("nvWin");if(!box||box.hidden)return;
+    ctx.clearRect(0,0,w,h);
+    bits.forEach(function(b){b.y+=b.vy;b.x+=b.vx;b.r+=0.08;ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.r);ctx.fillStyle=b.c;ctx.fillRect(-b.w/2,-b.h/2,b.w,b.h);ctx.restore();if(b.y>h+30){b.y=-20;b.x=Math.random()*w}});
+    if(now-t0<3200)requestAnimationFrame(frame);
+  })(t0);
+}
+function goWrite(html){document.open();document.write(html);document.close()}
+function afterOk(html){
+  toast("Key saved on this phone ✓");
+  var seen=false;try{seen=localStorage.getItem(WIN_KEY)==="1"}catch(e){}
+  if(seen){setTimeout(function(){goWrite(html)},600);return}
+  try{localStorage.setItem(WIN_KEY,"1")}catch(e){}
+  var box=document.getElementById("nvWin");
+  if(!box){goWrite(html);return}
+  box.hidden=false;confetti();
+  var done=false;
+  function close(){if(done)return;done=true;goWrite(html)}
+  var btn=document.getElementById("nvWinClose");if(btn)btn.onclick=close;
+  setTimeout(close,3000);
+}
+async function open(pass,stored){
+  if(nvBusy)return;
+  pass=String(pass||"").trim();
+  var e=document.getElementById("e"),b=document.getElementById("b"),w=document.getElementById("gxWait");
+  if(!pass)return;
+  if(!(window.crypto&&crypto.subtle)){e.textContent=nvFail(null,stored);return}
+  nvBusy=true;e.textContent="";b.disabled=true;b.textContent="Unlocking…";if(w)w.hidden=false;
+  try{
+    var o=await nvFetch("main.enc.json");var d=await nvDec(o,pass);localStorage.setItem(NVK,pass);
+    if(MODE==="flow")sessionStorage.setItem("nv_open","flow");
+    nvBusy=false;afterOk(d&&d.html);
+  }catch(x){
+    b.disabled=false;b.textContent="Unlock";if(w)w.hidden=true;nvBusy=false;
+    if(x&&x.name==="OperationError"&&stored)localStorage.removeItem(NVK);
+    e.textContent=nvFail(x,stored);
+  }
+}
+var eye=document.getElementById("kEye"),key=document.getElementById("k");
+if(eye&&key)eye.addEventListener("click",function(){
+  var show=key.type==="password";key.type=show?"text":"password";
+  eye.textContent=show?"Hide":"Show";eye.setAttribute("aria-label",show?"Hide key":"Show key");eye.setAttribute("aria-pressed",show?"true":"false");
+});
+document.getElementById("f").onsubmit=function(ev){ev.preventDefault();open(document.getElementById("k").value,false)};
+var install=document.getElementById("nvInstall"),tip=document.getElementById("nvInstallTip");
+window.addEventListener("beforeinstallprompt",function(ev){ev.preventDefault();deferred=ev;if(tip)tip.hidden=true});
+if(install)install.addEventListener("click",function(){if(deferred){var p=deferred;deferred=null;p.prompt()}else if(tip)tip.hidden=false});
 var s=localStorage.getItem(NVK);if(s)open(s,true);
 })();
 </script></body></html>

@@ -23,7 +23,23 @@ button{font:inherit;color:inherit;cursor:pointer}
 .wm .scr{width:.82em;height:.95em;color:var(--c);margin:0 .14em 0 .02em;flex:none}
 #lock{position:fixed;inset:0;z-index:50;background:radial-gradient(circle at 50% 30%,#0f2130,var(--bg) 70%);display:none;align-items:center;justify-content:center;padding:20px}
 body.locked #lock{display:flex}body.locked .app{visibility:hidden}
-.lk{width:100%;max-width:340px;text-align:center}
+.lk{width:100%;max-width:420px;text-align:center}
+.krow{display:flex;gap:8px;align-items:center}.krow input{flex:1;margin:0}
+#lkEye{width:44px;min-width:44px;height:44px;border-radius:999px;border:1px solid var(--c);background:transparent;color:var(--c);padding:0}
+#lkWait{color:var(--c);font-weight:700;margin:8px 0 0}
+.helpers{list-style:none;margin:14px 0 0;padding:0;text-align:left}
+.helpers li{display:flex;align-items:center;gap:10px;min-height:52px;border-bottom:1px solid var(--ln)}
+.helpers span{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+.helpers b{display:block}.helpers i{display:block;color:var(--mut);font-style:normal;font-size:12px}
+.install{margin-top:10px;width:auto;min-height:44px;border-radius:999px;padding:0 16px}
+.tip{color:var(--mut);font-size:13px;margin:8px 0 0}
+#nvWin{position:fixed;inset:0;z-index:140;background:#0b0f14;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+#nvWin[hidden]{display:none}
+#nvWin canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#nvWin p{position:relative;z-index:1;font:600 22px/1.35 system-ui;max-width:18em}
+#nvWin button{position:relative;z-index:1;width:auto;min-width:88px;margin-top:12px}
+.toast{position:fixed;z-index:150;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;border-radius:999px;padding:10px 16px;font-weight:700}
+.toast[hidden]{display:none}
 .lk img{margin:0 auto 10px;width:84px;height:84px;display:block}
 .lk h2{margin:0 0 4px;letter-spacing:.18em;font-size:22px;display:flex;justify-content:center}
 .lk p{color:var(--mut);margin:0 0 14px}
@@ -87,11 +103,24 @@ main{padding:4px 12px 40px;max-width:900px;margin:0 auto}
 <div id="lock"><div class="lk">
   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDBhZWVmIiBzdHJva2Utd2lkdGg9IjIuMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggdHJhbnNmb3JtPSJyb3RhdGUoMCAzMiAzMikiIGQ9Ik0zMiAyMi41QzI4LjYgMTcuNiAyOSAxMSAzMiA1LjVDMzUgMTEgMzUuNCAxNy42IDMyIDIyLjVaIi8+PHBhdGggdHJhbnNmb3JtPSJyb3RhdGUoNDAgMzIgMzIpIiBkPSJNMzIgMjIuNUMyOC42IDE3LjYgMjkgMTEgMzIgNS41QzM1IDExIDM1LjQgMTcuNiAzMiAyMi41WiIvPjxwYXRoIHRyYW5zZm9ybT0icm90YXRlKDgwIDMyIDMyKSIgZD0iTTMyIDIyLjVDMjguNiAxNy42IDI5IDExIDMyIDUuNUMzNSAxMSAzNS40IDE3LjYgMzIgMjIuNVoiLz48cGF0aCB0cmFuc2Zvcm09InJvdGF0ZSgxMjAgMzIgMzIpIiBkPSJNMzIgMjIuNUMyOC42IDE3LjYgMjkgMTEgMzIgNS41QzM1IDExIDM1LjQgMTcuNiAzMiAyMi41WiIvPjxwYXRoIHRyYW5zZm9ybT0icm90YXRlKDE2MCAzMiAzMikiIGQ9Ik0zMiAyMi41QzI4LjYgMTcuNiAyOSAxMSAzMiA1LjVDMzUgMTEgMzUuNCAxNy42IDMyIDIyLjVaIi8+PHBhdGggdHJhbnNmb3JtPSJyb3RhdGUoMjAwIDMyIDMyKSIgZD0iTTMyIDIyLjVDMjguNiAxNy42IDI5IDExIDMyIDUuNUMzNSAxMSAzNS40IDE3LjYgMzIgMjIuNVoiLz48cGF0aCB0cmFuc2Zvcm09InJvdGF0ZSgyNDAgMzIgMzIpIiBkPSJNMzIgMjIuNUMyOC42IDE3LjYgMjkgMTEgMzIgNS41QzM1IDExIDM1LjQgMTcuNiAzMiAyMi41WiIvPjxwYXRoIHRyYW5zZm9ybT0icm90YXRlKDI4MCAzMiAzMikiIGQ9Ik0zMiAyMi41QzI4LjYgMTcuNiAyOSAxMSAzMiA1LjVDMzUgMTEgMzUuNCAxNy42IDMyIDIyLjVaIi8+PHBhdGggdHJhbnNmb3JtPSJyb3RhdGUoMzIwIDMyIDMyKSIgZD0iTTMyIDIyLjVDMjguNiAxNy42IDI5IDExIDMyIDUuNUMzNSAxMSAzNS40IDE3LjYgMzIgMjIuNVoiLz48Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSI2LjUiLz48L2c+PGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iMi42IiBmaWxsPSIjMDBhZWVmIi8+PC9zdmc+" alt="">
   <h2><span class="wm" aria-label="NIRVANA">NI<svg class="scr" viewBox="8 8 46 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 47c5-8 9-16 15-25 3-5 6-9 9-11" stroke-width="5.5"/><path d="M22 51c6-9 12-19 19-28 2-3 5-6 8-8" stroke-width="4.2"/><path d="M33 53c4-6 8-12 13-18 2-2 3-4 5-5" stroke-width="3"/></g></svg>VANA</span></h2>
-  <p style="font:700 11px ui-monospace,Menlo,monospace;color:#60ff15">v10.0 · 2026-10-19 · build 2</p><p>Live · enter your key once on this phone</p>
-  <form id="lkF" autocomplete="off"><input id="lkI" type="password" placeholder="Key" autocomplete="current-password" aria-label="Key">
+  <p style="font:700 11px ui-monospace,Menlo,monospace;color:#60ff15">v10.0 · 2026-10-19 · build 2</p><p id="msg">Nirvana key (not your Desk PIN)</p>
+  <form id="lkF" autocomplete="off"><div class="krow"><input id="lkI" type="password" placeholder="Nirvana key" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Nirvana key"><button type="button" id="lkEye" aria-label="Show key" aria-pressed="false">Show</button></div>
   <button class="btn" type="submit" id="lkB">Unlock</button></form>
+  <p id="lkWait" hidden>Unlocking… takes a few seconds</p>
   <div class="err" id="lkE"></div>
+  <button type="button" class="btn install" id="nvInstall">Add to home screen</button>
+  <p class="tip" id="nvInstallTip" hidden>Tap ⋮ then Add to Home screen</p>
+  <ul class="helpers" aria-label="Helpers">
+  <li><span style="background:#00aeef;color:#00121c">A</span><div><b>Ara</b><i>Boss</i></div></li>
+  <li><span style="background:#e0262f;color:#fff">M</span><div><b>Marvin Musk</b><i>Gate</i></div></li>
+  <li><span style="background:#d4af37;color:#0b0f14">T</span><div><b>Terafab</b><i>Money</i></div></li>
+  <li><span style="background:#4c6a8a;color:#fff">F</span><div><b>Falcon 9</b><i>Overnight sweep</i></div></li>
+  <li><span style="background:#5b8def;color:#fff">Ne</span><div><b>Neuralink</b><i>Brain dump</i></div></li>
+  <li><span style="background:#a39e93;color:#111">N</span><div><b>Nova</b><i>The Google lane</i></div></li>
+  </ul>
 </div></div>
+<div id="nvWin" hidden><canvas id="nvWinCv" aria-hidden="true"></canvas><p>Nirvana is live. Ange, you're a genius. The team's a genius.</p><button type="button" class="btn" id="nvWinClose">Close</button></div>
+<div id="nvKeyToast" class="toast" role="status" hidden></div>
 <div class="app">
 <header class="top">
   <h1 class="brand"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDBhZWVmIiBzdHJva2Utd2lkdGg9IjIuMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggdHJhbnNmb3JtPSJyb3RhdGUoMCAzMiAzMikiIGQ9Ik0zMiAyMi41QzI4LjYgMTcuNiAyOSAxMSAzMiA1LjVDMzUgMTEgMzUuNCAxNy42IDMyIDIyLjVaIi8+PHBhdGggdHJhbnNmb3JtPSJyb3RhdGUoNDAgMzIgMzIpIiBkPSJNMzIgMjIuNUMyOC42IDE3LjYgMjkgMTEgMzIgNS41QzM1IDExIDM1LjQgMTcuNiAzMiAyMi41WiIvPjxwYXRoIHRyYW5zZm9ybT0icm90YXRlKDgwIDMyIDMyKSIgZD0iTTMyIDIyLjVDMjguNiAxNy42IDI5IDExIDMyIDUuNUMzNSAxMSAzNS40IDE3LjYgMzIgMjIuNVoiLz48cGF0aCB0cmFuc2Zvcm09InJvdGF0ZSgxMjAgMzIgMzIpIiBkPSJNMzIgMjIuNUMyOC42IDE3LjYgMjkgMTEgMzIgNS41QzM1IDExIDM1LjQgMTcuNiAzMiAyMi41WiIvPjxwYXRoIHRyYW5zZm9ybT0icm90YXRlKDE2MCAzMiAzMikiIGQ9Ik0zMiAyMi41QzI4LjYgMTcuNiAyOSAxMSAzMiA1LjVDMzUgMTEgMzUuNCAxNy42IDMyIDIyLjVaIi8+PHBhdGggdHJhbnNmb3JtPSJyb3RhdGUoMjAwIDMyIDMyKSIgZD0iTTMyIDIyLjVDMjguNiAxNy42IDI5IDExIDMyIDUuNUMzNSAxMSAzNS40IDE3LjYgMzIgMjIuNVoiLz48cGF0aCB0cmFuc2Zvcm09InJvdGF0ZSgyNDAgMzIgMzIpIiBkPSJNMzIgMjIuNUMyOC42IDE3LjYgMjkgMTEgMzIgNS41QzM1IDExIDM1LjQgMTcuNiAzMiAyMi41WiIvPjxwYXRoIHRyYW5zZm9ybT0icm90YXRlKDI4MCAzMiAzMikiIGQ9Ik0zMiAyMi41QzI4LjYgMTcuNiAyOSAxMSAzMiA1LjVDMzUgMTEgMzUuNCAxNy42IDMyIDIyLjVaIi8+PHBhdGggdHJhbnNmb3JtPSJyb3RhdGUoMzIwIDMyIDMyKSIgZD0iTTMyIDIyLjVDMjguNiAxNy42IDI5IDExIDMyIDUuNUMzNSAxMSAzNS40IDE3LjYgMzIgMjIuNVoiLz48Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSI2LjUiLz48L2c+PGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iMi42IiBmaWxsPSIjMDBhZWVmIi8+PC9zdmc+" alt="" width="26" height="26"><span class="wm" aria-label="NIRVANA">NI<svg class="scr" viewBox="8 8 46 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 47c5-8 9-16 15-25 3-5 6-9 9-11" stroke-width="5.5"/><path d="M22 51c6-9 12-19 19-28 2-3 5-6 8-8" stroke-width="4.2"/><path d="M33 53c4-6 8-12 13-18 2-2 3-4 5-5" stroke-width="3"/></g></svg>VANA</span><small>LIVE</small></h1>
@@ -220,22 +249,65 @@ $("tabs").onclick=e=>{const b=e.target.closest("button");if(b)tab(b.dataset.t)};
  if(saved!=="sch")tab(saved)}
 function mk(t,c){const e=document.createElement(t);e.className=c;return e}
 function link(a,e){if(e.link&&/^https:\/\/(www\.)?google\.com\/calendar\//.test(e.link)){a.href=e.link;a.target="_blank";a.rel="noopener noreferrer"}}
+let nvBusy=false,installPrompt=null;
+const WIN_KEY="nv_win_20261020";
+function nvFail(e,fromStore){
+  if(!(window.crypto&&crypto.subtle))return "This browser can't unlock here. Open Nirvana in Chrome or Safari over HTTPS.";
+  if(e&&e.name==="OperationError")return fromStore?"Key changed. Enter the new key.":"Wrong key. Try again.";
+  const m=String(e&&e.message||e||"");
+  if(/Couldn't load|HTTP |Failed to fetch|NetworkError|TypeError/i.test(m))return "Couldn't load the file. Check the signal and try again.";
+  return m||"Couldn't unlock.";
+}
+function toast(msg){const t=$("nvKeyToast");if(!t)return;t.textContent=msg;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>{t.hidden=true},2400)}
+function confetti(){
+  const cv=$("nvWinCv");if(!cv||!cv.getContext)return;
+  const ctx=cv.getContext("2d"),w=cv.width=innerWidth,h=cv.height=innerHeight,colors=["#00aeef","#e0262f","#d4af37","#60ff15","#5b8def","#fff"],bits=[];
+  for(let i=0;i<90;i++)bits.push({x:Math.random()*w,y:-Math.random()*h,w:4+Math.random()*6,h:14+Math.random()*22,vy:2+Math.random()*3.5,vx:-1.2+Math.random()*2.4,r:Math.random()*6,c:colors[i%colors.length]});
+  const t0=performance.now();
+  (function frame(now){
+    if($("nvWin").hidden)return;
+    ctx.clearRect(0,0,w,h);
+    bits.forEach(b=>{b.y+=b.vy;b.x+=b.vx;b.r+=0.08;ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.r);ctx.fillStyle=b.c;ctx.fillRect(-b.w/2,-b.h/2,b.w,b.h);ctx.restore();if(b.y>h+30){b.y=-20;b.x=Math.random()*w}});
+    if(now-t0<3200)requestAnimationFrame(frame);
+  })(t0);
+}
+function showWin(done){
+  let seen=false;try{seen=localStorage.getItem(WIN_KEY)==="1"}catch(_e){}
+  const box=$("nvWin");
+  if(seen||!box){done();return}
+  try{localStorage.setItem(WIN_KEY,"1")}catch(_e){}
+  box.hidden=false;confetti();
+  let closed=false;
+  const close=()=>{if(closed)return;closed=true;box.hidden=true;done()};
+  $("nvWinClose").onclick=close;setTimeout(close,3000);
+}
 async function unlock(pass,fromStore){
-  $("lkE").textContent="";$("lkB").disabled=true;$("lkB").textContent="Unlocking…";
+  if(nvBusy)return;
+  pass=String(pass||"").trim();
+  if(!pass)return;
+  if(!(window.crypto&&crypto.subtle)){$("lkE").textContent=nvFail(null,fromStore);return}
+  nvBusy=true;$("lkE").textContent="";$("lkB").disabled=true;$("lkB").textContent="Unlocking…";$("lkWait").hidden=false;
   try{await pull(pass);
-    if(!DOC)throw new Error("Couldn't load the schedule. Check signal and try again.");
-    localStorage.setItem(LS,pass);document.body.classList.remove("locked");start(pass);
+    if(!DOC)throw new Error("Couldn't load the file. Check the signal and try again.");
+    localStorage.setItem(LS,pass);
+    $("lkB").disabled=false;$("lkB").textContent="Unlock";$("lkWait").hidden=true;nvBusy=false;
+    toast("Key saved on this phone ✓");
+    showWin(()=>{document.body.classList.remove("locked");start(pass)});
   }catch(e){
-    if(e&&e.name==="OperationError"){if(fromStore)localStorage.removeItem(LS);$("lkE").textContent=fromStore?"Key changed. Enter the new key.":"Wrong key. Try again."}
-    else $("lkE").textContent=e.message||String(e);
-  }finally{$("lkB").disabled=false;$("lkB").textContent="Unlock"}
+    $("lkB").disabled=false;$("lkB").textContent="Unlock";$("lkWait").hidden=true;nvBusy=false;
+    if(e&&e.name==="OperationError"&&fromStore)localStorage.removeItem(LS);
+    $("lkE").textContent=nvFail(e,fromStore);
+  }
 }
 function start(pass){clearInterval(timer);timer=setInterval(()=>pull(pass).catch(relock),EVERY);
   $("rf").onclick=()=>pull(pass).catch(relock);
   document.addEventListener("visibilitychange",()=>{if(!document.hidden)pull(pass).catch(relock)});
   setInterval(()=>{if(DOC)render()},60000);}
 function relock(){localStorage.removeItem(LS);DOC=null;document.body.classList.add("locked");$("lkE").textContent="Key changed. Enter the new key."}
-$("lkF").onsubmit=ev=>{ev.preventDefault();const v=$("lkI").value;if(v)unlock(v,false)};
+$("lkF").onsubmit=ev=>{ev.preventDefault();unlock($("lkI").value,false)};
+$("lkEye").onclick=()=>{const show=$("lkI").type==="password";$("lkI").type=show?"text":"password";$("lkEye").textContent=show?"Hide":"Show";$("lkEye").setAttribute("aria-label",show?"Hide key":"Show key");$("lkEye").setAttribute("aria-pressed",show?"true":"false")};
+window.addEventListener("beforeinstallprompt",ev=>{ev.preventDefault();installPrompt=ev;const tip=$("nvInstallTip");if(tip)tip.hidden=true});
+$("nvInstall").onclick=()=>{if(installPrompt){const p=installPrompt;installPrompt=null;p.prompt()}else{$("nvInstallTip").hidden=false}};
 $("fg").onclick=()=>{localStorage.removeItem(LS);location.reload()};
 const saved=localStorage.getItem(LS);if(saved)unlock(saved,true);else $("lkI").focus();
 })();

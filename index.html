@@ -44,8 +44,8 @@ body.hub{padding:0 0 calc(24px + env(safe-area-inset-bottom))!important}
 #grid{padding-bottom:calc(180px + env(safe-area-inset-bottom))!important}/* room to scroll the last row clear of the floating Tell Ara + mic buttons */
 </style>
 <script src="js/ara-account.js?v=20261016b" defer></script><style>/* v22 (17 Oct): hub clutter off - Chrome Beta bar, three-dots tip; TELL ARA becomes the small 44px Ara symbol bottom-right, same as the other apps */#ara-openin,#araHint{display:none!important}#arbBtn{position:fixed!important;right:calc(12px + env(safe-area-inset-right))!important;bottom:calc(14px + env(safe-area-inset-bottom))!important;left:auto!important;top:auto!important;margin:0!important;z-index:2147482500!important;font-size:0!important;gap:0!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;padding:0!important;border-radius:50%!important;border:1.5px solid #a78bfa!important;background:#0b0f1a url(pwa/hub-ara-v3-192.svg) center/30px no-repeat!important;box-shadow:0 2px 10px rgba(0,0,0,.5)!important;letter-spacing:0!important}#arbBtn i{position:absolute;top:-5px;right:-5px;font-size:10px!important}</style></head><body class="hub">
-<div class="nv-logo-slot" aria-label="Logo slot"><span class="nv-logo-ring" aria-hidden="true"></span><span>Logo: Ange picks A/B/C</span></div>
-<header class="rui-top hub-top"><span class="rui-mark" style="background:#000 var(--ara-sym) center/cover no-repeat;border-radius:50%" role="img" aria-label="Ara 2.0"></span><h1 class="rui-title">Nirvana</h1><div class="nav" data-rl-pill></div></header>
+<div class="nv-logo-slot" aria-label="Logo slot"><span class="nv-logo-ring" aria-hidden="true"></span></div>
+<header class="rui-top hub-top"><span class="rui-mark" style="background:#000 var(--ara-sym) center/cover no-repeat;border-radius:50%" role="img" aria-label="Ara"></span><h1 class="rui-title">Nirvana</h1><div class="nav" data-rl-pill></div></header>
 <a id="st" href="./status.html"><b>TONIGHT STATUS</b><span>Done, in progress, needed from you</span></a>
 <div id="grid"><div class="load">Loading tiles&hellip;</div></div>
 <script src="js/reconnect.js"></script>
@@ -61,8 +61,8 @@ function fix(name,url){var n=name.toUpperCase();
 var BAD=/orion|elon|grok|claude/i;
 var SYM='<span class="sym" aria-hidden="true"></span>';
 function araLink(id){var w="https://cursor.com/grok-bot/link/v1/agent?id="+id;return /Android/i.test(navigator.userAgent)?"intent://app/v1/agent?id="+id+"#Intent;scheme=grokbot;package=ai.x.grok.bot;S.browser_fallback_url="+encodeURIComponent(w)+";end":w}
-var ARA2={name:"ARA 2.0",sub:"Open in Grok Bot",u:araLink("0aca7e2c-756b-4a08-a1c7-d0751a5703bb"),badge:"",reg:false};
-var HUB_MORE=[ARA2,{name:"ELON",sub:"Call + message",u:"./elon/"},{name:"REALM DESK",sub:"Desk",u:"./desk.html"},{name:"CAPTURE",sub:"Ara Capture",u:"./capture.html"},{name:"GROK HOW-TO",sub:"How to use it",u:"./grok-howto.html"},{name:"VIDEO SEARCH",sub:"YouTube",u:"./video.html"},{name:"FINDINGS",sub:"What changed",u:"./findings.html"},{name:"TEAM",sub:"Ara + coworkers",u:"./team.html"},{name:"TALLY",sub:"Tonight, in words",u:"./tally.html"}].map(function(x){x.badge="";x.reg=false;return x});
+var ARA2={name:"Ara",sub:"Boss bot. Builds Nirvana and runs the daily loop.",u:araLink("0aca7e2c-756b-4a08-a1c7-d0751a5703bb"),badge:"",reg:false};
+var HUB_MORE=[ARA2,{name:"REALM DESK",sub:"Desk",u:"./desk.html"},{name:"CAPTURE",sub:"Ara Capture",u:"./capture.html"},{name:"GROK HOW-TO",sub:"How to use it",u:"./grok-howto.html"},{name:"VIDEO SEARCH",sub:"YouTube",u:"./video.html"},{name:"FINDINGS",sub:"What changed",u:"./findings.html"},{name:"TEAM",sub:"Ara + coworkers",u:"./team.html"},{name:"TALLY",sub:"Tonight, in words",u:"./tally.html"}].map(function(x){x.badge="";x.reg=false;return x});
 function hubMore(t){return HUB_MORE.filter(function(x){return !t.some(function(y){return y.u===x.u||y.name===x.name})})}
 var ARA_APPS=[{name:"QUEUE",sub:"Layer 1 board",u:"./queue.html"},{name:"REALM FLOW MAP",sub:"Programs + bridges",u:"./metatron3.html"},{name:"LAYERS",sub:"The build, layer by layer",u:"./layers.html"},{name:"ETA BOARD",sub:"What's running",u:"./eta.html"},{name:"NOVA BOARD",sub:"Pipelines + rules",u:"./nova.html"},{name:"CERT STUDIO",sub:"Anchor certs",u:"./cert.html"},{name:"CERT STUDIO TEST",sub:"Ara test copy",u:"./certstudio-test.html"},{name:"PRIVATE",sub:"PIN-locked",u:"./private.html"},{name:"MEET RECORDINGS",sub:"Google Sheet",u:"https://docs.google.com/spreadsheets/d/13QpygblRPrGIM7a6PLzt4THo18yLhx21kjuWqc63Zks/edit",blank:true}].map(function(x){x.badge="";x.reg=false;return x});
 function tileTarget(x){return (x.blank||HUB_SA)?"_blank":"_self"}
@@ -94,7 +94,7 @@ araFallback("instant");/* built-in tiles show at once; the live list replaces th
  t.push({name:"REALM MAP",sub:"Edit in place",u:"./mapper.html",badge:"",reg:false});
  t=t.concat(hubMore(t));
  t=t.concat(ARA_APPS.filter(function(x){return !t.some(function(y){return y.u===x.u||y.name===x.name})}));
- t=t.filter(function(x){return x.u==="./metatron3.html"||!/FLOW MAP|^STATUS$|REALM LAUNCHER|DESK V3/i.test(x.name)});
+ t=t.filter(function(x){return (x.u==="./metatron3.html"||!/FLOW MAP|^STATUS$|REALM LAUNCHER|DESK V3/i.test(x.name))&&!/^elon$/i.test(x.name)&&String(x.u||"").indexOf("./elon/")!==0});
  t.sort(function(a,b){return (b.reg?1:0)-(a.reg?1:0)});
  var fi=-1;t.forEach(function(x,k){if(/^FLOW MAP$/i.test(x.name))fi=k});t.splice(fi>=0?fi+1:t.length,0,{name:"FLOW MAP (24 SEP)",sub:"Original Apps Script",u:"https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec?authuser=info@realmpcs.com",badge:"",reg:false});
  var si=-1;t.forEach(function(x,k){if(/^SCRIBE/i.test(x.name))si=k});var sc=si>=0?t.splice(si,1)[0]:{};sc.name="NOTES";sc.sub="You Got Me Bro";sc.u="./notes.html";sc.badge="";sc.reg=true;t.unshift(sc);

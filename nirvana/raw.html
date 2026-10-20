@@ -10,7 +10,23 @@
 :root{--bg:#0b0f14;--bg2:#121820;--ln:#26313d;--tx:#e8eef4;--mut:#8a98a8;--c:#00aeef}
 html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,sans-serif}
 #lock{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(circle at 50% 30%,#0f2130,var(--bg) 70%)}
-.lk{width:100%;max-width:340px;text-align:center}.lk img{width:84px;height:84px;border-radius:18px;display:block;margin:0 auto 10px}
+.lk{width:100%;max-width:420px;text-align:center}.lk img{width:84px;height:84px;border-radius:18px;display:block;margin:0 auto 10px}
+.krow{display:flex;gap:8px;align-items:center}.krow input{flex:1;margin:0}
+#kEye{width:44px;min-width:44px;height:44px;border-radius:999px;border:1px solid var(--c);background:transparent;color:var(--c);padding:0}
+#gxWait{color:var(--c);font-weight:700;margin:8px 0 0}
+.helpers{list-style:none;margin:14px 0 0;padding:0;text-align:left}
+.helpers li{display:flex;align-items:center;gap:10px;min-height:52px;border-bottom:1px solid var(--ln)}
+.helpers span{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+.helpers b{display:block;color:var(--tx)}.helpers i{display:block;color:var(--mut);font-style:normal;font-size:12px}
+.install{margin-top:10px;width:auto;min-height:44px;border-radius:999px;padding:0 16px}
+.tip{color:var(--mut);font-size:13px;margin:8px 0 0}
+#nvWin{position:fixed;inset:0;z-index:80;background:#0b0f14;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+#nvWin[hidden]{display:none}
+#nvWin canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#nvWin p{position:relative;z-index:1;font:600 22px/1.35 system-ui;max-width:18em}
+#nvWin button{position:relative;z-index:1;width:auto;min-width:88px;margin-top:12px}
+.toast{position:fixed;z-index:90;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;border-radius:999px;padding:10px 16px;font-weight:700}
+.toast[hidden]{display:none}
 .lk input{width:100%;box-sizing:border-box;padding:12px;border-radius:12px;border:1px solid var(--ln);background:var(--bg2);color:var(--tx);font-size:17px;text-align:center;margin-bottom:8px}
 .lk button,#b{box-sizing:border-box;width:100%;min-height:44px;min-width:44px;border:0;border-radius:12px;padding:11px;background:var(--c);color:#00121c;font-weight:700;font-size:15px}
 .err{color:#ff5a5a;min-height:20px;font-size:13px;margin-top:6px}.st{font:700 11px ui-monospace,Menlo,monospace;color:#60ff15}
@@ -24,8 +40,23 @@ pre{margin:0;padding:10px 12px 40px;font:12.5px/1.45 ui-monospace,SFMono-Regular
 </style></head>
 <body>
 <div id="lock"><div class="lk"><img src="icons/icon-v10-192.png" alt=""><h2 style="letter-spacing:.18em;margin:0">RAW</h2><div class="st">v10.0 · 2026-10-19 · build 2</div>
-<p style="color:var(--mut)">Enter your key once on this phone</p>
-<form id="f" autocomplete="off"><input id="k" type="password" placeholder="Key" aria-label="Key" autocomplete="current-password"><button id="b">Unlock</button></form><div class="err" id="e"></div></div></div>
+<p id="msg" style="color:var(--mut)">Nirvana key (not your Desk PIN)</p>
+<form id="f" autocomplete="off"><div class="krow"><input id="k" type="password" placeholder="Nirvana key" aria-label="Nirvana key" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false"><button type="button" id="kEye" aria-label="Show key" aria-pressed="false">Show</button></div><button id="b" type="submit">Unlock</button></form>
+<p id="gxWait" hidden>Unlocking… takes a few seconds</p>
+<div class="err" id="e"></div>
+<button type="button" class="install" id="nvInstall">Add to home screen</button>
+<p class="tip" id="nvInstallTip" hidden>Tap ⋮ then Add to Home screen</p>
+<ul class="helpers" aria-label="Helpers">
+<li><span style="background:#00aeef;color:#00121c">A</span><div><b>Ara</b><i>Boss</i></div></li>
+<li><span style="background:#e0262f;color:#fff">M</span><div><b>Marvin Musk</b><i>Gate</i></div></li>
+<li><span style="background:#d4af37;color:#0b0f14">T</span><div><b>Terafab</b><i>Money</i></div></li>
+<li><span style="background:#4c6a8a;color:#fff">F</span><div><b>Falcon 9</b><i>Overnight sweep</i></div></li>
+<li><span style="background:#5b8def;color:#fff">Ne</span><div><b>Neuralink</b><i>Brain dump</i></div></li>
+<li><span style="background:#a39e93;color:#111">N</span><div><b>Nova</b><i>The Google lane</i></div></li>
+</ul>
+</div></div>
+<div id="nvWin" hidden><canvas id="nvWinCv" aria-hidden="true"></canvas><p>Nirvana is live. Ange, you're a genius. The team's a genius.</p><button type="button" id="nvWinClose">Close</button></div>
+<div id="nvKeyToast" class="toast" role="status" hidden></div>
 <div id="app" hidden>
 <div class="top"><b>RAW</b><select id="sec" aria-label="Section"></select><button id="mj" class="on" type="button">JSON</button><button id="mp" type="button">Python dict</button><button id="cp" type="button">Copy</button><button id="rf" type="button">Refresh</button></div>
 <div class="meta"><span id="as"></span> · <a href="versions.html">v10.0 · 2026-10-19 · build 2</a> · <a href="index.html">Nirvana</a> · <a href="live.html">Live</a></div>
@@ -42,7 +73,37 @@ async function nvDec(o,pass){
 }
 async function nvFetch(src){var r=await fetch(src+(src.indexOf("?")<0?"?":"&")+"t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("Couldn't load ("+r.status+")");return r.json()}
 
-(function(){var D=null,mode="json",pass=null;var $=function(i){return document.getElementById(i)};
+(function(){var D=null,mode="json",pass=null,nvBusy=false,deferred=null,WIN_KEY="nv_win_20261020";var $=function(i){return document.getElementById(i)};
+function nvFail(x,stored){
+  if(!(window.crypto&&crypto.subtle))return "This browser can't unlock here. Open Nirvana in Chrome or Safari over HTTPS.";
+  if(x&&x.name==="OperationError")return stored?"Key changed. Enter the new key.":"Wrong key. Try again.";
+  var m=String(x&&x.message||x||"");
+  if(/Couldn't load|HTTP |Failed to fetch|NetworkError|TypeError/i.test(m))return "Couldn't load the file. Check the signal and try again.";
+  return m||"Couldn't unlock.";
+}
+function toast(msg){var t=$("nvKeyToast");if(!t)return;t.textContent=msg;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(function(){t.hidden=true},2400)}
+function confetti(){
+  var cv=$("nvWinCv");if(!cv||!cv.getContext)return;
+  var ctx=cv.getContext("2d"),w=cv.width=innerWidth,h=cv.height=innerHeight,colors=["#00aeef","#e0262f","#d4af37","#60ff15","#5b8def","#fff"],bits=[],i;
+  for(i=0;i<90;i++)bits.push({x:Math.random()*w,y:-Math.random()*h,w:4+Math.random()*6,h:14+Math.random()*22,vy:2+Math.random()*3.5,vx:-1.2+Math.random()*2.4,r:Math.random()*6,c:colors[i%colors.length]});
+  var t0=performance.now();
+  (function frame(now){
+    if($("nvWin").hidden)return;
+    ctx.clearRect(0,0,w,h);
+    bits.forEach(function(b){b.y+=b.vy;b.x+=b.vx;b.r+=0.08;ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.r);ctx.fillStyle=b.c;ctx.fillRect(-b.w/2,-b.h/2,b.w,b.h);ctx.restore();if(b.y>h+30){b.y=-20;b.x=Math.random()*w}});
+    if(now-t0<3200)requestAnimationFrame(frame);
+  })(t0);
+}
+function showWin(done){
+  var seen=false;try{seen=localStorage.getItem(WIN_KEY)==="1"}catch(e){}
+  var box=$("nvWin");
+  if(seen||!box){done();return}
+  try{localStorage.setItem(WIN_KEY,"1")}catch(e){}
+  box.hidden=false;confetti();
+  var closed=false;
+  function close(){if(closed)return;closed=true;box.hidden=true;done()}
+  $("nvWinClose").onclick=close;setTimeout(close,3000);
+}
 function esc(s){return s.replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
 function pyStr(s){return "'"+s.replace(/\\/g,"\\\\").replace(/'/g,"\\'").replace(/\n/g,"\\n")+"'"}
 function fmt(v,ind,py){var p="    ",pad=p.repeat(ind),pad1=p.repeat(ind+1);
@@ -55,13 +116,25 @@ function fmt(v,ind,py){var p="    ",pad=p.repeat(ind),pad1=p.repeat(ind+1);
  return "{\n"+ks.map(function(k){return pad1+'<span class="k">'+esc(py?pyStr(k):JSON.stringify(k))+'</span>: '+fmt(v[k],ind+1,py)}).join(",\n")+"\n"+pad+"}"}
 function cur(){var s=$("sec").value;return s==="*"?D:D[s]}
 function show(){$("out").innerHTML=fmt(cur(),0,mode==="py");$("mj").classList.toggle("on",mode==="json");$("mp").classList.toggle("on",mode==="py")}
-async function load(p,stored){$("e").textContent="";try{var o=await nvFetch("data.enc.json");D=await nvDec(o,p);pass=p;localStorage.setItem(NVK,p);
+async function load(p,stored){
+  if(nvBusy)return;
+  p=String(p||"").trim();
+  if(!p)return;
+  if(!(window.crypto&&crypto.subtle)){$("e").textContent=nvFail(null,stored);return}
+  nvBusy=true;$("e").textContent="";$("b").disabled=true;$("b").textContent="Unlocking…";$("gxWait").hidden=false;
+  try{var o=await nvFetch("data.enc.json");D=await nvDec(o,p);pass=p;localStorage.setItem(NVK,p);
   var sel=$("sec"),keep=sel.value;sel.innerHTML='<option value="*">everything</option>'+Object.keys(D).map(function(k){return '<option>'+esc(k)+'</option>'}).join("");
   if(keep)sel.value=keep;else if(D.schedule)sel.value="schedule";
   $("as").textContent="as of "+(D.as_of||o.as_of||"?")+" · checked "+new Date().toLocaleTimeString("en-AU",{timeZone:"Australia/Melbourne",hour:"2-digit",minute:"2-digit",hour12:false})+" Melbourne";
-  $("lock").hidden=true;$("app").hidden=false;show();
- }catch(x){if(x&&x.name==="OperationError"){if(stored)localStorage.removeItem(NVK);$("e").textContent=stored?"Key changed. Enter the new key.":"Wrong key. Try again."}else $("e").textContent=x.message||String(x)}}
-$("f").onsubmit=function(e){e.preventDefault();var v=$("k").value;if(v)load(v,false)};
+  $("b").disabled=false;$("b").textContent="Unlock";$("gxWait").hidden=true;nvBusy=false;
+  if($("lock").hidden){show();return}
+  toast("Key saved on this phone ✓");
+  showWin(function(){$("lock").hidden=true;$("app").hidden=false;show()});
+ }catch(x){$("b").disabled=false;$("b").textContent="Unlock";$("gxWait").hidden=true;nvBusy=false;if(x&&x.name==="OperationError"&&stored)localStorage.removeItem(NVK);$("e").textContent=nvFail(x,stored)}}
+$("f").onsubmit=function(ev){ev.preventDefault();load($("k").value,false)};
+$("kEye").onclick=function(){var show=$("k").type==="password";$("k").type=show?"text":"password";$("kEye").textContent=show?"Hide":"Show";$("kEye").setAttribute("aria-label",show?"Hide key":"Show key");$("kEye").setAttribute("aria-pressed",show?"true":"false")};
+window.addEventListener("beforeinstallprompt",function(ev){ev.preventDefault();deferred=ev;if($("nvInstallTip"))$("nvInstallTip").hidden=true});
+$("nvInstall").onclick=function(){if(deferred){var p=deferred;deferred=null;p.prompt()}else $("nvInstallTip").hidden=false};
 $("sec").onchange=show;$("mj").onclick=function(){mode="json";show()};$("mp").onclick=function(){mode="py";show()};
 $("cp").onclick=function(){var t=$("out").textContent;navigator.clipboard&&navigator.clipboard.writeText(t).then(function(){$("cp").textContent="Copied"},function(){})};
 $("rf").onclick=function(){if(pass)load(pass,true)};

@@ -72,7 +72,7 @@ img.photo{object-fit:cover;border-radius:8px;border:1px solid #26313d}
 .mailrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .mailrow label{flex:1;min-width:140px;color:#8a98a8;font-size:12px}
 .mailrow input{margin:4px 0 0;text-align:left}
-.mailmic,.mailok{min-height:44px;border-radius:12px;border:1px solid #26313d;background:#0b0f14;color:#00aeef;padding:8px 12px;cursor:pointer}
+.mailmic,.mic,.mailok{min-height:44px;border-radius:12px;border:1px solid #26313d;background:#0b0f14;color:#00aeef;padding:8px 12px;cursor:pointer}
 .mailok{background:#00aeef;color:#00121c;border-color:#00aeef;font-weight:700}
 .mailst,.mailnotest{margin:6px 0 0;color:#8a98a8;font-size:12px}
 #mailWait{margin:0;padding-left:18px}
@@ -212,6 +212,64 @@ body.julie-on .tf{display:none}
   .lane-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
   .agrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 }
+.gx{margin:0 auto 16px;text-align:left;max-width:980px}
+.gx-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px}
+.gx-tools h2{margin:0;letter-spacing:.08em;font-size:22px}
+.gx-pills{display:flex;flex-wrap:wrap;gap:8px}
+.gx-pill{min-height:44px;border-radius:999px;border:1px solid #00aeef;background:#00aeef;color:#00121c;font:700 14px system-ui;padding:0 16px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.gx-pill.ghost{background:transparent;color:#00aeef}
+.gx-tip{margin:6px 0 0;color:#8a98a8;font-size:13px}
+.gx-key{background:#121820;border:1px solid #26313d;border-radius:16px;padding:12px;margin:0 0 12px}
+.gx-key p{margin:0 0 8px}
+.gx-keyrow{display:flex;gap:8px;align-items:center}
+.gx-keyrow input{flex:1;margin:0}
+#kEye{width:44px;min-width:44px;height:44px;border-radius:999px;border:1px solid #00aeef;background:transparent;color:#00aeef;padding:0}
+#gxWait{color:#00aeef;font-weight:700}
+.gx-body{display:flex;min-height:68vh;border-radius:18px;overflow:hidden;background:#fff;color:#111;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+.gx-list{width:100%;background:#f7f7f7;overflow:auto}
+.gx-row{width:100%;display:flex;align-items:center;gap:12px;padding:14px 16px;border:0;border-bottom:1px solid #ececec;background:transparent;color:#111;text-align:left;cursor:pointer;min-height:72px}
+.gx-row.on{box-shadow:inset 3px 0 0 #00aeef;background:#fff}
+.gx-av{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 16px system-ui;flex:none}
+.gx-mid{flex:1;min-width:0}
+.gx-mid b{display:block;font-size:16px}
+.gx-mid span{display:block;color:#6b7280;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gx-time{color:#9ca3af;font-size:12px;flex:none}
+.gx-thread{display:none;flex:1;flex-direction:column;background:#fff;min-width:0}
+.gx.thread .gx-list{display:none}
+.gx.thread .gx-thread{display:flex;width:100%}
+.gx-head{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #eee}
+.gx-back{min-height:44px;min-width:44px;border-radius:999px;border:1px solid #e5e7eb;background:#fff;color:#111;padding:0 12px;cursor:pointer}
+.gx-msgs{flex:1;overflow:auto;padding:18px 16px 8px;display:flex;flex-direction:column;gap:10px}
+.gx-bubble{align-self:flex-start;max-width:80%;background:#f3f4f6;color:#111;border-radius:16px;padding:10px 12px;line-height:1.35}
+.gx-empty{display:flex;flex-direction:column;align-items:center;gap:10px;color:#6b7280;padding:48px 12px}
+.gx-mark{width:44px;height:44px;border-radius:50%;background:#000}
+.gx-compose{display:flex;gap:8px;padding:12px;border-top:1px solid #eee}
+.gx-compose input{flex:1;margin:0;text-align:left;border-radius:999px}
+.nv-key-toast,.nv-saved{position:fixed;z-index:130;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;border-radius:999px;padding:10px 16px;font-weight:700}
+.nv-key-toast[hidden],.nv-saved[hidden],#nvWin[hidden]{display:none}
+#nvWin{position:fixed;inset:0;z-index:120;background:#0b0f14;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+#nvWin canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#nvWin p{position:relative;z-index:1;font:600 22px/1.35 system-ui;max-width:18em;margin:0 0 16px}
+#nvWin button{position:relative;z-index:1}
+.nv-amend{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.nv-amend textarea{flex:1 1 180px;min-height:44px;margin:0;text-align:left}
+.lane.falcon{border-color:#4c6a8a;background:linear-gradient(165deg,#1a2836,#0b0f14)}
+.lane.neural{border-color:#5b8def}
+@media(min-width:700px){
+  .gx-list{width:320px;flex:none;border-right:1px solid #e6e6e6}
+  .gx-thread{display:flex}
+  .gx.thread .gx-list{display:block}
+  .gx-back{display:none}
+}
+@media(prefers-color-scheme:dark){
+  .gx-body,.gx-thread,.gx-head,.gx-compose{background:#12141a;color:#e8eef4}
+  .gx-list{background:#16181d}
+  .gx-row{color:#e8eef4;border-bottom-color:#2a2e36}
+  .gx-row.on{background:#1c2430}
+  .gx-mid span,.gx-time,.gx-empty{color:#9ca3af}
+  .gx-bubble{background:#1e2430;color:#e8eef4}
+  .gx-back{background:#12141a;color:#e8eef4;border-color:#2a2e36}
+}
 @page{size:A4 portrait;margin:14mm}
 @media print{
   html,body{background:#fff}
@@ -232,7 +290,33 @@ body.julie-on .tf{display:none}
 </div>
 </div>
 <div class="lk">
-<section class="grok" id="grokCenter" aria-label="Nirvana">
+<section class="gx" id="gxApp" aria-label="Helpers">
+<div class="gx-tools">
+<h2>Nirvana</h2>
+<div class="gx-pills">
+<button type="button" class="gx-pill" id="nvInstall">Add to home screen</button>
+</div>
+</div>
+<p class="gx-tip" id="nvInstallTip" hidden>Tap ⋮ then Add to Home screen</p>
+<div class="gx-key">
+<p id="msg">Nirvana key (not your Desk PIN)</p>
+<form id="f" autocomplete="off">
+<div class="gx-keyrow"><input id="k" type="password" placeholder="Nirvana key" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Nirvana key"><button type="button" id="kEye" aria-label="Show key" aria-pressed="false">Show</button></div>
+<button id="b" type="submit">Unlock</button>
+</form>
+<p id="gxWait" hidden>Unlocking… takes a few seconds</p>
+<div class="err" id="e"></div>
+</div>
+<div class="gx-body">
+<aside class="gx-list" id="gxList" aria-label="Helper threads"></aside>
+<section class="gx-thread" id="gxThread" aria-label="Thread">
+<header class="gx-head"><button type="button" class="gx-back" id="gxBack">Back</button><span class="gx-av" id="gxAv">A</span><div class="gx-mid"><b id="gxName">Ara</b><span id="gxRole">Boss</span></div></header>
+<div class="gx-msgs" id="gxMsgs"></div>
+<form class="gx-compose" id="gxCompose" autocomplete="off"><input id="gxIn" aria-label="Message" placeholder="Draft a line" autocapitalize="off"><button class="gx-pill" type="submit">Send</button><button class="gx-pill ghost" type="button" id="gxSave">Save</button></form>
+</section>
+</div>
+</section>
+<section class="grok" id="grokCenter" hidden aria-label="Nirvana">
 <h2 id="nirvanaHead">Nirvana</h2>
 <div class="nv-bar">
 <button type="button" id="nvStamp" class="nv-stamp">detected</button>
@@ -255,7 +339,7 @@ body.julie-on .tf{display:none}
 </div>
 </section>
 <section class="lanes" aria-label="Lanes">
-<a class="flowpill" href="../map.html">Flow</a><a class="flowpill" href="infograph.html">Infograph</a>
+<a class="flowpill" href="../map.html">Flow</a><a class="flowpill" href="infograph.html">Infograph</a><a class="flowpill" href="email.html">Email rules</a>
 <div class="lanes-top"><b class="lanes-k">LANES</b><a id="cue42" href="https://drive.google.com/file/d/1VIle9fAxLoh-y4_x3UZ9nPWIJUnhn-n1/view" target="_blank" rel="noopener">42* guide</a></div>
 <div class="lane-grid" id="laneGrid"></div>
 </section>
@@ -401,15 +485,19 @@ body.julie-on .tf{display:none}
 <section id="unlocked" class="panel" aria-label="Unlocked">
 <div class="wrap">
 <p><a class="back" href="#board">Board</a></p>
-<div class="unlock">
-<form id="f" autocomplete="off"><input id="k" type="password" placeholder="Key" autocomplete="current-password" aria-label="Key"><button id="b" type="submit">Unlock</button></form>
-<div class="err" id="e"></div>
-</div>
+<p>The key box is on the board.</p>
 <iframe id="unlockedFrame" title="Unlocked content" sandbox="allow-scripts allow-forms allow-popups" referrerpolicy="no-referrer"></iframe>
 </div>
 </section>
 
 <div id="cueToast" class="cue-toast" role="status" hidden></div>
+<div id="nvWin" hidden>
+<canvas id="nvWinCv" aria-hidden="true"></canvas>
+<p>Nirvana is live. Ange, you're a genius. The team's a genius.</p>
+<button type="button" class="gx-pill" id="nvWinClose">Close</button>
+</div>
+<div id="nvKeyToast" class="nv-key-toast" role="status" hidden></div>
+<div id="nvSaved" class="nv-saved" role="status" hidden>Saved ✓</div>
 <script>
 /* Nirvana shared unlock: AES-256-GCM, PBKDF2-SHA256. Key kept on this device only (localStorage). */
 var NVK="nirvana_key_v1";
@@ -434,24 +522,146 @@ function nvMount(html){
 
 (function(){try{var dd=(location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})/)||[])[1]||localStorage.getItem("realm_device")||"";var dev=document.getElementById("nvDev");if(dev)dev.textContent={fold8:"Fold 8",flip6:"Flip 6"}[dd]||(innerWidth>=900?"Desktop":"Phone")}catch(_){}})();
 (function(){var MODE="main";
+var nvBusy=false,WIN_KEY="nv_win_20261020",deferred=null;
 try{var dm=location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})(?:&|$)/);if(dm){localStorage.setItem("realm_device",dm[1].toLowerCase());var q=location.search.replace(/([?&])d=[^&]*&?/,"$1").replace(/[?&]$/,"");history.replaceState(null,"",location.pathname+q+location.hash)}}catch(_e){}
-async function open(pass,stored){var e=document.getElementById("e"),b=document.getElementById("b");e.textContent="";b.disabled=true;b.textContent="Unlocking…";
- try{var o=await nvFetch("main.enc.json");var d=await nvDec(o,pass);localStorage.setItem(NVK,pass);
-  if(MODE==="flow")sessionStorage.setItem("nv_open","flow");
-  b.disabled=false;b.textContent="Unlock";
-  nvMount(d&&d.html);
- }catch(x){b.disabled=false;b.textContent="Unlock";
-  if(x&&x.name==="OperationError"){if(stored)localStorage.removeItem(NVK);e.textContent=stored?"Key changed. Enter the new key.":"Wrong key. Try again."}else e.textContent=x.message||String(x)}}
-document.getElementById("f").onsubmit=function(ev){ev.preventDefault();var v=document.getElementById("k").value;if(v)open(v,false)};
+function nvFail(x,stored){
+  if(!(window.crypto&&crypto.subtle))return "This browser can't unlock here. Open Nirvana in Chrome or Safari over HTTPS.";
+  if(x&&x.name==="OperationError")return stored?"Key changed. Enter the new key.":"Wrong key. Try again.";
+  var m=String(x&&x.message||x||"");
+  if(/Couldn't load|HTTP |Failed to fetch|NetworkError|TypeError/i.test(m))return "Couldn't load the file. Check the signal and try again.";
+  return m||"Couldn't unlock.";
+}
+function toast(msg){var t=document.getElementById("nvKeyToast");if(!t)return;t.textContent=msg;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(function(){t.hidden=true},2400)}
+function confetti(){
+  var cv=document.getElementById("nvWinCv");if(!cv||!cv.getContext)return;
+  var ctx=cv.getContext("2d"),w=cv.width=innerWidth,h=cv.height=innerHeight;
+  var colors=["#00aeef","#e0262f","#d4af37","#60ff15","#5b8def","#fff"],bits=[],i;
+  for(i=0;i<90;i++)bits.push({x:Math.random()*w,y:-Math.random()*h,w:4+Math.random()*6,h:14+Math.random()*22,vy:2+Math.random()*3.5,vx:-1.2+Math.random()*2.4,r:Math.random()*6,c:colors[i%colors.length]});
+  var t0=performance.now();
+  (function frame(now){
+    if(document.getElementById("nvWin").hidden)return;
+    ctx.clearRect(0,0,w,h);
+    bits.forEach(function(b){b.y+=b.vy;b.x+=b.vx;b.r+=0.08;ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.r);ctx.fillStyle=b.c;ctx.fillRect(-b.w/2,-b.h/2,b.w,b.h);ctx.restore();if(b.y>h+30){b.y=-20;b.x=Math.random()*w}});
+    if(now-t0<3200)requestAnimationFrame(frame);
+  })(t0);
+}
+function showWin(done){
+  var box=document.getElementById("nvWin"),seen=false;
+  try{seen=localStorage.getItem(WIN_KEY)==="1"}catch(e){}
+  if(seen||!box){done();return}
+  try{localStorage.setItem(WIN_KEY,"1")}catch(e){}
+  box.hidden=false;confetti();
+  var closed=false;
+  function close(){if(closed)return;closed=true;box.hidden=true;done()}
+  var btn=document.getElementById("nvWinClose");if(btn)btn.onclick=close;
+  setTimeout(close,3000);
+}
+async function open(pass,stored){
+  if(nvBusy)return;
+  pass=String(pass||"").trim();
+  var e=document.getElementById("e"),b=document.getElementById("b"),w=document.getElementById("gxWait");
+  if(!pass)return;
+  if(!(window.crypto&&crypto.subtle)){e.textContent=nvFail(null,stored);return}
+  nvBusy=true;e.textContent="";b.disabled=true;b.textContent="Unlocking…";if(w)w.hidden=false;
+  try{
+    var o=await nvFetch("main.enc.json");var d=await nvDec(o,pass);localStorage.setItem(NVK,pass);
+    if(MODE==="flow")sessionStorage.setItem("nv_open","flow");
+    b.disabled=false;b.textContent="Unlock";if(w)w.hidden=true;nvBusy=false;
+    toast("Key saved on this phone ✓");
+    showWin(function(){nvMount(d&&d.html)});
+  }catch(x){
+    b.disabled=false;b.textContent="Unlock";if(w)w.hidden=true;nvBusy=false;
+    if(x&&x.name==="OperationError"&&stored)localStorage.removeItem(NVK);
+    e.textContent=nvFail(x,stored);
+  }
+}
+var eye=document.getElementById("kEye"),key=document.getElementById("k");
+if(eye&&key)eye.addEventListener("click",function(){
+  var show=key.type==="password";
+  key.type=show?"text":"password";
+  eye.textContent=show?"Hide":"Show";
+  eye.setAttribute("aria-label",show?"Hide key":"Show key");
+  eye.setAttribute("aria-pressed",show?"true":"false");
+});
+document.getElementById("f").onsubmit=function(ev){ev.preventDefault();open(document.getElementById("k").value,false)};
+var install=document.getElementById("nvInstall"),tip=document.getElementById("nvInstallTip");
+window.addEventListener("beforeinstallprompt",function(ev){ev.preventDefault();deferred=ev;if(tip)tip.hidden=true});
+if(install)install.addEventListener("click",function(){
+  if(deferred){var p=deferred;deferred=null;p.prompt();if(p.userChoice)p.userChoice.then(function(){})}
+  else if(tip)tip.hidden=false;
+});
+})();
+(function(){
+  var HELPERS=[
+    {id:"ara",name:"Ara",role:"Boss",time:"5:44 pm",initial:"A",bg:"#00aeef",fg:"#00121c",lines:["Draft. Ara runs the daily loop.","Nothing private is in this thread."]},
+    {id:"marvin",name:"Marvin Musk",role:"Gate",time:"5:44 pm",initial:"M",bg:"#e0262f",fg:"#fff",lines:["Draft. Marvin checks the build before it ships.","Nothing private is in this thread."]},
+    {id:"terafab",name:"Terafab",role:"Money",time:"5:44 pm",initial:"T",bg:"#d4af37",fg:"#0b0f14",lines:["Draft. Terafab holds the money lane.","Nothing private is in this thread."]},
+    {id:"falcon",name:"Falcon 9",role:"Overnight sweep",time:"5:44 pm",initial:"F",bg:"#4c6a8a",fg:"#fff",lines:["Draft. Falcon 9 sweeps overnight.","Nothing private is in this thread."]},
+    {id:"neuralink",name:"Neuralink",role:"Brain dump",time:"5:44 pm",initial:"Ne",bg:"#5b8def",fg:"#fff",lines:["Draft. Neuralink holds the brain dump.","Nothing private is in this thread."]},
+    {id:"nova",name:"Nova",role:"The Google lane",time:"5:44 pm",initial:"N",bg:"#a39e93",fg:"#111",lines:["Draft. Nova is the Google lane.","Nothing private is in this thread."]}
+  ];
+  var list=document.getElementById("gxList"),app=document.getElementById("gxApp"),msgs=document.getElementById("gxMsgs");
+  if(!list||!app||!msgs)return;
+  var cur=HELPERS[0],extra={};
+  function phone(){return matchMedia("(max-width:699px)").matches}
+  function paintList(){
+    list.textContent="";
+    HELPERS.forEach(function(h){
+      var b=document.createElement("button");
+      b.type="button";b.className="gx-row"+(h.id===cur.id?" on":"");
+      var av=document.createElement("span");av.className="gx-av";av.textContent=h.initial;av.style.background=h.bg;av.style.color=h.fg;
+      var mid=document.createElement("span");mid.className="gx-mid";
+      var nm=document.createElement("b");nm.textContent=h.name;
+      var role=document.createElement("span");role.textContent=h.role;
+      mid.appendChild(nm);mid.appendChild(role);
+      var time=document.createElement("span");time.className="gx-time";time.textContent=h.time;
+      b.appendChild(av);b.appendChild(mid);b.appendChild(time);
+      b.addEventListener("click",function(){openThread(h)});
+      list.appendChild(b);
+    });
+  }
+  function paintThread(){
+    var av=document.getElementById("gxAv"),nm=document.getElementById("gxName"),role=document.getElementById("gxRole");
+    av.textContent=cur.initial;av.style.background=cur.bg;av.style.color=cur.fg;
+    nm.textContent=cur.name;role.textContent=cur.role;
+    msgs.textContent="";
+    if(!(extra[cur.id]||[]).length){
+      var empty=document.createElement("div");empty.className="gx-empty";
+      var mark=document.createElement("span");mark.className="gx-mark";mark.setAttribute("aria-hidden","true");
+      empty.appendChild(mark);msgs.appendChild(empty);
+    }
+    (cur.lines||[]).concat(extra[cur.id]||[]).forEach(function(line){
+      var p=document.createElement("div");p.className="gx-bubble";p.textContent=line;msgs.appendChild(p);
+    });
+  }
+  function openThread(h){cur=h;paintList();paintThread();if(phone())app.classList.add("thread")}
+  document.getElementById("gxBack").addEventListener("click",function(){app.classList.remove("thread")});
+  document.getElementById("gxCompose").addEventListener("submit",function(ev){
+    ev.preventDefault();
+    var inp=document.getElementById("gxIn"),v=String(inp.value||"").trim();
+    if(!v)return;
+    extra[cur.id]=extra[cur.id]||[];extra[cur.id].push(v);inp.value="";paintThread();
+  });
+  document.getElementById("gxSave").addEventListener("click",function(){
+    try{
+      var o=JSON.parse(localStorage.getItem("nv_grok_center_v1")||"");
+      if(!o||!Array.isArray(o.history))o={current:"",history:[]};
+      var last=(extra[cur.id]||[]).slice(-1)[0];
+      if(last)o.history.unshift({t:Date.now(),text:last});
+      localStorage.setItem("nv_grok_center_v1",JSON.stringify(o));
+    }catch(e){}
+    if(window.nvSavedToast)window.nvSavedToast();
+  });
+  paintList();paintThread();
 })();
 (function(){
   var LANES=[
-    {id:"ara",name:"Ara 2.1",cls:"ara",icon:"../pwa/lanes/ara.svg",role:"Boss bot. Builds Nirvana and runs the daily loop.",bot:"0aca7e2c-756b-4a08-a1c7-d0751a5703bb"},
-    {id:"marvin",name:"Marvin Musk",cls:"marvin",icon:"../pwa/lanes/marvin.svg?v=20261020t80",role:"Final gate. Checks every build and message before it reaches Ange."},
-    {id:"terafab",name:"Terafab",cls:"tera",icon:"../pwa/lanes/terafab.svg",role:"Money: trades, F&H store, Qantas, pay-it-forward."},
-    {id:"falcon",sop:"falcon9",name:"Falcon 9",icon:"../pwa/lanes/falcon9.jpg",role:"Overnight sweep. Every email, WhatsApp and calendar, swept each night."},
-    {id:"neuralink",name:"Neuralink",icon:"../pwa/lanes/neural-mesh.svg",role:"Brain dumps and ideas in one place, plus the vaults.",href:"#after-dark"},
-    {id:"nova",name:"Nova",cls:"nova",initial:"N",role:"The Google lane",blurb:"The Google lane. Gmail, Drive, Photos and Sheets, sorted in the day."}
+    {id:"ara",name:"Ara",cls:"ara",initial:"A",bg:"#00aeef",fg:"#00121c",role:"Boss",bot:"0aca7e2c-756b-4a08-a1c7-d0751a5703bb"},
+    {id:"marvin",name:"Marvin Musk",cls:"marvin",initial:"M",bg:"#e0262f",fg:"#fff",role:"Gate"},
+    {id:"terafab",name:"Terafab",cls:"tera",initial:"T",bg:"#d4af37",fg:"#0b0f14",role:"Money"},
+    {id:"falcon",sop:"falcon9",name:"Falcon 9",cls:"falcon",initial:"F",bg:"#4c6a8a",fg:"#fff",role:"Overnight sweep"},
+    {id:"neuralink",name:"Neuralink",cls:"neural",initial:"Ne",bg:"#5b8def",fg:"#fff",role:"Brain dump",href:"#after-dark"},
+    {id:"nova",name:"Nova",cls:"nova",initial:"N",bg:"#a39e93",fg:"#111",role:"The Google lane",blurb:"The Google lane. Gmail, Drive, Photos and Sheets, sorted in the day."}
   ];
   var grid=document.getElementById("laneGrid");
   var araId="";
@@ -460,11 +670,7 @@ document.getElementById("f").onsubmit=function(ev){ev.preventDefault();var v=doc
     if(lane.bot){araId=lane.bot;href="https://cursor.com/grok-bot/link/v1/agent?id="+lane.bot}
     else if(lane.href)href=lane.href;
     var mark=lane.name==="Marvin Musk";
-    var face;
-    if(lane.icon){
-      var photo=lane.icon.indexOf("falcon9.jpg")>=0?' class="photo"':'';
-      face='<img src="'+lane.icon+'" width="36" height="36"'+photo+' alt="'+(mark?"Marvin Musk":"")+'"'+(mark?' title="Marvin Musk" aria-label="Marvin Musk"':'')+'>';
-    }else face='<span class="initial">'+(lane.initial||"\u00b7")+'</span>';
+    var face='<span class="initial" style="background:'+lane.bg+';color:'+lane.fg+';border-color:'+lane.bg+'">'+(lane.initial||"\u00b7")+'</span>';
     var img=face+'<span class="nm">'+lane.name+'</span><i class="dot" aria-hidden="true"></i><span class="role">'+lane.role+'</span>'+(lane.blurb?'<span class="blurb">'+lane.blurb+'</span>':'');
     var named=mark?' aria-label="Marvin Musk" title="Marvin Musk"':'';
     var go=href?'<a class="go"'+(lane.bot?' id="araLane" rel="noopener"':'')+named+' href="'+href+'">'+img+'</a>':'<button type="button" class="go"'+named+'>'+img+'</button>';
@@ -477,7 +683,7 @@ document.getElementById("f").onsubmit=function(ev){ev.preventDefault();var v=doc
     a.href="intent://app/v1/agent?id="+araId+"#Intent;scheme=grokbot;package=ai.x.grok.bot;S.browser_fallback_url="+encodeURIComponent(w)+";end";
   }
   var head=document.getElementById("nirvanaHead");
-  var wmLines=[["Let's hug it out.","Ari Gold"],["Victory is everything.","Ari Gold"],["I don't have dreams, I have goals.","Ari Gold"],["When something is important enough, you do it even if the odds are not in your favor.","Elon Musk"],["Failure is an option here. If things are not failing, you are not innovating enough.","Elon Musk"]];
+  var wmLines=[["Let's hug it out.","Ari Gold"],["Victory is everything.","Ari Gold"],["I don't have dreams, I have goals.","Ari Gold"],["When something is important enough, you do it even if the odds are not in your favor.","Marvin"],["Failure is an option here. If things are not failing, you are not innovating enough.","Marvin"]];
   var ariEl=document.getElementById("mirrorAri");
   var ariN=0;
   function paintAri(){if(ariEl)ariEl.textContent=wmLines[ariN][0]+" \u2014 "+wmLines[ariN][1]}
@@ -845,5 +1051,30 @@ document.getElementById("f").onsubmit=function(ev){ev.preventDefault();var v=doc
   window.__nvCue42=run;
 })();
 </script>
-<script src="draft.js?v=20261020t80"></script>
+<script>
+(function(){
+  window.nvSavedToast=function(){
+    var t=document.getElementById("nvSaved");
+    if(!t)return;
+    t.hidden=false;
+    clearTimeout(window.nvSavedToast._t);
+    window.nvSavedToast._t=setTimeout(function(){t.hidden=true},1600);
+  };
+  document.querySelectorAll("section.panel").forEach(function(sec){
+    if(sec.id==="unlocked"||sec.querySelector(".nv-amend"))return;
+    var bar=document.createElement("div");
+    bar.className="nv-amend";
+    var ta=document.createElement("textarea");
+    ta.setAttribute("aria-label","Amend "+(sec.getAttribute("aria-label")||"note"));
+    var key="nv_amend_"+sec.id;
+    try{ta.value=localStorage.getItem(key)||""}catch(e){}
+    var btn=document.createElement("button");
+    btn.type="button";btn.className="gx-pill";btn.textContent="Save";
+    btn.addEventListener("click",function(){try{localStorage.setItem(key,ta.value)}catch(e){}window.nvSavedToast()});
+    bar.appendChild(ta);bar.appendChild(btn);
+    (sec.querySelector(".wrap")||sec).appendChild(bar);
+  });
+})();
+</script>
+<script src="draft.js?v=20261020t82"></script>
 </body></html>

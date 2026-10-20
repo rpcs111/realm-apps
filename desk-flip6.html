@@ -9,8 +9,8 @@
 <meta name="apple-mobile-web-app-title" content="Desk">
 <meta name="ara-build" content="2026.10.20-SB1"><meta name="application-name" content="Desk · Flip 6">
 <title>Desk · Flip 6 · Ara 2.1</title>
-<link rel="icon" href="pwa/desk-scratch.svg"><link rel="apple-touch-icon" href="pwa/desk-scratch-512.png">
-<link rel="manifest" href="desk-flip6.webmanifest?v=2026.10.20-t80u">
+<link rel="icon" href="pwa/desk-lines.svg?v=20261020t82"><link rel="apple-touch-icon" href="pwa/desk-lines-180.png?v=20261020t82">
+<link rel="manifest" href="desk-flip6.webmanifest?v=20261020t82">
 <style>
 :root{--c:#00aeef;--bg:#000;--card:#0b1118;--line:#1d2a36;--tx:#eef6fb;--mut:#8ea3b3;--ok:#22c55e;--pw:300px}
 *{box-sizing:border-box}
@@ -197,7 +197,7 @@ body:not(.locked) #lock{display:none}
 <main>
   <section class="view on" id="v-finish" aria-labelledby="fH">
     <a class="btn" href="https://rpcs111.github.io/realm-apps/nirvana/" style="display:flex;align-items:center;justify-content:center;text-decoration:none;margin:0 0 12px;width:100%">Nirvana</a>
-    <form id="talk" autocomplete="off"><button type="button" id="talkMic" aria-label="Talk to Ara"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button><input id="talkIn" placeholder="Ask Ara anything" aria-label="Message for Ara"><button type="submit" id="talkSend">Send</button></form><div id="talkMsg" role="status" aria-live="polite"></div>
+    <form id="talk" autocomplete="off"><button type="button" id="talkMic" class="mic" aria-label="Mic"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="8.25" y="2.5" width="7.5" height="12.5" rx="3.75" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M5.25 11.25a6.75 6.75 0 0 0 13.5 0M12 18v3.25" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button><input id="talkIn" placeholder="Ask Ara anything" aria-label="Message for Ara"><button type="submit" id="talkSend">Send</button></form><button type="button" id="deskSave" style="min-height:44px;margin:0 0 14px;border-radius:999px;border:0;background:#00aeef;color:#00121c;font:800 14px system-ui;padding:0 16px;cursor:pointer">Save</button><div id="talkMsg" role="status" aria-live="polite"></div>
     <h2 id="fH">Hey, we need to finish this <small id="fCount"></small></h2>
     <form class="add" id="addForm">
       <input id="addIn" placeholder="Add something to finish" autocomplete="off" aria-label="New item">
@@ -277,8 +277,7 @@ var GROUPS=[
   {n:"Crew",s:"Ara and coworkers",u:"./team.html"},
   {n:"Ara's Bridge",s:"Actions and briefs",u:"./relay.html"},
   {n:"Gateway",s:"Next action",u:"./ange.html"},
-  {n:"Nova Board",s:"Pipelines and rules",u:"./nova.html"},
-  {n:"Elon",s:"Call and message",u:"./elon/index.html"}]},
+  {n:"Nova Board",s:"Pipelines and rules",u:"./nova.html"}]},
  {g:"Setup",apps:[
   {n:"Private",s:"Has its own PIN",u:"./private.html"},
   {n:"Grok How-To",s:"How to use it",u:"./grok-howto.html"},
@@ -331,10 +330,10 @@ $("toggleDone").onclick=function(){showDone=!showDone;render()};
 $("clearDone").onclick=function(){items=items.filter(function(x){return !x.d});save();render()};
 
 /* ---------- Messages from Ara (data-driven) ----------
-   Ara flips a message by setting status "ready": AraDesk.setMessage('claude-merge','ready')
-   or desk.html?msg=claude-merge:ready  (stored in localStorage realm_desk_msgs_v1) */
+   Ara flips a message by setting status "ready": AraDesk.setMessage('desk-note','ready')
+   or desk.html?msg=desk-note:ready  (stored in localStorage realm_desk_msgs_v1) */
 var MKEY="realm_desk_msgs_v1";
-var MSG_DEFAULT=[{id:"claude-merge",title:"Claude merge + chat cleanup bot",status:"waiting",waitingText:"NOT READY YET. Click this when ready.",readyText:"READY \u2014 click this",chip:"Waiting on your Claude export zip",readyChip:"Ready",plan:["Unzip the Claude export","Merge it with the saved Claude artifacts","Sort the chats into your groups"]}];
+var MSG_DEFAULT=[];
 var msgs=[],openMsg="";
 function mget(){try{return JSON.parse(localStorage.getItem(MKEY)||"{}")||{}}catch(e){return {}}}
 function mload(){var st=mget();
@@ -459,6 +458,7 @@ own((function(){try{return localStorage.getItem(OKEY)||"ange"}catch(e){return "a
 $("ownBtn").onclick=function(){own(document.body.classList.contains("own-julie")?"ange":"julie")};
 var SRC=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,heard="",sent=0;
 function tmsg(t){$("talkMsg").textContent=t}
+$("deskSave").onclick=function(){save();tmsg("Saved \u2713")};
 /* Android Chrome repeats cumulative results ("hi","hi there","hi there ara"): rebuild from scratch on every event,
    keep FINAL results only, drop a result that just repeats/extends the previous one, and send ONE line once. */
 function joinFinal(res){var parts=[];for(var i=0;i<res.length;i++){if(!res[i].isFinal)continue;var t=String(res[i][0].transcript||"").trim();if(!t)continue;
