@@ -411,14 +411,14 @@ Five Falcon 9s strapped together. Orbit. No more ground tests. No more essays. N
 
 ## Grok rule book (Ange 10:35pm)
 "Master How To Use Grok" (from Grok, 20 Oct) is the team's Grok rule book: on Ara's box. The rule-book page is pending its PR.
-Fact-check with official links: on Ara's box.
-- Prices corrected to the X Subscription tiers: Free $0, Plus $8, Premium $30, Super $100, Ultra $200.
+Fact-check with official links is kept on Ara's box (Warden's GROK_GUIDE_FACTCHECK).
+- Prices corrected to the X Subscription tiers: Free $0, Plus $8, Premium $30, Super $100, Ultra $200. Source: https://docs.x.ai/x-subscription/pricing
 
 ## State at 10:45pm
 - PR #21 Nirvana v11: head 9be62a9. Marvin PASSED all 10 points at 10:26pm. NOT merged. Waiting on Ange's own "merge", then the phone check at 412 and 904.
 - PR #20 HANDOFF: stopped under fail-twice (FAIL 3 at 10:38pm). Ange to give the next two steps.
 - PR #17 and PR #10: open and parked.
-- Side button: opens Ara 2.1 only. Draft steps at on Ara's box. Per-bot shortcut not verified on the phone.
+- Side button: opens Ara 2.1 only. Draft steps are kept on Ara's box (Warden's SIDE_BUTTON_ARA_DRAFT). Per-bot shortcut not verified on the phone.
 - Nova: Google lane, runs in Gemini. She has no Grok bot and can't message the bots.
 - Still open tonight: Notes, the Desk mirror panel, the Grok template. Search Studio waits on Ange's call.
-- Warden watch: every 10 minutes until 2:00am Melb. Misses go to on Ara's box.
+- Warden watch: every 10 minutes until 2:00am Melb. Misses go to the MARVIN_GATE_LOG on Ara's box.
