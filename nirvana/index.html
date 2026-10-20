@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#0b0f14">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline' 'self'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline' 'self'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'; frame-src blob:">
 <title>Nirvana</title>
 <meta name="application-name" content="Nirvana"><meta name="apple-mobile-web-app-title" content="Nirvana">
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="icons/icon-v10-180.png"><link rel="icon" href="icons/icon-v10-192.png">
 <style>
 html,body{margin:0;background:#0b0f14;color:#e8eef4;font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-.w{min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:20px 16px 28px;box-sizing:border-box;background:radial-gradient(circle at 50% 30%,#0f2130,#0b0f14 70%)}
+.w{position:relative;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:20px 16px 28px;box-sizing:border-box;background:radial-gradient(circle at 50% 30%,#0f2130,#0b0f14 70%)}
 .lk{width:100%;max-width:980px;text-align:center}
 .gate{max-width:340px;margin:0 auto}
 .gate>img{width:88px;height:88px;border-radius:20px;display:block;margin:0 auto 10px}
@@ -47,7 +47,39 @@ img.photo{object-fit:cover;border-radius:8px;border:1px solid #26313d}
 .pagechip{position:static;margin:0 auto 10px}
 .lane.ara .sopc{border-color:#00aeef;color:#00aeef}
 .lane.head .sopc{bottom:auto;top:50%;transform:translateY(-50%)}
-.gate h2{user-select:none;-webkit-user-select:none;touch-action:manipulation}
+#nirvanaHead{user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.mirror{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.mirror-shots img{position:absolute;width:min(46vw,280px);height:168px;object-fit:cover;opacity:.2;border-radius:18px;filter:saturate(.75)}
+.mirror-shots img:nth-child(1){top:18%;left:-6%}
+.mirror-shots img:nth-child(2){top:46%;right:-8%}
+.mirror-shots img:nth-child(3){bottom:8%;left:22%}
+.mirror-ari{position:static;width:auto;margin:0 0 12px;transform:none;text-align:center;font:600 14px/1.35 system-ui,sans-serif;letter-spacing:.01em;color:#9fb0c0;opacity:1}
+.mirror-strip{display:flex;gap:8px;margin:14px 0 0}
+.mirror-strip img{flex:1;width:0;height:88px;object-fit:cover;border-radius:12px;opacity:.8}
+.lk{position:relative;z-index:1}
+.grok{position:relative;z-index:1;margin:0 auto 18px;max-width:860px}
+.grok h2{margin:0;text-align:center;letter-spacing:.2em;font-size:28px;font-weight:700}
+.mirror-line{margin:6px 0 12px;text-align:center;color:#c5d0da;font-size:15px}
+.grok-panel{display:flex;flex-direction:column;gap:12px}
+.grok-work,.grok-hist{min-width:0;border:1px solid #26313d;border-radius:16px;background:rgba(11,15,20,.86);padding:12px}
+.work-k{margin:0 0 6px;font:700 11px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#8a98a8}
+.work-item{margin:0 0 8px;min-height:22px;color:#e8eef4;font-weight:700}
+#grokDraft,#grokSearch{text-align:left;margin:0 0 8px}
+#grokDraft{min-height:72px}
+#grokBench{min-height:44px;border:0;border-radius:12px;background:#00aeef;color:#00121c;font:700 15px system-ui;padding:8px 14px;cursor:pointer}
+#grokList{list-style:none;margin:0;padding:0;max-height:240px;overflow:auto}
+#grokList li{margin:0 0 8px;padding-top:8px;border-top:1px solid #1a232d;color:#e8eef4}
+#grokList time{display:block;color:#8a98a8;font-size:11px}
+#unlockedFrame{width:100%;min-height:70vh;border:1px solid #26313d;border-radius:12px;background:#0b0f14}
+@media(min-width:900px){
+  .grok-panel{flex-direction:row;align-items:stretch}
+  .grok-work,.grok-hist{flex:1}
+}
+.mirror-credit{margin:18px 0 0;text-align:left;background:rgba(11,15,20,.88);border:1px solid #26313d;border-radius:14px;padding:12px 14px}
+.mirror-credit h2{margin:0 0 6px;font:700 11px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#c5d0da}
+.mirror-credit ul{margin:0;padding-left:18px}
+.mirror-credit li{margin:6px 0;color:#c5d0da;font-size:12.5px;line-height:1.4}
+.mirror-credit a{color:#00aeef}
 .tf{position:fixed;z-index:70;top:calc(10px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right));box-sizing:border-box;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid #d4af37;border-radius:12px;background:#121820;text-decoration:none}
 .tf img{width:22px;height:22px;display:block}
 body.julie-on .tf{display:none}
@@ -150,10 +182,36 @@ body.julie-on .tf{display:none}
 </style></head>
 <body>
 <a class="tf" href="#terafab" aria-label="Terafab"><img src="../pwa/lanes/terafab.svg" width="22" height="22" alt=""></a>
-<div class="board" id="board"><div class="w"><div class="lk">
+<div class="board" id="board"><div class="w">
+<div class="mirror" aria-hidden="true">
+<div class="mirror-shots">
+<img src="../pwa/mirror/ses-10.jpg" alt="">
+<img src="../pwa/lanes/falcon9.jpg" alt="">
+<img src="../pwa/mirror/iridium-7.jpg" alt="">
+</div>
+</div>
+<div class="lk">
+<section class="grok" id="grokCenter" aria-label="Nirvana">
+<h2 id="nirvanaHead">Nirvana</h2>
+<p class="mirror-line">The centre mirror over the whole board.</p>
+<p class="mirror-ari" id="mirrorAri">Let's hug it out. — Ari Gold</p>
+<div class="grok-panel" id="grokPanel">
+<div class="grok-work" id="grokWork">
+<p class="work-k">Working on</p>
+<p class="work-item" id="grokItem">Click in</p>
+<textarea id="grokDraft" aria-label="What we're working on" placeholder="What we're working on"></textarea>
+<button type="button" id="grokBench">Bench it</button>
+</div>
+<div class="grok-hist">
+<p class="work-k">History</p>
+<input id="grokSearch" type="search" aria-label="Search history" placeholder="Search history">
+<ol id="grokList"></ol>
+</div>
+</div>
+</section>
 <div class="gate">
 <img src="icons/icon-v10-192.png" width="88" height="88" alt="">
-<h2>NIRVANA</h2><a class="sopc pagechip" href="#sop?lane=grokification">SOP</a><div class="st">Nirvana · Ara 2.1 · 2026.10.20-SB1 · second brain</div><div class="st" style="color:#8a98a8" id="nvDev"></div>
+<div class="st">Nirvana · Ara 2.1 · 2026.10.20-SB1 · second brain</div><div class="st" style="color:#8a98a8" id="nvDev"></div>
 <p id="msg">Enter your key once on this phone</p>
 <form id="f" autocomplete="off"><input id="k" type="password" placeholder="Key" autocomplete="current-password" aria-label="Key"><button id="b" type="submit">Unlock</button></form>
 <div class="err" id="e"></div>
@@ -162,11 +220,20 @@ body.julie-on .tf{display:none}
 </div>
 <section class="lanes" aria-label="Lanes">
 <div class="lanes-top"><b class="lanes-k">LANES</b><a id="cue42" href="https://drive.google.com/file/d/1VIle9fAxLoh-y4_x3UZ9nPWIJUnhn-n1/view" target="_blank" rel="noopener">42</a></div>
-<div class="lane head">
-<div class="go"><img src="../pwa/lanes/grokification.svg" width="36" height="36" alt=""><svg class="lights" viewBox="0 0 14 40" aria-label="Oversight"><circle cx="7" cy="6" r="4" fill="#26313d"/><circle cx="7" cy="18" r="4" fill="#26313d"/><circle cx="7" cy="32" r="4" fill="#22c58b"/></svg><span class="nm">Grokification · GM</span><i class="dot" aria-hidden="true"></i><span class="role">Grokification lane.</span></div>
-<a class="sopc" href="#sop?lane=grokification">SOP</a>
-</div>
 <div class="lane-grid" id="laneGrid"></div>
+</section>
+<div class="mirror-strip" aria-hidden="true">
+<img src="../pwa/mirror/ses-10.jpg" alt="">
+<img src="../pwa/lanes/falcon9.jpg" alt="">
+<img src="../pwa/mirror/iridium-7.jpg" alt="">
+</div>
+<section class="mirror-credit" aria-label="Launch photo attribution">
+<h2>LAUNCH PHOTOS</h2>
+<ul>
+<li>Falcon 9 tile and mirror. Iridium-1 Launch. Author: SpaceX. Licence: CC0 1.0. <a href="https://commons.wikimedia.org/wiki/File:Iridium-1_Launch_(32312419215).jpg" target="_blank" rel="noopener">Commons file</a>.</li>
+<li>Mirror. Iridium-7 Mission. Author: Official SpaceX Photos. Licence: CC0 1.0. <a href="https://commons.wikimedia.org/wiki/File:Iridium-7_Mission_(28787338307).jpg" target="_blank" rel="noopener">Commons file</a>.</li>
+<li>Mirror. SES-10 Launch. Author: SpaceX. Licence: CC0 1.0. <a href="https://commons.wikimedia.org/wiki/File:SES-10_Launch_-_world%27s_first_reflight_of_an_orbital_class_rocket_(33361035200).jpg" target="_blank" rel="noopener">Commons file</a>.</li>
+</ul>
 </section>
 <footer class="nv-foot"><a class="be" href="#backend">backend</a></footer>
 </div></div></div>
@@ -190,15 +257,14 @@ body.julie-on .tf{display:none}
 <table class="sheet">
 <thead><tr><th>Lane</th><th>Role</th><th>Status</th></tr></thead>
 <tbody>
-<tr><td><img src="../pwa/lanes/grokification.svg" width="22" height="22" alt="">Grokification</td><td>Grokification lane. Oversight light on.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/ara.svg" width="22" height="22" alt="">Ara 2.1</td><td>Second brain for the four apps.</td><td>draft</td></tr>
-<tr><td><img src="../pwa/lanes/marvin.svg" width="22" height="22" alt="Marvin Musk" title="Marvin Musk" aria-label="Marvin Musk">Marvin Musk</td><td>Marvin Musk lane.</td><td>draft</td></tr>
+<tr><td><img src="../pwa/lanes/marvin.svg" width="22" height="22" alt="Marvin Musk" title="Marvin Musk" aria-label="Marvin Musk">Marvin Musk</td><td>Final gate. Checks every build and message before it reaches Ange.</td><td>draft</td></tr>
 <tr><td></td><td>Infra — task under Marvin/Bastion.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/terafab.svg" width="22" height="22" alt="">Terafab</td><td>Money: trades, F&amp;H store, Qantas, pay-it-forward.</td><td>draft</td></tr>
 <!-- Falcon 9 photo: https://commons.wikimedia.org/wiki/File:Iridium-1_Launch_(32312419215).jpg
      Licence: CC0 1.0 Universal, public-domain dedication, Wikimedia Commons. -->
-<tr><td><img class="photo" src="../pwa/lanes/falcon9.jpg" width="22" height="22" alt="">Falcon 9</td><td>Falcon 9 lane.</td><td>draft</td></tr>
-<tr><td><img src="../pwa/lanes/neural-mesh.svg" width="22" height="22" alt="">Neuralink</td><td>After Dark gate.</td><td>draft</td></tr>
+<tr><td><img class="photo" src="../pwa/lanes/falcon9.jpg" width="22" height="22" alt="">Falcon 9</td><td>Overnight sweep. Every email, WhatsApp and calendar, swept each night.</td><td>draft</td></tr>
+<tr><td><img src="../pwa/lanes/neural-mesh.svg" width="22" height="22" alt="">Neuralink</td><td>Brain dumps and ideas in one place, plus the vaults.</td><td>draft</td></tr>
 </tbody>
 </table>
 </div>
@@ -281,6 +347,13 @@ body.julie-on .tf{display:none}
 </div>
 </section>
 
+<section id="unlocked" class="panel" aria-label="Unlocked">
+<div class="wrap">
+<p><a class="back" href="#board">Board</a></p>
+<iframe id="unlockedFrame" title="Unlocked content" sandbox="allow-scripts allow-forms allow-popups" referrerpolicy="no-referrer"></iframe>
+</div>
+</section>
+
 <div id="cueToast" class="cue-toast" role="status" hidden></div>
 <script>
 /* Nirvana shared unlock: AES-256-GCM, PBKDF2-SHA256. Key kept on this device only (localStorage). */
@@ -293,6 +366,16 @@ async function nvDec(o,pass){
   return JSON.parse(new TextDecoder().decode(pt));
 }
 async function nvFetch(src){var r=await fetch(src+(src.indexOf("?")<0?"?":"&")+"t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("Couldn't load ("+r.status+")");return r.json()}
+function nvMount(html){
+  var frame=document.getElementById("unlockedFrame");
+  if(!frame)return;
+  if(frame.dataset.url)URL.revokeObjectURL(frame.dataset.url);
+  var url=URL.createObjectURL(new Blob([String(html||"")],{type:"text/html"}));
+  frame.dataset.url=url;
+  frame.src=url;
+  location.hash="unlocked";
+  if(window.__nvShow)window.__nvShow();
+}
 
 (function(){try{var dd=(location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})/)||[])[1]||localStorage.getItem("realm_device")||"";document.getElementById("nvDev").textContent={fold8:"Fold 8",flip6:"Flip 6"}[dd]||(innerWidth>=900?"Desktop":"Phone")}catch(_){}})();
 (function(){var MODE="main";
@@ -300,19 +383,19 @@ try{var dm=location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})(?:&|$)/);if(dm){lo
 async function open(pass,stored){var e=document.getElementById("e"),b=document.getElementById("b");e.textContent="";b.disabled=true;b.textContent="Unlocking…";
  try{var o=await nvFetch("main.enc.json");var d=await nvDec(o,pass);localStorage.setItem(NVK,pass);
   if(MODE==="flow")sessionStorage.setItem("nv_open","flow");
-  document.open();document.write(d.html);document.close();
+  b.disabled=false;b.textContent="Unlock";
+  nvMount(d&&d.html);
  }catch(x){b.disabled=false;b.textContent="Unlock";
   if(x&&x.name==="OperationError"){if(stored)localStorage.removeItem(NVK);e.textContent=stored?"Key changed. Enter the new key.":"Wrong key. Try again."}else e.textContent=x.message||String(x)}}
 document.getElementById("f").onsubmit=function(ev){ev.preventDefault();var v=document.getElementById("k").value;if(v)open(v,false)};
-var s=localStorage.getItem(NVK);if(s)open(s,true);
 })();
 (function(){
   var LANES=[
     {id:"ara",name:"Ara 2.1",cls:"ara",icon:"../pwa/lanes/ara.svg",role:"Second brain for the four apps.",bot:"0aca7e2c-756b-4a08-a1c7-d0751a5703bb"},
-    {id:"marvin",name:"Marvin Musk",icon:"../pwa/lanes/marvin.svg",role:"Marvin Musk lane."},
+    {id:"marvin",name:"Marvin Musk",icon:"../pwa/lanes/marvin.svg",role:"Final gate. Checks every build and message before it reaches Ange."},
     {id:"terafab",name:"Terafab",cls:"tera",icon:"../pwa/lanes/terafab.svg",role:"Money: trades, F&H store, Qantas, pay-it-forward."},
-    {id:"falcon",sop:"falcon9",name:"Falcon 9",icon:"../pwa/lanes/falcon9.jpg",role:"Falcon 9 lane."},
-    {id:"neuralink",name:"Neuralink",icon:"../pwa/lanes/neural-mesh.svg",role:"After Dark gate.",href:"#after-dark"}
+    {id:"falcon",sop:"falcon9",name:"Falcon 9",icon:"../pwa/lanes/falcon9.jpg",role:"Overnight sweep. Every email, WhatsApp and calendar, swept each night."},
+    {id:"neuralink",name:"Neuralink",icon:"../pwa/lanes/neural-mesh.svg",role:"Brain dumps and ideas in one place, plus the vaults.",href:"#after-dark"}
   ];
   var grid=document.getElementById("laneGrid");
   var araId="";
@@ -333,7 +416,66 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     var w="https://cursor.com/grok-bot/link/v1/agent?id="+araId;
     a.href="intent://app/v1/agent?id="+araId+"#Intent;scheme=grokbot;package=ai.x.grok.bot;S.browser_fallback_url="+encodeURIComponent(w)+";end";
   }
-  var head=document.querySelector(".gate h2");
+  var head=document.getElementById("nirvanaHead");
+  var wmLines=[["Let's hug it out.","Ari Gold"],["Victory is everything.","Ari Gold"],["I don't have dreams, I have goals.","Ari Gold"],["When something is important enough, you do it even if the odds are not in your favor.","Elon Musk"],["Failure is an option here. If things are not failing, you are not innovating enough.","Elon Musk"]];
+  var ariEl=document.getElementById("mirrorAri");
+  var ariN=0;
+  function paintAri(){if(ariEl)ariEl.textContent=wmLines[ariN][0]+" \u2014 "+wmLines[ariN][1]}
+  paintAri();
+  if(ariEl&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    setInterval(function(){ariN=(ariN+1)%wmLines.length;paintAri()},5000);
+  }
+  (function(){
+    var storeKey="nv_grok_center_v1";
+    var panel=document.getElementById("grokPanel");
+    var work=document.getElementById("grokWork");
+    var item=document.getElementById("grokItem");
+    var draft=document.getElementById("grokDraft");
+    var list=document.getElementById("grokList");
+    var search=document.getElementById("grokSearch");
+    if(!panel||!draft||!list)return;
+    function load(){try{var o=JSON.parse(localStorage.getItem(storeKey)||"");if(o&&Array.isArray(o.history))return {current:String(o.current||""),history:o.history}}catch(e){}return {current:"",history:[]}}
+    var state=load();
+    draft.value=state.current;
+    function save(){localStorage.setItem(storeKey,JSON.stringify(state))}
+    function showItem(){item.textContent=state.current.trim()?state.current.trim():"Nothing in progress."}
+    function render(){
+      var q=(search.value||"").trim().toLowerCase();
+      var rows=state.history.filter(function(n){return !q||String(n.text||"").toLowerCase().indexOf(q)>=0});
+      list.innerHTML="";
+      if(!rows.length){var empty=document.createElement("li");empty.textContent=q?"No matching notes.":"No notes yet.";list.appendChild(empty);return}
+      rows.forEach(function(n){
+        var li=document.createElement("li");
+        var time=document.createElement("time");
+        time.dateTime=new Date(n.t).toISOString();
+        time.textContent=new Date(n.t).toLocaleString();
+        li.appendChild(time);
+        li.appendChild(document.createTextNode(n.text));
+        list.appendChild(li);
+      });
+    }
+    function noteCurrent(){
+      var text=state.current.trim();
+      if(!text)return;
+      var top=state.history[0];
+      if(top&&top.text===text)return;
+      state.history.unshift({t:Date.now(),text:text});
+      save();
+      render();
+    }
+    draft.addEventListener("input",function(){state.current=draft.value;save();if(panel.classList.contains("in"))showItem()});
+    work.addEventListener("click",function(){panel.classList.add("in");showItem()});
+    document.getElementById("grokBench").addEventListener("click",function(ev){ev.stopPropagation();noteCurrent()});
+    search.addEventListener("input",render);
+    document.addEventListener("pointerdown",function(ev){
+      if(!panel.classList.contains("in"))return;
+      if(panel.contains(ev.target))return;
+      noteCurrent();
+      panel.classList.remove("in");
+      item.textContent="Click in";
+    });
+    render();
+  })();
   if(head){
     var hold=null;
     head.addEventListener("pointerdown",function(e){if(e.button&&e.button!==0)return;clearTimeout(hold);hold=setTimeout(function(){location.hash="eleven"},1500)});
@@ -343,7 +485,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
   }
 })();
 (function(){
-  var PANELS=["after-dark","backend","desk","eleven","julie","terafab","sop","automations"];
+  var PANELS=["after-dark","backend","desk","eleven","julie","terafab","sop","automations","unlocked"];
   var SOP=null;
   function hashBits(){
     var raw=(location.hash||"").replace(/^#/,"");
@@ -360,7 +502,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     if(name==="sop")fillSop();
     var lane=new URLSearchParams(bits.q).get("lane");
     document.body.classList.toggle("julie-on",name==="julie"||(name==="sop"&&lane==="julie"));
-    var titles={"after-dark":"After Dark",backend:"Nirvana backend",desk:"Desk",eleven:"11:11",julie:"Julie",terafab:"Terafab",sop:"SOP",automations:"Automations"};
+    var titles={"after-dark":"After Dark",backend:"Nirvana backend",desk:"Desk",eleven:"11:11",julie:"Julie",terafab:"Terafab",sop:"SOP",automations:"Automations",unlocked:"Unlocked"};
     document.title=name?(titles[name]||"Nirvana"):"Nirvana";
   }
   function rows(el,list){el.innerHTML="";(list||[]).forEach(function(t){var li=document.createElement("li");li.textContent=t;el.appendChild(li)})}
@@ -546,7 +688,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
       var o=await r.json();
       if(!o.iter)o.iter=210000;
       var d=await nvDec(o,typed);
-      if(d&&typeof d.html==="string"){document.open();document.write(d.html);document.close();return}
+      if(d&&typeof d.html==="string"){nvMount(d.html);return}
       out.textContent=missing;
     }
     prompt();

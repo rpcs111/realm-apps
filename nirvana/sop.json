@@ -13,7 +13,7 @@
       "id": "marvin",
       "name": "Marvin Musk",
       "icon": "../pwa/lanes/marvin.svg",
-      "does": "Marvin Musk checks the work before it moves.",
+      "does": "Final gate. Checks every build and message before it reaches Ange.",
       "helps": "You get a look before a thing moves.",
       "saves": ["Goal: cut rework by 80%.", "Goal: catch a miss before it goes out.", "Goal: keep one clear yes or no."],
       "rules": ["Marvin checks it first.", "Proof, not promises.", "Nothing gets deleted."]
@@ -31,8 +31,8 @@
       "id": "falcon9",
       "name": "Falcon 9",
       "icon": "../pwa/lanes/falcon9.jpg",
-      "does": "Falcon 9 holds the daytime loop.",
-      "helps": "You see the loop on the board.",
+      "does": "Overnight sweep. Every email, WhatsApp and calendar, swept each night.",
+      "helps": "The overnight sweep lives on this tile.",
       "saves": ["Goal: cut forgotten loops by 80%.", "Goal: name the loop on the tile.", "Goal: keep the loop in one place."],
       "rules": ["Marvin checks it first.", "Proof, not promises.", "Nothing gets deleted."]
     },
@@ -40,8 +40,8 @@
       "id": "neuralink",
       "name": "Neuralink",
       "icon": "../pwa/lanes/neural-mesh.svg",
-      "does": "Neuralink opens the After Dark gate.",
-      "helps": "The lock sits one tap from the board.",
+      "does": "Neuralink keeps brain dumps and ideas in one place, plus the vaults.",
+      "helps": "You open that place from this tile.",
       "saves": ["Goal: cut extra steps to the gate by 80%.", "Goal: open the gate and nothing else.", "Goal: keep the lock on this phone."],
       "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Marvin checks it first."]
     },
@@ -138,8 +138,8 @@
   ],
   "automations": [
     {
-      "name": "Falcon 9 daytime loop",
-      "schedule": "Daytime loop",
+      "name": "Falcon 9 overnight sweep",
+      "schedule": "Each night",
       "status": "planned",
       "security": "Dry run only. No keys, tokens, or mailboxes in this file."
     },
