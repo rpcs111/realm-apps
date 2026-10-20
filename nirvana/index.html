@@ -132,9 +132,9 @@ body.julie-on .tf{display:none}
 @media(min-width:900px){
   .dfeeds{grid-template-columns:1fr 1fr}
 }
-.cue-toast{position:fixed;z-index:90;left:50%;top:14px;transform:translateX(-50%);max-width:min(92vw,560px);background:#121820;color:#e8eef4;border:1px solid #d4af37;border-radius:12px;padding:12px 14px;font:700 14px/1.35 ui-monospace,Menlo,monospace;text-align:center}
+.cue-toast{position:fixed;z-index:4;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translateX(-50%);max-width:min(92vw,560px);background:#121820;color:#e8eef4;border:1px solid #d4af37;border-radius:12px;padding:12px 14px;font:700 14px/1.35 ui-monospace,Menlo,monospace;text-align:center}
 .cue-toast.pass{color:#60ff15;border-color:#60ff15}
-.cue-toast.fail{color:#ff5a5a;border-color:#ff5a5a}
+.cue-toast.fail{color:#ff5a5a;border-color:#ff5a5a;cursor:pointer}
 @media(min-width:900px){
   .lane-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
   .agrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -559,6 +559,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
 })();
 (function(){
   var errs=window.__nvErrs||(window.__nvErrs=[]);
+  var toastTimer=0;
   function same(u){try{var x=new URL(u,location.href);if(x.origin!==location.origin)return null;if(x.protocol!=="http:"&&x.protocol!=="https:")return null;x.hash="";return x.href}catch(e){return null}}
   async function run(){
     var fails=[];
@@ -610,7 +611,13 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     if(errs.length)fails=fails.concat(errs.map(function(x){return "console "+x}));
     var text=fails.length?fails.join(" · "):"The answer is 42 · PASS";
     var toast=document.getElementById("cueToast");
-    if(toast){toast.hidden=false;toast.className="cue-toast "+(fails.length?"fail":"pass");toast.textContent=text}
+    if(toast){
+      if(toastTimer){clearTimeout(toastTimer);toastTimer=0}
+      toast.hidden=false;
+      toast.className="cue-toast "+(fails.length?"fail":"pass");
+      toast.textContent=text;
+      if(!fails.length)toastTimer=setTimeout(function(){toast.hidden=true;toastTimer=0},3000);
+    }
     var st=document.getElementById("flowMapStatus");
     if(st)st.textContent=text;
     return text;
@@ -626,6 +633,12 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
   if(flowA)flowA.addEventListener("click",function(ev){
     ev.preventDefault();
     run().then(function(){location.href=flowA.href});
+  });
+  var toastEl=document.getElementById("cueToast");
+  if(toastEl)toastEl.addEventListener("click",function(){
+    if(!toastEl.classList.contains("fail"))return;
+    if(toastTimer){clearTimeout(toastTimer);toastTimer=0}
+    toastEl.hidden=true;
   });
   window.__nvCue42=run;
 })();
