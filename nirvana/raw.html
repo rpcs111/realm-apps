@@ -1,8 +1,10 @@
 <!doctype html>
 <html lang="en"><head>
+<script>window.__nvErrs=[];window.addEventListener("error",function(e){var t=e.target;var src=t&&t!==window&&(t.currentSrc||t.src||t.href);window.__nvErrs.push(src?("resource "+src):(e.message||"error"))},true);window.addEventListener("unhandledrejection",function(e){window.__nvErrs.push(String(e.reason&&e.reason.message||e.reason||"rejection"))});</script>
+
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#0b0f14">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline' 'self'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'">
 <title>Nirvana · Raw</title>
 <link rel="manifest" href="manifest.webmanifest?v=2026-10-19-v10.0-b2"><link rel="icon" href="icons/icon-v10-192.png"><link rel="apple-touch-icon" href="icons/icon-v10-180.png">
 <style>
@@ -21,6 +23,13 @@ html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,
 pre{margin:0;padding:10px 12px 40px;font:12.5px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-word}
 .k{color:#7fd4ff}.s{color:#a5e88a}.n{color:#ffb020}.b{color:#ff8ac2}.z{color:#8a98a8}
 .meta{color:var(--mut);font-size:12px;padding:6px 12px 0}.meta a{color:#60ff15;text-decoration:none;font-family:ui-monospace,Menlo,monospace}
+
+.tf{position:fixed;z-index:70;top:calc(10px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right));box-sizing:border-box;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid #d4af37;border-radius:12px;background:#121820;text-decoration:none}
+.tf img{width:22px;height:22px;display:block;margin:0;border-radius:0}
+#cue42{position:fixed;z-index:80;left:calc(10px + env(safe-area-inset-left));bottom:calc(10px + env(safe-area-inset-bottom));box-sizing:border-box;min-width:44px;min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #26313d;background:#121820;color:#8a98a8;font:700 12px ui-monospace,Menlo,monospace;cursor:pointer}
+.cue-toast{position:fixed;z-index:90;left:50%;top:14px;transform:translateX(-50%);max-width:min(92vw,560px);background:#121820;color:#e8eef4;border:1px solid #d4af37;border-radius:12px;padding:12px 14px;font:700 14px/1.35 ui-monospace,Menlo,monospace;text-align:center}
+.cue-toast.pass{color:#60ff15;border-color:#60ff15}
+.cue-toast.fail{color:#ff5a5a;border-color:#ff5a5a}
 </style></head>
 <body>
 <div id="lock"><div class="lk"><img src="icons/icon-v10-192.png" alt=""><h2 style="letter-spacing:.18em;margin:0">RAW</h2><div class="st">v10.0 · 2026-10-19 · build 2</div>
@@ -68,4 +77,8 @@ $("rf").onclick=function(){if(pass)load(pass,true)};
 setInterval(function(){if(pass&&!document.hidden)load(pass,true)},180000);
 var s=localStorage.getItem(NVK);if(s)load(s,true);
 })();
-</script></body></html>
+</script><a class="tf" href="terafab.html" aria-label="Terafab"><img src="../pwa/lanes/terafab.svg" alt=""></a>
+<button type="button" id="cue42">42</button>
+<div id="cueToast" class="cue-toast" role="status" hidden></div>
+<script src="cue42.js"></script>
+</body></html>

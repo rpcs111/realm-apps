@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="en"><head>
+<script>window.__nvErrs=[];window.addEventListener("error",function(e){var t=e.target;var src=t&&t!==window&&(t.currentSrc||t.src||t.href);window.__nvErrs.push(src?("resource "+src):(e.message||"error"))},true);window.addEventListener("unhandledrejection",function(e){window.__nvErrs.push(String(e.reason&&e.reason.message||e.reason||"rejection"))});</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#0b0f14">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline' 'self'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'">
 <title>Nirvana</title>
 <meta name="application-name" content="Nirvana"><meta name="apple-mobile-web-app-title" content="Nirvana">
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,19 +13,45 @@
 <link rel="apple-touch-icon" href="icons/icon-v10-180.png"><link rel="icon" href="icons/icon-v10-192.png">
 <style>
 html,body{margin:0;background:#0b0f14;color:#e8eef4;font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-.w{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;background:radial-gradient(circle at 50% 30%,#0f2130,#0b0f14 70%)}
-.lk{width:100%;max-width:340px;text-align:center}
-.lk img{width:88px;height:88px;border-radius:20px;display:block;margin:0 auto 10px}
+.w{min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:20px 16px 28px;box-sizing:border-box;background:radial-gradient(circle at 50% 30%,#0f2130,#0b0f14 70%)}
+.lk{width:100%;max-width:980px;text-align:center}
+.gate{max-width:340px;margin:0 auto}
+.gate>img{width:88px;height:88px;border-radius:20px;display:block;margin:0 auto 10px}
 h2{margin:0 0 2px;letter-spacing:.18em;font-size:22px}
 .st{font:700 11px ui-monospace,Menlo,monospace;color:#60ff15;margin:0 0 12px}
 p{color:#8a98a8;margin:0 0 12px}
 input{width:100%;box-sizing:border-box;padding:12px;border-radius:12px;border:1px solid #26313d;background:#121820;color:#e8eef4;font-size:17px;text-align:center;margin-bottom:8px}
-button{width:100%;border:0;border-radius:12px;padding:11px 16px;background:#00aeef;color:#00121c;font:700 15px system-ui;cursor:pointer}
-#b{box-sizing:border-box;min-height:44px;min-width:44px}
+button{font:inherit;color:inherit}
+#b{box-sizing:border-box;min-height:44px;min-width:44px;width:100%;border:0;border-radius:12px;padding:11px 16px;background:#00aeef;color:#00121c;font:700 15px system-ui;cursor:pointer}
 .err{color:#ff5a5a;min-height:20px;font-size:13px;margin-top:8px}
 .ln{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px}.ln a{color:#00aeef;font-size:12.5px;text-decoration:none;border:1px solid #26313d;border-radius:99px;padding:3px 14px;min-height:44px;min-width:44px;box-sizing:border-box;display:inline-flex;align-items:center}.ap4{margin-top:14px;text-align:left;border:1px solid #26313d;border-radius:14px;padding:10px}.ap4 b{display:block;font:700 11px ui-monospace,Menlo,monospace;color:#8a98a8;letter-spacing:.12em;margin-bottom:6px}.ap4 a{display:flex;align-items:center;justify-content:space-between;min-height:44px;color:#e8eef4;text-decoration:none;border-top:1px solid #1a232d;padding:0 4px}.ap4 a:first-of-type{border-top:0}.ap4 a span{color:#00aeef;font-size:12px}
+.lanes{margin-top:18px;text-align:left}
+.lanes-k{display:block;font:700 11px ui-monospace,Menlo,monospace;color:#d4af37;letter-spacing:.14em;margin:0 0 8px}
+.lane-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lane{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:100%;min-width:0;min-height:96px;box-sizing:border-box;padding:12px 28px 10px 12px;border-radius:14px;border:1px solid #d4af37;background:linear-gradient(165deg,#121820,#0b0f14);color:#e8eef4;text-decoration:none;text-align:left;cursor:pointer}
+.lane.head{flex-direction:row;align-items:center;gap:10px;min-height:72px;margin-bottom:8px;padding-right:28px}
+.lane img{width:36px;height:36px;display:block;flex:none}
+.lane .nm{font-weight:700;font-size:14px;overflow-wrap:anywhere}
+.lane .role{color:#8a98a8;font-size:11.5px;line-height:1.3;overflow-wrap:anywhere}
+.lane .dot{position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%;background:#60ff15}
+.subh{margin:12px 0 6px;font:700 11px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#d4af37}
+.lane-grid.sub .lane{min-height:78px}
+.tf{position:fixed;z-index:70;top:calc(10px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right));box-sizing:border-box;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid #d4af37;border-radius:12px;background:#121820;text-decoration:none}
+.tf img{width:22px;height:22px;display:block}
+.nv-foot{display:flex;justify-content:flex-start;align-items:center;margin-top:18px}
+.be{color:#5c6b7a;font-size:11px;text-decoration:none}
+#cue42{position:fixed;z-index:70;left:calc(10px + env(safe-area-inset-left));bottom:calc(10px + env(safe-area-inset-bottom));box-sizing:border-box;min-width:44px;min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #26313d;background:#121820;color:#8a98a8;font:700 12px ui-monospace,Menlo,monospace;cursor:pointer}
+.cue-toast{position:fixed;z-index:90;left:50%;top:14px;transform:translateX(-50%);max-width:min(92vw,560px);background:#121820;color:#e8eef4;border:1px solid #d4af37;border-radius:12px;padding:12px 14px;font:700 14px/1.35 ui-monospace,Menlo,monospace;text-align:center}
+.cue-toast.pass{color:#60ff15;border-color:#60ff15}
+.cue-toast.fail{color:#ff5a5a;border-color:#ff5a5a}
+@media(min-width:900px){
+  .lane-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .lane-grid.sub{grid-template-columns:repeat(2,minmax(140px,220px));justify-content:start}
+}
 </style></head>
-<body><div class="w"><div class="lk">
+<body><a class="tf" href="terafab.html" aria-label="Terafab"><img src="../pwa/lanes/terafab.svg" alt=""></a>
+<div class="w"><div class="lk">
+<div class="gate">
 <img src="icons/icon-v10-192.png" alt="">
 <h2>NIRVANA</h2><div class="st">Nirvana · Ara 2.1 · 2026.10.20-SB1 · second brain</div><div class="st" style="color:#8a98a8" id="nvDev"></div>
 <p id="msg">Enter your key once on this phone</p>
@@ -32,7 +59,29 @@ button{width:100%;border:0;border-radius:12px;padding:11px 16px;background:#00ae
 <div class="err" id="e"></div>
 <div class="ln"><a href="index.html">Nirvana</a><a href="flow.html">Flow</a><a href="live.html">Live</a><a href="raw.html">Raw</a><a href="versions.html">Versions</a></div>
 <div class="ap4"><b>ARA 2.1 · THE FOUR APPS</b><a href="../desk.html?d=fold8">Desk · Fold 8<span>open</span></a><a href="../desk-flip6.html?d=flip6">Desk · Flip 6<span>open</span></a><a href="../certstudio.html">Cert Studio<span>open</span></a><a href="../map.html">Flow map<span>open</span></a></div>
+</div>
+<section class="lanes" aria-label="Lanes">
+<b class="lanes-k">LANES</b>
+<button type="button" class="lane head" data-role="Grokification lane.">
+<img src="../pwa/lanes/grokification.svg" alt=""><span class="nm">Grokification · GM</span><i class="dot" aria-hidden="true"></i><span class="role">Grokification lane.</span>
+</button>
+<div class="lane-grid">
+<a class="lane" id="araLane" href="https://cursor.com/grok-bot/link/v1/agent?id=0aca7e2c-756b-4a08-a1c7-d0751a5703bb" rel="noopener"><img src="../pwa/lanes/ara.svg" alt=""><span class="nm">Ara 2.1</span><i class="dot" aria-hidden="true"></i><span class="role">Second brain for the four apps.</span></a>
+<button type="button" class="lane"><img src="../pwa/lanes/marvin-musk.svg" alt=""><span class="nm">Marvin Musk</span><i class="dot" aria-hidden="true"></i><span class="role">Marvin Musk lane.</span></button>
+<button type="button" class="lane"><img src="../pwa/lanes/terafab.svg" alt=""><span class="nm">Terafab</span><i class="dot" aria-hidden="true"></i><span class="role">Trades, the cull, the store, CRM, pay-it-forward.</span></button>
+<button type="button" class="lane"><img src="../pwa/lanes/falcon9.svg" alt=""><span class="nm">Falcon 9</span><i class="dot" aria-hidden="true"></i><span class="role">Falcon 9 lane.</span></button>
+<a class="lane" href="after-dark.html"><img src="../pwa/lanes/neural-mesh.svg" alt=""><span class="nm">Neuralink</span><i class="dot" aria-hidden="true"></i><span class="role">After Dark gate.</span></a>
+</div>
+<h3 class="subh">Sub-lanes</h3>
+<div class="lane-grid sub">
+<button type="button" class="lane"><img src="../pwa/lanes/infra.svg" alt=""><span class="nm">Infra</span><i class="dot" aria-hidden="true"></i><span class="role">Infra sub-lane.</span></button>
+<button type="button" class="lane"><img src="../pwa/lanes/crm.svg" alt=""><span class="nm">CRM</span><i class="dot" aria-hidden="true"></i><span class="role">CRM sub-lane.</span></button>
+</div>
+</section>
+<footer class="nv-foot"><a class="be" href="backend.html">backend</a></footer>
 </div></div>
+<button type="button" id="cue42">42</button>
+<div id="cueToast" class="cue-toast" role="status" hidden></div>
 <script>
 /* Nirvana shared unlock: AES-256-GCM, PBKDF2-SHA256. Key kept on this device only (localStorage). */
 var NVK="nirvana_key_v1";
@@ -57,4 +106,12 @@ async function open(pass,stored){var e=document.getElementById("e"),b=document.g
 document.getElementById("f").onsubmit=function(ev){ev.preventDefault();var v=document.getElementById("k").value;if(v)open(v,false)};
 var s=localStorage.getItem(NVK);if(s)open(s,true);
 })();
-</script></body></html>
+(function(){
+  var id="0aca7e2c-756b-4a08-a1c7-d0751a5703bb";
+  var w="https://cursor.com/grok-bot/link/v1/agent?id="+id;
+  var a=document.getElementById("araLane");
+  if(a&&/Android/i.test(navigator.userAgent))a.href="intent://app/v1/agent?id="+id+"#Intent;scheme=grokbot;package=ai.x.grok.bot;S.browser_fallback_url="+encodeURIComponent(w)+";end";
+})();
+</script>
+<script src="cue42.js"></script>
+</body></html>
