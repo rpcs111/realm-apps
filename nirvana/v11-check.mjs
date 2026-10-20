@@ -62,18 +62,19 @@ if (KEY) assert.equal(lanes.includes("Ara 2.1"), true);
 if (KEY) assert.equal(lanes.includes("boss and builder"), true);
 if (KEY) assert.equal(lanes.includes("24/7 sweep"), true);
 if (KEY) assert.equal(lanes.includes("status: not wired yet"), true);
-assert.equal(index.includes("Nirvana key (not your Desk PIN)"), true);
+assert.equal(index.includes("Eternity key (not your Desk PIN)"), true);
 assert.equal(index.includes("Unlocking… takes a few seconds"), true);
 assert.equal(index.includes("Key saved on this phone ✓"), true);
 if (KEY) assert.equal(lanes.includes("Congratulations. You're a genius."), true);
-assert.equal(index.includes("Nirvana · v11 · 2026-10-20"), true);
+assert.equal(index.includes("v11 · 21 Oct 2026"), true);
+assert.equal(index.includes('aria-label="God mode"'), true);
 assert.equal(/falcon9\.jpg|pwa\/lanes\//.test(index + lanes), false, "no lane image file");
 assert.equal(/<img\b[^>]*(?:jpg|png)/i.test(index + lanes), false, "lane icons are inline svg");
 if (KEY) assert.ok(lanes.includes('data-icon="ara"') && lanes.includes('data-icon="marvin"') && lanes.includes('data-icon="terafab"') && lanes.includes('data-icon="falcon"') && lanes.includes('data-icon="neuralink"') && lanes.includes('data-icon="flow"'));
 assert.equal(index.includes("#d4af37"), true);
 assert.equal(index.includes("#9b6dff"), true);
 assert.equal(index.includes("#5b6b7f"), true);
-assert.equal(index.includes("#2bb8d6"), true);
+assert.equal(index.includes("--desk:#00aeef"), true);
 assert.equal(index.includes("#2fbf9a"), true);
 assert.equal(/locked hex/i.test(index + lanes), false);
 for (const gone of ["Projects", "Amend", "History thread", "1300 follow-ups", "Proxmox", "Wi-Fi", "Lock settings", "YOU ARE HERE"]) {
@@ -95,7 +96,8 @@ assert.equal(index.includes("localStorage.removeItem(NVK)"), true);
 assert.equal(index.includes("sessionStorage.removeItem(NVK)"), true);
 
 const meta = readFileSync(new URL("./manifest.webmanifest", import.meta.url), "utf8");
-assert.equal(meta.includes("Nirvana · v11 · 2026-10-20"), true);
+assert.equal(meta.includes("v11 · 21 Oct 2026"), true);
+assert.equal(meta.includes('"name": "Eternity"'), true);
 
 const map = readFileSync(new URL("../metatron3.html", import.meta.url), "utf8");
 assert.equal(map.includes("Elon Musk 2.0"), false);

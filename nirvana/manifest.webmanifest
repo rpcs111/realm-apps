@@ -1,8 +1,8 @@
 {
  "id": "nirvana-v10",
- "name": "Nirvana",
- "short_name": "Nirvana",
- "description": "Nirvana · v11 · 2026-10-20",
+ "name": "Eternity",
+ "short_name": "Eternity",
+ "description": "v11 · 21 Oct 2026",
  "start_url": "./index.html?app=nirvana",
  "scope": "./",
  "display": "standalone",
@@ -10,25 +10,25 @@
  "theme_color": "#0a0a0a",
  "icons": [
   {
-   "src": "icons/icon-v10-192.png",
+   "src": "icons/eternity-192.png",
    "sizes": "192x192",
    "type": "image/png",
    "purpose": "any"
   },
   {
-   "src": "icons/icon-v10-512.png",
+   "src": "icons/eternity-512.png",
    "sizes": "512x512",
    "type": "image/png",
    "purpose": "any"
   },
   {
-   "src": "icons/icon-v10-maskable-192.png",
+   "src": "icons/eternity-maskable-192.png",
    "sizes": "192x192",
    "type": "image/png",
    "purpose": "maskable"
   },
   {
-   "src": "icons/icon-v10-maskable-512.png",
+   "src": "icons/eternity-maskable-512.png",
    "sizes": "512x512",
    "type": "image/png",
    "purpose": "maskable"

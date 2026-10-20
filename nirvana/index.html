@@ -8,32 +8,32 @@
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#0a0a0a">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: blob: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline' 'self'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'">
-<title>Nirvana</title>
-<meta name="application-name" content="Nirvana">
-<meta name="apple-mobile-web-app-title" content="Nirvana">
+<title>Eternity</title>
+<meta name="application-name" content="Eternity">
+<meta name="apple-mobile-web-app-title" content="Eternity">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest?v=2026-10-20-v11">
-<link rel="apple-touch-icon" href="icons/icon-v10-180.png">
-<link rel="icon" href="icons/icon-v10-192.png">
+<link rel="apple-touch-icon" href="icons/eternity-180.png">
+<link rel="icon" href="icons/eternity-192.png">
 <style>
-:root{--bg:#0a0a0a;--ink:#f4f1ea;--muted:#b7b1a8;--ara:#00aeef;--marvin:#e0262f;--gold:#d4af37;--falcon:#5b6b7f;--falcon-stroke:#c9d3df;--violet:#9b6dff;--nova:#a39e93;--nova-stroke:#c4bfb4;--lead:#2fb5e8;--desk:#2bb8d6;--cert:#2fbf9a;--line:#2c2c2c}
+:root{--bg:#0a0a0a;--ink:#f4f1ea;--muted:#b7b1a8;--ara:#00aeef;--marvin:#e0262f;--gold:#d4af37;--falcon:#5b6b7f;--falcon-stroke:#c9d3df;--violet:#9b6dff;--nova:#a39e93;--nova-stroke:#c4bfb4;--lead:#2fb5e8;--desk:#00aeef;--cert:#2fbf9a;--line:#2c2c2c}
 *{box-sizing:border-box}[hidden]{display:none!important}
 html,body{margin:0;background:#0a0a0a;color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 body{min-height:100vh;background-image:radial-gradient(rgba(255,255,255,.14) 1px,transparent 1.2px);background-size:18px 18px}
 button,a.tap{font:inherit;color:inherit;cursor:pointer}
 button,.tap,.tile{min-width:44px;min-height:44px}
 a.tap{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px}
-.top{height:48px;max-height:48px;display:flex;align-items:center;gap:8px;padding:0 8px;background:rgba(10,10,10,.94);border-bottom:1px solid var(--line);flex-wrap:nowrap;white-space:nowrap;overflow:hidden}
+.top{height:48px;max-height:48px;display:flex;align-items:center;gap:6px;padding:0 6px;background:rgba(10,10,10,.94);border-bottom:1px solid var(--line);flex-wrap:nowrap;white-space:nowrap;overflow:hidden}
 .mark{width:28px;height:28px;flex:none;display:block}
-.word{font-weight:800;letter-spacing:.14em;font-size:15px}
+.word{font-weight:800;letter-spacing:.04em;font-size:13px}
 #nvDev{color:var(--muted);font-size:12px;font-weight:700}
 .top .acts{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
 .top .tap{height:44px;min-height:44px;min-width:44px;padding:0 12px;border-radius:999px;border:1px solid var(--ara);background:transparent;color:var(--ara);font-weight:700}
 .stamp{margin:0;padding:8px 12px 0;color:var(--muted);font-size:13px;font-weight:700}
-.lock{min-height:calc(100vh - 48px);display:flex;align-items:center;justify-content:center;padding:20px}
+.lock{min-height:calc(100vh - 132px);display:flex;align-items:center;justify-content:center;padding:20px}
 .card{width:min(420px,100%);text-align:center}
-.card h1{margin:8px 0 4px;letter-spacing:.16em;font-size:22px}
+.card h1{margin:8px 0 4px;letter-spacing:.08em;font-size:20px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
 .card p{color:var(--muted);margin:0 0 12px}
 .krow{display:flex;gap:8px}
 .krow input{flex:1;min-height:44px;border-radius:12px;border:1px solid var(--line);background:#141414;color:var(--ink);padding:0 12px;font-size:17px}
@@ -74,26 +74,26 @@ a.tap{display:inline-flex;align-items:center;justify-content:center;min-height:4
 #nvWin button{position:relative;z-index:1}
 .toast{position:fixed;z-index:90;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;border-radius:999px;padding:12px 16px;font-weight:700;min-height:44px;display:flex;align-items:center}
 #nvMapToast{position:static;left:auto;right:auto;top:auto;bottom:auto;transform:none;margin:10px 0 0;z-index:1;max-width:100%}
-</style>
+.god{display:inline-flex;align-items:center;gap:4px;flex:none;color:#fff;font:700 11px/1 system-ui,sans-serif;letter-spacing:.02em;pointer-events:none;user-select:none}.god svg{width:20px;height:20px;display:block;overflow:visible;filter:drop-shadow(0 0 1.2px #fff) drop-shadow(0 0 4px rgba(255,255,255,.85))}footer.ver{margin:0;padding:0 12px 12px;color:var(--muted);font:700 13px/44px system-ui;text-align:center;min-height:44px}</style>
 </head>
 <body>
 <header class="top">
 <svg class="mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#00aeef" stroke-width="2.2" stroke-linejoin="round"><path transform="rotate(0 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(40 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(80 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(120 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(160 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(200 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(240 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(280 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(320 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><circle cx="32" cy="32" r="6.5"/></g><circle cx="32" cy="32" r="2.6" fill="#00aeef"/></svg>
-<strong class="word">Nirvana</strong>
+<strong class="word">Eternity</strong><span class="god" role="img" aria-label="God mode"><svg class="godcube" viewBox="8 8 84 84" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width="1.15" stroke-linejoin="round" vector-effect="non-scaling-stroke"><line x1="50" y1="50" x2="50" y2="34"/><line x1="50" y1="50" x2="63.86" y2="42"/><line x1="50" y1="50" x2="63.86" y2="58"/><line x1="50" y1="50" x2="50" y2="66"/><line x1="50" y1="50" x2="36.14" y2="58"/><line x1="50" y1="50" x2="36.14" y2="42"/><line x1="50" y1="50" x2="50" y2="18"/><line x1="50" y1="50" x2="77.71" y2="34"/><line x1="50" y1="50" x2="77.71" y2="66"/><line x1="50" y1="50" x2="50" y2="82"/><line x1="50" y1="50" x2="22.29" y2="66"/><line x1="50" y1="50" x2="22.29" y2="34"/><line x1="50" y1="34" x2="63.86" y2="42"/><line x1="50" y1="34" x2="63.86" y2="58"/><line x1="50" y1="34" x2="50" y2="66"/><line x1="50" y1="34" x2="36.14" y2="58"/><line x1="50" y1="34" x2="36.14" y2="42"/><line x1="50" y1="34" x2="50" y2="18"/><line x1="50" y1="34" x2="77.71" y2="34"/><line x1="50" y1="34" x2="77.71" y2="66"/><line x1="50" y1="34" x2="50" y2="82"/><line x1="50" y1="34" x2="22.29" y2="66"/><line x1="50" y1="34" x2="22.29" y2="34"/><line x1="63.86" y1="42" x2="63.86" y2="58"/><line x1="63.86" y1="42" x2="50" y2="66"/><line x1="63.86" y1="42" x2="36.14" y2="58"/><line x1="63.86" y1="42" x2="36.14" y2="42"/><line x1="63.86" y1="42" x2="50" y2="18"/><line x1="63.86" y1="42" x2="77.71" y2="34"/><line x1="63.86" y1="42" x2="77.71" y2="66"/><line x1="63.86" y1="42" x2="50" y2="82"/><line x1="63.86" y1="42" x2="22.29" y2="66"/><line x1="63.86" y1="42" x2="22.29" y2="34"/><line x1="63.86" y1="58" x2="50" y2="66"/><line x1="63.86" y1="58" x2="36.14" y2="58"/><line x1="63.86" y1="58" x2="36.14" y2="42"/><line x1="63.86" y1="58" x2="50" y2="18"/><line x1="63.86" y1="58" x2="77.71" y2="34"/><line x1="63.86" y1="58" x2="77.71" y2="66"/><line x1="63.86" y1="58" x2="50" y2="82"/><line x1="63.86" y1="58" x2="22.29" y2="66"/><line x1="63.86" y1="58" x2="22.29" y2="34"/><line x1="50" y1="66" x2="36.14" y2="58"/><line x1="50" y1="66" x2="36.14" y2="42"/><line x1="50" y1="66" x2="50" y2="18"/><line x1="50" y1="66" x2="77.71" y2="34"/><line x1="50" y1="66" x2="77.71" y2="66"/><line x1="50" y1="66" x2="50" y2="82"/><line x1="50" y1="66" x2="22.29" y2="66"/><line x1="50" y1="66" x2="22.29" y2="34"/><line x1="36.14" y1="58" x2="36.14" y2="42"/><line x1="36.14" y1="58" x2="50" y2="18"/><line x1="36.14" y1="58" x2="77.71" y2="34"/><line x1="36.14" y1="58" x2="77.71" y2="66"/><line x1="36.14" y1="58" x2="50" y2="82"/><line x1="36.14" y1="58" x2="22.29" y2="66"/><line x1="36.14" y1="58" x2="22.29" y2="34"/><line x1="36.14" y1="42" x2="50" y2="18"/><line x1="36.14" y1="42" x2="77.71" y2="34"/><line x1="36.14" y1="42" x2="77.71" y2="66"/><line x1="36.14" y1="42" x2="50" y2="82"/><line x1="36.14" y1="42" x2="22.29" y2="66"/><line x1="36.14" y1="42" x2="22.29" y2="34"/><line x1="50" y1="18" x2="77.71" y2="34"/><line x1="50" y1="18" x2="77.71" y2="66"/><line x1="50" y1="18" x2="50" y2="82"/><line x1="50" y1="18" x2="22.29" y2="66"/><line x1="50" y1="18" x2="22.29" y2="34"/><line x1="77.71" y1="34" x2="77.71" y2="66"/><line x1="77.71" y1="34" x2="50" y2="82"/><line x1="77.71" y1="34" x2="22.29" y2="66"/><line x1="77.71" y1="34" x2="22.29" y2="34"/><line x1="77.71" y1="66" x2="50" y2="82"/><line x1="77.71" y1="66" x2="22.29" y2="66"/><line x1="77.71" y1="66" x2="22.29" y2="34"/><line x1="50" y1="82" x2="22.29" y2="66"/><line x1="50" y1="82" x2="22.29" y2="34"/><line x1="22.29" y1="66" x2="22.29" y2="34"/><circle cx="50" cy="50" r="8"/><circle cx="50" cy="34" r="8"/><circle cx="63.86" cy="42" r="8"/><circle cx="63.86" cy="58" r="8"/><circle cx="50" cy="66" r="8"/><circle cx="36.14" cy="58" r="8"/><circle cx="36.14" cy="42" r="8"/><circle cx="50" cy="18" r="8"/><circle cx="77.71" cy="34" r="8"/><circle cx="77.71" cy="66" r="8"/><circle cx="50" cy="82" r="8"/><circle cx="22.29" cy="66" r="8"/><circle cx="22.29" cy="34" r="8"/></g></svg><span>God mode</span></span>
 <span id="nvDev"></span>
 <div class="acts">
 <button type="button" class="tap" id="nvLock">Lock</button>
 <button type="button" class="tap" data-open="team">Team</button>
 </div>
 </header>
-<p class="stamp">Nirvana · v11 · 2026-10-20</p>
+<p class="stamp">v11 · 21 Oct 2026</p>
 
 <main class="lock" id="lock">
 <div class="card">
-<h1>NIRVANA</h1>
-<p id="msg">Nirvana key (not your Desk PIN)</p>
+<h1>ETERNITY<span class="god" role="img" aria-label="God mode"><svg class="godcube" viewBox="8 8 84 84" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width="1.15" stroke-linejoin="round" vector-effect="non-scaling-stroke"><line x1="50" y1="50" x2="50" y2="34"/><line x1="50" y1="50" x2="63.86" y2="42"/><line x1="50" y1="50" x2="63.86" y2="58"/><line x1="50" y1="50" x2="50" y2="66"/><line x1="50" y1="50" x2="36.14" y2="58"/><line x1="50" y1="50" x2="36.14" y2="42"/><line x1="50" y1="50" x2="50" y2="18"/><line x1="50" y1="50" x2="77.71" y2="34"/><line x1="50" y1="50" x2="77.71" y2="66"/><line x1="50" y1="50" x2="50" y2="82"/><line x1="50" y1="50" x2="22.29" y2="66"/><line x1="50" y1="50" x2="22.29" y2="34"/><line x1="50" y1="34" x2="63.86" y2="42"/><line x1="50" y1="34" x2="63.86" y2="58"/><line x1="50" y1="34" x2="50" y2="66"/><line x1="50" y1="34" x2="36.14" y2="58"/><line x1="50" y1="34" x2="36.14" y2="42"/><line x1="50" y1="34" x2="50" y2="18"/><line x1="50" y1="34" x2="77.71" y2="34"/><line x1="50" y1="34" x2="77.71" y2="66"/><line x1="50" y1="34" x2="50" y2="82"/><line x1="50" y1="34" x2="22.29" y2="66"/><line x1="50" y1="34" x2="22.29" y2="34"/><line x1="63.86" y1="42" x2="63.86" y2="58"/><line x1="63.86" y1="42" x2="50" y2="66"/><line x1="63.86" y1="42" x2="36.14" y2="58"/><line x1="63.86" y1="42" x2="36.14" y2="42"/><line x1="63.86" y1="42" x2="50" y2="18"/><line x1="63.86" y1="42" x2="77.71" y2="34"/><line x1="63.86" y1="42" x2="77.71" y2="66"/><line x1="63.86" y1="42" x2="50" y2="82"/><line x1="63.86" y1="42" x2="22.29" y2="66"/><line x1="63.86" y1="42" x2="22.29" y2="34"/><line x1="63.86" y1="58" x2="50" y2="66"/><line x1="63.86" y1="58" x2="36.14" y2="58"/><line x1="63.86" y1="58" x2="36.14" y2="42"/><line x1="63.86" y1="58" x2="50" y2="18"/><line x1="63.86" y1="58" x2="77.71" y2="34"/><line x1="63.86" y1="58" x2="77.71" y2="66"/><line x1="63.86" y1="58" x2="50" y2="82"/><line x1="63.86" y1="58" x2="22.29" y2="66"/><line x1="63.86" y1="58" x2="22.29" y2="34"/><line x1="50" y1="66" x2="36.14" y2="58"/><line x1="50" y1="66" x2="36.14" y2="42"/><line x1="50" y1="66" x2="50" y2="18"/><line x1="50" y1="66" x2="77.71" y2="34"/><line x1="50" y1="66" x2="77.71" y2="66"/><line x1="50" y1="66" x2="50" y2="82"/><line x1="50" y1="66" x2="22.29" y2="66"/><line x1="50" y1="66" x2="22.29" y2="34"/><line x1="36.14" y1="58" x2="36.14" y2="42"/><line x1="36.14" y1="58" x2="50" y2="18"/><line x1="36.14" y1="58" x2="77.71" y2="34"/><line x1="36.14" y1="58" x2="77.71" y2="66"/><line x1="36.14" y1="58" x2="50" y2="82"/><line x1="36.14" y1="58" x2="22.29" y2="66"/><line x1="36.14" y1="58" x2="22.29" y2="34"/><line x1="36.14" y1="42" x2="50" y2="18"/><line x1="36.14" y1="42" x2="77.71" y2="34"/><line x1="36.14" y1="42" x2="77.71" y2="66"/><line x1="36.14" y1="42" x2="50" y2="82"/><line x1="36.14" y1="42" x2="22.29" y2="66"/><line x1="36.14" y1="42" x2="22.29" y2="34"/><line x1="50" y1="18" x2="77.71" y2="34"/><line x1="50" y1="18" x2="77.71" y2="66"/><line x1="50" y1="18" x2="50" y2="82"/><line x1="50" y1="18" x2="22.29" y2="66"/><line x1="50" y1="18" x2="22.29" y2="34"/><line x1="77.71" y1="34" x2="77.71" y2="66"/><line x1="77.71" y1="34" x2="50" y2="82"/><line x1="77.71" y1="34" x2="22.29" y2="66"/><line x1="77.71" y1="34" x2="22.29" y2="34"/><line x1="77.71" y1="66" x2="50" y2="82"/><line x1="77.71" y1="66" x2="22.29" y2="66"/><line x1="77.71" y1="66" x2="22.29" y2="34"/><line x1="50" y1="82" x2="22.29" y2="66"/><line x1="50" y1="82" x2="22.29" y2="34"/><line x1="22.29" y1="66" x2="22.29" y2="34"/><circle cx="50" cy="50" r="8"/><circle cx="50" cy="34" r="8"/><circle cx="63.86" cy="42" r="8"/><circle cx="63.86" cy="58" r="8"/><circle cx="50" cy="66" r="8"/><circle cx="36.14" cy="58" r="8"/><circle cx="36.14" cy="42" r="8"/><circle cx="50" cy="18" r="8"/><circle cx="77.71" cy="34" r="8"/><circle cx="77.71" cy="66" r="8"/><circle cx="50" cy="82" r="8"/><circle cx="22.29" cy="66" r="8"/><circle cx="22.29" cy="34" r="8"/></g></svg><span>God mode</span></span></h1>
+<p id="msg">Eternity key (not your Desk PIN)</p>
 <form id="f" autocomplete="off">
-<div class="krow"><input id="k" type="password" placeholder="Nirvana key" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Nirvana key"><button type="button" id="kEye" aria-label="Show key" aria-pressed="false">Show</button></div>
+<div class="krow"><input id="k" type="password" placeholder="Eternity key" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Eternity key"><button type="button" id="kEye" aria-label="Show key" aria-pressed="false">Show</button></div>
 <button id="b" type="submit">Unlock</button>
 </form>
 <p id="gxWait" hidden>Unlocking… takes a few seconds</p>
@@ -115,6 +115,7 @@ a.tap{display:inline-flex;align-items:center;justify-content:center;min-height:4
 <button type="button" class="tap" id="nvWinClose">Close</button>
 </div>
 <div id="nvKeyToast" class="toast" role="status" hidden></div>
+<footer class="ver">v11 · 21 Oct 2026</footer>
 <script>
 var NVK="nirvana_key_v1";
 function nvB64(s){return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0)})}
@@ -130,7 +131,7 @@ async function nvFetch(src){var r=await fetch(src+(src.indexOf("?")<0?"?":"&")+"
 var nvBusy=false,WIN_KEY="nv_win_20261020",deferred=null,openSheet=null;
 try{var dm=location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})(?:&|$)/);if(dm){localStorage.setItem("realm_device",dm[1].toLowerCase());var q=location.search.replace(/([?&])d=[^&]*&?/,"$1").replace(/[?&]$/,"");history.replaceState(null,"",location.pathname+q+location.hash)}}catch(_e){}
 function nvFail(x,stored){
-  if(!(window.crypto&&crypto.subtle))return "This browser can't unlock here. Open Nirvana in Chrome or Safari over HTTPS.";
+  if(!(window.crypto&&crypto.subtle))return "This browser can't unlock here. Open Eternity in Chrome or Safari over HTTPS.";
   if(x&&x.name==="OperationError")return stored?"Key changed. Enter the new key.":"Wrong key. Try again.";
   var m=String(x&&x.message||x||"");
   if(/Couldn't load|HTTP |Failed to fetch|NetworkError|TypeError/i.test(m))return "Couldn't load the file. Check the signal and try again.";
