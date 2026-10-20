@@ -109,7 +109,29 @@ body.julie-on .tf{display:none}
 .panel .sopc.inline{position:static}
 .lanes-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 8px}
 .lanes-top .lanes-k{margin:0}
-#cue42{position:static;flex:none;box-sizing:border-box;min-width:44px;min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #26313d;background:#121820;color:#8a98a8;font:700 12px ui-monospace,Menlo,monospace;cursor:pointer}
+#cue42{position:static;flex:none;box-sizing:border-box;min-width:44px;min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #26313d;background:#121820;color:#8a98a8;font:700 12px ui-monospace,Menlo,monospace;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.lane .deskc{left:8px;right:auto}
+.dfilters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.dfilters label{display:flex;flex-direction:column;gap:4px;flex:1 1 140px;color:#8a98a8;font-size:12px}
+.dfilters input{width:100%;margin:0;text-align:left}
+.dfeeds{display:grid;gap:12px}
+.dfeeds h2{margin:0 0 4px;font-size:16px;letter-spacing:.08em}
+.feedst{color:#d4af37;font-weight:700;min-height:22px}
+.dfeeds ol{margin:8px 0 0;padding-left:18px}
+#julie .chill{margin:6px 0 18px;padding:14px;border:1px solid #ffb3d1;border-radius:18px;background:#140910}
+#julie .chill h2{margin:0 0 4px;color:#ffb3d1;font-size:18px;letter-spacing:0;font-weight:600}
+#julie .chill p{color:#c9a0b4}
+#chillAdd{display:flex;gap:8px;margin:0 0 8px}
+#chillAdd input{flex:1;margin:0;text-align:left}
+#chillAdd button,#chillList .tick,#chillList .edit{min-height:44px;min-width:44px;border-radius:12px;border:1px solid #ff5fa2;background:transparent;color:#ff5fa2;padding:8px 12px;cursor:pointer}
+#chillList{list-style:none;margin:0;padding:0}
+#chillList li{display:flex;gap:8px;align-items:center;min-height:52px;border-top:1px solid #2a1a24}
+#chillList .line{flex:1;text-align:left}
+#chillList li.done .line{opacity:.55;text-decoration:line-through}
+#chillList input{flex:1;margin:0;text-align:left}
+@media(min-width:900px){
+  .dfeeds{grid-template-columns:1fr 1fr}
+}
 .cue-toast{position:fixed;z-index:90;left:50%;top:14px;transform:translateX(-50%);max-width:min(92vw,560px);background:#121820;color:#e8eef4;border:1px solid #d4af37;border-radius:12px;padding:12px 14px;font:700 14px/1.35 ui-monospace,Menlo,monospace;text-align:center}
 .cue-toast.pass{color:#60ff15;border-color:#60ff15}
 .cue-toast.fail{color:#ff5a5a;border-color:#ff5a5a}
@@ -139,7 +161,7 @@ body.julie-on .tf{display:none}
 <div class="ap4"><b>ARA 2.1 · THE FOUR APPS</b><a href="../desk.html?d=fold8">Desk · Fold 8<span>open</span></a><a href="../desk-flip6.html?d=flip6">Desk · Flip 6<span>open</span></a><a class="sopc inline" href="#sop?lane=desk">SOP</a><a href="../certstudio.html">Cert Studio<span>open</span></a><a href="../map.html">Flow map<span id="flowMapStatus">open</span></a></div>
 </div>
 <section class="lanes" aria-label="Lanes">
-<div class="lanes-top"><b class="lanes-k">LANES</b><button type="button" id="cue42">42</button></div>
+<div class="lanes-top"><b class="lanes-k">LANES</b><a id="cue42" href="https://drive.google.com/file/d/1VIle9fAxLoh-y4_x3UZ9nPWIJUnhn-n1/view" target="_blank" rel="noopener">42</a></div>
 <div class="lane head">
 <div class="go"><img src="../pwa/lanes/grokification.svg" width="36" height="36" alt=""><svg class="lights" viewBox="0 0 14 40" aria-label="Oversight"><circle cx="7" cy="6" r="4" fill="#26313d"/><circle cx="7" cy="18" r="4" fill="#26313d"/><circle cx="7" cy="32" r="4" fill="#22c58b"/></svg><span class="nm">Grokification · GM</span><i class="dot" aria-hidden="true"></i><span class="role">Grokification lane.</span></div>
 <a class="sopc" href="#sop?lane=grokification">SOP</a>
@@ -194,9 +216,31 @@ body.julie-on .tf{display:none}
 </div>
 </section>
 
+<section id="desk" class="panel" aria-label="Desk">
+<div class="wrap">
+<div class="bar"><div><h1>DESK</h1><p>Deputy and Zoho history</p></div> <a class="back" href="#board">Board</a> <a class="sopc inline" href="#sop?lane=desk">SOP</a></div>
+<form class="dfilters" id="deskFilters">
+<label>Date <input type="date" id="deskDate" aria-label="Filter by date"></label>
+<label>Job <input id="deskJob" aria-label="Filter by job" placeholder="Job"></label>
+<label>Person <input id="deskPerson" aria-label="Filter by person" placeholder="Person"></label>
+<label>Search <input id="deskSearch" type="search" aria-label="Search" placeholder="Search"></label>
+</form>
+<div class="dfeeds">
+<section><h2>Deputy</h2><p class="feedst" id="deputyStatus">planned: not connected yet</p><p>Rosters and timesheets.</p><ol id="deputyList"></ol></section>
+<section><h2>Zoho</h2><p class="feedst" id="zohoStatus">planned: not connected yet</p><p>Quotes, invoices, emails.</p><ol id="zohoList"></ol></section>
+</div>
+</div>
+</section>
+
 <section id="julie" class="panel" aria-label="Julie">
 <div class="wrap">
 <div class="bar"><img src="../pwa/lanes/julie.svg" width="56" height="56" alt=""><h1>Julie</h1> <button type="button" class="back" id="julieBack">Board</button> <a class="sopc inline" href="#sop?lane=julie">SOP</a></div>
+<section class="chill" aria-label="Chill">
+<h2>Chill</h2>
+<p>Your list, on this phone.</p>
+<form id="chillAdd"><input id="chillText" aria-label="Add to the list" placeholder="Add a line"><button type="submit">Add</button></form>
+<ul id="chillList"></ul>
+</section>
 <button type="button" class="jbtn">What's on today?</button>
 <button type="button" class="jbtn">Tick a job done</button>
 <button type="button" class="jbtn">Add a note</button>
@@ -222,7 +266,7 @@ body.julie-on .tf{display:none}
 <p class="noprint"><a class="back" href="#board">Board</a> <button type="button" class="printb" id="sopPrint">Download / Print</button></p>
 <article id="sopCard">
 <header class="who"><img id="sopIcon" alt="" width="72" height="72" hidden><h1 id="sopName">SOP</h1></header>
-<h2>What it does</h2><p id="sopDoes"></p>
+<h2>What it does</h2><p id="sopDoes"></p><p id="sopLinkWrap" hidden><a id="sopLink" target="_blank" rel="noopener"></a></p>
 <h2>How it helps you</h2><p id="sopHelps"></p>
 <h2>How it saves time</h2><ul id="sopSaves"></ul>
 <h2>Rules it follows</h2><ul id="sopRules"></ul>
@@ -281,7 +325,8 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     var img='<img src="'+lane.icon+'" width="36" height="36"'+photo+' alt="'+(mark?"Marvin Musk":"")+'"'+(mark?' title="Marvin Musk" aria-label="Marvin Musk"':'')+'><span class="nm">'+lane.name+'</span><i class="dot" aria-hidden="true"></i><span class="role">'+lane.role+'</span>';
     var named=mark?' aria-label="Marvin Musk" title="Marvin Musk"':'';
     var go=href?'<a class="go"'+(lane.bot?' id="araLane" rel="noopener"':'')+named+' href="'+href+'">'+img+'</a>':'<button type="button" class="go"'+named+'>'+img+'</button>';
-    return '<div class="lane'+(lane.cls?' '+lane.cls:'')+'">'+go+'<a class="sopc" href="#sop?lane='+encodeURIComponent(lane.sop||lane.id)+'">SOP</a></div>';
+    var desk=lane.id==="ara"?'<a class="sopc deskc" href="#desk">Desk</a>':'';
+    return '<div class="lane'+(lane.cls?' '+lane.cls:'')+'">'+go+desk+'<a class="sopc" href="#sop?lane='+encodeURIComponent(lane.sop||lane.id)+'">SOP</a></div>';
   }).join("");
   var a=document.getElementById("araLane");
   if(a&&araId&&/Android/i.test(navigator.userAgent)){
@@ -298,7 +343,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
   }
 })();
 (function(){
-  var PANELS=["after-dark","backend","eleven","julie","terafab","sop","automations"];
+  var PANELS=["after-dark","backend","desk","eleven","julie","terafab","sop","automations"];
   var SOP=null;
   function hashBits(){
     var raw=(location.hash||"").replace(/^#/,"");
@@ -315,7 +360,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     if(name==="sop")fillSop();
     var lane=new URLSearchParams(bits.q).get("lane");
     document.body.classList.toggle("julie-on",name==="julie"||(name==="sop"&&lane==="julie"));
-    var titles={"after-dark":"After Dark",backend:"Nirvana backend",eleven:"11:11",julie:"Julie",terafab:"Terafab",sop:"SOP",automations:"Automations"};
+    var titles={"after-dark":"After Dark",backend:"Nirvana backend",desk:"Desk",eleven:"11:11",julie:"Julie",terafab:"Terafab",sop:"SOP",automations:"Automations"};
     document.title=name?(titles[name]||"Nirvana"):"Nirvana";
   }
   function rows(el,list){el.innerHTML="";(list||[]).forEach(function(t){var li=document.createElement("li");li.textContent=t;el.appendChild(li)})}
@@ -333,6 +378,8 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     var img=document.getElementById("sopIcon");
     if(hit&&hit.icon){img.hidden=false;img.src=hit.icon;img.alt=hit.name||"";img.classList.toggle("photo",hit.icon.indexOf("falcon9.jpg")>=0);if(hit.name==="Marvin Musk"){img.alt="Marvin Musk";img.title="Marvin Musk";img.setAttribute("aria-label","Marvin Musk")}}
     else{img.hidden=true;img.classList.remove("photo")}
+    var link=document.getElementById("sopLink"),wrap=document.getElementById("sopLinkWrap");
+    if(hit&&hit.link){wrap.hidden=false;link.href=hit.link;link.textContent=hit.link}else wrap.hidden=true;
   }
   function renderAuto(){
     var host=document.getElementById("autoList");
@@ -355,6 +402,79 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     if(ev.target.id==="julieBack"){location.hash="board";return}
     if(ev.target.classList&&ev.target.classList.contains("jbtn"))document.getElementById("julieNote").textContent=ev.target.textContent;
   });
+  var CHILL="nv_julie_chill_v1";
+  function chillLoad(){try{var v=JSON.parse(localStorage.getItem(CHILL)||"[]");return Array.isArray(v)?v:[]}catch(e){return []}}
+  function chillSave(rows){localStorage.setItem(CHILL,JSON.stringify(rows))}
+  function chillDraw(){
+    var ul=document.getElementById("chillList");
+    var rows=chillLoad();
+    ul.innerHTML="";
+    rows.forEach(function(row){
+      var li=document.createElement("li");
+      if(row.done)li.className="done";
+      var tick=document.createElement("button");
+      tick.type="button";tick.className="tick";tick.textContent=row.done?"✓":"";
+      tick.setAttribute("aria-label",row.done?"Ticked":"Tick");
+      tick.addEventListener("click",function(){
+        var next=chillLoad().map(function(x){if(x.id!==row.id)return x;x.done=!x.done;return x});
+        chillSave(next);chillDraw();
+      });
+      var line=document.createElement("span");
+      line.className="line";line.textContent=row.text;
+      var edit=document.createElement("button");
+      edit.type="button";edit.className="edit";edit.textContent="Edit";
+      edit.addEventListener("click",function(){
+        var input=document.createElement("input");
+        input.value=row.text;input.setAttribute("aria-label","Edit line");
+        var closed=false;
+        function commit(){
+          if(closed)return;closed=true;
+          var t=input.value.trim();
+          if(t)chillSave(chillLoad().map(function(x){if(x.id===row.id)x.text=t;return x}));
+          chillDraw();
+        }
+        line.replaceWith(input);input.focus();
+        input.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();commit()}else if(e.key==="Escape"){closed=true;chillDraw()}});
+        input.addEventListener("blur",commit);
+      });
+      li.appendChild(tick);li.appendChild(line);li.appendChild(edit);ul.appendChild(li);
+    });
+  }
+  document.getElementById("chillAdd").addEventListener("submit",function(ev){
+    ev.preventDefault();
+    var input=document.getElementById("chillText");
+    var t=input.value.trim();if(!t)return;
+    var rows=chillLoad();rows.push({id:String(Date.now()),text:t,done:false});
+    chillSave(rows);input.value="";chillDraw();
+  });
+  chillDraw();
+  var DESK={deputy:[],zoho:[]};
+  function paintFeed(listId,rows,statusId){
+    var list=document.getElementById(listId);
+    var status=document.getElementById(statusId);
+    var date=document.getElementById("deskDate").value;
+    var job=document.getElementById("deskJob").value.trim().toLowerCase();
+    var person=document.getElementById("deskPerson").value.trim().toLowerCase();
+    var q=document.getElementById("deskSearch").value.trim().toLowerCase();
+    list.innerHTML="";
+    if(!rows||!rows.length){status.textContent="planned: not connected yet";return}
+    status.textContent="";
+    rows.filter(function(row){
+      if(date&&row.date!==date)return false;
+      if(job&&String(row.job||"").toLowerCase().indexOf(job)<0)return false;
+      if(person&&String(row.person||"").toLowerCase().indexOf(person)<0)return false;
+      if(q&&(String(row.date||"")+" "+String(row.job||"")+" "+String(row.person||"")+" "+String(row.text||"")).toLowerCase().indexOf(q)<0)return false;
+      return true;
+    }).forEach(function(row){
+      var li=document.createElement("li");
+      li.textContent=[row.date,row.person,row.job,row.text].filter(Boolean).join(" · ");
+      list.appendChild(li);
+    });
+  }
+  function paintDesk(){paintFeed("deputyList",DESK.deputy,"deputyStatus");paintFeed("zohoList",DESK.zoho,"zohoStatus")}
+  document.getElementById("deskFilters").addEventListener("input",paintDesk);
+  paintDesk();
+  fetch("desk_history.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("desk");return r.json()}).then(function(d){DESK=d||DESK;paintDesk()}).catch(function(){paintDesk()});
   document.getElementById("autoList").addEventListener("submit",function(ev){
     ev.preventDefault();
     var kept=ev.target.querySelector(".kept");
@@ -466,7 +586,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     if(window.__nvSopReady){try{await window.__nvSopReady}catch(eReady){fails.push("sop file")}}
     var savedHash=location.hash;
     function openRoute(hash){location.hash=hash;if(window.__nvShow)window.__nvShow()}
-    ["terafab","after-dark","julie","backend","eleven"].forEach(function(id){
+    ["terafab","after-dark","julie","backend","eleven","desk"].forEach(function(id){
       openRoute(id);
       var el=document.getElementById(id);
       if(!el||!el.classList.contains("on")||!document.getElementById("board").hidden)fails.push("panel #"+id);
@@ -502,7 +622,6 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     if(!/search|command|amend/.test(blob))return;
     if(cueText(el.value))run();
   });
-  var chip=document.getElementById("cue42");if(chip)chip.addEventListener("click",function(){run()});
   var flowA=document.querySelector('a[href="flow.html"]');
   if(flowA)flowA.addEventListener("click",function(ev){
     ev.preventDefault();

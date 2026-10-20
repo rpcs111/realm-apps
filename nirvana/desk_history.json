@@ -1,0 +1,5 @@
+{
+  "schema": "deputy and zoho are arrays of {date, job, person, text}. Leave both arrays empty until a real feed is connected.",
+  "deputy": [],
+  "zoho": []
+}

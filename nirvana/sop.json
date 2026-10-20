@@ -125,6 +125,15 @@
       "helps": "A test stays a dry run on this page.",
       "saves": ["Goal: cut surprise jobs by 80%.", "Goal: keep each test on this page.", "Goal: leave mail and timers alone."],
       "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Proof, not promises."]
+    },
+    {
+      "id": "42star",
+      "name": "42* SOP guide (6-page printable PDF)",
+      "link": "https://drive.google.com/file/d/1VIle9fAxLoh-y4_x3UZ9nPWIJUnhn-n1/view",
+      "does": "The printable guide. The link opens in the browser.",
+      "helps": "The 42 badge opens the same link.",
+      "saves": ["Goal: cut hunting for the guide by 80%."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted."]
     }
   ],
   "automations": [
