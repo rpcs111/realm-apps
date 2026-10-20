@@ -228,6 +228,7 @@ Backup first: box `backups/handover_20261016_0915/` (HANDOVER.md, CHASE_DRAFT.md
 
 ## 7. Live job log — written the moment a job starts or finishes (newest first)
 
+42* SOP guide (6pp PDF, Nirvana look): Drive https://drive.google.com/file/d/1VIle9fAxLoh-y4_x3UZ9nPWIJUnhn-n1/view; nirvana/sop.json entry '42star' (PR #18); Gmail draft in info@ (unsent).
 Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINISHES (or fails), not just at session end. Any session — phone, laptop, voice, Nova, routines — reads this file first and picks up from the newest line. A RUNNING line with no matching DONE means the job may have been cut off: check its output before redoing it. Format: `time (Melb) | STATUS | job | result / where it is`.
 
 - ~6:05am 20 Oct | DONE | 6am thrash: top 5 refreshed + live apps re-verify | desk/notes/certstudio/nirvana Fold8/index all HTTP 200; Engine ping 200 ok:true v1.2.0; Nirvana soft fix (#13) live; correction: apps call their own Apps Script backends, not the Engine URL (all 200). Seal / WCS Send / clasp / Barkla still Ange. Box: daily_loop_1020/LIVE_VERIFY_0603.md, THRASH_TOP5.md. Push pending (box gh not authed).
