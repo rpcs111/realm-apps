@@ -106,7 +106,98 @@ function nvFrameListen(){
     nvStoreWrite(box);
   });
 }
+function nvHeal(doc){
+  function nvSquash(s){return String(s||"").replace(/\s+/g," ").trim()}
+  function nvOwn(el){var s="";for(var n=el.firstChild;n;n=n.nextSibling)if(n.nodeType===3)s+=n.nodeValue;return nvSquash(s)}
+  if(!doc||!doc.body)return;
+  var root=doc.body;
+  function skip(el){return !el||/^(SCRIPT|STYLE)$/.test(el.tagName)||el.id==="nvHelpers"||(el.closest&&el.closest("#nvHelpers"))}
+  var css=doc.getElementById("nvHomeCss");
+  if(!css){
+    css=doc.createElement("style");
+    css.id="nvHomeCss";
+    css.textContent="#nvHelpers{display:grid;grid-template-columns:1fr;gap:8px;margin:0;padding:12px 12px 4px;position:relative;z-index:2}#nvHelpers .nv-help{display:flex;gap:10px;align-items:center;min-height:72px;box-sizing:border-box;padding:10px 12px;border-radius:14px;border:1px solid #26313d;background:#121820;color:#e8eef4;text-align:left}#nvHelpers .nv-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 14px system-ui;flex:none}#nvHelpers b{display:block;font-size:15px}#nvHelpers .nv-role{display:block;color:#8a98a8;font:400 12px/1.3 system-ui}@media(min-width:700px){#nvHelpers{grid-template-columns:1fr 1fr}}.st,.nv-stamp-inline{position:static!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;margin:8px 12px!important;z-index:1!important;transform:none!important}";
+    (doc.head||doc.documentElement).appendChild(css);
+  }
+  var tiles=doc.getElementById("nvHelpers");
+  if(!tiles){
+    tiles=doc.createElement("section");
+    tiles.id="nvHelpers";
+    tiles.setAttribute("aria-label","Helpers");
+    tiles.setAttribute("data-nv","home");
+    [{i:"A",n:"Ara",r:"Boss",bg:"#00aeef",fg:"#00121c",bd:"#00aeef"},{i:"M",n:"Marvin Musk",r:"Gate",bg:"#e0262f",fg:"#fff",bd:"#e0262f"},{i:"T",n:"Terafab",r:"Money",bg:"#d4af37",fg:"#0b0f14",bd:"#d4af37"},{i:"F",n:"Falcon 9",r:"Overnight sweep",bg:"#4c6a8a",fg:"#fff",bd:"#4c6a8a"},{i:"Ne",n:"Neuralink",r:"Brain dump",bg:"#5b8def",fg:"#fff",bd:"#5b8def"},{i:"N",n:"Nova",r:"The Google lane",bg:"#a39e93",fg:"#111",bd:"#a39e93"}].forEach(function(p){
+      var row=doc.createElement("div");
+      row.className="nv-help";
+      row.style.borderColor=p.bd;
+      var av=doc.createElement("span");av.className="nv-av";av.textContent=p.i;av.style.background=p.bg;av.style.color=p.fg;
+      var mid=doc.createElement("span");
+      var nm=doc.createElement("b");nm.textContent=p.n;if(p.n==="Marvin Musk")nm.style.color="#e0262f";if(p.n==="Terafab")nm.style.color="#d4af37";
+      var role=doc.createElement("span");role.className="nv-role";role.textContent=p.r;
+      mid.appendChild(nm);mid.appendChild(role);row.appendChild(av);row.appendChild(mid);tiles.appendChild(row);
+    });
+  }
+  if(tiles.parentNode!==root)root.insertBefore(tiles,root.firstChild);else if(root.firstChild!==tiles)root.insertBefore(tiles,root.firstChild);
+  function cut(phrase,max){
+    var list=root.querySelectorAll("*"),kill=[],i,el,t,deeper,k;
+    for(i=0;i<list.length;i++){
+      el=list[i];if(skip(el))continue;
+      t=nvSquash(el.textContent);if(t.indexOf(phrase)<0||t.length>max)continue;
+      deeper=false;
+      for(k=0;k<el.children.length;k++){if(!skip(el.children[k])&&nvSquash(el.children[k].textContent).indexOf(phrase)>=0){deeper=true;break}}
+      if(!deeper)kill.push(el);
+    }
+    kill.forEach(function(node){if(node.parentNode)node.parentNode.removeChild(node)});
+  }
+  cut("Elon Always on: linked to Ara",160);
+  cut("Elon (always on)",240);
+  var all=root.querySelectorAll("*"),i,el,kids,k,own,ara,drop,norm;
+  for(i=0;i<all.length;i++){
+    el=all[i];if(skip(el))continue;
+    norm=nvSquash(el.textContent);
+    if(norm==="Ara | Elon | Both"||norm==="Ara / Elon / Both"||norm==="Ara | Elon | Checker"||norm==="Ara / Elon / Checker"){el.textContent="Ara";continue}
+    kids=el.children;if(kids.length<2)continue;
+    ara=null;drop=[];
+    for(k=0;k<kids.length;k++){
+      own=nvOwn(kids[k])||nvSquash(kids[k].textContent);
+      if(own==="Ara")ara=kids[k];
+      else if(own==="Elon"||own==="Both")drop.push(kids[k]);
+    }
+    if(ara&&drop.length)drop.forEach(function(node){if(node.parentNode)node.parentNode.removeChild(node)});
+  }
+  var texts=[],walker=doc.createTreeWalker(root,4,null),node;
+  while((node=walker.nextNode()))texts.push(node);
+  texts.forEach(function(node){
+    var p=node.parentElement;if(!p||skip(p)||/^(SCRIPT|STYLE)$/.test(p.tagName))return;
+    var v=node.nodeValue,j,phrase,start,buildAt,dateAt;
+    if(!v)return;
+    if(v.indexOf("Checker")>=0&&v.length<80)node.nodeValue=v=v.split("Checker").join("Marvin Musk");
+    phrase="as of 2026-10-19";j=v.indexOf(phrase);if(j<0){phrase="As of 2026-10-19";j=v.indexOf(phrase)}
+    if(j>=0)node.nodeValue=v=v.slice(0,j)+"last data sync"+v.slice(j+phrase.length);
+    start=v.indexOf("v10.0");
+    if(start>=0){
+      buildAt=v.indexOf("build 2",start);dateAt=v.indexOf("2026-10-19",start);
+      if(buildAt>=0&&dateAt>=0&&buildAt-start<48)node.nodeValue=v.slice(0,start)+"v10.0 · 2026-10-20"+v.slice(buildAt+"build 2".length);
+    }
+  });
+  all=root.querySelectorAll("*");
+  for(i=0;i<all.length;i++){
+    el=all[i];if(skip(el))continue;
+    own=nvOwn(el);norm=nvSquash(el.textContent);
+    if(own==="TEST"||norm==="TEST"){el.hidden=true;el.style.display="none"}
+    if((el.classList&&el.classList.contains("st"))||(norm.indexOf("v10.0")>=0&&norm.indexOf("2026-10-20")>=0&&norm.length<90))el.classList.add("nv-stamp-inline");
+  }
+}
+function nvHome(html){
+  var doc;try{doc=new DOMParser().parseFromString(String(html||""),"text/html")}catch(e){return String(html||"")}
+  if(!doc||!doc.body)return String(html||"");
+  nvHeal(doc);
+  var s=doc.createElement("script");
+  s.textContent="(function(){var heal="+nvHeal.toString()+";function go(){heal(document)}go();document.addEventListener('DOMContentLoaded',go);setTimeout(go,0);setTimeout(go,400)})()";
+  doc.body.appendChild(s);
+  return "<!doctype html>\n"+doc.documentElement.outerHTML;
+}
 function nvPrepare(html){
+  html=nvHome(html);
   var boot=JSON.stringify(nvStoreRead()).replace(/</g,"\\u003c").replace(/\u2028/g,"\\u2028").replace(/\u2029/g,"\\u2029");
   var shim='<script>(function(){var boot='+boot+';function make(kind){var data=Object.create(null);var src=boot[kind]||{};Object.keys(src).forEach(function(k){data[k]=String(src[k])});function send(op,key,val){try{parent.postMessage({nv:"store",kind:kind,op:op,key:key,val:val},"*")}catch(e){}}return {getItem:function(k){k=String(k);return Object.prototype.hasOwnProperty.call(data,k)?data[k]:null},setItem:function(k,v){k=String(k);v=String(v);data[k]=v;send("set",k,v)},removeItem:function(k){k=String(k);delete data[k];send("del",k)},clear:function(){Object.keys(data).forEach(function(k){delete data[k]});send("clear")},key:function(i){var ks=Object.keys(data);return ks[i]==null?null:ks[i]},get length(){return Object.keys(data).length}}}function install(name,store){try{Object.defineProperty(window,name,{configurable:true,get:function(){return store}})}catch(e){try{window[name]=store}catch(e2){}}}install("localStorage",make("local"));install("sessionStorage",make("session"));})();\u003c/script>';
   var skip='<script>window.__nvKeyGate=1;(function(){function go(){try{if(document.body)document.body.classList.remove("locked")}catch(e){}var l=document.getElementById("lock");if(l){l.hidden=true;l.style.display="none"}if(typeof unlock==="function"){try{unlock()}catch(e){}}window.lock=function(){if(!window.__nvKeyGate)return;try{if(typeof unlock==="function")unlock()}catch(e){}}}go();document.addEventListener("DOMContentLoaded",go);var n=0,iv=setInterval(function(){go();if(++n>25)clearInterval(iv)},100);document.addEventListener("visibilitychange",function(){setTimeout(go,0)});})();\u003c/script>';
@@ -161,7 +252,7 @@ function afterOk(html){
   if(!box){nvMount(html);return}
   box.hidden=false;confetti();
   var done=false;
-  function close(){if(done)return;done=true;nvMount(html)}
+  function close(){if(done)return;done=true;box.hidden=true;nvMount(html)}
   var btn=document.getElementById("nvWinClose");if(btn)btn.onclick=close;
   setTimeout(close,3000);
 }
