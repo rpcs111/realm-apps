@@ -30,7 +30,7 @@
     {
       "id": "falcon9",
       "name": "Falcon 9",
-      "icon": "../pwa/lanes/falcon9.svg",
+      "icon": "../pwa/lanes/falcon9.jpg",
       "does": "Falcon 9 holds the daytime loop.",
       "helps": "You see the loop on the board.",
       "saves": ["Goal: cut forgotten loops by 80%.", "Goal: name the loop on the tile.", "Goal: keep the loop in one place."],
@@ -120,7 +120,7 @@
     {
       "id": "automations",
       "name": "Automations",
-      "icon": "../pwa/lanes/falcon9.svg",
+      "icon": "../pwa/lanes/falcon9.jpg",
       "does": "Automations shows the seeded cards.",
       "helps": "A test stays a dry run on this page.",
       "saves": ["Goal: cut surprise jobs by 80%.", "Goal: keep each test on this page.", "Goal: leave mail and timers alone."],

@@ -33,6 +33,7 @@ button{font:inherit;color:inherit}
 .lane .go{display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:100%;min-height:96px;box-sizing:border-box;padding:12px 28px 36px 12px;border:0;background:transparent;color:inherit;text-decoration:none;text-align:left;cursor:pointer;font:inherit}
 .lane.head .go{flex-direction:row;align-items:center;gap:10px;min-height:72px;padding-right:72px}
 .lane img{width:36px;height:36px;display:block;flex:none}
+img.photo{object-fit:cover;border-radius:8px;border:1px solid #26313d}
 .lane .nm{font-weight:700;font-size:14px;overflow-wrap:anywhere}
 .lane .role{color:#8a98a8;font-size:11.5px;line-height:1.3;overflow-wrap:anywhere}
 .lane .dot{position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%;background:#60ff15}
@@ -65,6 +66,10 @@ body.julie-on .tf{display:none}
 .sheet td img{width:22px;height:22px;vertical-align:middle;margin-right:6px}
 .block{background:linear-gradient(165deg,#121820,#0b0f14);border:1px solid #d4af37;border-radius:14px;padding:12px 14px;margin:0 0 10px}
 .block h2{margin:0 0 4px;font-size:16px}
+.dogs{display:flex;gap:8px;margin-top:8px}
+.dogslot{flex:1;min-height:92px;box-sizing:border-box;border:1px dashed #d4af37;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#e8eef4;background:#0b0f14}
+.dogslot span{font-weight:700}
+.dogslot small{color:#8a98a8;font-size:11px}
 .draft{margin-top:6px;font:700 12px ui-monospace,Menlo,monospace;color:#d4af37}
 .goldh{background:linear-gradient(160deg,#f3d77a,#d4af37 48%,#9c7a1c);color:#0b0f14;border-radius:14px;padding:12px}
 .goldh h1,.goldh p{color:#0b0f14}
@@ -168,7 +173,9 @@ body.julie-on .tf{display:none}
 <tr><td><img src="../pwa/lanes/marvin.svg" width="22" height="22" alt="Marvin Musk" title="Marvin Musk" aria-label="Marvin Musk">Marvin Musk</td><td>Marvin Musk lane.</td><td>draft</td></tr>
 <tr><td></td><td>Infra — task under Marvin/Bastion.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/terafab.svg" width="22" height="22" alt="">Terafab</td><td>Money: trades, F&amp;H store, Qantas, pay-it-forward.</td><td>draft</td></tr>
-<tr><td><img src="../pwa/lanes/falcon9.svg" width="22" height="22" alt="">Falcon 9</td><td>Falcon 9 lane.</td><td>draft</td></tr>
+<!-- Falcon 9 photo: https://commons.wikimedia.org/wiki/File:Iridium-1_Launch_(32312419215).jpg
+     Licence: CC0 1.0 Universal, public-domain dedication, Wikimedia Commons. -->
+<tr><td><img class="photo" src="../pwa/lanes/falcon9.jpg" width="22" height="22" alt="">Falcon 9</td><td>Falcon 9 lane.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/neural-mesh.svg" width="22" height="22" alt="">Neuralink</td><td>After Dark gate.</td><td>draft</td></tr>
 </tbody>
 </table>
@@ -204,7 +211,7 @@ body.julie-on .tf{display:none}
 <div class="bar goldh"><img src="../pwa/lanes/terafab.svg" width="48" height="48" alt=""><div><h1>TERAFAB</h1><p>2026.10.20-LANES · SOP draft</p></div></div>
 <p><a class="back" href="#board">Board</a> <a class="sopc inline" href="#sop?lane=terafab-page">SOP</a></p>
 <section class="block"><h2>Trades</h2><p>The work this lane is tracking.</p><div class="draft">Status: draft</div></section>
-<section class="block"><h2>Frankie and Henry</h2><p>Store section, held as a draft.</p><div class="draft">Status: draft</div></section>
+<section class="block"><h2>Frankie and Henry</h2><p>Store section, held as a draft.</p><div class="dogs"><div class="dogslot"><span>Frankie</span><small>Cavoodle</small><small>Photo coming</small></div><div class="dogslot"><span>Henry</span><small>Photo coming</small></div></div><div class="draft">Status: draft</div></section>
 <section class="block"><h2>Qantas</h2><p>Travel lane, held as a draft.</p><div class="draft">Status: draft</div></section>
 <section class="block"><h2>Pay-it-forward</h2><p>The give-forward lane.</p><div class="draft">Status: draft</div></section>
 </div>
@@ -260,7 +267,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     {id:"ara",name:"Ara 2.1",cls:"ara",icon:"../pwa/lanes/ara.svg",role:"Second brain for the four apps.",bot:"0aca7e2c-756b-4a08-a1c7-d0751a5703bb"},
     {id:"marvin",name:"Marvin Musk",icon:"../pwa/lanes/marvin.svg",role:"Marvin Musk lane."},
     {id:"terafab",name:"Terafab",cls:"tera",icon:"../pwa/lanes/terafab.svg",role:"Money: trades, F&H store, Qantas, pay-it-forward."},
-    {id:"falcon",sop:"falcon9",name:"Falcon 9",icon:"../pwa/lanes/falcon9.svg",role:"Falcon 9 lane."},
+    {id:"falcon",sop:"falcon9",name:"Falcon 9",icon:"../pwa/lanes/falcon9.jpg",role:"Falcon 9 lane."},
     {id:"neuralink",name:"Neuralink",icon:"../pwa/lanes/neural-mesh.svg",role:"After Dark gate.",href:"#after-dark"}
   ];
   var grid=document.getElementById("laneGrid");
@@ -270,7 +277,8 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     if(lane.bot){araId=lane.bot;href="https://cursor.com/grok-bot/link/v1/agent?id="+lane.bot}
     else if(lane.href)href=lane.href;
     var mark=lane.name==="Marvin Musk";
-    var img='<img src="'+lane.icon+'" width="36" height="36" alt="'+(mark?"Marvin Musk":"")+'"'+(mark?' title="Marvin Musk" aria-label="Marvin Musk"':'')+'><span class="nm">'+lane.name+'</span><i class="dot" aria-hidden="true"></i><span class="role">'+lane.role+'</span>';
+    var photo=lane.icon.indexOf("falcon9.jpg")>=0?' class="photo"':'';
+    var img='<img src="'+lane.icon+'" width="36" height="36"'+photo+' alt="'+(mark?"Marvin Musk":"")+'"'+(mark?' title="Marvin Musk" aria-label="Marvin Musk"':'')+'><span class="nm">'+lane.name+'</span><i class="dot" aria-hidden="true"></i><span class="role">'+lane.role+'</span>';
     var named=mark?' aria-label="Marvin Musk" title="Marvin Musk"':'';
     var go=href?'<a class="go"'+(lane.bot?' id="araLane" rel="noopener"':'')+named+' href="'+href+'">'+img+'</a>':'<button type="button" class="go"'+named+'>'+img+'</button>';
     return '<div class="lane'+(lane.cls?' '+lane.cls:'')+'">'+go+'<a class="sopc" href="#sop?lane='+encodeURIComponent(lane.sop||lane.id)+'">SOP</a></div>';
@@ -323,8 +331,8 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     rows(document.getElementById("sopSaves"),hit?hit.saves:[]);
     rows(document.getElementById("sopRules"),hit?(Array.isArray(hit.rules)?hit.rules:[hit.rules].filter(Boolean)):[]);
     var img=document.getElementById("sopIcon");
-    if(hit&&hit.icon){img.hidden=false;img.src=hit.icon;img.alt=hit.name||"";if(hit.name==="Marvin Musk"){img.alt="Marvin Musk";img.title="Marvin Musk";img.setAttribute("aria-label","Marvin Musk")}}
-    else img.hidden=true;
+    if(hit&&hit.icon){img.hidden=false;img.src=hit.icon;img.alt=hit.name||"";img.classList.toggle("photo",hit.icon.indexOf("falcon9.jpg")>=0);if(hit.name==="Marvin Musk"){img.alt="Marvin Musk";img.title="Marvin Musk";img.setAttribute("aria-label","Marvin Musk")}}
+    else{img.hidden=true;img.classList.remove("photo")}
   }
   function renderAuto(){
     var host=document.getElementById("autoList");
