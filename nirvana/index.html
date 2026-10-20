@@ -71,6 +71,7 @@ img.photo{object-fit:cover;border-radius:8px;border:1px solid #26313d}
 #grokList li{margin:0 0 8px;padding-top:8px;border-top:1px solid #1a232d;color:#e8eef4}
 #grokList time{display:block;color:#8a98a8;font-size:11px}
 #unlockedFrame{width:100%;min-height:70vh;border:1px solid #26313d;border-radius:12px;background:#0b0f14}
+.unlock{max-width:340px;margin:0 auto 16px}
 @media(min-width:900px){
   .grok-panel{flex-direction:row;align-items:stretch}
   .grok-work,.grok-hist{flex:1}
@@ -209,15 +210,6 @@ body.julie-on .tf{display:none}
 </div>
 </div>
 </section>
-<div class="gate">
-<img src="icons/icon-v10-192.png" width="88" height="88" alt="">
-<div class="st">Nirvana · Ara 2.1 · 2026.10.20-SB1 · second brain</div><div class="st" style="color:#8a98a8" id="nvDev"></div>
-<p id="msg">Enter your key once on this phone</p>
-<form id="f" autocomplete="off"><input id="k" type="password" placeholder="Key" autocomplete="current-password" aria-label="Key"><button id="b" type="submit">Unlock</button></form>
-<div class="err" id="e"></div>
-<div class="ln"><a href="index.html">Nirvana</a><a href="flow.html">Flow</a><a href="live.html">Live</a><a href="raw.html">Raw</a><a href="versions.html">Versions</a></div>
-<div class="ap4"><b>ARA 2.1 · THE FOUR APPS</b><a href="../desk.html?d=fold8">Desk · Fold 8<span>open</span></a><a href="../desk-flip6.html?d=flip6">Desk · Flip 6<span>open</span></a><a class="sopc inline" href="#sop?lane=desk">SOP</a><a href="../certstudio.html">Cert Studio<span>open</span></a><a href="../map.html">Flow map<span id="flowMapStatus">open</span></a></div>
-</div>
 <section class="lanes" aria-label="Lanes">
 <div class="lanes-top"><b class="lanes-k">LANES</b><a id="cue42" href="https://drive.google.com/file/d/1VIle9fAxLoh-y4_x3UZ9nPWIJUnhn-n1/view" target="_blank" rel="noopener">42</a></div>
 <div class="lane-grid" id="laneGrid"></div>
@@ -350,6 +342,10 @@ body.julie-on .tf{display:none}
 <section id="unlocked" class="panel" aria-label="Unlocked">
 <div class="wrap">
 <p><a class="back" href="#board">Board</a></p>
+<div class="unlock">
+<form id="f" autocomplete="off"><input id="k" type="password" placeholder="Key" autocomplete="current-password" aria-label="Key"><button id="b" type="submit">Unlock</button></form>
+<div class="err" id="e"></div>
+</div>
 <iframe id="unlockedFrame" title="Unlocked content" sandbox="allow-scripts allow-forms allow-popups" referrerpolicy="no-referrer"></iframe>
 </div>
 </section>
@@ -377,7 +373,7 @@ function nvMount(html){
   if(window.__nvShow)window.__nvShow();
 }
 
-(function(){try{var dd=(location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})/)||[])[1]||localStorage.getItem("realm_device")||"";document.getElementById("nvDev").textContent={fold8:"Fold 8",flip6:"Flip 6"}[dd]||(innerWidth>=900?"Desktop":"Phone")}catch(_){}})();
+(function(){try{var dd=(location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})/)||[])[1]||localStorage.getItem("realm_device")||"";var dev=document.getElementById("nvDev");if(dev)dev.textContent={fold8:"Fold 8",flip6:"Flip 6"}[dd]||(innerWidth>=900?"Desktop":"Phone")}catch(_){}})();
 (function(){var MODE="main";
 try{var dm=location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})(?:&|$)/);if(dm){localStorage.setItem("realm_device",dm[1].toLowerCase());var q=location.search.replace(/([?&])d=[^&]*&?/,"$1").replace(/[?&]$/,"");history.replaceState(null,"",location.pathname+q+location.hash)}}catch(_e){}
 async function open(pass,stored){var e=document.getElementById("e"),b=document.getElementById("b");e.textContent="";b.disabled=true;b.textContent="Unlocking…";
