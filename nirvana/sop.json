@@ -46,15 +46,15 @@
       "does": "Opens the After Dark gate.",
       "helps": "Puts the lock one tap from the board.",
       "goal": "80% of Neuralink taps open the gate and nothing else.",
-      "rules": "The gate asks for a PIN. The vault file is not in the repo."
+      "rules": "The vault file is not in the repo. The lock stays on this device."
     },
     {
       "id": "after-dark",
       "name": "After Dark",
-      "does": "PIN gate for the locked panel.",
+      "does": "On first use the owner chooses four digits. This device stores only an encrypted check.",
       "helps": "Keeps vault text off the public board.",
-      "goal": "80% of opens ask for a PIN before any vault read.",
-      "rules": "No PIN and no vault text in the repo. A missing file says the vault is sealed."
+      "goal": "80% of opens confirm that local check before any vault read.",
+      "rules": "Nothing secret is written in the repo. A missing file says the vault is sealed."
     },
     {
       "id": "backend",
@@ -67,7 +67,7 @@
     {
       "id": "eleven",
       "name": "11:11",
-      "does": "Hidden PIN gate.",
+      "does": "Hidden gate. First use chooses four digits and stores only an encrypted check on this device.",
       "helps": "Keeps this panel off the board.",
       "goal": "80% of visits arrive from the Nirvana header long-press.",
       "rules": "No board link. No Julie link. A missing file says sealed."
