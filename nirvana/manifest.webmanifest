@@ -2,12 +2,12 @@
  "id": "nirvana-v10",
  "name": "Nirvana",
  "short_name": "Nirvana",
- "description": "Nirvana · v10.0 · 2026-10-20",
+ "description": "Nirvana · v11 · 2026-10-20",
  "start_url": "./index.html?app=nirvana",
  "scope": "./",
  "display": "standalone",
- "background_color": "#0b0f14",
- "theme_color": "#0b0f14",
+ "background_color": "#0a0a0a",
+ "theme_color": "#0a0a0a",
  "icons": [
   {
    "src": "icons/icon-v10-192.png",
