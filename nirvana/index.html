@@ -213,7 +213,7 @@ body.julie-on .tf{display:none}
 </section>
 <section class="lanes" aria-label="Lanes">
 <a class="flowpill" href="../map.html">Flow</a>
-<div class="lanes-top"><b class="lanes-k">LANES</b><a id="cue42" href="https://drive.google.com/file/d/1VIle9fAxLoh-y4_x3UZ9nPWIJUnhn-n1/view" target="_blank" rel="noopener">42</a></div>
+<div class="lanes-top"><b class="lanes-k">LANES</b><a id="cue42" href="https://drive.google.com/file/d/1VIle9fAxLoh-y4_x3UZ9nPWIJUnhn-n1/view" target="_blank" rel="noopener">42* guide</a></div>
 <div class="lane-grid" id="laneGrid"></div>
 </section>
 <div class="mirror-strip" aria-hidden="true">
@@ -229,7 +229,6 @@ body.julie-on .tf{display:none}
 <li>Mirror. SES-10 Launch. Author: SpaceX. Licence: CC0 1.0. <a href="https://commons.wikimedia.org/wiki/File:SES-10_Launch_-_world%27s_first_reflight_of_an_orbital_class_rocket_(33361035200).jpg" target="_blank" rel="noopener">Commons file</a>.</li>
 </ul>
 </section>
-<footer class="nv-foot"><a class="be" href="#backend">backend</a></footer>
 </div></div></div>
 
 <section id="after-dark" class="panel" aria-label="After Dark">
@@ -247,13 +246,13 @@ body.julie-on .tf{display:none}
 <section id="backend" class="panel" aria-label="Backend">
 <div class="wrap">
 <div class="bar"><div><h1>BACKEND</h1><p>2026.10.20-LANES</p></div> <a class="back" href="#board">Board</a> <a class="sopc inline" href="#sop?lane=backend">SOP</a></div>
-<p>Z Fold 8 side button opens Ara 2.1; owner Marvin; money prompts route to Terafab.</p>
+<p>Z Fold 8 side button opens Ara 2.1; gated by Marvin; money prompts route to Terafab.</p>
 <table class="sheet">
 <thead><tr><th>Lane</th><th>Role</th><th>Status</th></tr></thead>
 <tbody>
-<tr><td><img src="../pwa/lanes/ara.svg" width="22" height="22" alt="">Ara 2.1</td><td>Second brain for the four apps.</td><td>draft</td></tr>
+<tr><td><img src="../pwa/lanes/ara.svg" width="22" height="22" alt="">Ara 2.1</td><td>Boss bot. Builds Nirvana and runs the daily loop.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/marvin.svg" width="22" height="22" alt="Marvin Musk" title="Marvin Musk" aria-label="Marvin Musk">Marvin Musk</td><td>Final gate. Checks every build and message before it reaches Ange.</td><td>draft</td></tr>
-<tr><td></td><td>Infra — task under Marvin/Bastion.</td><td>draft</td></tr>
+<tr><td>Infra Lead</td><td>Proxmox, Ubiquiti, 1300 line, kill switch. Bastion checks it.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/terafab.svg" width="22" height="22" alt="">Terafab</td><td>Money: trades, F&amp;H store, Qantas, pay-it-forward.</td><td>draft</td></tr>
 <!-- Falcon 9 photo: https://commons.wikimedia.org/wiki/File:Iridium-1_Launch_(32312419215).jpg
      Licence: CC0 1.0 Universal, public-domain dedication, Wikimedia Commons. -->
@@ -314,10 +313,10 @@ body.julie-on .tf{display:none}
 <div class="wrap">
 <div class="bar goldh"><img src="../pwa/lanes/terafab.svg" width="48" height="48" alt=""><div><h1>TERAFAB</h1><p>2026.10.20-LANES · SOP draft</p></div></div>
 <p><a class="back" href="#board">Board</a> <a class="sopc inline" href="#sop?lane=terafab-page">SOP</a></p>
-<section class="block"><h2>Trades</h2><p>The work this lane is tracking.</p><div class="draft">Status: draft</div></section>
-<section class="block"><h2>Frankie and Henry</h2><p>Store section, held as a draft.</p><div class="dogs"><div class="dogslot"><span>Frankie</span><small>Cavoodle</small><small>Photo coming</small></div><div class="dogslot"><span>Henry</span><small>Photo coming</small></div></div><div class="draft">Status: draft</div></section>
-<section class="block"><h2>Qantas</h2><p>Travel lane, held as a draft.</p><div class="draft">Status: draft</div></section>
-<section class="block"><h2>Pay-it-forward</h2><p>The give-forward lane.</p><div class="draft">Status: draft</div></section>
+<section class="block"><h2>Trades</h2><p>Day trades on Plus500 and eToro.</p><div class="draft">Status: draft</div></section>
+<section class="block"><h2>Frankie and Henry</h2><p>Store section, held as a draft.</p><div class="dogs"><div class="dogslot"><span>Frankie</span><small>Cavoodle</small><small>Photo coming</small></div><div class="dogslot"><span>Henry</span><small>British Blue</small><small>Photo coming</small></div></div><div class="draft">Status: draft</div></section>
+<section class="block"><h2>Qantas</h2><p>The $1,000 Qantas claim, case open.</p><div class="draft">Status: draft</div></section>
+<section class="block"><h2>Pay-it-forward</h2><p>Who gets paid forward, and when.</p><div class="draft">Status: draft</div></section>
 </div>
 </section>
 
@@ -337,7 +336,7 @@ body.julie-on .tf{display:none}
 <section id="automations" class="panel" aria-label="Automations">
 <div class="wrap">
 <div class="bar"><div><h1>AUTOMATIONS</h1><p>Seeded list. Test is a dry run.</p></div> <a class="back" href="#board">Board</a> <a class="sopc inline" href="#sop?lane=automations">SOP</a></div>
-<div class="agrid" id="autoList"><p id="autoEmpty">Loading.</p></div>
+<div class="agrid" id="autoList"></div>
 </div>
 </section>
 
@@ -389,7 +388,7 @@ document.getElementById("f").onsubmit=function(ev){ev.preventDefault();var v=doc
 })();
 (function(){
   var LANES=[
-    {id:"ara",name:"Ara 2.1",cls:"ara",icon:"../pwa/lanes/ara.svg",role:"Second brain for the four apps.",bot:"0aca7e2c-756b-4a08-a1c7-d0751a5703bb"},
+    {id:"ara",name:"Ara 2.1",cls:"ara",icon:"../pwa/lanes/ara.svg",role:"Boss bot. Builds Nirvana and runs the daily loop.",bot:"0aca7e2c-756b-4a08-a1c7-d0751a5703bb"},
     {id:"marvin",name:"Marvin Musk",icon:"../pwa/lanes/marvin.svg",role:"Final gate. Checks every build and message before it reaches Ange."},
     {id:"terafab",name:"Terafab",cls:"tera",icon:"../pwa/lanes/terafab.svg",role:"Money: trades, F&H store, Qantas, pay-it-forward."},
     {id:"falcon",sop:"falcon9",name:"Falcon 9",icon:"../pwa/lanes/falcon9.jpg",role:"Overnight sweep. Every email, WhatsApp and calendar, swept each night."},
