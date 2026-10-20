@@ -34,6 +34,8 @@ Daily-loop working reminders (from the box handover; the channel doc still wins)
 
 RELEASE ORDER (Ange, 20 Oct 2026 9:17pm voice): 1 Ara builds, 2 Ara real-key test on the box at 412 and Fold sizes, 3 Marvin 10-point gate, 4 Ange says merge, 5 Ara and Marvin both check the live page on the phone (412 and Fold); only then does the link go to Ange. Nothing is called done before step 5. A relayed merge doesn't count; a Marvin PASS never merges.
 
+PACE RULE (Ange, 20 Oct 2026 10:13pm, non-negotiable, all lanes, replaces 10x): default pace is 20x prior speed. Zero failures, no excuses. No re-explaining, no missing-items lists, no novels, Rule 12 exact shape only, action or proof only.
+
 ## 1a. Standards v2 (16 Oct, from Elon audit; Elon retired 20 Oct) — PROPOSED, not yet in the master list
 
 ### CORE (Ara 2.1, 17 Oct 2026)
