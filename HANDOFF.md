@@ -410,7 +410,7 @@ Execution every time:
 Five Falcon 9s strapped together. Orbit. No more ground tests. No more essays. No more new systems.
 
 ## Grok rule book (Ange 10:35pm)
-"Master How To Use Grok" (from Grok, 20 Oct) is the team's Grok rule book: on Ara's box. The rule-book page is pending its PR.
+"Master How To Use Grok" (from Grok, 20 Oct) is the team's Grok rule book (PDF kept on Ara's box). The rule-book page is pending its PR.
 Fact-check with official links is kept on Ara's box (Warden's GROK_GUIDE_FACTCHECK).
 - Prices corrected to the X Subscription tiers: Free $0, Plus $8, Premium $30, Super $100, Ultra $200. Source: https://docs.x.ai/x-subscription/pricing
 
