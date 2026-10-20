@@ -34,8 +34,8 @@ button{font:inherit;color:inherit}
 .lane .nm{font-weight:700;font-size:14px;overflow-wrap:anywhere}
 .lane .role{color:#8a98a8;font-size:11.5px;line-height:1.3;overflow-wrap:anywhere}
 .lane .dot{position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%;background:#60ff15}
-.subh{margin:12px 0 6px;font:700 11px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#d4af37}
-.lane-grid.sub .lane{min-height:78px}
+.lights{width:14px;height:40px;flex:none;display:block}
+.gate h2{user-select:none;-webkit-user-select:none;touch-action:manipulation}
 .tf{position:fixed;z-index:70;top:calc(10px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right));box-sizing:border-box;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid #d4af37;border-radius:12px;background:#121820;text-decoration:none}
 .tf img{width:22px;height:22px;display:block}
 .nv-foot{display:flex;justify-content:flex-start;align-items:center;margin-top:18px}
@@ -46,7 +46,6 @@ button{font:inherit;color:inherit}
 .cue-toast.fail{color:#ff5a5a;border-color:#ff5a5a}
 @media(min-width:900px){
   .lane-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
-  .lane-grid.sub{grid-template-columns:repeat(2,minmax(140px,220px));justify-content:start}
 }
 </style></head>
 <body><a class="tf" href="terafab.html" aria-label="Terafab"><img src="../pwa/lanes/terafab.svg" alt=""></a>
@@ -58,25 +57,14 @@ button{font:inherit;color:inherit}
 <form id="f" autocomplete="off"><input id="k" type="password" placeholder="Key" autocomplete="current-password" aria-label="Key"><button id="b" type="submit">Unlock</button></form>
 <div class="err" id="e"></div>
 <div class="ln"><a href="index.html">Nirvana</a><a href="flow.html">Flow</a><a href="live.html">Live</a><a href="raw.html">Raw</a><a href="versions.html">Versions</a></div>
-<div class="ap4"><b>ARA 2.1 · THE FOUR APPS</b><a href="../desk.html?d=fold8">Desk · Fold 8<span>open</span></a><a href="../desk-flip6.html?d=flip6">Desk · Flip 6<span>open</span></a><a href="../certstudio.html">Cert Studio<span>open</span></a><a href="../map.html">Flow map<span>open</span></a></div>
+<div class="ap4"><b>ARA 2.1 · THE FOUR APPS</b><a href="../desk.html?d=fold8">Desk · Fold 8<span>open</span></a><a href="../desk-flip6.html?d=flip6">Desk · Flip 6<span>open</span></a><a href="../certstudio.html">Cert Studio<span>open</span></a><a href="../map.html">Flow map<span id="flowMapStatus">open</span></a></div>
 </div>
 <section class="lanes" aria-label="Lanes">
 <b class="lanes-k">LANES</b>
-<button type="button" class="lane head" data-role="Grokification lane.">
-<img src="../pwa/lanes/grokification.svg" alt=""><span class="nm">Grokification · GM</span><i class="dot" aria-hidden="true"></i><span class="role">Grokification lane.</span>
+<button type="button" class="lane head">
+<img src="../pwa/lanes/grokification.svg" alt=""><svg class="lights" viewBox="0 0 14 40" aria-label="Oversight"><circle cx="7" cy="6" r="4" fill="#26313d"/><circle cx="7" cy="18" r="4" fill="#26313d"/><circle cx="7" cy="32" r="4" fill="#22c58b"/></svg><span class="nm">Grokification · GM</span><i class="dot" aria-hidden="true"></i><span class="role">Grokification lane.</span>
 </button>
-<div class="lane-grid">
-<a class="lane" id="araLane" href="https://cursor.com/grok-bot/link/v1/agent?id=0aca7e2c-756b-4a08-a1c7-d0751a5703bb" rel="noopener"><img src="../pwa/lanes/ara.svg" alt=""><span class="nm">Ara 2.1</span><i class="dot" aria-hidden="true"></i><span class="role">Second brain for the four apps.</span></a>
-<button type="button" class="lane"><img src="../pwa/lanes/marvin-musk.svg" alt=""><span class="nm">Marvin Musk</span><i class="dot" aria-hidden="true"></i><span class="role">Marvin Musk lane.</span></button>
-<button type="button" class="lane"><img src="../pwa/lanes/terafab.svg" alt=""><span class="nm">Terafab</span><i class="dot" aria-hidden="true"></i><span class="role">Trades, the cull, the store, CRM, pay-it-forward.</span></button>
-<button type="button" class="lane"><img src="../pwa/lanes/falcon9.svg" alt=""><span class="nm">Falcon 9</span><i class="dot" aria-hidden="true"></i><span class="role">Falcon 9 lane.</span></button>
-<a class="lane" href="after-dark.html"><img src="../pwa/lanes/neural-mesh.svg" alt=""><span class="nm">Neuralink</span><i class="dot" aria-hidden="true"></i><span class="role">After Dark gate.</span></a>
-</div>
-<h3 class="subh">Sub-lanes</h3>
-<div class="lane-grid sub">
-<button type="button" class="lane"><img src="../pwa/lanes/infra.svg" alt=""><span class="nm">Infra</span><i class="dot" aria-hidden="true"></i><span class="role">Infra sub-lane.</span></button>
-<button type="button" class="lane"><img src="../pwa/lanes/crm.svg" alt=""><span class="nm">CRM</span><i class="dot" aria-hidden="true"></i><span class="role">CRM sub-lane.</span></button>
-</div>
+<div class="lane-grid" id="laneGrid"></div>
 </section>
 <footer class="nv-foot"><a class="be" href="backend.html">backend</a></footer>
 </div></div>
@@ -107,10 +95,36 @@ document.getElementById("f").onsubmit=function(ev){ev.preventDefault();var v=doc
 var s=localStorage.getItem(NVK);if(s)open(s,true);
 })();
 (function(){
-  var id="0aca7e2c-756b-4a08-a1c7-d0751a5703bb";
-  var w="https://cursor.com/grok-bot/link/v1/agent?id="+id;
+  var LANES=[
+    {name:"Ara 2.1",icon:"../pwa/lanes/ara.svg",role:"Second brain for the four apps.",bot:"0aca7e2c-756b-4a08-a1c7-d0751a5703bb"},
+    {name:"Marvin Musk",icon:"../pwa/lanes/marvin-musk.svg",role:"Marvin Musk lane."},
+    {name:"Terafab",icon:"../pwa/lanes/terafab.svg",role:"Trades, the cull, the store, CRM, pay-it-forward."},
+    {name:"Falcon 9",icon:"../pwa/lanes/falcon9.svg",role:"Falcon 9 lane."},
+    {name:"Neuralink",icon:"../pwa/lanes/neural-mesh.svg",role:"After Dark gate.",href:"after-dark.html"}
+  ];
+  var grid=document.getElementById("laneGrid");
+  var araId="";
+  grid.innerHTML=LANES.map(function(lane){
+    var href="";
+    if(lane.bot){araId=lane.bot;href="https://cursor.com/grok-bot/link/v1/agent?id="+lane.bot}
+    else if(lane.href)href=lane.href;
+    var img='<img src="'+lane.icon+'" alt=""><span class="nm">'+lane.name+'</span><i class="dot" aria-hidden="true"></i><span class="role">'+lane.role+'</span>';
+    if(href)return '<a class="lane"'+(lane.bot?' id="araLane" rel="noopener"':'')+' href="'+href+'">'+img+'</a>';
+    return '<button type="button" class="lane">'+img+'</button>';
+  }).join("");
   var a=document.getElementById("araLane");
-  if(a&&/Android/i.test(navigator.userAgent))a.href="intent://app/v1/agent?id="+id+"#Intent;scheme=grokbot;package=ai.x.grok.bot;S.browser_fallback_url="+encodeURIComponent(w)+";end";
+  if(a&&araId&&/Android/i.test(navigator.userAgent)){
+    var w="https://cursor.com/grok-bot/link/v1/agent?id="+araId;
+    a.href="intent://app/v1/agent?id="+araId+"#Intent;scheme=grokbot;package=ai.x.grok.bot;S.browser_fallback_url="+encodeURIComponent(w)+";end";
+  }
+  var head=document.querySelector(".gate h2");
+  if(head){
+    var hold=null;
+    head.addEventListener("pointerdown",function(e){if(e.button&&e.button!==0)return;clearTimeout(hold);hold=setTimeout(function(){location.href="eleven.html"},1500)});
+    head.addEventListener("pointerup",function(){clearTimeout(hold)});
+    head.addEventListener("pointercancel",function(){clearTimeout(hold)});
+    head.addEventListener("contextmenu",function(e){e.preventDefault()});
+  }
 })();
 </script>
 <script src="cue42.js"></script>

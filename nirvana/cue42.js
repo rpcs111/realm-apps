@@ -24,14 +24,25 @@
       try{var r2=await fetch(abs2,{method:"HEAD",cache:"no-store"});if(!r2.ok)fails.push("link "+r2.status+" "+href2)}catch(e2){fails.push("link "+href2)}
     }
     if(errs.length)fails=fails.concat(errs.map(function(x){return "console "+x}));
-    var toast=document.getElementById("cueToast");if(!toast)return;
-    toast.hidden=false;toast.className="cue-toast "+(fails.length?"fail":"pass");
-    toast.textContent=fails.length?fails.join(" · "):"The answer is 42 · PASS";
+    var text=fails.length?fails.join(" · "):"The answer is 42 · PASS";
+    var toast=document.getElementById("cueToast");
+    if(toast){toast.hidden=false;toast.className="cue-toast "+(fails.length?"fail":"pass");toast.textContent=text}
+    var st=document.getElementById("flowMapStatus");
+    if(st)st.textContent=text;
+    return text;
   }
-  document.querySelectorAll("input,textarea").forEach(function(el){
+  function cueText(v){v=String(v||"").trim().toLowerCase();return v==="42"||v==="42 is the answer"}
+  document.addEventListener("input",function(ev){
+    var el=ev.target;if(!el||(el.tagName!=="INPUT"&&el.tagName!=="TEXTAREA"))return;
     var blob=((el.id||"")+" "+(el.name||"")+" "+(el.getAttribute("placeholder")||"")+" "+(el.getAttribute("aria-label")||"")+" "+(el.type||"")).toLowerCase();
     if(!/search|command|amend/.test(blob))return;
-    el.addEventListener("input",function(){if(String(el.value).trim()==="42")run()});
+    if(cueText(el.value))run();
   });
   var chip=document.getElementById("cue42");if(chip)chip.addEventListener("click",function(){run()});
+  var flowA=document.querySelector('a[href="flow.html"]');
+  if(flowA)flowA.addEventListener("click",function(ev){
+    ev.preventDefault();
+    run().then(function(){location.href=flowA.href});
+  });
+  window.__nvCue42=run;
 })();
