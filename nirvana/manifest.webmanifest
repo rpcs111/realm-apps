@@ -1,8 +1,8 @@
 {
  "id": "nirvana-v10",
- "name": "Nirvana",
- "short_name": "Nirvana",
- "description": "Nirvana · v11 · 2026-10-20",
+ "name": "Eternity",
+ "short_name": "Eternity",
+ "description": "v11 · 21 Oct 2026",
  "start_url": "./index.html?app=nirvana",
  "scope": "./",
  "display": "standalone",
