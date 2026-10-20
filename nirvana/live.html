@@ -15,7 +15,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'">
 <link rel="manifest" href="manifest.webmanifest?v=2026-10-19-v10.0-b2"><link rel="icon" href="icons/icon-v10-192.png"><link rel="apple-touch-icon" href="icons/icon-v10-180.png">
 <style>
-:root{--bg:#0b0f14;--bg2:#121820;--bg3:#1a222c;--ln:#26313d;--tx:#e8eef4;--mut:#8a98a8;--c:#00aeef;--g:#60ff15;--red:#ff5a5a;--amb:#ffb020;--ok:#3ddc84;--top:52px}
+:root{--bg:#0b0f14;--bg2:#121820;--bg3:#1a222c;--ln:#26313d;--tx:#e8eef4;--mut:#8a98a8;--c:#00aeef;--g:#60ff15;--red:#ff5a5a;--amb:#ffb020;--ok:#3ddc84;--top:48px}
 *{box-sizing:border-box}[hidden]{display:none!important}
 html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -47,7 +47,7 @@ body.locked #lock{display:flex}body.locked .app{visibility:hidden}
 .btn{display:inline-block;border:0;border-radius:12px;padding:11px 16px;background:var(--c);color:#00121c;font-weight:700}
 .btn.g{background:var(--bg3);color:var(--tx);border:1px solid var(--ln)}
 .lk .btn,#lkB{width:100%;min-height:44px;min-width:44px;box-sizing:border-box}.err{color:var(--red);min-height:20px;font-size:13px;margin-top:6px}
-.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(11,15,20,.95);border-bottom:1px solid var(--ln);backdrop-filter:blur(8px);min-height:var(--top)}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;padding:0 8px;background:rgba(11,15,20,.95);border-bottom:1px solid var(--ln);backdrop-filter:blur(8px);height:48px;max-height:48px;flex-wrap:nowrap;white-space:nowrap;overflow:hidden}
 .brand{display:flex;align-items:center;gap:7px;font-weight:800;letter-spacing:.14em;font-size:15px;margin:0}
 .brand small{letter-spacing:.06em;font-weight:600;color:var(--mut);font-size:12px}
 .sp{flex:1}
@@ -94,7 +94,7 @@ main{padding:4px 12px 40px;max-width:900px;margin:0 auto}
 .banner{margin:10px 12px 0;padding:8px 10px;border-radius:10px;font-size:13px;background:#2a2410;color:var(--amb);border:1px solid #5a4710}
 .banner.r{background:#2a1416;color:var(--red);border-color:#5a2025}
 @media(min-width:700px){.tl{margin-left:64px}.ev .tm{left:-78px;width:56px}.now span{left:-66px}}
-#araSym{all:unset;box-sizing:border-box;position:fixed;z-index:2147482500;right:calc(12px + env(safe-area-inset-right));bottom:calc(14px + env(safe-area-inset-bottom));left:auto;top:auto;width:44px;height:44px;min-width:44px;min-height:44px;margin:0;padding:0;border:0;border-radius:50%;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#araSym{all:unset;box-sizing:border-box;display:block;position:fixed;z-index:2147482500;right:calc(12px + env(safe-area-inset-right));bottom:calc(14px + env(safe-area-inset-bottom));left:auto;top:auto;width:44px;height:44px;min-width:44px;min-height:44px;margin:0;padding:0;border:0;border-radius:50%;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #araSym::before{content:"";position:absolute;inset:4px;border-radius:50%;background:#0b0f1a url(../pwa/hub-ara-v3-192.svg) center/cover no-repeat;border:1.5px solid #a78bfa;box-sizing:border-box}
 #araSym:focus-visible{outline:2px solid #fff;outline-offset:2px}
 </style>
@@ -103,7 +103,7 @@ main{padding:4px 12px 40px;max-width:900px;margin:0 auto}
 <div id="lock"><div class="lk">
   <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDBhZWVmIiBzdHJva2Utd2lkdGg9IjIuMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggdHJhbnNmb3JtPSJyb3RhdGUoMCAzMiAzMikiIGQ9Ik0zMiAyMi41QzI4LjYgMTcuNiAyOSAxMSAzMiA1LjVDMzUgMTEgMzUuNCAxNy42IDMyIDIyLjVaIi8+PHBhdGggdHJhbnNmb3JtPSJyb3RhdGUoNDAgMzIgMzIpIiBkPSJNMzIgMjIuNUMyOC42IDE3LjYgMjkgMTEgMzIgNS41QzM1IDExIDM1LjQgMTcuNiAzMiAyMi41WiIvPjxwYXRoIHRyYW5zZm9ybT0icm90YXRlKDgwIDMyIDMyKSIgZD0iTTMyIDIyLjVDMjguNiAxNy42IDI5IDExIDMyIDUuNUMzNSAxMSAzNS40IDE3LjYgMzIgMjIuNVoiLz48cGF0aCB0cmFuc2Zvcm09InJvdGF0ZSgxMjAgMzIgMzIpIiBkPSJNMzIgMjIuNUMyOC42IDE3LjYgMjkgMTEgMzIgNS41QzM1IDExIDM1LjQgMTcuNiAzMiAyMi41WiIvPjxwYXRoIHRyYW5zZm9ybT0icm90YXRlKDE2MCAzMiAzMikiIGQ9Ik0zMiAyMi41QzI4LjYgMTcuNiAyOSAxMSAzMiA1LjVDMzUgMTEgMzUuNCAxNy42IDMyIDIyLjVaIi8+PHBhdGggdHJhbnNmb3JtPSJyb3RhdGUoMjAwIDMyIDMyKSIgZD0iTTMyIDIyLjVDMjguNiAxNy42IDI5IDExIDMyIDUuNUMzNSAxMSAzNS40IDE3LjYgMzIgMjIuNVoiLz48cGF0aCB0cmFuc2Zvcm09InJvdGF0ZSgyNDAgMzIgMzIpIiBkPSJNMzIgMjIuNUMyOC42IDE3LjYgMjkgMTEgMzIgNS41QzM1IDExIDM1LjQgMTcuNiAzMiAyMi41WiIvPjxwYXRoIHRyYW5zZm9ybT0icm90YXRlKDI4MCAzMiAzMikiIGQ9Ik0zMiAyMi41QzI4LjYgMTcuNiAyOSAxMSAzMiA1LjVDMzUgMTEgMzUuNCAxNy42IDMyIDIyLjVaIi8+PHBhdGggdHJhbnNmb3JtPSJyb3RhdGUoMzIwIDMyIDMyKSIgZD0iTTMyIDIyLjVDMjguNiAxNy42IDI5IDExIDMyIDUuNUMzNSAxMSAzNS40IDE3LjYgMzIgMjIuNVoiLz48Y2lyY2xlIGN4PSIzMiIgY3k9IjMyIiByPSI2LjUiLz48L2c+PGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iMi42IiBmaWxsPSIjMDBhZWVmIi8+PC9zdmc+" alt="">
   <h2><span class="wm" aria-label="NIRVANA">NI<svg class="scr" viewBox="8 8 46 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 47c5-8 9-16 15-25 3-5 6-9 9-11" stroke-width="5.5"/><path d="M22 51c6-9 12-19 19-28 2-3 5-6 8-8" stroke-width="4.2"/><path d="M33 53c4-6 8-12 13-18 2-2 3-4 5-5" stroke-width="3"/></g></svg>VANA</span></h2>
-  <p style="font:700 11px ui-monospace,Menlo,monospace;color:#60ff15">v10.0 · 2026-10-19 · build 2</p><p id="msg">Nirvana key (not your Desk PIN)</p>
+  <p style="font:700 11px ui-monospace,Menlo,monospace;color:#60ff15">v11 · 2026-10-19 · build 2</p><p id="msg">Nirvana key (not your Desk PIN)</p>
   <form id="lkF" autocomplete="off"><div class="krow"><input id="lkI" type="password" placeholder="Nirvana key" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Nirvana key"><button type="button" id="lkEye" aria-label="Show key" aria-pressed="false">Show</button></div>
   <button class="btn" type="submit" id="lkB">Unlock</button></form>
   <p id="lkWait" hidden>Unlocking… takes a few seconds</p>
@@ -132,7 +132,7 @@ main{padding:4px 12px 40px;max-width:900px;margin:0 auto}
 <div id="ban"></div>
 <div class="cals" id="cals"></div>
 <main id="main"></main><main id="stm" hidden></main><main id="him" hidden></main>
-<div class="foot"><a class="vs" href="versions.html">v10.0 · 2026-10-19 · build 2</a> · <a class="vs" href="index.html">Nirvana</a> · <a class="vs" href="flow.html">Flow</a> · <a class="vs" href="raw.html">Raw</a> · <span id="dev" class="vs" style="color:#8a98a8"></span><br><span id="chk"></span> · auto refresh every 3 min · <button id="fg" type="button">Forget key on this phone</button></div>
+<div class="foot"><a class="vs" href="versions.html">v11 · 2026-10-19 · build 2</a> · <a class="vs" href="index.html">Nirvana</a> · <a class="vs" href="flow.html">Flow</a> · <a class="vs" href="raw.html">Raw</a> · <span id="dev" class="vs" style="color:#8a98a8"></span><br><span id="chk"></span> · auto refresh every 3 min · <button id="fg" type="button">Forget key on this phone</button></div>
 </div>
 <script>
 (()=>{"use strict";
@@ -312,6 +312,6 @@ $("fg").onclick=()=>{localStorage.removeItem(LS);location.reload()};
 const saved=localStorage.getItem(LS);if(saved)unlock(saved,true);else $("lkI").focus();
 })();
 </script>
-<button id="araSym" type="button" aria-label="Ara" title="Ara"></button>
+<a id="araSym" href="grokbot://app/v1/agent?id=0aca7e2c-756b-4a08-a1c7-d0751a5703bb" aria-label="Ara 2.1" title="Ara 2.1"></a>
 </body>
 </html>
