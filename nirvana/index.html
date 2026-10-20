@@ -24,7 +24,7 @@ input{width:100%;box-sizing:border-box;padding:12px;border-radius:12px;border:1p
 button{font:inherit;color:inherit}
 #b{box-sizing:border-box;min-height:44px;min-width:44px;width:100%;border:0;border-radius:12px;padding:11px 16px;background:#00aeef;color:#00121c;font:700 15px system-ui;cursor:pointer}
 .err{color:#ff5a5a;min-height:20px;font-size:13px;margin-top:8px}
-.ln{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px}.ln a{color:#00aeef;font-size:12.5px;text-decoration:none;border:1px solid #26313d;border-radius:99px;padding:3px 14px;min-height:44px;min-width:44px;box-sizing:border-box;display:inline-flex;align-items:center}.ap4{margin-top:14px;text-align:left;border:1px solid #26313d;border-radius:14px;padding:10px}.ap4 b{display:block;font:700 11px ui-monospace,Menlo,monospace;color:#8a98a8;letter-spacing:.12em;margin-bottom:6px}.ap4 a{display:flex;align-items:center;justify-content:space-between;min-height:44px;color:#e8eef4;text-decoration:none;border-top:1px solid #1a232d;padding:0 4px}.ap4 a:first-of-type{border-top:0}.ap4 a span{color:#00aeef;font-size:12px}
+.ln{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px}.ln a{color:#00aeef;font-size:12.5px;text-decoration:none;border:1px solid #26313d;border-radius:99px;padding:3px 14px;min-height:44px;min-width:44px;box-sizing:border-box;display:inline-flex;align-items:center}.ap4{margin-top:14px;text-align:left;border:1px solid #26313d;border-radius:14px;padding:10px}.ap4 b{display:block;font:700 11px ui-monospace,Menlo,monospace;color:#8a98a8;letter-spacing:.12em;margin-bottom:6px}.ap4 a{display:flex;align-items:center;justify-content:space-between;min-height:44px;color:#e8eef4;text-decoration:none;border-top:1px solid #1a232d;padding:0 4px}.ap4 a:first-of-type{border-top:0}.ap4 a span{color:#00aeef;font-size:12px}.ap4 a.sopc{display:inline-flex;width:auto;min-height:28px;margin:6px 0;border-top:0;justify-content:center}
 .lanes{margin-top:18px;text-align:left}
 .lanes-k{display:block;font:700 11px ui-monospace,Menlo,monospace;color:#d4af37;letter-spacing:.14em;margin:0 0 8px}
 .lane-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -42,7 +42,8 @@ button{font:inherit;color:inherit}
 .lane.tera{border-color:#9c7a1c;background:linear-gradient(160deg,#f3d77a,#d4af37 48%,#9c7a1c);color:#0b0f14}
 .lane.tera .nm,.lane.tera .role{color:#0b0f14}
 .lights{width:14px;height:40px;flex:none;display:block}
-.sopc{position:absolute;right:8px;bottom:8px;z-index:2;min-height:28px;min-width:44px;padding:4px 8px;border-radius:999px;border:1px solid #d4af37;background:#0b0f14;color:#d4af37;font:700 10px ui-monospace,Menlo,monospace;cursor:pointer}
+.sopc{position:absolute;right:8px;bottom:8px;z-index:2;box-sizing:border-box;min-height:28px;min-width:44px;padding:4px 8px;border-radius:999px;border:1px solid #d4af37;background:#0b0f14;color:#d4af37;font:700 10px ui-monospace,Menlo,monospace;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.pagechip{position:static;margin:0 auto 10px}
 .lane.ara .sopc{border-color:#00aeef;color:#00aeef}
 .lane.head .sopc{bottom:auto;top:50%;transform:translateY(-50%)}
 .gate h2{user-select:none;-webkit-user-select:none;touch-action:manipulation}
@@ -114,18 +115,18 @@ body.julie-on .tf{display:none}
 <div class="board" id="board"><div class="w"><div class="lk">
 <div class="gate">
 <img src="icons/icon-v10-192.png" width="88" height="88" alt="">
-<h2>NIRVANA</h2><div class="st">Nirvana · Ara 2.1 · 2026.10.20-SB1 · second brain</div><div class="st" style="color:#8a98a8" id="nvDev"></div>
+<h2>NIRVANA</h2><a class="sopc pagechip" href="sop.html?lane=grokification">SOP</a><div class="st">Nirvana · Ara 2.1 · 2026.10.20-SB1 · second brain</div><div class="st" style="color:#8a98a8" id="nvDev"></div>
 <p id="msg">Enter your key once on this phone</p>
 <form id="f" autocomplete="off"><input id="k" type="password" placeholder="Key" autocomplete="current-password" aria-label="Key"><button id="b" type="submit">Unlock</button></form>
 <div class="err" id="e"></div>
 <div class="ln"><a href="index.html">Nirvana</a><a href="flow.html">Flow</a><a href="live.html">Live</a><a href="raw.html">Raw</a><a href="versions.html">Versions</a></div>
-<div class="ap4"><b>ARA 2.1 · THE FOUR APPS</b><a href="../desk.html?d=fold8">Desk · Fold 8<span>open</span></a><a href="../desk-flip6.html?d=flip6">Desk · Flip 6<span>open</span></a><a href="../certstudio.html">Cert Studio<span>open</span></a><a href="../map.html">Flow map<span id="flowMapStatus">open</span></a></div>
+<div class="ap4"><b>ARA 2.1 · THE FOUR APPS</b><a href="../desk.html?d=fold8">Desk · Fold 8<span>open</span></a><a href="../desk-flip6.html?d=flip6">Desk · Flip 6<span>open</span></a><a class="sopc inline" href="sop.html?lane=desk">SOP</a><a href="../certstudio.html">Cert Studio<span>open</span></a><a href="../map.html">Flow map<span id="flowMapStatus">open</span></a></div>
 </div>
 <section class="lanes" aria-label="Lanes">
 <b class="lanes-k">LANES</b>
 <div class="lane head">
 <div class="go"><img src="../pwa/lanes/grokification.svg" width="36" height="36" alt=""><svg class="lights" viewBox="0 0 14 40" aria-label="Oversight"><circle cx="7" cy="6" r="4" fill="#26313d"/><circle cx="7" cy="18" r="4" fill="#26313d"/><circle cx="7" cy="32" r="4" fill="#22c58b"/></svg><span class="nm">Grokification · GM</span><i class="dot" aria-hidden="true"></i><span class="role">Grokification lane.</span></div>
-<button type="button" class="sopc" data-sop="grokification">SOP</button>
+<a class="sopc" href="sop.html?lane=grokification">SOP</a>
 </div>
 <div class="lane-grid" id="laneGrid"></div>
 </section>
@@ -134,7 +135,7 @@ body.julie-on .tf{display:none}
 
 <section id="after-dark" class="panel" aria-label="After Dark">
 <div class="wrap cardbox">
-<p><a class="back" href="#board">Board</a> <button type="button" class="sopc inline" data-sop="after-dark">SOP</button></p>
+<p><a class="back" href="#board">Board</a> <a class="sopc inline" href="sop.html?lane=after-dark">SOP</a></p>
 <img src="../pwa/lanes/neural-mesh.svg" width="72" height="72" alt="">
 <h1>AFTER DARK</h1>
 <p id="darkAsk">Set a PIN</p>
@@ -146,14 +147,14 @@ body.julie-on .tf{display:none}
 
 <section id="backend" class="panel" aria-label="Backend">
 <div class="wrap">
-<div class="bar"><div><h1>BACKEND</h1><p>2026.10.20-LANES</p></div> <a class="back" href="#board">Board</a> <button type="button" class="sopc inline" data-sop="backend">SOP</button></div>
+<div class="bar"><div><h1>BACKEND</h1><p>2026.10.20-LANES</p></div> <a class="back" href="#board">Board</a> <a class="sopc inline" href="sop.html?lane=backend">SOP</a></div>
 <p>Z Fold 8 side button opens Ara 2.1; owner Marvin; money prompts route to Terafab.</p>
 <table class="sheet">
 <thead><tr><th>Lane</th><th>Role</th><th>Status</th></tr></thead>
 <tbody>
 <tr><td><img src="../pwa/lanes/grokification.svg" width="22" height="22" alt="">Grokification</td><td>Grokification lane. Oversight light on.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/ara.svg" width="22" height="22" alt="">Ara 2.1</td><td>Second brain for the four apps.</td><td>draft</td></tr>
-<tr><td><img src="../pwa/lanes/marvin_alien.svg" width="22" height="22" alt="">Marvin Musk</td><td>Marvin Musk lane.</td><td>draft</td></tr>
+<tr><td><img src="../pwa/lanes/marvin.svg" width="22" height="22" alt="">Marvin Musk</td><td>Marvin Musk lane.</td><td>draft</td></tr>
 <tr><td></td><td>Infra — task under Marvin/Bastion.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/terafab.svg" width="22" height="22" alt="">Terafab</td><td>Money: trades, F&amp;H store, Qantas, pay-it-forward.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/falcon9.svg" width="22" height="22" alt="">Falcon 9</td><td>Falcon 9 lane.</td><td>draft</td></tr>
@@ -165,7 +166,7 @@ body.julie-on .tf{display:none}
 
 <section id="eleven" class="panel" aria-label="11:11">
 <div class="wrap cardbox">
-<p><a class="back" href="#board">Board</a> <button type="button" class="sopc inline" data-sop="eleven">SOP</button></p>
+<p><a class="back" href="#board">Board</a> <a class="sopc inline" href="sop.html?lane=eleven">SOP</a></p>
 <img src="icons/icon-v10-192.png" width="72" height="72" alt="">
 <h1>11:11</h1>
 <p id="elevenAsk">Set a PIN</p>
@@ -177,7 +178,7 @@ body.julie-on .tf{display:none}
 
 <section id="julie" class="panel" aria-label="Julie">
 <div class="wrap">
-<div class="bar"><img src="../pwa/lanes/julie.svg" width="56" height="56" alt=""><h1>Julie</h1> <button type="button" class="back" id="julieBack">Board</button> <button type="button" class="sopc inline" data-sop="julie">SOP</button></div>
+<div class="bar"><img src="../pwa/lanes/julie.svg" width="56" height="56" alt=""><h1>Julie</h1> <button type="button" class="back" id="julieBack">Board</button> <a class="sopc inline" href="sop.html?lane=julie">SOP</a></div>
 <button type="button" class="jbtn">What's on today?</button>
 <button type="button" class="jbtn">Tick a job done</button>
 <button type="button" class="jbtn">Add a note</button>
@@ -190,7 +191,7 @@ body.julie-on .tf{display:none}
 <section id="terafab" class="panel" aria-label="Terafab">
 <div class="wrap">
 <div class="bar goldh"><img src="../pwa/lanes/terafab.svg" width="48" height="48" alt=""><div><h1>TERAFAB</h1><p>2026.10.20-LANES · SOP draft</p></div></div>
-<p><a class="back" href="#board">Board</a> <button type="button" class="sopc inline" data-sop="terafab">SOP</button></p>
+<p><a class="back" href="#board">Board</a> <a class="sopc inline" href="sop.html?lane=terafab-page">SOP</a></p>
 <section class="block"><h2>Trades</h2><p>The work this lane is tracking.</p><div class="draft">Status: draft</div></section>
 <section class="block"><h2>F&amp;H store</h2><p>Store lane, held as a draft.</p><div class="draft">Status: draft</div></section>
 <section class="block"><h2>Qantas</h2><p>Travel lane, held as a draft.</p><div class="draft">Status: draft</div></section>
@@ -198,22 +199,9 @@ body.julie-on .tf{display:none}
 </div>
 </section>
 
-<section id="sop" class="panel" aria-label="SOP">
-<div class="wrap">
-<p class="noprint"><a class="back" href="#board">Board</a> <button type="button" class="printb" id="sopPrint">Print</button> <button type="button" class="sopc inline" data-sop="sop">SOP</button></p>
-<article id="sopCard">
-<h1 id="sopName">SOP</h1>
-<h2>Does</h2><p id="sopDoes"></p>
-<h2>Helps</h2><p id="sopHelps"></p>
-<h2>80% goal</h2><p id="sopGoal"></p>
-<h2>Rules</h2><p id="sopRules"></p>
-</article>
-</div>
-</section>
-
 <section id="automations" class="panel" aria-label="Automations">
 <div class="wrap">
-<div class="bar"><div><h1>AUTOMATIONS</h1><p>Seeded list. Test is a dry run.</p></div> <a class="back" href="#board">Board</a> <button type="button" class="sopc inline" data-sop="automations">SOP</button></div>
+<div class="bar"><div><h1>AUTOMATIONS</h1><p>Seeded list. Test is a dry run.</p></div> <a class="back" href="#board">Board</a> <a class="sopc inline" href="sop.html?lane=automations">SOP</a></div>
 <div class="agrid" id="autoList"><p id="autoEmpty">Loading.</p></div>
 </div>
 </section>
@@ -247,9 +235,9 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
 (function(){
   var LANES=[
     {id:"ara",name:"Ara 2.1",cls:"ara",icon:"../pwa/lanes/ara.svg",role:"Second brain for the four apps.",bot:"0aca7e2c-756b-4a08-a1c7-d0751a5703bb"},
-    {id:"marvin",name:"Marvin Musk",icon:"../pwa/lanes/marvin_alien.svg",role:"Marvin Musk lane."},
+    {id:"marvin",name:"Marvin Musk",icon:"../pwa/lanes/marvin.svg",role:"Marvin Musk lane."},
     {id:"terafab",name:"Terafab",cls:"tera",icon:"../pwa/lanes/terafab.svg",role:"Money: trades, F&H store, Qantas, pay-it-forward."},
-    {id:"falcon",name:"Falcon 9",icon:"../pwa/lanes/falcon9.svg",role:"Falcon 9 lane."},
+    {id:"falcon",sop:"falcon9",name:"Falcon 9",icon:"../pwa/lanes/falcon9.svg",role:"Falcon 9 lane."},
     {id:"neuralink",name:"Neuralink",icon:"../pwa/lanes/neural-mesh.svg",role:"After Dark gate.",href:"#after-dark"}
   ];
   var grid=document.getElementById("laneGrid");
@@ -260,7 +248,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     else if(lane.href)href=lane.href;
     var img='<img src="'+lane.icon+'" width="36" height="36" alt=""><span class="nm">'+lane.name+'</span><i class="dot" aria-hidden="true"></i><span class="role">'+lane.role+'</span>';
     var go=href?'<a class="go"'+(lane.bot?' id="araLane" rel="noopener"':'')+' href="'+href+'">'+img+'</a>':'<button type="button" class="go">'+img+'</button>';
-    return '<div class="lane'+(lane.cls?' '+lane.cls:'')+'">'+go+'<button type="button" class="sopc" data-sop="'+lane.id+'">SOP</button></div>';
+    return '<div class="lane'+(lane.cls?' '+lane.cls:'')+'">'+go+'<a class="sopc" href="sop.html?lane='+encodeURIComponent(lane.sop||lane.id)+'">SOP</a></div>';
   }).join("");
   var a=document.getElementById("araLane");
   if(a&&araId&&/Android/i.test(navigator.userAgent)){
@@ -277,7 +265,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
   }
 })();
 (function(){
-  var PANELS=["after-dark","backend","eleven","julie","terafab","sop","automations"];
+  var PANELS=["after-dark","backend","eleven","julie","terafab","automations"];
   var SOP=null;
   function hashBits(){
     var raw=(location.hash||"").replace(/^#/,"");
@@ -292,25 +280,9 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     document.getElementById("board").hidden=!!name;
     PANELS.forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle("on",id===name)});
     document.body.classList.toggle("julie-on",name==="julie");
-    var titles={"after-dark":"After Dark",backend:"Nirvana backend",eleven:"11:11",julie:"Julie",terafab:"Terafab",sop:"SOP",automations:"Automations"};
+    if(bits.name==="sop"){location.replace("sop.html"+(bits.q?"?"+bits.q:""));return}
+    var titles={"after-dark":"After Dark",backend:"Nirvana backend",eleven:"11:11",julie:"Julie",terafab:"Terafab",automations:"Automations"};
     document.title=name?(titles[name]||"Nirvana"):"Nirvana";
-    if(name==="sop")fillSop();
-  }
-  function laneId(){
-    var bits=hashBits();
-    var params=new URLSearchParams(bits.q);
-    return params.get("lane")||"sop";
-  }
-  function fillSop(){
-    var id=laneId();
-    var list=(SOP&&SOP.entries)||[];
-    var hit=null;
-    for(var i=0;i<list.length;i++)if(list[i].id===id)hit=list[i];
-    document.getElementById("sopName").textContent=hit?hit.name:"SOP";
-    document.getElementById("sopDoes").textContent=hit?hit.does:"";
-    document.getElementById("sopHelps").textContent=hit?hit.helps:"";
-    document.getElementById("sopGoal").textContent=hit?hit.goal:"";
-    document.getElementById("sopRules").textContent=hit?hit.rules:(SOP?"":"SOP file missing");
   }
   function renderAuto(){
     var host=document.getElementById("autoList");
@@ -322,8 +294,6 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     }).join("");
   }
   document.addEventListener("click",function(ev){
-    var sop=ev.target.closest&&ev.target.closest(".sopc");
-    if(sop){ev.preventDefault();ev.stopPropagation();location.hash="sop?lane="+encodeURIComponent(sop.getAttribute("data-sop")||"sop");return}
     var dry=ev.target.closest&&ev.target.closest("[data-dry]");
     if(dry){
       var card=dry.closest(".acard");
@@ -341,7 +311,6 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     var kept=ev.target.querySelector(".kept");
     if(kept)kept.textContent="Not sent.";
   });
-  document.getElementById("sopPrint").addEventListener("click",function(){window.print()});
   function b64e(buf){var b=new Uint8Array(buf),s="";for(var i=0;i<b.length;i++)s+=String.fromCharCode(b[i]);return btoa(s)}
   async function sealLocal(secret){
     var salt=crypto.getRandomValues(new Uint8Array(16));
@@ -415,7 +384,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
   pad(document.getElementById("elevenPad"),document.getElementById("elevenDots"),document.getElementById("elevenOut"),document.getElementById("elevenAsk"),"eleven.enc.json","sealed","nv_gate_eleven_v1");
   window.addEventListener("hashchange",show);
   show();
-  fetch("sop.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("sop");return r.json()}).then(function(d){SOP=d;renderAuto();if(hashBits().name==="sop")fillSop()}).catch(function(){var n=document.getElementById("autoEmpty");if(n)n.textContent="SOP file missing"});
+  fetch("sop.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("sop");return r.json()}).then(function(d){SOP=d;renderAuto()}).catch(function(){var n=document.getElementById("autoEmpty");if(n)n.textContent="SOP file missing"});
 })();
 (function(){
   var errs=window.__nvErrs||(window.__nvErrs=[]);
@@ -443,6 +412,8 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
       var href2=as[k].getAttribute("href");if(href2.charAt(0)==="#")continue;var abs2=same(href2);if(!abs2||seen[abs2])continue;seen[abs2]=1;
       try{var r2=await fetch(abs2,{method:"HEAD",cache:"no-store"});if(!r2.ok)fails.push("link "+r2.status+" "+href2)}catch(e2){fails.push("link "+href2)}
     }
+    var sopOnly=same("sop.html");
+    if(sopOnly&&!seen[sopOnly]){seen[sopOnly]=1;try{var rSop=await fetch(sopOnly,{method:"HEAD",cache:"no-store"});if(!rSop.ok)fails.push("link "+rSop.status+" sop.html")}catch(eSop){fails.push("link sop.html")}}
     if(errs.length)fails=fails.concat(errs.map(function(x){return "console "+x}));
     var text=fails.length?fails.join(" · "):"The answer is 42 · PASS";
     var toast=document.getElementById("cueToast");

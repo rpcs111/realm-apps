@@ -1,100 +1,130 @@
 {
   "entries": [
     {
-      "id": "grokification",
-      "name": "Grokification",
-      "does": "Holds the oversight light on the lane board.",
-      "helps": "Shows the board is being watched.",
-      "goal": "The oversight light matches the board on 80% of opens.",
-      "rules": "The light stays on the header tile. This chip does not add a bot."
-    },
-    {
       "id": "ara",
       "name": "Ara 2.1",
-      "does": "Second brain for the four apps.",
-      "helps": "Opens the Ara lane from the board.",
-      "goal": "80% of board opens reach Ara without a wrong tile.",
-      "rules": "This tile stays cyan-blue. It is the only tile with the Ara deep link."
+      "icon": "../pwa/lanes/ara.svg",
+      "does": "Ara keeps the four apps in one blue tile.",
+      "helps": "You tap it and go to Ara.",
+      "saves": ["Goal: cut hunting for the right app by 80%.", "Goal: keep the next step on this tile.", "Goal: open Ara in one tap."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Marvin checks it first."]
     },
     {
       "id": "marvin",
       "name": "Marvin Musk",
-      "does": "Marvin Musk lane.",
-      "helps": "Marks the Marvin Musk seat on the board.",
-      "goal": "The tile name stays Marvin Musk on 80% of reviews.",
-      "rules": "Use the alien mark. Do not rename the tile."
+      "icon": "../pwa/lanes/marvin.svg",
+      "does": "Marvin is the checker with the big cracked head.",
+      "helps": "You get a look before a thing moves.",
+      "saves": ["Goal: cut rework by 80%.", "Goal: catch a miss before it goes out.", "Goal: keep one clear yes or no."],
+      "rules": ["Marvin checks it first.", "Proof, not promises.", "Nothing gets deleted."]
     },
     {
       "id": "terafab",
       "name": "Terafab",
-      "does": "Money: trades, F&H store, Qantas, pay-it-forward.",
-      "helps": "Keeps the money lane on one gold tile.",
-      "goal": "80% of money prompts land on this lane.",
-      "rules": "No gear. No amounts on this card. The role line stays as written."
+      "icon": "../pwa/lanes/terafab.svg",
+      "does": "Terafab holds the shop, travel, and give-forward jobs.",
+      "helps": "You see those jobs on one gold tile.",
+      "saves": ["Goal: cut searching for a job by 80%.", "Goal: keep each job in its own box.", "Goal: show a draft before it is called done."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Proof, not promises.", "Nothing gets deleted."]
     },
     {
-      "id": "falcon",
+      "id": "falcon9",
       "name": "Falcon 9",
-      "does": "Falcon 9 lane.",
-      "helps": "Holds the daytime loop on the board.",
-      "goal": "The daytime loop is named on 80% of board checks.",
-      "rules": "Status stays draft until the owner says otherwise."
+      "icon": "../pwa/lanes/falcon9.svg",
+      "does": "Falcon 9 holds the daytime loop.",
+      "helps": "You see the loop on the board.",
+      "saves": ["Goal: cut forgotten loops by 80%.", "Goal: name the loop on the tile.", "Goal: keep the loop in one place."],
+      "rules": ["Marvin checks it first.", "Proof, not promises.", "Nothing gets deleted."]
     },
     {
       "id": "neuralink",
       "name": "Neuralink",
-      "does": "Opens the After Dark gate.",
-      "helps": "Puts the lock one tap from the board.",
-      "goal": "80% of Neuralink taps open the gate and nothing else.",
-      "rules": "The vault file is not in the repo. The lock stays on this device."
+      "icon": "../pwa/lanes/neural-mesh.svg",
+      "does": "Neuralink opens the After Dark gate.",
+      "helps": "The lock sits one tap from the board.",
+      "saves": ["Goal: cut extra steps to the gate by 80%.", "Goal: open the gate and nothing else.", "Goal: keep the lock on this phone."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Marvin checks it first."]
+    },
+    {
+      "id": "grokification",
+      "name": "Grokification",
+      "icon": "../pwa/lanes/grokification.svg",
+      "does": "Grokification watches the lanes.",
+      "helps": "You see a light that says the watch is on.",
+      "saves": ["Goal: cut guesswork by 80%.", "Goal: keep the light on this tile.", "Goal: show the watch before you scroll."],
+      "rules": ["Marvin checks it first.", "Proof, not promises.", "Nothing gets deleted."]
+    },
+    {
+      "id": "flow",
+      "name": "Flow",
+      "icon": "icons/icon-v10-192.png",
+      "does": "Flow shows the map of the apps.",
+      "helps": "You tap a box and land on that app.",
+      "saves": ["Goal: cut map hunting by 80%.", "Goal: keep each app in one box.", "Goal: open the box you meant."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Proof, not promises."]
+    },
+    {
+      "id": "desk",
+      "name": "Desk",
+      "icon": "icons/icon-v10-192.png",
+      "does": "Desk is the job board for the day.",
+      "helps": "You start from one list.",
+      "saves": ["Goal: cut list hopping by 80%.", "Goal: keep today's jobs in one place.", "Goal: start the next job from the list."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Marvin checks it first."]
+    },
+    {
+      "id": "terafab-page",
+      "name": "Terafab page",
+      "icon": "../pwa/lanes/terafab.svg",
+      "does": "This page is the Terafab sheet.",
+      "helps": "You read each draft job in a big block.",
+      "saves": ["Goal: cut page hopping by 80%.", "Goal: keep each block as a draft.", "Goal: show the sheet before a job is called done."],
+      "rules": ["Proof, not promises.", "Nothing gets deleted.", "Nothing gets sent without Ange saying yes."]
     },
     {
       "id": "after-dark",
       "name": "After Dark",
-      "does": "On first use the owner chooses four digits. This device stores only an encrypted check.",
-      "helps": "Keeps vault text off the public board.",
-      "goal": "80% of opens confirm that local check before any vault read.",
-      "rules": "Nothing secret is written in the repo. A missing file says the vault is sealed."
-    },
-    {
-      "id": "backend",
-      "name": "Backend",
-      "does": "Lists each lane, its role, and draft status.",
-      "helps": "Gives one plain sheet for the board.",
-      "goal": "80% of lane rows match the board tiles.",
-      "rules": "Infra is a task under Marvin/Bastion, not a tile. The side-button note stays on this sheet only."
-    },
-    {
-      "id": "eleven",
-      "name": "11:11",
-      "does": "Hidden gate. First use chooses four digits and stores only an encrypted check on this device.",
-      "helps": "Keeps this panel off the board.",
-      "goal": "80% of visits arrive from the Nirvana header long-press.",
-      "rules": "No board link. No Julie link. A missing file says sealed."
+      "icon": "../pwa/lanes/neural-mesh.svg",
+      "does": "After Dark keeps a locked page on this phone.",
+      "helps": "The page stays shut until you open it here.",
+      "saves": ["Goal: cut peeks at the locked page by 80%.", "Goal: keep the lock on this phone.", "Goal: show a sealed line when the page is empty."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Marvin checks it first."]
     },
     {
       "id": "julie",
       "name": "Julie",
-      "does": "Five prompts for the day.",
-      "helps": "Gives Julie a large-type panel.",
-      "goal": "80% of taps only echo the prompt.",
-      "rules": "This panel only echoes the five prompts. It does not open another lane."
+      "icon": "../pwa/lanes/julie.svg",
+      "does": "Julie gets five big buttons for her day.",
+      "helps": "A tap only says the words on the button.",
+      "saves": ["Goal: cut extra taps by 80%.", "Goal: keep the page to five buttons.", "Goal: leave every other lane closed."],
+      "rules": ["Julie only sees her pink stuff.", "Nothing gets sent without Ange saying yes.", "Nothing gets deleted."]
+    },
+    {
+      "id": "backend",
+      "name": "Backend",
+      "icon": "../pwa/lanes/grokification.svg",
+      "does": "Backend is the plain sheet of the lanes.",
+      "helps": "You read each lane in one row.",
+      "saves": ["Goal: cut sheet hunting by 80%.", "Goal: keep each row a draft.", "Goal: match the rows to the tiles."],
+      "rules": ["Marvin checks it first.", "Nothing gets deleted.", "Proof, not promises."]
+    },
+    {
+      "id": "eleven",
+      "name": "11:11",
+      "icon": "icons/icon-v10-192.png",
+      "does": "11:11 stays off the board.",
+      "helps": "You do not see it in the tile list.",
+      "saves": ["Goal: cut stray links by 80%.", "Goal: keep this page off Julie.", "Goal: show a sealed line when the page is empty."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Julie only sees her pink stuff."]
     },
     {
       "id": "automations",
       "name": "Automations",
-      "does": "Shows the seeded automation cards.",
-      "helps": "Lets a dry run show the self-check.",
-      "goal": "80% of Test presses stay a dry run.",
-      "rules": "No secrets in the seed. Test does not send mail or start a job."
-    },
-    {
-      "id": "sop",
-      "name": "SOP",
-      "does": "Prints the does, helps, 80% goal, and rules for one tile or panel.",
-      "helps": "Puts the card on paper.",
-      "goal": "80% of tiles open a card that prints.",
-      "rules": "One card at a time. No secrets on the card."
+      "icon": "../pwa/lanes/falcon9.svg",
+      "does": "Automations shows the seeded cards.",
+      "helps": "A test stays a dry run on this page.",
+      "saves": ["Goal: cut surprise jobs by 80%.", "Goal: keep each test on this page.", "Goal: leave mail and timers alone."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Proof, not promises."]
     }
   ],
   "automations": [
