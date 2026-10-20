@@ -213,13 +213,14 @@ body.julie-on .tf{display:none}
   .agrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 }
 .gx{margin:0 auto 16px;text-align:left;max-width:980px}
-.gx-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px}
+.gx-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px;padding-right:52px}
 .gx-tools h2{margin:0;letter-spacing:.08em;font-size:22px}
 .gx-pills{display:flex;flex-wrap:wrap;gap:8px}
 .gx-pill{min-height:44px;border-radius:999px;border:1px solid #00aeef;background:#00aeef;color:#00121c;font:700 14px system-ui;padding:0 16px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
 .gx-pill.ghost{background:transparent;color:#00aeef}
 .gx-tip{margin:6px 0 0;color:#8a98a8;font-size:13px}
 .gx-key{background:#121820;border:1px solid #26313d;border-radius:16px;padding:12px;margin:0 0 12px}
+.gx.unlocked .gx-key{display:none}
 .gx-key p{margin:0 0 8px}
 .gx-keyrow{display:flex;gap:8px;align-items:center}
 .gx-keyrow input{flex:1;margin:0}
@@ -245,16 +246,23 @@ body.julie-on .tf{display:none}
 .gx-mark{width:44px;height:44px;border-radius:50%;background:#000}
 .gx-compose{display:flex;gap:8px;padding:12px;border-top:1px solid #eee}
 .gx-compose input{flex:1;margin:0;text-align:left;border-radius:999px}
+.gx-compose .mic{width:44px;min-width:44px;height:44px;padding:0;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.gx-compose .mic svg{width:22px;height:22px;display:block}
+.gx-compose .mic.on{background:#00aeef;color:#00121c}
 .nv-key-toast,.nv-saved{position:fixed;z-index:130;left:50%;bottom:24px;transform:translateX(-50%);background:#111;color:#fff;border-radius:999px;padding:10px 16px;font-weight:700}
+.nv-saved{bottom:76px}
 .nv-key-toast[hidden],.nv-saved[hidden],#nvWin[hidden]{display:none}
 #nvWin{position:fixed;inset:0;z-index:120;background:#0b0f14;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
 #nvWin canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-#nvWin p{position:relative;z-index:1;font:600 22px/1.35 system-ui;max-width:18em;margin:0 0 16px}
+#nvWin p{position:relative;z-index:1;font:600 22px/1.35 system-ui;max-width:18em;margin:0 0 16px;color:#fff}
 #nvWin button{position:relative;z-index:1}
 .nv-amend{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
 .nv-amend textarea{flex:1 1 180px;min-height:44px;margin:0;text-align:left}
 .lane.falcon{border-color:#4c6a8a;background:linear-gradient(165deg,#1a2836,#0b0f14)}
 .lane.neural{border-color:#5b8def}
+@media(max-width:699px){
+  .gx.thread .gx-thread{position:fixed;inset:0;z-index:80;width:100%;height:100dvh}
+}
 @media(min-width:700px){
   .gx-list{width:320px;flex:none;border-right:1px solid #e6e6e6}
   .gx-thread{display:flex}
@@ -312,7 +320,7 @@ body.julie-on .tf{display:none}
 <section class="gx-thread" id="gxThread" aria-label="Thread">
 <header class="gx-head"><button type="button" class="gx-back" id="gxBack">Back</button><span class="gx-av" id="gxAv">A</span><div class="gx-mid"><b id="gxName">Ara</b><span id="gxRole">Boss</span></div></header>
 <div class="gx-msgs" id="gxMsgs"></div>
-<form class="gx-compose" id="gxCompose" autocomplete="off"><input id="gxIn" aria-label="Message" placeholder="Draft a line" autocapitalize="off"><button class="gx-pill" type="submit">Send</button><button class="gx-pill ghost" type="button" id="gxSave">Save</button></form>
+<form class="gx-compose" id="gxCompose" autocomplete="off"><button type="button" class="mic" id="gxMic" aria-label="Mic"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="8.25" y="2.5" width="7.5" height="12.5" rx="3.75" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M5.25 11.25a6.75 6.75 0 0 0 13.5 0M12 18v3.25" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button><input id="gxIn" aria-label="Message" placeholder="Draft a line" autocapitalize="off"><button class="gx-pill" type="submit">Send</button><button class="gx-pill ghost" type="button" id="gxSave">Save</button></form>
 </section>
 </div>
 </section>
@@ -540,8 +548,8 @@ function nvFrameListen(){
 }
 function nvPrepare(html){
   var boot=JSON.stringify(nvStoreRead()).replace(/</g,"\\u003c").replace(/\u2028/g,"\\u2028").replace(/\u2029/g,"\\u2029");
-  var shim='<script>(function(){var boot='+boot+';function make(kind){var data=Object.create(null);var src=boot[kind]||{};Object.keys(src).forEach(function(k){data[k]=String(src[k])});function send(op,key,val){try{parent.postMessage({nv:"store",kind:kind,op:op,key:key,val:val},"*")}catch(e){}}return {getItem:function(k){k=String(k);return Object.prototype.hasOwnProperty.call(data,k)?data[k]:null},setItem:function(k,v){k=String(k);v=String(v);data[k]=v;send("set",k,v)},removeItem:function(k){k=String(k);delete data[k];send("del",k)},clear:function(){Object.keys(data).forEach(function(k){delete data[k]});send("clear")},key:function(i){var ks=Object.keys(data);return ks[i]==null?null:ks[i]},get length(){return Object.keys(data).length}}}function install(name,store){try{Object.defineProperty(window,name,{configurable:true,get:function(){return store}})}catch(e){try{window[name]=store}catch(e2){}}}install("localStorage",make("local"));install("sessionStorage",make("session"));})();<\/script>';
-  var skip='<script>window.__nvKeyGate=1;(function(){function go(){try{if(document.body)document.body.classList.remove("locked")}catch(e){}var l=document.getElementById("lock");if(l){l.hidden=true;l.style.display="none"}if(typeof unlock==="function"){try{unlock()}catch(e){}}window.lock=function(){if(!window.__nvKeyGate)return;try{if(typeof unlock==="function")unlock()}catch(e){}}}go();document.addEventListener("DOMContentLoaded",go);var n=0,iv=setInterval(function(){go();if(++n>25)clearInterval(iv)},100);document.addEventListener("visibilitychange",function(){setTimeout(go,0)});})();<\/script>';
+  var shim='<script>(function(){var boot='+boot+';function make(kind){var data=Object.create(null);var src=boot[kind]||{};Object.keys(src).forEach(function(k){data[k]=String(src[k])});function send(op,key,val){try{parent.postMessage({nv:"store",kind:kind,op:op,key:key,val:val},"*")}catch(e){}}return {getItem:function(k){k=String(k);return Object.prototype.hasOwnProperty.call(data,k)?data[k]:null},setItem:function(k,v){k=String(k);v=String(v);data[k]=v;send("set",k,v)},removeItem:function(k){k=String(k);delete data[k];send("del",k)},clear:function(){Object.keys(data).forEach(function(k){delete data[k]});send("clear")},key:function(i){var ks=Object.keys(data);return ks[i]==null?null:ks[i]},get length(){return Object.keys(data).length}}}function install(name,store){try{Object.defineProperty(window,name,{configurable:true,get:function(){return store}})}catch(e){try{window[name]=store}catch(e2){}}}install("localStorage",make("local"));install("sessionStorage",make("session"));})();\u003c/script>';
+  var skip='<script>window.__nvKeyGate=1;(function(){function go(){try{if(document.body)document.body.classList.remove("locked")}catch(e){}var l=document.getElementById("lock");if(l){l.hidden=true;l.style.display="none"}if(typeof unlock==="function"){try{unlock()}catch(e){}}window.lock=function(){if(!window.__nvKeyGate)return;try{if(typeof unlock==="function")unlock()}catch(e){}}}go();document.addEventListener("DOMContentLoaded",go);var n=0,iv=setInterval(function(){go();if(++n>25)clearInterval(iv)},100);document.addEventListener("visibilitychange",function(){setTimeout(go,0)});})();\u003c/script>';
   html=String(html||"");
   if(/<head\b[^>]*>/i.test(html))html=html.replace(/<head\b[^>]*>/i,function(m){return m+shim});
   else html=shim+html;
@@ -608,6 +616,7 @@ async function open(pass,stored){
     var o=await nvFetch("main.enc.json");var d=await nvDec(o,pass);localStorage.setItem(NVK,pass);
     if(MODE==="flow")sessionStorage.setItem("nv_open","flow");
     b.disabled=false;b.textContent="Unlock";if(w)w.hidden=true;nvBusy=false;
+    var appEl=document.getElementById("gxApp");if(appEl)appEl.classList.add("unlocked");
     toast("Key saved on this phone ✓");
     showWin(function(){nvMount(d&&d.html)});
   }catch(x){
@@ -631,6 +640,7 @@ if(install)install.addEventListener("click",function(){
   if(deferred){var p=deferred;deferred=null;p.prompt();if(p.userChoice)p.userChoice.then(function(){})}
   else if(tip)tip.hidden=false;
 });
+var s=localStorage.getItem(NVK);if(s)open(s,true);
 })();
 (function(){
   var HELPERS=[
@@ -677,6 +687,19 @@ if(install)install.addEventListener("click",function(){
   }
   function openThread(h){cur=h;paintList();paintThread();if(phone())app.classList.add("thread")}
   document.getElementById("gxBack").addEventListener("click",function(){app.classList.remove("thread")});
+  var micBtn=document.getElementById("gxMic");
+  if(micBtn)micBtn.addEventListener("click",function(){
+    var SR=window.SpeechRecognition||window.webkitSpeechRecognition,inp=document.getElementById("gxIn");
+    if(!SR||!inp)return;
+    if(micBtn._rec){try{micBtn._rec.stop()}catch(e){}return}
+    var rec=micBtn._rec=new SR();
+    rec.lang="en-AU";rec.interimResults=false;rec.continuous=false;
+    rec.onresult=function(ev){var said="";for(var i=0;i<ev.results.length;i++){if(ev.results[i].isFinal)said+=ev.results[i][0].transcript}if(said)inp.value=said.trim()};
+    rec.onend=function(){micBtn._rec=null;micBtn.classList.remove("on")};
+    rec.onerror=function(){micBtn._rec=null;micBtn.classList.remove("on")};
+    micBtn.classList.add("on");
+    try{rec.start()}catch(e){micBtn._rec=null;micBtn.classList.remove("on")}
+  });
   document.getElementById("gxCompose").addEventListener("submit",function(ev){
     ev.preventDefault();
     var inp=document.getElementById("gxIn"),v=String(inp.value||"").trim();
