@@ -1,7 +1,7 @@
 # HANDOFF — Ara 2.1's Daily Loop
 
 **Owner:** Ange Barlas (Andrew Barlas, Realm PCS, Melbourne UTC+11)
-**Last updated:** 2026-10-20
+**Last updated:** 2026-10-20 9:25pm Melb
 **Rule:** Every new session (box, phone app, voice, any Ara 2.1) reads this file FIRST, before touching anything. No rebuilding, no guessing URLs, no new deployments without Ange's yes.
 
 ## Where this lives (one brain)
@@ -27,6 +27,10 @@ Daily-loop working reminders (from the box handover; the channel doc still wins)
 - Emails are draft-only (text files), never sent without Ange's explicit yes for that specific message. Check before anything that sends, spends or deletes.
 - One task at a time, result reported before the next. Back up before editing. Log first, report second.
 - Do not edit the REALM OPEN REGISTER or ORION_HANDOFF sheets without Ange's OK (register is append-only; row ids repeat, so quote id + item text).
+
+12. "Have you got me, bro?" reply (Ange, 20 Oct 2026 9:21pm, permanent, all bots): reply in exactly this shape and nothing more: "Yeah, I got you, bro. It's done. It's on its way. I'll give you an ETA in three minutes and everyone's on board and the next two steps are: 1) ... 2) ..." No extra commentary or re-explaining. If the job is NOT literally done, reply instead: "Yeah, I got you, bro. It's not done yet: [blocker]. ETA [time]. Everyone's on board and the next two steps are: 1) ... 2) ..." Never say "It's done" unless it is proven done.
+
+RELEASE ORDER (Ange, 20 Oct 9:17pm): 1 Ara builds, 2 Ara real-key test on the box at 412 and Fold sizes, 3 Marvin 10-point gate, 4 Ange says merge, 5 live check on Ange's phone. Nothing is called done before step 5.
 
 ## 1a. Standards v2 (16 Oct, from Elon audit; Elon retired 20 Oct) — PROPOSED, not yet in the master list
 
@@ -64,7 +68,7 @@ Rule conflicts Elon listed (Elon retired 20 Oct; rule 38: flag, do not flatten):
 | Ara 2.1 (boss bot) | Builds (realm-apps), calls, HANDOFF upkeep; the only bot that asks Ange anything (no doubled asks from lanes) | Ship ungated, mirror Ange, say Marvin is unreachable, end a call on pushback |
 | Marvin Musk `7a2f50df` | Sole final gate: every build, prompt and handoff passes him before Ange; plus Bastion | Merge (a PASS never merges; only Ange's own "merge"); build |
 | Terafab `76897f17` | Money lane (gold tile); Frankie and Henry lives inside it | Being called Nirvana |
-| Falcon 9 `812882bb` | Overnight sweep | Sends |
+| Falcon 9 `812882bb` | Falcon 9: 24/7 sweep (Ange, 20 Oct 9:11pm): email and calendar around the clock, digest only on change, WhatsApp read-only once paired. | Sends |
 | Neuralink `9005ed36` | Brain dumps plus vaults | Keys or PINs in plain text |
 | Ivor `a68a9a78` | Accountability coach, unseen by Ange | Talking to Ange directly |
 | Infra Lead `5a501e95` | Infra task lane (not a tile) | Showing as a tile |
@@ -237,6 +241,8 @@ Backup first: box `backups/handover_20261016_0915/` (HANDOVER.md, CHASE_DRAFT.md
 ## 7. Live job log — written the moment a job starts or finishes (newest first)
 
 Dated lines below keep the name Elon where that was the gate that day. Elon retired 20 Oct. Marvin Musk is the gate now.
+
+- 20 Oct 2026 | Ange order | Falcon 9 overnight changed to 24/7.
 
 42* SOP guide (6pp PDF, Nirvana look): Drive https://drive.google.com/file/d/1VIle9fAxLoh-y4_x3UZ9nPWIJUnhn-n1/view; nirvana/sop.json entry '42star' (PR #18); Gmail draft in info@ (unsent).
 Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINISHES (or fails), not just at session end. Any session — phone, laptop, voice, Nova, routines — reads this file first and picks up from the newest line. A RUNNING line with no matching DONE means the job may have been cut off: check its output before redoing it. Format: `time (Melb) | STATUS | job | result / where it is`.
