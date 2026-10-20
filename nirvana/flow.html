@@ -88,7 +88,7 @@ function toast(msg){var t=document.getElementById("nvKeyToast");if(!t)return;t.t
 function confetti(){
   var cv=document.getElementById("nvWinCv");if(!cv||!cv.getContext)return;
   var ctx=cv.getContext("2d"),w=cv.width=innerWidth,h=cv.height=innerHeight,colors=["#00aeef","#e0262f","#d4af37","#60ff15","#5b8def","#fff"],bits=[],i;
-  for(i=0;i<90;i++)bits.push({x:Math.random()*w,y:-Math.random()*h,w:4+Math.random()*6,h:14+Math.random()*22,vy:2+Math.random()*3.5,vx:-1.2+Math.random()*2.4,r:Math.random()*6,c:colors[i%colors.length]});
+  for(i=0;i<120;i++)bits.push({x:Math.random()*w,y:Math.random()*h,w:8+Math.random()*10,h:28+Math.random()*40,vy:1.6+Math.random()*3,vx:-1.2+Math.random()*2.4,r:Math.random()*6,c:colors[i%colors.length]});
   var t0=performance.now();
   (function frame(now){
     var box=document.getElementById("nvWin");if(!box||box.hidden)return;
