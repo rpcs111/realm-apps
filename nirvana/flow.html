@@ -125,7 +125,7 @@ async function open(pass,stored){
   if(!(window.crypto&&crypto.subtle)){e.textContent=nvFail(null,stored);return}
   nvBusy=true;e.textContent="";b.disabled=true;b.textContent="Unlocking…";if(w)w.hidden=false;
   try{
-    var o=await nvFetch("main.enc.json");await nvDec(o,pass);localStorage.setItem(NVK,pass);
+    var o=await nvFetch("panels.enc.json");await nvDec(o,pass);localStorage.setItem(NVK,pass);
     sessionStorage.setItem("nv_open","flow");
     b.disabled=false;b.textContent="Unlock";if(w)w.hidden=true;nvBusy=false;
     toast("Key saved on this phone ✓");

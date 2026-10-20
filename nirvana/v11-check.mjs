@@ -15,6 +15,7 @@ for (const t of ["Ara 2.1", "Marvin Musk", "Terafab", "Falcon 9", "Neuralink", "
   assert.equal(index.includes(t), false, "lane text in page source: " + t);
 }
 assert.equal(index.includes("main.enc.json"), false, "unlock must not fetch main.enc.json");
+assert.equal(index.includes("main.enc") || flow.includes("main.enc"), false, "index and flow must not name main.enc");
 assert.equal(index.includes('nvFetch("panels.enc.json")'), true);
 assert.equal(/agent\?id=|Ara 2\.1|Marvin/.test(blobRaw), false, "blob is ciphertext only");
 
