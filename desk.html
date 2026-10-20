@@ -41,7 +41,7 @@ header h1 b{color:var(--c)}
 .sbox{display:flex;gap:6px}
 .sbox input{flex:1;min-width:0;min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);padding:0 12px;outline:none}
 .sbox input:focus{border-color:var(--c)}
-.sbox button{min-height:44px;border-radius:12px;border:1px solid var(--c);background:transparent;color:var(--c);padding:0 12px;font-weight:700;cursor:pointer}
+.sbox button{min-height:44px;min-width:44px;border-radius:12px;border:1px solid var(--c);background:transparent;color:var(--c);padding:0 12px;font-weight:700;cursor:pointer}
 .msgs{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:10px 12px}
 .msg{display:block;width:100%;text-align:left;background:#05090d;border:1px solid var(--line);border-radius:12px;padding:10px;cursor:pointer;color:var(--tx)}
 .msg:hover,.msg:focus-visible{border-color:var(--c)}
@@ -72,17 +72,17 @@ h2 small{font-size:12px;color:var(--mut);font-weight:500;margin-left:auto}
 .add input{flex:1;min-width:0;min-height:46px;border-radius:12px;border:1px solid var(--line);background:var(--card);padding:0 12px;outline:none}
 .add input:focus{border-color:var(--c)}
 .add button,.btn{min-height:46px;border-radius:12px;border:0;background:var(--c);color:#001018;font-weight:800;padding:0 14px;cursor:pointer}
-.btn.g{background:transparent;color:var(--c);border:1px solid var(--line);font-weight:600;min-height:40px}
+.btn.g{background:transparent;color:var(--c);border:1px solid var(--line);font-weight:600;min-height:44px;min-width:44px}
 ul.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .it{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:14px;background:var(--card);border:1px solid var(--line)}
 .it input[type=checkbox]{appearance:none;-webkit-appearance:none;width:26px;height:26px;flex:0 0 26px;border-radius:8px;border:2px solid var(--c);margin:1px 0 0;cursor:pointer;display:grid;place-content:center}
 .it input[type=checkbox]:checked{background:var(--c)}
 .it input[type=checkbox]:checked::after{content:"";width:10px;height:6px;border:solid #001018;border-width:0 0 3px 3px;transform:rotate(-45deg) translate(1px,-1px)}
-.it .tx{flex:1;min-width:0;outline:none;border-radius:6px;padding:2px 4px;word-wrap:break-word}
+.it .tx{flex:1;min-width:0;min-height:44px;outline:none;border-radius:6px;padding:2px 4px;word-wrap:break-word}
 .it .tx:focus{background:#101b25;box-shadow:0 0 0 1px var(--c)}
 .it .tx em{display:block;font-style:normal;font-size:12px;color:var(--mut)}
 .it.done .tx{color:var(--mut);text-decoration:line-through}
-.it .x{background:none;border:0;color:var(--mut);min-width:36px;min-height:36px;border-radius:10px;cursor:pointer;font-size:20px;line-height:1}
+.it .x{background:none;border:0;color:var(--mut);min-width:44px;min-height:44px;border-radius:10px;cursor:pointer;font-size:20px;line-height:1;display:inline-flex;align-items:center;justify-content:center}
 .row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
 .hint{font-size:12px;color:var(--mut);margin:10px 2px}
 .res{display:flex;flex-direction:column;gap:8px}
@@ -100,7 +100,7 @@ mark{background:rgba(0,174,239,.3);color:#fff;border-radius:3px}
 #v-app{margin:-14px -14px 0}
 .abar{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);background:#05090d;position:sticky;top:61px;z-index:15}
 .abar b{font-size:15px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.abar .ib{min-height:40px;min-width:40px}
+.abar .ib{min-height:44px;min-width:44px}
 #appFrame{display:block;width:100%;height:calc(100dvh - 122px);border:0;background:#000}
 .studio{margin-top:14px;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
 .studio iframe{display:block;width:100%;height:70vh;border:0;background:#000}
@@ -463,18 +463,42 @@ function tmsg(t){$("talkMsg").textContent=t}
 function joinFinal(res){var parts=[];for(var i=0;i<res.length;i++){if(!res[i].isFinal)continue;var t=String(res[i][0].transcript||"").trim();if(!t)continue;
   var p=parts.length?parts[parts.length-1]:"";if(p&&t.toLowerCase().indexOf(p.toLowerCase())===0)parts[parts.length-1]=t;else if(p&&p.toLowerCase().indexOf(t.toLowerCase())===0){}else parts.push(t)}
   return parts.join(" ").replace(/\s+/g," ").trim()}
+/* "Sent" only after NoteRelay emits landed for this note. waiting/offline means the relay call failed. */
+var araPending={},araGen=0,araHooked=false;
+function araRelayEv(ev){
+  if(!ev)return;
+  var i,n,item,id,cur;
+  if(ev.state==="landed"){
+    var list=ev.landed||[];
+    for(i=0;i<list.length;i++){
+      n=list[i]&&list[i].noteId;item=n&&araPending[n];if(!item)continue;
+      delete araPending[n];
+      if(item.gen!==araGen)continue;
+      tmsg("Saved on this device and sent to Ara\u2019s inbox.");
+      if($("talkIn").value.trim()===item.t)$("talkIn").value="";
+    }
+  }else if(ev.state==="waiting"||ev.state==="offline"){
+    for(id in araPending){cur=araPending[id];if(cur.gen===araGen)tmsg("Wasn\u2019t sent. Your text is still here.");}
+  }
+}
 function sendAra(t){t=String(t||"").trim();if(!t)return false;var who=document.body.classList.contains("own-julie")?"Julie":"Ange";
   var id="desk_"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
   var body="[Desk · "+DEVL+" · "+who+"] "+t;sent++;window.__araSends=(window.__araSends||0)+1;
-  if(window.NoteRelay){NoteRelay.queue("ara",id,"Desk voice",body);NoteRelay.flush();tmsg("Saved on this device and sent to Ara\u2019s inbox.")}else tmsg("Relay not loaded: saved nothing.");
+  if(!window.NoteRelay){tmsg("Relay not loaded: saved nothing.");return false;}
+  if(!araHooked&&typeof NoteRelay.onChange==="function"){NoteRelay.onChange(araRelayEv);araHooked=true;}
+  var gen=++araGen;
+  if(!NoteRelay.queue("ara",id,"Desk voice",body)){tmsg("Wasn\u2019t sent. Your text is still here.");return false;}
+  araPending[id]={t:t,gen:gen};
+  tmsg("Sending\u2026");
+  if(typeof NoteRelay.flush==="function")NoteRelay.flush();
   return true}
-$("talk").addEventListener("submit",function(e){e.preventDefault();var t=$("talkIn").value.trim();if(!t){tmsg("Say or type something for Ara first.");return}if(sendAra(t)){$("talkIn").value="";}});
+$("talk").addEventListener("submit",function(e){e.preventDefault();var t=$("talkIn").value.trim();if(!t){tmsg("Say or type something for Ara first.");return}sendAra(t);});
 $("talkMic").onclick=function(){if(!SRC){tmsg("This browser has no mic typing. Type instead.");return}
   if(rec){rec.stop();return}
   heard="";var r=rec=new SRC();r.lang="en-AU";r.interimResults=false;r.continuous=false;r.maxAlternatives=1;
   r.onresult=function(e){heard=joinFinal(e.results);$("talkIn").value=heard};
   r.onerror=function(e){tmsg(e.error==="not-allowed"?"Mic blocked: allow it in Chrome settings.":"Didn\u2019t catch that.")};
-  r.onend=function(){rec=null;$("talkMic").classList.remove("on");var t=heard;heard="";if(t){$("talkIn").value=t;sendAra(t);$("talkIn").value=""}else tmsg("Nothing heard.")};
+  r.onend=function(){rec=null;$("talkMic").classList.remove("on");var t=heard;heard="";if(t){$("talkIn").value=t;sendAra(t)}else tmsg("Nothing heard.")};
   $("talkMic").classList.add("on");tmsg("Listening\u2026 tap again to stop.");try{r.start()}catch(x){rec=null;$("talkMic").classList.remove("on")}};
 
 /* ---------- start ---------- */
