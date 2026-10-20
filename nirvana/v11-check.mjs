@@ -80,7 +80,11 @@ for (const gone of ["Projects", "Amend", "History thread", "1300 follow-ups", "P
   assert.equal((index + lanes).includes(gone), false, "unbuilt control still present: " + gone);
 }
 assert.equal(flow.includes("nvMount"), false, "flow must not mount the old board");
-for (const banned of ["Terafab", "Falcon", "Frankie", "grokbot://app/v1/agent"]) assert.equal(flow.includes(banned), false, "flow.html contains " + banned);
+const live = readFileSync(new URL("./live.html", import.meta.url), "utf8");
+for (const banned of ["Terafab", "Falcon", "Frankie", "grokbot://app/v1/agent"]) {
+  assert.equal(flow.includes(banned), false, "flow.html contains " + banned);
+  assert.equal(live.includes(banned), false, "live.html contains " + banned);
+}
 assert.equal(index.includes("nvMount"), false, "home must not mount the old board");
 assert.match(index, /a\.tap\{[^}]*display:\s*inline-flex/);
 assert.match(index, /a\.tap\{[^}]*min-height:\s*44px/);
