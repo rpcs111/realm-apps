@@ -22,15 +22,16 @@ input{width:100%;box-sizing:border-box;padding:12px;border-radius:12px;border:1p
 button{width:100%;border:0;border-radius:12px;padding:11px 16px;background:#00aeef;color:#00121c;font:700 15px system-ui;cursor:pointer}
 #b{box-sizing:border-box;min-height:44px;min-width:44px}
 .err{color:#ff5a5a;min-height:20px;font-size:13px;margin-top:8px}
-.ln{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px}.ln a{color:#00aeef;font-size:12.5px;text-decoration:none;border:1px solid #26313d;border-radius:99px;padding:3px 10px}
+.ln{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px}.ln a{color:#00aeef;font-size:12.5px;text-decoration:none;border:1px solid #26313d;border-radius:99px;padding:3px 14px;min-height:44px;min-width:44px;box-sizing:border-box;display:inline-flex;align-items:center}.ap4{margin-top:14px;text-align:left;border:1px solid #26313d;border-radius:14px;padding:10px}.ap4 b{display:block;font:700 11px ui-monospace,Menlo,monospace;color:#8a98a8;letter-spacing:.12em;margin-bottom:6px}.ap4 a{display:flex;align-items:center;justify-content:space-between;min-height:44px;color:#e8eef4;text-decoration:none;border-top:1px solid #1a232d;padding:0 4px}.ap4 a:first-of-type{border-top:0}.ap4 a span{color:#00aeef;font-size:12px}
 </style></head>
 <body><div class="w"><div class="lk">
 <img src="icons/icon-v10-192.png" alt="">
-<h2>NIRVANA</h2><div class="st">v10.0 · 2026-10-19 · build 2</div>
+<h2>NIRVANA</h2><div class="st">Nirvana · Ara 2.1 · 2026.10.20-SB1 · second brain</div><div class="st" style="color:#8a98a8" id="nvDev"></div>
 <p id="msg">Enter your key once on this phone</p>
 <form id="f" autocomplete="off"><input id="k" type="password" placeholder="Key" autocomplete="current-password" aria-label="Key"><button id="b" type="submit">Unlock</button></form>
 <div class="err" id="e"></div>
 <div class="ln"><a href="index.html">Nirvana</a><a href="flow.html">Flow</a><a href="live.html">Live</a><a href="raw.html">Raw</a><a href="versions.html">Versions</a></div>
+<div class="ap4"><b>ARA 2.1 · THE FOUR APPS</b><a href="../desk.html?d=fold8">Desk · Fold 8<span>open</span></a><a href="../desk-flip6.html?d=flip6">Desk · Flip 6<span>open</span></a><a href="../certstudio.html">Cert Studio<span>open</span></a><a href="../map.html">Flow map<span>open</span></a></div>
 </div></div>
 <script>
 /* Nirvana shared unlock: AES-256-GCM, PBKDF2-SHA256. Key kept on this device only (localStorage). */
@@ -44,6 +45,7 @@ async function nvDec(o,pass){
 }
 async function nvFetch(src){var r=await fetch(src+(src.indexOf("?")<0?"?":"&")+"t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("Couldn't load ("+r.status+")");return r.json()}
 
+(function(){try{var dd=(location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})/)||[])[1]||localStorage.getItem("realm_device")||"";document.getElementById("nvDev").textContent={fold8:"Fold 8",flip6:"Flip 6"}[dd]||(innerWidth>=900?"Desktop":"Phone")}catch(_){}})();
 (function(){var MODE="main";
 try{var dm=location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})(?:&|$)/);if(dm){localStorage.setItem("realm_device",dm[1].toLowerCase());var q=location.search.replace(/([?&])d=[^&]*&?/,"$1").replace(/[?&]$/,"");history.replaceState(null,"",location.pathname+q+location.hash)}}catch(_e){}
 async function open(pass,stored){var e=document.getElementById("e"),b=document.getElementById("b");e.textContent="";b.disabled=true;b.textContent="Unlocking…";
