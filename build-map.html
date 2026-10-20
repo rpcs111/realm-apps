@@ -53,7 +53,6 @@ section h2 span{font-size:11px;letter-spacing:0;background:rgba(255,255,255,.08)
     <span class="chip a"><i class="dot"></i>Building now</span>
     <span class="chip r"><i class="dot"></i>Blocked / waiting on Ange</span>
     <span class="chip x"><i class="dot"></i>Planned</span>
-    <span class="chip"><s>Name</s>&nbsp;= &#10003; Elon checked</span>
   </div>
   <div class="counts" id="counts"></div>
 </header>
@@ -88,7 +87,6 @@ section h2 span{font-size:11px;letter-spacing:0;background:rgba(255,255,255,.08)
         html+='<div class="card '+m.k+(v?' v':'')+'"><div class="top"><div class="name">'+esc(it.name)+'</div><span class="pill">'+esc(it.label||m.t)+'</span></div>'+
           '<div class="note">'+esc(it.note)+'</div>'+
           ((it.owner||it.next)?'<div class="note">'+(it.owner?'<b>Owner:</b> '+esc(it.owner):'')+(it.owner&&it.next?' &middot; ':'')+(it.next?'<b>Next:</b> '+esc(it.next):'')+'</div>':'')+
-          (v?'<span class="badge">&#10003; Elon checked'+(it.verified_date?' &middot; '+esc(it.verified_date):'')+(it.verified_how?' <small>('+esc(it.verified_how)+')</small>':'')+'</span>':'')+
           '</div>';
       });
       html+='</div></section>';
