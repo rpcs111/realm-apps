@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Desk">
+<meta name="ara-build" content="2026.10.20-SB1"><meta name="application-name" content="Desk · Flip 6">
+<title>Desk · Flip 6 · Ara 2.1</title>
+<link rel="icon" href="pwa/desk-scratch.svg"><link rel="apple-touch-icon" href="pwa/desk-scratch-512.png">
+<link rel="manifest" href="desk-flip6.webmanifest?v=2026.10.20-SB1">
+<style>
+:root{--c:#00aeef;--bg:#000;--card:#0b1118;--line:#1d2a36;--tx:#eef6fb;--mut:#8ea3b3;--ok:#22c55e;--pw:300px}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+button,input{font:inherit;color:inherit}
+a{color:var(--c)}
+[hidden]{display:none!important}
+header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:calc(8px + env(safe-area-inset-top)) 12px 8px;background:#000;border-bottom:1px solid var(--line)}
+header h1{margin:0;font-size:16px;letter-spacing:.14em;font-weight:800}
+header h1 b{color:var(--c)}
+.ib{min-width:44px;min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx);text-decoration:none}
+.ib svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sp{flex:1}
+/* side panel */
+#panel{position:fixed;top:0;bottom:0;left:0;width:min(var(--pw),88vw);z-index:40;background:#05090d;border-right:1px solid var(--line);padding:calc(12px + env(safe-area-inset-top)) 14px calc(16px + env(safe-area-inset-bottom));overflow-y:auto;transform:translateX(-102%);transition:transform .22s ease;display:flex;flex-direction:column;gap:12px}
+#panel.open{transform:none}
+#scrim{position:fixed;inset:0;z-index:35;background:rgba(0,0,0,.55);display:none}
+#scrim.on{display:block}
+.ph{display:flex;align-items:center;justify-content:space-between}
+.ph b{letter-spacing:.14em;font-size:13px}.ph b span{color:var(--c)}
+.flow{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border-radius:16px;border:2px solid var(--c);background:linear-gradient(135deg,rgba(0,174,239,.22),rgba(0,174,239,.06));color:var(--tx);text-align:left;cursor:pointer}
+.flow svg{width:34px;height:34px;flex:0 0 34px;stroke:var(--c);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.flow b{display:block;font-size:20px;letter-spacing:.06em}
+.flow span{font-size:12px;color:var(--mut)}
+.finish{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;padding:10px 14px;border-radius:14px;border:0;background:var(--c);color:#001018;font-weight:800;font-size:15px;text-align:left;cursor:pointer}
+.finish i{margin-left:auto;font-style:normal;background:#001018;color:var(--c);border-radius:999px;min-width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;padding:0 7px}
+.lbl{font-size:11px;letter-spacing:.14em;color:var(--mut);font-weight:700;margin:0 0 6px}
+.sbox{display:flex;gap:6px}
+.sbox input{flex:1;min-width:0;min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);padding:0 12px;outline:none}
+.sbox input:focus{border-color:var(--c)}
+.sbox button{min-height:44px;min-width:44px;border-radius:12px;border:1px solid var(--c);background:transparent;color:var(--c);padding:0 12px;font-weight:700;cursor:pointer}
+.msgs{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:10px 12px}
+.msg{display:block;width:100%;text-align:left;background:#05090d;border:1px solid var(--line);border-radius:12px;padding:10px;cursor:pointer;color:var(--tx)}
+.msg:hover,.msg:focus-visible{border-color:var(--c)}
+.msg b{display:block;font-size:14px}
+.chip{display:inline-block;margin-top:6px;font-size:11px;font-weight:700;letter-spacing:.04em;border-radius:999px;padding:3px 8px;border:1px solid #f59e0b;color:#fbbf24}
+.chip.ready{border-color:var(--ok);color:#4ade80}
+.note{margin-top:8px;font-size:13px;color:var(--mut);border-top:1px solid var(--line);padding-top:8px}
+.note ol{margin:4px 0 0;padding-left:18px}
+.allbtn{display:flex;align-items:center;width:100%;min-height:46px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-weight:700}
+.allbtn i{margin-left:auto;font-style:normal;color:var(--c)}
+details.grp{border-top:1px solid var(--line);padding-top:6px}
+details.grp summary{cursor:pointer;list-style:none;min-height:36px;display:flex;align-items:center;font-size:11px;letter-spacing:.14em;color:var(--mut);font-weight:700}
+details.grp summary::-webkit-details-marker{display:none}
+details.grp summary::after{content:"+";margin-left:auto;color:var(--c);font-size:16px}
+details.grp[open] summary::after{content:"\2212"}
+.apl{display:flex;align-items:center;gap:8px;width:100%;min-height:42px;padding:0 10px;border-radius:10px;border:1px solid transparent;background:none;color:var(--tx);cursor:pointer;text-align:left}
+.apl:hover,.apl:focus-visible{border-color:var(--line);background:var(--card)}
+.apl::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c);flex:0 0 7px}
+.apl small{margin-left:auto;color:var(--mut);font-size:11px}
+.foot{margin-top:auto;font-size:11px;color:var(--mut)}
+.foot button{background:none;border:0;color:var(--c);padding:0;cursor:pointer;font-size:11px;text-decoration:underline}
+/* main */
+main{padding:14px 14px calc(90px + env(safe-area-inset-bottom));max-width:900px}
+.view{display:none}.view.on{display:block}
+h2{font-size:18px;margin:4px 0 12px;display:flex;align-items:center;gap:8px}
+h2 small{font-size:12px;color:var(--mut);font-weight:500;margin-left:auto}
+.add{display:flex;gap:6px;margin-bottom:12px}
+.add input{flex:1;min-width:0;min-height:46px;border-radius:12px;border:1px solid var(--line);background:var(--card);padding:0 12px;outline:none}
+.add input:focus{border-color:var(--c)}
+.add button,.btn{min-height:46px;border-radius:12px;border:0;background:var(--c);color:#001018;font-weight:800;padding:0 14px;cursor:pointer}
+.btn.g{background:transparent;color:var(--c);border:1px solid var(--line);font-weight:600;min-height:44px;min-width:44px}
+ul.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.it{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:14px;background:var(--card);border:1px solid var(--line)}
+.it input[type=checkbox]{appearance:none;-webkit-appearance:none;width:26px;height:26px;flex:0 0 26px;border-radius:8px;border:2px solid var(--c);margin:1px 0 0;cursor:pointer;display:grid;place-content:center}
+.it input[type=checkbox]:checked{background:var(--c)}
+.it input[type=checkbox]:checked::after{content:"";width:10px;height:6px;border:solid #001018;border-width:0 0 3px 3px;transform:rotate(-45deg) translate(1px,-1px)}
+.it .tx{flex:1;min-width:0;min-height:44px;outline:none;border-radius:6px;padding:2px 4px;word-wrap:break-word}
+.it .tx:focus{background:#101b25;box-shadow:0 0 0 1px var(--c)}
+.it .tx em{display:block;font-style:normal;font-size:12px;color:var(--mut)}
+.it.done .tx{color:var(--mut);text-decoration:line-through}
+.it .x{background:none;border:0;color:var(--mut);min-width:44px;min-height:44px;border-radius:10px;cursor:pointer;font-size:20px;line-height:1;display:inline-flex;align-items:center;justify-content:center}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.hint{font-size:12px;color:var(--mut);margin:10px 2px}
+.res{display:flex;flex-direction:column;gap:8px}
+.res .r{display:block;width:100%;text-align:left;padding:10px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);color:var(--tx);cursor:pointer}
+.res b{color:var(--c);font-size:11px;letter-spacing:.12em;display:block;margin-bottom:2px}
+mark{background:rgba(0,174,239,.3);color:#fff;border-radius:3px}
+.grid h3{font-size:11px;letter-spacing:.14em;color:var(--mut);margin:16px 0 8px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.tile{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:68px;padding:10px 12px;border-radius:14px;background:var(--card);border:1px solid var(--line);color:var(--tx);cursor:pointer;text-align:left}
+.tile:hover,.tile:focus-visible{border-color:var(--c)}
+.tile b{font-size:14px}.tile span{font-size:12px;color:var(--mut)}
+.tile.key{grid-column:1/-1;border:2px solid var(--c);background:linear-gradient(135deg,rgba(0,174,239,.2),rgba(0,174,239,.05))}
+.tile.key b{font-size:18px}
+/* app opened inside Desk */
+#v-app{margin:-14px -14px 0}
+.abar{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);background:#05090d;position:sticky;top:61px;z-index:15}
+.abar b{font-size:15px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.abar .ib{min-height:44px;min-width:44px}
+#appFrame{display:block;width:100%;height:calc(100dvh - 122px);border:0;background:#000}
+.studio{margin-top:14px;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.studio iframe{display:block;width:100%;height:70vh;border:0;background:#000}
+#araSym{position:fixed;right:calc(14px + env(safe-area-inset-right));bottom:calc(14px + env(safe-area-inset-bottom));z-index:30;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--c);background:#000;display:grid;place-content:center;pointer-events:none;opacity:.9}
+#araSym svg{width:20px;height:20px}
+body.framed #araSym{display:none} /* the opened app brings its own Ara symbol: still only one on screen */
+/* lock */
+#lock{position:fixed;inset:0;z-index:100;background:#000;display:flex;align-items:center;justify-content:center;padding:24px}
+body.locked>*:not(#lock){visibility:hidden}
+body:not(.locked) #lock{display:none}
+.lk{width:100%;max-width:340px;text-align:center}
+.lk .mark{width:64px;height:64px;margin:0 auto 14px;border-radius:50%;border:2px solid var(--c);display:grid;place-content:center}
+.lk .mark.cube{width:110px;height:110px;border:0;border-radius:0}
+.brand{display:flex;align-items:center;gap:6px}.brand img{display:block}.brand .scr{margin-left:-6px}
+.lk h2 .scr{margin-right:6px}
+.apl.has-ic::before{display:none}.apl .aic{flex:0 0 18px}
+.tile{position:relative}.tile .tic{position:absolute;top:6px;right:6px}
+.tile:has(.tic){padding-right:50px;border-color:#2c4a1a}
+.lk h2{justify-content:center;font-size:20px;letter-spacing:.12em}
+.lk p{color:var(--mut);font-size:13px;margin:6px 0 14px}
+.lk input{width:100%;min-height:52px;border-radius:14px;border:1px solid var(--line);background:var(--card);text-align:center;font-size:24px;letter-spacing:.4em;outline:none;margin-bottom:8px}
+.lk input:focus{border-color:var(--c)}
+.lk .btn{width:100%;margin-top:4px}
+.lk .err{color:#f87171;font-size:13px;min-height:18px;margin:6px 0}
+.lk .set{margin-top:22px;border-top:1px solid var(--line);padding-top:12px;font-size:11px;color:var(--mut);text-align:left}
+.lk .set button{background:none;border:0;color:var(--c);padding:0;cursor:pointer;font-size:11px;text-decoration:underline}
+@media (min-width:900px){
+  #panel{transform:none;width:var(--pw)}
+  #scrim,#menuBtn,#closeBtn{display:none!important}
+  header{margin-left:var(--pw)}
+  main{margin-left:var(--pw);padding:20px 28px 60px}
+  #v-app{margin:-20px -28px 0}
+  .abar{top:61px}
+}
+@media (max-width:360px){main{padding:10px 10px 80px}#v-app{margin:-10px -10px 0}}
+#sbTag{display:flex;flex-direction:column;line-height:1.15;margin-left:4px;min-width:0}#sbTag b{font:800 13px system-ui;letter-spacing:.06em;color:var(--tx)}#sbTag span{font:600 10.5px ui-monospace,Menlo,monospace;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#ownBtn{min-height:44px;min-width:44px;padding:0 14px;border-radius:999px;border:1.5px solid var(--own);background:transparent;color:var(--own);font:800 13px system-ui;cursor:pointer}:root{--own:#3b82f6}body.own-julie{--own:#ec4899}#talk{display:flex;gap:8px;align-items:stretch;margin:0 0 14px}#talkMic{min-width:52px;min-height:52px;border-radius:999px;border:1.5px solid var(--c);background:#04161a;color:var(--c);cursor:pointer;display:inline-flex;align-items:center;justify-content:center}#talkMic.on{background:#16a34a;border-color:#16a34a;color:#fff}#talkMic svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}#talkIn{flex:1;min-height:52px;border-radius:26px;border:1px solid var(--line);background:var(--card);padding:0 18px;color:var(--tx)}#talkSend{min-height:52px;min-width:72px;border-radius:26px;border:0;background:var(--c);color:#00121c;font-weight:800;cursor:pointer}#talkMsg{font-size:12.5px;color:var(--mut);min-height:1.2em;margin:-8px 0 12px 6px}#talkIn{min-width:0}#talkSend{min-width:64px;padding:0 12px}@media (max-width:440px){header{gap:6px;padding-left:8px;padding-right:8px}header h1.brand{display:none}#sbTag b{font-size:12.5px}#sbTag span{font-size:9.5px;white-space:normal}#ownBtn{padding:0 10px}}details.grp>summary{min-height:44px!important;display:flex;align-items:center}button,.btn,summary,.apl,.tile,input[type=checkbox]{min-height:44px}input[type=checkbox]{min-width:44px}@media (max-width:420px){header{gap:6px;padding-left:8px;padding-right:8px}header h1 .cube{display:none}#sbTag b{font-size:12px}#sbTag span{font-size:9.5px}#ownBtn{padding:0 10px}}</style>
+</head>
+<body class="locked">
+<div id="lock" role="dialog" aria-modal="true" aria-labelledby="lkH">
+  <div class="lk">
+    <div class="mark cube"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjE0Mi40MSAtMC4xMiAxMjkgMTI5Ij48c3R5bGU+LmNscy0yLC5jbHMtM3tmaWxsOm5vbmU7c3Ryb2tlOiMwMGFlZWY7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kfS5jbHMtMntzdHJva2Utd2lkdGg6LjhweH0uY2xzLTN7c3Ryb2tlLXdpZHRoOjEuMnB4fTwvc3R5bGU+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE5MS42NSAxNS43MiAxNzUuMzcgNDcuNjUgMTc2LjU0IDkwLjQ1IDIwNC41NSAxMDcuNTYgMjMwLjg3IDU1Ljk3IDIxNi44IDExLjI5IDE5MS42NSAxNS43MiIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxNzYuNTQgOTAuNDUgMTkxLjY1IDE1LjcyIDIzMC44NyA1NS45NyAxNzYuNTQgOTAuNDUiLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMTc1LjM3IDQ3LjY1IDIxNi44IDExLjI5IDIwNC41NSAxMDcuNTYgMTc1LjM3IDQ3LjY1Ii8+PGxpbmUgY2xhc3M9ImNscy0yIiB4MT0iMTc2LjU0IiB5MT0iOTAuNDUiIHgyPSIyMTYuOCIgeTI9IjExLjI5Ii8+PGxpbmUgY2xhc3M9ImNscy0yIiB4MT0iMTkxLjY1IiB5MT0iMTUuNzIiIHgyPSIyMDQuNTUiIHkyPSIxMDcuNTYiLz48bGluZSBjbGFzcz0iY2xzLTIiIHgxPSIxNzUuMzciIHkxPSI0Ny42NSIgeDI9IjIzMC44NyIgeTI9IjU1Ljk3Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE4Ni41OSA3MC42OSAyMTEuNDggNTMuMDcgMTkxLjY1IDE1LjcyIDE4Ni41OSA3MC42OSIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxODQuOTEgNDkuMDggMjA2LjY5IDMxLjE2IDIwNC41NSAxMDcuNTYgMTg0LjkxIDQ5LjA4Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE4NC45MSA0OS4wOCAyMDAuMDUgNzUuNTMgMjE2LjggMTEuMjkgMTg0LjkxIDQ5LjA4Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE5My44NiAzMS40MiAyMTEuNDggNTMuMDcgMTc2LjU0IDkwLjQ1IDE5My44NiAzMS40MiIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIyMDAuMDUgNzUuNTMgMjA2LjY5IDMxLjE2IDE3NS4zNyA0Ny42NSAyMDAuMDUgNzUuNTMiLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMTg2LjU5IDcwLjY5IDE5My44NiAzMS40MiAyMzAuODcgNTUuOTcgMTg2LjU5IDcwLjY5Ii8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTkwLjQ0LDQ5LjkxYy0uMzcsMi4zLTEsNywxLjE4LDEwLjg5czUuMjIsMi42Myw2LjYsMS42Niw0LjQzLTQuMyw1LjM3LTEwLjU3Yy44My01LjU4LDAtOC41Mi0xLjkyLTEwLjg2cy00LjMzLTIuMTctNi41Mi0uMzdTMTkxLDQ2LjIxLDE5MC40NCw0OS45MVoiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yMDUuNzYsNjQuMzJhNi4yNCw2LjI0LDAsMCwwLDguODQsMmMzLjM5LTIuMTUsNS4yNi02LjkxLDUuODYtMTEuODhTMjIwLDQ0Ljg0LDIxNy4yNiw0MnMtNS4zLTIuNjUtOC4zMi0uNTctNC44OCw3LjMtNS4zNSwxMC40NkExOC40NywxOC40NywwLDAsMCwyMDUuNzYsNjQuMzJaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTkwLjQ0LDQ5LjkxYy40OS0yLjY1LjgyLTcuNTctMS05LjY0cy0zLjUzLTEuODMtNS4xNS0uNEExNS42MiwxNS42MiwwLDAsMCwxODAsNDguMzVjLS42MSwzLjEzLS43Nyw3LjIxLjM2LDkuNTNzMy4yNSwyLjcyLDUuMzMsMS40MlMxODkuNjQsNTQuMjEsMTkwLjQ0LDQ5LjkxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE3NS42Miw1Ni43OWMxLjc3LTEuNTEsMy40OC00LjM5LDQuMzctOC40NHMuMzktNy40OC0uNDctOC44Mi0yLjYyLTEuNzItNC4zOCwwLTMuMzgsNS41Ni0zLjkzLDguMzgtLjY1LDYuODUuNzQsOC42NUEyLjM2LDIuMzYsMCwwLDAsMTc1LjYyLDU2Ljc5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIyMC40Nyw1NC40MWExNS45MSwxNS45MSwwLDAsMSw2LjA5LTEyLjExLDguNjYsOC42NiwwLDAsMSwxMC42Ny40MmMyLjU3LDIuMDgsNS44LDYuOTQsNS44LDEzLjc0cy0yLjg4LDEyLjA4LTUuNzMsMTQuMjNhOC40Nyw4LjQ3LDAsMCwxLTEwLjQxLjQxQzIyMi45NCw2OC41NCwyMjAuMDgsNjIuMjEsMjIwLjQ3LDU0LjQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5Mi44NSwyMy4yMmExNi4xNCwxNi4xNCwwLDAsMC00LjM3LDguMjFjLS42NCwzLjE3LS4zOCw2Ljg4LjkxLDguODVzMy42NCwyLjEzLDUuNzYuMzhhMTUuMjUsMTUuMjUsMCwwLDAsNC43Ny05LjM2Yy42OC00LjMyLjQxLTYuNjYtMS42Ny04LjhDMTk2LjY3LDIwLjg3LDE5NC4zOCwyMS45MiwxOTIuODUsMjMuMjJaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjAxLjY4LDQxYzEuMzQsMS4zNCwzLjkzLDIuNzcsNy4yNi40czQuOTItNy4wOSw1LjMzLTEwLjI3LDAtOC4xLTIuNTItOS45NC01LTEtNy4yLjgzYy0xLjg4LDEuNjQtMy45Myw1LjU1LTQuNjMsOS4yNFMyMDAuMjQsMzkuNTksMjAxLjY4LDQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5MS42Miw2MC44YTIxLjE0LDIxLjE0LDAsMCwxLDEuMywxMi4xM2MtLjk1LDQuOTEtMi44NSw4Ljk0LTUuMTksMTAuNDJzLTQuNzYsMC02LjA1LTMtMS40NC04LjE4LS42OS0xMS44NywyLjM5LTcuMzgsNC43LTkuMlMxOTAuNTEsNTguMDksMTkxLjYyLDYwLjhaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTk4LjIyLDYyLjQ2YzIuMTktMS41NSw0LjgyLTIuMzIsNy41NSwxLjg2czMuMjIsOC4zNSwyLjU2LDEzLjYyLTIuNiwxMC40LTYuMjEsMTIuMi02LjQtLjczLTcuNzktMy42LTIuMTYtOS0xLjM5LTEzLjYxUzE5NS4zOSw2NC40NiwxOTguMjIsNjIuNDZaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTk2LjA4LDEwMi4zOWMuODItNS44MSwzLjI1LTEwLjU0LDYtMTIuMjVzNi4zNC0uNTUsOS4xNiw0LjI2LDUuNSwxNywxLjgsMjYuMTgtOS4zOSw4LjYtMTMsMy4zM1MxOTUsMTEwLDE5Ni4wOCwxMDIuMzlaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTgxLjY3LDgwLjM2YzEuMzIsMy4xOSwxLjY4LDcuNTkuNiwxMy41OXMtNC4wOSwxMS4xOC03LjIzLDEwLjUzUzE2OS44Niw5Ny4xMiwxNzEuMiw4OXM0LTEwLjUsNS0xMS4yNFMxNzkuODgsNzYsMTgxLjY3LDgwLjM2WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5Mi43MiwyMy4zM2MyLjUxLTIuMTEsMy42OC01LjM4LDQuMzItOC41NnMwLTgtMy03LjU3LTUuNjUsNC42My02LjUxLDcuMjktMS44NCw4LjQ1LDEuMSwxMEMxOTAuNDksMjUuNSwxOTIuNzIsMjMuMzMsMTkyLjcyLDIzLjMzWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIxMS43NSwyMS4yMWMyLjA3LDEuNTMsNC4wOCwyLDcuOTItLjc5czYuODctMTAuODYsNC42Ny0xNS43NWMtMi00LjQ1LTUuNzctNC4zMS05LjEyLTIuMTYtMy4xNCwyLTUuMjIsNi4yNi01Ljc1LDEwLjA2UzIxMC4wNywyMCwyMTEuNzUsMjEuMjFaIi8+PHBvbHlnb24gY2xhc3M9ImNscy0zIiBwb2ludHM9IjE5My44NiAzMS40MiAyMDYuNjkgMzEuMTYgMjExLjQ4IDUzLjA3IDIwMC4wNSA3NS41MyAxODYuNTkgNzAuNjkgMTg0LjkxIDQ5LjA4IDE5My44NiAzMS40MiIvPjwvc3ZnPg==" alt="" width="96" height="96"></div>
+    <h2 id="lkH"><img class="scr" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDBhZWVmIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xNCA0N2M1LTggOS0xNiAxNS0yNSAzLTUgNi05IDktMTEiIHN0cm9rZS13aWR0aD0iNS41Ii8+PHBhdGggZD0iTTIyIDUxYzYtOSAxMi0xOSAxOS0yOCAyLTMgNS02IDgtOCIgc3Ryb2tlLXdpZHRoPSI0LjIiLz48cGF0aCBkPSJNMzMgNTNjNC02IDgtMTIgMTMtMTggMi0yIDMtNCA1LTUiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik0xMiA0NGwyIDNNNDcgMTNjMS0xIDItMSAzLTIiIHN0cm9rZS13aWR0aD0iMiIvPjwvZz48L3N2Zz4=" alt="" width="26" height="26">DESK</h2>
+    <p id="lkMsg">Enter your PIN</p>
+    <form id="lkForm">
+      <input id="lkPin" type="password" autocomplete="current-password" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="&bull;&bull;&bull;&bull;" aria-label="PIN">
+      <input id="lkPin2" type="password" autocomplete="new-password" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="again" aria-label="PIN again" hidden>
+      <div class="err" id="lkErr" role="alert"></div>
+      <button class="btn" type="submit" id="lkGo">Unlock</button>
+    </form>
+    <button class="btn g" type="button" id="lkBio" hidden style="width:100%;margin-top:8px">Unlock with fingerprint or face</button>
+    <div class="set" id="lkSet">
+      <b style="color:var(--tx)">Lock settings</b><br>
+      This is a lock on this device only. The page files are public, so anyone with a link can read them. Real privacy needs the backend seal.<br>
+      Locks after 10 minutes idle, or when you leave the tab.<br>
+      <span id="lkBioSet"></span>
+      <button type="button" id="lkReset">Forgot PIN: reset this device</button> (clears the PIN and Desk's saved list on this device)
+    </div>
+  </div>
+</div>
+
+<header>
+  <button class="ib" id="menuBtn" type="button" aria-label="Open Desk panel" aria-controls="panel" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <h1 class="brand"><img class="cube" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjE0Mi40MSAtMC4xMiAxMjkgMTI5Ij48c3R5bGU+LmNscy0yLC5jbHMtM3tmaWxsOm5vbmU7c3Ryb2tlOiMwMGFlZWY7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kfS5jbHMtMntzdHJva2Utd2lkdGg6LjhweH0uY2xzLTN7c3Ryb2tlLXdpZHRoOjEuMnB4fTwvc3R5bGU+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE5MS42NSAxNS43MiAxNzUuMzcgNDcuNjUgMTc2LjU0IDkwLjQ1IDIwNC41NSAxMDcuNTYgMjMwLjg3IDU1Ljk3IDIxNi44IDExLjI5IDE5MS42NSAxNS43MiIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxNzYuNTQgOTAuNDUgMTkxLjY1IDE1LjcyIDIzMC44NyA1NS45NyAxNzYuNTQgOTAuNDUiLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMTc1LjM3IDQ3LjY1IDIxNi44IDExLjI5IDIwNC41NSAxMDcuNTYgMTc1LjM3IDQ3LjY1Ii8+PGxpbmUgY2xhc3M9ImNscy0yIiB4MT0iMTc2LjU0IiB5MT0iOTAuNDUiIHgyPSIyMTYuOCIgeTI9IjExLjI5Ii8+PGxpbmUgY2xhc3M9ImNscy0yIiB4MT0iMTkxLjY1IiB5MT0iMTUuNzIiIHgyPSIyMDQuNTUiIHkyPSIxMDcuNTYiLz48bGluZSBjbGFzcz0iY2xzLTIiIHgxPSIxNzUuMzciIHkxPSI0Ny42NSIgeDI9IjIzMC44NyIgeTI9IjU1Ljk3Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE4Ni41OSA3MC42OSAyMTEuNDggNTMuMDcgMTkxLjY1IDE1LjcyIDE4Ni41OSA3MC42OSIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxODQuOTEgNDkuMDggMjA2LjY5IDMxLjE2IDIwNC41NSAxMDcuNTYgMTg0LjkxIDQ5LjA4Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE4NC45MSA0OS4wOCAyMDAuMDUgNzUuNTMgMjE2LjggMTEuMjkgMTg0LjkxIDQ5LjA4Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE5My44NiAzMS40MiAyMTEuNDggNTMuMDcgMTc2LjU0IDkwLjQ1IDE5My44NiAzMS40MiIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIyMDAuMDUgNzUuNTMgMjA2LjY5IDMxLjE2IDE3NS4zNyA0Ny42NSAyMDAuMDUgNzUuNTMiLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMTg2LjU5IDcwLjY5IDE5My44NiAzMS40MiAyMzAuODcgNTUuOTcgMTg2LjU5IDcwLjY5Ii8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTkwLjQ0LDQ5LjkxYy0uMzcsMi4zLTEsNywxLjE4LDEwLjg5czUuMjIsMi42Myw2LjYsMS42Niw0LjQzLTQuMyw1LjM3LTEwLjU3Yy44My01LjU4LDAtOC41Mi0xLjkyLTEwLjg2cy00LjMzLTIuMTctNi41Mi0uMzdTMTkxLDQ2LjIxLDE5MC40NCw0OS45MVoiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yMDUuNzYsNjQuMzJhNi4yNCw2LjI0LDAsMCwwLDguODQsMmMzLjM5LTIuMTUsNS4yNi02LjkxLDUuODYtMTEuODhTMjIwLDQ0Ljg0LDIxNy4yNiw0MnMtNS4zLTIuNjUtOC4zMi0uNTctNC44OCw3LjMtNS4zNSwxMC40NkExOC40NywxOC40NywwLDAsMCwyMDUuNzYsNjQuMzJaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTkwLjQ0LDQ5LjkxYy40OS0yLjY1LjgyLTcuNTctMS05LjY0cy0zLjUzLTEuODMtNS4xNS0uNEExNS42MiwxNS42MiwwLDAsMCwxODAsNDguMzVjLS42MSwzLjEzLS43Nyw3LjIxLjM2LDkuNTNzMy4yNSwyLjcyLDUuMzMsMS40MlMxODkuNjQsNTQuMjEsMTkwLjQ0LDQ5LjkxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE3NS42Miw1Ni43OWMxLjc3LTEuNTEsMy40OC00LjM5LDQuMzctOC40NHMuMzktNy40OC0uNDctOC44Mi0yLjYyLTEuNzItNC4zOCwwLTMuMzgsNS41Ni0zLjkzLDguMzgtLjY1LDYuODUuNzQsOC42NUEyLjM2LDIuMzYsMCwwLDAsMTc1LjYyLDU2Ljc5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIyMC40Nyw1NC40MWExNS45MSwxNS45MSwwLDAsMSw2LjA5LTEyLjExLDguNjYsOC42NiwwLDAsMSwxMC42Ny40MmMyLjU3LDIuMDgsNS44LDYuOTQsNS44LDEzLjc0cy0yLjg4LDEyLjA4LTUuNzMsMTQuMjNhOC40Nyw4LjQ3LDAsMCwxLTEwLjQxLjQxQzIyMi45NCw2OC41NCwyMjAuMDgsNjIuMjEsMjIwLjQ3LDU0LjQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5Mi44NSwyMy4yMmExNi4xNCwxNi4xNCwwLDAsMC00LjM3LDguMjFjLS42NCwzLjE3LS4zOCw2Ljg4LjkxLDguODVzMy42NCwyLjEzLDUuNzYuMzhhMTUuMjUsMTUuMjUsMCwwLDAsNC43Ny05LjM2Yy42OC00LjMyLjQxLTYuNjYtMS42Ny04LjhDMTk2LjY3LDIwLjg3LDE5NC4zOCwyMS45MiwxOTIuODUsMjMuMjJaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjAxLjY4LDQxYzEuMzQsMS4zNCwzLjkzLDIuNzcsNy4yNi40czQuOTItNy4wOSw1LjMzLTEwLjI3LDAtOC4xLTIuNTItOS45NC01LTEtNy4yLjgzYy0xLjg4LDEuNjQtMy45Myw1LjU1LTQuNjMsOS4yNFMyMDAuMjQsMzkuNTksMjAxLjY4LDQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5MS42Miw2MC44YTIxLjE0LDIxLjE0LDAsMCwxLDEuMywxMi4xM2MtLjk1LDQuOTEtMi44NSw4Ljk0LTUuMTksMTAuNDJzLTQuNzYsMC02LjA1LTMtMS40NC04LjE4LS42OS0xMS44NywyLjM5LTcuMzgsNC43LTkuMlMxOTAuNTEsNTguMDksMTkxLjYyLDYwLjhaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTk4LjIyLDYyLjQ2YzIuMTktMS41NSw0LjgyLTIuMzIsNy41NSwxLjg2czMuMjIsOC4zNSwyLjU2LDEzLjYyLTIuNiwxMC40LTYuMjEsMTIuMi02LjQtLjczLTcuNzktMy42LTIuMTYtOS0xLjM5LTEzLjYxUzE5NS4zOSw2NC40NiwxOTguMjIsNjIuNDZaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTk2LjA4LDEwMi4zOWMuODItNS44MSwzLjI1LTEwLjU0LDYtMTIuMjVzNi4zNC0uNTUsOS4xNiw0LjI2LDUuNSwxNywxLjgsMjYuMTgtOS4zOSw4LjYtMTMsMy4zM1MxOTUsMTEwLDE5Ni4wOCwxMDIuMzlaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTgxLjY3LDgwLjM2YzEuMzIsMy4xOSwxLjY4LDcuNTkuNiwxMy41OXMtNC4wOSwxMS4xOC03LjIzLDEwLjUzUzE2OS44Niw5Ny4xMiwxNzEuMiw4OXM0LTEwLjUsNS0xMS4yNFMxNzkuODgsNzYsMTgxLjY3LDgwLjM2WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5Mi43MiwyMy4zM2MyLjUxLTIuMTEsMy42OC01LjM4LDQuMzItOC41NnMwLTgtMy03LjU3LTUuNjUsNC42My02LjUxLDcuMjktMS44NCw4LjQ1LDEuMSwxMEMxOTAuNDksMjUuNSwxOTIuNzIsMjMuMzMsMTkyLjcyLDIzLjMzWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIxMS43NSwyMS4yMWMyLjA3LDEuNTMsNC4wOCwyLDcuOTItLjc5czYuODctMTAuODYsNC42Ny0xNS43NWMtMi00LjQ1LTUuNzctNC4zMS05LjEyLTIuMTYtMy4xNCwyLTUuMjIsNi4yNi01Ljc1LDEwLjA2UzIxMC4wNywyMCwyMTEuNzUsMjEuMjFaIi8+PHBvbHlnb24gY2xhc3M9ImNscy0zIiBwb2ludHM9IjE5My44NiAzMS40MiAyMDYuNjkgMzEuMTYgMjExLjQ4IDUzLjA3IDIwMC4wNSA3NS41MyAxODYuNTkgNzAuNjkgMTg0LjkxIDQ5LjA4IDE5My44NiAzMS40MiIvPjwvc3ZnPg==" alt="" width="40" height="40"><img class="scr" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDBhZWVmIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xNCA0N2M1LTggOS0xNiAxNS0yNSAzLTUgNi05IDktMTEiIHN0cm9rZS13aWR0aD0iNS41Ii8+PHBhdGggZD0iTTIyIDUxYzYtOSAxMi0xOSAxOS0yOCAyLTMgNS02IDgtOCIgc3Ryb2tlLXdpZHRoPSI0LjIiLz48cGF0aCBkPSJNMzMgNTNjNC02IDgtMTIgMTMtMTggMi0yIDMtNCA1LTUiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik0xMiA0NGwyIDNNNDcgMTNjMS0xIDItMSAzLTIiIHN0cm9rZS13aWR0aD0iMiIvPjwvZz48L3N2Zz4=" alt="" width="22" height="22"><b>DESK</b></h1><div id="sbTag"><b>Desk · Flip 6</b><span>Ara 2.1 · 2026.10.20-SB1 · second brain</span></div><span class="sp"></span><button type="button" id="ownBtn" title="Who is using Desk (Ange blue, Julie pink)">Ange</button><span class="sp"></span>
+  <button class="ib" id="lockNow" type="button" aria-label="Lock now" title="Lock now"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg></button>
+</header>
+
+<div id="scrim"></div>
+<aside id="panel" aria-label="Desk panel">
+  <div class="ph"><b class="brand"><img class="cube" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjE0Mi40MSAtMC4xMiAxMjkgMTI5Ij48c3R5bGU+LmNscy0yLC5jbHMtM3tmaWxsOm5vbmU7c3Ryb2tlOiMwMGFlZWY7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kfS5jbHMtMntzdHJva2Utd2lkdGg6LjhweH0uY2xzLTN7c3Ryb2tlLXdpZHRoOjEuMnB4fTwvc3R5bGU+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE5MS42NSAxNS43MiAxNzUuMzcgNDcuNjUgMTc2LjU0IDkwLjQ1IDIwNC41NSAxMDcuNTYgMjMwLjg3IDU1Ljk3IDIxNi44IDExLjI5IDE5MS42NSAxNS43MiIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxNzYuNTQgOTAuNDUgMTkxLjY1IDE1LjcyIDIzMC44NyA1NS45NyAxNzYuNTQgOTAuNDUiLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMTc1LjM3IDQ3LjY1IDIxNi44IDExLjI5IDIwNC41NSAxMDcuNTYgMTc1LjM3IDQ3LjY1Ii8+PGxpbmUgY2xhc3M9ImNscy0yIiB4MT0iMTc2LjU0IiB5MT0iOTAuNDUiIHgyPSIyMTYuOCIgeTI9IjExLjI5Ii8+PGxpbmUgY2xhc3M9ImNscy0yIiB4MT0iMTkxLjY1IiB5MT0iMTUuNzIiIHgyPSIyMDQuNTUiIHkyPSIxMDcuNTYiLz48bGluZSBjbGFzcz0iY2xzLTIiIHgxPSIxNzUuMzciIHkxPSI0Ny42NSIgeDI9IjIzMC44NyIgeTI9IjU1Ljk3Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE4Ni41OSA3MC42OSAyMTEuNDggNTMuMDcgMTkxLjY1IDE1LjcyIDE4Ni41OSA3MC42OSIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxODQuOTEgNDkuMDggMjA2LjY5IDMxLjE2IDIwNC41NSAxMDcuNTYgMTg0LjkxIDQ5LjA4Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE4NC45MSA0OS4wOCAyMDAuMDUgNzUuNTMgMjE2LjggMTEuMjkgMTg0LjkxIDQ5LjA4Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE5My44NiAzMS40MiAyMTEuNDggNTMuMDcgMTc2LjU0IDkwLjQ1IDE5My44NiAzMS40MiIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIyMDAuMDUgNzUuNTMgMjA2LjY5IDMxLjE2IDE3NS4zNyA0Ny42NSAyMDAuMDUgNzUuNTMiLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMTg2LjU5IDcwLjY5IDE5My44NiAzMS40MiAyMzAuODcgNTUuOTcgMTg2LjU5IDcwLjY5Ii8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTkwLjQ0LDQ5LjkxYy0uMzcsMi4zLTEsNywxLjE4LDEwLjg5czUuMjIsMi42Myw2LjYsMS42Niw0LjQzLTQuMyw1LjM3LTEwLjU3Yy44My01LjU4LDAtOC41Mi0xLjkyLTEwLjg2cy00LjMzLTIuMTctNi41Mi0uMzdTMTkxLDQ2LjIxLDE5MC40NCw0OS45MVoiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yMDUuNzYsNjQuMzJhNi4yNCw2LjI0LDAsMCwwLDguODQsMmMzLjM5LTIuMTUsNS4yNi02LjkxLDUuODYtMTEuODhTMjIwLDQ0Ljg0LDIxNy4yNiw0MnMtNS4zLTIuNjUtOC4zMi0uNTctNC44OCw3LjMtNS4zNSwxMC40NkExOC40NywxOC40NywwLDAsMCwyMDUuNzYsNjQuMzJaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTkwLjQ0LDQ5LjkxYy40OS0yLjY1LjgyLTcuNTctMS05LjY0cy0zLjUzLTEuODMtNS4xNS0uNEExNS42MiwxNS42MiwwLDAsMCwxODAsNDguMzVjLS42MSwzLjEzLS43Nyw3LjIxLjM2LDkuNTNzMy4yNSwyLjcyLDUuMzMsMS40MlMxODkuNjQsNTQuMjEsMTkwLjQ0LDQ5LjkxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE3NS42Miw1Ni43OWMxLjc3LTEuNTEsMy40OC00LjM5LDQuMzctOC40NHMuMzktNy40OC0uNDctOC44Mi0yLjYyLTEuNzItNC4zOCwwLTMuMzgsNS41Ni0zLjkzLDguMzgtLjY1LDYuODUuNzQsOC42NUEyLjM2LDIuMzYsMCwwLDAsMTc1LjYyLDU2Ljc5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIyMC40Nyw1NC40MWExNS45MSwxNS45MSwwLDAsMSw2LjA5LTEyLjExLDguNjYsOC42NiwwLDAsMSwxMC42Ny40MmMyLjU3LDIuMDgsNS44LDYuOTQsNS44LDEzLjc0cy0yLjg4LDEyLjA4LTUuNzMsMTQuMjNhOC40Nyw4LjQ3LDAsMCwxLTEwLjQxLjQxQzIyMi45NCw2OC41NCwyMjAuMDgsNjIuMjEsMjIwLjQ3LDU0LjQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5Mi44NSwyMy4yMmExNi4xNCwxNi4xNCwwLDAsMC00LjM3LDguMjFjLS42NCwzLjE3LS4zOCw2Ljg4LjkxLDguODVzMy42NCwyLjEzLDUuNzYuMzhhMTUuMjUsMTUuMjUsMCwwLDAsNC43Ny05LjM2Yy42OC00LjMyLjQxLTYuNjYtMS42Ny04LjhDMTk2LjY3LDIwLjg3LDE5NC4zOCwyMS45MiwxOTIuODUsMjMuMjJaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjAxLjY4LDQxYzEuMzQsMS4zNCwzLjkzLDIuNzcsNy4yNi40czQuOTItNy4wOSw1LjMzLTEwLjI3LDAtOC4xLTIuNTItOS45NC01LTEtNy4yLjgzYy0xLjg4LDEuNjQtMy45Myw1LjU1LTQuNjMsOS4yNFMyMDAuMjQsMzkuNTksMjAxLjY4LDQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5MS42Miw2MC44YTIxLjE0LDIxLjE0LDAsMCwxLDEuMywxMi4xM2MtLjk1LDQuOTEtMi44NSw4Ljk0LTUuMTksMTAuNDJzLTQuNzYsMC02LjA1LTMtMS40NC04LjE4LS42OS0xMS44NywyLjM5LTcuMzgsNC43LTkuMlMxOTAuNTEsNTguMDksMTkxLjYyLDYwLjhaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTk4LjIyLDYyLjQ2YzIuMTktMS41NSw0LjgyLTIuMzIsNy41NSwxLjg2czMuMjIsOC4zNSwyLjU2LDEzLjYyLTIuNiwxMC40LTYuMjEsMTIuMi02LjQtLjczLTcuNzktMy42LTIuMTYtOS0xLjM5LTEzLjYxUzE5NS4zOSw2NC40NiwxOTguMjIsNjIuNDZaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTk2LjA4LDEwMi4zOWMuODItNS44MSwzLjI1LTEwLjU0LDYtMTIuMjVzNi4zNC0uNTUsOS4xNiw0LjI2LDUuNSwxNywxLjgsMjYuMTgtOS4zOSw4LjYtMTMsMy4zM1MxOTUsMTEwLDE5Ni4wOCwxMDIuMzlaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTgxLjY3LDgwLjM2YzEuMzIsMy4xOSwxLjY4LDcuNTkuNiwxMy41OXMtNC4wOSwxMS4xOC03LjIzLDEwLjUzUzE2OS44Niw5Ny4xMiwxNzEuMiw4OXM0LTEwLjUsNS0xMS4yNFMxNzkuODgsNzYsMTgxLjY3LDgwLjM2WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5Mi43MiwyMy4zM2MyLjUxLTIuMTEsMy42OC01LjM4LDQuMzItOC41NnMwLTgtMy03LjU3LTUuNjUsNC42My02LjUxLDcuMjktMS44NCw4LjQ1LDEuMSwxMEMxOTAuNDksMjUuNSwxOTIuNzIsMjMuMzMsMTkyLjcyLDIzLjMzWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIxMS43NSwyMS4yMWMyLjA3LDEuNTMsNC4wOCwyLDcuOTItLjc5czYuODctMTAuODYsNC42Ny0xNS43NWMtMi00LjQ1LTUuNzctNC4zMS05LjEyLTIuMTYtMy4xNCwyLTUuMjIsNi4yNi01Ljc1LDEwLjA2UzIxMC4wNywyMCwyMTEuNzUsMjEuMjFaIi8+PHBvbHlnb24gY2xhc3M9ImNscy0zIiBwb2ludHM9IjE5My44NiAzMS40MiAyMDYuNjkgMzEuMTYgMjExLjQ4IDUzLjA3IDIwMC4wNSA3NS41MyAxODYuNTkgNzAuNjkgMTg0LjkxIDQ5LjA4IDE5My44NiAzMS40MiIvPjwvc3ZnPg==" alt="" width="26" height="26"><img class="scr" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDBhZWVmIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xNCA0N2M1LTggOS0xNiAxNS0yNSAzLTUgNi05IDktMTEiIHN0cm9rZS13aWR0aD0iNS41Ii8+PHBhdGggZD0iTTIyIDUxYzYtOSAxMi0xOSAxOS0yOCAyLTMgNS02IDgtOCIgc3Ryb2tlLXdpZHRoPSI0LjIiLz48cGF0aCBkPSJNMzMgNTNjNC02IDgtMTIgMTMtMTggMi0yIDMtNCA1LTUiIHN0cm9rZS13aWR0aD0iMyIvPjxwYXRoIGQ9Ik0xMiA0NGwyIDNNNDcgMTNjMS0xIDItMSAzLTIiIHN0cm9rZS13aWR0aD0iMiIvPjwvZz48L3N2Zz4=" alt="" width="18" height="18"><span>DESK</span></b><button class="ib" id="closeBtn" type="button" aria-label="Close panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+
+  <button class="flow" id="flowBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8.5 6h7M7.2 8.2l3.6 7.6M16.8 8.2l-3.6 7.6"/></svg><div><b>FLOW</b><span>Where everything is up to, and what's broken</span></div></button>
+
+  <button class="finish" id="finishBtn" type="button">Hey, we need to finish this <i id="openCount">0</i></button>
+
+  <section class="msgs" aria-labelledby="mH">
+    <p class="lbl" id="mH">MESSAGES FROM ARA</p>
+    <div id="msgList"></div>
+  </section>
+
+  <div>
+    <p class="lbl">SEARCH</p>
+    <form class="sbox" id="sForm" role="search">
+      <input id="sIn" type="search" placeholder="Search Desk and apps" autocomplete="off" aria-label="Search">
+      <button type="submit">Go</button>
+    </form>
+  </div>
+
+  <button class="allbtn" id="allBtn" type="button">All apps <i id="appCount"></i></button>
+  <div id="groups"></div>
+
+  <div class="foot">Ara 2.1 · 2026.10.20-SB1 · Desk · Flip 6. Saved on this device. Device lock only: <button type="button" id="lockSettings">lock settings</button></div>
+</aside>
+
+<main>
+  <section class="view on" id="v-finish" aria-labelledby="fH">
+    <form id="talk" autocomplete="off"><button type="button" id="talkMic" aria-label="Talk to Ara"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button><input id="talkIn" placeholder="Ask Ara anything" aria-label="Message for Ara"><button type="submit" id="talkSend">Send</button></form><div id="talkMsg" role="status" aria-live="polite"></div>
+    <h2 id="fH">Hey, we need to finish this <small id="fCount"></small></h2>
+    <form class="add" id="addForm">
+      <input id="addIn" placeholder="Add something to finish" autocomplete="off" aria-label="New item">
+      <button type="submit">Add</button>
+    </form>
+    <ul class="items" id="list"></ul>
+    <div class="row">
+      <button class="btn g" type="button" id="toggleDone">Show done</button>
+      <button class="btn g" type="button" id="clearDone">Clear done</button>
+    </div>
+    <p class="hint">Tap the box to tick it off. Tap the words to change them.</p>
+  </section>
+
+  <section class="view grid" id="v-all" aria-labelledby="aH">
+    <h2 id="aH">All apps <small id="aCount"></small></h2>
+    <div id="allGrid"></div>
+  </section>
+
+  <section class="view" id="v-search" aria-labelledby="sH">
+    <h2 id="sH">Search <small id="sCount"></small></h2>
+    <div class="res" id="sRes"></div>
+    <div class="row"><button class="btn" type="button" id="studioBtn">Search it in Search Studio</button></div>
+    <div class="studio" id="studio" hidden></div>
+  </section>
+
+  <section class="view" id="v-app" aria-label="App">
+    <div class="abar">
+      <button class="ib" type="button" id="appBack" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg></button>
+      <b id="appTitle"></b>
+      <a class="ib" id="appFull" target="_blank" rel="noopener" aria-label="Open full screen" title="Open full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-8 8M10 5H5v14h14v-5"/></svg></a>
+      <button class="ib" type="button" id="appClose" aria-label="Close app"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div id="appHost"></div>
+  </section>
+</main>
+
+<div id="araSym" aria-label="Ara" role="img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19L12 4.5 19 19" fill="none" stroke="#00aeef" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.6 13.5h6.8" stroke="#00aeef" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+
+<script>
+(function(){
+"use strict";
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+var mq=matchMedia("(min-width:900px)");
+
+/* ---------- every current app, grouped. Flow first. ---------- */
+var GROUPS=[
+ {g:"Ara 2.1",open:true,apps:[
+  {n:"Nirvana",s:"Home: holds everything",u:"./nirvana/index.html"},
+  {n:"Flow map",s:"One flow map",u:"./map.html"},
+  {n:"Cert Studio",s:"Certs",u:"./certstudio.html",ic:"green"},
+  {n:"Desk · Fold 8",s:"The other phone",u:"./desk.html?d=fold8"}]},
+ {g:"Flow",open:true,apps:[
+  {id:"flow",n:"Flow",s:"Where it's up to, what's broken",u:"./metatron3.html",key:1},
+  {n:"Flow steps",s:"The job loop, step by step",u:"./map.html"},
+  {n:"Flow notes",s:"Edit and file notes on the map",u:"./mapper.html"},
+  {n:"Layers",s:"The build, layer by layer",u:"./layers.html"},
+  {n:"Build Map",s:"Building, blocked, planned",u:"./build-map.html"},
+  {n:"ETA Board",s:"What's running",u:"./eta.html"},
+  {n:"Queue",s:"Layer 1 board",u:"./queue.html"},
+  {n:"Prism",s:"Ara layer map",u:"./prism.html"},
+  {n:"Hub map",s:"Layer 1 cube map",u:"./metatron-layer1.html"}]},
+ {g:"Work",apps:[
+  {n:"Notes",s:"Notes and tasks",u:"./notes.html"},
+  {n:"Cert Studio",s:"Certs",u:"./cert.html",ic:"green"},
+  {n:"Search Studio",s:"Register, calendar, drive",u:"./search-grok.html"},
+  {n:"Today",s:"Staff day view",u:"./staff.html"},
+  {n:"Capture",s:"Ara Capture",u:"./capture.html"},
+  {n:"Video Search",s:"YouTube",u:"./video.html"}]},
+ {g:"Status",apps:[
+  {n:"Tonight Status",s:"Done, in progress, needed",u:"./status.html"},
+  {n:"Tally",s:"Faults caught and fixed",u:"./tally.html"},
+  {n:"Findings",s:"What changed",u:"./findings.html"},
+  {n:"Clean-up audit",s:"What to keep",u:"./cleanup.html"}]},
+ {g:"Team",apps:[
+  {n:"Crew",s:"Ara and coworkers",u:"./team.html"},
+  {n:"Ara's Bridge",s:"Actions and briefs",u:"./relay.html"},
+  {n:"Gateway",s:"Next action",u:"./ange.html"},
+  {n:"Nova Board",s:"Pipelines and rules",u:"./nova.html"},
+  {n:"Elon",s:"Call and message",u:"./elon/index.html"}]},
+ {g:"Setup",apps:[
+  {n:"Private",s:"Has its own PIN",u:"./private.html"},
+  {n:"Grok How-To",s:"How to use it",u:"./grok-howto.html"},
+  {n:"Set up this device",s:"Key and sync",u:"./setup.html"},
+  {n:"Launcher",s:"The old tile hub",u:"./index.html"}]}
+];
+/* real Realm cubes, cropped from realm_logos (cyan = Property Cleaning, lime #60ff15 = Height Safety) */
+var IC={cyan:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjE0Mi40MSAtMC4xMiAxMjkgMTI5Ij48c3R5bGU+LmNscy0yLC5jbHMtM3tmaWxsOm5vbmU7c3Ryb2tlOiMwMGFlZWY7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kfS5jbHMtMntzdHJva2Utd2lkdGg6LjhweH0uY2xzLTN7c3Ryb2tlLXdpZHRoOjEuMnB4fTwvc3R5bGU+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE5MS42NSAxNS43MiAxNzUuMzcgNDcuNjUgMTc2LjU0IDkwLjQ1IDIwNC41NSAxMDcuNTYgMjMwLjg3IDU1Ljk3IDIxNi44IDExLjI5IDE5MS42NSAxNS43MiIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxNzYuNTQgOTAuNDUgMTkxLjY1IDE1LjcyIDIzMC44NyA1NS45NyAxNzYuNTQgOTAuNDUiLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMTc1LjM3IDQ3LjY1IDIxNi44IDExLjI5IDIwNC41NSAxMDcuNTYgMTc1LjM3IDQ3LjY1Ii8+PGxpbmUgY2xhc3M9ImNscy0yIiB4MT0iMTc2LjU0IiB5MT0iOTAuNDUiIHgyPSIyMTYuOCIgeTI9IjExLjI5Ii8+PGxpbmUgY2xhc3M9ImNscy0yIiB4MT0iMTkxLjY1IiB5MT0iMTUuNzIiIHgyPSIyMDQuNTUiIHkyPSIxMDcuNTYiLz48bGluZSBjbGFzcz0iY2xzLTIiIHgxPSIxNzUuMzciIHkxPSI0Ny42NSIgeDI9IjIzMC44NyIgeTI9IjU1Ljk3Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE4Ni41OSA3MC42OSAyMTEuNDggNTMuMDcgMTkxLjY1IDE1LjcyIDE4Ni41OSA3MC42OSIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxODQuOTEgNDkuMDggMjA2LjY5IDMxLjE2IDIwNC41NSAxMDcuNTYgMTg0LjkxIDQ5LjA4Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE4NC45MSA0OS4wOCAyMDAuMDUgNzUuNTMgMjE2LjggMTEuMjkgMTg0LjkxIDQ5LjA4Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE5My44NiAzMS40MiAyMTEuNDggNTMuMDcgMTc2LjU0IDkwLjQ1IDE5My44NiAzMS40MiIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIyMDAuMDUgNzUuNTMgMjA2LjY5IDMxLjE2IDE3NS4zNyA0Ny42NSAyMDAuMDUgNzUuNTMiLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMTg2LjU5IDcwLjY5IDE5My44NiAzMS40MiAyMzAuODcgNTUuOTcgMTg2LjU5IDcwLjY5Ii8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTkwLjQ0LDQ5LjkxYy0uMzcsMi4zLTEsNywxLjE4LDEwLjg5czUuMjIsMi42Myw2LjYsMS42Niw0LjQzLTQuMyw1LjM3LTEwLjU3Yy44My01LjU4LDAtOC41Mi0xLjkyLTEwLjg2cy00LjMzLTIuMTctNi41Mi0uMzdTMTkxLDQ2LjIxLDE5MC40NCw0OS45MVoiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yMDUuNzYsNjQuMzJhNi4yNCw2LjI0LDAsMCwwLDguODQsMmMzLjM5LTIuMTUsNS4yNi02LjkxLDUuODYtMTEuODhTMjIwLDQ0Ljg0LDIxNy4yNiw0MnMtNS4zLTIuNjUtOC4zMi0uNTctNC44OCw3LjMtNS4zNSwxMC40NkExOC40NywxOC40NywwLDAsMCwyMDUuNzYsNjQuMzJaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTkwLjQ0LDQ5LjkxYy40OS0yLjY1LjgyLTcuNTctMS05LjY0cy0zLjUzLTEuODMtNS4xNS0uNEExNS42MiwxNS42MiwwLDAsMCwxODAsNDguMzVjLS42MSwzLjEzLS43Nyw3LjIxLjM2LDkuNTNzMy4yNSwyLjcyLDUuMzMsMS40MlMxODkuNjQsNTQuMjEsMTkwLjQ0LDQ5LjkxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE3NS42Miw1Ni43OWMxLjc3LTEuNTEsMy40OC00LjM5LDQuMzctOC40NHMuMzktNy40OC0uNDctOC44Mi0yLjYyLTEuNzItNC4zOCwwLTMuMzgsNS41Ni0zLjkzLDguMzgtLjY1LDYuODUuNzQsOC42NUEyLjM2LDIuMzYsMCwwLDAsMTc1LjYyLDU2Ljc5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIyMC40Nyw1NC40MWExNS45MSwxNS45MSwwLDAsMSw2LjA5LTEyLjExLDguNjYsOC42NiwwLDAsMSwxMC42Ny40MmMyLjU3LDIuMDgsNS44LDYuOTQsNS44LDEzLjc0cy0yLjg4LDEyLjA4LTUuNzMsMTQuMjNhOC40Nyw4LjQ3LDAsMCwxLTEwLjQxLjQxQzIyMi45NCw2OC41NCwyMjAuMDgsNjIuMjEsMjIwLjQ3LDU0LjQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5Mi44NSwyMy4yMmExNi4xNCwxNi4xNCwwLDAsMC00LjM3LDguMjFjLS42NCwzLjE3LS4zOCw2Ljg4LjkxLDguODVzMy42NCwyLjEzLDUuNzYuMzhhMTUuMjUsMTUuMjUsMCwwLDAsNC43Ny05LjM2Yy42OC00LjMyLjQxLTYuNjYtMS42Ny04LjhDMTk2LjY3LDIwLjg3LDE5NC4zOCwyMS45MiwxOTIuODUsMjMuMjJaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjAxLjY4LDQxYzEuMzQsMS4zNCwzLjkzLDIuNzcsNy4yNi40czQuOTItNy4wOSw1LjMzLTEwLjI3LDAtOC4xLTIuNTItOS45NC01LTEtNy4yLjgzYy0xLjg4LDEuNjQtMy45Myw1LjU1LTQuNjMsOS4yNFMyMDAuMjQsMzkuNTksMjAxLjY4LDQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5MS42Miw2MC44YTIxLjE0LDIxLjE0LDAsMCwxLDEuMywxMi4xM2MtLjk1LDQuOTEtMi44NSw4Ljk0LTUuMTksMTAuNDJzLTQuNzYsMC02LjA1LTMtMS40NC04LjE4LS42OS0xMS44NywyLjM5LTcuMzgsNC43LTkuMlMxOTAuNTEsNTguMDksMTkxLjYyLDYwLjhaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTk4LjIyLDYyLjQ2YzIuMTktMS41NSw0LjgyLTIuMzIsNy41NSwxLjg2czMuMjIsOC4zNSwyLjU2LDEzLjYyLTIuNiwxMC40LTYuMjEsMTIuMi02LjQtLjczLTcuNzktMy42LTIuMTYtOS0xLjM5LTEzLjYxUzE5NS4zOSw2NC40NiwxOTguMjIsNjIuNDZaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTk2LjA4LDEwMi4zOWMuODItNS44MSwzLjI1LTEwLjU0LDYtMTIuMjVzNi4zNC0uNTUsOS4xNiw0LjI2LDUuNSwxNywxLjgsMjYuMTgtOS4zOSw4LjYtMTMsMy4zM1MxOTUsMTEwLDE5Ni4wOCwxMDIuMzlaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTgxLjY3LDgwLjM2YzEuMzIsMy4xOSwxLjY4LDcuNTkuNiwxMy41OXMtNC4wOSwxMS4xOC03LjIzLDEwLjUzUzE2OS44Niw5Ny4xMiwxNzEuMiw4OXM0LTEwLjUsNS0xMS4yNFMxNzkuODgsNzYsMTgxLjY3LDgwLjM2WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5Mi43MiwyMy4zM2MyLjUxLTIuMTEsMy42OC01LjM4LDQuMzItOC41NnMwLTgtMy03LjU3LTUuNjUsNC42My02LjUxLDcuMjktMS44NCw4LjQ1LDEuMSwxMEMxOTAuNDksMjUuNSwxOTIuNzIsMjMuMzMsMTkyLjcyLDIzLjMzWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIxMS43NSwyMS4yMWMyLjA3LDEuNTMsNC4wOCwyLDcuOTItLjc5czYuODctMTAuODYsNC42Ny0xNS43NWMtMi00LjQ1LTUuNzctNC4zMS05LjEyLTIuMTYtMy4xNCwyLTUuMjIsNi4yNi01Ljc1LDEwLjA2UzIxMC4wNywyMCwyMTEuNzUsMjEuMjFaIi8+PHBvbHlnb24gY2xhc3M9ImNscy0zIiBwb2ludHM9IjE5My44NiAzMS40MiAyMDYuNjkgMzEuMTYgMjExLjQ4IDUzLjA3IDIwMC4wNSA3NS41MyAxODYuNTkgNzAuNjkgMTg0LjkxIDQ5LjA4IDE5My44NiAzMS40MiIvPjwvc3ZnPg==",green:"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjE0Mi40MSAtMC4xMiAxMjkgMTI5Ij48c3R5bGU+LmNscy0yLC5jbHMtM3tmaWxsOm5vbmU7c3Ryb2tlOiM2MGZmMTU7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kfS5jbHMtMntzdHJva2Utd2lkdGg6LjhweH0uY2xzLTN7c3Ryb2tlLXdpZHRoOjEuMnB4fTwvc3R5bGU+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE5MS42NSAxNS43MiAxNzUuMzcgNDcuNjUgMTc2LjU0IDkwLjQ1IDIwNC41NSAxMDcuNTYgMjMwLjg3IDU1Ljk3IDIxNi44IDExLjI5IDE5MS42NSAxNS43MiIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxNzYuNTQgOTAuNDUgMTkxLjY1IDE1LjcyIDIzMC44NyA1NS45NyAxNzYuNTQgOTAuNDUiLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMTc1LjM3IDQ3LjY1IDIxNi44IDExLjI5IDIwNC41NSAxMDcuNTYgMTc1LjM3IDQ3LjY1Ii8+PGxpbmUgY2xhc3M9ImNscy0yIiB4MT0iMTc2LjU0IiB5MT0iOTAuNDUiIHgyPSIyMTYuOCIgeTI9IjExLjI5Ii8+PGxpbmUgY2xhc3M9ImNscy0yIiB4MT0iMTkxLjY1IiB5MT0iMTUuNzIiIHgyPSIyMDQuNTUiIHkyPSIxMDcuNTYiLz48bGluZSBjbGFzcz0iY2xzLTIiIHgxPSIxNzUuMzciIHkxPSI0Ny42NSIgeDI9IjIzMC44NyIgeTI9IjU1Ljk3Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE4Ni41OSA3MC42OSAyMTEuNDggNTMuMDcgMTkxLjY1IDE1LjcyIDE4Ni41OSA3MC42OSIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxODQuOTEgNDkuMDggMjA2LjY5IDMxLjE2IDIwNC41NSAxMDcuNTYgMTg0LjkxIDQ5LjA4Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE4NC45MSA0OS4wOCAyMDAuMDUgNzUuNTMgMjE2LjggMTEuMjkgMTg0LjkxIDQ5LjA4Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0yIiBwb2ludHM9IjE5My44NiAzMS40MiAyMTEuNDggNTMuMDcgMTc2LjU0IDkwLjQ1IDE5My44NiAzMS40MiIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIyMDAuMDUgNzUuNTMgMjA2LjY5IDMxLjE2IDE3NS4zNyA0Ny42NSAyMDAuMDUgNzUuNTMiLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMTg2LjU5IDcwLjY5IDE5My44NiAzMS40MiAyMzAuODcgNTUuOTcgMTg2LjU5IDcwLjY5Ii8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTkwLjQ0LDQ5LjkxYy0uMzcsMi4zLTEsNywxLjE4LDEwLjg5czUuMjIsMi42Myw2LjYsMS42Niw0LjQzLTQuMyw1LjM3LTEwLjU3Yy44My01LjU4LDAtOC41Mi0xLjkyLTEwLjg2cy00LjMzLTIuMTctNi41Mi0uMzdTMTkxLDQ2LjIxLDE5MC40NCw0OS45MVoiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0yMDUuNzYsNjQuMzJhNi4yNCw2LjI0LDAsMCwwLDguODQsMmMzLjM5LTIuMTUsNS4yNi02LjkxLDUuODYtMTEuODhTMjIwLDQ0Ljg0LDIxNy4yNiw0MnMtNS4zLTIuNjUtOC4zMi0uNTctNC44OCw3LjMtNS4zNSwxMC40NkExOC40NywxOC40NywwLDAsMCwyMDUuNzYsNjQuMzJaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTkwLjQ0LDQ5LjkxYy40OS0yLjY1LjgyLTcuNTctMS05LjY0cy0zLjUzLTEuODMtNS4xNS0uNEExNS42MiwxNS42MiwwLDAsMCwxODAsNDguMzVjLS42MSwzLjEzLS43Nyw3LjIxLjM2LDkuNTNzMy4yNSwyLjcyLDUuMzMsMS40MlMxODkuNjQsNTQuMjEsMTkwLjQ0LDQ5LjkxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE3NS42Miw1Ni43OWMxLjc3LTEuNTEsMy40OC00LjM5LDQuMzctOC40NHMuMzktNy40OC0uNDctOC44Mi0yLjYyLTEuNzItNC4zOCwwLTMuMzgsNS41Ni0zLjkzLDguMzgtLjY1LDYuODUuNzQsOC42NUEyLjM2LDIuMzYsMCwwLDAsMTc1LjYyLDU2Ljc5WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIyMC40Nyw1NC40MWExNS45MSwxNS45MSwwLDAsMSw2LjA5LTEyLjExLDguNjYsOC42NiwwLDAsMSwxMC42Ny40MmMyLjU3LDIuMDgsNS44LDYuOTQsNS44LDEzLjc0cy0yLjg4LDEyLjA4LTUuNzMsMTQuMjNhOC40Nyw4LjQ3LDAsMCwxLTEwLjQxLjQxQzIyMi45NCw2OC41NCwyMjAuMDgsNjIuMjEsMjIwLjQ3LDU0LjQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5Mi44NSwyMy4yMmExNi4xNCwxNi4xNCwwLDAsMC00LjM3LDguMjFjLS42NCwzLjE3LS4zOCw2Ljg4LjkxLDguODVzMy42NCwyLjEzLDUuNzYuMzhhMTUuMjUsMTUuMjUsMCwwLDAsNC43Ny05LjM2Yy42OC00LjMyLjQxLTYuNjYtMS42Ny04LjhDMTk2LjY3LDIwLjg3LDE5NC4zOCwyMS45MiwxOTIuODUsMjMuMjJaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjAxLjY4LDQxYzEuMzQsMS4zNCwzLjkzLDIuNzcsNy4yNi40czQuOTItNy4wOSw1LjMzLTEwLjI3LDAtOC4xLTIuNTItOS45NC01LTEtNy4yLjgzYy0xLjg4LDEuNjQtMy45Myw1LjU1LTQuNjMsOS4yNFMyMDAuMjQsMzkuNTksMjAxLjY4LDQxWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5MS42Miw2MC44YTIxLjE0LDIxLjE0LDAsMCwxLDEuMywxMi4xM2MtLjk1LDQuOTEtMi44NSw4Ljk0LTUuMTksMTAuNDJzLTQuNzYsMC02LjA1LTMtMS40NC04LjE4LS42OS0xMS44NywyLjM5LTcuMzgsNC43LTkuMlMxOTAuNTEsNTguMDksMTkxLjYyLDYwLjhaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTk4LjIyLDYyLjQ2YzIuMTktMS41NSw0LjgyLTIuMzIsNy41NSwxLjg2czMuMjIsOC4zNSwyLjU2LDEzLjYyLTIuNiwxMC40LTYuMjEsMTIuMi02LjQtLjczLTcuNzktMy42LTIuMTYtOS0xLjM5LTEzLjYxUzE5NS4zOSw2NC40NiwxOTguMjIsNjIuNDZaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTk2LjA4LDEwMi4zOWMuODItNS44MSwzLjI1LTEwLjU0LDYtMTIuMjVzNi4zNC0uNTUsOS4xNiw0LjI2LDUuNSwxNywxLjgsMjYuMTgtOS4zOSw4LjYtMTMsMy4zM1MxOTUsMTEwLDE5Ni4wOCwxMDIuMzlaIi8+PHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTgxLjY3LDgwLjM2YzEuMzIsMy4xOSwxLjY4LDcuNTkuNiwxMy41OXMtNC4wOSwxMS4xOC03LjIzLDEwLjUzUzE2OS44Niw5Ny4xMiwxNzEuMiw4OXM0LTEwLjUsNS0xMS4yNFMxNzkuODgsNzYsMTgxLjY3LDgwLjM2WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE5Mi43MiwyMy4zM2MyLjUxLTIuMTEsMy42OC01LjM4LDQuMzItOC41NnMwLTgtMy03LjU3LTUuNjUsNC42My02LjUxLDcuMjktMS44NCw4LjQ1LDEuMSwxMEMxOTAuNDksMjUuNSwxOTIuNzIsMjMuMzMsMTkyLjcyLDIzLjMzWiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIxMS43NSwyMS4yMWMyLjA3LDEuNTMsNC4wOCwyLDcuOTItLjc5czYuODctMTAuODYsNC42Ny0xNS43NWMtMi00LjQ1LTUuNzctNC4zMS05LjEyLTIuMTYtMy4xNCwyLTUuMjIsNi4yNi01Ljc1LDEwLjA2UzIxMC4wNywyMCwyMTEuNzUsMjEuMjFaIi8+PHBvbHlnb24gY2xhc3M9ImNscy0zIiBwb2ludHM9IjE5My44NiAzMS40MiAyMDYuNjkgMzEuMTYgMjExLjQ4IDUzLjA3IDIwMC4wNSA3NS41MyAxODYuNTkgNzAuNjkgMTg0LjkxIDQ5LjA4IDE5My44NiAzMS40MiIvPjwvc3ZnPg=="};
+var APPS=[];GROUPS.forEach(function(G){G.apps.forEach(function(a){a.g=G.g;APPS.push(a)})});
+var FLOW=APPS[0];
+
+/* ---------- Hey, we need to finish this ---------- */
+var KEY="realm_desk_finish_v1";
+var SEED=[
+ {t:"Backend seal",n:"Fresh key, Desk v3, Scribe"},
+ {t:"Links fix (PR #10)",n:"Waits on the freeze being lifted"},
+ {t:"App count decision",n:"Target 3 to 4 apps"},
+ {t:"Bots planned, not built",n:"Competitor watch, AI receptionist, smart-home, Proxmox watch, chat cleanup, housekeeping"},
+ {t:"Laptop audio",n:"Confirm the outcome"},
+ {t:"Job flow + Tonight previews",n:"Built local-only, waiting on review"}
+];
+var items=[],showDone=false;
+function load(){try{var r=JSON.parse(localStorage.getItem(KEY)||"null");if(Array.isArray(r)){items=r;return}}catch(e){}
+  items=SEED.map(function(s){return {id:uid(),t:s.t,n:s.n,d:false}});save()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(items))}catch(e){}}
+function render(){
+  var open=items.filter(function(x){return !x.d}).length;
+  $("openCount").textContent=open;$("fCount").textContent=open+" open";
+  $("toggleDone").textContent=showDone?"Hide done":"Show done";
+  var ul=$("list");ul.innerHTML="";
+  items.filter(function(x){return showDone||!x.d}).forEach(function(x){
+    var li=document.createElement("li");li.className="it"+(x.d?" done":"");li.dataset.id=x.id;
+    li.innerHTML='<input type="checkbox" aria-label="Done"'+(x.d?" checked":"")+'><div class="tx" contenteditable="true" spellcheck="true">'+esc(x.t)+(x.n?'<em>'+esc(x.n)+'</em>':'')+'</div><button class="x" type="button" aria-label="Remove">&times;</button>';
+    ul.appendChild(li)});
+  if(!ul.children.length)ul.innerHTML='<li class="hint">All done. Nothing left to finish.</li>';
+}
+function find(id){for(var i=0;i<items.length;i++)if(items[i].id===id)return items[i]}
+$("list").addEventListener("change",function(e){var li=e.target.closest(".it");if(!li)return;var x=find(li.dataset.id);if(x){x.d=e.target.checked;save();render()}});
+$("list").addEventListener("click",function(e){if(!e.target.classList.contains("x"))return;var li=e.target.closest(".it");items=items.filter(function(x){return x.id!==li.dataset.id});save();render()});
+$("list").addEventListener("focusout",function(e){
+  if(!e.target.classList||!e.target.classList.contains("tx"))return;
+  var li=e.target.closest(".it"),x=find(li.dataset.id);if(!x)return;
+  var em=e.target.querySelector("em"),n=em?em.textContent.trim():"";if(em)em.remove();
+  var t=e.target.textContent.trim();
+  if(!t&&!n){items=items.filter(function(y){return y!==x})}else{x.t=t||n;x.n=t?n:""}
+  save();render()});
+$("list").addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target.classList.contains("tx")){e.preventDefault();e.target.blur()}});
+$("addForm").addEventListener("submit",function(e){e.preventDefault();var v=$("addIn").value.trim();if(!v)return;items.unshift({id:uid(),t:v,n:"",d:false});$("addIn").value="";save();render()});
+$("toggleDone").onclick=function(){showDone=!showDone;render()};
+$("clearDone").onclick=function(){items=items.filter(function(x){return !x.d});save();render()};
+
+/* ---------- Messages from Ara (data-driven) ----------
+   Ara flips a message by setting status "ready": AraDesk.setMessage('claude-merge','ready')
+   or desk.html?msg=claude-merge:ready  (stored in localStorage realm_desk_msgs_v1) */
+var MKEY="realm_desk_msgs_v1";
+var MSG_DEFAULT=[{id:"claude-merge",title:"Claude merge + chat cleanup bot",status:"waiting",waitingText:"NOT READY YET. Click this when ready.",readyText:"READY \u2014 click this",chip:"Waiting on your Claude export zip",readyChip:"Ready",plan:["Unzip the Claude export","Merge it with the saved Claude artifacts","Sort the chats into your groups"]}];
+var msgs=[],openMsg="";
+function mget(){try{return JSON.parse(localStorage.getItem(MKEY)||"{}")||{}}catch(e){return {}}}
+function mload(){var st=mget();
+  var q=location.search.match(/[?&]msg=([\w-]+):(ready|waiting)/);if(q){st[q[1]]=q[2];try{localStorage.setItem(MKEY,JSON.stringify(st))}catch(e){}}
+  msgs=MSG_DEFAULT.map(function(m){var o={};for(var k in m)o[k]=m[k];if(st[m.id])o.status=st[m.id];return o})}
+function mrender(){$("msgList").innerHTML=msgs.map(function(m){var r=m.status==="ready";
+  return '<button type="button" class="msg" data-id="'+esc(m.id)+'" aria-expanded="'+(openMsg===m.id)+'"><b>'+esc(m.title)+'</b>'+esc(r?m.readyText:m.waitingText)+'<br><span class="chip'+(r?' ready':'')+'">'+esc(r?m.readyChip:m.chip)+'</span>'+
+  (openMsg===m.id?'<div class="note"><b style="font-size:12px;color:var(--c)">PLAN'+(r?'':' (not built yet)')+'</b><ol>'+m.plan.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ol></div>':'')+'</button>'}).join("")}
+$("msgList").addEventListener("click",function(e){var b=e.target.closest(".msg");if(!b)return;openMsg=openMsg===b.dataset.id?"":b.dataset.id;mrender()});
+window.AraDesk={setMessage:function(id,status){var st=mget();st[id]=status;localStorage.setItem(MKEY,JSON.stringify(st));mload();mrender()}};
+
+/* ---------- views, panel, apps inside Desk ---------- */
+var cur="finish",prev="finish";
+function view(v){if(v!==cur){prev=cur;cur=v}["finish","all","search","app"].forEach(function(n){$("v-"+n).classList.toggle("on",n===v)});
+  document.body.classList.toggle("framed",v==="app"||(v==="search"&&!$("studio").hidden));
+  if(v!=="app"){$("appHost").innerHTML=""}}
+function panel(o){$("panel").classList.toggle("open",!!o);$("scrim").classList.toggle("on",!!o&&!mq.matches);$("menuBtn").setAttribute("aria-expanded",o?"true":"false")}
+function closeIfPhone(){if(!mq.matches)panel(0)}
+function openApp(a){
+  $("appTitle").textContent=a.n;$("appFull").href=a.u;
+  $("appHost").innerHTML='<iframe id="appFrame" title="'+esc(a.n)+'" src="'+esc(a.u)+'"></iframe>';
+  var f=$("appFrame");f.addEventListener("load",function(){hookFrame(f)});
+  view("app");closeIfPhone();window.scrollTo(0,0);
+}
+function byU(u){for(var i=0;i<APPS.length;i++)if(APPS[i].u===u)return APPS[i]}
+$("menuBtn").onclick=function(){panel(1)};
+$("closeBtn").onclick=$("scrim").onclick=function(){panel(0)};
+$("flowBtn").onclick=function(){openApp(FLOW)};
+$("finishBtn").onclick=function(){view("finish");closeIfPhone()};
+$("allBtn").onclick=function(){view("all");closeIfPhone()};
+$("appBack").onclick=function(){view(prev==="app"?"finish":prev)};
+$("appClose").onclick=function(){view("finish")};
+$("appCount").textContent=APPS.length;$("aCount").textContent=APPS.length+" apps";
+$("groups").innerHTML=GROUPS.map(function(G){return '<details class="grp"'+(G.open?" open":"")+'><summary>'+esc(G.g.toUpperCase())+' &middot; '+G.apps.length+'</summary>'+
+  G.apps.map(function(a){return '<button type="button" class="apl'+(a.ic?' has-ic':'')+'" data-u="'+esc(a.u)+'">'+(a.ic?'<img class="aic" src="'+IC[a.ic]+'" alt="" width="18" height="18">':'')+esc(a.n)+'</button>'}).join("")+'</details>'}).join("");
+$("allGrid").innerHTML=GROUPS.map(function(G){return '<h3>'+esc(G.g.toUpperCase())+'</h3><div class="tiles">'+
+  G.apps.map(function(a){return '<button type="button" class="tile'+(a.key?" key":"")+'" data-u="'+esc(a.u)+'">'+(a.ic?'<img class="tic" src="'+IC[a.ic]+'" alt="" width="44" height="44">':'')+'<b>'+esc(a.n)+'</b><span>'+esc(a.s)+'</span></button>'}).join("")+'</div>'}).join("");
+document.addEventListener("click",function(e){var b=e.target.closest("[data-u]");if(!b)return;var a=byU(b.dataset.u);if(a)openApp(a)});
+
+/* ---------- search ---------- */
+function hl(s,q){var i=s.toLowerCase().indexOf(q);return i<0?esc(s):esc(s.slice(0,i))+"<mark>"+esc(s.slice(i,i+q.length))+"</mark>"+esc(s.slice(i+q.length))}
+var lastQ="";
+function search(q){
+  lastQ=q;var ql=q.trim().toLowerCase(),out=[];
+  if(ql){
+    items.forEach(function(x){if((x.t+" "+x.n).toLowerCase().indexOf(ql)>=0)out.push('<div class="r"><b>'+(x.d?"DONE":"TO FINISH")+'</b>'+hl(x.t,ql)+(x.n?' <span style="color:var(--mut)">'+hl(x.n,ql)+'</span>':'')+'</div>')});
+    APPS.forEach(function(a){if((a.n+" "+a.s+" "+a.g).toLowerCase().indexOf(ql)>=0)out.push('<button type="button" class="r" data-u="'+esc(a.u)+'"><b>APP &middot; '+esc(a.g.toUpperCase())+'</b>'+hl(a.n,ql)+' <span style="color:var(--mut)">'+hl(a.s,ql)+'</span></button>')});
+  }
+  $("sRes").innerHTML=out.length?out.join(""):'<div class="hint">'+(ql?"Nothing on Desk matches. Try Search Studio below.":"Type something to search.")+'</div>';
+  $("sCount").textContent=ql?(out.length+" on Desk"):"";
+  $("studio").hidden=true;$("studio").innerHTML="";view("search");
+}
+$("sForm").addEventListener("submit",function(e){e.preventDefault();search($("sIn").value);closeIfPhone()});
+$("studioBtn").onclick=function(){var s=$("studio");s.hidden=false;document.body.classList.add("framed");
+  s.innerHTML='<iframe title="Search Studio" src="./search-grok.html'+(lastQ.trim()?"?q="+encodeURIComponent(lastQ.trim()):"")+'"></iframe>';
+  var f=s.querySelector("iframe");f.addEventListener("load",function(){hookFrame(f)});s.scrollIntoView({block:"start"})};
+
+/* ---------- device lock: PIN (salted SHA-256) + optional fingerprint/face (WebAuthn) ----------
+   Device lock only. These files are public; anyone with the URL can read them. Real privacy = backend seal. */
+var LKEY="realm_desk_lock_v1",IDLE=10*60*1000,last=Date.now(),locked=true;
+function lget(){try{return JSON.parse(localStorage.getItem(LKEY)||"null")}catch(e){return null}}
+function lset(o){localStorage.setItem(LKEY,JSON.stringify(o))}
+function hex(b){return Array.prototype.map.call(new Uint8Array(b),function(x){return ("0"+x.toString(16)).slice(-2)}).join("")}
+function unhex(h){var a=new Uint8Array(h.length/2);for(var i=0;i<a.length;i++)a[i]=parseInt(h.substr(i*2,2),16);return a}
+function hash(salt,pin){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(salt+":"+pin)).then(hex)}
+function b64u(b){var s="",a=new Uint8Array(b);for(var i=0;i<a.length;i++)s+=String.fromCharCode(a[i]);return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function unb64u(s){s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";var r=atob(s),a=new Uint8Array(r.length);for(var i=0;i<r.length;i++)a[i]=r.charCodeAt(i);return a}
+var bioOK=false,fails=0,until=0;
+function bioCheck(){if(!window.PublicKeyCredential||!PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable||!window.isSecureContext)return Promise.resolve(false);
+  return PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable().catch(function(){return false})}
+function lockUI(){
+  var L=lget(),setup=!L||!L.h;
+  $("lkMsg").textContent=setup?"First time on this device: choose a PIN (4 to 8 digits)":"Enter your PIN";
+  $("lkPin2").hidden=!setup;$("lkGo").textContent=setup?"Set PIN":"Unlock";$("lkErr").textContent="";
+  $("lkBio").hidden=!(bioOK&&L&&L.cred);
+  $("lkBioSet").innerHTML=bioOK?(L&&L.cred?'Fingerprint or face unlock is on. <button type="button" id="bioOff">Turn off</button><br>':(L&&L.h?'<button type="button" id="bioOn">Turn on fingerprint or face unlock</button> (after you unlock with your PIN)<br>':'')):"";
+}
+function lock(){locked=true;document.body.classList.add("locked");$("lkPin").value="";$("lkPin2").value="";lockUI();$("appHost").innerHTML="";var s=$("studio");s.hidden=true;s.innerHTML="";if(cur==="app")view("finish");setTimeout(function(){try{$("lkPin").focus()}catch(e){}},50)}
+function unlock(){locked=false;fails=0;document.body.classList.remove("locked");last=Date.now();var L=lget();if(L&&L.wantBio&&!L.cred){L.wantBio=false;lset(L);bioEnrol()}}
+$("lkForm").addEventListener("submit",function(e){e.preventDefault();
+  var p=$("lkPin").value.trim(),L=lget(),err=$("lkErr");
+  if(Date.now()<until){err.textContent="Too many tries. Wait a few seconds.";return}
+  if(!/^\d{4,8}$/.test(p)){err.textContent="Use 4 to 8 digits.";return}
+  if(!L||!L.h){if(p!==$("lkPin2").value.trim()){err.textContent="The two PINs don't match.";return}
+    var salt=hex(crypto.getRandomValues(new Uint8Array(16)));
+    hash(salt,p).then(function(h){lset({s:salt,h:h});$("lkPin").value="";$("lkPin2").value="";lockUI();unlock()});return}
+  hash(L.s,p).then(function(h){if(h===L.h)unlock();else{fails++;err.textContent="Wrong PIN.";$("lkPin").value="";if(fails>=5){until=Date.now()+30000;fails=0}}});
+});
+function bioEnrol(){
+  var uidb=crypto.getRandomValues(new Uint8Array(16));
+  return navigator.credentials.create({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),rp:{name:"Desk"},user:{id:uidb,name:"desk",displayName:"Desk"},
+    pubKeyCredParams:[{type:"public-key",alg:-7},{type:"public-key",alg:-257}],authenticatorSelection:{authenticatorAttachment:"platform",userVerification:"required",residentKey:"discouraged"},timeout:60000,attestation:"none"}})
+  .then(function(c){var L=lget();L.cred=b64u(c.rawId);lset(L);toastLock("Fingerprint or face unlock is on.");return true})
+  .catch(function(){toastLock("Fingerprint or face unlock was not set up.");return false})}
+function bioUnlock(){var L=lget();if(!L||!L.cred)return;
+  navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:[{type:"public-key",id:unb64u(L.cred),transports:["internal"]}],userVerification:"required",timeout:60000}})
+  .then(function(a){if(a&&a.response&&(new Uint8Array(a.response.authenticatorData)[32]&4))unlock();else $("lkErr").textContent="Not verified. Use your PIN."})
+  .catch(function(){$("lkErr").textContent="Not unlocked. Use your PIN."})}
+function toastLock(t){var e=$("lkErr");if(e)e.textContent=t}
+$("lkBio").onclick=bioUnlock;
+$("lkSet").addEventListener("click",function(e){
+  if(e.target.id==="bioOn"){var L=lget();L.wantBio=true;lset(L);$("lkErr").textContent="Enter your PIN, then confirm your fingerprint or face."}
+  if(e.target.id==="bioOff"){var L2=lget();delete L2.cred;lset(L2);lockUI()}
+});
+$("lkReset").onclick=function(){if(!confirm("Reset Desk on this device? This clears the PIN, fingerprint unlock and Desk's saved list here."))return;
+  [LKEY,KEY,MKEY].forEach(function(k){localStorage.removeItem(k)});load();render();mload();mrender();lockUI()};
+$("lockNow").onclick=lock;
+$("lockSettings").onclick=function(){lock()};
+function act(){last=Date.now()}
+["pointerdown","keydown","touchstart","wheel","scroll"].forEach(function(t){addEventListener(t,act,{passive:true,capture:true})});
+function hookFrame(f){try{var w=f.contentWindow;["pointerdown","keydown","touchstart","wheel","scroll"].forEach(function(t){w.addEventListener(t,act,{passive:true,capture:true})})}catch(e){}}
+setInterval(function(){if(!locked&&Date.now()-last>IDLE)lock()},15000);
+document.addEventListener("visibilitychange",function(){if(document.hidden&&!locked)lock()});
+addEventListener("pagehide",function(){if(!locked)lock()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!locked)panel(0)});
+window.__deskTest={idle:function(ms){last=Date.now()-ms}};
+
+var DEVL="Flip 6";try{localStorage.setItem("realm_device","flip6")}catch(e){}
+/* ---------- Ara 2.1 (second brain): owner colour + one-line voice to Ara ---------- */
+var OKEY="realm_owner";function own(o){document.body.classList.toggle("own-julie",o==="julie");$("ownBtn").textContent=o==="julie"?"Julie":"Ange";try{localStorage.setItem(OKEY,o)}catch(e){}}
+own((function(){try{return localStorage.getItem(OKEY)||"ange"}catch(e){return "ange"}})());
+$("ownBtn").onclick=function(){own(document.body.classList.contains("own-julie")?"ange":"julie")};
+var SRC=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,heard="",sent=0;
+function tmsg(t){$("talkMsg").textContent=t}
+/* Android Chrome repeats cumulative results ("hi","hi there","hi there ara"): rebuild from scratch on every event,
+   keep FINAL results only, drop a result that just repeats/extends the previous one, and send ONE line once. */
+function joinFinal(res){var parts=[];for(var i=0;i<res.length;i++){if(!res[i].isFinal)continue;var t=String(res[i][0].transcript||"").trim();if(!t)continue;
+  var p=parts.length?parts[parts.length-1]:"";if(p&&t.toLowerCase().indexOf(p.toLowerCase())===0)parts[parts.length-1]=t;else if(p&&p.toLowerCase().indexOf(t.toLowerCase())===0){}else parts.push(t)}
+  return parts.join(" ").replace(/\s+/g," ").trim()}
+/* "Sent" only after NoteRelay emits landed for this note. A failed call stays queued and retries itself. */
+var araPending={},araGen=0,araHooked=false;
+var ARA_RETRY="Not sent yet. It will retry by itself.";
+function araRelayEv(ev){
+  if(!ev)return;
+  var i,n,item,id,cur;
+  if(ev.state==="landed"){
+    var list=ev.landed||[];
+    for(i=0;i<list.length;i++){
+      n=list[i]&&list[i].noteId;item=n&&araPending[n];if(!item)continue;
+      delete araPending[n];
+      if(item.gen!==araGen)continue;
+      tmsg("Saved on this device and sent to Ara\u2019s inbox.");
+      if($("talkIn").value.trim()===item.t)$("talkIn").value="";
+    }
+  }else if(ev.state==="waiting"||ev.state==="offline"){
+    for(id in araPending){cur=araPending[id];if(cur.gen!==araGen)continue;
+      tmsg(ARA_RETRY);$("talkIn").value="";}
+  }
+}
+function araWaitingId(body){
+  var raw;try{raw=JSON.parse(localStorage.getItem(NoteRelay.OUTBOX)||"[]");}catch(e){return "";}
+  if(!Array.isArray(raw))return "";
+  for(var i=0;i<raw.length;i++){
+    var x=raw[i];if(!x||x.who!=="ara"||typeof x.text!=="string")continue;
+    var nl=x.text.indexOf("\n");
+    if(nl>=0&&x.text.slice(nl+1)===body)return x.noteId||"";
+  }
+  return "";
+}
+function sendAra(t){t=String(t||"").trim();if(!t)return false;var who=document.body.classList.contains("own-julie")?"Julie":"Ange";
+  var id="desk_"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  var body="[Desk · "+DEVL+" · "+who+"] "+t;
+  if(!window.NoteRelay){tmsg("Relay not loaded: saved nothing.");return false;}
+  if(!araHooked&&typeof NoteRelay.onChange==="function"){NoteRelay.onChange(araRelayEv);araHooked=true;}
+  var waiting=araWaitingId(body);
+  if(waiting){
+    if(!araPending[waiting])araPending[waiting]={t:t,gen:araGen};
+    tmsg(ARA_RETRY);$("talkIn").value="";
+    return true;
+  }
+  sent++;window.__araSends=(window.__araSends||0)+1;
+  var gen=++araGen;
+  if(!NoteRelay.queue("ara",id,"Desk voice",body)){tmsg("Wasn\u2019t sent. Your text is still here.");return false;}
+  araPending[id]={t:t,gen:gen};
+  tmsg("Sending\u2026");
+  if(typeof NoteRelay.flush==="function")NoteRelay.flush();
+  return true}
+$("talk").addEventListener("submit",function(e){e.preventDefault();var t=$("talkIn").value.trim();if(!t){tmsg("Say or type something for Ara first.");return}sendAra(t);});
+$("talkMic").onclick=function(){if(!SRC){tmsg("This browser has no mic typing. Type instead.");return}
+  if(rec){rec.stop();return}
+  heard="";var r=rec=new SRC();r.lang="en-AU";r.interimResults=false;r.continuous=false;r.maxAlternatives=1;
+  r.onresult=function(e){heard=joinFinal(e.results);$("talkIn").value=heard};
+  r.onerror=function(e){tmsg(e.error==="not-allowed"?"Mic blocked: allow it in Chrome settings.":"Didn\u2019t catch that.")};
+  r.onend=function(){rec=null;$("talkMic").classList.remove("on");var t=heard;heard="";if(t){$("talkIn").value=t;sendAra(t)}else tmsg("Nothing heard.")};
+  $("talkMic").classList.add("on");tmsg("Listening\u2026 tap again to stop.");try{r.start()}catch(x){rec=null;$("talkMic").classList.remove("on")}};
+
+/* ---------- start ---------- */
+load();render();mload();mrender();
+bioCheck().then(function(ok){bioOK=!!ok;lockUI()});
+lock();
+if(/[?&]panel=1/.test(location.search))panel(1);
+})();
+</script>
+<script src="js/note-relay.js?v=2026.10.20-SB1"></script>
+</body></html>
