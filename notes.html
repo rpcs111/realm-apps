@@ -174,6 +174,9 @@ return api})();</script>
 <script>
 "use strict";
 var TASKS=[];/* v23: old 15 Oct snapshot removed (client data off the public repo); live Google Tasks load below */
+/* TODO: Ange confirms the final names. */
+var TASK_LISTS_ALLOW=["Realm Daily","Julie and Ange","Bills to pay","Remittances"];
+function taskListRank(name){var n=String(name||"").trim().toLowerCase();for(var i=0;i<TASK_LISTS_ALLOW.length;i++)if(String(TASK_LISTS_ALLOW[i]||"").trim().toLowerCase()===n)return i;return -1}
 var TSRC="Google Tasks: connecting…";
 var TK="realm_notes_tasks_v1",NK="realm_scribe_v1";
 function $(i){return document.getElementById(i)}
@@ -190,12 +193,16 @@ function doneBtn(id,k,n){var b=$(id);if(!b)return;b.hidden=!n;b.textContent=(sho
 function drawTasks(){var U=$("tasks");U.textContent="";$("tsrc").textContent=TSRC;var done=0,cols=[],by={};var noteByTask={};notes.forEach(function(n){if(n.task&&n.task.id)noteByTask[n.task.id]=n});
 function isD(t){var tk=ticks[t.id];return tk?!!tk.done:!!t.gdone}
 TASKS.forEach(function(t){if(isD(t))done++;var L=t.live?(t.list||"My Tasks"):"Snapshot (not live)";if(!by[L]){by[L]=[];cols.push(L)}by[L].push(t)});
+var matched=cols.filter(function(L){return taskListRank(L)>=0});
+var showAll=!!cols.length&&!matched.length;
+var viewCols=showAll?cols:matched.slice().sort(function(a,b){return taskListRank(a)-taskListRank(b)});
+if(showAll){var note=mk("p","allownote","Showing every list. None of these names are on the allow-list yet.");note.style.cssText="margin:0 0 8px;padding:6px 10px;border-radius:8px;background:#3a2a08;color:#fbbf24;border:1px solid #b45309;font-size:13px";U.appendChild(note)}
 function row(t,sub){var d=isD(t),li=mk("li",(d?"d":"")+(sub?" sub":""));var b=mk("button","tick"+(d?" d":""),d?"\u2713":"");b.type="button";b.setAttribute("aria-label","Tick "+t.title);b.setAttribute("data-t",t.id);
 b.onclick=function(){var cur=isD(t);ticks[t.id]={done:!cur,at:new Date().toISOString()};lsSet(TK,ticks);drawTasks();ruiCounts()};
 var bd=mk("div","b");bd.appendChild(mk("div","t",t.title));if(t.due)bd.appendChild(mk("span","due",t.due));var ln=t.gid&&noteByTask[t.gid];if(ln){bd.appendChild(mk("span","rlab ok","\u2194 From your note"+(ln.done&&!d?" (note ticked, task still open in Google)":"")))}var meta=[];if(t.notes)meta.push(t.notes);if(!t.live){if(t.scope)meta.push(t.scope);meta.push(t.src+" \u00b7 "+t.snap)}if(meta.length)bd.appendChild(mk("div","n",meta.join("\n")));
 if(t.link&&/\/task\//.test(t.link)){var la=mk("a","gt","Open \u2197");la.href=t.link;la.target="_blank";la.rel="noopener";bd.appendChild(la)}if(t.srcLink){var sa=mk("a","gt","Source \u2197");sa.href=t.srcLink;sa.target="_blank";sa.rel="noopener";bd.appendChild(sa)}
 li.appendChild(b);li.appendChild(bd);return li}
-cols.forEach(function(L){var a=by[L],ids={},kids={},open=0;a.forEach(function(t){ids[t.gid||""]=1});a.forEach(function(t){if(t.parent&&ids[t.parent]){(kids[t.parent]=kids[t.parent]||[]).push(t)}});
+viewCols.forEach(function(L){var a=by[L],ids={},kids={},open=0;a.forEach(function(t){ids[t.gid||""]=1});a.forEach(function(t){if(t.parent&&ids[t.parent]){(kids[t.parent]=kids[t.parent]||[]).push(t)}});
 a.forEach(function(t){if(!isD(t))open++});var c=mk("div","gcol");var h=mk("h3");h.appendChild(document.createTextNode(L));h.appendChild(mk("i",null,open+" open"));c.appendChild(h);var ul=mk("ul");
 a.forEach(function(t){if(t.parent&&ids[t.parent])return;var ch=kids[t.gid]||[];var anyOpen=!isD(t)||ch.some(function(k){return!isD(k)});if(!showDone.t&&!anyOpen)return;if(showDone.t||!isD(t))ul.appendChild(row(t,false));else{var p=row(t,false);ul.appendChild(p)}
 ch.forEach(function(k){if(!showDone.t&&isD(k))return;ul.appendChild(row(k,true))})});

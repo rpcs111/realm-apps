@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="mvHead" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#e0262f"/>
+      <stop offset="0.55" stop-color="#e0262f"/>
+      <stop offset="1" stop-color="#8b0f16"/>
+    </linearGradient>
+    <clipPath id="mvClip">
+      <path d="M256 36C392 36 468 128 468 236C468 332 414 402 346 444C314 470 286 492 256 492C226 492 198 470 166 444C98 402 44 332 44 236C44 128 120 36 256 36Z"/>
+    </clipPath>
+  </defs>
+  <path d="M256 36C392 36 468 128 468 236C468 332 414 402 346 444C314 470 286 492 256 492C226 492 198 470 166 444C98 402 44 332 44 236C44 128 120 36 256 36Z" fill="url(#mvHead)" stroke="#8b0f16" stroke-width="14"/>
+  <g clip-path="url(#mvClip)">
+    <ellipse cx="168" cy="118" rx="108" ry="62" fill="#ffffff" opacity=".22"/>
+    <ellipse cx="360" cy="360" rx="170" ry="190" fill="#8b0f16" opacity=".55"/>
+  </g>
+  <path d="M96 214C128 168 188 162 236 204" fill="none" stroke="#8b0f16" stroke-width="16" stroke-linecap="round"/>
+  <path d="M416 214C384 168 324 162 276 204" fill="none" stroke="#8b0f16" stroke-width="16" stroke-linecap="round"/>
+  <g transform="translate(168 286) rotate(-16)">
+    <ellipse cx="0" cy="0" rx="92" ry="64" fill="#0b0f14"/>
+    <ellipse cx="6" cy="10" rx="34" ry="42" fill="#8b0f16"/>
+    <ellipse cx="-22" cy="-16" rx="22" ry="12" fill="#ffffff" opacity=".9"/>
+  </g>
+  <g transform="translate(344 286) rotate(16)">
+    <ellipse cx="0" cy="0" rx="92" ry="64" fill="#0b0f14"/>
+    <ellipse cx="-6" cy="10" rx="34" ry="42" fill="#8b0f16"/>
+    <ellipse cx="22" cy="-16" rx="22" ry="12" fill="#ffffff" opacity=".9"/>
+  </g>
+  <path d="M214 408Q256 448 298 408" fill="none" stroke="#8b0f16" stroke-width="12" stroke-linecap="round"/>
+</svg>

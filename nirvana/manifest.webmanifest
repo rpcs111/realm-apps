@@ -2,7 +2,7 @@
  "id": "nirvana-v10",
  "name": "Nirvana",
  "short_name": "Nirvana",
- "description": "Nirvana v10.0 \u00b7 2026-10-19 \u00b7 build 2",
+ "description": "Nirvana · v10.0 · 2026-10-20",
  "start_url": "./index.html?app=nirvana",
  "scope": "./",
  "display": "standalone",

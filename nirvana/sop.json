@@ -1,0 +1,185 @@
+{
+  "entries": [
+    {
+      "id": "ara",
+      "name": "Ara 2.1",
+      "icon": "../pwa/lanes/ara.svg",
+      "does": "Ara keeps the four apps in one blue tile.",
+      "helps": "You tap it and go to Ara.",
+      "saves": ["Goal: cut hunting for the right app by 80%.", "Goal: keep the next step on this tile.", "Goal: open Ara in one tap."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Marvin checks it first."]
+    },
+    {
+      "id": "marvin",
+      "name": "Marvin Musk",
+      "icon": "../pwa/lanes/marvin.svg?v=20261020t80",
+      "does": "Final gate. Checks every build and message before it reaches Ange.",
+      "helps": "You get a look before a thing moves.",
+      "saves": ["Goal: cut rework by 80%.", "Goal: catch a miss before it goes out.", "Goal: keep one clear yes or no."],
+      "rules": ["Marvin checks it first.", "Proof, not promises.", "Nothing gets deleted."]
+    },
+    {
+      "id": "terafab",
+      "name": "Terafab",
+      "icon": "../pwa/lanes/terafab.svg",
+      "does": "Terafab holds trades, the shop, the Qantas claim and pay-it-forward.",
+      "helps": "You see those jobs on one gold tile.",
+      "saves": ["Goal: cut searching for a job by 80%.", "Goal: keep each job in its own box.", "Goal: show a draft before it is called done."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Proof, not promises.", "Nothing gets deleted."]
+    },
+    {
+      "id": "falcon9",
+      "name": "Falcon 9",
+      "icon": "../pwa/lanes/falcon9.jpg",
+      "does": "Overnight sweep. Every email, WhatsApp and calendar, swept each night.",
+      "helps": "The overnight sweep lives on this tile.",
+      "saves": ["Goal: cut forgotten loops by 80%.", "Goal: name the loop on the tile.", "Goal: keep the loop in one place."],
+      "rules": ["Marvin checks it first.", "Proof, not promises.", "Nothing gets deleted."]
+    },
+    {
+      "id": "neuralink",
+      "name": "Neuralink",
+      "icon": "../pwa/lanes/neural-mesh.svg",
+      "does": "Neuralink keeps brain dumps and ideas in one place, plus the vaults.",
+      "helps": "You open that place from this tile.",
+      "saves": ["Goal: cut extra steps to the gate by 80%.", "Goal: open the gate and nothing else.", "Goal: keep the lock on this phone."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Marvin checks it first."]
+    },
+    {
+      "id": "nova",
+      "name": "Nova",
+      "does": "The Google lane. Gmail, Drive, Photos and Sheets, sorted in the day.",
+      "helps": "Ara gives Nova her jobs. Falcon 9 sweeps overnight; Nova acts on it in the day.",
+      "saves": ["Goal: cut hunting through Google by 80%.", "Goal: keep Gmail, Drive, Photos and Sheets on one tile.", "Goal: act on the overnight sweep in the day."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Marvin checks it first."]
+    },
+    {
+      "id": "grokification",
+      "name": "Grokification",
+      "icon": "../pwa/lanes/grokification.svg",
+      "does": "Grokification watches the lanes.",
+      "helps": "You see a light that says the watch is on.",
+      "saves": ["Goal: cut guesswork by 80%.", "Goal: keep the light on this tile.", "Goal: show the watch before you scroll."],
+      "rules": ["Marvin checks it first.", "Proof, not promises.", "Nothing gets deleted."]
+    },
+    {
+      "id": "flow",
+      "name": "Flow",
+      "icon": "icons/icon-v10-192.png",
+      "does": "Flow shows the map of the apps.",
+      "helps": "You tap a box and land on that app.",
+      "saves": ["Goal: cut map hunting by 80%.", "Goal: keep each app in one box.", "Goal: open the box you meant."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Proof, not promises."]
+    },
+    {
+      "id": "desk",
+      "name": "Desk",
+      "icon": "icons/icon-v10-192.png",
+      "does": "Desk is the job board for the day.",
+      "helps": "You start from one list.",
+      "saves": ["Goal: cut list hopping by 80%.", "Goal: keep today's jobs in one place.", "Goal: start the next job from the list."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Marvin checks it first."]
+    },
+    {
+      "id": "terafab-page",
+      "name": "Terafab page",
+      "icon": "../pwa/lanes/terafab.svg",
+      "does": "This page is the Terafab sheet.",
+      "helps": "You read each draft job in a big block.",
+      "saves": ["Goal: cut page hopping by 80%.", "Goal: keep each block as a draft.", "Goal: show the sheet before a job is called done."],
+      "rules": ["Proof, not promises.", "Nothing gets deleted.", "Nothing gets sent without Ange saying yes."]
+    },
+    {
+      "id": "after-dark",
+      "name": "After Dark",
+      "icon": "../pwa/lanes/neural-mesh.svg",
+      "does": "After Dark keeps a locked page on this phone.",
+      "helps": "The page stays shut until you open it here.",
+      "saves": ["Goal: cut peeks at the locked page by 80%.", "Goal: keep the lock on this phone.", "Goal: show a sealed line when the page is empty."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Marvin checks it first."]
+    },
+    {
+      "id": "julie",
+      "name": "Julie",
+      "icon": "../pwa/lanes/julie.svg",
+      "does": "Julie gets five big buttons for her day.",
+      "helps": "A tap only says the words on the button.",
+      "saves": ["Goal: cut extra taps by 80%.", "Goal: keep the page to five buttons.", "Goal: leave every other lane closed."],
+      "rules": ["Julie only sees her pink stuff.", "Nothing gets sent without Ange saying yes.", "Nothing gets deleted."]
+    },
+    {
+      "id": "backend",
+      "name": "Backend",
+      "icon": "../pwa/lanes/grokification.svg",
+      "does": "Backend is the plain sheet of the lanes.",
+      "helps": "You read each lane in one row.",
+      "saves": ["Goal: cut sheet hunting by 80%.", "Goal: keep each row a draft.", "Goal: match the rows to the tiles."],
+      "rules": ["Marvin checks it first.", "Nothing gets deleted.", "Proof, not promises."]
+    },
+    {
+      "id": "eleven",
+      "name": "11:11",
+      "icon": "icons/icon-v10-192.png",
+      "does": "11:11 stays off the board.",
+      "helps": "You do not see it in the tile list.",
+      "saves": ["Goal: cut stray links by 80%.", "Goal: keep this page off Julie.", "Goal: show a sealed line when the page is empty."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Julie only sees her pink stuff."]
+    },
+    {
+      "id": "automations",
+      "name": "Automations",
+      "icon": "../pwa/lanes/falcon9.jpg",
+      "does": "Automations shows the seeded cards.",
+      "helps": "A test stays a dry run on this page.",
+      "saves": ["Goal: cut surprise jobs by 80%.", "Goal: keep each test on this page.", "Goal: leave mail and timers alone."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted.", "Proof, not promises."]
+    },
+    {
+      "id": "42star",
+      "name": "42* SOP guide (6-page printable PDF)",
+      "link": "https://drive.google.com/file/d/1VIle9fAxLoh-y4_x3UZ9nPWIJUnhn-n1/view",
+      "does": "The printable guide. The link opens in the browser.",
+      "helps": "The 42 badge opens the same link.",
+      "saves": ["Goal: cut hunting for the guide by 80%."],
+      "rules": ["Nothing gets sent without Ange saying yes.", "Nothing gets deleted."]
+    }
+  ],
+  "automations": [
+    {
+      "name": "Falcon 9 overnight sweep",
+      "schedule": "Each night",
+      "status": "planned",
+      "security": "Dry run only. No keys, tokens, or mailboxes in this file."
+    },
+    {
+      "name": "Pomodoro 5-minute tune",
+      "schedule": "Every 5 minutes",
+      "status": "planned",
+      "security": "Dry run only. Test does not start a timer off this page."
+    },
+    {
+      "name": "Second brain digest / attention / nightly",
+      "schedule": "Digest, attention, and nightly",
+      "status": "planned",
+      "security": "Dry run only. No digest text is stored here."
+    },
+    {
+      "name": "Notes drain",
+      "schedule": "When notes are waiting",
+      "status": "planned",
+      "security": "Dry run only. Notes are not pulled by this card."
+    },
+    {
+      "name": "Nova reply watch",
+      "schedule": "While Nova is open",
+      "status": "planned",
+      "security": "Dry run only. No reply text and no account in this file."
+    },
+    {
+      "name": "Meet recordings feed",
+      "schedule": "After a meeting ends",
+      "status": "planned",
+      "security": "Dry run only. No recording links in this file."
+    }
+  ]
+}

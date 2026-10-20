@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Nirvana infograph</title>
+<style>
+:root{--bg:#0b0f14;--card:#121820;--tx:#e8eef4;--mut:#8a98a8;--ara:#00aeef;--marvin:#e0262f;--gold:#d4af37;--line:#26313d}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{padding:20px 16px 40px}
+.wrap{max-width:720px;margin:0 auto}
+.back{display:inline-flex;align-items:center;min-height:44px;margin:0 0 12px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ara);font:700 13px ui-monospace,Menlo,monospace;text-decoration:none}
+h1{margin:0 0 4px;letter-spacing:.14em;font-size:22px}
+.lead{margin:0 0 16px;color:var(--mut)}
+.chain{display:block;width:100%;height:auto;margin:0 0 18px;border-radius:14px;border:1px solid var(--line);background:#fff}
+ol{list-style:none;margin:0;padding:0}
+li{margin:0 0 10px;padding:12px 14px 14px;border-radius:14px;border:1px solid var(--line);background:linear-gradient(165deg,#121820,#0b0f14);break-inside:avoid}
+li header{display:flex;align-items:center;gap:10px;margin:0 0 6px}
+li img{width:36px;height:36px;display:block;flex:none}
+li.falcon img{object-fit:cover;border-radius:8px}
+li h2{margin:0;font-size:18px}
+li .who{margin:0;color:var(--mut);font-size:13px}
+li p{margin:8px 0 0}
+li .cut{color:var(--mut)}
+li.ara{border-color:var(--ara);background:linear-gradient(165deg,#0a4666,#062033)}
+li.ara h2{color:var(--ara)}
+li.marvin{border-color:var(--marvin);background:linear-gradient(165deg,#3a0a0e,#140306)}
+li.marvin h2{color:var(--marvin)}
+li.tera{border-color:#9c7a1c;background:linear-gradient(160deg,#f3d77a,#d4af37 48%,#9c7a1c);color:#0b0f14}
+li.tera h2,li.tera .who,li.tera p,li.tera .cut{color:#0b0f14}
+@page{size:A4;margin:12mm}
+@media print{
+  html,body{background:#fff;color:#14181d}
+  body{padding:0}
+  .wrap{max-width:none}
+  .noprint{display:none!important}
+  .chain{border-color:#ccc;width:100%;max-width:100%;height:auto;max-height:none;object-fit:contain}
+  li{background:#fff!important;color:#14181d;border-width:1.5px}
+  li .who,li .cut{color:#333}
+  li.ara h2{color:#0077a8}
+  li.marvin h2{color:#e0262f}
+  li.tera{background:#fff8e6!important;color:#14181d}
+  li.tera h2,li.tera .who,li.tera p,li.tera .cut{color:#14181d}
+  h1{letter-spacing:.08em}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back noprint" href="index.html">Board</a>
+<h1>NIRVANA</h1>
+<p class="lead">Five lanes. Short words. Each one has a target, not a score.</p>
+<img class="chain" src="img/NIRVANA_CHAIN_20261020.png" alt="Chain from Ange to Ara, then Marvin, then Terafab.">
+<ol>
+<li class="ara">
+<header><img src="../pwa/lanes/ara.svg" alt="" width="36" height="36"><div><h2>Ara 2.1</h2><p class="who">Blue. The boss bot.</p></div></header>
+<p>She builds Nirvana and runs the daily loop.</p>
+<p class="cut">How it cuts the work: the next step lives on one blue tile. Target: 80% less work hunting for it.</p>
+</li>
+<li class="marvin">
+<header><img src="../pwa/lanes/marvin.svg?v=20261020t80" alt="" width="36" height="36"><div><h2>Marvin</h2><p class="who">Red alien. The final gate.</p></div></header>
+<p>He checks every reply before Ange sees it.</p>
+<p class="cut">How it cuts the work: a bad reply stops with Marvin. Target: 80% less work fixing messages.</p>
+</li>
+<li class="tera">
+<header><img src="../pwa/lanes/terafab.svg" alt="" width="36" height="36"><div><h2>Terafab</h2><p class="who">Gold. The money lane.</p></div></header>
+<p>It covers trades, the shop, the Qantas claim and pay-it-forward.</p>
+<p class="cut">How it cuts the work: those money jobs sit in one gold lane. Target: 80% less work searching for them.</p>
+</li>
+<li class="falcon">
+<header><img src="../pwa/lanes/falcon9.jpg" alt="" width="36" height="36"><div><h2>Falcon 9</h2><p class="who">The overnight sweep.</p></div></header>
+<p>It sweeps email, WhatsApp and the calendar each night.</p>
+<p class="cut">How it cuts the work: the morning starts from one pile. Target: 80% less work chasing those messages.</p>
+</li>
+<li>
+<header><img src="../pwa/lanes/neural-mesh.svg" alt="" width="36" height="36"><div><h2>Neuralink</h2><p class="who">Ideas, and the locked vault.</p></div></header>
+<p>Brain dumps and ideas live here, plus the After Dark vault, which sits behind a PIN.</p>
+<p class="cut">How it cuts the work: the ideas and the vault are on one tile. Target: 80% less work finding them.</p>
+</li>
+</ol>
+</div>
+</body>
+</html>
