@@ -90,10 +90,17 @@ body.julie-on .tf{display:none}
 .suggest{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
 .suggest input{width:auto;flex:1 1 180px;margin:0;text-align:left}
 .suggest button{min-height:44px;border-radius:12px;border:1px solid #26313d;background:#121820;color:#e8eef4;padding:8px 12px;cursor:pointer}
-#sopCard{background:#fff;color:#14181d;border-radius:16px;padding:22px 20px;max-width:640px;margin:0 auto}
-#sopCard h1{color:#14181d;letter-spacing:.08em}
-#sopCard h2{margin:14px 0 4px;font-size:13px;letter-spacing:.12em;color:#6b5a2a}
-#sopCard p{color:#14181d;margin:0}
+#sopCard{background:#fff;color:#14181d;border:1px solid #d4af37;border-radius:18px;padding:22px 18px 26px;max-width:210mm;margin:0 auto}
+#sopCard h1{margin:0;color:#14181d;letter-spacing:.02em;font:700 28px/1.15 system-ui,sans-serif}
+#sopCard h2{margin:16px 0 6px;font:700 12px/1.2 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#9c7a1c}
+#sopCard p,#sopCard li{color:#14181d;margin:0}
+#sopCard ul{margin:0;padding-left:18px}
+#sopCard li{margin:4px 0}
+#sopCard .who{display:flex;align-items:center;gap:14px;margin:0 0 8px}
+#sopCard .who img{width:72px;height:72px;border-radius:16px;background:#0b0f14}
+#sopCard.pink{border-color:#ff5fa2}
+#sopCard.pink h2{color:#ff5fa2}
+#sop .printb{border-color:#d4af37;color:#d4af37}
 .panel .sopc.inline{position:static}
 #cue42{position:fixed;z-index:70;left:calc(10px + env(safe-area-inset-left));bottom:calc(10px + env(safe-area-inset-bottom));box-sizing:border-box;min-width:44px;min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #26313d;background:#121820;color:#8a98a8;font:700 12px ui-monospace,Menlo,monospace;cursor:pointer}
 .cue-toast{position:fixed;z-index:90;left:50%;top:14px;transform:translateX(-50%);max-width:min(92vw,560px);background:#121820;color:#e8eef4;border:1px solid #d4af37;border-radius:12px;padding:12px 14px;font:700 14px/1.35 ui-monospace,Menlo,monospace;text-align:center}
@@ -103,10 +110,12 @@ body.julie-on .tf{display:none}
   .lane-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
   .agrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 }
+@page{size:A4 portrait;margin:14mm}
 @media print{
+  html,body{background:#fff}
   body *{visibility:hidden}
   #sopCard,#sopCard *{visibility:visible}
-  #sopCard{position:absolute;left:0;top:0;width:100%;box-shadow:none}
+  #sopCard{position:absolute;left:0;top:0;width:100%;box-shadow:none;border-radius:0}
   .noprint{display:none!important}
 }
 </style></head>
@@ -115,18 +124,18 @@ body.julie-on .tf{display:none}
 <div class="board" id="board"><div class="w"><div class="lk">
 <div class="gate">
 <img src="icons/icon-v10-192.png" width="88" height="88" alt="">
-<h2>NIRVANA</h2><a class="sopc pagechip" href="sop.html?lane=grokification">SOP</a><div class="st">Nirvana · Ara 2.1 · 2026.10.20-SB1 · second brain</div><div class="st" style="color:#8a98a8" id="nvDev"></div>
+<h2>NIRVANA</h2><a class="sopc pagechip" href="#sop?lane=grokification">SOP</a><div class="st">Nirvana · Ara 2.1 · 2026.10.20-SB1 · second brain</div><div class="st" style="color:#8a98a8" id="nvDev"></div>
 <p id="msg">Enter your key once on this phone</p>
 <form id="f" autocomplete="off"><input id="k" type="password" placeholder="Key" autocomplete="current-password" aria-label="Key"><button id="b" type="submit">Unlock</button></form>
 <div class="err" id="e"></div>
 <div class="ln"><a href="index.html">Nirvana</a><a href="flow.html">Flow</a><a href="live.html">Live</a><a href="raw.html">Raw</a><a href="versions.html">Versions</a></div>
-<div class="ap4"><b>ARA 2.1 · THE FOUR APPS</b><a href="../desk.html?d=fold8">Desk · Fold 8<span>open</span></a><a href="../desk-flip6.html?d=flip6">Desk · Flip 6<span>open</span></a><a class="sopc inline" href="sop.html?lane=desk">SOP</a><a href="../certstudio.html">Cert Studio<span>open</span></a><a href="../map.html">Flow map<span id="flowMapStatus">open</span></a></div>
+<div class="ap4"><b>ARA 2.1 · THE FOUR APPS</b><a href="../desk.html?d=fold8">Desk · Fold 8<span>open</span></a><a href="../desk-flip6.html?d=flip6">Desk · Flip 6<span>open</span></a><a class="sopc inline" href="#sop?lane=desk">SOP</a><a href="../certstudio.html">Cert Studio<span>open</span></a><a href="../map.html">Flow map<span id="flowMapStatus">open</span></a></div>
 </div>
 <section class="lanes" aria-label="Lanes">
 <b class="lanes-k">LANES</b>
 <div class="lane head">
 <div class="go"><img src="../pwa/lanes/grokification.svg" width="36" height="36" alt=""><svg class="lights" viewBox="0 0 14 40" aria-label="Oversight"><circle cx="7" cy="6" r="4" fill="#26313d"/><circle cx="7" cy="18" r="4" fill="#26313d"/><circle cx="7" cy="32" r="4" fill="#22c58b"/></svg><span class="nm">Grokification · GM</span><i class="dot" aria-hidden="true"></i><span class="role">Grokification lane.</span></div>
-<a class="sopc" href="sop.html?lane=grokification">SOP</a>
+<a class="sopc" href="#sop?lane=grokification">SOP</a>
 </div>
 <div class="lane-grid" id="laneGrid"></div>
 </section>
@@ -135,7 +144,7 @@ body.julie-on .tf{display:none}
 
 <section id="after-dark" class="panel" aria-label="After Dark">
 <div class="wrap cardbox">
-<p><a class="back" href="#board">Board</a> <a class="sopc inline" href="sop.html?lane=after-dark">SOP</a></p>
+<p><a class="back" href="#board">Board</a> <a class="sopc inline" href="#sop?lane=after-dark">SOP</a></p>
 <img src="../pwa/lanes/neural-mesh.svg" width="72" height="72" alt="">
 <h1>AFTER DARK</h1>
 <p id="darkAsk">Set a PIN</p>
@@ -147,14 +156,14 @@ body.julie-on .tf{display:none}
 
 <section id="backend" class="panel" aria-label="Backend">
 <div class="wrap">
-<div class="bar"><div><h1>BACKEND</h1><p>2026.10.20-LANES</p></div> <a class="back" href="#board">Board</a> <a class="sopc inline" href="sop.html?lane=backend">SOP</a></div>
+<div class="bar"><div><h1>BACKEND</h1><p>2026.10.20-LANES</p></div> <a class="back" href="#board">Board</a> <a class="sopc inline" href="#sop?lane=backend">SOP</a></div>
 <p>Z Fold 8 side button opens Ara 2.1; owner Marvin; money prompts route to Terafab.</p>
 <table class="sheet">
 <thead><tr><th>Lane</th><th>Role</th><th>Status</th></tr></thead>
 <tbody>
 <tr><td><img src="../pwa/lanes/grokification.svg" width="22" height="22" alt="">Grokification</td><td>Grokification lane. Oversight light on.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/ara.svg" width="22" height="22" alt="">Ara 2.1</td><td>Second brain for the four apps.</td><td>draft</td></tr>
-<tr><td><img src="../pwa/lanes/marvin.svg" width="22" height="22" alt="">Marvin Musk</td><td>Marvin Musk lane.</td><td>draft</td></tr>
+<tr><td><img src="../pwa/lanes/marvin.svg" width="22" height="22" alt="Marvin Musk" title="Marvin Musk" aria-label="Marvin Musk">Marvin Musk</td><td>Marvin Musk lane.</td><td>draft</td></tr>
 <tr><td></td><td>Infra — task under Marvin/Bastion.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/terafab.svg" width="22" height="22" alt="">Terafab</td><td>Money: trades, F&amp;H store, Qantas, pay-it-forward.</td><td>draft</td></tr>
 <tr><td><img src="../pwa/lanes/falcon9.svg" width="22" height="22" alt="">Falcon 9</td><td>Falcon 9 lane.</td><td>draft</td></tr>
@@ -166,7 +175,7 @@ body.julie-on .tf{display:none}
 
 <section id="eleven" class="panel" aria-label="11:11">
 <div class="wrap cardbox">
-<p><a class="back" href="#board">Board</a> <a class="sopc inline" href="sop.html?lane=eleven">SOP</a></p>
+<p><a class="back" href="#board">Board</a> <a class="sopc inline" href="#sop?lane=eleven">SOP</a></p>
 <img src="icons/icon-v10-192.png" width="72" height="72" alt="">
 <h1>11:11</h1>
 <p id="elevenAsk">Set a PIN</p>
@@ -178,7 +187,7 @@ body.julie-on .tf{display:none}
 
 <section id="julie" class="panel" aria-label="Julie">
 <div class="wrap">
-<div class="bar"><img src="../pwa/lanes/julie.svg" width="56" height="56" alt=""><h1>Julie</h1> <button type="button" class="back" id="julieBack">Board</button> <a class="sopc inline" href="sop.html?lane=julie">SOP</a></div>
+<div class="bar"><img src="../pwa/lanes/julie.svg" width="56" height="56" alt=""><h1>Julie</h1> <button type="button" class="back" id="julieBack">Board</button> <a class="sopc inline" href="#sop?lane=julie">SOP</a></div>
 <button type="button" class="jbtn">What's on today?</button>
 <button type="button" class="jbtn">Tick a job done</button>
 <button type="button" class="jbtn">Add a note</button>
@@ -191,17 +200,30 @@ body.julie-on .tf{display:none}
 <section id="terafab" class="panel" aria-label="Terafab">
 <div class="wrap">
 <div class="bar goldh"><img src="../pwa/lanes/terafab.svg" width="48" height="48" alt=""><div><h1>TERAFAB</h1><p>2026.10.20-LANES · SOP draft</p></div></div>
-<p><a class="back" href="#board">Board</a> <a class="sopc inline" href="sop.html?lane=terafab-page">SOP</a></p>
+<p><a class="back" href="#board">Board</a> <a class="sopc inline" href="#sop?lane=terafab-page">SOP</a></p>
 <section class="block"><h2>Trades</h2><p>The work this lane is tracking.</p><div class="draft">Status: draft</div></section>
-<section class="block"><h2>F&amp;H store</h2><p>Store lane, held as a draft.</p><div class="draft">Status: draft</div></section>
+<section class="block"><h2>Frankie and Henry</h2><p>Store section, held as a draft.</p><div class="draft">Status: draft</div></section>
 <section class="block"><h2>Qantas</h2><p>Travel lane, held as a draft.</p><div class="draft">Status: draft</div></section>
 <section class="block"><h2>Pay-it-forward</h2><p>The give-forward lane.</p><div class="draft">Status: draft</div></section>
 </div>
 </section>
 
+<section id="sop" class="panel" aria-label="SOP">
+<div class="wrap">
+<p class="noprint"><a class="back" href="#board">Board</a> <button type="button" class="printb" id="sopPrint">Download / Print</button></p>
+<article id="sopCard">
+<header class="who"><img id="sopIcon" alt="" width="72" height="72" hidden><h1 id="sopName">SOP</h1></header>
+<h2>What it does</h2><p id="sopDoes"></p>
+<h2>How it helps you</h2><p id="sopHelps"></p>
+<h2>How it saves time</h2><ul id="sopSaves"></ul>
+<h2>Rules it follows</h2><ul id="sopRules"></ul>
+</article>
+</div>
+</section>
+
 <section id="automations" class="panel" aria-label="Automations">
 <div class="wrap">
-<div class="bar"><div><h1>AUTOMATIONS</h1><p>Seeded list. Test is a dry run.</p></div> <a class="back" href="#board">Board</a> <a class="sopc inline" href="sop.html?lane=automations">SOP</a></div>
+<div class="bar"><div><h1>AUTOMATIONS</h1><p>Seeded list. Test is a dry run.</p></div> <a class="back" href="#board">Board</a> <a class="sopc inline" href="#sop?lane=automations">SOP</a></div>
 <div class="agrid" id="autoList"><p id="autoEmpty">Loading.</p></div>
 </div>
 </section>
@@ -246,9 +268,11 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     var href="";
     if(lane.bot){araId=lane.bot;href="https://cursor.com/grok-bot/link/v1/agent?id="+lane.bot}
     else if(lane.href)href=lane.href;
-    var img='<img src="'+lane.icon+'" width="36" height="36" alt=""><span class="nm">'+lane.name+'</span><i class="dot" aria-hidden="true"></i><span class="role">'+lane.role+'</span>';
-    var go=href?'<a class="go"'+(lane.bot?' id="araLane" rel="noopener"':'')+' href="'+href+'">'+img+'</a>':'<button type="button" class="go">'+img+'</button>';
-    return '<div class="lane'+(lane.cls?' '+lane.cls:'')+'">'+go+'<a class="sopc" href="sop.html?lane='+encodeURIComponent(lane.sop||lane.id)+'">SOP</a></div>';
+    var mark=lane.name==="Marvin Musk";
+    var img='<img src="'+lane.icon+'" width="36" height="36" alt="'+(mark?"Marvin Musk":"")+'"'+(mark?' title="Marvin Musk" aria-label="Marvin Musk"':'')+'><span class="nm">'+lane.name+'</span><i class="dot" aria-hidden="true"></i><span class="role">'+lane.role+'</span>';
+    var named=mark?' aria-label="Marvin Musk" title="Marvin Musk"':'';
+    var go=href?'<a class="go"'+(lane.bot?' id="araLane" rel="noopener"':'')+named+' href="'+href+'">'+img+'</a>':'<button type="button" class="go"'+named+'>'+img+'</button>';
+    return '<div class="lane'+(lane.cls?' '+lane.cls:'')+'">'+go+'<a class="sopc" href="#sop?lane='+encodeURIComponent(lane.sop||lane.id)+'">SOP</a></div>';
   }).join("");
   var a=document.getElementById("araLane");
   if(a&&araId&&/Android/i.test(navigator.userAgent)){
@@ -265,7 +289,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
   }
 })();
 (function(){
-  var PANELS=["after-dark","backend","eleven","julie","terafab","automations"];
+  var PANELS=["after-dark","backend","eleven","julie","terafab","sop","automations"];
   var SOP=null;
   function hashBits(){
     var raw=(location.hash||"").replace(/^#/,"");
@@ -279,10 +303,27 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     var name=PANELS.indexOf(bits.name)>=0?bits.name:"";
     document.getElementById("board").hidden=!!name;
     PANELS.forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle("on",id===name)});
-    document.body.classList.toggle("julie-on",name==="julie");
-    if(bits.name==="sop"){location.replace("sop.html"+(bits.q?"?"+bits.q:""));return}
-    var titles={"after-dark":"After Dark",backend:"Nirvana backend",eleven:"11:11",julie:"Julie",terafab:"Terafab",automations:"Automations"};
+    if(name==="sop")fillSop();
+    var lane=new URLSearchParams(bits.q).get("lane");
+    document.body.classList.toggle("julie-on",name==="julie"||(name==="sop"&&lane==="julie"));
+    var titles={"after-dark":"After Dark",backend:"Nirvana backend",eleven:"11:11",julie:"Julie",terafab:"Terafab",sop:"SOP",automations:"Automations"};
     document.title=name?(titles[name]||"Nirvana"):"Nirvana";
+  }
+  function rows(el,list){el.innerHTML="";(list||[]).forEach(function(t){var li=document.createElement("li");li.textContent=t;el.appendChild(li)})}
+  function fillSop(){
+    var id=new URLSearchParams(hashBits().q).get("lane")||new URLSearchParams(hashBits().q).get("page")||"";
+    var list=(SOP&&SOP.entries)||[];
+    var hit=null;
+    for(var i=0;i<list.length;i++)if(list[i].id===id)hit=list[i];
+    document.getElementById("sopCard").classList.toggle("pink",id==="julie");
+    document.getElementById("sopName").textContent=hit?hit.name:"SOP";
+    document.getElementById("sopDoes").textContent=hit?hit.does:(SOP?"This card is not written yet.":"SOP file missing");
+    document.getElementById("sopHelps").textContent=hit?hit.helps:"";
+    rows(document.getElementById("sopSaves"),hit?hit.saves:[]);
+    rows(document.getElementById("sopRules"),hit?(Array.isArray(hit.rules)?hit.rules:[hit.rules].filter(Boolean)):[]);
+    var img=document.getElementById("sopIcon");
+    if(hit&&hit.icon){img.hidden=false;img.src=hit.icon;img.alt=hit.name||"";if(hit.name==="Marvin Musk"){img.alt="Marvin Musk";img.title="Marvin Musk";img.setAttribute("aria-label","Marvin Musk")}}
+    else img.hidden=true;
   }
   function renderAuto(){
     var host=document.getElementById("autoList");
@@ -311,6 +352,8 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     var kept=ev.target.querySelector(".kept");
     if(kept)kept.textContent="Not sent.";
   });
+  document.getElementById("sopPrint").addEventListener("click",function(){window.print()});
+  window.__nvShow=show;
   function b64e(buf){var b=new Uint8Array(buf),s="";for(var i=0;i<b.length;i++)s+=String.fromCharCode(b[i]);return btoa(s)}
   async function sealLocal(secret){
     var salt=crypto.getRandomValues(new Uint8Array(16));
@@ -384,7 +427,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
   pad(document.getElementById("elevenPad"),document.getElementById("elevenDots"),document.getElementById("elevenOut"),document.getElementById("elevenAsk"),"eleven.enc.json","sealed","nv_gate_eleven_v1");
   window.addEventListener("hashchange",show);
   show();
-  fetch("sop.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("sop");return r.json()}).then(function(d){SOP=d;renderAuto()}).catch(function(){var n=document.getElementById("autoEmpty");if(n)n.textContent="SOP file missing"});
+  window.__nvSopReady=fetch("sop.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("sop");return r.json()}).then(function(d){SOP=d;window.__nvSop=d;renderAuto();if(hashBits().name==="sop")fillSop()}).catch(function(){var n=document.getElementById("autoEmpty");if(n)n.textContent="SOP file missing"});
 })();
 (function(){
   var errs=window.__nvErrs||(window.__nvErrs=[]);
@@ -412,8 +455,30 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
       var href2=as[k].getAttribute("href");if(href2.charAt(0)==="#")continue;var abs2=same(href2);if(!abs2||seen[abs2])continue;seen[abs2]=1;
       try{var r2=await fetch(abs2,{method:"HEAD",cache:"no-store"});if(!r2.ok)fails.push("link "+r2.status+" "+href2)}catch(e2){fails.push("link "+href2)}
     }
-    var sopOnly=same("sop.html");
-    if(sopOnly&&!seen[sopOnly]){seen[sopOnly]=1;try{var rSop=await fetch(sopOnly,{method:"HEAD",cache:"no-store"});if(!rSop.ok)fails.push("link "+rSop.status+" sop.html")}catch(eSop){fails.push("link sop.html")}}
+    if(window.__nvSopReady){try{await window.__nvSopReady}catch(eReady){fails.push("sop file")}}
+    var savedHash=location.hash;
+    function openRoute(hash){location.hash=hash;if(window.__nvShow)window.__nvShow()}
+    ["terafab","after-dark","julie","backend","eleven"].forEach(function(id){
+      openRoute(id);
+      var el=document.getElementById(id);
+      if(!el||!el.classList.contains("on")||!document.getElementById("board").hidden)fails.push("panel #"+id);
+    });
+    var sopIds=(window.__nvSop&&window.__nvSop.entries||[]).map(function(e){return e.id});
+    if(!sopIds.length)fails.push("sop entries");
+    sopIds.forEach(function(id){
+      openRoute("sop?lane="+encodeURIComponent(id));
+      var card=document.getElementById("sop");
+      var nm=document.getElementById("sopName").textContent;
+      if(!card||!card.classList.contains("on")||!nm)fails.push("panel #sop?lane="+id);
+      if(id==="marvin"&&nm!=="Marvin Musk")fails.push("marvin label");
+    });
+    if(savedHash)location.hash=savedHash.replace(/^#/,"");
+    else history.replaceState(null,"",location.pathname+location.search);
+    if(window.__nvShow)window.__nvShow();
+    var named=document.querySelector('#laneGrid img[alt="Marvin Musk"]');
+    var labelBlob=(document.body.innerText||"")+" "+[].map.call(document.querySelectorAll("[alt],[aria-label],[title]"),function(el){return (el.getAttribute("alt")||"")+" "+(el.getAttribute("aria-label")||"")+" "+(el.getAttribute("title")||"")}).join(" ");
+    if(!named||named.getAttribute("title")!=="Marvin Musk"||named.getAttribute("aria-label")!=="Marvin Musk")fails.push("marvin label");
+    if(/\balien\b|\brobot\b/i.test(labelBlob))fails.push("extra name");
     if(errs.length)fails=fails.concat(errs.map(function(x){return "console "+x}));
     var text=fails.length?fails.join(" · "):"The answer is 42 · PASS";
     var toast=document.getElementById("cueToast");

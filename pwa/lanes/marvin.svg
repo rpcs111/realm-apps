@@ -19,7 +19,7 @@
     <line x1="88" y1="120" x2="110" y2="134" stroke-width="10"/>
     <line x1="424" y1="120" x2="402" y2="134" stroke-width="10"/>
   </g>
-  <!-- big almond alien eyes, slightly droopy -->
+  <!-- big almond eyes, slightly droopy -->
   <path d="M164 270 C190 244 236 254 240 292 C214 310 176 302 164 270 Z" fill="#d4af37"/>
   <path d="M348 270 C322 244 276 254 272 292 C298 310 336 302 348 270 Z" fill="#d4af37"/>
   <path d="M168 262 L236 274" stroke="#0b0f14" stroke-width="8" stroke-linecap="round"/>

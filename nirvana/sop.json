@@ -13,7 +13,7 @@
       "id": "marvin",
       "name": "Marvin Musk",
       "icon": "../pwa/lanes/marvin.svg",
-      "does": "Marvin is the checker with the big cracked head.",
+      "does": "Marvin Musk checks the work before it moves.",
       "helps": "You get a look before a thing moves.",
       "saves": ["Goal: cut rework by 80%.", "Goal: catch a miss before it goes out.", "Goal: keep one clear yes or no."],
       "rules": ["Marvin checks it first.", "Proof, not promises.", "Nothing gets deleted."]
