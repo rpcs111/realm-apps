@@ -1,0 +1,138 @@
+{
+  "entries": [
+    {
+      "id": "grokification",
+      "name": "Grokification",
+      "does": "Holds the oversight light on the lane board.",
+      "helps": "Shows the board is being watched.",
+      "goal": "The oversight light matches the board on 80% of opens.",
+      "rules": "The light stays on the header tile. This chip does not add a bot."
+    },
+    {
+      "id": "ara",
+      "name": "Ara 2.1",
+      "does": "Second brain for the four apps.",
+      "helps": "Opens the Ara lane from the board.",
+      "goal": "80% of board opens reach Ara without a wrong tile.",
+      "rules": "This tile stays cyan-blue. It is the only tile with the Ara deep link."
+    },
+    {
+      "id": "marvin",
+      "name": "Marvin Musk",
+      "does": "Marvin Musk lane.",
+      "helps": "Marks the Marvin Musk seat on the board.",
+      "goal": "The tile name stays Marvin Musk on 80% of reviews.",
+      "rules": "Use the alien mark. Do not rename the tile."
+    },
+    {
+      "id": "terafab",
+      "name": "Terafab",
+      "does": "Money: trades, F&H store, Qantas, pay-it-forward.",
+      "helps": "Keeps the money lane on one gold tile.",
+      "goal": "80% of money prompts land on this lane.",
+      "rules": "No gear. No amounts on this card. The role line stays as written."
+    },
+    {
+      "id": "falcon",
+      "name": "Falcon 9",
+      "does": "Falcon 9 lane.",
+      "helps": "Holds the daytime loop on the board.",
+      "goal": "The daytime loop is named on 80% of board checks.",
+      "rules": "Status stays draft until the owner says otherwise."
+    },
+    {
+      "id": "neuralink",
+      "name": "Neuralink",
+      "does": "Opens the After Dark gate.",
+      "helps": "Puts the lock one tap from the board.",
+      "goal": "80% of Neuralink taps open the gate and nothing else.",
+      "rules": "The gate asks for a PIN. The vault file is not in the repo."
+    },
+    {
+      "id": "after-dark",
+      "name": "After Dark",
+      "does": "PIN gate for the locked panel.",
+      "helps": "Keeps vault text off the public board.",
+      "goal": "80% of opens ask for a PIN before any vault read.",
+      "rules": "No PIN and no vault text in the repo. A missing file says the vault is sealed."
+    },
+    {
+      "id": "backend",
+      "name": "Backend",
+      "does": "Lists each lane, its role, and draft status.",
+      "helps": "Gives one plain sheet for the board.",
+      "goal": "80% of lane rows match the board tiles.",
+      "rules": "Infra is a task under Marvin/Bastion, not a tile. The side-button note stays on this sheet only."
+    },
+    {
+      "id": "eleven",
+      "name": "11:11",
+      "does": "Hidden PIN gate.",
+      "helps": "Keeps this panel off the board.",
+      "goal": "80% of visits arrive from the Nirvana header long-press.",
+      "rules": "No board link. No Julie link. A missing file says sealed."
+    },
+    {
+      "id": "julie",
+      "name": "Julie",
+      "does": "Five prompts for the day.",
+      "helps": "Gives Julie a large-type panel.",
+      "goal": "80% of taps only echo the prompt.",
+      "rules": "This panel only echoes the five prompts. It does not open another lane."
+    },
+    {
+      "id": "automations",
+      "name": "Automations",
+      "does": "Shows the seeded automation cards.",
+      "helps": "Lets a dry run show the self-check.",
+      "goal": "80% of Test presses stay a dry run.",
+      "rules": "No secrets in the seed. Test does not send mail or start a job."
+    },
+    {
+      "id": "sop",
+      "name": "SOP",
+      "does": "Prints the does, helps, 80% goal, and rules for one tile or panel.",
+      "helps": "Puts the card on paper.",
+      "goal": "80% of tiles open a card that prints.",
+      "rules": "One card at a time. No secrets on the card."
+    }
+  ],
+  "automations": [
+    {
+      "name": "Falcon 9 daytime loop",
+      "schedule": "Daytime loop",
+      "status": "running",
+      "security": "Dry run only. No keys, tokens, or mailboxes in this file."
+    },
+    {
+      "name": "Pomodoro 5-minute tune",
+      "schedule": "Every 5 minutes",
+      "status": "running",
+      "security": "Dry run only. Test does not start a timer off this page."
+    },
+    {
+      "name": "Second brain digest / attention / nightly",
+      "schedule": "Digest, attention, and nightly",
+      "status": "running",
+      "security": "Dry run only. No digest text is stored here."
+    },
+    {
+      "name": "Notes drain",
+      "schedule": "When notes are waiting",
+      "status": "paused",
+      "security": "Dry run only. Notes are not pulled by this card."
+    },
+    {
+      "name": "Nova reply watch",
+      "schedule": "While Nova is open",
+      "status": "paused",
+      "security": "Dry run only. No reply text and no account in this file."
+    },
+    {
+      "name": "Meet recordings feed",
+      "schedule": "After a meeting ends",
+      "status": "running",
+      "security": "Dry run only. No recording links in this file."
+    }
+  ]
+}

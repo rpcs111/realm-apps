@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script>window.__nvErrs=[];window.addEventListener("error",function(e){var t=e.target;var src=t&&t!==window&&(t.currentSrc||t.src||t.href);window.__nvErrs.push(src?("resource "+src):(e.message||"error"))},true);window.addEventListener("unhandledrejection",function(e){window.__nvErrs.push(String(e.reason&&e.reason.message||e.reason||"rejection"))});</script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
@@ -14,7 +12,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline' 'self'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'">
 <link rel="manifest" href="manifest.webmanifest?v=2026-10-19-v10.0-b2"><link rel="icon" href="icons/icon-v10-192.png"><link rel="apple-touch-icon" href="icons/icon-v10-180.png">
 <style>
 :root{--bg:#0b0f14;--bg2:#121820;--bg3:#1a222c;--ln:#26313d;--tx:#e8eef4;--mut:#8a98a8;--c:#00aeef;--g:#60ff15;--red:#ff5a5a;--amb:#ffb020;--ok:#3ddc84;--top:52px}
@@ -83,13 +81,6 @@ main{padding:4px 12px 40px;max-width:900px;margin:0 auto}
 #araSym{all:unset;box-sizing:border-box;position:fixed;z-index:2147482500;right:calc(12px + env(safe-area-inset-right));bottom:calc(14px + env(safe-area-inset-bottom));left:auto;top:auto;width:44px;height:44px;min-width:44px;min-height:44px;margin:0;padding:0;border:0;border-radius:50%;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #araSym::before{content:"";position:absolute;inset:4px;border-radius:50%;background:#0b0f1a url(../pwa/hub-ara-v3-192.svg) center/cover no-repeat;border:1.5px solid #a78bfa;box-sizing:border-box}
 #araSym:focus-visible{outline:2px solid #fff;outline-offset:2px}
-
-.tf{position:fixed;z-index:70;top:calc(10px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right));box-sizing:border-box;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid #d4af37;border-radius:12px;background:#121820;text-decoration:none}
-.tf img{width:22px;height:22px;display:block;margin:0;border-radius:0}
-#cue42{position:fixed;z-index:80;left:calc(10px + env(safe-area-inset-left));bottom:calc(10px + env(safe-area-inset-bottom));box-sizing:border-box;min-width:44px;min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #26313d;background:#121820;color:#8a98a8;font:700 12px ui-monospace,Menlo,monospace;cursor:pointer}
-.cue-toast{position:fixed;z-index:90;left:50%;top:14px;transform:translateX(-50%);max-width:min(92vw,560px);background:#121820;color:#e8eef4;border:1px solid #d4af37;border-radius:12px;padding:12px 14px;font:700 14px/1.35 ui-monospace,Menlo,monospace;text-align:center}
-.cue-toast.pass{color:#60ff15;border-color:#60ff15}
-.cue-toast.fail{color:#ff5a5a;border-color:#ff5a5a}
 </style>
 </head>
 <body class="locked">
@@ -250,9 +241,5 @@ const saved=localStorage.getItem(LS);if(saved)unlock(saved,true);else $("lkI").f
 })();
 </script>
 <button id="araSym" type="button" aria-label="Ara" title="Ara"></button>
-<a class="tf" href="terafab.html" aria-label="Terafab"><img src="../pwa/lanes/terafab.svg" alt=""></a>
-<button type="button" id="cue42">42</button>
-<div id="cueToast" class="cue-toast" role="status" hidden></div>
-<script src="cue42.js"></script>
 </body>
 </html>

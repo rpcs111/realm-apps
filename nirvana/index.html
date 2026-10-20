@@ -28,30 +28,93 @@ button{font:inherit;color:inherit}
 .lanes{margin-top:18px;text-align:left}
 .lanes-k{display:block;font:700 11px ui-monospace,Menlo,monospace;color:#d4af37;letter-spacing:.14em;margin:0 0 8px}
 .lane-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.lane{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:100%;min-width:0;min-height:96px;box-sizing:border-box;padding:12px 28px 10px 12px;border-radius:14px;border:1px solid #d4af37;background:linear-gradient(165deg,#121820,#0b0f14);color:#e8eef4;text-decoration:none;text-align:left;cursor:pointer}
-.lane.head{flex-direction:row;align-items:center;gap:10px;min-height:72px;margin-bottom:8px;padding-right:28px}
+.lane{position:relative;width:100%;min-width:0;min-height:96px;box-sizing:border-box;border-radius:14px;border:1px solid #d4af37;background:linear-gradient(165deg,#121820,#0b0f14);color:#e8eef4}
+.lane.head{min-height:72px;margin-bottom:8px}
+.lane .go{display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:100%;min-height:96px;box-sizing:border-box;padding:12px 28px 36px 12px;border:0;background:transparent;color:inherit;text-decoration:none;text-align:left;cursor:pointer;font:inherit}
+.lane.head .go{flex-direction:row;align-items:center;gap:10px;min-height:72px;padding-right:72px}
 .lane img{width:36px;height:36px;display:block;flex:none}
 .lane .nm{font-weight:700;font-size:14px;overflow-wrap:anywhere}
 .lane .role{color:#8a98a8;font-size:11.5px;line-height:1.3;overflow-wrap:anywhere}
 .lane .dot{position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%;background:#60ff15}
+.lane.ara{border-color:#00aeef;background:linear-gradient(165deg,#0a4666,#062033);color:#e7f7ff}
+.lane.ara .nm{color:#00aeef}
+.lane.ara .role{color:#9ed8f2}
+.lane.tera{border-color:#9c7a1c;background:linear-gradient(160deg,#f6e2a0,#d4af37 48%,#9c7a1c);color:#1a1406}
+.lane.tera .role{color:#3d3112}
+.lane.tera .dot{background:#0b8f55}
 .lights{width:14px;height:40px;flex:none;display:block}
+.sopc{position:absolute;right:8px;bottom:8px;z-index:2;min-height:28px;min-width:44px;padding:4px 8px;border-radius:999px;border:1px solid #d4af37;background:#0b0f14;color:#d4af37;font:700 10px ui-monospace,Menlo,monospace;cursor:pointer}
+.lane.ara .sopc{border-color:#00aeef;color:#00aeef}
+.lane.head .sopc{bottom:auto;top:50%;transform:translateY(-50%)}
 .gate h2{user-select:none;-webkit-user-select:none;touch-action:manipulation}
 .tf{position:fixed;z-index:70;top:calc(10px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right));box-sizing:border-box;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid #d4af37;border-radius:12px;background:#121820;text-decoration:none}
 .tf img{width:22px;height:22px;display:block}
+body.julie-on .tf{display:none}
 .nv-foot{display:flex;justify-content:flex-start;align-items:center;margin-top:18px}
 .be{color:#5c6b7a;font-size:11px;text-decoration:none}
+.panel{display:none;min-height:100vh;box-sizing:border-box;padding:64px 16px 88px}
+.panel.on{display:block}
+.panel .wrap{max-width:860px;margin:0 auto}
+.panel h1{margin:0;letter-spacing:.12em;font-size:22px}
+.bar{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.bar img{width:48px;height:48px;display:block}
+.back,.printb,.dry,.status{min-height:44px;border-radius:12px;border:1px solid #26313d;background:#121820;color:#00aeef;padding:8px 12px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.sheet{width:100%;border-collapse:collapse;background:#121820}
+.sheet th,.sheet td{text-align:left;padding:8px 10px;border:1px solid #26313d;vertical-align:top}
+.sheet th{font-size:12px;letter-spacing:.08em;color:#8a98a8}
+.sheet td img{width:22px;height:22px;vertical-align:middle;margin-right:6px}
+.block{background:linear-gradient(165deg,#121820,#0b0f14);border:1px solid #d4af37;border-radius:14px;padding:12px 14px;margin:0 0 10px}
+.block h2{margin:0 0 4px;font-size:16px}
+.draft{margin-top:6px;font:700 12px ui-monospace,Menlo,monospace;color:#d4af37}
+.goldh{background:linear-gradient(160deg,#f6e2a0,#d4af37 48%,#9c7a1c);color:#1a1406;border-radius:14px;padding:12px}
+.goldh h1,.goldh p{color:#1a1406}
+.cardbox{width:100%;max-width:360px;margin:0 auto;text-align:center}
+.cardbox>img{width:72px;height:72px;display:block;margin:0 auto 8px}
+.dots{display:flex;gap:10px;justify-content:center;margin:0 0 14px}
+.dots i{width:12px;height:12px;border-radius:50%;border:1px solid #d4af37;display:block}
+.dots i.on{background:#d4af37}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pad button{min-height:52px;border-radius:12px;border:1px solid #26313d;background:#121820;color:#e8eef4;font:700 18px system-ui;cursor:pointer}
+.vout{min-height:22px;margin:14px 0 0;color:#d4af37;font-weight:700}
+#julie{background:#0b0f14}
+#julie h1{color:#ff5fa2;letter-spacing:0;font-size:28px}
+#julie .jbtn{min-height:92px;width:100%;border-radius:18px;border:1px solid #ff5fa2;background:linear-gradient(165deg,#121820,#0b0f14);color:#fff;font:700 22px/1.25 system-ui;text-align:left;padding:16px 18px;cursor:pointer;margin:0 0 12px}
+#julieNote{min-height:24px;color:#ff5fa2;font-weight:700}
+#julie .sopc{position:static;border-color:#ff5fa2;color:#ff5fa2}
+.acard{border:1px solid #d4af37;border-radius:14px;background:linear-gradient(165deg,#121820,#0b0f14);padding:12px 14px;margin:0 0 12px}
+.acard h2{margin:0 0 4px;font-size:18px}
+.acard .sch,.acard .secnote{margin:4px 0}
+.status{color:#e8eef4;margin:6px 0}
+.status.run{border-color:#22c58b;color:#22c58b}
+.status.pause{border-color:#8a98a8;color:#8a98a8}
+.suggest{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.suggest input{width:auto;flex:1 1 180px;margin:0;text-align:left}
+.suggest button{min-height:44px;border-radius:12px;border:1px solid #26313d;background:#121820;color:#e8eef4;padding:8px 12px;cursor:pointer}
+#sopCard{background:#fff;color:#14181d;border-radius:16px;padding:22px 20px;max-width:640px;margin:0 auto}
+#sopCard h1{color:#14181d;letter-spacing:.08em}
+#sopCard h2{margin:14px 0 4px;font-size:13px;letter-spacing:.12em;color:#6b5a2a}
+#sopCard p{color:#14181d;margin:0}
+.panel .sopc.inline{position:static}
 #cue42{position:fixed;z-index:70;left:calc(10px + env(safe-area-inset-left));bottom:calc(10px + env(safe-area-inset-bottom));box-sizing:border-box;min-width:44px;min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #26313d;background:#121820;color:#8a98a8;font:700 12px ui-monospace,Menlo,monospace;cursor:pointer}
 .cue-toast{position:fixed;z-index:90;left:50%;top:14px;transform:translateX(-50%);max-width:min(92vw,560px);background:#121820;color:#e8eef4;border:1px solid #d4af37;border-radius:12px;padding:12px 14px;font:700 14px/1.35 ui-monospace,Menlo,monospace;text-align:center}
 .cue-toast.pass{color:#60ff15;border-color:#60ff15}
 .cue-toast.fail{color:#ff5a5a;border-color:#ff5a5a}
 @media(min-width:900px){
   .lane-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .agrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+}
+@media print{
+  body *{visibility:hidden}
+  #sopCard,#sopCard *{visibility:visible}
+  #sopCard{position:absolute;left:0;top:0;width:100%;box-shadow:none}
+  .noprint{display:none!important}
 }
 </style></head>
-<body><a class="tf" href="terafab.html" aria-label="Terafab"><img src="../pwa/lanes/terafab.svg" alt=""></a>
-<div class="w"><div class="lk">
+<body>
+<a class="tf" href="#terafab" aria-label="Terafab"><img src="../pwa/lanes/terafab_gold.svg" width="22" height="22" alt=""></a>
+<div class="board" id="board"><div class="w"><div class="lk">
 <div class="gate">
-<img src="icons/icon-v10-192.png" alt="">
+<img src="icons/icon-v10-192.png" width="88" height="88" alt="">
 <h2>NIRVANA</h2><div class="st">Nirvana · Ara 2.1 · 2026.10.20-SB1 · second brain</div><div class="st" style="color:#8a98a8" id="nvDev"></div>
 <p id="msg">Enter your key once on this phone</p>
 <form id="f" autocomplete="off"><input id="k" type="password" placeholder="Key" autocomplete="current-password" aria-label="Key"><button id="b" type="submit">Unlock</button></form>
@@ -61,13 +124,101 @@ button{font:inherit;color:inherit}
 </div>
 <section class="lanes" aria-label="Lanes">
 <b class="lanes-k">LANES</b>
-<button type="button" class="lane head">
-<img src="../pwa/lanes/grokification.svg" alt=""><svg class="lights" viewBox="0 0 14 40" aria-label="Oversight"><circle cx="7" cy="6" r="4" fill="#26313d"/><circle cx="7" cy="18" r="4" fill="#26313d"/><circle cx="7" cy="32" r="4" fill="#22c58b"/></svg><span class="nm">Grokification · GM</span><i class="dot" aria-hidden="true"></i><span class="role">Grokification lane.</span>
-</button>
+<div class="lane head">
+<div class="go"><img src="../pwa/lanes/grokification.svg" width="36" height="36" alt=""><svg class="lights" viewBox="0 0 14 40" aria-label="Oversight"><circle cx="7" cy="6" r="4" fill="#26313d"/><circle cx="7" cy="18" r="4" fill="#26313d"/><circle cx="7" cy="32" r="4" fill="#22c58b"/></svg><span class="nm">Grokification · GM</span><i class="dot" aria-hidden="true"></i><span class="role">Grokification lane.</span></div>
+<button type="button" class="sopc" data-sop="grokification">SOP</button>
+</div>
 <div class="lane-grid" id="laneGrid"></div>
 </section>
-<footer class="nv-foot"><a class="be" href="backend.html">backend</a></footer>
-</div></div>
+<footer class="nv-foot"><a class="be" href="#backend">backend</a></footer>
+</div></div></div>
+
+<section id="after-dark" class="panel" aria-label="After Dark">
+<div class="wrap cardbox">
+<p><a class="back" href="#board">Board</a> <button type="button" class="sopc inline" data-sop="after-dark">SOP</button></p>
+<img src="../pwa/lanes/neural-mesh.svg" width="72" height="72" alt="">
+<h1>AFTER DARK</h1>
+<p id="darkAsk">Enter PIN</p>
+<div class="dots" id="darkDots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="pad" id="darkPad"></div>
+<p class="vout" id="darkOut" role="status"></p>
+</div>
+</section>
+
+<section id="backend" class="panel" aria-label="Backend">
+<div class="wrap">
+<div class="bar"><div><h1>BACKEND</h1><p>2026.10.20-LANES</p></div> <a class="back" href="#board">Board</a> <button type="button" class="sopc inline" data-sop="backend">SOP</button></div>
+<p>Z Fold 8 side button opens Ara 2.1; owner Marvin; money prompts route to Terafab.</p>
+<table class="sheet">
+<thead><tr><th>Lane</th><th>Role</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td><img src="../pwa/lanes/grokification.svg" width="22" height="22" alt="">Grokification</td><td>Grokification lane. Oversight light on.</td><td>draft</td></tr>
+<tr><td><img src="../pwa/lanes/ara.svg" width="22" height="22" alt="">Ara 2.1</td><td>Second brain for the four apps.</td><td>draft</td></tr>
+<tr><td><img src="../pwa/lanes/marvin_alien.svg" width="22" height="22" alt="">Marvin Musk</td><td>Marvin Musk lane.</td><td>draft</td></tr>
+<tr><td></td><td>Infra — task under Marvin/Bastion.</td><td>draft</td></tr>
+<tr><td><img src="../pwa/lanes/terafab_gold.svg" width="22" height="22" alt="">Terafab</td><td>Money: trades, F&amp;H store, Qantas, pay-it-forward.</td><td>draft</td></tr>
+<tr><td><img src="../pwa/lanes/falcon9.svg" width="22" height="22" alt="">Falcon 9</td><td>Falcon 9 lane.</td><td>draft</td></tr>
+<tr><td><img src="../pwa/lanes/neural-mesh.svg" width="22" height="22" alt="">Neuralink</td><td>After Dark gate.</td><td>draft</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section id="eleven" class="panel" aria-label="11:11">
+<div class="wrap cardbox">
+<p><a class="back" href="#board">Board</a> <button type="button" class="sopc inline" data-sop="eleven">SOP</button></p>
+<img src="icons/icon-v10-192.png" width="72" height="72" alt="">
+<h1>11:11</h1>
+<p>Enter PIN</p>
+<div class="dots" id="elevenDots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="pad" id="elevenPad"></div>
+<p class="vout" id="elevenOut" role="status"></p>
+</div>
+</section>
+
+<section id="julie" class="panel" aria-label="Julie">
+<div class="wrap">
+<div class="bar"><img src="../pwa/lanes/julie.svg" width="56" height="56" alt=""><h1>Julie</h1> <button type="button" class="back" id="julieBack">Board</button> <button type="button" class="sopc inline" data-sop="julie">SOP</button></div>
+<button type="button" class="jbtn">What's on today?</button>
+<button type="button" class="jbtn">Tick a job done</button>
+<button type="button" class="jbtn">Add a note</button>
+<button type="button" class="jbtn">Ask Ara</button>
+<button type="button" class="jbtn">Push back on this</button>
+<p id="julieNote" role="status"></p>
+</div>
+</section>
+
+<section id="terafab" class="panel" aria-label="Terafab">
+<div class="wrap">
+<div class="bar goldh"><img src="../pwa/lanes/terafab_gold.svg" width="48" height="48" alt=""><div><h1>TERAFAB</h1><p>2026.10.20-LANES · SOP draft</p></div></div>
+<p><a class="back" href="#board">Board</a> <button type="button" class="sopc inline" data-sop="terafab">SOP</button></p>
+<section class="block"><h2>Trades</h2><p>The work this lane is tracking.</p><div class="draft">Status: draft</div></section>
+<section class="block"><h2>F&amp;H store</h2><p>Store lane, held as a draft.</p><div class="draft">Status: draft</div></section>
+<section class="block"><h2>Qantas</h2><p>Travel lane, held as a draft.</p><div class="draft">Status: draft</div></section>
+<section class="block"><h2>Pay-it-forward</h2><p>The give-forward lane.</p><div class="draft">Status: draft</div></section>
+</div>
+</section>
+
+<section id="sop" class="panel" aria-label="SOP">
+<div class="wrap">
+<p class="noprint"><a class="back" href="#board">Board</a> <button type="button" class="printb" id="sopPrint">Print</button> <button type="button" class="sopc inline" data-sop="sop">SOP</button></p>
+<article id="sopCard">
+<h1 id="sopName">SOP</h1>
+<h2>Does</h2><p id="sopDoes"></p>
+<h2>Helps</h2><p id="sopHelps"></p>
+<h2>80% goal</h2><p id="sopGoal"></p>
+<h2>Rules</h2><p id="sopRules"></p>
+</article>
+</div>
+</section>
+
+<section id="automations" class="panel" aria-label="Automations">
+<div class="wrap">
+<div class="bar"><div><h1>AUTOMATIONS</h1><p>Seeded list. Test is a dry run.</p></div> <a class="back" href="#board">Board</a> <button type="button" class="sopc inline" data-sop="automations">SOP</button></div>
+<div class="agrid" id="autoList"><p id="autoEmpty">Loading.</p></div>
+</div>
+</section>
+
 <button type="button" id="cue42">42</button>
 <div id="cueToast" class="cue-toast" role="status" hidden></div>
 <script>
@@ -96,11 +247,11 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
 })();
 (function(){
   var LANES=[
-    {name:"Ara 2.1",icon:"../pwa/lanes/ara.svg",role:"Second brain for the four apps.",bot:"0aca7e2c-756b-4a08-a1c7-d0751a5703bb"},
-    {name:"Marvin Musk",icon:"../pwa/lanes/marvin-musk.svg",role:"Marvin Musk lane."},
-    {name:"Terafab",icon:"../pwa/lanes/terafab.svg",role:"Trades, the cull, the store, CRM, pay-it-forward."},
-    {name:"Falcon 9",icon:"../pwa/lanes/falcon9.svg",role:"Falcon 9 lane."},
-    {name:"Neuralink",icon:"../pwa/lanes/neural-mesh.svg",role:"After Dark gate.",href:"after-dark.html"}
+    {id:"ara",name:"Ara 2.1",cls:"ara",icon:"../pwa/lanes/ara.svg",role:"Second brain for the four apps.",bot:"0aca7e2c-756b-4a08-a1c7-d0751a5703bb"},
+    {id:"marvin",name:"Marvin Musk",icon:"../pwa/lanes/marvin_alien.svg",role:"Marvin Musk lane."},
+    {id:"terafab",name:"Terafab",cls:"tera",icon:"../pwa/lanes/terafab_gold.svg",role:"Money: trades, F&H store, Qantas, pay-it-forward."},
+    {id:"falcon",name:"Falcon 9",icon:"../pwa/lanes/falcon9.svg",role:"Falcon 9 lane."},
+    {id:"neuralink",name:"Neuralink",icon:"../pwa/lanes/neural-mesh.svg",role:"After Dark gate.",href:"#after-dark"}
   ];
   var grid=document.getElementById("laneGrid");
   var araId="";
@@ -108,9 +259,9 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     var href="";
     if(lane.bot){araId=lane.bot;href="https://cursor.com/grok-bot/link/v1/agent?id="+lane.bot}
     else if(lane.href)href=lane.href;
-    var img='<img src="'+lane.icon+'" alt=""><span class="nm">'+lane.name+'</span><i class="dot" aria-hidden="true"></i><span class="role">'+lane.role+'</span>';
-    if(href)return '<a class="lane"'+(lane.bot?' id="araLane" rel="noopener"':'')+' href="'+href+'">'+img+'</a>';
-    return '<button type="button" class="lane">'+img+'</button>';
+    var img='<img src="'+lane.icon+'" width="36" height="36" alt=""><span class="nm">'+lane.name+'</span><i class="dot" aria-hidden="true"></i><span class="role">'+lane.role+'</span>';
+    var go=href?'<a class="go"'+(lane.bot?' id="araLane" rel="noopener"':'')+' href="'+href+'">'+img+'</a>':'<button type="button" class="go">'+img+'</button>';
+    return '<div class="lane'+(lane.cls?' '+lane.cls:'')+'">'+go+'<button type="button" class="sopc" data-sop="'+lane.id+'">SOP</button></div>';
   }).join("");
   var a=document.getElementById("araLane");
   if(a&&araId&&/Android/i.test(navigator.userAgent)){
@@ -120,12 +271,169 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
   var head=document.querySelector(".gate h2");
   if(head){
     var hold=null;
-    head.addEventListener("pointerdown",function(e){if(e.button&&e.button!==0)return;clearTimeout(hold);hold=setTimeout(function(){location.href="eleven.html"},1500)});
+    head.addEventListener("pointerdown",function(e){if(e.button&&e.button!==0)return;clearTimeout(hold);hold=setTimeout(function(){location.hash="eleven"},1500)});
     head.addEventListener("pointerup",function(){clearTimeout(hold)});
     head.addEventListener("pointercancel",function(){clearTimeout(hold)});
     head.addEventListener("contextmenu",function(e){e.preventDefault()});
   }
 })();
+(function(){
+  var PANELS=["after-dark","backend","eleven","julie","terafab","sop","automations"];
+  var SOP=null;
+  function hashBits(){
+    var raw=(location.hash||"").replace(/^#/,"");
+    var q=location.search.replace(/^\?/,"");
+    var i=raw.indexOf("?");
+    if(i>=0){q=(q?q+"&":"")+raw.slice(i+1);raw=raw.slice(0,i)}
+    return {name:raw,q:q};
+  }
+  function show(){
+    var bits=hashBits();
+    var name=PANELS.indexOf(bits.name)>=0?bits.name:"";
+    document.getElementById("board").hidden=!!name;
+    PANELS.forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle("on",id===name)});
+    document.body.classList.toggle("julie-on",name==="julie");
+    var titles={"after-dark":"After Dark",backend:"Nirvana backend",eleven:"11:11",julie:"Julie",terafab:"Terafab",sop:"SOP",automations:"Automations"};
+    document.title=name?(titles[name]||"Nirvana"):"Nirvana";
+    if(name==="sop")fillSop();
+  }
+  function laneId(){
+    var bits=hashBits();
+    var params=new URLSearchParams(bits.q);
+    return params.get("lane")||"sop";
+  }
+  function fillSop(){
+    var id=laneId();
+    var list=(SOP&&SOP.entries)||[];
+    var hit=null;
+    for(var i=0;i<list.length;i++)if(list[i].id===id)hit=list[i];
+    document.getElementById("sopName").textContent=hit?hit.name:"SOP";
+    document.getElementById("sopDoes").textContent=hit?hit.does:"";
+    document.getElementById("sopHelps").textContent=hit?hit.helps:"";
+    document.getElementById("sopGoal").textContent=hit?hit.goal:"";
+    document.getElementById("sopRules").textContent=hit?hit.rules:(SOP?"":"SOP file missing");
+  }
+  function renderAuto(){
+    var host=document.getElementById("autoList");
+    var rows=(SOP&&SOP.automations)||[];
+    if(!rows.length){host.innerHTML='<p id="autoEmpty">SOP file missing</p>';return}
+    host.innerHTML=rows.map(function(a,i){
+      var st=a.status==="paused"?"paused":"running";
+      return '<article class="acard"><h2>'+a.name+'</h2><p class="sch">Schedule: '+a.schedule+'</p><p class="status '+(st==="running"?"run":"pause")+'">'+st+'</p><button type="button" class="dry" data-dry="'+i+'">Test</button><p class="secnote">Security: '+a.security+'</p><p class="drynote" role="status"></p><form class="suggest"><label>Suggest better <input aria-label="Suggest better" name="suggest"></label><button type="submit">Note it</button><p class="kept" role="status"></p></form></article>';
+    }).join("");
+  }
+  document.addEventListener("click",function(ev){
+    var sop=ev.target.closest&&ev.target.closest(".sopc");
+    if(sop){ev.preventDefault();ev.stopPropagation();location.hash="sop?lane="+encodeURIComponent(sop.getAttribute("data-sop")||"sop");return}
+    var dry=ev.target.closest&&ev.target.closest("[data-dry]");
+    if(dry){
+      var card=dry.closest(".acard");
+      var note=card&&card.querySelector(".drynote");
+      if(note)note.textContent="Dry run: self-check only.";
+      if(window.__nvCue42)window.__nvCue42();
+    }
+  });
+  document.getElementById("julie").addEventListener("click",function(ev){
+    if(ev.target.id==="julieBack"){location.hash="board";return}
+    if(ev.target.classList&&ev.target.classList.contains("jbtn"))document.getElementById("julieNote").textContent=ev.target.textContent;
+  });
+  document.getElementById("autoList").addEventListener("submit",function(ev){
+    ev.preventDefault();
+    var kept=ev.target.querySelector(".kept");
+    if(kept)kept.textContent="Not sent.";
+  });
+  document.getElementById("sopPrint").addEventListener("click",function(){window.print()});
+  function pad(root,dots,out,file,missing){
+    var digits="";
+    function paint(){var ds=dots.querySelectorAll("i");for(var i=0;i<ds.length;i++)ds[i].className=i<digits.length?"on":""}
+    function key(ch){
+      if(ch==="x"){digits=digits.slice(0,-1);paint();return}
+      if(digits.length>=4)return;
+      digits+=ch;paint();
+      if(digits.length===4){var pin=digits;digits="";paint();openVault(pin)}
+    }
+    ["1","2","3","4","5","6","7","8","9","x","0"].forEach(function(ch){
+      var b=document.createElement("button");
+      b.type="button";
+      b.textContent=ch==="x"?"⌫":ch;
+      b.setAttribute("aria-label",ch==="x"?"Delete":ch);
+      b.addEventListener("click",function(){key(ch)});
+      root.appendChild(b);
+    });
+    document.addEventListener("keydown",function(e){
+      if(!root.closest(".panel").classList.contains("on"))return;
+      if(e.key>="0"&&e.key<="9"){key(e.key);e.preventDefault()}
+      else if(e.key==="Backspace"){key("x");e.preventDefault()}
+    });
+    async function openVault(pin){
+      out.textContent="";
+      try{
+        var r=await fetch(file,{cache:"no-store"});
+        if(!r.ok){out.textContent=missing;return}
+        var o=await r.json();
+        if(!o.iter)o.iter=210000;
+        var d=await nvDec(o,pin);
+        if(d&&typeof d.html==="string"){document.open();document.write(d.html);document.close();return}
+        out.textContent=missing;
+      }catch(e){
+        out.textContent=(e&&e.name==="OperationError")?"That PIN did not open the vault.":missing;
+      }
+    }
+  }
+  pad(document.getElementById("darkPad"),document.getElementById("darkDots"),document.getElementById("darkOut"),"after-dark.enc.json","Vault sealed: content not published yet");
+  pad(document.getElementById("elevenPad"),document.getElementById("elevenDots"),document.getElementById("elevenOut"),"eleven.enc.json","sealed");
+  window.addEventListener("hashchange",show);
+  show();
+  fetch("sop.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("sop");return r.json()}).then(function(d){SOP=d;renderAuto();if(hashBits().name==="sop")fillSop()}).catch(function(){var n=document.getElementById("autoEmpty");if(n)n.textContent="SOP file missing"});
+})();
+(function(){
+  var errs=window.__nvErrs||(window.__nvErrs=[]);
+  function same(u){try{var x=new URL(u,location.href);if(x.origin!==location.origin)return null;if(x.protocol!=="http:"&&x.protocol!=="https:")return null;x.hash="";return x.href}catch(e){return null}}
+  async function run(){
+    var fails=[];
+    if(document.readyState==="loading")fails.push("page not loaded");
+    var imgs=[].slice.call(document.images);
+    for(var i=0;i<imgs.length;i++){
+      var im=imgs[i];
+      if(im.hidden)continue;
+      if(!im.complete)await new Promise(function(res){im.addEventListener("load",res,{once:true});im.addEventListener("error",res,{once:true})});
+      var src=im.getAttribute("src")||"";
+      if(src.indexOf("data:")===0){if(!im.complete)fails.push("icon "+src.slice(0,24))}
+      else if(!(im.naturalWidth>0))fails.push("icon "+src);
+    }
+    var seen={};
+    var icons=[].slice.call(document.querySelectorAll('link[rel~="icon"],link[rel="apple-touch-icon"]'));
+    for(var j=0;j<icons.length;j++){
+      var href=icons[j].getAttribute("href");var abs=same(href);if(!abs||seen[abs])continue;seen[abs]=1;
+      try{var r=await fetch(abs,{method:"HEAD",cache:"no-store"});if(!r.ok)fails.push("icon "+r.status+" "+href)}catch(e){fails.push("icon "+href)}
+    }
+    var as=[].slice.call(document.querySelectorAll("a[href]"));
+    for(var k=0;k<as.length;k++){
+      var href2=as[k].getAttribute("href");if(href2.charAt(0)==="#")continue;var abs2=same(href2);if(!abs2||seen[abs2])continue;seen[abs2]=1;
+      try{var r2=await fetch(abs2,{method:"HEAD",cache:"no-store"});if(!r2.ok)fails.push("link "+r2.status+" "+href2)}catch(e2){fails.push("link "+href2)}
+    }
+    if(errs.length)fails=fails.concat(errs.map(function(x){return "console "+x}));
+    var text=fails.length?fails.join(" · "):"The answer is 42 · PASS";
+    var toast=document.getElementById("cueToast");
+    if(toast){toast.hidden=false;toast.className="cue-toast "+(fails.length?"fail":"pass");toast.textContent=text}
+    var st=document.getElementById("flowMapStatus");
+    if(st)st.textContent=text;
+    return text;
+  }
+  function cueText(v){v=String(v||"").trim().toLowerCase();return v==="42"||v==="42 is the answer"}
+  document.addEventListener("input",function(ev){
+    var el=ev.target;if(!el||(el.tagName!=="INPUT"&&el.tagName!=="TEXTAREA"))return;
+    var blob=((el.id||"")+" "+(el.name||"")+" "+(el.getAttribute("placeholder")||"")+" "+(el.getAttribute("aria-label")||"")+" "+(el.type||"")).toLowerCase();
+    if(!/search|command|amend/.test(blob))return;
+    if(cueText(el.value))run();
+  });
+  var chip=document.getElementById("cue42");if(chip)chip.addEventListener("click",function(){run()});
+  var flowA=document.querySelector('a[href="flow.html"]');
+  if(flowA)flowA.addEventListener("click",function(ev){
+    ev.preventDefault();
+    run().then(function(){location.href=flowA.href});
+  });
+  window.__nvCue42=run;
+})();
 </script>
-<script src="cue42.js"></script>
 </body></html>
