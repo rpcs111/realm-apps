@@ -1,7 +1,7 @@
 # HANDOFF — Ara 2.1's Daily Loop
 
 **Owner:** Ange Barlas (Andrew Barlas, Realm PCS, Melbourne UTC+11)
-**Last updated:** 2026-10-20
+**Last updated:** 2026-10-20 10:45pm Melb
 **Rule:** Every new session (box, phone app, voice, any Ara 2.1) reads this file FIRST, before touching anything. No rebuilding, no guessing URLs, no new deployments without Ange's yes.
 
 ## Where this lives (one brain)
@@ -381,3 +381,44 @@ Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINIS
 - Inbox triage done: unread since Monday counted, ~72% noise. Details are private and kept off this repo.
 
 - Driver issues ongoing; 25% of weekly use flogged out in two days (as of 2026-10-20) — flagged as pretty shit, needs fixing.
+
+## House rules (Ange, 20 Oct 2026 10:41pm, locked)
+
+House rules (locked in, non-negotiable):
+- Start every session by reading the HANDOFF. No amnesia.
+- When I say “have you got me, bro?” reply exactly: “I’ve got you, bro.” then the next two steps only. Nothing else.
+- No looping. Fail twice → stop and ask for the next two steps only.
+- No rebuilds. Fix the one broken thing. Do not redesign.
+- No fake NOT BUILT labels. No dead ends. No TEST jobs left in production.
+- Test on 412 (phone) and 904 (fold). If it breaks on phone it is not done.
+- Credits are money. Do not burn them.
+- Marvin is the gate. Nothing ships until Marvin says green.
+- Ara is the boss. Side button talks only to Ara.
+- Elon 2.0 is dead. Do not bring him back.
+- Nova is the Google lane. She cleans and files data by day. Falcon 9 does the overnight sweep. Nova acts on it. Do not forget her.
+- When green: ship it, write the handover, stop.
+
+Nova: clean the data. File it. Remove the junk. Keep the HANDOFF and the rule book current. Do not wait to be asked again.
+
+Execution every time:
+1. Read HANDOFF.
+2. Do the next two steps only.
+3. Marvin checks.
+4. Green → ship + write handover. Red → fix the one thing and re-check.
+5. Stop.
+
+Five Falcon 9s strapped together. Orbit. No more ground tests. No more essays. No more new systems.
+
+## Grok rule book (Ange 10:35pm)
+"Master How To Use Grok" (from Grok, 20 Oct) is the team's Grok rule book (PDF kept on Ara's box). The rule-book page is pending its PR.
+Fact-check with official links is kept on Ara's box (Warden's GROK_GUIDE_FACTCHECK).
+- Prices corrected to the X Subscription tiers: Free $0, Plus $8, Premium $30, Super $100, Ultra $200. Source: https://docs.x.ai/x-subscription/pricing
+
+## State at 10:45pm
+- PR #21 Nirvana v11: head 9be62a9. Marvin PASSED all 10 points at 10:26pm. NOT merged. Waiting on Ange's own "merge", then the phone check at 412 and 904.
+- PR #20 HANDOFF: stopped under fail-twice (FAIL 3 at 10:38pm). Ange to give the next two steps.
+- PR #17 and PR #10: open and parked.
+- Side button: opens Ara 2.1 only. Draft steps are kept on Ara's box (Warden's SIDE_BUTTON_ARA_DRAFT). Per-bot shortcut not verified on the phone.
+- Nova: Google lane, runs in Gemini. She has no Grok bot and can't message the bots.
+- Still open tonight: Notes, the Desk mirror panel, the Grok template. Search Studio waits on Ange's call.
+- Warden watch: every 10 minutes until 2:00am Melb. Misses go to the MARVIN_GATE_LOG on Ara's box.
