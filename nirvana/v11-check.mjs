@@ -95,5 +95,6 @@ assert.equal(meta.includes("Nirvana · v11 · 2026-10-20"), true);
 const map = readFileSync(new URL("../metatron3.html", import.meta.url), "utf8");
 assert.equal(map.includes("Elon Musk 2.0"), false);
 assert.equal(map.includes('"name": "Marvin Musk"'), true);
+assert.equal(/ivor/i.test(map), false, "ivor must not appear in metatron3.html");
 
 console.log("v11-check ok");
