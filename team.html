@@ -41,7 +41,6 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 
 <h2>Day in the life (Melbourne time)</h2>
 <div class="grid">
-<div class="card" style="--c:#3fa9ff"><h3>7:30am daily</h3>Elon brief: ELON (alerts every 2 hours after)</div>
 <div class="card" style="--c:#22c58b"><h3>8:52am Mondays</h3>Weekly accountability check: IVOR</div>
 <div class="card" style="--c:#ffb800"><h3>10:00am weekdays</h3>Morning sweep: ARA, with MERCHANT store check</div>
 <div class="card" style="--c:#ff6fb5"><h3>11:11am daily</h3>11:11 reset: ARA and MUSE</div>
@@ -114,7 +113,6 @@ const bots=[
 ['NOVA','#8a7dff','Gemini backend partner. Audits the back end.',['HANDOFF sheet','Google-side builds and audit'],'Live','Running','12, 32','Backend audit on handoff','Google Workspace, Apps Script'],
 ['ECHO','#ff8a3d','The checker. Runs the checklist below before every reply and blocks repeats or missed steps.',['Blocks repeats (rule 36)','Blocks asks Ara can do herself (rule 37)','Flags rule conflicts (rule 38)'],'Planned','30 min','3, 5, 6, 10, 36, 37, 38 + reply format','Before every reply; notes drain 7pm','Channel doc, REALM LOG, Drive'],
 ['IVOR','#22c58b','AI coach. Trains Ange to talk to the crew without wasting time.',['Coaching nudges','Teaching steps to others'],'Live','Already live','30, 34','Daily AI drill 11:52am; weekly accountability check Mondays 8:52am; Ivor nudge weekdays 2pm. Log: ANGE_ACCOUNTABILITY_LOG.md','Chat, Calendar'],
-['ELON','#3fa9ff','Elon Musk tracker, with X links and photos.',['Tesla','SpaceX','xAI','X','Neuralink'],'Live','Running','21, 27, 33','Daily brief 7:30am; alerts every 2 hours','X, web search'],
 ['FORGE','#ffb800','Realm ops.',['Desk (pick one of the two v9 links)','Cert Studio','You Got Me Bro','Roster','Realm Flow Map','00 INDEX front door'],'Planned','1 hr','11, 15, 16, 17, 22, 28, 29','Week-ahead check, weekdays 1:27pm','Drive, Calendar, GitHub Pages, Apps Script (deploy = New version, only on his yes)'],
 ['MERCHANT','#4fb8ff','Frankie and Henry plus the online stores (Wix and Shopify).',['Orders','Stock','Listings'],'Planned','1 hr','13, 26, 29','Daily store check in morning sweep','Wix, Shopify, Gmail, Drive'],
 ['LEDGER','#00b3a4','Subscriptions and refunds.',['Monthly subscription review','Anthropic A$473.44 refund follow-up','Julie payroll view'],'Planned','45 min','28, 31, 33','Monthly review on the 1st; refund follow-up every 2 days','Gmail, Drive, Xero (look-only), Deputy (look-only)'],
@@ -129,7 +127,6 @@ const DEF=`flowchart TD
   ARA <--> NOVA
   ARA --> ECHO[ECHO - Checker]:::b1
   ARA --> IVOR[IVOR - AI coach, LIVE]:::b2
-  ARA --> ELON[ELON - Musk tracker, LIVE]:::b2
   ARA --> FORGE[FORGE - Realm ops]:::b3
   ARA --> MERCHANT[MERCHANT - Frankie and Henry, stores]:::b4
   ARA --> LEDGER[LEDGER - Subs and refunds]:::b5
