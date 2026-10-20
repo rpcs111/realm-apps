@@ -17,7 +17,6 @@
 <link rel="apple-touch-icon" href="icons/icon-v10-180.png">
 <link rel="icon" href="icons/icon-v10-192.png">
 <style>
-/* Chosen for this build: gold #d4af37, violet #9b6dff. Falcon slate stays #5b6b7f. */
 :root{--bg:#0a0a0a;--ink:#f4f1ea;--muted:#b7b1a8;--ara:#00aeef;--marvin:#e0262f;--gold:#d4af37;--falcon:#5b6b7f;--falcon-stroke:#c9d3df;--violet:#9b6dff;--nova:#a39e93;--nova-stroke:#c4bfb4;--lead:#2fb5e8;--desk:#2bb8d6;--cert:#2fbf9a;--line:#2c2c2c}
 *{box-sizing:border-box}[hidden]{display:none!important}
 html,body{margin:0;background:#0a0a0a;color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
@@ -105,180 +104,14 @@ a.tap{display:inline-flex;align-items:center;justify-content:center;min-height:4
 </main>
 
 <main class="board" id="board" hidden>
-<div class="tiles">
-<button type="button" class="tile ara" data-open="ara"><span class="slot" data-icon="ara"><svg id="ico-ara" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3.5 17.5a1.5 1.5 0 0 0 2.1 2.1l5.8-5.8a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.1-.5-.5-2.1z"/></svg></span><b>Ara 2.1</b><span>boss and builder</span></button>
-<button type="button" class="tile marvin" data-open="marvin"><span class="slot" data-icon="marvin"><svg id="ico-marvin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6z"/><path d="M8.3 12.2l2.6 2.6 5-5.2"/></svg></span><b>Marvin Musk</b><span>the gate</span></button>
-<button type="button" class="tile gold" data-open="terafab"><span class="slot" data-icon="terafab"><svg id="ico-terafab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="2.8"/><path d="M5 6v6c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8V6"/><path d="M5 12v6c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8v-6"/></svg></span><b>Terafab</b><span>money lane</span></button>
-<button type="button" class="tile falcon" data-open="falcon"><span class="slot" data-icon="falcon"><svg id="ico-falcon" viewBox="0 0 24 24" fill="none" stroke="#c9d3df" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2.6 2.2 4 5.4 4 9v5H8v-5c0-3.6 1.4-6.8 4-9z"/><circle cx="12" cy="9.5" r="1.6"/><path d="M8 13.5l-2.5 2.2V19L8 17.5M16 13.5l2.5 2.2V19L16 17.5"/><path d="M10.5 16v3.5M13.5 16v3.5M12 16v5.5"/></svg></span><b>Falcon 9</b><span>24/7 sweep</span></button>
-<button type="button" class="tile violet" data-open="neuralink"><span class="slot" data-icon="neuralink"><svg id="ico-neuralink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></span><b>Neuralink</b><span>brain dump</span></button>
-</div>
-<div class="more">
-<button type="button" class="tap" data-open="flow"><svg class="slot" data-icon="flow" viewBox="0 0 24 24" fill="none" stroke="#00aeef" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:28px;height:28px;border:0"><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="4.2" r="1.3"/><circle cx="18.8" cy="8.1" r="1.3"/><circle cx="18.8" cy="15.9" r="1.3"/><circle cx="12" cy="19.8" r="1.3"/><circle cx="5.2" cy="15.9" r="1.3"/><circle cx="5.2" cy="8.1" r="1.3"/><path d="M12 4.2v15.6M5.2 8.1l13.6 7.8M18.8 8.1L5.2 15.9M5.2 8.1h13.6M5.2 15.9h13.6"/></svg>Flow</button>
-<button type="button" class="tap" data-open="notes">Notes</button>
-</div>
+
 </main>
 
-<section class="sheet" id="sheet-ara" hidden role="dialog" aria-modal="true" aria-labelledby="ara-title">
-<div class="sheet-card ara">
-<button type="button" class="x" data-close>Close</button>
-<h2 id="ara-title">Ara 2.1</h2>
-<p>boss and builder</p>
-<p>Builds the apps, keeps HANDOFF current, the only one who asks you things.</p>
-<p>Only Ara asks Ange.</p>
-<p class="why">Why it's built this way: one ask, so the other lanes do not ask as well.</p>
-<p class="without">Without it: every lane would ask you itself.</p>
-<p class="status">status: not wired yet</p>
-<a class="tap" href="grokbot://app/v1/agent?id=0aca7e2c-756b-4a08-a1c7-d0751a5703bb">Open chat</a>
-</div>
-</section>
-
-<section class="sheet" id="sheet-marvin" hidden role="dialog" aria-modal="true" aria-labelledby="marvin-title">
-<div class="sheet-card marvin">
-<button type="button" class="x" data-close>Close</button>
-<h2 id="marvin-title">Marvin Musk</h2>
-<p>the gate</p>
-<p>Checks everything before you see it. A pass needs all 10 checks ticked.</p>
-<p>Bastion is security.</p>
-<p>Marvin's 10-point gate.</p>
-<p class="why">Why it's built this way: the gate sits between the build and you. A pass is not a merge.</p>
-<p class="without">Without it: work could reach you with checks still open.</p>
-<p class="status">status: not wired yet</p>
-<a class="tap" href="grokbot://app/v1/agent?id=7a2f50df-0230-48ec-855a-33b9e7bfeb71">Open chat</a>
-</div>
-</section>
-
-<section class="sheet" id="sheet-terafab" hidden role="dialog" aria-modal="true" aria-labelledby="tera-title">
-<div class="sheet-card gold">
-<button type="button" class="x" data-close>Close</button>
-<h2 id="tera-title">Terafab</h2>
-<p>Money lane. Day trades, on paper only. Frankie and Henry.</p>
-<p class="why">Why it's built this way: paper only, so a plan can be read before any money moves.</p>
-<p class="without">Without it: the money lane has nowhere to sit.</p>
-<p class="status">status: not wired yet</p>
-<a class="tap" href="grokbot://app/v1/agent?id=76897f17-7d0b-41a2-b054-4ae80f38e829">Open chat</a>
-</div>
-</section>
-
-<section class="sheet" id="sheet-falcon" hidden role="dialog" aria-modal="true" aria-labelledby="falcon-title">
-<div class="sheet-card falcon">
-<button type="button" class="x" data-close>Close</button>
-<h2 id="falcon-title">Falcon 9</h2>
-<p>24/7 sweep. Sweeps email and the calendar 24/7, and writes a digest when something changes. WhatsApp: connecting.</p>
-<p class="why">Why it's built this way: a change is written up when it happens, not on a night shift.</p>
-<p class="without">Without it: email and the calendar sit until someone looks.</p>
-<p class="status">status: not wired yet</p>
-<a class="tap" href="grokbot://app/v1/agent?id=812882bb-13e5-4765-8377-b1350f12cbc2">Open chat</a>
-</div>
-</section>
-
-<section class="sheet" id="sheet-neuralink" hidden role="dialog" aria-modal="true" aria-labelledby="neuro-title">
-<div class="sheet-card violet">
-<button type="button" class="x" data-close>Close</button>
-<h2 id="neuro-title">Neuralink</h2>
-<p>Catches every idea into one raw layer. Holds the After Dark vault behind its PIN. Reads and files only.</p>
-<p class="why">Why it's built this way: one raw layer, so an idea is filed instead of lost.</p>
-<p class="without">Without it: ideas stay in whatever chat they landed in.</p>
-<p class="status">status: not wired yet</p>
-<a class="tap" href="grokbot://app/v1/agent?id=9005ed36-32b9-46ec-9af1-d4f17492f0d7">Open chat</a>
-</div>
-</section>
-
-<section class="sheet" id="sheet-nova" hidden role="dialog" aria-modal="true" aria-labelledby="nova-title">
-<div class="sheet-card nova">
-<button type="button" class="x" data-close>Close</button>
-<h2 id="nova-title">Nova</h2>
-<p>The Google lane in Gemini. Reports to Ara.</p>
-<p class="why">Why it's built this way: Google work reports to Ara, and Ara is the one who asks.</p>
-<p class="without">Without it: the Google lane has no path back to Ara.</p>
-<p class="status">status: not wired yet</p>
-<a class="tap" href="https://gemini.google.com/app">Open Gemini</a>
-</div>
-</section>
-
-<section class="sheet" id="sheet-infra" hidden role="dialog" aria-modal="true" aria-labelledby="infra-title">
-<div class="sheet-card lead">
-<button type="button" class="x" data-close>Close</button>
-<h2 id="infra-title">Infra Lead</h2>
-<p>Infra lane. Not a home tile.</p>
-<p class="why">Why it's built this way: infra stays on the team map, off the five home tiles.</p>
-<p class="without">Without it: infra has no owner on the map.</p>
-<p class="status">status: not wired yet</p>
-<a class="tap" href="grokbot://app/v1/agent?id=5a501e95-8fae-4e1f-a9df-2f440f3b8b5a">Open chat</a>
-</div>
-</section>
-
-<section class="sheet" id="sheet-crm" hidden role="dialog" aria-modal="true" aria-labelledby="crm-title">
-<div class="sheet-card lead">
-<button type="button" class="x" data-close>Close</button>
-<h2 id="crm-title">CRM Lead</h2>
-<p>CRM lane.</p>
-<p class="why">Why it's built this way: CRM stays on the team map until placement is settled.</p>
-<p class="without">Without it: CRM has no owner on the map.</p>
-<p class="status">status: not wired yet</p>
-<a class="tap" href="grokbot://app/v1/agent?id=af33c179-96c8-42db-9dc6-80279fd44066">Open chat</a>
-</div>
-</section>
-
-<section class="sheet" id="sheet-flow" hidden role="dialog" aria-modal="true" aria-labelledby="flow-title">
-<div class="sheet-card">
-<button type="button" class="x" data-close>Close</button>
-<h2 id="flow-title">Flow</h2>
-<p>Five release steps. Nothing is called done before the last one.</p>
-<ol class="steps" id="flowSteps">
-<li>Ara builds</li>
-<li>Real-key test at 412 and Fold sizes</li>
-<li>Marvin's 10-point gate</li>
-<li>Ange says merge</li>
-<li>Ara and Marvin both check the live page on the phone (412 and Fold), then the link goes to Ange.</li>
-</ol>
-<div class="swatches">
-<button type="button" class="tap ara" data-open="ara">Ara 2.1</button>
-<button type="button" class="tap marvin" data-open="marvin">Marvin Musk</button>
-<button type="button" class="tap gold" data-open="terafab">Terafab</button>
-<button type="button" class="tap falcon" data-open="falcon">Falcon 9</button>
-<button type="button" class="tap violet" data-open="neuralink">Neuralink</button>
-<a class="tap desk" href="../desk.html">Desk</a>
-<a class="tap cert" href="../certstudio.html">Cert Studio</a>
-</div>
-</div>
-</section>
-
-<section class="sheet" id="sheet-notes" hidden role="dialog" aria-modal="true" aria-labelledby="notes-title">
-<div class="sheet-card">
-<button type="button" class="x" data-close>Close</button>
-<h2 id="notes-title">Notes</h2>
-<p>Notes is the existing Notes page.</p>
-<a class="tap" href="../notes.html">Open Notes</a>
-</div>
-</section>
-
-<section class="sheet" id="sheet-team" hidden role="dialog" aria-modal="true" aria-labelledby="team-title">
-<div class="sheet-card" id="teamMap">
-<button type="button" class="x" data-close>Close</button>
-<h2 id="team-title">Team</h2>
-<p>Only Ara asks Ange.</p>
-<div class="gate-row">
-<div class="person ara"><button type="button" class="orb ara" data-open="ara"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ico-ara"/></svg>Ara 2.1</button><a class="tap" href="grokbot://app/v1/agent?id=0aca7e2c-756b-4a08-a1c7-d0751a5703bb">Open chat</a></div>
-<div class="person marvin"><button type="button" class="orb marvin" data-open="marvin"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ico-marvin"/></svg>Marvin</button><a class="tap" href="grokbot://app/v1/agent?id=7a2f50df-0230-48ec-855a-33b9e7bfeb71">Open chat</a></div>
-<div class="ange">Ange</div>
-</div>
-<div class="orbit">
-<div class="person gold"><button type="button" class="orb" data-open="terafab"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ico-terafab"/></svg>Terafab</button><a class="tap" href="grokbot://app/v1/agent?id=76897f17-7d0b-41a2-b054-4ae80f38e829">Open chat</a><p class="without">Without it: the money lane has nowhere to sit.</p></div>
-<div class="person falcon"><button type="button" class="orb" data-open="falcon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#c9d3df" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ico-falcon"/></svg>Falcon 9</button><a class="tap" href="grokbot://app/v1/agent?id=812882bb-13e5-4765-8377-b1350f12cbc2">Open chat</a><p class="without">Without it: email and the calendar sit until someone looks.</p></div>
-<div class="person violet"><button type="button" class="orb" data-open="neuralink"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#ico-neuralink"/></svg>Neuralink</button><a class="tap" href="grokbot://app/v1/agent?id=9005ed36-32b9-46ec-9af1-d4f17492f0d7">Open chat</a><p>After Dark vault</p><p class="without">Without it: ideas stay in whatever chat they landed in.</p></div>
-<div class="person nova"><button type="button" class="orb" data-open="nova"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#c4bfb4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9.5h16M4 15h16M10 4v16"/></svg>Nova</button><a class="tap" href="https://gemini.google.com/app">Open Gemini</a><p>Google lane in Gemini, reports to Ara</p><p class="without">Without it: the Google lane has no path back to Ara.</p></div>
-<div class="person lead"><button type="button" class="orb" data-open="infra"><svg id="ico-infra" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="6" rx="1.5"/><rect x="3.5" y="14" width="17" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/></svg>Infra Lead</button><a class="tap" href="grokbot://app/v1/agent?id=5a501e95-8fae-4e1f-a9df-2f440f3b8b5a">Open chat</a><p class="without">Without it: infra has no owner on the map.</p></div>
-<div class="person lead"><button type="button" class="orb" data-open="crm"><svg id="ico-crm" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.2 3.2 0 0 1 0 6.3M18 14.3c1.9.8 3 2.7 3 5.7"/></svg>CRM Lead</button><a class="tap" href="grokbot://app/v1/agent?id=af33c179-96c8-42db-9dc6-80279fd44066">Open chat</a><p class="without">Without it: CRM has no owner on the map.</p></div>
-</div>
-<p class="why">1 Ara builds. 2 Real-key test at 412 and Fold sizes. 3 Marvin's 10-point gate. 4 Ange says merge. 5 Ara and Marvin both check the live page on the phone (412 and Fold), then the link goes to Ange.</p>
-<div id="nvMapToast" class="toast" role="status" hidden>Congratulations. You're a genius.</div>
-<button type="button" class="tap" id="saveMap">Save map</button>
-</div>
-</section>
+<div id="nvPanels"></div>
 
 <div id="nvWin" hidden>
 <canvas id="nvWinCv" aria-hidden="true"></canvas>
-<p>Nirvana is live. Ange, you're a genius. The team's a genius.</p>
+<p id="nvWinMsg"></p>
 <button type="button" class="tap" id="nvWinClose">Close</button>
 </div>
 <div id="nvKeyToast" class="toast" role="status" hidden></div>
@@ -328,6 +161,15 @@ function showWin(done){
   var btn=document.getElementById("nvWinClose");if(btn)btn.onclick=close;
   setTimeout(close,3000);
 }
+var NV_MAP={sub:"",people:[]},nvDone=false;
+function nvRender(d){
+  if(nvDone)return;if(!d||d.v!==1||typeof d.board!=="string"||typeof d.sheets!=="string")throw new Error("Couldn't unlock.");
+  document.getElementById("board").innerHTML=d.board;
+  document.getElementById("nvPanels").innerHTML=d.sheets;
+  var wm=document.getElementById("nvWinMsg");if(wm)wm.textContent=d.win||"";
+  NV_MAP=d.map||NV_MAP;nvDone=true;
+}
+function nvClear(){document.getElementById("board").innerHTML="";document.getElementById("nvPanels").innerHTML="";var wm=document.getElementById("nvWinMsg");if(wm)wm.textContent="";NV_MAP={sub:"",people:[]};nvDone=false}
 function hideSheet(){
   if(openSheet)openSheet.hidden=true;
   openSheet=null;
@@ -356,7 +198,7 @@ async function open(pass,stored){
   if(!(window.crypto&&crypto.subtle)){e.textContent=nvFail(null,stored);return}
   nvBusy=true;e.textContent="";b.disabled=true;b.textContent="Unlocking…";if(w)w.hidden=false;
   try{
-    var o=await nvFetch("main.enc.json");await nvDec(o,pass);localStorage.setItem(NVK,pass);
+    var o=await nvFetch("panels.enc.json");var d=await nvDec(o,pass);nvRender(d);localStorage.setItem(NVK,pass);
     b.disabled=false;b.textContent="Unlock";if(w)w.hidden=true;nvBusy=false;
     toast("Key saved on this phone ✓");
     showWin(reveal);
@@ -394,6 +236,7 @@ document.getElementById("nvLock").addEventListener("click",function(){
   hideSheet();
   var win=document.getElementById("nvWin");if(win)win.hidden=true;
   document.getElementById("board").hidden=true;
+  nvClear();
   document.getElementById("lock").hidden=false;
   document.body.classList.remove("nv-open");
   nvBusy=false;
@@ -403,13 +246,13 @@ document.getElementById("nvLock").addEventListener("click",function(){
   var k=document.getElementById("k");if(k){k.value="";k.type="password"}
   var eye=document.getElementById("kEye");if(eye){eye.textContent="Show";eye.setAttribute("aria-label","Show key");eye.setAttribute("aria-pressed","false")}
 });
-document.getElementById("saveMap").addEventListener("click",function(){
+document.addEventListener("click",function(ev){if(!(ev.target.closest&&ev.target.closest("#saveMap")))return;
   var cv=document.createElement("canvas");cv.width=900;cv.height=700;
   var ctx=cv.getContext("2d");
   ctx.fillStyle="#0a0a0a";ctx.fillRect(0,0,900,700);
   ctx.fillStyle="#f4f1ea";ctx.font="700 28px system-ui";ctx.fillText("Team",40,56);
-  ctx.font="16px system-ui";ctx.fillStyle="#b7b1a8";ctx.fillText("Only Ara asks Ange",40,88);
-  var people=[["Ara 2.1","#00aeef",80,180],["Marvin","#e0262f",220,180],["Ange","#b7b1a8",360,180],["Terafab","#d4af37",80,340],["Falcon 9","#5b6b7f",230,340],["Neuralink","#9b6dff",390,340],["Nova","#a39e93",550,340],["Infra Lead","#2fb5e8",80,500],["CRM Lead","#2fb5e8",250,500]];
+  ctx.font="16px system-ui";ctx.fillStyle="#b7b1a8";ctx.fillText(NV_MAP.sub,40,88);
+  var people=NV_MAP.people;
   people.forEach(function(p){ctx.beginPath();ctx.strokeStyle=p[1];ctx.lineWidth=3;ctx.arc(p[2]+36,p[3],34,0,Math.PI*2);ctx.stroke();ctx.fillStyle=p[1];ctx.font="700 14px system-ui";ctx.fillText(p[0],p[2]-10,p[3]+58)});
   var toastEl=document.getElementById("nvMapToast");
   function cheer(){toastEl.hidden=false;toastEl.scrollIntoView({block:"nearest"});clearTimeout(cheer._t);cheer._t=setTimeout(function(){toastEl.hidden=true},2400)}
