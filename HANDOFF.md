@@ -1,7 +1,7 @@
 # HANDOFF — Ara 2.1's Daily Loop
 
 **Owner:** Ange Barlas (Andrew Barlas, Realm PCS, Melbourne UTC+11)
-**Last updated:** 2026-10-20 9:25pm Melb
+**Last updated:** 2026-10-20 9:31pm Melb
 **Rule:** Every new session (box, phone app, voice, any Ara 2.1) reads this file FIRST, before touching anything. No rebuilding, no guessing URLs, no new deployments without Ange's yes.
 
 ## Where this lives (one brain)
@@ -28,9 +28,11 @@ Daily-loop working reminders (from the box handover; the channel doc still wins)
 - One task at a time, result reported before the next. Back up before editing. Log first, report second.
 - Do not edit the REALM OPEN REGISTER or ORION_HANDOFF sheets without Ange's OK (register is append-only; row ids repeat, so quote id + item text).
 
-12. "Have you got me, bro?" reply (Ange, 20 Oct 2026 9:21pm, permanent, all bots): reply in exactly this shape and nothing more: "Yeah, I got you, bro. It's done. It's on its way. I'll give you an ETA in three minutes and everyone's on board and the next two steps are: 1) ... 2) ..." No extra commentary or re-explaining. If the job is NOT literally done, reply instead: "Yeah, I got you, bro. It's not done yet: [blocker]. ETA [time]. Everyone's on board and the next two steps are: 1) ... 2) ..." Never say "It's done" unless it is proven done.
+### Standing rules (pending master list)
 
-RELEASE ORDER (Ange, 20 Oct 9:17pm): 1 Ara builds, 2 Ara real-key test on the box at 412 and Fold sizes, 3 Marvin 10-point gate, 4 Ange says merge, 5 live check on Ange's phone. Nothing is called done before step 5.
+"Have you got me, bro?" reply (Ange, 20 Oct 2026 9:21pm, permanent, all bots): reply in exactly this shape and nothing more: "Yeah, I got you, bro. It's done. It's on its way. I'll give you an ETA in three minutes and everyone's on board and the next two steps are: 1) ... 2) ..." No extra commentary or re-explaining. If the job is NOT literally done, reply instead: "Yeah, I got you, bro. It's not done yet: [blocker]. ETA [time]. Everyone's on board and the next two steps are: 1) ... 2) ..." Never say "It's done" unless it is proven done.
+
+RELEASE ORDER (Ange, 20 Oct 2026 9:17pm voice): 1 Ara builds, 2 Ara real-key test on the box at 412 and Fold sizes, 3 Marvin 10-point gate, 4 Ange says merge, 5 Ara and Marvin both check the live page on the phone (412 and Fold); only then does the link go to Ange. Nothing is called done before step 5. A relayed merge doesn't count; a Marvin PASS never merges.
 
 ## 1a. Standards v2 (16 Oct, from Elon audit; Elon retired 20 Oct) — PROPOSED, not yet in the master list
 
@@ -177,7 +179,7 @@ Sources of truth (sheets):
 - Notes: https://rpcs111.github.io/realm-apps/notes.html (200)
 - Cert Studio: https://rpcs111.github.io/realm-apps/certstudio.html (200)
 - Flow (map): https://rpcs111.github.io/realm-apps/map.html (200)
-- **Nirvana Fold8 LIVE:** https://rpcs111.github.io/realm-apps/nirvana/live.html?d=fold8 — PR #11 merged to gh-pages (`29c2a748`); decrypt OK (35 events). Marvin Musk gate GREEN (Elon retired 20 Oct), about 90%, hard checks 100%, soft fixes (Unlock 44px, Ara symbol) in a draft PR.
+- **Nirvana Fold8 LIVE:** https://rpcs111.github.io/realm-apps/nirvana/live.html?d=fold8 — PR #11 merged to gh-pages (`29c2a748`); decrypt OK (35 events). Elon gate GREEN (Elon retired 20 Oct), about 90%, hard checks 100%, soft fixes (Unlock 44px, Ara symbol) in a draft PR.
 - PR #10 (private links / hub pill): DRAFT + deploy freeze — must not be merged.
 - 6am Melb thrash routine enabled (weekdays ~6:00 Australia/Melbourne).
 
@@ -200,7 +202,7 @@ Sources of truth (sheets):
 - Realm Desk web app live on GitHub Pages. 39 successful deploys, last one 14 Oct (run 39, "Add calm Next focus mode as default on staff/today/ange").
 - Repo contains: README.md, team.html, img/family.svg, img/umbrella.svg. gh-pages branch holds the deployed site.
 - team.html (historical, 14 Oct; current lanes are in §1b Who does what) documents the full crew: ARA (head, live), NOVA (Gemini backend, live), IVOR (AI coach, live), ELON (Musk tracker, live), ECHO (checker, planned), FORGE (Realm ops, planned), MERCHANT (stores, planned), LEDGER (subs/refunds, planned), SENTRY (banned-tool watch, planned), MUSE (personal, planned), ORACLE (five-year goals, planned).
-- Daily schedule (Melbourne time) encoded in team.html: 7:30am Marvin Musk brief (Elon retired 20 Oct), 8:52am Mon IVOR accountability, 10:00am weekday Ara morning sweep + Merchant store check, 11:11am Ara/Muse reset, 11:52am IVOR daily drill, 1:27pm weekday Forge week-ahead, 2:00pm IVOR nudge, 7:00pm weekday Echo notes drain, 6:00pm Sun Sentry sweep, 1st of month Ledger subscription review, every 2 days 10am Ledger Anthropic refund follow-up, every 2 hours Ara triage alarm.
+- Daily schedule (Melbourne time) encoded in team.html: 7:30am Elon brief (retired 20 Oct), 8:52am Mon IVOR accountability, 10:00am weekday Ara morning sweep + Merchant store check, 11:11am Ara/Muse reset, 11:52am IVOR daily drill, 1:27pm weekday Forge week-ahead, 2:00pm IVOR nudge, 7:00pm weekday Echo notes drain, 6:00pm Sun Sentry sweep, 1st of month Ledger subscription review, every 2 days 10am Ledger Anthropic refund follow-up, every 2 hours Ara triage alarm.
 
 - 'realm daily' EOD report (Workspace Studio flow, 5:55pm daily): Ange wants it OFF (16 Oct, 24h+; one tap, see §7 9:54pm). When it comes back: report in chat, never to the info@ inbox, and nothing is listed as suggested/missed unless it has actually been worked.
 - Ara Engine (updated 19–20 Oct): Engine Allow CLEARED — live `core.ping` / exec returns `{"ok":true,"engine":"Ara Engine","version":"1.2.0…"}`. How-to: docs/ARA_ENGINE.md. Still blocked for clasp push: wrong clasp identity on box (see `/workspace/daily_loop_1020/CLASP_ONE_TAP.md` + `/workspace/daily_loop_1020/ENGINE_STATUS.md`); Ange one-tap re-login as info@realmpcs.com. Seal-first still applies for panel / Start Here / new app deploys except Nirvana schedule (Ange approved schedule live).
