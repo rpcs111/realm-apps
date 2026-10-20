@@ -86,7 +86,7 @@ body.julie-on .tf{display:none}
 .acard .sch,.acard .secnote{margin:4px 0}
 .status{color:#e8eef4;margin:6px 0}
 .status.run{border-color:#22c58b;color:#22c58b}
-.status.pause{border-color:#8a98a8;color:#8a98a8}
+.status.pause,.status.plan{border-color:#8a98a8;color:#8a98a8}
 .suggest{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
 .suggest input{width:auto;flex:1 1 180px;margin:0;text-align:left}
 .suggest button{min-height:44px;border-radius:12px;border:1px solid #26313d;background:#121820;color:#e8eef4;padding:8px 12px;cursor:pointer}
@@ -102,7 +102,9 @@ body.julie-on .tf{display:none}
 #sopCard.pink h2{color:#ff5fa2}
 #sop .printb{border-color:#d4af37;color:#d4af37}
 .panel .sopc.inline{position:static}
-#cue42{position:fixed;z-index:70;left:calc(10px + env(safe-area-inset-left));bottom:calc(10px + env(safe-area-inset-bottom));box-sizing:border-box;min-width:44px;min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #26313d;background:#121820;color:#8a98a8;font:700 12px ui-monospace,Menlo,monospace;cursor:pointer}
+.lanes-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 8px}
+.lanes-top .lanes-k{margin:0}
+#cue42{position:static;flex:none;box-sizing:border-box;min-width:44px;min-height:44px;padding:0 12px;border-radius:999px;border:1px solid #26313d;background:#121820;color:#8a98a8;font:700 12px ui-monospace,Menlo,monospace;cursor:pointer}
 .cue-toast{position:fixed;z-index:90;left:50%;top:14px;transform:translateX(-50%);max-width:min(92vw,560px);background:#121820;color:#e8eef4;border:1px solid #d4af37;border-radius:12px;padding:12px 14px;font:700 14px/1.35 ui-monospace,Menlo,monospace;text-align:center}
 .cue-toast.pass{color:#60ff15;border-color:#60ff15}
 .cue-toast.fail{color:#ff5a5a;border-color:#ff5a5a}
@@ -132,7 +134,7 @@ body.julie-on .tf{display:none}
 <div class="ap4"><b>ARA 2.1 · THE FOUR APPS</b><a href="../desk.html?d=fold8">Desk · Fold 8<span>open</span></a><a href="../desk-flip6.html?d=flip6">Desk · Flip 6<span>open</span></a><a class="sopc inline" href="#sop?lane=desk">SOP</a><a href="../certstudio.html">Cert Studio<span>open</span></a><a href="../map.html">Flow map<span id="flowMapStatus">open</span></a></div>
 </div>
 <section class="lanes" aria-label="Lanes">
-<b class="lanes-k">LANES</b>
+<div class="lanes-top"><b class="lanes-k">LANES</b><button type="button" id="cue42">42</button></div>
 <div class="lane head">
 <div class="go"><img src="../pwa/lanes/grokification.svg" width="36" height="36" alt=""><svg class="lights" viewBox="0 0 14 40" aria-label="Oversight"><circle cx="7" cy="6" r="4" fill="#26313d"/><circle cx="7" cy="18" r="4" fill="#26313d"/><circle cx="7" cy="32" r="4" fill="#22c58b"/></svg><span class="nm">Grokification · GM</span><i class="dot" aria-hidden="true"></i><span class="role">Grokification lane.</span></div>
 <a class="sopc" href="#sop?lane=grokification">SOP</a>
@@ -228,7 +230,6 @@ body.julie-on .tf{display:none}
 </div>
 </section>
 
-<button type="button" id="cue42">42</button>
 <div id="cueToast" class="cue-toast" role="status" hidden></div>
 <script>
 /* Nirvana shared unlock: AES-256-GCM, PBKDF2-SHA256. Key kept on this device only (localStorage). */
@@ -330,8 +331,7 @@ var s=localStorage.getItem(NVK);if(s)open(s,true);
     var rows=(SOP&&SOP.automations)||[];
     if(!rows.length){host.innerHTML='<p id="autoEmpty">SOP file missing</p>';return}
     host.innerHTML=rows.map(function(a,i){
-      var st=a.status==="paused"?"paused":"running";
-      return '<article class="acard"><h2>'+a.name+'</h2><p class="sch">Schedule: '+a.schedule+'</p><p class="status '+(st==="running"?"run":"pause")+'">'+st+'</p><button type="button" class="dry" data-dry="'+i+'">Test</button><p class="secnote">Security: '+a.security+'</p><p class="drynote" role="status"></p><form class="suggest"><label>Suggest better <input aria-label="Suggest better" name="suggest"></label><button type="submit">Note it</button><p class="kept" role="status"></p></form></article>';
+      return '<article class="acard"><h2>'+a.name+'</h2><p class="sch">Schedule: '+a.schedule+'</p><p class="status plan">planned</p><button type="button" class="dry" data-dry="'+i+'">Test</button><p class="secnote">Security: '+a.security+'</p><p class="drynote" role="status"></p><form class="suggest"><label>Suggest better <input aria-label="Suggest better" name="suggest"></label><button type="submit">Note it</button><p class="kept" role="status"></p></form></article>';
     }).join("");
   }
   document.addEventListener("click",function(ev){

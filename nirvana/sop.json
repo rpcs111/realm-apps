@@ -131,37 +131,37 @@
     {
       "name": "Falcon 9 daytime loop",
       "schedule": "Daytime loop",
-      "status": "running",
+      "status": "planned",
       "security": "Dry run only. No keys, tokens, or mailboxes in this file."
     },
     {
       "name": "Pomodoro 5-minute tune",
       "schedule": "Every 5 minutes",
-      "status": "running",
+      "status": "planned",
       "security": "Dry run only. Test does not start a timer off this page."
     },
     {
       "name": "Second brain digest / attention / nightly",
       "schedule": "Digest, attention, and nightly",
-      "status": "running",
+      "status": "planned",
       "security": "Dry run only. No digest text is stored here."
     },
     {
       "name": "Notes drain",
       "schedule": "When notes are waiting",
-      "status": "paused",
+      "status": "planned",
       "security": "Dry run only. Notes are not pulled by this card."
     },
     {
       "name": "Nova reply watch",
       "schedule": "While Nova is open",
-      "status": "paused",
+      "status": "planned",
       "security": "Dry run only. No reply text and no account in this file."
     },
     {
       "name": "Meet recordings feed",
       "schedule": "After a meeting ends",
-      "status": "running",
+      "status": "planned",
       "security": "Dry run only. No recording links in this file."
     }
   ]
