@@ -1,7 +1,7 @@
 # HANDOFF — Ara 2.1's Daily Loop
 
 **Owner:** Ange Barlas (Andrew Barlas, Realm PCS, Melbourne UTC+11)
-**Last updated:** 2026-10-22 1:05pm Melb (draft PR: 42* chain, one pace rule, ELON gate names; not merged)
+**Last updated:** 2026-10-22 1:05pm Melb (42* chain, one pace rule, ELON gate names)
 **Rule:** Every new session (box, phone app, voice, any Ara 2.1) reads this file FIRST, before touching anything. No rebuilding, no guessing URLs, no new deployments without Ange's yes.
 
 ## Where this lives (one brain)
@@ -399,7 +399,7 @@ House rules (locked in, non-negotiable):
 - Test on 412 (phone) and 904 (fold). If it breaks on phone it is not done.
 - Credits are money. Do not burn them.
 - ELON is the gate. Nothing ships until ELON says green.
-- Ara 2.1 builds; 42* checks and steers. Side button talks only to Ara.
+- Ara 2.1 builds; 42* checks and steers. Side button and mic go to 42* and Ara 2.1 only.
 - Elon 2.0 is dead. Do not bring him back.
 - Nova is the Google lane. She cleans and files data by day. Falcon 9 does the overnight sweep. Nova acts on it. Do not forget her.
 - When green: ship it, write the handover, stop.
