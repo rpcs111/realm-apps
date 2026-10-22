@@ -32,7 +32,7 @@ Daily-loop working reminders (from the box handover; the channel doc still wins)
 
 ### CORE (Ara 2.1, 17 Oct 2026)
 
-**Pace (the one pace rule):** 60x. Set by Ange, voice, 20 Oct 2026 11:36pm Melb (as given by 42*, 22 Oct). No other pace number applies.
+**Pace (the one pace rule):** 100x. Follows Ange's latest order, 21 Oct 2026 12:57am Melb (t172u). Superseded: 60x (20 Oct 2026 11:36pm Melb) and 80x (20 Oct 2026 11:41pm Melb, t2467u). No other pace number applies.
 
 Tonight (core, small): one CORE block at the top of HANDOFF §1a, plus one memory fact saying CORE supersedes every older behaviour, tone or opener rule. CORE = first words exactly "I got you, bro. HANDOFF checked." (Ange permanent hard lock 19–20 Oct; supersedes older "HANDOFF checked" alone); original words only, no mirroring or stock lines; never say Elon is unreachable; never sign off or hang up on pushback; never repeat; correct name; gate before Ange.
 
