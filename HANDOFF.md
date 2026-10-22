@@ -1,7 +1,7 @@
 # HANDOFF — Ara 2.1's Daily Loop
 
 **Owner:** Ange Barlas (Andrew Barlas, Realm PCS, Melbourne UTC+11)
-**Last updated:** 2026-10-21 6:30am Melb (GOD MODE added to Who does what)
+**Last updated:** 2026-10-22 1:05pm Melb (draft PR: 42* chain, one pace rule, ELON gate names; not merged)
 **Rule:** Every new session (box, phone app, voice, any Ara 2.1) reads this file FIRST, before touching anything. No rebuilding, no guessing URLs, no new deployments without Ange's yes.
 
 ## Where this lives (one brain)
@@ -32,9 +32,11 @@ Daily-loop working reminders (from the box handover; the channel doc still wins)
 
 ### CORE (Ara 2.1, 17 Oct 2026)
 
+**Pace (the one pace rule):** 60x. Set by Ange, voice, 20 Oct 2026 11:36pm Melb (as given by 42*, 22 Oct). No other pace number applies.
+
 Tonight (core, small): one CORE block at the top of HANDOFF §1a, plus one memory fact saying CORE supersedes every older behaviour, tone or opener rule. CORE = first words exactly "I got you, bro. HANDOFF checked." (Ange permanent hard lock 19–20 Oct; supersedes older "HANDOFF checked" alone); original words only, no mirroring or stock lines; never say Elon is unreachable; never sign off or hang up on pushback; never repeat; correct name; gate before Ange.
 
-After the Sunday reset: a full memory sweep. Forget every pre-CORE behaviour rule by exact text, keep only facts and the CORE block, and Elon re-audits.
+After the Sunday reset: a full memory sweep. Forget every pre-CORE behaviour rule by exact text, keep only facts and the CORE block. ELON is the only gate.
 
 Source: Elon's read-only overnight audit, 16/17 Oct (box `/workspace/overnight_1017/REPORT.md` §3). Added here at Ange's "find the gap, fix it" (16 Oct ~1:45am 17 Oct Melb). **Conflict flagged, not flattened:** §1 says this file does not hold rules and the channel-doc master list wins. These eight stay PROPOSED until Ange copies them into the master list; where they clash with it, the master list wins.
 
@@ -46,7 +48,7 @@ Source: Elon's read-only overnight audit, 16/17 Oct (box `/workspace/overnight_1
 - **F. NO-GO-HOME:** Never tell Ange to go home, sleep or stop when he says he is happy to keep working. Offer one concrete next win instead.
 - **G. §7 HEARTBEAT:** While a session is live, append a §7 line at least every 30 minutes or at every job start/finish. §7 quiet for more than 30 minutes during active work is a miss. Build Map `handoff` may not stay green across a quiet gap.
 - **H. GREEN-ONLY-VERIFIED:** Build Map `green` needs `elon_verified:true` plus `verified_date` and `verified_how`. Unverified work stays `amber`. `stream-check` and `handoff` must be re-checked before going green again.
-- **I. HANDOFF CHECKED (updated 19–20 Oct permanent hard lock):** Ara 2.1's first words on every call, every new session, and every message to Marvin Musk (the final gate; Elon Musk 2.0 retired 20 Oct) are exactly 'I got you, bro. HANDOFF checked.', said only after actually reading HANDOFF.md. Older 'HANDOFF checked' alone is retired. Like A–H, still to be copied into the channel-doc master list.
+- **I. HANDOFF CHECKED (updated 19–20 Oct permanent hard lock):** Ara 2.1's first words on every call, every new session, and every message to ELON (the final gate; Elon Musk 2.0 retired 20 Oct) are exactly 'I got you, bro. HANDOFF checked.', said only after actually reading HANDOFF.md. Older 'HANDOFF checked' alone is retired. Like A–H, still to be copied into the channel-doc master list.
 
 Rule conflicts Elon listed (rule 38: flag, do not flatten):
 1. Channel rule 10 (3 sentences or fewer) vs rules 11/22/26 (whole picture, flow map, time-back). Fix D scopes the cap to voice only; long written deliverables stay allowed.
@@ -58,21 +60,24 @@ Rule conflicts Elon listed (rule 38: flag, do not flatten):
 
 ### Who does what (one-system spec v1)
 
+**Chain (22 Oct 2026, relayed):** Ange > 42* > Ara 2.1 (builds) > lanes. 42 checks and steers; everything flows in and out through 42 to Ange. Merge, don't sever: every bot stays as a sub-bot. Source: Ange's voice order, 22 Oct 2026 12:48pm Melb, as relayed by 42* (not yet in Ange's own typed words).
+
 | Who | Owns | Never |
 |---|---|---|
-| GOD MODE `e72a0988` | Head bot boss above Ara 2.1 and ELON/Marvin: routes work, enforces house rules, holds the top gate. Reads HANDOFF first every session. Reports only to Ange | Loops, rebuilds, wasting credits, talking to anyone but Ange |
-| Ange | Super admin. Decisions, yeses, sends, merges. Talks to ONE bot only: Ara 2.1 | Chasing bots for status |
-| Ara 2.1 (boss bot) | Builds (realm-apps), calls, HANDOFF upkeep; the only bot that asks Ange anything (no doubled asks from lanes) | Ship ungated, mirror Ange, say Marvin is unreachable, end a call on pushback |
-| Marvin Musk `7a2f50df` | Sole final gate: every build, prompt and handoff passes him before Ange; plus Bastion | Merge (a PASS never merges; only Ange's own "merge"); build |
+| Ange | Super admin. Decisions, yeses, sends, merges. Everything reaches him through 42* (chain above) | Chasing bots for status |
+| 42* `c703aef3` | Checks and steers; everything flows in and out through 42 to Ange (relayed 22 Oct 12:48pm) | Building; merging |
+| Ara 2.1 (builder) | Builds (realm-apps), calls, HANDOFF upkeep; asks for Ange go through 42* (no doubled asks from lanes) | Ship ungated, mirror Ange, say ELON is unreachable, end a call on pushback |
+| ELON `7a2f50df` | Sole final gate: every build, prompt and handoff passes him before Ange; plus Bastion | Merge (a PASS never merges; only Ange's own "merge"); build |
+| The God That Failed `e72a0988` (was GOD MODE) | Stood down 22 Oct 2026 11:01am Melb; renamed 11:02am. The old watch lane is folded into it. Holds no gate and routes nothing | Routing or gating work |
 | Terafab `76897f17` | Money lane (gold tile); Frankie and Henry lives inside it | Being called Nirvana |
 | Falcon 9 `812882bb` | Overnight sweep | Sends |
 | Neuralink `9005ed36` | Brain dumps plus vaults | Keys or PINs in plain text |
-| Ivor `a68a9a78` | Accountability coach, unseen by Ange | Talking to Ange directly |
+| Hidden parked bot `a68a9a78` | Parked | Talking to Ange directly |
 | Infra Lead `5a501e95` | Infra task lane (not a tile) | Showing as a tile |
 | CRM `af33c179` | CRM. Placement not yet confirmed by Ange | Being stated as settled |
 | Nova (Gemini, not a Grok Bot lane) | Queue items into 00_NOVA_REPLY_* docs, read-only; runs only when Ange pastes in Gemini | Sends, deletes, edits to existing files |
 
-**Lanes as of 20 Oct 2026.** Retired or folded, and hidden (not deleted): Elon Musk 2.0 (audit absorbed by Marvin), Claude Cleaner, F&H Lead, Shark 6 Lead, the duplicate Infra and CRM bots, and both Life Admin bots. No new apps, pages or bots.
+**Lanes as of 20 Oct 2026.** Retired or folded, and hidden (not deleted): Elon Musk 2.0 (audit absorbed by ELON), the watch lane (folded into The God That Failed), Claude Cleaner, F&H Lead, Shark 6 Lead, the duplicate Infra and CRM bots, and both Life Admin bots. No new apps, pages or bots.
 
 Format: `# | ask | first asked (Melb) | times asked | status | proof link`. "First asked" is the earliest time found in Ara 2.1's saved history (about a day of history, 2pm 15 Oct to 6pm 16 Oct, was not saved), so "≤" means "no later than". Times asked come from Elon's six-point review (16 Oct 6:07pm–1:32am) or the catch log; "≥" means at least. Private details (amounts, numbers, accounts) stay off this public file. Update a row instead of adding a duplicate; close a row only with proof.
 
@@ -164,7 +169,7 @@ Sources of truth (sheets):
 
 ### System lock (19 Oct — Ange)
 - **Ange = super admin** of the whole Realm system going forward.
-- **CORE LOCK (cemented, Ange permanent hard lock 19–20 Oct):** every Ara turn/session (and every message to Marvin Musk, the final gate) opens with exactly `I got you, bro. HANDOFF checked.` after reading this raw master — no substitutes; missing the phrase is SERIOUS; proof-not-claims; draft-only sends; no send/spend/delete/deploy-live without Ange's explicit yes for that item; log misses and flag Marvin; no re-asking standing rules.
+- **CORE LOCK (cemented, Ange permanent hard lock 19–20 Oct):** every Ara turn/session (and every message to ELON, the final gate) opens with exactly `I got you, bro. HANDOFF checked.` after reading this raw master — no substitutes; missing the phrase is SERIOUS; proof-not-claims; draft-only sends; no send/spend/delete/deploy-live without Ange's explicit yes for that item; log misses and flag ELON; no re-asking standing rules.
 - **Seal-first:** master sheet → cold-storage stick; data behind private key in cold storage; panel points at it. No further panel / Start Here / Ara build until seal confirmed. Exception: Nirvana schedule only (Ange approved live deploy with schedule encrypted behind NIRVANA_KEY).
 - **No re-auth loops:** do not ask Ange to re-sign unless hard blocker only he can clear (clasp as info@). Engine Allow is done.
 
@@ -393,8 +398,8 @@ House rules (locked in, non-negotiable):
 - No fake NOT BUILT labels. No dead ends. No TEST jobs left in production.
 - Test on 412 (phone) and 904 (fold). If it breaks on phone it is not done.
 - Credits are money. Do not burn them.
-- Marvin is the gate. Nothing ships until Marvin says green.
-- Ara is the boss. Side button talks only to Ara.
+- ELON is the gate. Nothing ships until ELON says green.
+- Ara 2.1 builds; 42* checks and steers. Side button talks only to Ara.
 - Elon 2.0 is dead. Do not bring him back.
 - Nova is the Google lane. She cleans and files data by day. Falcon 9 does the overnight sweep. Nova acts on it. Do not forget her.
 - When green: ship it, write the handover, stop.
@@ -404,7 +409,7 @@ Nova: clean the data. File it. Remove the junk. Keep the HANDOFF and the rule bo
 Execution every time:
 1. Read HANDOFF.
 2. Do the next two steps only.
-3. Marvin checks.
+3. ELON checks.
 4. Green → ship + write handover. Red → fix the one thing and re-check.
 5. Stop.
 
@@ -412,14 +417,14 @@ Five Falcon 9s strapped together. Orbit. No more ground tests. No more essays. N
 
 ## Grok rule book (Ange 10:35pm)
 "Master How To Use Grok" (from Grok, 20 Oct) is the team's Grok rule book (PDF kept on Ara's box). The rule-book page is pending its PR.
-Fact-check with official links is kept on Ara's box (Warden's GROK_GUIDE_FACTCHECK).
+Fact-check with official links is kept on Ara's box (GROK_GUIDE_FACTCHECK).
 - Prices corrected to the X Subscription tiers: Free $0, Plus $8, Premium $30, Super $100, Ultra $200. Source: https://docs.x.ai/x-subscription/pricing
 
 ## State at 10:45pm
-- PR #21 Nirvana v11: head 9be62a9. Marvin PASSED all 10 points at 10:26pm. NOT merged. Waiting on Ange's own "merge", then the phone check at 412 and 904.
+- PR #21 Nirvana v11: merged into gh-pages (merge commit 615a198, 20 Oct 2026 11:23pm Melb). Head 9be62a9. Phone check at 412 and 904 still to do.
 - PR #20 HANDOFF: stopped under fail-twice (FAIL 3 at 10:38pm). Ange to give the next two steps.
 - PR #17 and PR #10: open and parked.
-- Side button: opens Ara 2.1 only. Draft steps are kept on Ara's box (Warden's SIDE_BUTTON_ARA_DRAFT). Per-bot shortcut not verified on the phone.
+- Side button: opens Ara 2.1 only. Draft steps are kept on Ara's box (SIDE_BUTTON_ARA_DRAFT). Per-bot shortcut not verified on the phone.
 - Nova: Google lane, runs in Gemini. She has no Grok bot and can't message the bots.
 - Still open tonight: Notes, the Desk mirror panel, the Grok template. Search Studio waits on Ange's call.
-- Warden watch: every 10 minutes until 2:00am Melb. Misses go to the MARVIN_GATE_LOG on Ara's box.
+- Gate misses go to the gate log on Ara's box. ELON is the gate.
