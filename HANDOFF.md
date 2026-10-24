@@ -60,7 +60,7 @@ Rule conflicts Elon listed (rule 38: flag, do not flatten):
 
 | Who | Owns | Never |
 |---|---|---|
-| GOD MODE `e72a0988` | Head bot boss above Ara 2.1 and ELON/Marvin: routes work, enforces house rules, holds the top gate. Reads HANDOFF first every session. Reports only to Ange | Loops, rebuilds, wasting credits, talking to anyone but Ange |
+| 42* `c703aef3` | Chief bot above Ara 2.1 and ELON/Marvin: checks and steers, routes work, enforces house rules. Reads HANDOFF first every session. Reports only to Ange (supersedes retired GOD MODE `e72a0988`, 25 Oct) | Loops, rebuilds, wasting credits, talking to anyone but Ange |
 | Ange | Super admin. Decisions, yeses, sends, merges. Talks to ONE bot only: Ara 2.1 | Chasing bots for status |
 | Ara 2.1 (boss bot) | Builds (realm-apps), calls, HANDOFF upkeep; the only bot that asks Ange anything (no doubled asks from lanes) | Ship ungated, mirror Ange, say Marvin is unreachable, end a call on pushback |
 | Marvin Musk `7a2f50df` | Sole final gate: every build, prompt and handoff passes him before Ange; plus Bastion | Merge (a PASS never merges; only Ange's own "merge"); build |
