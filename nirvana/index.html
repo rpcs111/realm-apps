@@ -14,6 +14,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest?v=2026-10-20-v11">
+<script src="../js/realm-device.js?v=20261025"></script>
 <link rel="apple-touch-icon" href="icons/icon-v10-180.png">
 <link rel="icon" href="icons/icon-v10-192.png">
 <style>
@@ -80,7 +81,7 @@ a.tap{display:inline-flex;align-items:center;justify-content:center;min-height:4
 <header class="top">
 <svg class="mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#00aeef" stroke-width="2.2" stroke-linejoin="round"><path transform="rotate(0 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(40 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(80 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(120 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(160 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(200 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(240 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(280 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><path transform="rotate(320 32 32)" d="M32 22.5C28.6 17.6 29 11 32 5.5C35 11 35.4 17.6 32 22.5Z"/><circle cx="32" cy="32" r="6.5"/></g><circle cx="32" cy="32" r="2.6" fill="#00aeef"/></svg>
 <strong class="word">Nirvana</strong>
-<span id="nvDev"></span>
+<span id="nvDev" data-realm-device></span>
 <div class="acts">
 <button type="button" class="tap" id="nvLock">Lock</button>
 <button type="button" class="tap" data-open="team">Team</button>
@@ -125,7 +126,7 @@ async function nvDec(o,pass){
   return JSON.parse(new TextDecoder().decode(pt));
 }
 async function nvFetch(src){var r=await fetch(src+(src.indexOf("?")<0?"?":"&")+"t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("Couldn't load ("+r.status+")");return r.json()}
-(function(){try{var dd=(location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})/)||[])[1]||localStorage.getItem("realm_device")||"";var dev=document.getElementById("nvDev");if(dev)dev.textContent={fold8:"Fold 8",flip6:"Flip 6"}[String(dd).toLowerCase()]||(innerWidth>=900?"Desktop":"Phone")}catch(_){}})();
+(function(){if(window.RealmDevice){RealmDevice.paint();return}try{var dd=(location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})/)||[])[1]||localStorage.getItem("realm_device")||"";var dev=document.getElementById("nvDev");if(dev)dev.textContent={fold8:"Fold 8",flip6:"Flip 6"}[String(dd).toLowerCase()]||(innerWidth>=900?"Desktop":"Phone")}catch(_){}})();
 (function(){
 var nvBusy=false,WIN_KEY="nv_win_20261020",deferred=null,openSheet=null;
 try{var dm=location.search.match(/[?&]d=([A-Za-z0-9_-]{2,20})(?:&|$)/);if(dm){localStorage.setItem("realm_device",dm[1].toLowerCase());var q=location.search.replace(/([?&])d=[^&]*&?/,"$1").replace(/[?&]$/,"");history.replaceState(null,"",location.pathname+q+location.hash)}}catch(_e){}

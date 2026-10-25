@@ -12,8 +12,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'">
-<link rel="manifest" href="manifest.webmanifest?v=2026-10-19-v10.0-b2"><link rel="icon" href="icons/icon-v10-192.png"><link rel="apple-touch-icon" href="icons/icon-v10-180.png">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data: 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline' 'self'; connect-src 'self'; manifest-src 'self'; form-action 'none'; base-uri 'none'">
+<link rel="manifest" href="manifest.webmanifest?v=2026-10-19-v10.0-b2">
+<script src="../js/realm-device.js?v=20261025"></script><link rel="icon" href="icons/icon-v10-192.png"><link rel="apple-touch-icon" href="icons/icon-v10-180.png">
 <style>
 :root{--bg:#0b0f14;--bg2:#121820;--bg3:#1a222c;--ln:#26313d;--tx:#e8eef4;--mut:#8a98a8;--c:#00aeef;--g:#60ff15;--red:#ff5a5a;--amb:#ffb020;--ok:#3ddc84;--top:48px}
 *{box-sizing:border-box}[hidden]{display:none!important}
@@ -130,7 +131,7 @@ main{padding:4px 12px 40px;max-width:900px;margin:0 auto}
 <div id="ban"></div>
 <div class="cals" id="cals"></div>
 <main id="main"></main><main id="stm" hidden></main><main id="him" hidden></main>
-<div class="foot"><a class="vs" href="versions.html">v11 · 2026-10-19 · build 2</a> · <a class="vs" href="index.html">Nirvana</a> · <a class="vs" href="flow.html">Flow</a> · <a class="vs" href="raw.html">Raw</a> · <span id="dev" class="vs" style="color:#8a98a8"></span><br><span id="chk"></span> · auto refresh every 3 min · <button id="fg" type="button">Forget key on this phone</button></div>
+<div class="foot"><a class="vs" href="versions.html">v11 · 2026-10-19 · build 2</a> · <a class="vs" href="index.html">Nirvana</a> · <a class="vs" href="flow.html">Flow</a> · <a class="vs" href="raw.html">Raw</a> · <span id="dev" class="vs" style="color:#8a98a8" data-realm-device></span><br><span id="chk"></span> · auto refresh every 3 min · <button id="fg" type="button">Forget key on this phone</button></div>
 </div>
 <script>
 (()=>{"use strict";
@@ -217,7 +218,7 @@ function render(){
     sec.appendChild(tl);m.appendChild(sec)});
   stamp();renderSH();
   if(sel){const el=document.getElementById("d-"+sel);if(el){requestAnimationFrame(()=>el.scrollIntoView({behavior:"auto"}))}}
-  try{const d=localStorage.getItem("realm_device")||"";const n=$("dev");if(n)n.textContent=d?({fold8:"Fold 8",flip6:"Flip 6",fold8cover:"Fold 8 cover"}[d]||d):""}catch(_e){}
+  if(window.RealmDevice)RealmDevice.paint();else try{const d=localStorage.getItem("realm_device")||"";const n=$("dev");if(n)n.textContent=d?({fold8:"Fold 8",flip6:"Flip 6",fold8cover:"Fold 8 cover"}[d]||d):""}catch(_e){}
 }
 function nowLine(now){const d=mk("div","now");const s=document.createElement("span");s.textContent=fT.format(now);d.appendChild(s);return d}
 function renderSH(){
