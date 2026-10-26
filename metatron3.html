@@ -558,14 +558,14 @@
   },
   {
    "id": "nirvana",
-   "name": "NIRVANA",
+   "name": "HUB",
    "zone": "app",
    "group": "apps",
    "status": "partial",
    "sub": "wins list",
    "emoji": "🏆",
    "col": "#22c55e",
-   "note": "Nirvana — wins.\n2026-10-18 — Cursor cloud agent wired into realm-apps: first build pushed",
+   "note": "HUB — wins.\n2026-10-18 — Cursor cloud agent wired into realm-apps: first build pushed",
    "wins": [{"d": "2026-10-18", "t": "Cursor cloud agent wired into realm-apps: first build pushed"}],
    "inReg": ""
   },
@@ -635,14 +635,14 @@
   },
   {
    "id": "acct",
-   "name": "Marvin Musk",
+   "name": "ELON",
    "zone": "bot",
    "group": "bots",
    "status": "partial",
    "sub": "accountability · checks Ara",
    "emoji": "🚀",
    "col": "#f43f5e",
-   "note": "Rule 40: Marvin Musk audits Ara. No ACCOUNTABILITY LOG file found in Drive yet — no link yet.",
+   "note": "Rule 40: ELON audits Ara. No ACCOUNTABILITY LOG file found in Drive yet — no link yet.",
    "inReg": ""
   },
   {
@@ -1936,6 +1936,7 @@ header{padding:10px 14px 4px}h1{margin:0;font-size:21px}header p{margin:3px 0 0;
 .card{background:rgba(14,22,44,.65);border:1px solid rgba(125,233,255,.15);border-radius:12px;padding:9px 11px;margin:0 0 7px;font-size:13.5px;line-height:1.4}
 details.card summary{cursor:pointer;font-weight:600}
 .lk a{display:block;padding:5px 0;color:#cfe9ff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.05);font-size:13.5px}
+#map a.agg-link{display:inline-block;min-height:44px;padding:14px 8px;box-sizing:border-box}
 .lk .g{font-size:11.5px;color:#8ea0c2;margin-top:8px;letter-spacing:.06em}
 @media (min-width:1000px){.page{grid-template-columns:minmax(0,1fr) 300px;align-items:start;padding:0 14px 20px}#wrap{max-width:min(1100px,calc((100vh - 150px)*1.07))}.side{padding:0;max-height:calc(100vh - 150px);overflow:auto}}
 .lab{fill:#e8eefc;text-anchor:middle;pointer-events:none;paint-order:stroke;stroke:#05070f;stroke-linejoin:round}
@@ -2089,7 +2090,9 @@ function drawGeo(){var pts=[[0,0]],R=P.cube;for(var k=0;k<6;k++){var a=(-90+60*k
 function badge(g,x,y,r,id){var s=STAT[stOf(id)]||STAT.live;var c=el('circle',{cx:x,cy:y,r:r,fill:s.c,stroke:'#05070f','stroke-width':Math.max(1.5,r*.3),'class':'badge','data-st':stOf(id)},g);el('title',{},c).textContent=s.l}
 function drawBand(){var B=CFG.band,bb=BB,g=el('g',{'class':'band','data-id':B.id},G.nodes);
  el('rect',{x:bb.x,y:bb.y,width:bb.w,height:bb.h,rx:14,fill:'rgba(66,133,244,.13)',stroke:'#4285f4','stroke-width':PH?3:2},g);
- var ta=el('a',{href:B.link,target:'_blank',rel:'noopener'},g);el('title',{},ta).textContent=B.sub;
+ var ta=el('a',{href:B.link,target:'_blank',rel:'noopener','class':'agg-link'},g);el('title',{},ta).textContent=B.sub;
+ var px=svg.getBoundingClientRect().width||wrap.clientWidth||P.w,scale=px/P.w||1,hit=44/scale;if(hit>bb.h)hit=bb.h;
+ el('rect',{x:bb.x,y:bb.y,width:bb.w,height:hit,fill:'transparent','pointer-events':'all'},ta);
  var is=P.f.title*1.3;el('image',{href:B.img,x:bb.x+10,y:bb.y+P.f.title*.35,width:is,height:is},ta);
  txt('Google Drive · '+B.title,{x:bb.x+bb.w/2+is/2,y:bb.y+P.f.title*1.3,'class':'lab','font-size':P.f.title,'font-weight':700,'stroke-width':0},ta);
  badge(g,bb.x+bb.w-P.f.title*.7,bb.y+P.f.title*.7,P.f.title*.32,B.id);
