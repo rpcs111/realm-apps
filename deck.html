@@ -1,4 +1,5 @@
-<!doctype html><html lang="en"><head><script>window.__araBIP=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__araBIP=e});</script><meta name="robots" content="noindex,nofollow">
+<!doctype html><html lang="en"><head><script>window.__araBIP=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__araBIP=e});</script><script>/* Ange blue, Julie pink. Same accent as HUB (localStorage realm_user). */
+(function(){var c="#22d3ee";try{if(localStorage.getItem("realm_user")==="julie")c="#ff4fa3"}catch(e){}var d=document.documentElement;d.style.setProperty("--accent",c);d.style.setProperty("--c",c);d.style.setProperty("--ac",c)})();</script><meta name="robots" content="noindex,nofollow">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#000000"><title>Deck</title>
 <link rel="manifest" href="deck.webmanifest?v=20261026-1"><link rel="icon" type="image/png" sizes="192x192" href="pwa/star-deck-192.png?v=20261026-1"><link rel="apple-touch-icon" sizes="180x180" href="pwa/star-deck-apple-180.png?v=20261026-1"><meta name="application-name" content="Deck"><meta name="apple-mobile-web-app-title" content="Deck">
@@ -6,12 +7,13 @@
 <script src="js/realm-key.js?v=20261016a"></script>
 <link rel="stylesheet" href="css/realm-ui.css?v=20261016b">
 <style>/* Deck (26 Oct 2026): the history of what is going on in the apps. Real records only; gaps are said out loud. */
+:root{--accent:#22d3ee}
 *{box-sizing:border-box}html,body{overflow-x:hidden}
 body{margin:0;min-height:100dvh;background:#000;color:#e5e5e5;font:15px/1.45 system-ui,-apple-system,Roboto,sans-serif;padding:0 0 calc(40px + env(safe-area-inset-bottom))}
 .top{display:flex;align-items:center;gap:10px;padding:calc(8px + env(safe-area-inset-top)) 12px 8px;border-bottom:1px solid #1f1f1f}
 .mark{width:28px;height:28px;flex:0 0 28px;background:url(pwa/star-deck.svg?v=20261026-1) center/cover no-repeat;border-radius:6px}
 .top b.ttl{font-size:15px;letter-spacing:.06em;color:#fff}.top .nav{margin-left:auto;display:flex;align-items:center;gap:8px}
-.top .nav a{color:#d4d4d4;text-decoration:none;min-height:44px;display:inline-flex;align-items:center;padding:0 6px}
+.top .nav a{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;padding:0 6px}
 .wrap{max-width:760px;margin:0 auto;padding:6px 12px}
 h2{font-size:12px;letter-spacing:.12em;color:#a3a3a3;margin:18px 2px 8px;font-weight:700}
 .card{border:1px solid #262626;border-radius:14px;background:#0a0a0a;padding:10px 12px;margin:0 0 8px}
@@ -22,7 +24,7 @@ ul.ev{list-style:none;margin:0;padding:0}ul.ev li{display:flex;gap:10px;padding:
 ul.ev .tm{flex:0 0 58px;color:#8a8a8a;font-size:12px;padding-top:2px}ul.ev .k{display:inline-block;font-size:10.5px;letter-spacing:.08em;border:1px solid #404040;border-radius:999px;padding:1px 7px;margin-right:6px;color:#d4d4d4}
 ul.ev .x{flex:1;min-width:0;overflow-wrap:anywhere}
 .muted{color:#8a8a8a;font-size:13px}
-button.btn,a.btn{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid rgba(255,255,255,.25);border-radius:10px;color:#fff;font-weight:600;font-size:13px;cursor:pointer;margin:6px 6px 0 0}
+button.btn,a.btn{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--accent);border-radius:10px;color:#fff;font-weight:600;font-size:13px;cursor:pointer;margin:6px 6px 0 0}
 .kv{display:flex;justify-content:space-between;gap:10px;padding:4px 0}.kv span:last-child{color:#fff;text-align:right}
 </style></head><body>
 <header class="top"><span class="mark" role="img" aria-label="Deck star"></span><b class="ttl">DECK</b><div class="nav"><a href="./index.html">&lsaquo; HUB</a></div></header>
