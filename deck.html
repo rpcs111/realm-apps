@@ -36,6 +36,9 @@ button.btn,a.btn{all:unset;box-sizing:border-box;display:inline-flex;align-items
 <div class="card gap" id="logGap"><b>Daily activity logging is not switched on.</b> The team change log is the FLOW_CHANGES tab in the REALM OPEN REGISTER (when, who, what, old, new). Its last entry is <b>13 Oct 2026</b> (checked 26 Oct 2026). Nothing has been written to it since, so there is no team history after 13 Oct to show.<br><br>This page cannot list that tab yet: REALM DESK does not hand it out. Turning the history on needs a REALM DESK update (backend), not a phone change.
 <br><a class="btn" href="https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit" target="_blank" rel="noopener noreferrer">Open the register &#8599;</a></div>
 
+<h2>LET US DO THIS &middot; YOUR ASKS</h2>
+<div class="card" id="ludList"><div class="muted">Loading&hellip;</div></div>
+
 <h2>MESSAGES SENT FROM THE APPS</h2>
 <div class="card" id="msgs"></div>
 
@@ -101,6 +104,7 @@ function all(){deskState();msgState();devState()}
 all();document.addEventListener("visibilitychange",function(){if(!document.hidden){msgState();devState()}});
 })();
 </script>
+<script src="js/letusdo.js?v=20261027-1" data-where="Deck" data-targets="#dev ul.ev > li" data-list="#ludList"></script>
 <script src="js/saveapp.js?v=20261017s" data-mount=".top .nav"></script>
 <script src="js/ara-version.js" defer></script>
 <script src="js/ara-install.js?v=20261017c" defer></script><script src="js/nirvana.js?v=20261017b" data-app="deck" data-name="Deck" defer></script>
