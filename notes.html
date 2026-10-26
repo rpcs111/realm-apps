@@ -444,7 +444,7 @@ window.drawPickup=function(){var B=$("puBody");if(!B)return;B.textContent="";
 ["drawNotes","drawTasks"].forEach(function(fn){var f=window[fn];if(typeof f!=="function")return;window[fn]=function(){var r=f.apply(this,arguments);try{drawPickup()}catch(e){}return r}});
 try{drawPickup()}catch(e){}
 })();</script>
-<script src="js/letusdo.js?v=20261027-2" data-where="Note" data-targets="#notes > li, #puBody li, section[data-k=tasks] .gcol li"></script><script src="js/ara-version.js" defer></script><script src="js/nirvana.js?v=20261017-24" data-app="notes" data-name="Note" defer></script>
+<script src="js/letusdo.js?v=20261027-3" data-where="Note" data-targets="#notes > li, #puBody li, section[data-k=tasks] .gcol li"></script><script src="js/ara-version.js" defer></script><script src="js/nirvana.js?v=20261017-24" data-app="notes" data-name="Note" defer></script>
 <script>ruiCounts();RealmUI.tabs(document.getElementById("rail"),document.getElementById("list"))</script>
 <script>/* v16: a tap anywhere on the input bar (not on a button) focuses the text box */(function(){var b=document.querySelector(".rui-box");if(!b)return;b.addEventListener("click",function(e){if(e.target.closest("button,a,input,textarea"))return;var f=b.querySelector("textarea,input");if(f)f.focus()})})()</script><script src="js/ara-install.js?v=20261017-24" defer></script><script>/* v20b: "New Google task" adds straight to the chosen Google Tasks list, with the same call Desk used (addTask on the Desk engine, Realm key from this device). One tap = one task; the button is off while it sends. */
 (function(){var U="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";

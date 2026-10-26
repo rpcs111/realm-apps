@@ -23,7 +23,8 @@ function css(){if(document.getElementById("ludCss"))return;var s=mk("style");s.i
  "#notes>li .t,#pickup #puBody li .t,section[data-k=tasks] .gcol li .t,#dev ul.ev>li .x{min-width:0;overflow-wrap:break-word;word-break:normal}"+
  ".lud-btn{flex:1 0 100%;box-sizing:border-box;width:100%;max-width:100%;min-height:44px;min-width:44px;padding:0 12px;margin:6px 0 0;border-radius:10px;border:1px solid #22c55e;background:#052e1a;color:#bbf7d0;font:600 14px system-ui,sans-serif;cursor:pointer}"+
  ".lud-st{flex:1 0 100%;box-sizing:border-box;display:flex;align-items:center;width:100%;max-width:100%;min-height:44px;margin:4px 0 0;padding:0 2px;border:0;background:transparent;text-align:left;font:12px system-ui,sans-serif;color:#a7f3d0;cursor:default}.lud-st.unsent{color:#fbbf24;cursor:pointer}.lud-st.needs{color:#f87171}"+
- ".lud-list li{list-style:none;padding:8px 0;border-top:1px solid #1f2937}.lud-list .w{font-size:12px;opacity:.75}";
+ ".lud-list li{list-style:none;padding:8px 0;border-top:1px solid #1f2937}.lud-list .w{font-size:12px;opacity:.75}"+
+ ".lud-list .lud-retry{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;margin:4px 0;padding:0 12px;border-radius:10px;border:1px solid var(--accent);background:transparent;color:var(--accent);font:600 14px system-ui,sans-serif;cursor:pointer}";
  document.head.appendChild(s)}
 function clean(el){if(!el)return"";var c=el.cloneNode(true);c.querySelectorAll("button,.lud-st,.tm,.k,.m,img").forEach(function(x){x.remove()});c.querySelectorAll("b,span,div").forEach(function(x){x.append(" ")});return c.textContent.replace(/\s+/g," ").trim()}
 function textOf(li){var t=li.querySelector(".t")||li.querySelector(".x")||li,n=li.querySelector(".n,.pv");
@@ -58,8 +59,11 @@ function add(root){if(!TARGETS)return;var asks=ls();
   var o=textOf(li),hit=asks.filter(function(x){return x.title===o.title&&x.where===WHERE}).pop();if(hit)mark(li,hit)})}
 function paint(){if(!LIST)return;var L=document.querySelector(LIST);if(!L)return;L.textContent="";var a=ls().slice().reverse();
  if(!a.length){L.appendChild(mk("div","muted","Nothing sent with Let us do this from this device yet."));return}
- var ul=mk("ul","lud-list");a.slice(0,30).forEach(function(x){var li=mk("li");li.appendChild(mk("div",null,x.title));
-  li.appendChild(mk("div","w",x.where+" · "+new Date(x.ts).toLocaleString("en-AU",{timeZone:"Australia/Melbourne",day:"numeric",month:"short",hour:"numeric",minute:"2-digit"})+" · "+(LABEL[x.st]||x.st)));ul.appendChild(li)});
+ var ul=mk("ul","lud-list");a.slice(0,30).forEach(function(x){var li=mk("li"),meta=mk("div","w"),when=new Date(x.ts).toLocaleString("en-AU",{timeZone:"Australia/Melbourne",day:"numeric",month:"short",hour:"numeric",minute:"2-digit"});
+  li.appendChild(mk("div",null,x.title));meta.appendChild(document.createTextNode(x.where+" · "+when+" · "));
+  if(x.st==="unsent"){var b=mk("button","lud-retry",LABEL.unsent);b.type="button";b.setAttribute("data-lud-retry",x.id);b.onclick=function(e){e.stopPropagation();resend(x.id)};meta.appendChild(b)}
+  else meta.appendChild(document.createTextNode(LABEL[x.st]||x.st));
+  li.appendChild(meta);ul.appendChild(li)});
  L.appendChild(ul);L.appendChild(mk("div","muted","Queued means Ara's inbox wrote it down. Doing, done and needs-you show here once the bots send status back (not switched on yet)."))}
 function start(){css();add(document);paint();
  if(TARGETS&&window.MutationObserver)new MutationObserver(function(){add(document)}).observe(document.body,{childList:true,subtree:true})}
