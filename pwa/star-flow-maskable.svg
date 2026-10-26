@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"><defs>
+<radialGradient id="glow" cx="50" cy="50" r="34.00" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".18" stop-color="#e8f0ff" stop-opacity=".55"/><stop offset=".5" stop-color="#bcd0ff" stop-opacity=".14"/><stop offset="1" stop-color="#9fb8ff" stop-opacity="0"/></radialGradient>
+<radialGradient id="ray" cx="50" cy="50" r="46.00" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<radialGradient id="core" cx="50" cy="50" r="7.00" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+</defs><rect width="512" height="512" fill="#000000"/><g transform="translate(100.0,73.0) scale(3.12)">
+
+<circle cx="50" cy="50" r="34.00" fill="url(#glow)"/>
+<polygon points="53.20,50.00 50.00,4.00 46.80,50.00" fill="url(#ray)"/>
+<polygon points="50.00,53.20 96.00,50.00 50.00,46.80" fill="url(#ray)"/>
+<polygon points="46.80,50.00 50.00,96.00 53.20,50.00" fill="url(#ray)"/>
+<polygon points="50.00,46.80 4.00,50.00 50.00,53.20" fill="url(#ray)"/>
+<polygon points="51.84,51.84 71.21,28.79 48.16,48.16" fill="url(#ray)"/>
+<polygon points="48.16,51.84 71.21,71.21 51.84,48.16" fill="url(#ray)"/>
+<polygon points="48.16,48.16 28.79,71.21 51.84,51.84" fill="url(#ray)"/>
+<polygon points="51.84,48.16 28.79,28.79 48.16,51.84" fill="url(#ray)"/>
+<polygon points="51.66,50.69 58.04,30.60 48.34,49.31" fill="url(#ray)"/>
+<polygon points="50.69,51.66 69.40,41.96 49.31,48.34" fill="url(#ray)"/>
+<polygon points="49.31,51.66 69.40,58.04 50.69,48.34" fill="url(#ray)"/>
+<polygon points="48.34,50.69 58.04,69.40 51.66,49.31" fill="url(#ray)"/>
+<polygon points="48.34,49.31 41.96,69.40 51.66,50.69" fill="url(#ray)"/>
+<polygon points="49.31,48.34 30.60,58.04 50.69,51.66" fill="url(#ray)"/>
+<polygon points="50.69,48.34 30.60,41.96 49.31,51.66" fill="url(#ray)"/>
+<polygon points="51.66,49.31 41.96,30.60 48.34,50.69" fill="url(#ray)"/>
+<polygon points="51.08,50.21 52.54,37.25 48.92,49.79" fill="url(#ray)"/>
+<polygon points="50.91,50.61 57.22,39.19 49.09,49.39" fill="url(#ray)"/>
+<polygon points="50.61,50.91 60.81,42.78 49.39,49.09" fill="url(#ray)"/>
+<polygon points="50.21,51.08 62.75,47.46 49.79,48.92" fill="url(#ray)"/>
+<polygon points="49.79,51.08 62.75,52.54 50.21,48.92" fill="url(#ray)"/>
+<polygon points="49.39,50.91 60.81,57.22 50.61,49.09" fill="url(#ray)"/>
+<polygon points="49.09,50.61 57.22,60.81 50.91,49.39" fill="url(#ray)"/>
+<polygon points="48.92,50.21 52.54,62.75 51.08,49.79" fill="url(#ray)"/>
+<polygon points="48.92,49.79 47.46,62.75 51.08,50.21" fill="url(#ray)"/>
+<polygon points="49.09,49.39 42.78,60.81 50.91,50.61" fill="url(#ray)"/>
+<polygon points="49.39,49.09 39.19,57.22 50.61,50.91" fill="url(#ray)"/>
+<polygon points="49.79,48.92 37.25,52.54 50.21,51.08" fill="url(#ray)"/>
+<polygon points="50.21,48.92 37.25,47.46 49.79,51.08" fill="url(#ray)"/>
+<polygon points="50.61,49.09 39.19,42.78 49.39,50.91" fill="url(#ray)"/>
+<polygon points="50.91,49.39 42.78,39.19 49.09,50.61" fill="url(#ray)"/>
+<polygon points="51.08,49.79 47.46,37.25 48.92,50.21" fill="url(#ray)"/>
+<circle cx="50" cy="50" r="7.00" fill="url(#core)"/>
+</g><text x="256" y="420" text-anchor="middle" font-family="DejaVu Sans,Arial,sans-serif" font-weight="700" font-size="45" letter-spacing="6" fill="#ffffff">FLOW</text></svg>
