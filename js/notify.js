@@ -1,5 +1,5 @@
 /* Local phone alerts. No push server, no keys, no paid service.
-   One small "Turn on alerts" control plus a "Send test alert" link.
+   One small "Turn on alerts" control plus a "Try an alert" link.
    On/off is stored per app in localStorage. Notifications go through the
    existing app-sw.js registration so they show in the phone shade.
    Due checks use only data the page already has. No invented rows. */
@@ -92,7 +92,7 @@
     test.type='button';
     test.id='araAlertTest';
     test.className='ara-test';
-    test.textContent='Send test alert';
+    test.textContent='Try an alert';
     msg=document.createElement('p');
     msg.className='ara-msg';
     msg.setAttribute('role','status');
