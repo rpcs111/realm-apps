@@ -165,11 +165,21 @@ html body #tAddBox #tAdd{border-color:var(--accent)!important;color:var(--accent
 .sw.on::before{border-color:var(--accent)}
 .addt{border-color:var(--accent)}
 #tAdd{background:var(--accent)}
+</style><style id="ange-todo">/* 27 Oct 2026 (Ange): ANGE TO DO at the top of Note. Black, blue accent, plain words. */
+#angeTodo h2{color:var(--accent)}
+#angeTodo .at{border:1px solid var(--rui-line,#262626);border-left:3px solid var(--accent);border-radius:12px;padding:6px 12px;background:#0a0a0a}
+#angeTodo ul{list-style:none;margin:0;padding:0}
+#angeTodo li{display:flex;gap:8px;align-items:center;justify-content:space-between;min-height:44px;border-top:1px solid #1a1a1a}
+#angeTodo li:first-child{border-top:0}
+#angeTodo li .t{flex:1;min-width:0;overflow-wrap:anywhere;color:#ececec;font-size:14px}
+#angeTodo li .m{display:block;color:#8a8a8a;font-size:12px}
+#angeTodo .empty{color:#8a8a8a;font-size:13px;padding:8px 0}
+#angeTodo a.more{display:inline-flex;align-items:center;min-height:44px;color:var(--accent);font-size:13px;text-decoration:none}
 </style></head><body class="rui">
 <header class="rui-top top"><span class="rui-mark" role="img" aria-label="Ara"></span><b class="rui-title">Note</b><div class="nav"><a href="./index.html">‹ Apps</a><a id="toSearch" href="./search.html">Search ›</a></div></header>
-<div class="rui-shell"><aside class="rui-rail" id="rail" role="tablist" aria-label="Show"><button type="button" class="rui-tab on" data-k="all" role="tab" aria-selected="true">All <i id="acnt">0</i></button><button type="button" class="rui-tab" data-k="notes" role="tab">My notes <i id="ncntT">0</i></button><button type="button" class="rui-tab" data-k="next" role="tab">Pick up <i id="pcntT">0</i></button><button type="button" class="rui-tab" data-k="tasks" role="tab">To do <i id="tcntT">0</i></button><h3>Google Tasks</h3><div class="rui-links"><a class="gt" id="gTasks" href="https://tasks.google.com/tasks/?authuser=info@realmpcs.com" target="_blank" rel="noopener">Google Tasks ↗</a><button id="exp" type="button">CSV</button></div></aside>
+<div class="rui-shell"><aside class="rui-rail" id="rail" role="tablist" aria-label="Show"><button type="button" class="rui-tab on" data-k="all" role="tab" aria-selected="true">All <i id="acnt">0</i></button><button type="button" class="rui-tab" data-k="ange" role="tab">Ange to do <i id="atcntT">0</i></button><button type="button" class="rui-tab" data-k="notes" role="tab">My notes <i id="ncntT">0</i></button><button type="button" class="rui-tab" data-k="next" role="tab">Pick up <i id="pcntT">0</i></button><button type="button" class="rui-tab" data-k="tasks" role="tab">To do <i id="tcntT">0</i></button><h3>Google Tasks</h3><div class="rui-links"><a class="gt" id="gTasks" href="https://tasks.google.com/tasks/?authuser=info@realmpcs.com" target="_blank" rel="noopener">Google Tasks ↗</a><button id="exp" type="button">CSV</button></div></aside>
 <main class="rui-main"><div class="rui-status" data-realm-sync>Saved on this device.</div><div class="rui-list" id="list">
-<section data-k="notes"><h2>MY NOTES <span class="cnt" id="ncnt"></span><button type="button" class="nnew" id="newNote" aria-label="New note">+ New note</button></h2><ul id="notes"></ul><button type="button" class="showd" id="showdN" hidden></button></section>
+<section data-k="ange" id="angeTodo"><h2>ANGE TO DO <span class="cnt" id="atcnt"></span></h2><div id="atBody"></div></section><section data-k="notes"><h2>MY NOTES <span class="cnt" id="ncnt"></span><button type="button" class="nnew" id="newNote" aria-label="New note">+ New note</button></h2><ul id="notes"></ul><button type="button" class="showd" id="showdN" hidden></button></section>
 <section data-k="next" id="pickup"><h2>PICK UP WHERE YOU LEFT OFF</h2><div id="puBody"></div></section>
 <section data-k="tasks"><h2>TO DO <span class="cnt" id="tcnt"></span></h2><div class="tadd" id="tAddBox"><input id="tTitle" type="text" placeholder="New Google task&hellip;" aria-label="New Google task" autocomplete="off"><div class="tadd-r"><select id="tList" aria-label="Task list"><option>Ange to do</option><option>Realm Daily</option><option>Realm Quotes</option><option>JP to do</option><option>LINKS ACCESS</option></select><button id="tAdd" type="button">Add</button></div><div class="tmsg" id="tMsg" role="status"></div></div><div class="rui-note" id="tsrc" title="Tap to read all"></div><div class="rui-inline-links"><a href="https://tasks.google.com/tasks/?authuser=info@realmpcs.com" target="_blank" rel="noopener">Google Tasks ↗</a><button id="expM" type="button">CSV</button></div><div class="gcols" id="tasks"></div><button type="button" class="showd" id="showdT" hidden></button></section>
 </div></main></div>
@@ -513,6 +523,27 @@ setInterval(function(){if(!document.hidden)load(true)},60000);
 var st=document.createElement("style");st.textContent=".gt-connect{margin:6px 0 10px;padding:12px;border:1px solid #2a2a2a;border-radius:14px;background:#0a0a0a}.gt-connect[hidden]{display:none}.gt-btn{min-height:44px;padding:0 18px;border-radius:999px;border:0;background:#fff;color:#000;font:700 15px system-ui,sans-serif;cursor:pointer}.gt-why{margin-top:8px;color:#a1a1aa;font-size:13px;line-height:1.4}.gt-f{display:flex;gap:8px;flex-wrap:wrap}.gt-f input{flex:1 1 160px;min-width:0;min-height:44px;box-sizing:border-box;padding:0 12px;border-radius:12px;border:1px solid #333;background:#000;color:#fff;font:16px monospace}.gcadd{margin:4px 6px 2px}.gcadd input{width:100%;box-sizing:border-box;min-height:44px;padding:0 10px;border-radius:10px;border:1px solid #222;background:#000;color:#fff;font:inherit;font-size:14px}.gcmsg{display:block;font-size:12px;color:#a1a1aa;margin-top:2px}.gcmsg:empty{display:none}.gcol h3 .gcopen{margin-left:auto;text-decoration:none;color:#a1a1aa;border:0!important;background:none!important;box-shadow:none!important;font-size:15px;display:inline-flex;align-items:center;justify-content:center}[data-realm-sync][data-sync-state=nokey],[data-realm-sync][data-sync-state=local]{display:none!important}";document.head.appendChild(st);
 function init(){wireTop();var c=null;try{c=JSON.parse(localStorage.getItem(CK))}catch(e){}if(key()&&c&&c.lists)apply(c.lists,c.at,true);else{window.TASKS=[];drawTasks();if(window.ruiCounts)ruiCounts()}paintConnect();load(true)}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else setTimeout(init,0);
+})();</script>
+<script>/* ANGE TO DO (27 Oct 2026). Shows the open tasks in your Google Tasks list called "Ange to do",
+   in the order Google keeps them. Built only from the live Google Tasks this page already loads. Nothing is invented. */
+(function(){"use strict";
+function $(i){return document.getElementById(i)}
+function mk(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function dueTxt(d){if(!d)return"";d=String(d).slice(0,10);var t=new Date(),y=t.getFullYear()+"-"+("0"+(t.getMonth()+1)).slice(-2)+"-"+("0"+t.getDate()).slice(-2);var p;try{p=new Date(d+"T12:00:00").toLocaleDateString("en-AU",{weekday:"short",day:"numeric",month:"short"})}catch(e){p=d}if(d<y)return"Overdue, was due "+p;if(d===y)return"Due today";return"Due "+p}
+function tDone(t){try{var k=ticks[t.id];return k?!!k.done:!!t.gdone}catch(e){return!!t.gdone}}
+window.drawAngeTodo=function(){var B=$("atBody");if(!B)return;B.textContent="";
+ var all=window.TASKS||[],live=/Live from Google Tasks/.test(window.TSRC||"");
+ var T=all.filter(function(t){return t&&t.live&&/^\s*ange to do\s*$/i.test(t.list||"")&&!tDone(t)});
+ var box=mk("div","at");
+ if(!T.length){box.appendChild(mk("div","empty",live?"Nothing open in your Ange to do list.":"Your Google Tasks have not loaded on this device yet. Connect them in TO DO below."))}
+ else{var ul=mk("ul");T.slice(0,15).forEach(function(x){var li=mk("li"),t=mk("div","t",x.title);var d=dueTxt(x.due);if(d)t.appendChild(mk("span","m",d));li.appendChild(t);ul.appendChild(li)});box.appendChild(ul);
+  if(T.length>15)box.appendChild(mk("div","empty","Plus "+(T.length-15)+" more in Google Tasks."))}
+ var a=mk("a","more","Open in Google Tasks \u2197");a.href="https://tasks.google.com/tasks/?authuser=info@realmpcs.com";a.target="_blank";a.rel="noopener";box.appendChild(a);
+ B.appendChild(box);
+ var c=$("atcnt");if(c)c.textContent=T.length?T.length+" open":"";var ct=$("atcntT");if(ct)ct.textContent=String(T.length);
+};
+var f=window.drawTasks;if(typeof f==="function")window.drawTasks=function(){var r=f.apply(this,arguments);try{drawAngeTodo()}catch(e){}return r};
+try{drawAngeTodo()}catch(e){}
 })();</script>
 <script src="js/notify.js?v=20261018-1" data-app="notes" data-kind="notes" defer></script>
 </body></html>
