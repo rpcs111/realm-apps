@@ -121,7 +121,7 @@ a.cal-line{color:var(--accent)}
 </head><body class="rui">
 <header class="rui-top"><button id="ara" class="rui-ara" type="button" title="Call Ara on this job" aria-label="Call Ara on this job"><span class="rui-mark" aria-hidden="true"></span>ARA</button><b class="rui-title">Search Studio</b><div class="nav" data-rl-pill><a href="./index.html">‹ Apps</a><a id="toNotes" href="./notes.html">Note ›</a></div></header>
 <div class="rui-shell"><aside class="rui-rail" id="rail" role="tablist" aria-label="Filter results"><button type="button" class="rui-tab on" data-k="all" role="tab" aria-selected="true">All <i>0</i></button><button type="button" class="rui-tab" data-k="reg" role="tab">Register <i>0</i></button><button type="button" class="rui-tab" data-k="ev" role="tab">Calendar <i>0</i></button><button type="button" class="rui-tab" data-k="file" role="tab">Drive <i>0</i></button><button type="button" class="rui-tab" data-k="wa" role="tab">WhatsApp <i>0</i></button><h3>Sources</h3><div class="rui-src" id="src"><span>Register</span><span>Calendar</span><span>Drive</span><span>WhatsApp links</span></div></aside>
-<main class="rui-main"><div id="tips" class="srch-tips"></div><div class="rk-line" id="rkLine" hidden>Search needs the Realm key on this phone. <button type="button" id="rkAdd">Add key</button></div><div class="rui-status" id="msg">Type or tap the mic, then Go. Data comes live from Realm Desk.</div><div class="sync-chip" data-realm-sync role="status"></div><section id="weeks" class="weeks" aria-label="Last week vs Next week"><div class="weeks-bar"><button type="button" id="wkPrev" aria-label="Earlier weeks">&#8249;</button><h2 id="wkTitle">Last week vs Next week</h2><button type="button" id="wkNext" aria-label="Later weeks">&#8250;</button><button type="button" id="sayJob">Say the job</button><button type="button" id="showAll" hidden>Show all</button></div><p class="weeks-note" id="wkNote"></p><div id="wkBody" class="weeks-cols"></div></section><section id="amendPath" class="amend-path" aria-label="Path of amend"><h2>Path of amend</h2><div id="amendPathBody"></div></section><div class="rui-list" id="out"></div></main></div>
+<main class="rui-main"><div id="tips" class="srch-tips"></div><div class="rk-line" id="rkLine" hidden>Search needs the Realm key on this phone. <button type="button" id="rkAdd">Add key</button></div><div class="rui-status" id="msg">Type or tap the mic, then Go. Data comes live from Desk.</div><div class="sync-chip" data-realm-sync role="status"></div><section id="weeks" class="weeks" aria-label="Last week vs Next week"><div class="weeks-bar"><button type="button" id="wkPrev" aria-label="Earlier weeks">&#8249;</button><h2 id="wkTitle">Last week vs Next week</h2><button type="button" id="wkNext" aria-label="Later weeks">&#8250;</button><button type="button" id="sayJob">Say the job</button><button type="button" id="showAll" hidden>Show all</button></div><p class="weeks-note" id="wkNote"></p><div id="wkBody" class="weeks-cols"></div></section><section id="amendPath" class="amend-path" aria-label="Path of amend"><h2>Path of amend</h2><div id="amendPathBody"></div></section><div class="rui-list" id="out"></div></main></div>
 <script>/* keep the one-time banners in the page flow, never over the search box / tabs */
 (function(){var slot=document.getElementById("tips"),ids=["ara-openin","araHint"];
  function pull(){ids.forEach(function(i){var e=document.getElementById(i);if(e&&e.parentNode!==slot)slot.appendChild(e)})}
@@ -155,9 +155,9 @@ function call(fn,args,opt){opt=opt||{};var n=0;
 /* plain words for the screen: never a raw parser or browser error */
 function friendly(e){var k=e&&e.kind;
  if(navigator.onLine===false||(e&&e.message==="offline"))return {t:"You're offline",s:"Check your signal, then tap to retry."};
- if(k==="timeout")return {t:"Search took too long, tap to retry",s:"Realm Desk didn't answer in time."};
- if(k==="app")return {t:"Realm Desk said: "+e.message,s:/key/i.test(e.message)?"Add the Realm key once on this device, then retry.":"Tap to retry."};
- return {t:"Search didn't come back properly, tap to retry",s:"Realm Desk sent a bad answer. It usually works on the next go."}}
+ if(k==="timeout")return {t:"Search took too long, tap to retry",s:"Desk didn't answer in time."};
+ if(k==="app")return {t:"Desk could not answer, tap to retry",s:/key/i.test(e.message)?"Add the Realm key once on this device, then retry.":"Tap to retry."};
+ return {t:"Search didn't come back properly, tap to retry",s:"Desk sent a bad answer. It usually works on the next go."}}
 function setSrc(live){var s=document.getElementById("src").children;var names=["Register","Calendar","Drive","WhatsApp links"];for(var i=0;i<4;i++){s[i].className=live?"live":"no";s[i].textContent=names[i]+(live?" – live":" – no answer")}}
 var lastGo=0;function go(q){q=(q||"").trim();var o=document.getElementById("out"),m=document.getElementById("msg");if(!q){m.textContent="Type or say an address, client or keyword first, then Go.";try{document.getElementById("q").focus()}catch(e){}return}var nowT=Date.now();if(q===go.lastQ&&nowT-lastGo<800)return;lastGo=nowT;go.lastQ=q;try{document.getElementById("q").blur()}catch(e){}o.innerHTML="";var gb=document.getElementById("goBtn"),t0=Date.now();var again=false;function tick(){if(mySeq!==go.seq)return;var sec=Math.round((Date.now()-t0)/1000);m.textContent="Searching “"+q+"”… "+sec+"s"+(again?" · slow answer, trying again":"")}var mySeq=go.seq=(go.seq||0)+1;clearInterval(go.iv);tick();go.iv=setInterval(tick,1000);gb.classList.add("busy");gb.textContent="…";function done(){if(mySeq!==go.seq)return;clearInterval(go.iv);gb.classList.remove("busy");gb.textContent="Go"}
  try{history.replaceState(null,"","?q="+encodeURIComponent(q))}catch(e){}
@@ -186,20 +186,20 @@ if(!SR){mic.title="Voice isn't available here. Use the keyboard mic"}
 mic.onclick=function(){var qi=document.getElementById("q");
  if(!SR){micMsg("Voice search isn't available in this browser. Tap the box and use the mic on your keyboard.");qi.focus();return}
  if(srec){try{srec.stop()}catch(e){}return}
- var r;try{r=new SR()}catch(e){micMsg("Mic could not start: "+e.message);return}
+ var r;try{r=new SR()}catch(e){try{console.warn(e)}catch(_){}micMsg("The microphone isn't available right now.");return}
  srec=r;r.lang="en-AU";r.interimResults=true;r.continuous=false;r.maxAlternatives=1;
  var before=qi.value,fin="",heard="",err="",RL=window.RealmLine;
  mic.classList.add("on");mic.setAttribute("aria-pressed","true");micMsg("Listening\u2026 say an address, client or keyword.");
  RL&&RL.mic("search",function(){mic.onclick()});
  r.onstart=function(){RL&&RL.micLive("search")};
  r.onresult=function(e){if(srec!==r)return;var f="",t="";for(var i=0;i<e.results.length;i++){var x=e.results[i];if(x.isFinal)f+=x[0].transcript;else t+=x[0].transcript}fin=f.trim();heard=(f+t).trim();if(heard)qi.value=heard};
- r.onerror=function(e){err=e.error||"error";if(err!=="aborted")micMsg(MICERR[err]||("Mic error: "+err+". Tap the mic to try again."))};
+ r.onerror=function(e){err=e.error||"error";if(err!=="aborted"){try{console.warn(e)}catch(_){}micMsg(MICERR[err]||"The microphone isn't available right now.")}};
  r.onend=function(){if(srec===r)srec=null;mic.classList.remove("on");mic.setAttribute("aria-pressed","false");
   if(document.hidden){RL&&RL.micEnd("search");return}
   RL&&RL.micStop("search");var t=fin||heard;
   if(t){qi.value=t;try{qi.dispatchEvent(new Event("input",{bubbles:true}))}catch(x){}go(t)}
   else{qi.value=before;if(!err)micMsg("Didn't catch that. Tap the mic and try again.")}};
- try{r.start()}catch(e){srec=null;mic.classList.remove("on");micMsg("Mic could not start: "+e.message)}};
+ try{r.start()}catch(e){srec=null;mic.classList.remove("on");try{console.warn(e)}catch(_){}micMsg("The microphone isn't available right now.")}};
 var q0=new URLSearchParams(location.search).get("q");if(q0){document.getElementById("q").value=q0;go(q0)}
 </script><style>.am{min-height:34px;padding:4px 12px;font-size:13px;margin-top:8px;background:#000;border-color:#2a2a2a;color:#e4e4e7}.amb button{display:inline-flex;align-items:center;gap:6px}.amb .micI,#araM .micI{width:20px;height:20px}.amb{margin-top:8px;display:flex;flex-direction:column;gap:6px}.amb textarea{font:inherit;background:#000;color:#fff;border:1px solid var(--l);border-radius:12px;padding:8px;min-height:64px}.amb .r{display:flex;gap:6px;flex-wrap:wrap}.amd{font-size:12px;color:#67e8f9;margin-top:6px}
 
@@ -234,7 +234,7 @@ new MutationObserver(decorate).observe(document.getElementById("out"),{childList
 })();
 </script>
 <script>/* bot line reconnect hooks (see js/reconnect.js) */
-(function(){if(!window.RealmLine)return;RealmLine.line({name:'Desk v9 (Search)',ping:function(){return RealmLine.pingExec(EXEC)}});RealmLine.drafts(['q','araT']);})();</script>
+(function(){if(!window.RealmLine)return;RealmLine.line({name:'Search',ping:function(){return RealmLine.pingExec(EXEC)}});RealmLine.drafts(['q','araT']);})();</script>
 <script src="voice.js?v=20261017-24"></script><script src="js/saveapp.js?v=20261017-24" data-mount="header .nav"></script><script>RealmUI.tabs(document.getElementById("rail"),document.getElementById("out"))</script><script src="js/ara-version.js" defer></script><script src="js/realm-sync.js?v=20261017-24" data-backoff data-allow-text="Tap Allow once to sync"></script>
 <script>/* v15: inline Add key line instead of the first-load popup; key lock unchanged */(function(){var l=document.getElementById("rkLine"),b=document.getElementById("rkAdd");function has(){return !!(window.RealmKey&&RealmKey.get())}if(l&&!has())l.hidden=false;if(b)b.onclick=function(){if(window.RealmKey)RealmKey.ask("")}})()</script><script>/* v16: a tap anywhere on the input bar (not on a button) focuses the text box */(function(){var b=document.querySelector(".rui-box");if(!b)return;b.addEventListener("click",function(e){if(e.target.closest("button,a,input,textarea"))return;var f=b.querySelector("textarea,input");if(f)f.focus()})})()</script><script src="js/ara-install.js?v=20261017-24" defer></script><script>/* v20 (Elon): never say "Connected" when this device has no Realm key */(function(){function k(){try{return !!(window.RealmKey&&RealmKey.get())}catch(e){return false}}function f(){var p=document.getElementById("rlPill");if(!p||k())return;[].forEach.call(p.querySelectorAll("span"),function(x){if(x.textContent==="Connected"){x.textContent="Key needed";p.title="Online, but this device has no Realm key yet"}})}setInterval(f,800);addEventListener("load",f)})();</script><script src="js/nirvana.js?v=20261017-24" data-app="search" data-name="Search Studio" defer></script><script src="js/notify.js?v=20261018-1" data-app="search" data-kind="cert"></script><script>
 /* Search Studio week view. Desk is the only source. AMEND_PATH_URL stays empty until a Drive link is set. */
