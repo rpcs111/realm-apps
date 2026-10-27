@@ -27,9 +27,11 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 
 <h2>The crew</h2>
 <div class="grid" id="cards"></div>
+<p class="cost"><b>Limits:</b> Deputy and Xero look-only. No sends, spending, deletes, Apps Script deploys or go-lives without Ange's yes. Banned: Claude, Zapier, Make, n8n, Fireflies, scribehow.</p>
+<div class="cost">Inside Grok Heavy plan; no extra fee confirmed. Spend cap set privately</div>
 
 
-<h2>Echo's checklist (before every reply)</h2>
+<h2>Historical (before 27 Oct 2026): Echo's checklist (before every reply)</h2>
 <div class="card" style="--c:#ff8a3d"><ol>
 <li>Starts with "I got you, bro", then the next two steps, then the answer.</li>
 <li>Rule 36: nothing repeated or paraphrased. Already delivered? Say "check your screen".</li>
@@ -40,27 +42,20 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 <li>Sends, spends, deletes, deploys and go-lives held for Ange's yes (rule 10 note, spend cap set privately).</li></ol></div>
 
 <h2>Day in the life (Melbourne time)</h2>
+<p>RETIRED (27 Oct 2026): these old team routines are retired.</p>
+<h3>Still running</h3>
 <div class="grid">
-<div class="card" style="--c:#22c58b"><h3>8:52am Mondays</h3>Weekly accountability check: Coach</div>
-<div class="card" style="--c:#ffb800"><h3>10:00am weekdays</h3>Morning sweep: Ara</div>
-<div class="card" style="--c:#ff6fb5"><h3>11:11am daily</h3>11:11 reset: Ara</div>
-<div class="card" style="--c:#22c58b"><h3>11:52am daily</h3>Daily AI drill: Coach</div>
-<div class="card" style="--c:#ffb800"><h3>1:27pm weekdays</h3>Week-ahead check: Infra</div>
-<div class="card" style="--c:#22c58b"><h3>2:00pm weekdays</h3>Nudge: Coach</div>
-<div class="card" style="--c:#ff8a3d"><h3>7:00pm weekdays</h3>Notes drain: ECHO</div>
-<div class="card" style="--c:#ff4f6d"><h3>6:00pm Sundays</h3>Sunday sweep: SENTRY</div>
 <div class="card" style="--c:#00b3a4"><h3>1st of the month</h3>Subscription review: Ara</div>
-<div class="card" style="--c:#ff6fb5"><h3>Every 2 hours</h3>Triage alarm: Ara</div>
 </div>
 
-<h2>Gaps closed: who owns each of the 20</h2>
+<h2>Historical (before 27 Oct 2026): Gaps closed: who owns each of the 20</h2>
 <div class="card" style="--c:#4fb8ff"><ol>
 <li>Rule 19 blank: ECHO (asks Ange once)</li>
 <li>Rules 1-39 have no status: ECHO</li>
 <li>Duplicate 23-25 text and 28/31/32 numbering: ECHO</li>
 <li>No owners or due dates: ECHO</li>
 <li>No habits section in the register: ECHO</li>
-<li>No single library location: FORGE (00 INDEX)</li>
+<li>No single library location: FORGE</li>
 <li>Duplicate folders: FORGE (archive, never delete)</li>
 <li>Unsorted folders: FORGE</li>
 <li>Rule 25 five-year goals and "fix it" button: ORACLE</li>
@@ -85,7 +80,7 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 <li>Rule 14 phone-first: Yes, cards stack on phone.</li>
 <li>Rule 22 always editable: Yes, tree text saves on this device.</li>
 <li>Rule 33 prices: Partly. No prices invented; cost is "Inside Grok Heavy plan; no extra fee confirmed. Spend cap set privately".</li>
-<li>Rule 34 coworkers Ange can check: Yes, every role shown. They're planned, not built yet.</li>
+<li>Rule 34 coworkers Ange can check: Yes, every role shown.</li>
 <li>Rule 36 no repeats: Yes, each fact appears once per section.</li>
 <li>No API keys in the page: Yes.</li>
 <li>Banned tools used: None.</li>
@@ -93,7 +88,7 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 <li>Rule 19: still blank, so not checked.</li></ul></div>
 
 <h2>Got an idea? Rename or add a bot</h2>
-<textarea id="idea" style="min-height:140px" placeholder="e.g. Rename Merchant to Shopkeeper. Add a bot for..."></textarea>
+<textarea id="idea" style="min-height:140px" placeholder="e.g. Add a bot for the morning jobs."></textarea>
 <button class="pink" onclick="copyIdea()">Copy</button><span id="saved"></span>
 
 <h2>Pictures</h2>
@@ -138,12 +133,12 @@ const DEF=`flowchart TD
   classDef nova fill:#8a7dff,stroke:#fff,color:#fff
   classDef b1 fill:#ff8a3d,color:#fff
   classDef b2 fill:#22c58b,color:#fff
-  classDef b3 fill:#ffd23f,color:#e8eefc
+  classDef b3 fill:#ffd23f,color:#111
   classDef b4 fill:#4fb8ff,color:#fff
   classDef b5 fill:#00b3a4,color:#fff
   classDef b6 fill:#ff4f6d,color:#fff
   classDef b7 fill:#c35cff,color:#fff
-  classDef b8 fill:#ffe066,color:#e8eefc`;
+  classDef b8 fill:#ffe066,color:#111`;
 const src=document.getElementById('src');src.value=localStorage.getItem('realmCrewTree_v2')||DEF;
 mermaid.initialize({startOnLoad:false,flowchart:{htmlLabels:false},theme:'base',themeVariables:{lineColor:'#e0459b',primaryColor:'#fff3c4'}});
 let n=0,t;
