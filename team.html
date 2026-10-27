@@ -123,7 +123,8 @@ const bots=[
 document.getElementById('cards').innerHTML=bots.map(b=>`<div class="card" style="--c:${b[1]}"><h3>${b[0]}</h3><span class="tag">${b[4]}</span><span class="tag" style="background:#2b235033;color:#e8eefc">Setup: ${b[5]}</span><p>${b[2]}</p><b>Hands down:</b><ul>${b[3].map(x=>'<li>'+x+'</li>').join('')}</ul><p><b>Rules:</b> ${b[6]}</p><p><b>Routines:</b> ${b[7]}</p><p><b>Tools:</b> ${b[8]}</p><p class="cost"><b>Limits:</b> ${LIM}</p><div class="cost">${COST}</div></div>`).join('');
 const DEF=`flowchart TD
   ANGE([ANGE - Boss]):::boss
-  ANGE --> ARA[Ara – Builder, Grok<br/>car, desktop, phone]:::ara
+  ANGE --> CHIEF[42* – Chief]:::b2
+  CHIEF --> ARA[Ara – Builder, Grok<br/>car, desktop, phone]:::ara
   ANGE --> NOVA[NOVA - Gemini backend]:::nova
   ARA <--> NOVA
   ARA --> ECHO[ECHO - Checker]:::b1
