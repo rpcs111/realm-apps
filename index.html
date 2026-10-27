@@ -16,7 +16,7 @@ body.hub{margin:0;min-height:100dvh;color:#e5e5e5;font:16px/1.4 system-ui,-apple
 .hub-mark{width:28px;height:28px;flex:0 0 28px;background:url(pwa/hub-star.svg?v=20261026-1) center/contain no-repeat}
 .shell{display:flex;flex-direction:column;max-width:760px;margin:0 auto;padding:10px 12px;min-width:0}
 .side,.main{min-width:0}
-.ver{color:#737373;font-size:12px;margin:2px 2px 10px}
+.ver{display:none}
 #q{display:block;width:100%;max-width:100%;min-height:44px;margin:0 0 10px;padding:0 14px;border-radius:12px;border:1px solid var(--accent);background:#0a0a0a;color:#fff;font:16px/1.2 system-ui,-apple-system,Roboto,sans-serif}
 #q:focus{outline:2px solid var(--accent);outline-offset:2px}
 .who{display:flex;gap:8px;margin:0 0 12px}
@@ -74,7 +74,7 @@ var EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj
 var FOUR=[
  {name:"SEARCH STUDIO",sub:"Search · amend notes",u:"./search.html"},
  {name:"NOTE",sub:"Pick up where you left off · to-dos",u:"./notes.html"},
- {name:"DESK",sub:"Job board · REALM DESK",u:EXEC,ext:true},
+ {name:"DESK",sub:"Job board",u:EXEC,ext:true},
  {name:"DECK",sub:"History · what changed",u:"./deck.html"}];
 var MORE=[
  {name:"FLOW",sub:"Programs + bridges",u:"./metatron3.html"},

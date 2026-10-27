@@ -29,11 +29,11 @@ button.btn,a.btn{all:unset;box-sizing:border-box;display:inline-flex;align-items
 </style></head><body>
 <header class="top"><span class="mark" role="img" aria-label="Deck star"></span><b class="ttl">DECK</b><div class="nav"><a href="./index.html">&lsaquo; HUB</a></div></header>
 <div class="wrap">
-<p class="muted" id="intro">The history of what changed in your apps. Desk is the job board; Deck is the record. Version 2026.10.26.</p>
+<p class="muted" id="intro">The history of what changed in your apps. Desk is the job board; Deck is the record.</p>
 
-<h2>TEAM HISTORY &middot; REALM DESK</h2>
-<div class="card" id="desk"><div class="muted">Checking REALM DESK&hellip;</div></div>
-<div class="card gap" id="logGap"><b>Daily activity logging is not switched on.</b> The team change log is the FLOW_CHANGES tab in the REALM OPEN REGISTER (when, who, what, old, new). Its last entry is <b>13 Oct 2026</b> (checked 26 Oct 2026). Nothing has been written to it since, so there is no team history after 13 Oct to show.<br><br>This page cannot list that tab yet: REALM DESK does not hand it out. Turning the history on needs a REALM DESK update (backend), not a phone change.
+<h2>TEAM HISTORY</h2>
+<div class="card" id="desk"><div class="muted">Checking Desk&hellip;</div></div>
+<div class="card gap" id="logGap"><b>Daily activity logging is not switched on.</b> The team change log is kept in the register. Its last entry is <b>13 Oct 2026</b> (checked 26 Oct 2026). Nothing has been written to it since, so there is no team history after 13 Oct to show.<br><br>This page cannot list that tab yet: Desk does not hand it out. Turning the history on needs a Desk update (backend), not a phone change.
 <br><a class="btn" href="https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit" target="_blank" rel="noopener noreferrer">Open the register &#8599;</a></div>
 
 <h2>LET US DO THIS &middot; YOUR ASKS</h2>
@@ -60,18 +60,18 @@ function num(t){var n=typeof t==="number"?t:Date.parse(t);return isFinite(n)?n:0
 
 /* 1) REALM DESK: live read with the Realm key (getFlow gives the count of changes still waiting) */
 function deskState(){var D=$("desk");D.textContent="";
- if(!key()){D.appendChild(mk("div",null,"Needs the Realm key on this device to read REALM DESK."));var b=mk("button","btn","Add key");b.type="button";b.onclick=function(){if(window.RealmKey)RealmKey.ask("One time on this device. Ange has the key.")};D.appendChild(b);return}
- D.appendChild(mk("div","muted","Asking REALM DESK\u2026"));
+ if(!key()){D.appendChild(mk("div",null,"Needs the Realm key on this device to read Desk."));var b=mk("button","btn","Add key");b.type="button";b.onclick=function(){if(window.RealmKey)RealmKey.ask("One time on this device. Ange has the key.")};D.appendChild(b);return}
+ D.appendChild(mk("div","muted","Asking Desk\u2026"));
  fetch(EXEC,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:"getFlow",args:[],key:key()})})
  .then(function(r){return r.json()}).then(function(j){D.textContent="";
-   if(!j||!j.ok){var m=(j&&j.error)||"no answer";D.appendChild(mk("div",null,/Realm key/.test(m)?"REALM DESK did not accept the key on this device.":"REALM DESK answered with an error: "+m));if(/Realm key/.test(m)){var b=mk("button","btn","Enter the key again");b.type="button";b.onclick=function(){if(window.RealmKey)RealmKey.ask("That key did not work. Check it and type it again.")};D.appendChild(b)}return}
+   if(!j||!j.ok){var m=(j&&j.error)||"no answer";D.appendChild(mk("div",null,/Realm key/.test(m)?"Desk did not accept the key on this device.":"Desk could not answer just now. Try again soon."));if(/Realm key/.test(m)){var b=mk("button","btn","Enter the key again");b.type="button";b.onclick=function(){if(window.RealmKey)RealmKey.ask("That key did not work. Check it and type it again.")};D.appendChild(b)}return}
    var r=j.result||{};
    function kv(a,b){var d=mk("div","kv");d.appendChild(mk("span",null,a));d.appendChild(mk("span",null,b));D.appendChild(d)}
-   kv("REALM DESK","answering");
+   kv("Desk","answering");
    kv("Changes logged but not actioned yet",String(r.openChanges==null?"not reported":r.openChanges));
    kv("Flow map steps",String((r.nodes||[]).length));
    kv("Checked",r.when||timeOf(Date.now()));
- }).catch(function(e){D.textContent="";D.appendChild(mk("div",null,"REALM DESK did not answer from this device ("+(e&&e.message||"network")+"). Nothing shown rather than a guess."))})}
+ }).catch(function(e){D.textContent="";D.appendChild(mk("div",null,"Desk did not answer from this device. Nothing shown rather than a guess."))})}
 
 /* 2) Messages: what is still waiting on this device vs what the helper confirmed */
 function msgState(){var M=$("msgs");M.textContent="";
