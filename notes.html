@@ -445,7 +445,7 @@ window.drawPickup=function(){var B=$("puBody");if(!B)return;B.textContent="";
  var T=(window.TASKS||TASKS||[]).filter(function(t){return t&&t.live&&!tDone(t)});
  var allow=T.filter(function(t){return typeof taskListRank==="function"&&taskListRank(t.list)>=0});if(allow.length)T=allow;
  T=T.slice().sort(function(a,b){var x=a.due||"9999",y=b.due||"9999";return x<y?-1:x>y?1:0});
- var src=window.TSRC||"",live=/Live from Google Tasks/.test(src),failed=/That didn't work/.test(src);var tEmpty=live?"Nothing open in your to-do lists.":failed?"Google Tasks didn't load. Please try again in a moment.":"Your Google Tasks have not loaded on this device yet, so there is nothing to show here. Connect them in TO DO below.";
+ var src=window.TSRC||"",live=/Live from Google Tasks/.test(src),failed=/That didn't work/.test(src),loading=/Loading your Google Tasks/.test(src),offline=/^You're offline\./.test(src);var tEmpty=offline?"You're offline. Google Tasks will load when you're back online.":live?"Nothing open in your to-do lists.":failed?"Google Tasks didn't load. Please try again in a moment.":loading?"Loading your Google Tasks\u2026":"Your Google Tasks have not loaded on this device yet, so there is nothing to show here. Connect them in TO DO below.";
  B.appendChild(box("DO NEXT",T.slice(0,3).map(taskRow),tEmpty));
  var more=open.length-1-rest.length;
  B.appendChild(box("NOT FINISHED"+(open.length>1?" ("+(open.length-1)+")":""),rest.map(noteRow),open.length>1?"":"Nothing else unfinished in your notes."));
@@ -496,10 +496,11 @@ function paintConnect(){var box=g("gtConnect");if(!box){box=document.createEleme
   g("gtF").onsubmit=function(e){e.preventDefault();var k=i.value.trim().toUpperCase();if(k.replace(/[^A-Z0-9]/g,"").length<20){g("gtW").textContent="That looks too short. Check it and try again.";return}
    try{localStorage.setItem("realm_key",k)}catch(x){}state="idle";box.dataset.open="";g("gtW").textContent="Connecting\u2026";load(true)}}}
 function load(force){if(busy)return;if(!key()){state="nokey";if(!lists.length){window.TASKS=[];setSrc("Google Tasks not connected on this device yet.");drawTasks();if(window.ruiCounts)ruiCounts()}paintConnect();return}
- if(!force&&Date.now()-lastAt<15000)return;busy=true;if(!lists.length)setSrc("Loading your Google Tasks\u2026");
+ if(navigator.onLine===false){setSrc("You're offline. Google Tasks will load when you're back online.");if(window.drawPickup)drawPickup();return}
+ if(!force&&Date.now()-lastAt<15000)return;busy=true;if(!lists.length){setSrc("Loading your Google Tasks\u2026");if(window.drawPickup)drawPickup()}
  call("getTasks",[],45000).then(function(r){busy=false;if(r&&r.err)throw new Error(r.err);lastAt=Date.now();state="ok";load.n=0;try{localStorage.setItem(CK,JSON.stringify({at:lastAt,lists:r.lists||[]}))}catch(e){}apply(r.lists||[],lastAt,false)})
- .catch(function(e){busy=false;try{console.warn(e)}catch(_){}var msg=String(e&&e.message||e);if(/Realm key needed/i.test(msg)){state="badkey";paintConnect();setSrc("Google Tasks: this device\u2019s Realm key was not accepted.");return}
-  state="err";if(!lists.length&&(load.n=(load.n||0)+1)<3){setTimeout(function(){load(true)},3000);return}setSrc((lists.length?"Showing the last copy. ":"")+"That didn't work. Please try again.");if(window.drawPickup)drawPickup();})}
+ .catch(function(e){busy=false;try{console.warn(e)}catch(_){}var msg=String(e&&e.message||e);if(/Realm key needed/i.test(msg)){state="badkey";paintConnect();setSrc("Google Tasks: this device\u2019s Realm key was not accepted.");if(window.drawPickup)drawPickup();return}
+  state="err";if(!lists.length&&(load.n=(load.n||0)+1)<3){setSrc("Loading your Google Tasks\u2026");if(window.drawPickup)drawPickup();setTimeout(function(){load(true)},3000);return}setSrc((lists.length?"Showing the last copy. ":"")+"That didn't work. Please try again.");if(window.drawPickup)drawPickup();})}
 /* tick = complete in Google Tasks (optimistic, put back if Google says no) */
 g("tasks")&&g("tasks").addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".tick[data-t]");if(!b)return;var id=b.getAttribute("data-t");if(!/^g_/.test(id))return;
  e.preventDefault();e.stopPropagation();var t=(window.TASKS||[]).filter(function(x){return x.id===id})[0];if(!t)return;
@@ -532,7 +533,7 @@ function $(i){return document.getElementById(i)}
 function mk(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
 function dueTxt(d){if(!d)return"";d=String(d).slice(0,10);var t=new Date(),y=t.getFullYear()+"-"+("0"+(t.getMonth()+1)).slice(-2)+"-"+("0"+t.getDate()).slice(-2);var p;try{p=new Date(d+"T12:00:00").toLocaleDateString("en-AU",{weekday:"short",day:"numeric",month:"short"})}catch(e){p=d}if(d<y)return"Overdue, was due "+p;if(d===y)return"Due today";return"Due "+p}
 function tDone(t){try{var k=ticks[t.id];return k?!!k.done:!!t.gdone}catch(e){return!!t.gdone}}
-function angeMsg(){var src=window.TSRC||"",shown=($("tsrc")&&$("tsrc").textContent)||"";var live=/Live from Google Tasks/.test(src);var failed=!live&&(/That didn't work/.test(src)||/That didn't work/.test(shown));if(live)return{t:"Nothing open in your Ange to do list.",f:false};if(failed)return{t:"Google Tasks didn't load.",f:true};var box=$("gtConnect");if(box&&box.hidden)return{t:"Your Google Tasks have not loaded on this device yet.",f:false};return{t:"Your Google Tasks have not loaded on this device yet. Connect them in TO DO below.",f:false}}
+function angeMsg(){var src=window.TSRC||"",shown=($("tsrc")&&$("tsrc").textContent)||"",blob=src||shown;var box=$("gtConnect"),connected=!!(box&&box.hidden);var offline=/^You're offline\./.test(blob)||(connected&&navigator.onLine===false);var live=/Live from Google Tasks/.test(src);var failed=!offline&&/That didn't work/.test(blob);var loading=/Loading your Google Tasks/.test(blob);if(offline)return{t:"You're offline. Google Tasks will load when you're back online.",f:false};if(live)return{t:"Nothing open in your Ange to do list.",f:false};if(failed)return{t:"Google Tasks didn't load.",f:true};if(loading)return{t:"Loading your Google Tasks\u2026",f:false};if(!connected)return{t:"Your Google Tasks have not loaded on this device yet. Connect them in TO DO below.",f:false};return{t:"Your Google Tasks have not loaded on this device yet.",f:false}}
 window.drawAngeTodo=function(){var B=$("atBody");if(!B)return;B.textContent="";
  var all=window.TASKS||[];
  var T=all.filter(function(t){return t&&t.live&&/^\s*ange to do\s*$/i.test(t.list||"")&&!tDone(t)});
