@@ -175,6 +175,7 @@ html body #tAddBox #tAdd{border-color:var(--accent)!important;color:var(--accent
 #angeTodo li .m{display:block;color:#8a8a8a;font-size:12px}
 #angeTodo .empty{color:#8a8a8a;font-size:13px;padding:8px 0}
 #angeTodo a.more{display:inline-flex;align-items:center;min-height:44px;color:var(--accent);font-size:13px;text-decoration:none}
+#angeTodo button.retry{display:inline-flex;align-items:center;box-sizing:border-box;min-height:44px;padding:0 2px;border:0;background:none;color:var(--accent);font:inherit;font-size:14px;cursor:pointer}
 </style></head><body class="rui">
 <header class="rui-top top"><span class="rui-mark" role="img" aria-label="Ara"></span><b class="rui-title">Note</b><div class="nav"><a href="./index.html">‹ Apps</a><a id="toSearch" href="./search.html">Search ›</a></div></header>
 <div class="rui-shell"><aside class="rui-rail" id="rail" role="tablist" aria-label="Show"><button type="button" class="rui-tab on" data-k="all" role="tab" aria-selected="true">All <i id="acnt">0</i></button><button type="button" class="rui-tab" data-k="ange" role="tab">Ange to do <i id="atcntT">0</i></button><button type="button" class="rui-tab" data-k="notes" role="tab">My notes <i id="ncntT">0</i></button><button type="button" class="rui-tab" data-k="next" role="tab">Pick up <i id="pcntT">0</i></button><button type="button" class="rui-tab" data-k="tasks" role="tab">To do <i id="tcntT">0</i></button><h3>Google Tasks</h3><div class="rui-links"><a class="gt" id="gTasks" href="https://tasks.google.com/tasks/?authuser=info@realmpcs.com" target="_blank" rel="noopener">Google Tasks ↗</a><button id="exp" type="button">CSV</button></div></aside>
@@ -286,7 +287,7 @@ function micUI(on){listening=on;$("mic").classList.toggle("on",on);$("mic").setA
 function micKill(){want=false;if(rec){var r=rec;rec=null;r.onresult=r.onend=r.onerror=null;try{r.abort()}catch(e){}}micUI(false);base="";sess="";var R=RLx();if(R&&R.micStop)R.micStop("notes")}
 function micSession(){var r=new SR();rec=r;r.lang="en-AU";r.interimResults=true;r.continuous=false;r.maxAlternatives=1;sess="";var heard=false;
 r.onresult=function(e){if(rec!==r)return;var t="";for(var i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;sess=t.trim();if(sess){heard=true;heardAny=true}$("nt").value=base+sess};
-r.onerror=function(e){var c=e.error||"error";if(c==="no-speech"||c==="aborted")return;want=false;micErrShown=true;try{console.error(e)}catch(_){}$("micMsg").textContent=MICERR[c]||"The microphone isn't available right now."};
+r.onerror=function(e){var c=e.error||"error";if(c==="no-speech"||c==="aborted")return;want=false;micErrShown=true;try{console.warn(e)}catch(_){}$("micMsg").textContent=MICERR[c]||"The microphone isn't available right now."};
 r.onend=function(){if(rec!==r)return;rec=null;if(sess){base+=sess+" ";sess=""}$("nt").value=base.replace(/\s+$/,"");misses=heard?0:misses+1;
  if(document.hidden){micUI(false);want=false;var R0=RLx();if(R0&&R0.micEnd)R0.micEnd("notes");return}
  if(want&&misses<2){try{micSession();r=null;rec.start();return}catch(err){}}
@@ -294,7 +295,7 @@ r.onend=function(){if(rec!==r)return;rec=null;if(sess){base+=sess+" ";sess=""}$(
  if(!micErrShown)$("micMsg").textContent=heardAny?"Got it. Check the words, then tap Save note.":"Didn't hear anything. Tap Mic and talk."};
 return r}
 function startMic(){if(!SR){$("micMsg").textContent="Voice typing is not available in this browser. Use the mic on your keyboard.";return}
-if(listening)return;try{base=$("nt").value?$("nt").value.replace(/\s*$/," "):"";want=true;misses=0;heardAny=false;micErrShown=false;micSession().start();micUI(true);$("micMsg").textContent="Listening\u2026 talk, then tap Stop.";var R=RLx();if(R){if(R.mic)R.mic("notes",startMic);if(R.micLive)R.micLive("notes")}}catch(err){micKill();try{console.error(err)}catch(_){}$("micMsg").textContent="The microphone isn't available right now."}}
+if(listening)return;try{base=$("nt").value?$("nt").value.replace(/\s*$/," "):"";want=true;misses=0;heardAny=false;micErrShown=false;micSession().start();micUI(true);$("micMsg").textContent="Listening\u2026 talk, then tap Stop.";var R=RLx();if(R){if(R.mic)R.mic("notes",startMic);if(R.micLive)R.micLive("notes")}}catch(err){micKill();try{console.warn(err)}catch(_){}$("micMsg").textContent="The microphone isn't available right now."}}
 $("mic").onclick=function(){if(listening){want=false;if(rec){try{rec.stop()}catch(e){micKill()}}else micKill()}else startMic()};
 if(window.RealmLine){RealmLine.drafts(["nt"]);RealmLine.onBack(function(){ticks=lsGet(TK,{});notes=lsGet(NK,[]);if(!Array.isArray(notes))notes=[];if(window.NDB)NDB.mirror(notes);drawTasks();drawNotes()})}
 /* LIVE GOOGLE TASKS (Ara): from the Ara Engine tasksSync feed, only with this device's sync key (never in this repo). */
@@ -387,7 +388,7 @@ window.shrinkImage=function(file,max,qual){return loadBmp(file).then(function(b)
  return new Promise(function(res,rej){c.toBlob(function(bl){bl?res({blob:bl,w:W,h:H}):rej(new Error("Couldn't save the picture"))},"image/jpeg",qual)})})};
 $("edPhoto").onclick=function(){if(!NDB.booted){msg("Photos need storage this browser won't give (private mode?).");return}$("edFile").click()};
 $("edFile").onchange=function(){var f=this.files&&this.files[0];this.value="";if(!f||!cur)return;msg("Adding photo…");
- shrinkImage(f,1600,0.8).then(function(r){return addImg(r.blob,r.w,r.h,"Photo")}).then(function(){msg("")}).catch(function(e){try{console.error(e)}catch(_){}msg("That didn't work. Please try again.")})};
+ shrinkImage(f,1600,0.8).then(function(r){return addImg(r.blob,r.w,r.h,"Photo")}).then(function(){msg("")}).catch(function(e){try{console.warn(e)}catch(_){}msg("That didn't work. Please try again.")})};
 /* ---------- drawing: pointer events, pen/eraser/colours/undo; over a photo = one merged image ---------- */
 var D={};
 $("edDraw").onclick=function(){if(!NDB.booted){msg("Drawings need storage this browser won't give (private mode?).");return}openDraw(null)};
@@ -397,7 +398,7 @@ window.openDraw=function(mid){if(!cur)return;D={mid:mid,strokes:[],act:null,col:
   var s=Math.min(sw/W,sh/H),dw=Math.round(W*s),dh=Math.round(H*s);D.W=W;D.H=H;D.k=W/dw;
   ["drBg","drInk"].forEach(function(i){var c=$(i);c.width=W;c.height=H;c.style.width=dw+"px";c.style.height=dh+"px";c.style.left=Math.round((sw-dw)/2)+"px";c.style.top=Math.round((sh-dh)/2)+"px"});
   var bx=$("drBg").getContext("2d");bx.fillStyle="#fff";bx.fillRect(0,0,W,H);if(bmp)bx.drawImage(bmp,0,0,W,H);$("drInk").getContext("2d").clearRect(0,0,W,H);undoUI();D.ready=true}
- D.ready=false;if(mid){NDB.getMedia(mid).then(function(r){if(!r||!r.blob)throw new Error("Picture not on this device");return loadBmp(r.blob)}).then(go).catch(function(e){try{console.error(e)}catch(_){}msg("That didn't work. Please try again.");drClose()})}else requestAnimationFrame(function(){go(null)})};
+ D.ready=false;if(mid){NDB.getMedia(mid).then(function(r){if(!r||!r.blob)throw new Error("Picture not on this device");return loadBmp(r.blob)}).then(go).catch(function(e){try{console.warn(e)}catch(_){}msg("That didn't work. Please try again.");drClose()})}else requestAnimationFrame(function(){go(null)})};
 function setTool(m){D.mode=m;$("drPen").classList.toggle("on",m==="pen");$("drErase").classList.toggle("on",m==="eraser");$("drPen").setAttribute("aria-pressed",m==="pen");$("drErase").setAttribute("aria-pressed",m==="eraser")}
 $("drPen").onclick=function(){setTool("pen")};$("drErase").onclick=function(){setTool("eraser")};
 [].forEach.call(document.querySelectorAll("#dr .sw"),function(b){b.onclick=function(){D.col=b.getAttribute("data-c");[].forEach.call(document.querySelectorAll("#dr .sw"),function(x){x.classList.toggle("on",x===b)});setTool("pen")}});
@@ -419,7 +420,7 @@ function drCancel(pop){if(D.strokes&&D.strokes.length&&!confirm("Discard this dr
 $("drCancel").onclick=function(){drCancel(false)};
 $("drSave").onclick=function(){if(!D.ready)return;if(!D.strokes.length){drClose();return}var o=document.createElement("canvas");o.width=D.W;o.height=D.H;var x=o.getContext("2d");x.drawImage($("drBg"),0,0);x.drawImage($("drInk"),0,0);
  var mid=D.mid;o.toBlob(function(bl){if(!bl){msg("Couldn't save the drawing");return}var p;if(mid){p=NDB.putMedia({id:mid,blob:bl,type:bl.type,w:D.W,h:D.H,noteId:String(cur.id),ts:now()}).then(function(){(cur.att||[]).forEach(function(a){if(a.id===mid){a.drawn=1;a.ts=now()}});commit.force=true;commit();drawMedia()})}else p=addImg(bl,D.W,D.H,"Drawing");
- p.then(function(){drClose()}).catch(function(e){try{console.error(e)}catch(_){}msg("That didn't work. Please try again.")})},"image/jpeg",0.8)};
+ p.then(function(){drClose()}).catch(function(e){try{console.warn(e)}catch(_){}msg("That didn't work. Please try again.")})},"image/jpeg",0.8)};
 $("newNote").onclick=function(){openNote(null)};
 window.NotesV20={boot:boot,cur:function(){return cur},D:function(){return D}};
 NotesV20.booting=boot();
@@ -444,7 +445,7 @@ window.drawPickup=function(){var B=$("puBody");if(!B)return;B.textContent="";
  var T=(window.TASKS||TASKS||[]).filter(function(t){return t&&t.live&&!tDone(t)});
  var allow=T.filter(function(t){return typeof taskListRank==="function"&&taskListRank(t.list)>=0});if(allow.length)T=allow;
  T=T.slice().sort(function(a,b){var x=a.due||"9999",y=b.due||"9999";return x<y?-1:x>y?1:0});
- var tEmpty=(window.TSRC&&/Live from Google Tasks/.test(window.TSRC))?"Nothing open in your to-do lists.":"Your Google Tasks have not loaded on this device yet, so there is nothing to show here. Connect them in TO DO below.";
+ var src=window.TSRC||"",live=/Live from Google Tasks/.test(src),failed=/That didn't work/.test(src);var tEmpty=live?"Nothing open in your to-do lists.":failed?"Google Tasks didn't load. Please try again in a moment.":"Your Google Tasks have not loaded on this device yet, so there is nothing to show here. Connect them in TO DO below.";
  B.appendChild(box("DO NEXT",T.slice(0,3).map(taskRow),tEmpty));
  var more=open.length-1-rest.length;
  B.appendChild(box("NOT FINISHED"+(open.length>1?" ("+(open.length-1)+")":""),rest.map(noteRow),open.length>1?"":"Nothing else unfinished in your notes."));
@@ -462,7 +463,7 @@ function g(i){return document.getElementById(i)}function key(){try{return localS
 function add(){var t=g("tTitle"),l=g("tList"),m=g("tMsg"),b=g("tAdd");if(!t||b.disabled)return;var v=t.value.trim(),L=l.value;if(!v){m.textContent="Type the task first.";t.focus();return}
  if(!key()){m.textContent="This device has no Realm key yet. Open Desk, tap Add key, then add tasks here.";return}
  b.disabled=true;m.textContent="Adding to "+L+"\u2026";
- fetch(U,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:"addTask",args:[L,v,""],key:key()})}).then(function(r){return r.text()}).then(function(x){var j;try{j=JSON.parse(x)}catch(e){throw new Error("no answer")}if(!j||!j.ok)throw new Error((j&&j.error)||"not added");m.textContent="\u2713 Added to "+(j.result||L)+".";t.value=""}).catch(function(e){try{console.error(e)}catch(_){}m.textContent="That didn't work. Please try again."}).then(function(){b.disabled=false})}
+ fetch(U,{method:"POST",redirect:"follow",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:"addTask",args:[L,v,""],key:key()})}).then(function(r){return r.text()}).then(function(x){var j;try{j=JSON.parse(x)}catch(e){throw new Error("no answer")}if(!j||!j.ok)throw new Error((j&&j.error)||"not added");m.textContent="\u2713 Added to "+(j.result||L)+".";t.value=""}).catch(function(e){try{console.warn(e)}catch(_){}m.textContent="That didn't work. Please try again."}).then(function(){b.disabled=false})}
 function init(){var b=g("tAdd"),t=g("tTitle");if(!b)return;b.onclick=add;t.onkeydown=function(e){if(e.key==="Enter"){e.preventDefault();add()}}}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init()})();</script><script>/* v23 (Ara, 17 Oct): LIVE two-way Google Tasks replica via Realm Desk (already allowed by info@, no new Google consent).
    Reads every list + open task (getTasks), ticks complete the task in Google (completeTask), adds go straight into the chosen list (addTask).
@@ -497,17 +498,17 @@ function paintConnect(){var box=g("gtConnect");if(!box){box=document.createEleme
 function load(force){if(busy)return;if(!key()){state="nokey";if(!lists.length){window.TASKS=[];setSrc("Google Tasks not connected on this device yet.");drawTasks();if(window.ruiCounts)ruiCounts()}paintConnect();return}
  if(!force&&Date.now()-lastAt<15000)return;busy=true;if(!lists.length)setSrc("Loading your Google Tasks\u2026");
  call("getTasks",[],45000).then(function(r){busy=false;if(r&&r.err)throw new Error(r.err);lastAt=Date.now();state="ok";load.n=0;try{localStorage.setItem(CK,JSON.stringify({at:lastAt,lists:r.lists||[]}))}catch(e){}apply(r.lists||[],lastAt,false)})
- .catch(function(e){busy=false;try{console.error(e)}catch(_){}var msg=String(e&&e.message||e);if(/Realm key needed/i.test(msg)){state="badkey";paintConnect();setSrc("Google Tasks: this device\u2019s Realm key was not accepted.");return}
-  state="err";if(!lists.length&&(load.n=(load.n||0)+1)<3){setTimeout(function(){load(true)},3000);return}var s=g("tsrc");if(s)s.textContent=(lists.length?"Showing the last copy. ":"")+"That didn't work. Please try again.";})}
+ .catch(function(e){busy=false;try{console.warn(e)}catch(_){}var msg=String(e&&e.message||e);if(/Realm key needed/i.test(msg)){state="badkey";paintConnect();setSrc("Google Tasks: this device\u2019s Realm key was not accepted.");return}
+  state="err";if(!lists.length&&(load.n=(load.n||0)+1)<3){setTimeout(function(){load(true)},3000);return}setSrc((lists.length?"Showing the last copy. ":"")+"That didn't work. Please try again.");if(window.drawPickup)drawPickup();})}
 /* tick = complete in Google Tasks (optimistic, put back if Google says no) */
 g("tasks")&&g("tasks").addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".tick[data-t]");if(!b)return;var id=b.getAttribute("data-t");if(!/^g_/.test(id))return;
  e.preventDefault();e.stopPropagation();var t=(window.TASKS||[]).filter(function(x){return x.id===id})[0];if(!t)return;
  pending[t.gid]=1;window.TASKS=window.TASKS.filter(function(x){return x.id!==id});drawTasks();if(window.ruiCounts)ruiCounts();var m=g("tMsg");if(m)m.textContent="\u2713 Done in Google Tasks: "+t.title;
- call("completeTask",[t.listId,t.gid]).then(function(){delete pending[t.gid];lastAt=0;setTimeout(function(){load(true)},1500)}).catch(function(err){delete pending[t.gid];window.TASKS.push(t);drawTasks();if(window.ruiCounts)ruiCounts();try{console.error(err)}catch(_){}if(m)m.textContent="That didn't work. Please try again."})},true);
+ call("completeTask",[t.listId,t.gid]).then(function(){delete pending[t.gid];lastAt=0;setTimeout(function(){load(true)},1500)}).catch(function(err){delete pending[t.gid];window.TASKS.push(t);drawTasks();if(window.ruiCounts)ruiCounts();try{console.warn(err)}catch(_){}if(m)m.textContent="That didn't work. Please try again."})},true);
 g("tsrc")&&g("tsrc").addEventListener("click",function(){if(state==="err")load(true)});
 /* add = straight into the chosen list (top box) or the column's own box */
 function addTo(listTitle,title,msgEl,done){if(!title){msgEl.textContent="Type the task first.";return}msgEl.textContent="Adding to "+listTitle.trim()+"\u2026";
- call("addTask",[listTitle,title,""]).then(function(r){msgEl.textContent="\u2713 Added to "+String(r||listTitle).trim()+".";done&&done();lastAt=0;load(true)}).catch(function(e){try{console.error(e)}catch(_){}msgEl.textContent="That didn't work. Please try again."})}
+ call("addTask",[listTitle,title,""]).then(function(r){msgEl.textContent="\u2713 Added to "+String(r||listTitle).trim()+".";done&&done();lastAt=0;load(true)}).catch(function(e){try{console.warn(e)}catch(_){}msgEl.textContent="That didn't work. Please try again."})}
 function wireTop(){var b=g("tAdd"),t=g("tTitle"),s=g("tList"),m=g("tMsg");if(!b)return;var go=function(){if(b.disabled)return;b.disabled=true;addTo(s.value,t.value.trim(),m,function(){t.value=""});setTimeout(function(){b.disabled=false},1200)};
  b.onclick=go;t.onkeydown=function(e){if(e.key==="Enter"){e.preventDefault();go()}}}
 var od=window.drawTasks;window.drawTasks=function(){od();if(!lists.length)return;[].forEach.call(document.querySelectorAll("#tasks .gcol"),function(c){var h=c.querySelector("h3");if(!h||c.querySelector(".gcadd"))return;var L=(h.firstChild&&h.firstChild.nodeValue||"").trim();var l=lists.filter(function(x){return x.title.trim()===L})[0];if(!l)return;
@@ -531,12 +532,12 @@ function $(i){return document.getElementById(i)}
 function mk(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
 function dueTxt(d){if(!d)return"";d=String(d).slice(0,10);var t=new Date(),y=t.getFullYear()+"-"+("0"+(t.getMonth()+1)).slice(-2)+"-"+("0"+t.getDate()).slice(-2);var p;try{p=new Date(d+"T12:00:00").toLocaleDateString("en-AU",{weekday:"short",day:"numeric",month:"short"})}catch(e){p=d}if(d<y)return"Overdue, was due "+p;if(d===y)return"Due today";return"Due "+p}
 function tDone(t){try{var k=ticks[t.id];return k?!!k.done:!!t.gdone}catch(e){return!!t.gdone}}
-function angeEmpty(){var shown=($("tsrc")&&$("tsrc").textContent)||"",src=window.TSRC||"";var failed=/That didn't work\. Please try again\./.test(shown)||/That didn't work\. Please try again\./.test(src);if(/Live from Google Tasks/.test(src)&&!failed)return"Nothing open in your Ange to do list.";if(failed)return"Google Tasks didn't load. Tap retry in TO DO below.";var box=$("gtConnect");if(box&&box.hidden)return"Your Google Tasks have not loaded on this device yet.";return"Your Google Tasks have not loaded on this device yet. Connect them in TO DO below."}
+function angeMsg(){var src=window.TSRC||"",shown=($("tsrc")&&$("tsrc").textContent)||"";var live=/Live from Google Tasks/.test(src);var failed=!live&&(/That didn't work/.test(src)||/That didn't work/.test(shown));if(live)return{t:"Nothing open in your Ange to do list.",f:false};if(failed)return{t:"Google Tasks didn't load.",f:true};var box=$("gtConnect");if(box&&box.hidden)return{t:"Your Google Tasks have not loaded on this device yet.",f:false};return{t:"Your Google Tasks have not loaded on this device yet. Connect them in TO DO below.",f:false}}
 window.drawAngeTodo=function(){var B=$("atBody");if(!B)return;B.textContent="";
  var all=window.TASKS||[];
  var T=all.filter(function(t){return t&&t.live&&/^\s*ange to do\s*$/i.test(t.list||"")&&!tDone(t)});
  var box=mk("div","at");
- if(!T.length){box.appendChild(mk("div","empty",angeEmpty()))}
+ if(!T.length){var m=angeMsg();box.appendChild(mk("div","empty",m.t));if(m.f){var rb=mk("button","retry","Retry");rb.type="button";rb.onclick=function(){var s=$("tsrc");if(s)s.click()};box.appendChild(rb)}}
  else{var ul=mk("ul");T.slice(0,15).forEach(function(x){var li=mk("li"),t=mk("div","t",x.title);var d=dueTxt(x.due);if(d)t.appendChild(mk("span","m",d));li.appendChild(t);ul.appendChild(li)});box.appendChild(ul);
   if(T.length>15)box.appendChild(mk("div","empty","Plus "+(T.length-15)+" more in Google Tasks."))}
  var a=mk("a","more","Open in Google Tasks \u2197");a.href="https://tasks.google.com/tasks/?authuser=info@realmpcs.com";a.target="_blank";a.rel="noopener";box.appendChild(a);
