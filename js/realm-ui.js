@@ -19,4 +19,4 @@
   document.addEventListener('input',function(e){if(e.target.matches&&e.target.matches('textarea[data-autogrow]'))grow(e.target)});
 })();
 /* Google account pin (16 Oct 2026): every page using realm-ui also loads js/ara-account.js (info@ on all Google links + one-time Open-in hint). */
-(function(){if(window.AraAccount||document.querySelector('script[src*="ara-account.js"]'))return;var me=document.currentScript&&document.currentScript.src;var x=document.createElement('script');x.src=me?me.replace(/realm-ui\.js.*$/,'ara-account.js?v=20261017-24'):'js/ara-account.js?v=20261017-24';x.defer=true;document.head.appendChild(x)})();
+(function(){if(window.AraAccount||document.querySelector('script[src*="ara-account.js"]'))return;var me=document.currentScript&&document.currentScript.src;var x=document.createElement('script');x.src=me?me.replace(/realm-ui\.js.*$/,'ara-account.js?v=20261028-1'):'js/ara-account.js?v=20261028-1';x.defer=true;document.head.appendChild(x)})();

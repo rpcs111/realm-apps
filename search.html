@@ -21,7 +21,7 @@ button.on{background:rgba(34,211,238,.12);box-shadow:0 0 0 3px rgba(34,211,238,.
 .srch-err span{color:#a9c1cc;font-size:13px}.srch-err .srch-retry{margin-top:6px;border-color:#22d3ee;color:#e6fbff;box-shadow:0 0 10px rgba(34,211,238,.25)}
 @media(max-width:899px){.rui-rail{flex-wrap:wrap;overflow:visible;gap:4px;padding:6px}.rui-tab{flex:0 1 auto;gap:4px;padding:4px 7px;font-size:12px}.rui-tab i{min-width:16px;padding:1px 4px;font-size:10px}.rui-list h2{top:calc(var(--rui-top) + var(--rail-h,45px) + env(safe-area-inset-top))}}
 </style>
-<script src="js/ara-account.js?v=20261017-24" defer></script><style>/* 17 Oct clean-up (Ange): one Ara symbol (header), Save app labelled, no floating TELL ARA pill */
+<script src="js/ara-account.js?v=20261028-1" defer></script><style>/* 17 Oct clean-up (Ange): one Ara symbol (header), Save app labelled, no floating TELL ARA pill */
 #arbBtn{display:inline-flex!important}
 .rui #araSave{font-size:11px!important;gap:5px!important;padding:0 10px!important;letter-spacing:.06em!important;height:30px!important;min-height:30px!important;box-shadow:none!important}
 @media(max-width:560px){.rui-top #toNotes{display:none}.rui-top .rui-title{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}.rui-top .nav{gap:2px}}
@@ -129,7 +129,7 @@ a.cal-line{color:var(--accent)}
  var rail=document.getElementById("rail");function rh(){try{document.documentElement.style.setProperty("--rail-h",rail.offsetHeight+"px")}catch(e){}}
  rh();window.addEventListener("resize",rh);try{new ResizeObserver(rh).observe(rail)}catch(e){}})();</script>
 <form class="rui-composer" id="f"><div class="rui-box"><input id="q" placeholder="Search jobs, certs, Drive…" autocomplete="off" enterkeyhint="search" aria-label="Search"><button type="button" class="rui-ib" id="mic" title="Speak" aria-label="Speak a search"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="8.25" y="2.5" width="7.5" height="12.5" rx="3.75" fill="currentColor"/><path d="M5.25 11.25a6.75 6.75 0 0 0 13.5 0M12 18v3.25" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg></button><button class="rui-send" type="submit" id="goBtn">Go</button></div></form>
-<script src="js/reconnect.js"></script><script src="js/realm-ui.js?v=20261017-24"></script>
+<script src="js/reconnect.js"></script><script src="js/realm-ui.js?v=20261028-1"></script>
 <script>
 var EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"\x26amp;","<":"\x26lt;",">":"\x26gt;",'"':"\x26quot;"}[c]})}
