@@ -49,8 +49,7 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 <div class="card" style="--c:#22c58b"><h3>2:00pm weekdays</h3>Nudge: Coach</div>
 <div class="card" style="--c:#ff8a3d"><h3>7:00pm weekdays</h3>Notes drain: ECHO</div>
 <div class="card" style="--c:#ff4f6d"><h3>6:00pm Sundays</h3>Sunday sweep: SENTRY</div>
-<div class="card" style="--c:#00b3a4"><h3>1st of the month</h3>Subscription review: Legal &amp; Finance</div>
-<div class="card" style="--c:#00b3a4"><h3>Every 2 days, 10am</h3>Refund follow-up: Legal &amp; Finance</div>
+<div class="card" style="--c:#00b3a4"><h3>1st of the month</h3>Subscription review: Ara</div>
 <div class="card" style="--c:#ff6fb5"><h3>Every 2 hours</h3>Triage alarm: Ara</div>
 </div>
 
@@ -70,7 +69,7 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 <li>Rule 16 BYD Shark drive mode: ARA</li>
 <li>Rule 22 five-minute Realm Flow Map: FORGE</li>
 <li>Rule 15 Proxmox plan: FORGE</li>
-<li>Rule 28 payroll flow: LEDGER</li>
+<li>Rule 28 payroll flow: Ange's own. Bots only read it.</li>
 <li>Rule 21 resume template: ORACLE</li>
 <li>Rule 11 chat audit trail in HANDOFF: NOVA</li>
 <li>No execution tracker: ECHO</li>
@@ -117,7 +116,7 @@ const bots=[
 ['Directory Site','#ff4f6d','Directory site.'],
 ['Infra','#c35cff','Infra.'],
 ['Coach','#22c58b','Accountability coach.'],
-['Legal &amp; Finance','#ffcc00','Subscriptions, refunds and payroll.'],
+['Legal &amp; Finance','#ffcc00','Reviews the business sale papers and the insolvency.'],
 ['NOVA','#8a7dff','Gemini backend. Audits the back end.']];
 document.getElementById('cards').innerHTML=bots.map(b=>`<div class="card" style="--c:${b[1]}"><h3>${b[0]}</h3><p>${b[2]}</p></div>`).join('');
 const DEF=`flowchart TD
