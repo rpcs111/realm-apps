@@ -1,8 +1,10 @@
 # HANDOFF — Ara 2.1's Daily Loop
 
 **Owner:** Ange Barlas (Andrew Barlas, Realm PCS, Melbourne UTC+11)
-**Last updated:** 2026-10-27 12:53pm Melb (public client details removed)
+**Last updated:** 2026-10-27 1:19pm Melb (private-notes pointer added)
 **Rule:** Every new session (box, phone app, voice, any Ara 2.1) reads this file FIRST, before touching anything. No rebuilding, no guessing URLs, no new deployments without Ange's yes.
+
+Private notes: details removed from this public file (draft texts, client replies, row references) are kept on the bots' shared computer at /workspace/private_notes/, not in this repo.
 
 ## CURRENT RULES (Ange, 27 Oct 2026; these override anything older in this file)
 - 42* is chief and Ange's only contact. Every other bot, Ara included, is hidden and reports to 42*.
@@ -52,7 +54,7 @@ Source: Elon's read-only overnight audit, 16/17 Oct (box `/workspace/overnight_1
 - **C. PROOF-NOT-CLAIMS:** Never say "done", "live", "fixed", "installs" or "stopped" without one of: a URL that returns HTTP 200, a screenshot path on the box, or a Build Map line with `elon_verified:true` and `verified_how`. Otherwise say "built, not verified".
 - **D. VOICE CAP:** On a live voice call, default reply is 3 short lines or fewer unless Ange asks for detail. Detail goes in chat or a doc link.
 - **E. NO-FINAL:** REPLACED (27 Oct 2026): no codes or version numbers shown to Ange. Never call a Nova/Gemini paste "final", "last" or "the one".
-- **F. NO-GO-HOME:** Never tell Ange to go home, sleep or stop when he says he is happy to keep working. Offer one concrete next win instead.
+- **F. NO-GO-HOME:** Never tell Ange to go home, sleep or stop when he says he is happy to keep working. REPLACED (27 Oct 2026): handovers give only status and what's due, no extra work suggestions.
 - **G. §7 HEARTBEAT:** While a session is live, append a §7 line at least every 30 minutes or at every job start/finish. §7 quiet for more than 30 minutes during active work is a miss. Build Map `handoff` may not stay green across a quiet gap.
 - **H. GREEN-ONLY-VERIFIED:** Build Map `green` needs `elon_verified:true` plus `verified_date` and `verified_how`. Unverified work stays `amber`. `stream-check` and `handoff` must be re-checked before going green again.
 - **I. HANDOFF CHECKED:** REPLACED (27 Oct 2026): an order from Ange gets exactly 'I got you, bro.' and nothing more; ELON is the gate; 42* is chief. The older opener and the Marvin Musk gate line are retired.
@@ -193,7 +195,7 @@ Sources of truth (sheets):
 - **Recert reply:** drafted and not sent (details in private notes).
 - **Oasis:** see private notes. A chase WAS sent 14 Oct; no reply yet. Follow-up text in box `CHASE_DRAFT.md` — **drafted, NOT sent.** Stale 13 Oct Gmail draft to be deleted by Ange.
 - **PI certificate reply:** drafted and not sent (details in private notes).
-- (see private notes).
+- Business notes (see private notes).
 
 ### NEXT (in order, from ONE_PAGER.md, status as of 16 Oct)
 1. Recert booking — **DRAFTED, waiting on Ange's Send.** (details in private notes).
@@ -210,7 +212,7 @@ Sources of truth (sheets):
 - Daily schedule (Melbourne time) encoded in team.html: RETIRED (27 Oct 2026): the 7:30am Elon brief, 8:52am Mon IVOR accountability, 10:00am weekday Ara morning sweep + Merchant store check, 11:11am Ara/Muse reset, 11:52am IVOR daily drill, 1:27pm weekday Forge week-ahead, 2:00pm IVOR nudge, 7:00pm weekday Echo notes drain, 6:00pm Sun Sentry sweep, 1st of month Ledger subscription review, every 2 days 10am Ledger Anthropic refund follow-up, every 2 hours Ara triage alarm.
 
 - 'realm daily' EOD report (Workspace Studio flow, 5:55pm daily): Ange wants it OFF (16 Oct, 24h+; one tap, see §7 9:54pm). When it comes back: report in chat, never to the info@ inbox, and nothing is listed as suggested/missed unless it has actually been worked.
-- Ara Engine (updated 19–20 Oct): Engine Allow CLEARED — live `core.ping` / exec returns `{"ok":true,"engine":"Ara Engine","version":"1.2.0…"}`. How-to: docs/ARA_ENGINE.md. Still blocked for clasp push: wrong clasp identity on box (see `/workspace/daily_loop_1020/CLASP_ONE_TAP.md` + `/workspace/daily_loop_1020/ENGINE_STATUS.md`); Ange one-tap re-login as info@realmpcs.com. Seal-first still applies for panel / Start Here / new app deploys RETIRED (27 Oct 2026): the schedule-app exception is retired.
+- Ara Engine (updated 19–20 Oct): Engine Allow CLEARED — live `core.ping` / exec returns `{"ok":true,"engine":"Ara Engine","version":"1.2.0…"}`. How-to: docs/ARA_ENGINE.md. Still blocked for clasp push: wrong clasp identity on box (see `/workspace/daily_loop_1020/CLASP_ONE_TAP.md` + `/workspace/daily_loop_1020/ENGINE_STATUS.md`); Ange one-tap re-login as info@realmpcs.com. Seal-first still applies for panel / Start Here / new app deploys. RETIRED (27 Oct 2026): the schedule-app exception is retired.
 
 ### Security (post-Claude lockout)
 - Claude Google access cut. 0 Apps Script triggers. Zapier removed from info@.
@@ -398,7 +400,7 @@ Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINIS
 House rules (locked in, non-negotiable):
 - Start every session by reading the HANDOFF. No amnesia.
 - REPLACED 27 Oct: an order gets exactly “I got you, bro.” Nothing else.
-- No looping. REPLACED (27 Oct 2026): results come back short to 42*; no "next two steps" shape.
+- Don't redo finished work. REPLACED (27 Oct 2026): results come back short to 42*; no "next two steps" shape.
 - No rebuilds. Fix the one broken thing. Do not redesign.
 - No fake NOT BUILT labels. No dead ends. No TEST jobs left in production.
 - Test on 412 (phone) and 904 (fold). If it breaks on phone it is not done.
@@ -426,7 +428,7 @@ RETIRED (27 Oct 2026): Fact-check with official links is kept on Ara's box (Ward
 - Prices corrected to the X Subscription tiers: Free $0, Plus $8, Premium $30, Super $100, Ultra $200. Source: https://docs.x.ai/x-subscription/pricing
 
 ## State at 10:45pm
-- PR #21 Nirvana v11: head 9be62a9. REPLACED (27 Oct 2026): Marvin is retired; that 10:26pm pass is historical. NOT merged. Waiting on Ange's own "merge", then the phone check at 412 and 904.
+- RETIRED (27 Oct 2026): PR #21 Nirvana v11: head 9be62a9. REPLACED (27 Oct 2026): Marvin is retired; that 10:26pm pass is historical. NOT merged. Waiting on Ange's own "merge", then the phone check at 412 and 904.
 - PR #20 HANDOFF: stopped under fail-twice (FAIL 3 at 10:38pm). REPLACED (27 Oct 2026): results come back short to 42*; no "next two steps" shape.
 - PR #17 and PR #10: open and parked.
 - RETIRED (27 Oct 2026): Side button: opens Ara 2.1 only. Draft steps are kept on Ara's box (Warden's SIDE_BUTTON_ARA_DRAFT). Per-bot shortcut not verified on the phone.
