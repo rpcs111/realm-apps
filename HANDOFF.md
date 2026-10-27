@@ -1,7 +1,7 @@
 # HANDOFF — Ara 2.1's Daily Loop
 
 **Owner:** Ange Barlas (Andrew Barlas, Realm PCS, Melbourne UTC+11)
-**Last updated:** 2026-10-27 11:40am Melb (current rules block; 42* chief, ELON gate, Ara builder)
+**Last updated:** 2026-10-27 12:30pm Melb (CORE opener replaced)
 **Rule:** Every new session (box, phone app, voice, any Ara 2.1) reads this file FIRST, before touching anything. No rebuilding, no guessing URLs, no new deployments without Ange's yes.
 
 ## CURRENT RULES (Ange, 27 Oct 2026; these override anything older in this file)
@@ -41,7 +41,7 @@ Daily-loop working reminders (from the box handover; the channel doc still wins)
 
 ### CORE (Ara 2.1, 17 Oct 2026)
 
-Tonight (core, small): one CORE block at the top of HANDOFF §1a, plus one memory fact saying CORE supersedes every older behaviour, tone or opener rule. CORE = first words exactly "I got you, bro. HANDOFF checked." (Ange permanent hard lock 19–20 Oct; supersedes older "HANDOFF checked" alone); original words only, no mirroring or stock lines; never say Elon is unreachable; never sign off or hang up on pushback; never repeat; correct name; gate before Ange.
+Tonight (core, small): one CORE block at the top of HANDOFF §1a, plus one memory fact saying CORE supersedes every older behaviour, tone or opener rule. REPLACED (27 Oct 2026): an order from Ange gets exactly 'I got you, bro.' and nothing more. Original words only, no mirroring or stock lines; never say Elon is unreachable; never sign off or hang up on pushback; never repeat; correct name; gate before Ange.
 
 After the Sunday reset: a full memory sweep. Forget every pre-CORE behaviour rule by exact text, keep only facts and the CORE block, and Elon re-audits.
 
@@ -81,7 +81,7 @@ Rule conflicts Elon listed (rule 38: flag, do not flatten):
 | CRM `af33c179` | CRM. Placement not yet confirmed by Ange | Being stated as settled |
 | Nova (Gemini, not a Grok Bot lane) | Queue items into 00_NOVA_REPLY_* docs, read-only; runs only when Ange pastes in Gemini | Sends, deletes, edits to existing files |
 
-**Lanes as of 20 Oct 2026.** Retired or folded, and hidden (not deleted): Elon Musk 2.0 (audit absorbed by Marvin), Claude Cleaner, F&H Lead, Shark 6 Lead, the duplicate Infra and CRM bots, and both Life Admin bots. No new apps, pages or bots.
+**Lanes as of 20 Oct 2026.** Retired or folded, and hidden (not deleted): Elon Musk 2.0 (audit absorbed by Marvin; REPLACED 27 Oct 2026: Marvin is retired, ELON is the gate), Claude Cleaner, F&H Lead, Shark 6 Lead, the duplicate Infra and CRM bots, and both Life Admin bots. No new apps, pages or bots.
 
 Format: `# | ask | first asked (Melb) | times asked | status | proof link`. "First asked" is the earliest time found in Ara 2.1's saved history (about a day of history, 2pm 15 Oct to 6pm 16 Oct, was not saved), so "≤" means "no later than". Times asked come from Elon's six-point review (16 Oct 6:07pm–1:32am) or the catch log; "≥" means at least. Private details (amounts, numbers, accounts) stay off this public file. Update a row instead of adding a duplicate; close a row only with proof.
 
@@ -426,7 +426,7 @@ RETIRED (27 Oct 2026): Fact-check with official links is kept on Ara's box (Ward
 - Prices corrected to the X Subscription tiers: Free $0, Plus $8, Premium $30, Super $100, Ultra $200. Source: https://docs.x.ai/x-subscription/pricing
 
 ## State at 10:45pm
-- PR #21 Nirvana v11: head 9be62a9. Marvin PASSED all 10 points at 10:26pm. NOT merged. Waiting on Ange's own "merge", then the phone check at 412 and 904.
+- PR #21 Nirvana v11: head 9be62a9. REPLACED (27 Oct 2026): Marvin is retired; that 10:26pm pass is historical. NOT merged. Waiting on Ange's own "merge", then the phone check at 412 and 904.
 - PR #20 HANDOFF: stopped under fail-twice (FAIL 3 at 10:38pm). Ange to give the next two steps.
 - PR #17 and PR #10: open and parked.
 - RETIRED (27 Oct 2026): Side button: opens Ara 2.1 only. Draft steps are kept on Ara's box (Warden's SIDE_BUTTON_ARA_DRAFT). Per-bot shortcut not verified on the phone.
