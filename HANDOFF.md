@@ -1,7 +1,7 @@
 # HANDOFF — Ara 2.1's Daily Loop
 
 **Owner:** Ange Barlas (Andrew Barlas, Realm PCS, Melbourne UTC+11)
-**Last updated:** 2026-10-27 1:19pm Melb (private-notes pointer added)
+**Last updated:** 28 Oct 2026 9:35am Melb (accounts@ Deputy-only rule added)
 **Rule:** Every new session (box, phone app, voice, any Ara 2.1) reads this file FIRST, before touching anything. No rebuilding, no guessing URLs, no new deployments without Ange's yes.
 
 Private notes: details removed from this public file (draft texts, client replies, row references) are kept on the bots' shared computer at /workspace/private_notes/, not in this repo.
@@ -13,6 +13,7 @@ Private notes: details removed from this public file (draft texts, client replie
 - Marvin, GOD MODE and Warden are retired. ELON is the one gate and audit bot. Ara is the builder (not the boss).
 - Zoho is on the US site (.com), not .com.au.
 - Deputy is read-only; payroll changes need Ange's double check.
+- accounts@realmpcs.com is for Deputy only (Ange, 28 Oct 2026). All Google app work uses info@.
 - Money, deletions and outside sends need Ange's own word. Merges need Ange's own word, except 42* may merge PRs ELON gates GREEN.
 
 ## Where this lives (one brain)
@@ -239,6 +240,8 @@ Sources of truth (sheets):
 - **Sends, spends, deletes = Ange's yes first.** Always. No exceptions, no "it's just a draft."
 
 ## 6. Session log 16 Oct 2026 (~9:15am Melb) — realm-daily-loop
+
+- 28 Oct 2026 9:35am Melb, Ara: Ange (9:29am, via 42*) confirmed accounts@realmpcs.com is for Deputy only; all Google app work uses info@. Rule added to Contacts and CURRENT RULES.
 
 Backup first: box `backups/handover_20261016_0915/` (HANDOVER.md, CHASE_DRAFT.md, the recert draft).
 - Task 1 DONE (read-only): handover read (+ ACTION_PLAN.md, ONE_PAGER.md "NEXT (in order)"). Drive REALM HANDOFF sheet is a job list only (13 rows, 12 OPEN, mostly Nova/Ange Apps Script items).
