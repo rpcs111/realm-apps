@@ -186,20 +186,20 @@ if(!SR){mic.title="Voice isn't available here. Use the keyboard mic"}
 mic.onclick=function(){var qi=document.getElementById("q");
  if(!SR){micMsg("Voice search isn't available in this browser. Tap the box and use the mic on your keyboard.");qi.focus();return}
  if(srec){try{srec.stop()}catch(e){}return}
- var r;try{r=new SR()}catch(e){try{console.error(e)}catch(_){}micMsg("The microphone isn't available right now.");return}
+ var r;try{r=new SR()}catch(e){try{console.warn(e)}catch(_){}micMsg("The microphone isn't available right now.");return}
  srec=r;r.lang="en-AU";r.interimResults=true;r.continuous=false;r.maxAlternatives=1;
  var before=qi.value,fin="",heard="",err="",RL=window.RealmLine;
  mic.classList.add("on");mic.setAttribute("aria-pressed","true");micMsg("Listening\u2026 say an address, client or keyword.");
  RL&&RL.mic("search",function(){mic.onclick()});
  r.onstart=function(){RL&&RL.micLive("search")};
  r.onresult=function(e){if(srec!==r)return;var f="",t="";for(var i=0;i<e.results.length;i++){var x=e.results[i];if(x.isFinal)f+=x[0].transcript;else t+=x[0].transcript}fin=f.trim();heard=(f+t).trim();if(heard)qi.value=heard};
- r.onerror=function(e){err=e.error||"error";if(err!=="aborted"){try{console.error(e)}catch(_){}micMsg(MICERR[err]||"The microphone isn't available right now.")}};
+ r.onerror=function(e){err=e.error||"error";if(err!=="aborted"){try{console.warn(e)}catch(_){}micMsg(MICERR[err]||"The microphone isn't available right now.")}};
  r.onend=function(){if(srec===r)srec=null;mic.classList.remove("on");mic.setAttribute("aria-pressed","false");
   if(document.hidden){RL&&RL.micEnd("search");return}
   RL&&RL.micStop("search");var t=fin||heard;
   if(t){qi.value=t;try{qi.dispatchEvent(new Event("input",{bubbles:true}))}catch(x){}go(t)}
   else{qi.value=before;if(!err)micMsg("Didn't catch that. Tap the mic and try again.")}};
- try{r.start()}catch(e){srec=null;mic.classList.remove("on");try{console.error(e)}catch(_){}micMsg("The microphone isn't available right now.")}};
+ try{r.start()}catch(e){srec=null;mic.classList.remove("on");try{console.warn(e)}catch(_){}micMsg("The microphone isn't available right now.")}};
 var q0=new URLSearchParams(location.search).get("q");if(q0){document.getElementById("q").value=q0;go(q0)}
 </script><style>.am{min-height:34px;padding:4px 12px;font-size:13px;margin-top:8px;background:#000;border-color:#2a2a2a;color:#e4e4e7}.amb button{display:inline-flex;align-items:center;gap:6px}.amb .micI,#araM .micI{width:20px;height:20px}.amb{margin-top:8px;display:flex;flex-direction:column;gap:6px}.amb textarea{font:inherit;background:#000;color:#fff;border:1px solid var(--l);border-radius:12px;padding:8px;min-height:64px}.amb .r{display:flex;gap:6px;flex-wrap:wrap}.amd{font-size:12px;color:#67e8f9;margin-top:6px}
 
@@ -234,7 +234,7 @@ new MutationObserver(decorate).observe(document.getElementById("out"),{childList
 })();
 </script>
 <script>/* bot line reconnect hooks (see js/reconnect.js) */
-(function(){if(!window.RealmLine)return;RealmLine.line({name:'Desk v9 (Search)',ping:function(){return RealmLine.pingExec(EXEC)}});RealmLine.drafts(['q','araT']);})();</script>
+(function(){if(!window.RealmLine)return;RealmLine.line({name:'Search',ping:function(){return RealmLine.pingExec(EXEC)}});RealmLine.drafts(['q','araT']);})();</script>
 <script src="voice.js?v=20261017-24"></script><script src="js/saveapp.js?v=20261017-24" data-mount="header .nav"></script><script>RealmUI.tabs(document.getElementById("rail"),document.getElementById("out"))</script><script src="js/ara-version.js" defer></script><script src="js/realm-sync.js?v=20261017-24" data-backoff data-allow-text="Tap Allow once to sync"></script>
 <script>/* v15: inline Add key line instead of the first-load popup; key lock unchanged */(function(){var l=document.getElementById("rkLine"),b=document.getElementById("rkAdd");function has(){return !!(window.RealmKey&&RealmKey.get())}if(l&&!has())l.hidden=false;if(b)b.onclick=function(){if(window.RealmKey)RealmKey.ask("")}})()</script><script>/* v16: a tap anywhere on the input bar (not on a button) focuses the text box */(function(){var b=document.querySelector(".rui-box");if(!b)return;b.addEventListener("click",function(e){if(e.target.closest("button,a,input,textarea"))return;var f=b.querySelector("textarea,input");if(f)f.focus()})})()</script><script src="js/ara-install.js?v=20261017-24" defer></script><script>/* v20 (Elon): never say "Connected" when this device has no Realm key */(function(){function k(){try{return !!(window.RealmKey&&RealmKey.get())}catch(e){return false}}function f(){var p=document.getElementById("rlPill");if(!p||k())return;[].forEach.call(p.querySelectorAll("span"),function(x){if(x.textContent==="Connected"){x.textContent="Key needed";p.title="Online, but this device has no Realm key yet"}})}setInterval(f,800);addEventListener("load",f)})();</script><script src="js/nirvana.js?v=20261017-24" data-app="search" data-name="Search Studio" defer></script><script src="js/notify.js?v=20261018-1" data-app="search" data-kind="cert"></script><script>
 /* Search Studio week view. Desk is the only source. AMEND_PATH_URL stays empty until a Drive link is set. */
