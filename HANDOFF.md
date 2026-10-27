@@ -8,11 +8,10 @@
 - 42* is chief and Ange's only contact. Every other bot, Ara included, is hidden and reports to 42*.
 - An order from Ange gets exactly "I got you, bro." and nothing else. No "HANDOFF checked", no closing question, no next-steps list.
 - No codes, IDs, hashes, version strings or raw numbers on Ange's screen. Plain words; only dates, times and money.
-- Work alerts (bills, payees, bank and security alerts) stay in the inbox.
-- ELON is the gate (not Marvin). Ara is the builder (not the boss).
+- Marvin, GOD MODE and Warden are retired. ELON is the one gate and audit bot. Ara is the builder (not the boss).
 - Zoho is on the US site (.com), not .com.au.
 - Deputy is read-only; payroll changes need Ange's double check.
-- Money, deletions and outside sends need Ange. Merges are fine once ELON gates GREEN.
+- Money, deletions and outside sends need Ange's own word. Merges need Ange's own word, except 42* may merge PRs ELON gates GREEN.
 
 ## Where this lives (one brain)
 
@@ -56,7 +55,7 @@ Source: Elon's read-only overnight audit, 16/17 Oct (box `/workspace/overnight_1
 - **F. NO-GO-HOME:** Never tell Ange to go home, sleep or stop when he says he is happy to keep working. Offer one concrete next win instead.
 - **G. §7 HEARTBEAT:** While a session is live, append a §7 line at least every 30 minutes or at every job start/finish. §7 quiet for more than 30 minutes during active work is a miss. Build Map `handoff` may not stay green across a quiet gap.
 - **H. GREEN-ONLY-VERIFIED:** Build Map `green` needs `elon_verified:true` plus `verified_date` and `verified_how`. Unverified work stays `amber`. `stream-check` and `handoff` must be re-checked before going green again.
-- **I. HANDOFF CHECKED (updated 19–20 Oct permanent hard lock):** Ara 2.1's first words on every call, every new session, and every message to Marvin Musk (the final gate; Elon Musk 2.0 retired 20 Oct) are exactly 'I got you, bro. HANDOFF checked.', said only after actually reading HANDOFF.md. Older 'HANDOFF checked' alone is retired. Like A–H, still to be copied into the channel-doc master list.
+- **I. HANDOFF CHECKED:** REPLACED (27 Oct 2026): an order from Ange gets exactly 'I got you, bro.' and nothing more; ELON is the gate; 42* is chief. The older opener and the Marvin Musk gate line are retired.
 
 Rule conflicts Elon listed (rule 38: flag, do not flatten):
 1. Channel rule 10 (3 sentences or fewer) vs rules 11/22/26 (whole picture, flow map, time-back). Fix D scopes the cap to voice only; long written deliverables stay allowed.
@@ -71,12 +70,12 @@ Rule conflicts Elon listed (rule 38: flag, do not flatten):
 | Who | Owns | Never |
 |---|---|---|
 | 42* `c703aef3` | Chief bot above Ara 2.1 and ELON (gate): checks and steers, routes work, enforces house rules. Reads HANDOFF first every session. Reports only to Ange (supersedes retired GOD MODE `e72a0988`, 25 Oct) | Loops, rebuilds, wasting credits, talking to anyone but Ange |
-| Ange | Super admin. Decisions, yeses, sends, merges. Talks to ONE bot only: Ara 2.1 | Chasing bots for status |
-| Ara 2.1 (builder) | Builds (realm-apps), HANDOFF upkeep; reports to 42*, never messages Ange (27 Oct) | Ship ungated, mirror Ange, say Marvin is unreachable, end a call on pushback |
-| ELON `7a2f50df` (was Marvin Musk) | Sole final gate: every build, prompt and handoff passes him before Ange; plus Bastion | Merge (a PASS never merges; only Ange's own "merge"); build |
-| Terafab `76897f17` | Money lane (gold tile); Frankie and Henry lives inside it | Being called Nirvana |
-| Falcon 9 `812882bb` | Overnight sweep | Sends |
-| Neuralink `9005ed36` | Brain dumps plus vaults | Keys or PINs in plain text |
+| Ange | Super admin. Decisions and yeses. Ange talks only to 42* (chief); merges need Ange's own word, except 42* may merge PRs ELON gates GREEN (money, deletions and outside sends still need Ange's own word). | Chasing bots for status |
+| Ara 2.1 (builder) | Builds (realm-apps), HANDOFF upkeep; reports to 42*, never messages Ange (27 Oct) | Ship ungated, mirror Ange, end a call on pushback |
+| ELON `7a2f50df` (was Marvin Musk) | Sole final gate: every build, prompt and handoff passes him before Ange; plus Bastion | Merge (a PASS never merges; merges need Ange's own word, except 42* may merge PRs ELON gates GREEN; money, deletions and outside sends still need Ange's own word); build |
+| Money `76897f17` | Money lane (gold tile); Frankie and Henry lives inside it | Being called Nirvana |
+| Inbox Sweep `812882bb` | Overnight sweep | Sends |
+| Brain Dump `9005ed36` | Brain dumps plus vaults | Keys or PINs in plain text |
 | Ivor `a68a9a78` | Accountability coach, unseen by Ange | Talking to Ange directly |
 | Infra Lead `5a501e95` | Infra task lane (not a tile) | Showing as a tile |
 | CRM `af33c179` | CRM. Placement not yet confirmed by Ange | Being stated as settled |
@@ -175,7 +174,7 @@ Sources of truth (sheets):
 
 ### System lock (19 Oct — Ange)
 - **Ange = super admin** of the whole Realm system going forward.
-- **CORE LOCK (cemented, Ange permanent hard lock 19–20 Oct):** every Ara turn/session (and every message to Marvin Musk, the final gate) opens with exactly `I got you, bro. HANDOFF checked.` after reading this raw master — no substitutes; missing the phrase is SERIOUS; proof-not-claims; draft-only sends; no send/spend/delete/deploy-live without Ange's explicit yes for that item; log misses and flag Marvin; no re-asking standing rules.
+- **CORE LOCK (cemented, Ange permanent hard lock 19–20 Oct):** REPLACED (27 Oct 2026): an order from Ange gets exactly 'I got you, bro.' and nothing more; ELON is the gate; 42* is chief. Proof-not-claims; draft-only sends; no send/spend/delete/deploy-live without Ange's explicit yes for that item; log misses and flag ELON; no re-asking standing rules.
 - **Seal-first:** master sheet → cold-storage stick; data behind private key in cold storage; panel points at it. No further panel / Start Here / Ara build until seal confirmed. Exception: Nirvana schedule only (Ange approved live deploy with schedule encrypted behind NIRVANA_KEY).
 - **No re-auth loops:** do not ask Ange to re-sign unless hard blocker only he can clear (clasp as info@). Engine Allow is done.
 
@@ -192,7 +191,7 @@ Sources of truth (sheets):
 
 ### Business priorities
 - **Base P1 Craigieburn (WO 000915, The Base, 650 Hume Hwy) recert expires 22 Oct 2026.** (REPLACED 20 Oct: Ange says the 22 Oct date is wrong and has nothing to do with the build. It is the client's stated date and hasn't been checked.) Reply to David Barkla (Leedwell) drafted, booking **Wed 21 Oct 9:00am** and asking for the **24 Riley Rd work order** (Riley Rd P2 passed its 29 Sep due date). To david.barkla@leedwell.com.au, cc Robert.nucifora@leedwell.com.au, reply on Gmail thread 1a0405d4a2d37e2a. Text in box `LEEDWELL_DRAFT.md`. **NOT sent — waiting on Ange's Send + diary entry.** Riley Rd currently diarised Mon 19 Oct 9:45 (Ange to decide whether it moves to Wed 21).
-- **Oasis (OC 438902Q, 33 Inkerman) real balance $89,086.80** per statement (not $77k/$81k/$80.6k — those are stale). A chase WAS sent 14 Oct to Kev + Darren ($89K, AGM ask); no reply yet. Follow-up text in box `CHASE_DRAFT.md` — **drafted, NOT sent.** Stale 13 Oct Gmail draft ($80,600 to accounts@) to be deleted by Ange.
+- **Oasis:** see private notes. A chase WAS sent 14 Oct; no reply yet. Follow-up text in box `CHASE_DRAFT.md` — **drafted, NOT sent.** Stale 13 Oct Gmail draft to be deleted by Ange.
 - **PI certificate (The Knight compliance):** The Knight's 7 Oct remittance shows PI "expired 06/08/2026". Current PI = EOS / Lloyd's Policy **03 PII 000519 04**, 4pm 6 Aug 2026 to 4pm 6 Aug 2027 (continuous). The renewal cert was **already sent to compliance@theknight.com.au on 30 Jul 2026** (thread 19ef70e5669ea1e0); The Knight likely filed the old RNL25.26 cert sent 29 Jul. Reply asking them to update records is in box `PI_DRAFT.md` — **drafted, NOT sent.** Attachment copies in box `/workspace/pi_cert/`. Ange to confirm EOS premium (invoice 47262) is paid.
 - Selling half of Realm PCS; Julie stepping out. Marijuana dispensary launch in progress.
 
@@ -241,7 +240,7 @@ Sources of truth (sheets):
 Backup first: box `backups/handover_20261016_0915/` (HANDOVER.md, CHASE_DRAFT.md, LEEDWELL_DRAFT.md).
 - Task 1 DONE (read-only): handover read (+ ACTION_PLAN.md, ONE_PAGER.md "NEXT (in order)"). Drive REALM HANDOFF sheet is a job list only (13 rows, 12 OPEN, mostly Nova/Ange Apps Script items).
 - Task 2 DONE (Craigieburn): reply to David Barkla still NOT sent (thread 1a0405d4a2d37e2a). Wed 21 9:00am has no anchor clash. Final text in LEEDWELL_DRAFT.md. Waiting on Ange's yes to send + diary entry. Riley Rd already diarised Mon 19 9:45.
-- Task 3 DONE (Oasis): chase WAS sent 14 Oct to Kev + Darren ($89K, AGM ask). No reply yet. Real balance $89,086.80 per statement. Follow-up text in CHASE_DRAFT.md. Stale 13 Oct Gmail draft ($80,600 to accounts@) to be deleted by Ange.
+- Task 3 DONE (Oasis): see private notes. No reply yet. Follow-up text in CHASE_DRAFT.md. Stale 13 Oct Gmail draft to be deleted by Ange.
 - Task 4 DRAFTED (PI cert): text in PI_DRAFT.md; renewal cert already sent to The Knight 30 Jul 2026; draft asks them to update records. Attachments in /workspace/pi_cert/. Ange to confirm EOS invoice 47262 paid. Backup: backups/handover_20261015_221935/.
 - Nothing sent, deleted, deployed or diarised this session (no Gmail drafts created).
 - Handoff unified (Ara): GitHub main HANDOFF.md made the single master; Google Doc and box HANDOVER.md now mirrors. Backups of all three pre-merge copies: box `backups/handoff_unify_20261016_010906/`.
@@ -274,7 +273,7 @@ Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINIS
 - 8:52pm 17 Oct | DONE (awaiting Elon gate) | Tonight's tally page + hub clutter (Ange ~8:45pm ask) | gh-pages e6ed0da https://github.com/rpcs111/realm-apps/commit/e6ed0daf2d93918d9cc3986ace28d6df5fa2f3e2, v2026.10.17-22: new https://rpcs111.github.io/realm-apps/tally.html (everything rebuilt, fixed and still open tonight in plain words, the numbers, Ange's Frankie & Henry and Proxmox questions answered in plain words, the 36 faults; every line editable, his edits kept on the phone, 'Copy corrections' button; install flow + nirvana; no codes, keys, numbers, money figures, client names or addresses). Hub: TALLY tile on both tile paths; Chrome Beta 'signed in as' bar and three-dots tip hidden; TELL ARA is now the 44px Ara symbol bottom-right. Live 412 (Android, ?d=flip6) + 1280: 200, 0 console errors, Chrome install check 0 errors, no overflow. Proof box /workspace/tally_1017/*.png. Real links kept off the repo in box /workspace/tally_1017/PRIVATE_LINKS.md. Resume (box /workspace/resume) got a 17 Oct entry. Backup box /workspace/backups/tally_20261017/. Still open: Flow Map + Prism Nova link points at the wrong Gem (fault 30); F&H store 525 (needs Ange's Shopify sign-in); 0 working Proxmox links (LAN only, tunnel down).
 - 8:49pm 17 Oct | DONE (awaiting Elon gate) | v21b Nirvana sparklers | gh-pages 1fa5bd6 https://github.com/rpcs111/realm-apps/commit/1fa5bd6a486167db249342412b8936d188b25e8c, version 2026.10.17-21b: light canvas sparkle burst behind 'Saved. You’re set.' (~2.8s, no library, skipped with prefers-reduced-motion), fits the 260px Flip 6 cover screen. Headless live check at 260 / 412 (Android UA) / 1280: 0 console errors, shows once, Open closes it. Screenshots box /workspace/notes_cleanup/v21/nirvana_sparkle_*.png (+ live/). Not yet seen on a real installed phone or desktop window.
 - 8:45pm 17 Oct | DONE (awaiting Elon gate, not done until Elon PASS) | v21 Nirvana save-to-phone screen + Notes Grokified | gh-pages 164b66b https://github.com/rpcs111/realm-apps/commit/164b66bf7b5d302d3e79f9ff5fa03fe5610fce1c (new js/nirvana.js: calm black one-time 'Saved. You’re set.' screen with Ara symbol, app name, one Open button; shows on appinstalled or first standalone launch, one localStorage flag per app, ?nirvana=1 for testing only; wired into hub) + 00ca442 https://github.com/rpcs111/realm-apps/commit/00ca4420d8fceb4b546dbf9e544a6d3dd9bf6eb0 (notes.html: same v17 structure and columns, pure black, '+ New note' pill off, Google task add one slim row, nirvana wired; storage/Engine logic untouched), version 2026.10.17-21. Headless 412 Android ?d=flip6 + 1280 on live: 0 console errors, ticked note hides behind 'Show done (1)', notes survive reload. Screenshots box /workspace/notes_cleanup/v21/ (+ live/). Tasks still show one 'Snapshot (not live)' column until the Engine Allow (#22).
-- 8:45pm 17 Oct | PARTIAL (security fixes, Ange's go ~8:40pm) | 1) Realm Desk key (the Search Studio #k= key, ends F58X, leaked in chat ~1:02am) rotation PREPARED, NOT LIVE: new key generated (ends L37W, box /workspace/secrets/DESK_KEY.new.txt, chmod 600, never in repo/chat), patched REALM DESK Code.js + one-step script box /workspace/rotate_desk_key/ROTATE.sh (pull live, swap SHA-256, push, new version, redeploy all Desk deployments in place, curl old-vs-new test). BLOCKED on clasp: token expired (invalid_rapt), needs Ange's clasp re-auth as info@realmpcs.com; old key still accepted until then. After it runs, every phone/laptop re-enters the new key once. 2) Nova item 29 doc 00_NOVA_REPLY_29_Job_Note_Types: 2 access codes (1 key-safe, 1 roof hatch) replaced with [REDACTED 17 Oct, Ange's go]; 0 comments, 1 tab; channel doc, 00_NOVA_QUEUE, STATUS_7 and other 00_NOVA docs checked: 0 hits. Private backup copy in Drive (id 1f1MMrpnc4XPuwDe6xKgPWxGMmYnuWZYPAfRuCfkR_zs, not shared). Doc version history still holds the old text. Item 101 / Julie's row not touched. Box backup /workspace/backups/secfix_20261017T094028Z
+- 8:45pm 17 Oct | PARTIAL (security fixes, Ange's go ~8:40pm) | 1) Realm Desk key (the Search Studio #k= key, leaked in chat ~1:02am) rotation PREPARED, NOT LIVE: new key generated (box /workspace/secrets/DESK_KEY.new.txt, chmod 600, never in repo/chat), patched REALM DESK Code.js + one-step script box /workspace/rotate_desk_key/ROTATE.sh (pull live, swap SHA-256, push, new version, redeploy all Desk deployments in place, curl old-vs-new test). BLOCKED on clasp: token expired (invalid_rapt), needs Ange's clasp re-auth as info@realmpcs.com; old key still accepted until then. After it runs, every phone/laptop re-enters the new key once. 2) Nova item 29 doc 00_NOVA_REPLY_29_Job_Note_Types: 2 access codes (1 key-safe, 1 roof hatch) replaced with [REDACTED 17 Oct, Ange's go]; 0 comments, 1 tab; channel doc, 00_NOVA_QUEUE, STATUS_7 and other 00_NOVA docs checked: 0 hits. Private backup copy in Drive (id 1f1MMrpnc4XPuwDe6xKgPWxGMmYnuWZYPAfRuCfkR_zs, not shared). Doc version history still holds the old text. Item 101 / Julie's row not touched. Box backup /workspace/backups/secfix_20261017T094028Z
 - 17 Oct 2026 ~8:35pm Melb — One-system spec v1 adopted, full memory sweep after Sunday reset (Elon re-audits).
 - 6:56pm 17 Oct | DONE (closes 5:35pm 'awaiting Elon 412 check') / UNVERIFIED (5:14pm 'awaiting Elon re-check') | Elon check of hub v20f tiles rebrand + v20e Save app | reconciled by Handoff mirror sync: the 5:30pm line records 'Elon PASSED 20f at 412', which closes the 5:35pm v20f line (gh-pages 60c8e0f https://github.com/rpcs111/realm-apps/commit/60c8e0ff02c89481b6fd992b877568ae179c4995). The 5:14pm v20e Save app button (gh-pages 29d3d3b https://github.com/rpcs111/realm-apps/commit/29d3d3b1b981a3aa3e605f71a3d04f117cf59d83) was carried unchanged into 20f, but there is no separate Elon re-check record for it, so it stays UNVERIFIED. Still open: 4:18pm v20b gate fixes (version 2026.10.17-20d) awaiting Elon re-check, and 5:30pm v20g has no Elon check recorded yet.
 - 5:30pm 17 Oct | DONE (Elon PASSED 20f at 412; 20g fixes requested by Elon) | Hub v20g (index.html) | gh-pages fcd8f6d https://github.com/rpcs111/realm-apps/commit/fcd8f6d5147f9361d33972c69af63bca974fab64, v2026.10.17-20g: ELON tile subtitle 'Family page' to 'Call + message'; header 'R' logo swapped for the same Ara symbol the tiles use (same 24px box, round). Nothing else changed. Live 412 + 1280: header symbol renders, install button same position/size as 20f, 0 console errors. Proof: /workspace/notes_cleanup/v20/proof2/hub_20g_412.png and hub_20g_1280.png. Backup: /workspace/backups/hub_20g_20261017T062627Z/
@@ -407,7 +406,7 @@ House rules (locked in, non-negotiable):
 - ELON is the gate (27 Oct). Nothing ships until ELON says green.
 - REPLACED 27 Oct: 42* is chief; Ara is the builder.
 - Elon 2.0 is dead. Do not bring him back.
-- Nova is the Google lane. She cleans and files data by day. Falcon 9 does the overnight sweep. Nova acts on it. Do not forget her.
+- Nova is the Google lane. She cleans and files data by day. Inbox Sweep does the overnight sweep. Nova acts on it. Do not forget her.
 - When green: ship it, write the handover, stop.
 
 Nova: clean the data. File it. Remove the junk. Keep the HANDOFF and the rule book current. Do not wait to be asked again.
@@ -415,7 +414,7 @@ Nova: clean the data. File it. Remove the junk. Keep the HANDOFF and the rule bo
 Execution every time:
 1. Read HANDOFF.
 2. Do the next two steps only.
-3. Marvin checks.
+3. ELON checks.
 4. Green → ship + write handover. Red → fix the one thing and re-check.
 5. Stop.
 
@@ -423,14 +422,14 @@ Five Falcon 9s strapped together. Orbit. No more ground tests. No more essays. N
 
 ## Grok rule book (Ange 10:35pm)
 "Master How To Use Grok" (from Grok, 20 Oct) is the team's Grok rule book (PDF kept on Ara's box). The rule-book page is pending its PR.
-Fact-check with official links is kept on Ara's box (Warden's GROK_GUIDE_FACTCHECK).
+RETIRED (27 Oct 2026): Fact-check with official links is kept on Ara's box (Warden's GROK_GUIDE_FACTCHECK).
 - Prices corrected to the X Subscription tiers: Free $0, Plus $8, Premium $30, Super $100, Ultra $200. Source: https://docs.x.ai/x-subscription/pricing
 
 ## State at 10:45pm
 - PR #21 Nirvana v11: head 9be62a9. Marvin PASSED all 10 points at 10:26pm. NOT merged. Waiting on Ange's own "merge", then the phone check at 412 and 904.
 - PR #20 HANDOFF: stopped under fail-twice (FAIL 3 at 10:38pm). Ange to give the next two steps.
 - PR #17 and PR #10: open and parked.
-- Side button: opens Ara 2.1 only. Draft steps are kept on Ara's box (Warden's SIDE_BUTTON_ARA_DRAFT). Per-bot shortcut not verified on the phone.
+- RETIRED (27 Oct 2026): Side button: opens Ara 2.1 only. Draft steps are kept on Ara's box (Warden's SIDE_BUTTON_ARA_DRAFT). Per-bot shortcut not verified on the phone.
 - Nova: Google lane, runs in Gemini. She has no Grok bot and can't message the bots.
 - Still open tonight: Notes, the Desk mirror panel, the Grok template. Search Studio waits on Ange's call.
-- Warden watch: every 10 minutes until 2:00am Melb. Misses go to the MARVIN_GATE_LOG on Ara's box.
+- RETIRED (27 Oct 2026): Warden watch: every 10 minutes until 2:00am Melb. Misses go to the MARVIN_GATE_LOG on Ara's box.
