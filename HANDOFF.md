@@ -150,6 +150,7 @@ Format: `# | ask | first asked (Melb) | times asked | status | proof link`. "Fir
 - **Business email:** info@realmpcs.com.au
 - **Realm Google account (sign-in, Drive, Gmail, Apps Script, admin):** info@realmpcs.com (Ange, 16 Oct; NOT .com.au)
 - **Zoho (CRM + Books):** US site, crm.zoho.com and books.zoho.com, signed in as info@realmpcs.com (27 Oct). **Deputy:** au.deputy.com via the accounts@ Google login, read-only.
+- **accounts@realmpcs.com is for Deputy only (Ange, 28 Oct 2026). All Google app work uses info@.**
 - **Business phone:** 1300 358 500
 - Older register-row URLs (Bridge, Realm Desk, Scribe, Cert Studio, Launcher, Flow Map): box file `/workspace/ACTION_PLAN.md` section 5, copied verbatim from the register.
 
