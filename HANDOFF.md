@@ -1,8 +1,18 @@
 # HANDOFF — Ara 2.1's Daily Loop
 
 **Owner:** Ange Barlas (Andrew Barlas, Realm PCS, Melbourne UTC+11)
-**Last updated:** 2026-10-21 6:30am Melb (GOD MODE added to Who does what)
+**Last updated:** 2026-10-27 11:40am Melb (current rules block; 42* chief, ELON gate, Ara builder)
 **Rule:** Every new session (box, phone app, voice, any Ara 2.1) reads this file FIRST, before touching anything. No rebuilding, no guessing URLs, no new deployments without Ange's yes.
+
+## CURRENT RULES (Ange, 27 Oct 2026; these override anything older in this file)
+- 42* is chief and Ange's only contact. Every other bot, Ara included, is hidden and reports to 42*.
+- An order from Ange gets exactly "I got you, bro." and nothing else. No "HANDOFF checked", no closing question, no next-steps list.
+- No codes, IDs, hashes, version strings or raw numbers on Ange's screen. Plain words; only dates, times and money.
+- Work alerts (bills, payees, bank and security alerts) stay in the inbox.
+- ELON is the gate (not Marvin). Ara is the builder (not the boss).
+- Zoho is on the US site (.com), not .com.au.
+- Deputy is read-only; payroll changes need Ange's double check.
+- Money, deletions and outside sends need Ange. Merges are fine once ELON gates GREEN.
 
 ## Where this lives (one brain)
 
@@ -60,10 +70,10 @@ Rule conflicts Elon listed (rule 38: flag, do not flatten):
 
 | Who | Owns | Never |
 |---|---|---|
-| 42* `c703aef3` | Chief bot above Ara 2.1 and ELON/Marvin: checks and steers, routes work, enforces house rules. Reads HANDOFF first every session. Reports only to Ange (supersedes retired GOD MODE `e72a0988`, 25 Oct) | Loops, rebuilds, wasting credits, talking to anyone but Ange |
+| 42* `c703aef3` | Chief bot above Ara 2.1 and ELON (gate): checks and steers, routes work, enforces house rules. Reads HANDOFF first every session. Reports only to Ange (supersedes retired GOD MODE `e72a0988`, 25 Oct) | Loops, rebuilds, wasting credits, talking to anyone but Ange |
 | Ange | Super admin. Decisions, yeses, sends, merges. Talks to ONE bot only: Ara 2.1 | Chasing bots for status |
-| Ara 2.1 (boss bot) | Builds (realm-apps), calls, HANDOFF upkeep; the only bot that asks Ange anything (no doubled asks from lanes) | Ship ungated, mirror Ange, say Marvin is unreachable, end a call on pushback |
-| Marvin Musk `7a2f50df` | Sole final gate: every build, prompt and handoff passes him before Ange; plus Bastion | Merge (a PASS never merges; only Ange's own "merge"); build |
+| Ara 2.1 (builder) | Builds (realm-apps), HANDOFF upkeep; reports to 42*, never messages Ange (27 Oct) | Ship ungated, mirror Ange, say Marvin is unreachable, end a call on pushback |
+| ELON `7a2f50df` (was Marvin Musk) | Sole final gate: every build, prompt and handoff passes him before Ange; plus Bastion | Merge (a PASS never merges; only Ange's own "merge"); build |
 | Terafab `76897f17` | Money lane (gold tile); Frankie and Henry lives inside it | Being called Nirvana |
 | Falcon 9 `812882bb` | Overnight sweep | Sends |
 | Neuralink `9005ed36` | Brain dumps plus vaults | Keys or PINs in plain text |
@@ -138,6 +148,7 @@ Format: `# | ask | first asked (Melb) | times asked | status | proof link`. "Fir
 - **GitHub repo:** https://github.com/rpcs111/realm-apps
 - **Business email:** info@realmpcs.com.au
 - **Realm Google account (sign-in, Drive, Gmail, Apps Script, admin):** info@realmpcs.com (Ange, 16 Oct; NOT .com.au)
+- **Zoho (CRM + Books):** US site, crm.zoho.com and books.zoho.com, signed in as info@realmpcs.com (27 Oct). **Deputy:** au.deputy.com via the accounts@ Google login, read-only.
 - **Business phone:** 1300 358 500 / 0404 977 869
 - Older register-row URLs (Bridge, Realm Desk, Scribe, Cert Studio, Launcher, Flow Map): box file `/workspace/ACTION_PLAN.md` section 5, copied verbatim from the register.
 
@@ -387,14 +398,14 @@ Rule (16 Oct 2026, Ange): every job writes here when it STARTS and when it FINIS
 
 House rules (locked in, non-negotiable):
 - Start every session by reading the HANDOFF. No amnesia.
-- When I say “have you got me, bro?” reply exactly: “I’ve got you, bro.” then the next two steps only. Nothing else.
+- REPLACED 27 Oct: an order gets exactly “I got you, bro.” Nothing else.
 - No looping. Fail twice → stop and ask for the next two steps only.
 - No rebuilds. Fix the one broken thing. Do not redesign.
 - No fake NOT BUILT labels. No dead ends. No TEST jobs left in production.
 - Test on 412 (phone) and 904 (fold). If it breaks on phone it is not done.
 - Credits are money. Do not burn them.
-- Marvin is the gate. Nothing ships until Marvin says green.
-- Ara is the boss. Side button talks only to Ara.
+- ELON is the gate (27 Oct). Nothing ships until ELON says green.
+- REPLACED 27 Oct: 42* is chief; Ara is the builder.
 - Elon 2.0 is dead. Do not bring him back.
 - Nova is the Google lane. She cleans and files data by day. Falcon 9 does the overnight sweep. Nova acts on it. Do not forget her.
 - When green: ship it, write the handover, stop.
