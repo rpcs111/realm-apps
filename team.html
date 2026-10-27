@@ -41,17 +41,17 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 
 <h2>Day in the life (Melbourne time)</h2>
 <div class="grid">
-<div class="card" style="--c:#22c58b"><h3>8:52am Mondays</h3>Weekly accountability check: IVOR</div>
-<div class="card" style="--c:#ffb800"><h3>10:00am weekdays</h3>Morning sweep: ARA, with MERCHANT store check</div>
-<div class="card" style="--c:#ff6fb5"><h3>11:11am daily</h3>11:11 reset: ARA and MUSE</div>
-<div class="card" style="--c:#22c58b"><h3>11:52am daily</h3>Daily AI drill: IVOR</div>
-<div class="card" style="--c:#ffb800"><h3>1:27pm weekdays</h3>Week-ahead check: FORGE</div>
-<div class="card" style="--c:#22c58b"><h3>2:00pm weekdays</h3>Ivor nudge: IVOR</div>
+<div class="card" style="--c:#22c58b"><h3>8:52am Mondays</h3>Weekly accountability check: Coach</div>
+<div class="card" style="--c:#ffb800"><h3>10:00am weekdays</h3>Morning sweep: Ara</div>
+<div class="card" style="--c:#ff6fb5"><h3>11:11am daily</h3>11:11 reset: Ara</div>
+<div class="card" style="--c:#22c58b"><h3>11:52am daily</h3>Daily AI drill: Coach</div>
+<div class="card" style="--c:#ffb800"><h3>1:27pm weekdays</h3>Week-ahead check: Infra</div>
+<div class="card" style="--c:#22c58b"><h3>2:00pm weekdays</h3>Nudge: Coach</div>
 <div class="card" style="--c:#ff8a3d"><h3>7:00pm weekdays</h3>Notes drain: ECHO</div>
 <div class="card" style="--c:#ff4f6d"><h3>6:00pm Sundays</h3>Sunday sweep: SENTRY</div>
-<div class="card" style="--c:#00b3a4"><h3>1st of the month</h3>Subscription review: LEDGER (rule 31)</div>
-<div class="card" style="--c:#00b3a4"><h3>Every 2 days, 10am</h3>Refund follow-up: LEDGER</div>
-<div class="card" style="--c:#ff6fb5"><h3>Every 2 hours</h3>Triage alarm: ARA</div>
+<div class="card" style="--c:#00b3a4"><h3>1st of the month</h3>Subscription review: Legal &amp; Finance</div>
+<div class="card" style="--c:#00b3a4"><h3>Every 2 days, 10am</h3>Refund follow-up: Legal &amp; Finance</div>
+<div class="card" style="--c:#ff6fb5"><h3>Every 2 hours</h3>Triage alarm: Ara</div>
 </div>
 
 <h2>Gaps closed: who owns each of the 20</h2>
@@ -106,36 +106,34 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 </main>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>
-const COST='Inside Grok Heavy plan; no extra fee confirmed. Spend cap set privately';
-const LIM='Deputy and Xero look-only. No sends, spending, deletes, Apps Script deploys or go-lives without Ange\'s yes. Banned: Claude, Zapier, Make, n8n, Fireflies, scribehow.';
 const bots=[
-['ARA','#ff6fb5','Head of the crew (Grok). Ange\'s voice in the car (BYD Shark), on desktop and phone.',['Runs every bot below','Briefs Nova on the HANDOFF sheet'],'Live','Running','1-10, 13, 14, 16, 18, 20, 26, 34, 35, 39','Morning sweep, 11:11 reset, triage alarm (every 2 hrs)','Gmail, Drive, Docs, Calendar, GitHub, Wix'],
-['NOVA','#8a7dff','Gemini backend partner. Audits the back end.',['HANDOFF sheet','Google-side builds and audit'],'Live','Running','12, 32','Backend audit on handoff','Google Workspace, Apps Script'],
-['ECHO','#ff8a3d','The checker. Runs the checklist below before every reply and blocks repeats or missed steps.',['Blocks repeats (rule 36)','Blocks asks Ara can do herself (rule 37)','Flags rule conflicts (rule 38)'],'Planned','30 min','3, 5, 6, 10, 36, 37, 38 + reply format','Before every reply; notes drain 7pm','Channel doc, REALM LOG, Drive'],
-['IVOR','#22c58b','AI coach. Trains Ange to talk to the crew without wasting time.',['Coaching nudges','Teaching steps to others'],'Live','Already live','30, 34','Daily AI drill 11:52am; weekly accountability check Mondays 8:52am; Ivor nudge weekdays 2pm. Log: ANGE_ACCOUNTABILITY_LOG.md','Chat, Calendar'],
-['ELON','#3fa9ff','Elon Musk tracker, with X links and photos.',['Tesla','SpaceX','xAI','X','Brain Dump'],'Live','Running','21, 27, 33','Daily brief 7:30am; alerts every 2 hours','X, web search'],
-['FORGE','#ffb800','Realm ops.',['Desk (pick one of the two Desk links)','Cert Studio','You Got Me Bro','Roster','Realm Flow Map','00 INDEX front door'],'Planned','1 hr','11, 15, 16, 17, 22, 28, 29','Week-ahead check, weekdays 1:27pm','Drive, Calendar, GitHub Pages, Apps Script (deploy = New version, only on his yes)'],
-['MERCHANT','#4fb8ff','Frankie and Henry plus the online stores (Wix and Shopify).',['Orders','Stock','Listings'],'Planned','1 hr','13, 26, 29','Daily store check in morning sweep','Wix, Shopify, Gmail, Drive'],
-['LEDGER','#00b3a4','Subscriptions and refunds.',['Monthly subscription review','Refund follow-up','Payroll view'],'Planned','45 min','28, 31, 33','Monthly review on the 1st; refund follow-up every 2 days','Gmail, Drive, Xero (look-only), Deputy (look-only)'],
-['SENTRY (KILL)','#ff4f6d','Watches for banned tools re-linking to Ange\'s accounts.',['Done: Claude Google access cut','Done: 0 Apps Script triggers','Done: Zapier removed from info@','Open: Ange pulls the claude.ai connectors','Open: Ange switches off the Claude billing toggles','Watching: Claude, Zapier, n8n, Make, Fireflies'],'Planned','30 min','20, 32, 35, 39','Sunday sweep, Sundays 6pm','Google account linked apps, GitHub, Gmail'],
-['MUSE','#c35cff','Personal life.',['Alivio','Goodfellas Car Club','Guitars','Watches','Bucket list'],'Planned','30 min','26, 27','11:11 reset ideas','Calendar, Gmail, Drive'],
-['ORACLE','#ffcc00','Stretch goal: five-year-goals strategist that turns visions into plans.',['Five-year plan (rule 25 gap)','Resume template (rule 21)','Grok upgrades with price and link (rule 33)'],'Planned','1 hr plus Ange\'s goals session','21, 23, 24, 25, 27, 33','Monthly with Ledger review','Docs, Drive, web search']];
-document.getElementById('cards').innerHTML=bots.map(b=>`<div class="card" style="--c:${b[1]}"><h3>${b[0]}</h3><span class="tag">${b[4]}</span><span class="tag" style="background:#2b235033;color:#e8eefc">Setup: ${b[5]}</span><p>${b[2]}</p><b>Hands down:</b><ul>${b[3].map(x=>'<li>'+x+'</li>').join('')}</ul><p><b>Rules:</b> ${b[6]}</p><p><b>Routines:</b> ${b[7]}</p><p><b>Tools:</b> ${b[8]}</p><p class="cost"><b>Limits:</b> ${LIM}</p><div class="cost">${COST}</div></div>`).join('');
+['42* – Chief','#ffb347','Ange\'s chief and only contact. Passes work down and brings back one answer.'],
+['ELON – Gate','#3fa9ff','Checks and audits every change before it merges. Reports to 42*.'],
+['Ara – Builder','#ff6fb5','Builds and tests apps. Reports to 42*.'],
+['Inbox Sweep','#ff8a3d','Overnight inbox sweep.'],
+['Money','#ffb800','Money lane.'],
+['Jobs &amp; Clients','#4fb8ff','Jobs and clients.'],
+['Brain Dump','#00b3a4','Brain dumps.'],
+['Directory Site','#ff4f6d','Directory site.'],
+['Infra','#c35cff','Infra.'],
+['Coach','#22c58b','Accountability coach.'],
+['Legal &amp; Finance','#ffcc00','Subscriptions, refunds and payroll.'],
+['NOVA','#8a7dff','Gemini backend. Audits the back end.']];
+document.getElementById('cards').innerHTML=bots.map(b=>`<div class="card" style="--c:${b[1]}"><h3>${b[0]}</h3><p>${b[2]}</p></div>`).join('');
 const DEF=`flowchart TD
   ANGE([ANGE - Boss]):::boss
   ANGE --> CHIEF[42* – Chief]:::b2
-  CHIEF --> ARA[Ara – Builder, Grok<br/>car, desktop, phone]:::ara
   ANGE --> NOVA[NOVA - Gemini backend]:::nova
-  ARA <--> NOVA
-  ARA --> ECHO[ECHO - Checker]:::b1
-  ARA --> IVOR[IVOR - AI coach, LIVE]:::b2
-  ARA --> ELON[ELON – Gate, LIVE]:::b2
-  ARA --> FORGE[FORGE - Realm ops]:::b3
-  ARA --> MERCHANT[MERCHANT - Frankie and Henry, stores]:::b4
-  ARA --> LEDGER[LEDGER - Subs and refunds]:::b5
-  ARA --> SENTRY[SENTRY - Banned-tool watch]:::b6
-  ARA --> MUSE[MUSE - Personal life]:::b7
-  ARA --> ORACLE[ORACLE - Five-year goals]:::b8
+  CHIEF --> ELON[ELON – Gate]:::b4
+  ELON --> ARA[Ara – Builder]:::ara
+  ELON --> SWEEP[Inbox Sweep]:::b1
+  ELON --> MONEY[Money]:::b3
+  ELON --> JOBS["Jobs & Clients"]:::b4
+  ELON --> BRAIN[Brain Dump]:::b5
+  ELON --> DIR[Directory Site]:::b6
+  ELON --> INFRA[Infra]:::b7
+  ELON --> COACH[Coach]:::b8
+  ELON --> LEGAL["Legal & Finance"]:::b5
   classDef boss fill:#ffb347,stroke:#ff6fb5,color:#fff,font-size:20px
   classDef ara fill:#ff6fb5,stroke:#fff,color:#fff
   classDef nova fill:#8a7dff,stroke:#fff,color:#fff
@@ -147,10 +145,10 @@ const DEF=`flowchart TD
   classDef b6 fill:#ff4f6d,color:#fff
   classDef b7 fill:#c35cff,color:#fff
   classDef b8 fill:#ffe066,color:#e8eefc`;
-const src=document.getElementById('src');src.value=localStorage.getItem('realmCrewTree')||DEF;
+const src=document.getElementById('src');src.value=localStorage.getItem('realmCrewTree_v2')||DEF;
 mermaid.initialize({startOnLoad:false,flowchart:{htmlLabels:false},theme:'base',themeVariables:{lineColor:'#e0459b',primaryColor:'#fff3c4'}});
 let n=0,t;
-async function render(){localStorage.setItem('realmCrewTree',src.value);try{const {svg}=await mermaid.render('m'+(n++),src.value);document.getElementById('tree').innerHTML=svg}catch(e){document.getElementById('tree').innerHTML='<p style="color:#ff4f6d">Tree text has a mistake: '+e.message+'</p>'}}
+async function render(){localStorage.setItem('realmCrewTree_v2',src.value);try{const {svg}=await mermaid.render('m'+(n++),src.value);document.getElementById('tree').innerHTML=svg}catch(e){document.getElementById('tree').innerHTML='<p style="color:#ff4f6d">Tree text has a mistake: '+e.message+'</p>'}}
 src.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(render,600)});
 function resetTree(){src.value=DEF;render()}
 function save(b,name){const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click()}
