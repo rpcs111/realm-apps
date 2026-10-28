@@ -4,6 +4,8 @@
       other device's changes on open / focus / every minute, so the phone and the desktop show the same thing.
    The device key is NEVER in this repo: open the one-tap link from Ara once per device (...#sync=KEY).
    It is kept on the device (localStorage 'realm_sync_token') and wiped from the address bar.
+   28 Oct 2026: the Flow Map (realm_flow_map_v*) is no longer synced here: its step notes merge per step and save to
+   Realm Desk with Google sign-in; whole-copy last-write-wins here could undo that merge.
    Only the app-data keys listed in INC are synced. Never synced: realm_key, PINs, Private vault, capture outbox. */
 (function () {
   'use strict';
@@ -11,7 +13,7 @@
   var API = 'https://script.google.com/macros/s/AKfycbxzrPy359CBlkbrYuR0-5xJB4GLXIQ6xNDIE6EFEb2xvnoY0n5sodcnljN4Ohqf4nWa/exec';
   var TOK = 'realm_sync_token', BASE = 'realm_sync_base', META = 'realm_sync_meta', DEVK = 'realm_sync_dev';
   var INC = [/^realm_scribe_v\d+$/, /^realm_notes$/, /^realm_notes_tasks_v\d+$/, /^realm_today_blocks$/, /^realm_next_(done|q|snz)_/,
-    /^realm_layers_v\d+$/, /^realm_flow_map_v\d+$/, /^realm_map_app_v\d+$/, /^realm_queue_v1$/, /^realm_queue_dryrun_v1$/,
+    /^realm_layers_v\d+$/, /^realm_map_app_v\d+$/, /^realm_queue_v1$/, /^realm_queue_dryrun_v1$/,
     /^realm_metatron[A-Za-z0-9_]*$/, /^realm_prism_v\d+$/, /^realm_amends$/, /^realm_video_recent$/, /^realmCrew(Idea|Tree)$/,
     /^realm_setup_[A-Za-z0-9_\-]+$/, /^realm-cert-items$/];
   var CUR = document.currentScript, LS = window.localStorage, SP = Storage.prototype, rawSet = SP.setItem, rawRemove = SP.removeItem;

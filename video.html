@@ -14,5 +14,5 @@ function draw(){var a=L();document.getElementById("r").innerHTML=a.length?a.map(
 document.getElementById("f").onsubmit=function(e){e.preventDefault();var q=document.getElementById("q").value.trim();if(!q)return;var a=L().filter(function(x){return x!==q});a.unshift(q);localStorage.setItem(K,JSON.stringify(a.slice(0,20)));draw();location.href=U(q)};
 document.getElementById("clr").onclick=function(){localStorage.removeItem(K);draw()};draw();
 </script><script src="voice.js?v=20261017-24"></script>
-<script src="js/realm-sync.js?v=20261017-24"></script>
+<script src="js/realm-sync.js?v=20261028-7"></script>
 <script src="js/ara-install.js?v=20261017-24" defer></script><script src="js/ara-version.js" defer></script><script src="js/saveapp.js?v=20261017-24" data-mount=".top" defer></script></body></html>
