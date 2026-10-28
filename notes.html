@@ -176,6 +176,11 @@ html body #tAddBox #tAdd{border-color:var(--accent)!important;color:var(--accent
 #angeTodo .empty{color:#8a8a8a;font-size:13px;padding:8px 0}
 #angeTodo a.more{display:inline-flex;align-items:center;min-height:44px;color:var(--accent);font-size:13px;text-decoration:none}
 #angeTodo button.retry{display:inline-flex;align-items:center;box-sizing:border-box;min-height:44px;padding:0 2px;border:0;background:none;color:var(--accent);font:inherit;font-size:14px;cursor:pointer}
+</style><style id="tap44">/* 29 Oct 2026: every tap line at least 44px. The sync line gets the same 44px bar as Today's; the Google Tasks line is 44px;
+tapping into the add-a-task row brings it clear of the fixed note box. */
+.rui-main .rui-status{display:flex;align-items:center;min-height:44px;box-sizing:border-box;cursor:pointer}
+#tsrc{min-height:44px;box-sizing:border-box;padding-top:12px;padding-bottom:12px}
+#tAddBox,#tTitle,#tList,#tAdd,#gtConnect,#gtGo{scroll-margin-bottom:calc(var(--rui-comp,68px) + 16px + env(safe-area-inset-bottom))}
 </style></head><body class="rui">
 <header class="rui-top top"><span class="rui-mark" role="img" aria-label="Ara"></span><b class="rui-title">Note</b><div class="nav"><a href="./index.html">‹ Apps</a><a id="toSearch" href="./search.html">Search ›</a></div></header>
 <div class="rui-shell"><aside class="rui-rail" id="rail" role="tablist" aria-label="Show"><button type="button" class="rui-tab on" data-k="all" role="tab" aria-selected="true">All <i id="acnt">0</i></button><button type="button" class="rui-tab" data-k="ange" role="tab">Ange to do <i id="atcntT">0</i></button><button type="button" class="rui-tab" data-k="notes" role="tab">My notes <i id="ncntT">0</i></button><button type="button" class="rui-tab" data-k="next" role="tab">Pick up <i id="pcntT">0</i></button><button type="button" class="rui-tab" data-k="tasks" role="tab">To do <i id="tcntT">0</i></button><h3>Google Tasks</h3><div class="rui-links"><a class="gt" id="gTasks" href="https://tasks.google.com/tasks/?authuser=info@realmpcs.com" target="_blank" rel="noopener">Google Tasks ↗</a><button id="exp" type="button">CSV</button></div></aside>
