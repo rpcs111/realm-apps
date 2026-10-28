@@ -1,0 +1,38 @@
+{
+  "id": "/realm-apps/desk-cube-2026-10-29",
+  "name": "Desk",
+  "short_name": "Desk",
+  "description": "Desk: the REALM DESK job board.",
+  "start_url": "./desk-app.html?app=desk-app",
+  "scope": "./desk-app.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "pwa/desk-cube-192.png?v=20261029-1",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa/desk-cube-512.png?v=20261029-1",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa/desk-cube-maskable-192.png?v=20261029-1",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "pwa/desk-cube-maskable-512.png?v=20261029-1",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
