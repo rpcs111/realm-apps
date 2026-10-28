@@ -1,0 +1,627 @@
+{
+ "title": "Realm Bot History Log (local copy)",
+ "note": "Backfill, 28 and 29 Oct. Newest first. Same rows as the sheet, without its private source column.",
+ "rows": [
+  {
+   "id": "bf69",
+   "time": "Thu 29 Oct, about 1:00am",
+   "who": "Builder",
+   "what": "Cert Studio round five: every tap on the main cert screen made big enough for a finger",
+   "result": "Built, all tests pass. Waiting for ELON's check",
+   "problem": "Some buttons and sliders were far too small to tap",
+   "workaround": "None needed. Local test copy only"
+  },
+  {
+   "id": "bf68",
+   "time": "Thu 29 Oct, 12:52am (file time)",
+   "who": "Builder",
+   "what": "Desk fix round four: added box, keybox and lockup to the code words so a lockbox code can't be saved",
+   "result": "Built, waiting for ELON's check",
+   "problem": "A whole lockbox code could still be saved in one note",
+   "workaround": "None yet. Not live"
+  },
+  {
+   "id": "bf67",
+   "time": "Thu 29 Oct, 12:44am",
+   "who": "ELON",
+   "what": "Own miss logged on the Desk code word list",
+   "result": "Miss, caught in round three",
+   "problem": "The round two word list given to Builder left out 'box'",
+   "workaround": "New rule: the no-codes gate item checks every code word"
+  },
+  {
+   "id": "bf66",
+   "time": "Thu 29 Oct, 12:43am",
+   "who": "ELON",
+   "what": "Checked Builder's Desk fix, round three",
+   "result": "FAIL 1",
+   "problem": "'box' was not a code word, so four natural notes could save a whole code. Labels, double send, hold, tabs and tap sizes all passed",
+   "workaround": "Builder to add box, boxes, lockup and keybox to the code words"
+  },
+  {
+   "id": "bf65",
+   "time": "Wed 28 Oct, 11:58pm",
+   "who": "ELON",
+   "what": "Checked Builder's Cert Studio, round four",
+   "result": "GREEN",
+   "problem": "None. Six headings now easy to read in light and dark at all six widths",
+   "workaround": "None needed"
+  },
+  {
+   "id": "bf64",
+   "time": "Wed 28 Oct, 11:43pm",
+   "who": "ELON",
+   "what": "Checked Builder's Desk fix, round two",
+   "result": "FAIL 3",
+   "problem": "Code blocker could still be got round with sound-alikes and run-together words; card labels and a double send still open",
+   "workaround": "Builder to widen the blocker, strip card text from labels and stop the double send"
+  },
+  {
+   "id": "bf63",
+   "time": "Wed 28 Oct, 10:49pm",
+   "who": "ELON",
+   "what": "Checked Builder's Flow mock, round four re-report",
+   "result": "GREEN",
+   "problem": "Real-phone checks still open",
+   "workaround": "Needs a real phone test"
+  },
+  {
+   "id": "bf62",
+   "time": "Wed 28 Oct, 10:48pm",
+   "who": "ELON",
+   "what": "Checked Builder's Flow mock, round four",
+   "result": "FAIL 1",
+   "problem": "Code fix passed, but the reported file fingerprints did not match the files on disk",
+   "workaround": "Builder re-reported the fingerprints"
+  },
+  {
+   "id": "bf61",
+   "time": "Wed 28 Oct, 10:11pm",
+   "who": "ELON",
+   "what": "Checked Builder's Desk crash fix and Amend",
+   "result": "FAIL 8",
+   "problem": "Tab time-out, Try again and Back passed. Code blocker had many bypasses, card text leaked into amend labels, and a long hold closed the sheet",
+   "workaround": "Builder to fix all eight and resend"
+  },
+  {
+   "id": "bf60",
+   "time": "Wed 28 Oct, 10:05pm",
+   "who": "ELON",
+   "what": "Checked Builder's Flow mock, round three",
+   "result": "FAIL 1",
+   "problem": "Digits from other scripts (not plain 0 to 9) were not all blocked",
+   "workaround": "Builder to block every kind of digit"
+  },
+  {
+   "id": "bf59",
+   "time": "Wed 28 Oct, about 10:00pm",
+   "who": "42*",
+   "what": "Wrote the final set of answers to Ange's fourteen open asks for the half past midnight batch",
+   "result": "Final answers written, with a list of corrections",
+   "problem": "Several of Builder's draft answers were wrong or unsourced",
+   "workaround": "Corrections listed at the bottom of the file"
+  },
+  {
+   "id": "bf58",
+   "time": "Wed 28 Oct, 9:59pm",
+   "who": "ELON",
+   "what": "Audit of Ange's fourteen open asks",
+   "result": "1 closed, 9 open, 4 wrong",
+   "problem": "Builder said things were fixed before any check, said a whole Drive was scanned when it wasn't, and made a promise that clashed with an open ask",
+   "workaround": "New rule: until ELON says GREEN, say 'fix built, waiting for check'"
+  },
+  {
+   "id": "bf57",
+   "time": "Wed 28 Oct, about 9:55pm (file time)",
+   "who": "42*",
+   "what": "Wrote the team structure pick: three workers under 42* (Builder, Jobs & Inbox, Money & Admin)",
+   "result": "Proposal for Ange's yes. Nothing changes until he says yes",
+   "problem": "None",
+   "workaround": "None needed"
+  },
+  {
+   "id": "bf56",
+   "time": "Wed 28 Oct, about 9:50pm (file time)",
+   "who": "Builder",
+   "what": "Drafted answers to Ange's fourteen open asks",
+   "result": "Draft, sent for ELON's check",
+   "problem": "Four answers later found wrong",
+   "workaround": "Corrected in the final set"
+  },
+  {
+   "id": "bf55",
+   "time": "Wed 28 Oct, 9:50pm",
+   "who": "Money & Admin",
+   "what": "Own miss: told 42* an airline had not replied",
+   "result": "Miss, corrected to 42* at 9:50pm",
+   "problem": "Staff had replied on a separate email chain; the hourly check only watched the first thread",
+   "workaround": "Routine widened to watch every chain"
+  },
+  {
+   "id": "bf54",
+   "time": "Wed 28 Oct, 9:46pm",
+   "who": "Builder",
+   "what": "Two misses in the Team room",
+   "result": "Miss",
+   "problem": "Told Ange the Desk crash was found and fixed while it was still unchecked, and promised answers one at a time against his 'no more noise' order",
+   "workaround": "New rules: say 'fix built, being checked' until GREEN; Ange's latest order wins"
+  },
+  {
+   "id": "bf53",
+   "time": "Wed 28 Oct, 9:45pm",
+   "who": "42*",
+   "what": "Answered Ange's question on how long his asks waited, in minutes",
+   "result": "Answered from the asks audit",
+   "problem": "His file upload ask took about three days to get a real answer; the airline ask is still open",
+   "workaround": "None"
+  },
+  {
+   "id": "bf52",
+   "time": "Wed 28 Oct, 9:24pm",
+   "who": "ELON",
+   "what": "Checked Builder's Flow mock, round two",
+   "result": "FAIL 3",
+   "problem": "Round one fixes held. ELON also missed a dropped word in round one",
+   "workaround": "New rule: scan the gaps list, readme and file paths for dropped words too"
+  },
+  {
+   "id": "bf51",
+   "time": "Wed 28 Oct, 9:23pm",
+   "who": "ELON",
+   "what": "Checked Builder's Cert Studio, round three",
+   "result": "FAIL 1",
+   "problem": "Start panel headings too faint on the dark screen",
+   "workaround": "Builder to lift the heading colour"
+  },
+  {
+   "id": "bf50",
+   "time": "Wed 28 Oct, 9:19pm",
+   "who": "42*",
+   "what": "Confirmed the mic overlay change on the branch matches the GREEN files",
+   "result": "Confirmed",
+   "problem": "Merge waits on the info sign-in and Ange's word",
+   "workaround": "None until then"
+  },
+  {
+   "id": "bf49",
+   "time": "Wed 28 Oct, 9:00pm",
+   "who": "ELON",
+   "what": "Checked Builder's mic overlay, round three",
+   "result": "GREEN, FAIL 0",
+   "problem": "None. The inbox reader routine passed its first real row to 42*",
+   "workaround": "GREEN only for the checked files"
+  },
+  {
+   "id": "bf48",
+   "time": "Wed 28 Oct, 8:56pm",
+   "who": "ELON",
+   "what": "Checked Builder's mic overlay, first pass of round three",
+   "result": "FAIL 1",
+   "problem": "Code clean, but 'Builder passes it to 42*' was not yet true",
+   "workaround": "Builder's routine had to start reading the live chat rows"
+  },
+  {
+   "id": "bf47",
+   "time": "Wed 28 Oct, 8:52pm (file time)",
+   "who": "Builder",
+   "what": "Mic overlay round two fixes written up",
+   "result": "Sent for ELON's check",
+   "problem": "On-screen wording promised replies that no bot was reading yet",
+   "workaround": "Wording changed"
+  },
+  {
+   "id": "bf46",
+   "time": "Wed 28 Oct, 8:51pm",
+   "who": "ELON",
+   "what": "Checked Builder's mic overlay, round two",
+   "result": "FAIL 1",
+   "problem": "On-screen line 'Replies come in your chat' was not true yet. ELON's own round one wording caused it",
+   "workaround": "New rule: no invented facts on Ange's screen"
+  },
+  {
+   "id": "bf45",
+   "time": "Wed 28 Oct, 8:51pm",
+   "who": "ELON",
+   "what": "Checked Builder's Flow mock, round one",
+   "result": "FAIL 7",
+   "problem": "Code block easy to get round, 'not sure' saved as No, the finger-hold sheet shut on lift, and phone Back left the mock",
+   "workaround": "Builder to fix all seven"
+  },
+  {
+   "id": "bf44",
+   "time": "Wed 28 Oct, 8:47pm",
+   "who": "ELON",
+   "what": "Marked the brief quiz for all ten bots",
+   "result": "0 outright fails, 0 full passes. Best score was Builder",
+   "problem": "Every bot was partly wrong on some questions",
+   "workaround": "Re-teach sent to each bot"
+  },
+  {
+   "id": "bf43",
+   "time": "Wed 28 Oct, 8:46pm",
+   "who": "Builder",
+   "what": "Miss: gave Ange a count of unanswered asks with no source",
+   "result": "Miss",
+   "problem": "The audited list says 36 asks: 22 answered, 10 partly, 4 not",
+   "workaround": "Builder told to use the asks audit file"
+  },
+  {
+   "id": "bf42",
+   "time": "Wed 28 Oct, 8:45pm",
+   "who": "ELON",
+   "what": "Audit of Ange's asks from 25 to 28 Oct",
+   "result": "36 asks: 22 answered, 10 partly, 4 not answered",
+   "problem": "Some asks got 'checking now' and then nothing; one was answered three days late",
+   "workaround": "Each miss logged for 42*"
+  },
+  {
+   "id": "bf41",
+   "time": "Wed 28 Oct, 8:44pm",
+   "who": "ELON",
+   "what": "Wrote the final brief quiz and its answer key and sent it to every live bot",
+   "result": "Sent",
+   "problem": "None",
+   "workaround": "None"
+  },
+  {
+   "id": "bf40",
+   "time": "Wed 28 Oct, 8:43pm",
+   "who": "ELON",
+   "what": "Checked Builder's master brief and quiz, round three",
+   "result": "GREEN, FAIL 0",
+   "problem": "None",
+   "workaround": "None needed"
+  },
+  {
+   "id": "bf39",
+   "time": "Wed 28 Oct, 8:42pm",
+   "who": "ELON",
+   "what": "Checked Builder's master brief and quiz, round two",
+   "result": "FAIL 2",
+   "problem": "Two lines cited the wrong source",
+   "workaround": "Builder to fix both citations"
+  },
+  {
+   "id": "bf38",
+   "time": "Wed 28 Oct, 8:41pm",
+   "who": "ELON",
+   "what": "Checked Builder's mic live-chat overlay, round one",
+   "result": "FAIL 2",
+   "problem": "Called live chat but one way, and the tick only meant the inbox saved it",
+   "workaround": "Builder to change the wording"
+  },
+  {
+   "id": "bf37",
+   "time": "Wed 28 Oct, 8:40pm",
+   "who": "ELON",
+   "what": "Checked the locked rules block, rounds one and two",
+   "result": "FAIL 3, then GREEN",
+   "problem": "Old screen widths and two rules that clashed with standing orders",
+   "workaround": "All three fixed, two new rules added (passwords only in the vault, the Deputy login is only for Deputy)"
+  },
+  {
+   "id": "bf36",
+   "time": "Wed 28 Oct, 8:39pm",
+   "who": "ELON",
+   "what": "Checked Builder's master brief and quiz, round one",
+   "result": "FAIL 12",
+   "problem": "Stale rules, wrong sign-in owner, client and personal money details in a shared file",
+   "workaround": "Builder to fix all twelve"
+  },
+  {
+   "id": "bf35",
+   "time": "Wed 28 Oct, 8:33pm",
+   "who": "ELON",
+   "what": "System audit of every bot and rule file",
+   "result": "7 FAIL, 1 PASS, 1 true, 1 for Ange to call",
+   "problem": "The handoff file was stale, rule files disagreed, a retired bot was still answering, and Builder had hit the same info sign-in problem again and again for nine days",
+   "workaround": "Each FAIL logged; fixes started the same evening"
+  },
+  {
+   "id": "bf34",
+   "time": "Wed 28 Oct, 8:31pm",
+   "who": "ELON",
+   "what": "Checked the app publishing tool's sign-in on the box",
+   "result": "Confirmed: it is signed in as a temporary account, not the real info account",
+   "problem": "Builder's blocker was real, but she asked Ange to put a password in chat",
+   "workaround": "Ange told to use the vault form only"
+  },
+  {
+   "id": "bf33",
+   "time": "Wed 28 Oct, 8:29pm",
+   "who": "ELON",
+   "what": "Flagged the retired bot posting to Ange in the Team room",
+   "result": "Miss logged for 42*",
+   "problem": "A retired bot should send no posts",
+   "workaround": "Flagged in the night audit"
+  },
+  {
+   "id": "bf32",
+   "time": "Wed 28 Oct, 8:27pm",
+   "who": "ELON",
+   "what": "Took Ange's order: every bot answers his orders with exactly 'I got you, bro.', and an audit pulls up any bot that slips",
+   "result": "Done, replied 'I got you, bro.'",
+   "problem": "Builder had answered with a pitch at 8:24pm",
+   "workaround": "New reply rule for every bot"
+  },
+  {
+   "id": "bf31",
+   "time": "Wed 28 Oct, 7:35pm",
+   "who": "ELON",
+   "what": "Checked Builder's Cert Studio adjustments, round two",
+   "result": "FAIL 1",
+   "problem": "When nothing was left to fill, the old auto-fill note stayed on screen",
+   "workaround": "Builder to clear it"
+  },
+  {
+   "id": "bf30",
+   "time": "Wed 28 Oct, 5:38pm",
+   "who": "ELON",
+   "what": "Checked Builder's Cert Studio adjustments, round one",
+   "result": "FAIL 2",
+   "problem": "Auto-fill went stale after reload and wrote over typed fields. Diary entries need Ange's yes",
+   "workaround": "Builder to fix both; diary entries wait for Ange via 42*"
+  },
+  {
+   "id": "bf29",
+   "time": "Wed 28 Oct, 3:02pm",
+   "who": "ELON",
+   "what": "Checked Builder's four installable apps, re-gate two",
+   "result": "GREEN, FAIL 0",
+   "problem": "None. Every tap big enough for a finger at all six widths",
+   "workaround": "None needed"
+  },
+  {
+   "id": "bf28",
+   "time": "Wed 28 Oct, 2:24pm",
+   "who": "ELON",
+   "what": "Checked the Jobs & Inbox sweep sheet",
+   "result": "FAIL 3, then GREEN",
+   "problem": "A reply time overstated, a money item put in the wrong list, and a reply owed listed as a quote owed",
+   "workaround": "All three lines fixed"
+  },
+  {
+   "id": "bf27",
+   "time": "Wed 28 Oct, 1:24pm",
+   "who": "ELON",
+   "what": "Checked the Jobs & Inbox sweep sheet",
+   "result": "FAIL 2, then GREEN",
+   "problem": "A reply owed was dropped and a reply time was overstated",
+   "workaround": "Both fixed"
+  },
+  {
+   "id": "bf26",
+   "time": "Wed 28 Oct, 1:11pm",
+   "who": "ELON",
+   "what": "Checked Builder's four installable apps, re-gate one",
+   "result": "FAIL 1",
+   "problem": "New tap circles on two Flow Map bubbles covered nearby bubbles and stole their taps",
+   "workaround": "Builder made the tap circle smaller"
+  },
+  {
+   "id": "bf25",
+   "time": "Wed 28 Oct, 12:19pm",
+   "who": "ELON",
+   "what": "Checked the Jobs & Inbox sweep sheet",
+   "result": "FAIL 1, then GREEN",
+   "problem": "The top five said quotes were owed today, but no email set a deadline",
+   "workaround": "Fixed to match the mail"
+  },
+  {
+   "id": "bf24",
+   "time": "Wed 28 Oct, 12:00pm",
+   "who": "ELON",
+   "what": "Checked Builder's four installable apps",
+   "result": "FAIL 1",
+   "problem": "Flow Map bubbles just too small to tap on the Fold cover screen. ELON's earlier check had missed them",
+   "workaround": "New rule: measure every tappable thing at every width"
+  },
+  {
+   "id": "bf23",
+   "time": "Wed 28 Oct, 11:23am",
+   "who": "ELON",
+   "what": "Checked the Jobs & Inbox sweep sheet",
+   "result": "FAIL 1, then GREEN",
+   "problem": "One job line gave the wrong date for when a problem was found",
+   "workaround": "Fixed to match the mail"
+  },
+  {
+   "id": "bf22",
+   "time": "Wed 28 Oct, about 10:58 to 11:10am",
+   "who": "Builder",
+   "what": "Built the four installable apps (Hub, Note, Cert Studio, Flow Map) with real icon files",
+   "result": "Built locally, sent for ELON's check",
+   "problem": "Two apps used inline icons that can fail to install on Android",
+   "workaround": "Icons turned into real files"
+  },
+  {
+   "id": "bf21",
+   "time": "Wed 28 Oct, 10:20am",
+   "who": "ELON",
+   "what": "Checked the Jobs & Inbox sweep sheet",
+   "result": "GREEN, FAIL 0",
+   "problem": "None",
+   "workaround": "None needed"
+  },
+  {
+   "id": "bf20",
+   "time": "Wed 28 Oct, 10:05am",
+   "who": "ELON",
+   "what": "Checked the no-key sign-in and Flow Map, rebased on the live site",
+   "result": "Both GREEN, FAIL 0",
+   "problem": "None",
+   "workaround": "None needed"
+  },
+  {
+   "id": "bf19",
+   "time": "Wed 28 Oct, 9:35am",
+   "who": "42*",
+   "what": "Merged the handoff change and checked it live: the Deputy login is only for Deputy; all Google app work uses the info account",
+   "result": "PASS, live",
+   "problem": "None",
+   "workaround": "None needed"
+  },
+  {
+   "id": "bf18",
+   "time": "Wed 28 Oct, 9:32am",
+   "who": "ELON",
+   "what": "Checked Builder's handoff line change, rounds one and two",
+   "result": "FAIL 1, then GREEN at 9:34am",
+   "problem": "The 'last updated' line was not bumped and there was no log entry",
+   "workaround": "Both added"
+  },
+  {
+   "id": "bf17",
+   "time": "Wed 28 Oct, 9:30am",
+   "who": "42*",
+   "what": "Passed on Ange's word: the Deputy login is only for Deputy",
+   "result": "Rule set: any plan using it for anything else fails",
+   "problem": "None",
+   "workaround": "None"
+  },
+  {
+   "id": "bf16",
+   "time": "Wed 28 Oct, 9:21am",
+   "who": "42*",
+   "what": "Passed on Ange's word: 'No keep it to info'",
+   "result": "The plan to use the Deputy login for the sign-in was dropped",
+   "problem": "None",
+   "workaround": "Everything stays on the info account"
+  },
+  {
+   "id": "bf15",
+   "time": "Wed 28 Oct, 9:18am",
+   "who": "ELON",
+   "what": "Checked Builder's Deputy login re-plan (read only)",
+   "result": "FAIL 1",
+   "problem": "A new cloud project and sign-in client is a new app and needs Ange's own yes",
+   "workaround": "Plan dropped at 9:21am"
+  },
+  {
+   "id": "bf14",
+   "time": "Wed 28 Oct, 9:18am",
+   "who": "ELON",
+   "what": "Checked the Jobs & Inbox sweep sheet",
+   "result": "GREEN, FAIL 0",
+   "problem": "None",
+   "workaround": "None needed"
+  },
+  {
+   "id": "bf13",
+   "time": "Wed 28 Oct, 8:48am",
+   "who": "42*",
+   "what": "Checked the plain-links and tag fixes live on the Hub",
+   "result": "PASS on both, 0 problems",
+   "problem": "None",
+   "workaround": "None needed"
+  },
+  {
+   "id": "bf12",
+   "time": "Wed 28 Oct, 8:42am",
+   "who": "ELON",
+   "what": "Confirmed the plain-links and Hub tag changes match the checked copies",
+   "result": "Confirmed, cleared for 42* to merge",
+   "problem": "None",
+   "workaround": "None"
+  },
+  {
+   "id": "bf11",
+   "time": "Wed 28 Oct, 8:34am",
+   "who": "ELON",
+   "what": "Checked Builder's Hub tiles, round two",
+   "result": "GREEN, FAIL 0",
+   "problem": "None. Tiles behave as before; only cache tags changed",
+   "workaround": "None needed"
+  },
+  {
+   "id": "bf10",
+   "time": "Wed 28 Oct, about 7:58 to 8:06am",
+   "who": "Builder",
+   "what": "Hub tiles round two: removed the new-tab change and bumped the missed page tags",
+   "result": "Built locally, sent for ELON's check",
+   "problem": "The new-tab change had no order behind it",
+   "workaround": "Removed completely"
+  },
+  {
+   "id": "bf09",
+   "time": "Wed 28 Oct, 7:57am",
+   "who": "ELON",
+   "what": "Checked Builder's Hub tiles",
+   "result": "FAIL 2",
+   "problem": "Tiles opening in a new tab had no order, and many pages still loaded old files",
+   "workaround": "Builder to drop the new-tab change and bump every page"
+  },
+  {
+   "id": "bf08",
+   "time": "Wed 28 Oct, 7:01am",
+   "who": "ELON",
+   "what": "Checked Builder's editable Flow Map, round two",
+   "result": "GREEN, FAIL 0",
+   "problem": "None. All three round one fails fixed and the order traced",
+   "workaround": "None needed"
+  },
+  {
+   "id": "bf07",
+   "time": "Wed 28 Oct, about 6:40 to 6:52am",
+   "who": "Builder",
+   "what": "Flow Map notes: saved as plain text so the Register never turns them into formulas, dates or numbers",
+   "result": "Built locally, all tests pass",
+   "problem": "Notes starting with = or text like 1/2 changed in the sheet",
+   "workaround": "Notes now saved as plain text and read back unchanged"
+  },
+  {
+   "id": "bf06",
+   "time": "Wed 28 Oct, 6:40am",
+   "who": "ELON",
+   "what": "Checked Builder's editable Flow Map",
+   "result": "FAIL 4",
+   "problem": "Notes went into the Register as live formulas or got turned into dates",
+   "workaround": "Builder to save notes as plain text"
+  },
+  {
+   "id": "bf05",
+   "time": "Wed 28 Oct, 6:20am",
+   "who": "ELON",
+   "what": "Checked Builder's no-key sign-in, round six",
+   "result": "GREEN, FAIL 0",
+   "problem": "None. Only four files differ, none protected",
+   "workaround": "Release still waits on Ange's word"
+  },
+  {
+   "id": "bf04",
+   "time": "Wed 28 Oct, 4:44am",
+   "who": "ELON",
+   "what": "Checked Builder's no-key sign-in, round five",
+   "result": "FAIL 2",
+   "problem": "The push guard checked only the main code file",
+   "workaround": "Builder to pin every file"
+  },
+  {
+   "id": "bf03",
+   "time": "Wed 28 Oct, 4:25am",
+   "who": "ELON",
+   "what": "Checked the Jobs & Inbox sweep sheet",
+   "result": "GREEN, FAIL 0",
+   "problem": "None",
+   "workaround": "None needed"
+  },
+  {
+   "id": "bf02",
+   "time": "Wed 28 Oct, 2:26am",
+   "who": "ELON",
+   "what": "Checked Builder's no-key sign-in, round four",
+   "result": "FAIL 4",
+   "problem": "The push guard still let file-dropping settings through",
+   "workaround": "Builder to tighten the guard"
+  },
+  {
+   "id": "bf01",
+   "time": "Wed 28 Oct, 12:46am",
+   "who": "ELON",
+   "what": "Checked Builder's no-key sign-in, round three",
+   "result": "FAIL 5",
+   "problem": "A storm of old-key requests from one search, plus push guard gaps",
+   "workaround": "Builder to fix all five"
+  }
+ ]
+}
