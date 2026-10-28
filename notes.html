@@ -176,9 +176,12 @@ html body #tAddBox #tAdd{border-color:var(--accent)!important;color:var(--accent
 #angeTodo .empty{color:#8a8a8a;font-size:13px;padding:8px 0}
 #angeTodo a.more{display:inline-flex;align-items:center;min-height:44px;color:var(--accent);font-size:13px;text-decoration:none}
 #angeTodo button.retry{display:inline-flex;align-items:center;box-sizing:border-box;min-height:44px;padding:0 2px;border:0;background:none;color:var(--accent);font:inherit;font-size:14px;cursor:pointer}
-</style><style id="tap44">/* 29 Oct 2026: every tap line at least 44px. The sync line gets the same 44px bar as Today's; the Google Tasks line is 44px;
+</style><style id="tap44">/* 29 Oct 2026: every tap line at least 44px. The sync line gets the same 44px bar as Today's, beside Watch me work so nothing below it moves down; the Google Tasks line is 44px;
 tapping into the add-a-task row brings it clear of the fixed note box. */
-.rui-main .rui-status{display:flex;align-items:center;min-height:44px;box-sizing:border-box;cursor:pointer}
+.rui-main{display:flex;flex-wrap:wrap;align-items:center;align-content:flex-start;column-gap:8px}
+.rui-main>*{flex:0 0 100%;min-width:0}
+.rui-main>.rui-status{flex:3 1 0;display:flex;align-items:center;min-height:44px;box-sizing:border-box;margin:20px 0 12px;line-height:14px;cursor:pointer}
+.rui-main>.wmw-open{flex:1 0 auto;width:auto;margin:8px 0 0}
 #tsrc{min-height:44px;box-sizing:border-box;padding-top:12px;padding-bottom:12px}
 #tAddBox,#tTitle,#tList,#tAdd,#gtConnect,#gtGo{scroll-margin-bottom:calc(var(--rui-comp,68px) + 16px + env(safe-area-inset-bottom))}
 </style></head><body class="rui">
