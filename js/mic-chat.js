@@ -198,13 +198,13 @@ return { MSG: MSG, why: why };
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function hhmm(iso) { try { return new Date(iso).toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit' }); } catch (e) { return ''; } }
 
-  var MIC = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3.5"/></svg>';
+  var MIC = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6.2" y="1.5" width="11.6" height="9.4" rx="4.2" fill="currentColor" fill-opacity=".3"/><path d="M8 4.7h8M7.8 7.8h8.4" stroke-width="1.6"/><path d="M8.9 10.9v2.3a1.5 1.5 0 0 0 1.5 1.5h3.2a1.5 1.5 0 0 0 1.5-1.5v-2.3"/><path d="M5.6 13.6a6.4 5.4 0 0 0 12.8 0" stroke-width="2.4"/><path d="M12 19.2v2.2M8.3 21.8h7.4"/></svg>';
 
   /* Header button art: the cyan line SM7B podcast mic icon, inlined, background square dropped so the
      button's own black disc shows, stroke thickened so it reads at button size. currentColor keeps the button's cyan.
      To swap the drawing, replace this one string. Keep the viewBox square and wide enough for the strokes:
      drawn extents plus half the stroke width (here x 140-372, y 86-420) must sit inside it, or the art is clipped. */
-  var SM7B = '<svg viewBox="76 73 360 360" width="26" height="26" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"><rect x="186" y="96" width="140" height="210" rx="62"/><path d="M206 150h100M200 190h112" opacity=".5"/><path d="M176 250h-26v50h26M336 250h26v50h-26"/><path d="M256 306v66M200 410h112M256 372l-24 38M256 372l24 38"/></svg>';
+  var SM7B = '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6.2" y="1.5" width="11.6" height="9.4" rx="4.2" fill="currentColor" fill-opacity=".3"/><path d="M8 4.7h8M7.8 7.8h8.4" stroke-width="1.6"/><path d="M8.9 10.9v2.3a1.5 1.5 0 0 0 1.5 1.5h3.2a1.5 1.5 0 0 0 1.5-1.5v-2.3"/><path d="M5.6 13.6a6.4 5.4 0 0 0 12.8 0" stroke-width="2.4"/><path d="M12 19.2v2.2M8.3 21.8h7.4"/></svg>';
 
   var css = ''
     + '#micChatBtn{all:unset;box-sizing:border-box;flex:0 0 44px;width:44px;height:44px;min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid #22d3ee;background:#000;color:#22d3ee;cursor:pointer;-webkit-tap-highlight-color:transparent;margin-left:6px}'

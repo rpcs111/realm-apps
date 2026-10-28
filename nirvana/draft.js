@@ -302,7 +302,7 @@ function nvRenderMail() {
     mic.type = "button";
     mic.className = "mic";
     mic.setAttribute("aria-label", "Mic");
-    mic.innerHTML = '<svg class="mic" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="8.25" y="2.5" width="7.5" height="12.5" rx="3.75" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M5.25 11.25a6.75 6.75 0 0 0 13.5 0M12 18v3.25" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+    mic.innerHTML = '<svg class="mic" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6.2" y="1.5" width="11.6" height="9.4" rx="4.2" fill="currentColor" fill-opacity=".3"/><path d="M8 4.7h8M7.8 7.8h8.4" stroke-width="1.6"/><path d="M8.9 10.9v2.3a1.5 1.5 0 0 0 1.5 1.5h3.2a1.5 1.5 0 0 0 1.5-1.5v-2.3"/><path d="M5.6 13.6a6.4 5.4 0 0 0 12.8 0" stroke-width="2.4"/><path d="M12 19.2v2.2M8.3 21.8h7.4"/></svg>';
     mic.addEventListener("click", function() { nvSpeakInto(g.id, input); });
     row.appendChild(mic);
     if (g.approve) {
