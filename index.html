@@ -6,7 +6,7 @@
 <link rel="manifest" href="realm-apps-v3.webmanifest?v=20261026-2"><link rel="icon" type="image/svg+xml" sizes="any" href="pwa/hub-star.svg?v=20261026-1"><link rel="icon" type="image/png" sizes="192x192" href="pwa/hub-star-192.png?v=20261026-1"><link rel="apple-touch-icon" sizes="180x180" href="pwa/hub-star-apple-180.png?v=20261026-1"><meta name="application-name" content="HUB"><meta name="apple-mobile-web-app-title" content="HUB">
 <link rel="stylesheet" href="css/ara-theme.css">
 <link rel="stylesheet" href="css/realm-ui.css?v=20261016b">
-<style>/* HUB: four apps (Search Studio, Note, Desk, Deck). Flow lives in More. */
+<style>/* HUB: four apps (Search Studio, Note, Desk, Deck). Flow lives in More. History and Flow Map shelves sit above More. */
 :root{--accent:#22d3ee}
 *{box-sizing:border-box}html,body{overflow-x:hidden;max-width:100%}
 html,body.hub{background:#000!important;background-image:none!important;background-color:#000!important}
@@ -43,6 +43,23 @@ details.more[open] > .mgrid,.mgrid{display:grid;grid-template-columns:repeat(aut
 .more a{min-height:56px;padding:8px 12px;border-radius:12px}
 .more a b{font-size:13.5px;letter-spacing:.03em;overflow-wrap:anywhere}.more a span{color:#a3a3a3;font-size:11.5px;overflow-wrap:anywhere}
 .more a:hover,.more a:focus-visible{border-color:var(--accent)}
+/* Shelves (29 Oct 2026): History (what the bots did) and Flow Map */
+.shelf{margin:0 0 14px;border:1px solid #262626;border-radius:16px;background:#050505;padding:12px 12px 10px;min-width:0;max-width:100%}
+.shelf h2{margin:0 0 6px;font-size:14px;letter-spacing:.08em;color:#fff}
+.shelf .why{margin:6px 0 4px;color:#fcd34d;font-size:14px;overflow-wrap:anywhere}
+.shelf .why[hidden]{display:none}
+.hh-count{margin:0 0 8px;color:#a3a3a3;font-size:12.5px;overflow-wrap:anywhere}
+.hh-list{list-style:none;margin:0;padding:0}
+.hh-row{border-top:1px solid #1a1a1a;padding:8px 2px;min-width:0}
+.hh-row:first-child{border-top:0}
+.hh-top{display:flex;flex-wrap:wrap;gap:2px 8px;align-items:baseline;font-size:12.5px}
+.hh-who{color:var(--accent);font-weight:700}.hh-role{color:#d4d4d4}.hh-time{color:#8a8a8a;margin-left:auto}
+.hh-what{color:#fff;font-size:14.5px;margin-top:2px;overflow-wrap:anywhere}
+.hh-res{color:#a3a3a3;font-size:13px;margin-top:2px;overflow-wrap:anywhere}.hh-res b{color:#d4d4d4;font-weight:600}
+.shelf-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;max-width:100%;padding:0 16px;margin-top:6px;border-radius:12px;border:1px solid var(--accent);background:#0a0a0a;color:#fff;font:600 15px/1.2 system-ui,-apple-system,Roboto,sans-serif;text-decoration:none;cursor:pointer}
+.shelf-btn[hidden]{display:none}
+.shelf-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.shelf-btn[disabled]{border-color:#404040;color:#8a8a8a;cursor:not-allowed}
 @media(max-width:360px){.four a b{font-size:15px}}
 @media(min-width:900px){
  body.hub{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
@@ -65,9 +82,20 @@ details.more[open] > .mgrid,.mgrid{display:grid;grid-template-columns:repeat(aut
 </aside>
 <div class="main">
 <div class="ver" id="ver">Version 2026.10.26</div>
+<section class="shelf" id="hhShelf" aria-labelledby="hhH"><h2 id="hhH">HISTORY &middot; WHAT THE BOTS DID</h2>
+<p class="hh-count" id="hhCount" aria-live="polite">Loading&hellip;</p>
+<ol class="hh-list" id="hhList"></ol>
+<p class="why" id="hhWhy" role="status" hidden></p>
+<button type="button" class="shelf-btn" id="hhMore" aria-controls="hhList" hidden>Show all</button>
+</section>
+<section class="shelf" id="fmShelf" aria-labelledby="fmH"><h2 id="fmH">FLOW MAP</h2>
+<div id="fmSlot"><button type="button" class="shelf-btn" disabled aria-describedby="fmWhy">Open Flow Map</button></div>
+<p class="why" id="fmWhy">Flow Map opens here once its fixes pass the check.</p>
+</section>
 <details class="more" id="more"><summary>MORE <i id="mcnt"></i></summary><div class="mgrid" id="mgrid"></div></details>
 </div>
 </div>
+<script src="js/history.js?v=20261029b" data-mount="#hub-no-deck-panel"></script><script src="js/hub-shelves.js?v=20261029-1"></script>
 <script>
 /* REALM DESK web app (the working Desk). It asks for the Realm key itself. */
 var EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";
@@ -82,7 +110,7 @@ var MORE=[
  {name:"REALM MAP",sub:"Edit in place",u:"./mapper.html"},
  {name:"LAYERS",sub:"The build, layer by layer",u:"./layers.html"},
  {name:"ETA",sub:"What's running",u:"./eta.html"},
- {name:"PRIVATE",sub:"PIN-locked",u:"./private.html"},
+ {name:"PRIVATE",sub:"locked",u:"./private.html"},
  {name:"MEET RECORDINGS",sub:"Google Sheet",u:"https://docs.google.com/spreadsheets/d/13QpygblRPrGIM7a6PLzt4THo18yLhx21kjuWqc63Zks/edit",ext:true},
  {name:"GROK HOW-TO",sub:"How to use it",u:"./grok-howto.html"},
  {name:"VIDEO",sub:"YouTube search",u:"./video.html"},
