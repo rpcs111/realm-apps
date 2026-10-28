@@ -3203,4 +3203,12 @@ function persist(){ clearTimeout(pt); pt=setTimeout(async function(){ try{ var d
   document.addEventListener('keydown',function(e){ if((e.ctrlKey||e.metaKey)&&e.altKey&&e.key.toLowerCase()==='r'){ e.preventDefault(); open(); } });
 })();
 </script>
-<script src="js/cs-split.js?v=20261029-4"></script><script src="js/cs-account.js?v=20261029-4"></script><script src="js/resume.js?v=20261029-4"></script><script src="js/cs-ui.js?v=20261029-4"></script><script src="js/app-shell-config.js?v=20261029-4"></script><script src="js/cs-shell-config.js?v=20261029-4"></script><script src="js/app-shell.js?v=20261029-4" data-app="certstudio" defer></script></body></html>
+<style id="csFix8">
+.chip{min-height:44px;display:inline-flex;align-items:center;box-sizing:border-box}
+.lv-mic,#lvPanel .lv-mic{min-width:44px}
+/* room under the floating Start / list and Amend buttons, so the last controls in each pane can scroll clear of them */
+@media (max-width:820px){body{padding-bottom:132px!important}}
+@media (min-width:821px){.side,.stage,#certPane,#mergePane,.certrail{padding-bottom:132px!important}}
+</style>
+<script>if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){window.addEventListener('load',function(){navigator.serviceWorker.register('app-sw.js',{scope:'./certstudio.html'}).catch(function(){})})}</script>
+<script src="js/cs-split.js?v=20261029-4"></script><script src="js/cs-account.js?v=20261029-8"></script><script src="js/resume.js?v=20261029-4"></script><script src="js/cs-ui.js?v=20261029-4"></script><script src="js/app-shell-config.js?v=20261029-4"></script><script src="js/cs-shell-config.js?v=20261029-4"></script><script src="js/app-shell.js?v=20261029-4" data-app="certstudio" defer></script></body></html>

@@ -26,13 +26,16 @@
       : (CS.isSignedIn() ? '<span>Signed in as info@.</span>' : '<span>Diary, Email and Drive need the info@ account.</span><button type="button" class="cs-b" id="csSignIn">Sign in as info@</button>'))
       + '<span class="cs-note" id="csAcctNote" role="status">' + esc(keep) + '</span>';
   }
-  /* why-not line under Diary, Approval email and Drive folder (fallback only). Each button moves into a small column with its
+  /* why-not line under every button that opens Google (fallback only): Drive, Diary, Approval email, Drive folder, Previous certificate,
+     Open diary entry, Save PDF to Drive, photo upload, File + email draft, Save to Drive folder, Find in Drive. Each button moves into a small column with its
      line under it; the button keeps its id and its click handlers. */
-  var WHY_IDS = ['csGDrive', 'cDiary', 'cMail', 'cFolder'], WHY = 'Opens in Google for now, until the info@ sign-in is set up.';
+  var WHY_IDS = ['csGDrive', 'cDiary', 'cMail', 'cFolder', 'ckPrev', 'cDiaryOpen', 'cDrive', 'phUp', 'rfGo', 'mgDrive', 'rdFind'], WHY = 'Opens in Google for now, until the info@ sign-in is set up.';
+  var T0 = Date.now();
   function whyNot() {
     if (CS.mode !== 'fallback' || !$('csWhyCss')) return;
     WHY_IDS.forEach(function (id) {
       var b = $(id); if (!b || $(id + 'Why') || !b.parentNode) return;
+      if (id === 'cDrive' && !$('rfBox') && Date.now() - T0 < 8000) return; /* the Finish box is placed after cDrive's row; wrap only once it is in */
       var col = document.createElement('span'); col.className = 'cs-wncol';
       b.parentNode.insertBefore(col, b); col.appendChild(b);
       var s = document.createElement('small'); s.className = 'cs-whynot'; s.id = id + 'Why'; s.textContent = WHY; col.appendChild(s);
@@ -73,7 +76,7 @@
       p.replaceChild(frag, n);
     });
   }
-  paint(); fixText(document.body); whyNot();
+  paint(); fixText(document.body); whyNot(); setTimeout(whyNot, 8100);
   if (window.MutationObserver) { var q = 0; new MutationObserver(function () { if (q) return; q = setTimeout(function () { q = 0; fixText(document.body); whyNot(); }, 50); }).observe(document.body, { childList: true, subtree: true, characterData: true }); }
   document.addEventListener('cs:needsignin', function () { note('Tap \u201cSign in as info@\u201d for Diary, Email and Drive.'); });
   document.addEventListener('cs:signedin', paint);
