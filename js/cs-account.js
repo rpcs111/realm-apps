@@ -44,6 +44,7 @@
   if (CS.mode === 'fallback') {
     var wcss = document.createElement('style'); wcss.id = 'csWhyCss';
     wcss.textContent = '.cs-wncol{display:flex;flex-direction:column;gap:3px;flex:1 1 120px;min-width:0}.cs-wncol>button,.cs-split .cs-wncol>.cs-b{width:100%;flex:0 0 auto}'
+      + '.row>.cs-wncol:has(>#cDrive),.row>.cs-wncol:has(>#cDiaryOpen){flex:1 1 100%}'
       + '.cs-wncol .cs-whynot{display:block;font:12px/1.3 system-ui,-apple-system,Roboto,sans-serif;color:#a3a3a3}';
     document.head.appendChild(wcss);
   }
