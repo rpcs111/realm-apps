@@ -31,6 +31,9 @@ button.btn,a.btn{all:unset;box-sizing:border-box;display:inline-flex;align-items
 <div class="wrap">
 <p class="muted" id="intro">The history of what changed in your apps. Desk is the job board; Deck is the record.</p>
 
+<h2>HISTORY &middot; WHAT THE BOTS DID</h2>
+<div class="card" id="hist"><div class="muted">Loading&hellip;</div></div>
+
 <h2>TEAM HISTORY</h2>
 <div class="card" id="desk"><div class="muted">Checking Desk&hellip;</div></div>
 <div class="card gap" id="logGap"><b>Daily activity logging is not switched on.</b> The team change log is kept in the register. Its last entry is <b>13 Oct 2026</b> (checked 26 Oct 2026). Nothing has been written to it since, so there is no team history after 13 Oct to show.<br><br>This page cannot list that tab yet: Desk does not hand it out. Turning the history on needs a Desk update (backend), not a phone change.
@@ -104,6 +107,7 @@ function all(){deskState();msgState();devState()}
 all();document.addEventListener("visibilitychange",function(){if(!document.hidden){msgState();devState()}});
 })();
 </script>
+<script src="js/history.js?v=20261029b" data-mount="#hist" data-read=""></script>
 <script src="js/letusdo.js?v=20261027-3" data-where="Deck" data-targets="#dev ul.ev > li" data-list="#ludList"></script>
 <script src="js/saveapp.js?v=20261017s" data-mount=".top .nav"></script>
 <script src="js/ara-version.js" defer></script>
