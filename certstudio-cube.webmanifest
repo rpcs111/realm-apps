@@ -1,0 +1,17 @@
+{
+  "id": "certstudio-cube-2026-10-29",
+  "name": "Cert Studio",
+  "short_name": "Cert Studio",
+  "description": "Cert Studio, by Ara",
+  "start_url": "./certstudio.html?go=1",
+  "scope": "./certstudio.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {"src": "pwa/searchstudio-cube-192.png?v=20261029c", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "pwa/searchstudio-cube-512.png?v=20261029c", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "pwa/searchstudio-cube-maskable-192.png?v=20261029c", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+    {"src": "pwa/searchstudio-cube-maskable-512.png?v=20261029c", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
