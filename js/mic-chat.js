@@ -127,18 +127,23 @@ return { hasCode: hasCode };
 var MSG="No codes, links, emails or file names, please.";
 var TLD="com|net|org|io|au|app|dev|co|me|gov|edu|info|biz|xyz|ly|gl|page|site|uk|nz|ai|so|sh|gg|tv|us|ca|google|cloud|link|online|store|tech|github";
 var EXT="js|mjs|cjs|ts|html?|css|json|md|txt|py|csv|tsv|pdf|png|jpe?g|gif|webp|svg|gs|sh|xlsx?|docx?|pptx?|zip|webmanifest|ya?ml|log|patch|diff|key|pem|env|ini|cfg|sql|xml|rtf|odt|ods|heic|mov|mp4|mp3|wav|m4a";
-var PAIRS={"and/or":1,"either/or":1,"he/she":1,"she/he":1,"him/her":1,"his/her":1,"her/his":1,"yes/no":1,"on/off":1,"in/out":1,"n/a":1,"s/he":1,"km/h":1,"w/e":1,"w/o":1,"a/c":1,"c/o":1};
+/* FOLDERS-BEGIN: made by tools/refcheck_folders.py from the repo's real top-level folders; rerun it, don't hand-edit */
+var FOLDERS=[".cursor","app","bin","brain","brief","css","docs","elon","etc","gas","grok-howto","home","img","js","nirvana","node_modules","pwa","release","src","test","tests","tmp","tools","users","usr","v","var","workspace"];
+/* FOLDERS-END */
 var RULES=[
  ["email",/@|\b[\w.+-]+\s+at\s+[\w-]+\s+dot\s+(?:com|au|net|org)\b/i],
- ["pr ref",/#\s*\d|\bpr\s*#?\s*\d|\bpull\s*\/\s*\d|\bpull\s+request\s*#?\s*\d|\bpulls?\/|\bcommit\s+[0-9a-f]{4,}\b/i],
+ ["pr ref",/#\s*\d|\bpr\s*#?\s*\d|\bpull\s*[\/\\]\s*\d|\bpull\s+request\s*#?\s*\d|\bpulls?[\/\\]|\bcommit\s+[0-9a-f]{4,}\b/i],
  ["hash",/(?:^|[^0-9a-z])(?:(?=[0-9a-f]*\d)[0-9a-f]{7,}|[a-f]{8,})(?![0-9a-z])/i],
  ["link",new RegExp("https?:|\\bwww\\.|\\b[a-z0-9-]+(?:\\.[a-z0-9-]+)*\\.(?:"+TLD+")\\b","i")],
- ["file",new RegExp("~\\/|(?:^|\\s)\\/[a-z0-9_.~-]|[a-z0-9_]\\\\[a-z0-9_]|\\b[\\w-]+\\.(?:"+EXT+")\\b","i")]
+ ["file",new RegExp("~[\\/\\\\]|(?:^|\\s)[\\/\\\\][a-z0-9_.~-]|[a-z0-9_]\\\\[a-z0-9_]|\\b[\\w-]+\\.(?:"+EXT+")\\b","i")],
+ ["file",/(?:^|[^\w.])\.{1,2}[\/\\]|\bfile:|[\/\\]\.[a-z0-9]|[\w-]+[\/\\][\w-]+\.[a-z][a-z0-9]{1,5}\b/i],
+ ["file",new RegExp("(?:^|[^\\w.\\/\\\\-])(?:"+FOLDERS.map(function(f){return f.replace(/[.\-]/g,"\\$&")}).join("|")+")[\\/\\\\][\\w.~-]","i")],
+ ["file",/(?:^|[^\w])[a-z]:[\/\\]|%\w+%[\\\/]/i],
+ ["repo",/\brpcs111[\/\\]|\brealm-apps\b|\borigin[\/\\][\w.-]/i]
 ];
 function norm(s){s=String(s==null?"":s);try{s=s.normalize("NFKC")}catch(e){}
  return s.replace(/[\u200b-\u200d\u2060\ufeff]/g,"").replace(/[\uff20\ufe6b]/g,"@").replace(/\u2215|\u2044|\uff0f/g,"/")}
-function slashHit(s){var re=/[a-z0-9_.~-]+\/[a-z0-9_.~/-]*/ig,m;
- while((m=re.exec(s))){var w=m[0].toLowerCase().replace(/[.]+$/,"");if(!PAIRS[w])return w}return ""}
+function slashHit(s){var m=s.match(/[a-z0-9_.~-]+(?:\/[a-z0-9_.~-]+){2,}/i);return m?m[0]:""}
 /* why(s): "" when the note is fine, else the rule name that refused it */
 function why(s){s=norm(s);if(!s.trim())return "";
  for(var i=0;i<RULES.length;i++)if(RULES[i][1].test(s))return RULES[i][0];
@@ -159,7 +164,29 @@ return { MSG: MSG, why: why };
     if (blocked(x.text.replace(LABEL, ''))) return true;
     if (m && blocked(m[1])) return true;
     if (typeof x.msg === 'string' && blocked(x.msg)) return true;
+    /* r7b: the label must be one this app writes itself ('<app>' or '<app> \u00b7 <known device>'), and the label and the
+       words are also checked joined, so a code split across the label and the text is caught */
+    if (!m) return true;
+    var p = m[1].split(' \u00b7 '), an = p[0], d = p.length > 1 ? p.slice(1).join(' \u00b7 ') : '';
+    if (p.length > 2 || !appOk(an) || (p.length > 1 && !devWord(d))) return true;
+    if (blocked(joined(an, d, x.text.replace(LABEL, '')))) return true;
+    if (typeof x.msg === 'string' && blocked(joined(an, d, x.msg))) return true;
     return false;
+  }
+  /* r7b: device labels are only the ones the Realm apps set themselves (js/realm-device.js ids, plus their screen names).
+     Any other ?d= value is left out of the label. In the joined check a known device counts as its plain name with no
+     digit (Fold 8 -> Fold), so 'gate 12' typed on the Fold 8 is not read as the code 812. */
+  var DEVICES = { fold8: 'Fold', 'fold 8': 'Fold', fold8cover: 'Fold cover', 'fold 8 cover': 'Fold cover', flip6: 'Flip', 'flip 6': 'Flip',
+    desktop: 'Desktop', phone: 'Phone', julie: 'Julie' };
+  function devWord(d) { d = String(d == null ? '' : d).trim().toLowerCase(); return Object.prototype.hasOwnProperty.call(DEVICES, d) ? DEVICES[d] : ''; }
+  function appOk(a) { return (a === appName || a === 'Realm') && !blocked(a); }
+  function joined(an, d, words) { return an + ' ' + (d ? (devWord(d) || d) : '') + ' ' + words; }
+  /* drop every queued row that fails the check: purged from this phone (outbox and chat log), never sent. Returns how many. */
+  function purgeBad() {
+    var q = get(OUT), bad = {}, nb = 0;
+    q.forEach(function (x) { if (rowBad(x)) { bad[x && x.id] = 1; nb++; } });
+    if (nb) { put(OUT, q.filter(function (x) { return !bad[x && x.id]; })); put(LOG, get(LOG).filter(function (m) { return !bad[m && m.id]; })); }
+    return nb;
   }
   /* chat history on this phone: drop any of my lines that fail the check (bot lines are kept) */
   function cleanLog() { var l = get(LOG), k = l.filter(function (m) { return m && (m.who === 'bot' || !blocked(m.text)); }); if (k.length !== l.length) { put(LOG, k); return true; } return false; }
@@ -222,10 +249,9 @@ return { MSG: MSG, why: why };
   function later(ms) { clearTimeout(timer); timer = setTimeout(flush, ms); }
   function flush() {
     clearTimeout(timer);
-    var q = get(OUT), bad = {}, nb = 0;
     /* drop any queued row that fails the check: it is purged from this phone (outbox and chat log) and never sent */
-    q.forEach(function (x) { if (rowBad(x)) { bad[x && x.id] = 1; nb++; } });
-    if (nb) { q = q.filter(function (x) { return !bad[x && x.id]; }); put(OUT, q); put(LOG, get(LOG).filter(function (m) { return !bad[m && m.id]; })); say(NO_MSG); }
+    var nb = purgeBad(), q = get(OUT);
+    if (nb) say(NO_MSG);
     /* also clean the chat history, then redraw the overlay from the cleaned log */
     if (cleanLog() || nb) render();
     if (!q.length || sending) return Promise.resolve();
@@ -252,6 +278,10 @@ return { MSG: MSG, why: why };
     var id = 'mic_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7), ts = new Date().toISOString(), d = dev(), an = appName;
     /* the device and app labels are checked on their own (a ?d= link can set any name); a failing label is left out */
     if (blocked(d)) d = ''; if (blocked(an)) an = 'Realm';
+    /* r7b: only a known device goes in the label (any other ?d= value is left out), and the label plus the typed words
+       are checked joined, so a code split across them is refused */
+    if (!devWord(d)) d = '';
+    if (blocked(joined(an, d, v))) { say(NO_MSG); try { ta.focus(); } catch (e) {} return; }
     var row = { id: id, msg: v.slice(0, 1800), text: (TAG + ' [' + an + (d ? ' \u00b7 ' + d : '') + '] ' + v).slice(0, 2000), ts: ts };
     var q = get(OUT); q.push(row);
     var log = get(LOG); log.push({ id: id, who: 'me', text: v.slice(0, 2000), ts: ts });
@@ -319,7 +349,7 @@ return { MSG: MSG, why: why };
     });
     addEventListener('online', function () { flush(); });
     document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') flush(); else stopTalk(); });
-    cleanLog();
+    purgeBad(); cleanLog();
     if (/[?&](talk|chat)=1\b/.test(location.search)) open(); else if (get(OUT).length) later(1500);
   }
   window.MicChat = { open: function () { if (ov) open(); }, close: function () { if (ov) close(); }, flush: flush, blocked: blocked };
