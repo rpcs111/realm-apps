@@ -2,7 +2,7 @@
   "id": "certstudio-cube-2026-10-29",
   "name": "Cert Studio",
   "short_name": "Cert Studio",
-  "description": "Cert Studio, by Ara",
+  "description": "Cert Studio",
   "start_url": "./certstudio.html?go=1",
   "scope": "./certstudio.html",
   "display": "standalone",
