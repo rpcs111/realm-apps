@@ -380,10 +380,10 @@
    "name": "Remove Claude app (Mac / phone)",
    "status": "red",
    "elon_verified": false,
-   "note": "Cutover OPEN: revoke claude.ai connectors on Mac; billing toggles. HANDOFF Security section. Not on Build Map.",
+   "note": "Cutover OPEN: revoke Claude connectors on Mac; billing toggles. HANDOFF Security section. Not on Build Map.",
    "source": "Elon overnight audit 16/17 Oct",
    "owner": "Ange",
-   "next": "Ange removes the claude.ai connectors on the Mac. Ara sends the 3 steps at the 9am wake."
+   "next": "Ange removes the Claude connectors on the Mac. Ara sends the 3 steps at the 9am wake."
   },
   {
    "id": "security-app",
