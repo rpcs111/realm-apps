@@ -174,13 +174,16 @@ function hasCode(s){s=String(s==null?'':s);if(!s.trim())return false;
 /* ---------- end of copied code check ---------- */
 /* Flow Map only: street addresses ("12 Smith St", "twelve Smith Street") and bank details (BSB, account number, IBAN, SWIFT) */
 var NUMW='(?:\\d+[a-z]?|'+Object.keys(ONES).concat(Object.keys(TEENS),Object.keys(TENS)).join('|')+')';
-var STREET='(?:st|street|rd|road|ave|av|avenue|ct|crt|court|dr|drv|drive|pde|parade|cres|crescent|pl|place|ln|lane|hwy|highway|blvd|bvd|boulevard|tce|terrace|cl|close|gr|grove|cct|circuit|esp|esplanade|sq|square|bwy|broadway)';
+var STREET='(?:st|street|rd|road|ave|av|avenue|ct|crt|court|dr|drv|drive|pde|parade|cres|crescent|pl|place|ln|lane|hwy|highway|blvd|bvd|boulevard|tce|terrace|cl|close|gr|grove|cct|circuit|esp|esplanade|sq|square|bwy|broadway|way|wy|mews|glen|gln|parkway|pkwy|gdns|grv|rdg|cir|alley|arcade|strand|quay|wharf|promenade|hts)';
+/* street types that are also everyday words (walk, view, row...): only when typed like a name, e.g. '8 Smith Walk' */
+var STREET_TC=/\b\d+[A-Za-z]?(?:\s*[\/-]\s*\d+)?\s+(?:[A-Z][A-Za-z'-]+\s+){1,2}(?:Rise|Walk|View|Row|Link|Lo{2}p|Track|Trail|Gardens|Ridge|Hill|Circle|Green|Chase|Vista|Retreat|Path|Heights|Approach|RISE|WALK|VIEW|ROW|LINK|LO{2}P|TRACK|TRAIL|GARDENS|RIDGE|HILL|CIRCLE|GREEN|CHASE|VISTA|RETREAT|PATH|HEIGHTS|APPROACH)\b/;
 var STOP={on:1,the:1,to:1,at:1,in:1,a:1,an:1,of:1,for:1,and:1,then:1,by:1,or:1,is:1,it:1,its:1,up:1,from:1,with:1};
 var ADDR=new RegExp('\\b'+NUMW+'(?:\\s*[/-]\\s*\\d+)?\\s+((?:[a-z\'-]+\\s+){1,2})'+STREET+'\\b','g');
 var LOCKNUM=/\b(?:(?:key\s*safe|key\s*box|lock\s*box|padlock|combo|combination|code)\b(?:\s+[a-z'-]+){0,4}?|(?:pin|alarm)(?:\s+(?:code|number|no|is|it's|its|=))*)\s*#?\d/;
 var BANK=/\b(?:bsb|iban|swift|bic|acc(?:ount)?\.?\s*(?:no|num|number|#)|account\s+details|card\s+(?:no|number))\b/;
-function hasAddr(t){var m;ADDR.lastIndex=0;while((m=ADDR.exec(t))){if(!m[1].trim().split(/\s+/).some(function(w){return STOP[w]}))return true}return false}
-function blocked(s){s=String(s==null?'':s);if(!s.trim())return false;if(hasCode(s))return true;var t=normText(s).replace(/[^a-z0-9#/'-]+/g,' ');return hasAddr(t)||BANK.test(t)||LOCKNUM.test(t)}
+var ADDR_THE=new RegExp('\\b'+NUMW+'(?:\\s*[/-]\\s*\\d+)?\\s+the\\s+(?:[a-z\'-]+\\s+)?'+STREET+'\\b');
+function hasAddr(t){var m;if(ADDR_THE.test(t))return true;ADDR.lastIndex=0;while((m=ADDR.exec(t))){if(!m[1].trim().split(/\s+/).some(function(w){return STOP[w]}))return true}return false}
+function blocked(s){s=String(s==null?'':s);if(!s.trim())return false;if(hasCode(s))return true;var t=normText(s).replace(/[^a-z0-9#/'-]+/g,' ');return hasAddr(t)||STREET_TC.test(decodeEnt(s).normalize('NFKC'))||BANK.test(t)||LOCKNUM.test(t)}
 return {hasCode:hasCode,blocked:blocked}})();
 const BLOCK_MSG='Note not saved. Leave out lockbox or key-safe codes, addresses and bank details.';
 let lastBlocked=false;
