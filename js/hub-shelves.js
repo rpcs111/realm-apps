@@ -6,7 +6,7 @@
    an email, a street address, a code, a PR/job/invoice number, a version tag, a titled name or a banned word is not shown at all.
    FLOW MAP: one button. It stays disabled with a plain why-not line until FLOWMAP_READY is true. */
 (function(){"use strict";
-var FLOWMAP_READY=false;           /* flip to true in the PR that ships the passed Flow Map */
+var FLOWMAP_READY=true;            /* flip to true in the PR that ships the passed Flow Map */
 var FLOWMAP_URL="./map.html";
 var FEED="history.json",EVERY_MS=60000,FIRST=10;
 var WHY_FEED="History can't load right now; try again in a minute.";
