@@ -29,7 +29,7 @@ button.btn,a.btn{all:unset;box-sizing:border-box;display:inline-flex;align-items
 </style></head><body>
 <header class="top"><span class="mark" role="img" aria-label="Deck star"></span><b class="ttl">DECK</b><div class="nav"><a href="./index.html">&lsaquo; HUB</a></div></header>
 <div class="wrap">
-<p class="muted" id="intro">The history of what changed in your apps. Desk is the job board; Deck is the record.</p>
+<p class="muted" id="intro">The history of what changed in your apps. Desk is the job board; Deck is the record. Tap Agree or Disagree on any line to tell the bots.</p>
 
 <h2>HISTORY &middot; WHAT THE BOTS DID</h2>
 <div class="card" id="hist"><div class="muted">Loading&hellip;</div></div>
@@ -107,8 +107,10 @@ function all(){deskState();msgState();devState()}
 all();document.addEventListener("visibilitychange",function(){if(!document.hidden){msgState();devState()}});
 })();
 </script>
-<script src="js/history.js?v=20261029b" data-mount="#hist" data-read=""></script>
-<script src="js/letusdo.js?v=20261029-1" data-where="Deck" data-targets="#dev ul.ev > li" data-list="#ludList"></script>
+<script src="js/refcheck.js?v=20261029-r6"></script>
+<script src="js/verdict.js?v=20261029-3" data-where="Deck" data-targets="#dev ul.ev > li, #ludList ul.lud-list > li"></script>
+<script src="js/history.js?v=20261029e" data-mount="#hist" data-read=""></script>
+<script src="js/letusdo.js?v=20261029-dv2" data-where="Deck" data-targets="#dev ul.ev > li" data-list="#ludList"></script>
 <script src="js/saveapp.js?v=20261017s" data-mount=".top .nav"></script>
 <script src="js/ara-version.js" defer></script>
 <script src="js/ara-install.js?v=20261017c" defer></script><script src="js/nirvana.js?v=20261017b" data-app="deck" data-name="Deck" defer></script>

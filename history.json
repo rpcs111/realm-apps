@@ -3,6 +3,33 @@
  "note": "Backfill, 28 and 29 Oct. Newest first. Same rows as the sheet, without its private source column.",
  "rows": [
   {
+   "id": "builder-29oct-v3",
+   "time": "Thu 29 Oct, 2:06am",
+   "who": "Builder",
+   "what": "Closed Ange's Deck test tap asking if anyone sees his notes, marked done and passed to 42*",
+   "result": "Done, passed to 42*",
+   "problem": "The tap sat unread for about a day because no routine read the capture inbox then",
+   "workaround": "Passed to 42* to answer Ange"
+  },
+  {
+   "id": "builder-29oct-v2",
+   "time": "Thu 29 Oct, 2:06am",
+   "who": "Builder",
+   "what": "Picked up Ange's Deck ask about where his podcast style mic icon went, set it to doing",
+   "result": "Doing, checking the unmerged mic change",
+   "problem": "None",
+   "workaround": "None"
+  },
+  {
+   "id": "builder-29oct-v1",
+   "time": "Thu 29 Oct, 2:06am",
+   "who": "Builder",
+   "what": "Picked up Ange's Deck ask for an agree and disagree button on every thread and history line, set it to doing",
+   "result": "Doing, building in a local test copy",
+   "problem": "None",
+   "workaround": "None"
+  },
+  {
    "id": "bf69",
    "time": "Thu 29 Oct, about 1:00am",
    "who": "Builder",

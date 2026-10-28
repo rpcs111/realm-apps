@@ -152,7 +152,7 @@ function css(){if(document.getElementById("ludCss"))return;var s=mk("style");s.i
  "#ludSheet .go{border:1px solid #22c55e;background:#14532d;color:#dcfce7}#ludSheet .no{border:1px solid #475569;background:transparent;color:#cbd5e1}"+
  "#ludToast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:2147483001;max-width:calc(100vw - 24px);box-sizing:border-box;padding:12px 16px;min-height:44px;border-radius:12px;background:#14532d;color:#dcfce7;font:600 14px system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.5)}#ludToast.bad{background:#78350f;color:#fef3c7}";
  document.head.appendChild(s)}
-function clean(el){if(!el)return"";var c=el.cloneNode(true);c.querySelectorAll("button,.lud-st,.tm,.k,.m,img").forEach(function(x){x.remove()});c.querySelectorAll("b,span,div").forEach(function(x){x.append(" ")});return c.textContent.replace(/\s+/g," ").trim()}
+function clean(el){if(!el)return"";var c=el.cloneNode(true);c.querySelectorAll("button,.lud-st,.dv,.tm,.k,.m,img").forEach(function(x){x.remove()});c.querySelectorAll("b,span,div").forEach(function(x){x.append(" ")});return c.textContent.replace(/\s+/g," ").trim()}
 function textOf(li){var t=li.querySelector(".t")||li.querySelector(".x")||li,n=li.querySelector(".n,.pv");
  if(n&&n.classList.contains("pv")&&n.firstElementChild&&n.firstElementChild.tagName==="B"){n=n.cloneNode(true);n.firstElementChild.remove()} /* the preview's date line is not part of the ask */
  return {title:clean(t).slice(0,200),context:clean(n).slice(0,400)}}
@@ -163,7 +163,7 @@ function hideCodes(s,force){s=normDigits(s);if(!force&&!HIDEW.test(s))return {s:
 function toast(msg,bad){var t=document.getElementById("ludToast");if(!t){t=mk("div");t.id="ludToast";t.setAttribute("role","status");t.setAttribute("aria-live","polite");document.body.appendChild(t)}
  t.className=bad?"bad":"";t.textContent=msg;clearTimeout(toast._t);toast._t=setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t)},6000)}
 function postOnce(ask){
- var text="[LET US DO THIS · "+ask.where+"] "+ask.title+(ask.context?" — context: "+ask.context:"")+(ask.how?" — ask: "+ask.how:"")+" — rule: customer-facing = draft for Ange's OK";
+ var text="[LET US DO THIS · "+ask.where+"] "+ask.title+(ask.context?" — context: "+ask.context:"")+(ask.how?" — ask: "+ask.how:"")+(refOf(ask)?" — row: "+refOf(ask):"")+" — rule: customer-facing = draft for Ange's OK";
  var ctl=window.AbortController?new AbortController():null,tm=setTimeout(function(){if(ctl)ctl.abort()},TRY_MS);
  if(navigator.onLine===false){clearTimeout(tm);return Promise.reject(new Error("offline"))}
  return fetch(API,{method:"POST",mode:"cors",redirect:"follow",credentials:"omit",signal:ctl?ctl.signal:undefined,headers:{"Content-Type":"text/plain;charset=utf-8"},
@@ -190,7 +190,7 @@ function upd(id,patch){var a=ls(),ask=null;a.forEach(function(x){if(x.id===id){f
  if(!ask)return null;rows().forEach(function(li){if(li.getAttribute("data-lud-id")===id||textOf(li).title===ask.title)mark(li,ask)});return ask}
 var inflight={};
 function send(id,quiet){var ask=ls().filter(function(x){return x.id===id})[0];if(!ask||inflight[id])return;
- if(blocked(ask.title,ask.context,ask.how)){save(ls().filter(function(x){return x.id!==id}));paint();return}inflight[id]=1;
+ if(blockedAsk(ask)){save(ls().filter(function(x){return x.id!==id}));paint();return}inflight[id]=1;
  upd(id,{st:"sending",why:""});
  post(ask).then(function(){var a=upd(id,{st:"queued",got:Date.now(),why:""});if(!quiet)toast("Got it \u2713 Ara's inbox has \u201c"+(a?a.title:"it").slice(0,60)+"\u201d")},
   function(e){var w=why(e);upd(id,{st:"unsent",why:w});if(!quiet)toast(w+". Kept on this phone.",true)})
@@ -243,7 +243,15 @@ function poll(){if(document.hidden||navigator.onLine===false)return;var ids=ls()
  fetch(API+"?app=capture&ids="+encodeURIComponent(ids.join(",")),{method:"GET",credentials:"omit"}).then(function(r){return r.ok?r.json():null}).then(function(j){
   if(!j||!j.statuses||typeof j.statuses!=="object")return;Object.keys(j.statuses).forEach(function(id){var s=String(j.statuses[id]||"");if(/^(doing|done|needs)$/.test(s))upd(id,{st:s})})}).catch(function(){})}
 /* drop every saved ask that fails the code check, whatever its status (asks saved by v1 could hold codes, e.g. "key safe 4719 · Got it") */
-function purge(){var a=ls(),k=a.filter(function(x){return x&&!blocked(x.title,x.context,x.how)&&!(x.key&&blocked(x.key))});if(k.length!==a.length)save(k)}
+/* A Deck History amend carries its row id in ask.ref, a field the code check never reads (ids like builder-29oct-v3 have 3
+   digits). ref only ever holds a plain id; anything else is dropped from it. The check runs on the words, never on the id. */
+function refOf(x){var r=x&&x.ref;return typeof r==="string"&&/^[a-z0-9][a-z0-9-]{0,39}$/i.test(r)?r:""}
+/* older Deck History amends put the id in the title: move it to ref before anything is checked */
+function migrate(x){var m=x&&x.where==="Deck \u00b7 History"&&typeof x.title==="string"&&x.title.match(/^Amend history row (\S+) \((.*)\)$/);
+ if(m&&/^[a-z0-9][a-z0-9-]{0,39}$/i.test(m[1])){x.title="Amend history row by "+m[2];x.ref=m[1];return true}return false}
+function blockedAsk(x){return !!(blocked(x.title,x.context,x.how)||(x.key&&blocked(x.key)))}
+function purge(){var a=ls(),moved=0;a.forEach(function(x){if(migrate(x))moved++});
+ var k=a.filter(function(x){return x&&!blockedAsk(x)});if(k.length!==a.length||moved)save(k)}
 function start(){css();purge();add(document);paint();
  if(TARGETS&&window.MutationObserver)new MutationObserver(function(){add(document)}).observe(document.body,{childList:true,subtree:true});
  window.addEventListener("online",autoResend);setTimeout(autoResend,1500);
