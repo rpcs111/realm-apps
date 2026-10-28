@@ -3,10 +3,13 @@
    Newest first. Search and a bot filter. A table from 600px wide, cards below that.
    Every row has an amend button (pencil) and a 600ms hold; both open one note sheet.
    Notes go through the same "Let us do this" path as letusdo.js (Ara Engine capture inbox, where "Deck · History")
-   and are blocked when they look like a code (same check as the Flow mock, plus the Desk box words).
+   and are blocked when they look like a code (same check as the Flow mock, plus the Desk box words), and when they
+   hold a PR or commit reference, a hash, a link, an email or a file name (js/refcheck.js, loaded before this file).
    DATA: READ_URL is empty until a no-key read for the sheet exists (needs info@, see APPEND.md).
    Until then rows come from history.json on this site (a copy of the sheet, plain words only).
    Rows hold columns A to F plus the id only. The source column stays in the private sheet.
+   29 Oct: every row also gets Agree / Disagree (js/verdict.js, mounted through window.DeckVerdict). Disagree opens
+   the same note box (window.DeckHistory.note) so Ange can say why.
    Usage: <div id="hist"></div><script src="js/history.js" data-mount="#hist" data-read=""></script> */
 (function(){"use strict";
 var S=document.currentScript||{},D=(S.dataset||{});
@@ -74,8 +77,16 @@ function tkey(t){t=String(t||"").toLowerCase();var d=t.match(/(\d{1,2})\s+(jan|f
 
 function ls(){try{var a=JSON.parse(localStorage.getItem(LS)||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}}
 function lsSave(a){try{localStorage.setItem(LS,JSON.stringify(a.slice(-200)))}catch(e){}}
+/* The row id never goes on screen and never into checked text (an id like builder-29oct-v3 has 3 digits, so the code
+   check would drop the note). It rides in its own field, ask.ref, which only ever holds a plain id, and goes in the sent text. */
+function safeRef(id){id=String(id==null?"":id);return /^[a-z0-9][a-z0-9-]{0,39}$/i.test(id)?id:""}
+/* "Thu 29 Oct, 1:58am" from the row's Melbourne time; "" if the row has no clear time */
+function rowWhen(t){var m=String(t||"").match(/\b(mon|tue|wed|thu|fri|sat|sun)\w*,?\s+(\d{1,2})\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\w*,?\s+(\d{1,2}:\d\d)\s*([ap]m)/i);
+ if(!m)return "";var cap=function(w){w=w.slice(0,3).toLowerCase();return w[0].toUpperCase()+w.slice(1)};
+ return cap(m[1])+" "+(+m[2])+" "+cap(m[3])+", "+m[4]+m[5].toLowerCase()}
+function rowShown(r){var w=rowWhen(r.time);return "this row by "+r.who+(w?" ("+w+")":"")}
 function post(ask){ /* same body and checks as letusdo.js post() */
- var text="[LET US DO THIS · "+ask.where+"] "+ask.title+(ask.context?" — context: "+ask.context:"")+(ask.how?" — ask: "+ask.how:"")+" — rule: customer-facing = draft for Ange's OK";
+ var text="[LET US DO THIS · "+ask.where+"] "+ask.title+(ask.context?" — context: "+ask.context:"")+(ask.how?" — ask: "+ask.how:"")+(safeRef(ask.ref)?" — row: "+ask.ref:"")+" — rule: customer-facing = draft for Ange's OK";
  var ctl=window.AbortController?new AbortController():null,tm=setTimeout(function(){if(ctl)ctl.abort()},30000);
  return fetch(API,{method:"POST",mode:"cors",redirect:"follow",credentials:"omit",signal:ctl?ctl.signal:undefined,headers:{"Content-Type":"text/plain;charset=utf-8"},
   body:JSON.stringify({app:"capture",items:[{id:ask.id,text:text,category:"Ara",ts:new Date(ask.ts).toISOString()}]})})
@@ -93,13 +104,13 @@ function css(){if($("#histCss"))return;var s=mk("style");s.id="histCss";s.textCo
  "#hist td{vertical-align:top;padding:8px 6px;border-top:1px solid #171717;font-size:13.5px;overflow-wrap:anywhere;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}"+
  "#hist td.c-time{color:#8a8a8a;font-size:12px}#hist td.c-who{color:var(--accent);font-weight:600}"+
  "#hist .rs-fail{color:#fca5a5}#hist .rs-green{color:#86efac}#hist .rs-miss{color:#fcd34d}"+
- "#hist col.c-time{width:13%}#hist col.c-who{width:11%}#hist col.c-what{width:24%}#hist col.c-result{width:14%}#hist col.c-problem{width:18%}#hist col.c-workaround{width:14%}#hist col.c-am{width:56px}"+
+ "#hist col.c-time{width:13%}#hist col.c-who{width:11%}#hist col.c-what{width:24%}#hist col.c-result{width:14%}#hist col.c-problem{width:18%}#hist col.c-workaround{width:14%}#hist col.c-dv{width:112px}#hist col.c-am{width:56px}"+
  "#hist .h-am{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;border:1px solid var(--accent);border-radius:10px;color:var(--accent);font-size:18px;cursor:pointer}"+
  "#hist tr.holding td{background:#06222a}"+
  "@media (max-width:599.98px){#hist table,#hist tbody,#hist tr,#hist td{display:block;width:auto}#hist thead,#hist colgroup{display:none}"+
  "#hist tr{border:1px solid #262626;border-radius:12px;background:#0a0a0a;margin:0 0 8px;padding:6px 10px 10px;position:relative}"+
  "#hist td{border:0;padding:3px 0}#hist td::before{content:attr(data-l);display:block;font-size:10.5px;letter-spacing:.06em;color:#737373;text-transform:uppercase}"+
- "#hist td.c-time::before,#hist td.c-who::before,#hist td.c-am::before{display:none}#hist td.c-time{padding-right:56px}#hist td.c-am{position:absolute;top:6px;right:8px;padding:0}}"+
+ "#hist td.c-time::before,#hist td.c-who::before,#hist td.c-am::before,#hist td.c-dv::before{display:none}#hist td.c-dv{padding-top:6px}#hist td.c-time{padding-right:56px}#hist td.c-am{position:absolute;top:6px;right:8px;padding:0}}"+
  ".hsheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2147483550;display:flex;align-items:flex-end;justify-content:center}"+
  ".hsheet{box-sizing:border-box;width:100%;max-width:560px;background:#0a0a0a;border:1px solid #333;border-radius:16px 16px 0 0;padding:14px 14px calc(14px + env(safe-area-inset-bottom));color:#e5e5e5;font:15px system-ui,sans-serif}"+
  ".hsheet h3{margin:0 0 6px;font-size:14px;color:#fff}.hsheet .m{font-size:12.5px;color:#a3a3a3;margin:0 0 8px}"+
@@ -117,11 +128,12 @@ function render(){var q=normText($(".h-q",ROOT).value).trim(),who=$(".h-who",ROO
  var tb=$("tbody",ROOT);tb.textContent="";
  rows.forEach(function(r){var tr=mk("tr");tr.setAttribute("data-id",r.id);
   COLS.forEach(function(c){var td=mk("td","c-"+c[0],r[c[0]]||"");td.setAttribute("data-l",c[1]);if(c[0]==="result"){var k=rsClass(r.result);if(k)td.classList.add(k)}tr.appendChild(td)});
+  if(window.DeckVerdict){var tv=mk("td","c-dv");tv.setAttribute("data-l","Agree?");DeckVerdict.mount(tv,"hist_"+r.id,"history row "+r.id+" ("+r.who+")",rowShown(r));tr.appendChild(tv)}
   var ta=mk("td","c-am"),b=mk("button","h-am","\u270e");b.type="button";b.setAttribute("aria-label","Amend this row");
   b.addEventListener("click",function(e){e.stopPropagation();openSheet(r)});ta.appendChild(b);tr.appendChild(ta);
   hold(tr,r);tb.appendChild(tr)});
  $(".hcount",ROOT).textContent=rows.length===ALL.length?ALL.length+" rows, newest first. "+SRCNOTE:"Showing "+rows.length+" of "+ALL.length+". "+SRCNOTE;
- if(!rows.length){var tr=mk("tr"),td=mk("td","muted","Nothing matches.");td.colSpan=7;tr.appendChild(td);tb.appendChild(tr)}}
+ if(!rows.length){var tr=mk("tr"),td=mk("td","muted","Nothing matches.");td.colSpan=window.DeckVerdict?8:7;tr.appendChild(td);tb.appendChild(tr)}}
 
 /* 600ms hold opens the sheet. Moving more than 10px or lifting early cancels. The click that ends a hold is swallowed. */
 function hold(tr,r){var t=null,x=0,y=0,fired=0;
@@ -135,34 +147,48 @@ function hold(tr,r){var t=null,x=0,y=0,fired=0;
 
 var SHEET=null;
 function closeSheet(){if(SHEET){SHEET.remove();SHEET=null}}
-function openSheet(r){closeSheet();var bg=mk("div","hsheet-bg"),sh=mk("div","hsheet");sh.setAttribute("role","dialog");sh.setAttribute("aria-modal","true");sh.setAttribute("aria-label","Amend history row");
- sh.appendChild(mk("h3",null,"Amend this row"));
- sh.appendChild(mk("p","m","Row by "+r.who+". Say what is wrong or missing. It goes to the bots' inbox with Let us do this. No codes, keys or client details."));
- var ta=mk("textarea");ta.setAttribute("aria-label","Amend note");ta.maxLength=600;sh.appendChild(ta);
+/* One note box for Amend and for "why I disagree". o: heading, lead, aria, check(note) -> message or "",
+   send(note) -> promise, okMsg, failMsg. Only Cancel closes it. */
+function noteBox(o){closeSheet();var bg=mk("div","hsheet-bg"),sh=mk("div","hsheet");sh.setAttribute("role","dialog");sh.setAttribute("aria-modal","true");sh.setAttribute("aria-label",o.heading);
+ sh.appendChild(mk("h3",null,o.heading));
+ sh.appendChild(mk("p","m",o.lead));
+ var ta=mk("textarea");ta.setAttribute("aria-label",o.aria||"Note");ta.maxLength=600;sh.appendChild(ta);
  var er=mk("div","err");er.setAttribute("aria-live","polite");sh.appendChild(er);
  var row=mk("div","row"),cancel=mk("button",null,"Cancel"),send=mk("button","go","Send to the bots");cancel.type=send.type="button";
  row.appendChild(cancel);row.appendChild(send);sh.appendChild(row);bg.appendChild(sh);
  /* only Cancel closes it: lifting the finger or tapping outside never does (ELON Flow mock round 1) */
  bg.addEventListener("click",function(e){if(e.target===bg)ta.focus()});
  cancel.addEventListener("click",closeSheet);
- var ask=null;
  send.addEventListener("click",function(){var note=ta.value.trim();er.className="err";
   if(!note){er.textContent="Write a note first.";return}
-  if(blocked(note)){er.textContent=blockMsg(note);return}
-  if(!ask||ask.how!==note){ask={id:"lud_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,6),ts:Date.now(),where:WHERE,title:"Amend history row "+r.id+" ("+r.who+")",context:"",how:note,st:"sending"};
-   var a=ls();a.push(ask);lsSave(a)}
+  /* codes, links, emails, file names (js/refcheck.js, shared with the Disagree box): refused, nothing stored or sent.
+     If the shared check did not load, nothing is sent either. */
+  var RC=window.RefCheck;if(!RC){er.textContent="This note can't be checked right now, so it isn't sent.";return}
+  if(RC.blocked(note)){er.textContent=RC.MSG;return}
+  var why=o.check?o.check(note):(blocked(note)?blockMsg(note):"");if(why){er.textContent=why;return}
   send.disabled=true;ta.disabled=true;er.textContent="Sending to the bots\u2026";
-  function setSt(st){var a=ls();a.forEach(function(x){if(x.id===ask.id){x.st=st;x.at=Date.now()}});lsSave(a);ask.st=st}
-  post(ask).then(function(){setSt("queued");er.className="err ok";er.textContent="Queued. The bots' inbox wrote it down.";send.textContent="Sent";
+  o.send(note).then(function(){er.className="err ok";er.textContent=o.okMsg||"Queued. The bots' inbox wrote it down.";send.textContent="Sent";
     setTimeout(closeSheet,1400)},
-   function(){setSt("unsent");er.textContent="Not sent. It is kept on this phone; tap Send again to retry.";send.disabled=false;ta.disabled=false})});
- document.body.appendChild(bg);SHEET=bg;setTimeout(function(){ta.focus()},50)}
+   function(){var fm=typeof o.failMsg==="function"?o.failMsg():o.failMsg;
+    er.textContent=fm||"Not sent. It is kept on this phone; tap Send again to retry.";send.disabled=false;ta.disabled=false})});
+ document.body.appendChild(bg);SHEET=bg;setTimeout(function(){ta.focus()},50);return bg}
+function openSheet(r){var ask=null;
+ /* "kept on this phone" only when the note really is in storage */
+ var stored=function(){return !!ask&&ls().some(function(x){return x.id===ask.id})};
+ return noteBox({heading:"Amend this row",aria:"Amend note",
+  lead:"Row by "+r.who+". Say what is wrong or missing. It goes to the bots' inbox with Let us do this. No codes, keys or client details.",
+  failMsg:function(){return stored()?"Not sent. It is kept on this phone; tap Send again to retry.":"Not sent, and this phone couldn't keep it. Copy your note and try again."},
+  send:function(note){
+   if(!ask||ask.how!==note){ask={id:"lud_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,6),ts:Date.now(),where:WHERE,title:"Amend history row by "+r.who,ref:safeRef(r.id),context:"",how:note,st:"sending"};
+    var a=ls();a.push(ask);lsSave(a)}
+   function setSt(st){var a=ls();a.forEach(function(x){if(x.id===ask.id){x.st=st;x.at=Date.now()}});lsSave(a);ask.st=st}
+   return post(ask).then(function(){setSt("queued")},function(e){setSt("unsent");throw e})}})}
 
 function build(){ROOT=$(MOUNT);if(!ROOT)return;css();ROOT.textContent="";
  var bar=mk("div","hbar"),q=mk("input","h-q"),sel=mk("select","h-who");q.type="search";q.placeholder="Search the history";q.setAttribute("aria-label","Search the history");
  sel.setAttribute("aria-label","Filter by bot");bar.appendChild(q);bar.appendChild(sel);ROOT.appendChild(bar);ROOT.appendChild(mk("div","hcount","Loading\u2026"));
  var tbl=mk("table"),cg=mk("colgroup"),th=mk("thead"),hr=mk("tr");
- COLS.concat([["am","Amend"]]).forEach(function(c){cg.appendChild(mk("col","c-"+c[0]));var h=mk("th",null,c[1]);h.scope="col";hr.appendChild(h)});
+ COLS.concat(window.DeckVerdict?[["dv","Agree?"],["am","Amend"]]:[["am","Amend"]]).forEach(function(c){cg.appendChild(mk("col","c-"+c[0]));var h=mk("th",null,c[1]);h.scope="col";hr.appendChild(h)});
  th.appendChild(hr);tbl.appendChild(cg);tbl.appendChild(th);tbl.appendChild(mk("tbody"));ROOT.appendChild(tbl);
  q.addEventListener("input",render);sel.addEventListener("change",render)}
 function fill(rows,note){ALL=(rows||[]).filter(function(r){return r&&r.what}).map(function(r,i){r._i=i;return r});
@@ -175,5 +201,5 @@ function load(){var local=function(why){return get(LOCAL).then(function(rows){fi
  return local("This is the copy kept with the app (28 and 29 Oct). The live log sheet is not linked yet.")}
 function start(){build();if(ROOT)load()}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
-window.DeckHistory={blocked:blocked,normText:normText,looksLikeCode:looksLikeCode,tkey:tkey,rows:function(){return ALL}};
+window.DeckHistory={note:noteBox,blocked:blocked,normText:normText,looksLikeCode:looksLikeCode,tkey:tkey,rows:function(){return ALL}};
 })();
