@@ -129,7 +129,7 @@ pre{white-space:pre-wrap;font:12px/1.4 ui-monospace,monospace;color:var(--mut);m
     <div class="bar"><h2>Open register</h2><label style="font-size:12px;color:var(--mut)"><input type="checkbox" id="showClosed" style="width:auto" onchange="load('desk',true)"> closed</label><button class="btn p" onclick="toggle('addRow')">+ Add</button></div>
     <div id="addRow" style="display:none" class="card">
       <input id="nItem" placeholder="What is it?"><div style="height:6px"></div>
-      <div style="display:flex;gap:6px"><select id="nType"><option>task</option><option>build</option><option>flow</option><option>cert</option><option>quote</option><option>idea</option></select><select id="nOwner"><option>Ange</option><option>Julie</option><option>Orion</option></select></div><div style="height:6px"></div>
+      <div style="display:flex;gap:6px"><select id="nType"><option>task</option><option>build</option><option>flow</option><option>cert</option><option>quote</option><option>idea</option></select><select id="nOwner"><option>Ange</option><option value="Julie">Office</option><option>Orion</option></select></div><div style="height:6px"></div>
       <input id="nNext" placeholder="Next action"><div style="height:6px"></div>
       <input id="nLink" placeholder="Link (optional)"><div style="height:8px"></div>
       <button class="btn p" onclick="addReg()">Save to register</button>
@@ -148,7 +148,7 @@ pre{white-space:pre-wrap;font:12px/1.4 ui-monospace,monospace;color:var(--mut);m
   </section>
   <section class="tab" id="tab-notes"><div class="bar"><h2>Notepad</h2></div>
     <div class="card"><textarea id="note" placeholder="Type or dictate&hellip; (mic on your keyboard)"></textarea><div style="height:8px"></div>
-    <div style="display:flex;gap:6px"><select id="noteTag" style="flex:1"><option>desk</option><option>flow</option><option>idea</option><option>julie</option><option>park</option></select><button class="btn p" onclick="saveNote()">Save</button></div></div>
+    <div style="display:flex;gap:6px"><select id="noteTag" style="flex:1"><option>desk</option><option>flow</option><option>idea</option><option value="julie">office</option><option>park</option></select><button class="btn p" onclick="saveNote()">Save</button></div></div>
     <div id="notes"></div></section>
   <section class="tab" id="tab-links"><div class="bar"><h2>Links</h2></div><div id="links"></div></section>
 </main>
@@ -495,7 +495,7 @@ function renderReg(r){var h=r.rows.length?r.rows.map(function(x){var st=(x.statu
   return '<div class="card" style="border-left-color:'+col+'"><div class="t" contenteditable="true" onblur="upd('+x.row+',{item:this.textContent.replace(/^#\\d+\\s*/,\'\')})">'+esc(x.item)+'</div><div class="m"><span class="pill">'+esc(x.type)+'</span><span class="pill">'+esc(x.owner)+'</span>'+esc(st)+(x.updated?' &middot; '+esc(x.updated):'')+'</div>'+
   '<div style="margin-top:6px"><input value="'+esc(x.next)+'" placeholder="next action" onchange="upd('+x.row+',{next_action:this.value})"></div>'+
   '<div class="acts">'+(x.link?'<a class="btn" href="'+esc(x.link)+'" target="_blank">&#128279; Open</a>':'')+
-  '<button class="btn g" onclick="upd('+x.row+',{status:\'CLOSED\',close_it:\'&#10004;\'})">&#10004; Done</button><button class="btn a" onclick="push('+x.row+')">&#9208; Push</button><button class="btn b" onclick="upd('+x.row+',{owner:\'Julie\'})">&#8594; Julie</button><button class="btn" onclick="upd('+x.row+',{status:\'IN PROGRESS\'})">&#9654; Doing</button>'+
+  '<button class="btn g" onclick="upd('+x.row+',{status:\'CLOSED\',close_it:\'&#10004;\'})">&#10004; Done</button><button class="btn a" onclick="push('+x.row+')">&#9208; Push</button><button class="btn b" onclick="upd('+x.row+',{owner:\'Julie\'})">&#8594; Office</button><button class="btn" onclick="upd('+x.row+',{status:\'IN PROGRESS\'})">&#9654; Doing</button>'+
   '<button class="btn" onclick="chatOpen(\'Orion, register #'+x.id+': '+q1(x.item)+'\',\'register row\',\'desk\')">&#128172; Chat</button></div></div>'}).join(''):'<div class="empty">Nothing open.</div>';document.getElementById('desk').innerHTML=h}
 function renderStart(r){document.getElementById('startWhen').textContent=r.count+' open · '+r.when;var ic={cert:'&#128994;',quote:'&#128993;',reg:'&#128450;',task:'&#9989;',job:'&#9728;',chat:'&#128172;'};
   var card=function(x,i){return '<div class="card" style="border-left-color:'+(i<5?'var(--cyan)':'var(--line)')+'"><div class="t">'+(i<5?(i+1)+'. ':'')+esc(x.title)+'</div><div class="m">'+esc(x.why)+'</div><div class="acts"><button class="btn p" onclick="go(\''+x.tab+'\',document.querySelectorAll(\'nav button\')[TABIX[\''+x.tab+'\']])">'+(ic[x.kind]||'')+' Open</button>'+(x.row?'<button class="btn a" onclick="push('+x.row+')">&#9208; Push</button>':'')+'<button class="btn" onclick="chatOpen(\'Orion: '+q1(x.title)+'\',\''+q1(x.why)+'\',\'desk\')">&#128172; Chat</button></div></div>'};
