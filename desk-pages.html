@@ -844,6 +844,9 @@ function lss(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catc
 var MAXTRY=5,PEND=6*60*1000,STILL='Still sending, check back in a few minutes.',inflight={},sending=false;
 function upd(id,fn){var all=lsj('realm_amends',[]);if(!Array.isArray(all))all=[];var hit=null;all.forEach(function(x){if(x&&x.id===id){fn(x);hit=x}});lss('realm_amends',all);return hit}
 function stored(id){var all=lsj('realm_amends',[]);if(!Array.isArray(all))return null;for(var i=0;i<all.length;i++)if(all[i]&&all[i].id===id)return all[i];return null}
+/* 30 Oct: each amend carries the device that made it (realm_sync_dev); only this device's own (or old unstamped) amends are ever re-sent */
+function myDev(){try{return localStorage.getItem('realm_sync_dev')||''}catch(e){return ''}}
+function mine(x){return !x.dev||x.dev===myDev()}
 function pendingLeft(x){var p=x&&+x.pendingSince;if(!p)return 0;var left=PEND-(Date.now()-p);return left>0&&left<=PEND?left:0}
 function payload(a){var lab=relabel(a.ctx,a.where);return 'AMEND (Desk \u00b7 '+tabName(a.where)+') '+a.text+' | re: '+lab}
 function send(a,then){
@@ -874,17 +877,17 @@ document.getElementById('amSave').onclick=function(){
   if(deskHasCode(v)){m.textContent='Note not saved. No codes or long numbers: 3 or more digits, typed or spoken, look like a code. Say it in words, like \u201cthe second job on Friday\u201d or \u201chalf ten\u201d.';return}
   var all=lsj('realm_amends',[]);if(!Array.isArray(all))all=[];
   /* same note, same card, not yet sent: reuse it, never add a second copy */
-  var a=all.filter(function(x){return x&&x.app==='Desk'&&!x.saved&&!x.blocked&&x.text===v&&x.where===whereNow&&x.ctx===ctxNow})[0];
+  var a=all.filter(function(x){return x&&x.app==='Desk'&&mine(x)&&!x.saved&&!x.blocked&&x.text===v&&x.where===whereNow&&x.ctx===ctxNow})[0];
   if(a&&pendingLeft(a)){m.textContent=STILL;return}
   if(a&&(a.tries||0)>=MAXTRY){a.tries=0;upd(a.id,function(x){x.tries=0})}
-  if(!a){a={id:'dam_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),t:Date.now(),q:'desk',where:whereNow,ctx:ctxNow,text:v,saved:false,tries:0,app:'Desk'};
+  if(!a){a={id:'dam_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),t:Date.now(),q:'desk',where:whereNow,ctx:ctxNow,text:v,saved:false,tries:0,app:'Desk',dev:myDev()};
     all.push(a);lss('realm_amends',all.slice(-300))}
   sending=true;sv.disabled=true;sv.setAttribute('aria-busy','true');
   m.textContent='Saved on this phone. Sending to Desk\u2026';
   send(a,function(ok,e,tries){sending=false;sv.disabled=false;sv.removeAttribute('aria-busy');
     if(ok){toast('Amend saved for the bots');closeSheet()}else if(e!=='busy')m.textContent=failMsg(e,tries)})};
 /* resend anything left unsent from an earlier visit (max 5 tries each, never one that is still sending) */
-setTimeout(function(){var gaveUp=0;lsj('realm_amends',[]).filter(function(a){return a&&a.app==='Desk'&&!a.saved&&!a.blocked&&(a.tries||0)<MAXTRY&&!pendingLeft(a)}).slice(0,10).forEach(function(a){
+setTimeout(function(){var gaveUp=0;lsj('realm_amends',[]).filter(function(a){return a&&a.app==='Desk'&&mine(a)&&!a.saved&&!a.blocked&&(a.tries||0)<MAXTRY&&!pendingLeft(a)}).slice(0,10).forEach(function(a){
   send(a,function(ok,e,tries){if(!ok&&tries>=MAXTRY&&!gaveUp++)toast('A Desk note couldn\u2019t send after 5 tries. It\u2019s kept on this phone.')})})},4000);
 /* voice: browser speech if allowed here, otherwise the keyboard's own mic works in the box */
 var rec=null;function stopMic(){if(rec){try{rec.stop()}catch(e){}rec=null}document.getElementById('amMic').innerHTML='&#127908; Speak'}
@@ -955,4 +958,107 @@ document.addEventListener('contextmenu',function(e){if(e.target.closest&&e.targe
   loaded[t]=false;load(t,true)})();
 })();
 </script>
+<!-- Calendar side panel + Push task (30 Oct 2026, Ange 3:31am order). The calendar is the source of truth.
+     The Google Calendar embed shows events only to a browser signed in to info@; nothing private is in this file.
+     Push task saves to the Note to-do list (realm_scribe_v1, synced by js/realm-sync.js), roles only, no names. -->
+<style id="calpanel">
+.cp-hbtn{min-height:44px;min-width:44px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--txt);font:600 14px system-ui,sans-serif;cursor:pointer}
+.cp-hbtn.p{background:var(--cyan);color:#04121a;border-color:var(--cyan)}
+header{flex-wrap:nowrap;padding-top:6px;padding-bottom:6px}header h1{white-space:nowrap}header .cp-hb{display:flex;gap:8px;margin-left:auto;flex:0 0 auto}header .who{margin-left:0;min-width:0;overflow:hidden}
+@media (max-width:419px){.cp-hb .cp-t{display:none}}
+#cpPanel{position:fixed;inset:0;z-index:40;background:var(--bg);display:none;flex-direction:column;overflow-y:auto;padding:10px 12px calc(14px + env(safe-area-inset-bottom))}
+#cpPanel.open{display:flex}
+#cpPanel .cp-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}#cpPanel .cp-top h2{flex:1;margin:0;font-size:16px}
+#cpFrameWrap{flex:1 0 360px;min-height:360px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+#cpFrame{width:100%;height:100%;min-height:360px;border:0;display:block}
+.cp-why{color:var(--mut);font-size:13px;margin:8px 0}
+.cp-row{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+.cp-link{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--line);color:var(--txt);text-decoration:none;font-size:14px}
+.cp-sync{display:flex;align-items:center;min-height:44px;width:100%;text-align:left;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:none;color:var(--mut);font:13px system-ui,sans-serif;cursor:pointer}
+.cp-wa{border:1px dashed var(--line);border-radius:12px;padding:12px;margin-top:10px;color:var(--mut);opacity:.7}
+.cp-wa b{color:var(--txt)}
+#cpList{list-style:none;margin:6px 0 0;padding:0}#cpList li{border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin:6px 0;background:var(--card)}
+#cpList .m{font-size:12px;color:var(--mut)}#cpList .cp-row{margin:6px 0 0}
+#ptBack{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.55);display:none}#ptBack.on{display:block}
+#ptSheet{position:fixed;left:0;right:0;bottom:0;z-index:51;background:var(--card);border-top:1px solid var(--line);border-radius:16px 16px 0 0;padding:14px 14px calc(16px + env(safe-area-inset-bottom));display:none;max-width:560px;margin:0 auto}
+#ptSheet.on{display:block}#ptSheet h3{margin:0 0 8px;font-size:16px}
+#ptSheet label{display:block;font-size:13px;color:var(--mut);margin:8px 0 4px}
+#ptSheet input,#ptSheet select{width:100%;min-height:44px;font-size:16px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--txt);padding:0 10px}
+#ptMsg{min-height:18px;font-size:13px;color:var(--amber);margin-top:8px}
+@media (min-width:900px){
+ body.cp-dock{padding-right:380px}body.cp-dock nav{right:380px}
+ #cpPanel{display:flex;left:auto;width:380px;border-left:1px solid var(--line);z-index:6}
+ #cpOpen,#cpClose,#cpPush{display:none!important}
+}
+</style>
+<div id="cpPanel" role="complementary" aria-label="Calendar">
+ <div class="cp-top"><h2>&#128197; Calendar</h2><button type="button" class="cp-hbtn p" id="cpPush2">+ Push task</button><button type="button" class="cp-hbtn" id="cpClose" aria-label="Close calendar">&times;</button></div>
+ <div id="cpFrameWrap"><iframe id="cpFrame" title="Office calendar" loading="lazy" referrerpolicy="no-referrer"></iframe></div>
+ <p class="cp-why">If you see a blank calendar, sign in to info@ in this browser.</p>
+ <div class="cp-row"><a class="cp-link" id="cpOpenG" href="https://calendar.google.com/calendar/r" target="_blank" rel="noopener">Open in Google Calendar</a></div>
+ <h2 style="font-size:15px;margin:12px 0 0">Pushed tasks</h2>
+ <p class="cp-why">These go to the Note to-do list.</p>
+ <button type="button" class="cp-sync" id="cpSync" data-realm-sync>Saved on this device.</button>
+ <ul id="cpList"></ul>
+ <div class="cp-wa" aria-disabled="true"><b>WhatsApp threads: needs WhatsApp access</b><br>Not connected yet, so no messages show here.</div>
+</div>
+<div id="ptBack"></div>
+<div id="ptSheet" role="dialog" aria-label="Push task">
+ <h3 id="ptTitle">Push a task</h3>
+ <label for="ptWhat">What</label><input id="ptWhat" maxlength="140" autocomplete="off">
+ <label for="ptDue">Due date</label><input id="ptDue" type="date">
+ <label for="ptTo">To</label><select id="ptTo"><option value="Office">Office</option><option value="Owner">Owner</option></select>
+ <div id="ptMsg" role="status"></div>
+ <div class="cp-row"><button type="button" class="cp-hbtn p" id="ptSave">Push task</button><button type="button" class="cp-hbtn" id="ptCancel">Cancel</button></div>
+</div>
+<script src="js/refcheck.js?v=20261029-r6"></script>
+<script src="js/realm-sync.js?v=20261028-7" data-backoff data-live data-allow-text="Saved on this device, syncs once Allow is done"></script>
+<script>(function(){"use strict";
+var NK="realm_scribe_v1",OPENK="desk_cal_open",EMB="https://calendar.google.com/calendar/embed?src=info%40realmpcs.com&ctz=Australia%2FMelbourne";
+var $=function(i){return document.getElementById(i)},P=$("cpPanel"),editId=null,WIDE=900;
+function wide(){return window.innerWidth>=WIDE}
+function rd(){try{var a=JSON.parse(localStorage.getItem(NK));return Array.isArray(a)?a:[]}catch(e){return[]}}
+function wr(a){try{localStorage.setItem(NK,JSON.stringify(a));return true}catch(e){return false}}
+/* header buttons: Calendar (phones) + Push task */
+var hb=document.createElement("span");hb.className="cp-hb";
+hb.innerHTML='<button type="button" class="cp-hbtn" id="cpOpen" aria-expanded="false" aria-label="Calendar">&#128197;<span class="cp-t"> Calendar</span></button><button type="button" class="cp-hbtn p" id="cpPush" aria-label="Push task">+<span class="cp-t"> Push</span> task</button>';
+document.querySelector("header").appendChild(hb);
+/* calendar: AGENDA on phones, WEEK on desktop; loaded only when shown */
+function setFrame(){var m=wide()?"WEEK":"AGENDA",u=EMB+"&mode="+m;if($("cpFrame").getAttribute("data-mode")!==m){$("cpFrame").setAttribute("data-mode",m);$("cpFrame").src=u}}
+function setOpen(on,save){P.classList.toggle("open",!!on);$("cpOpen").setAttribute("aria-expanded",on?"true":"false");if(save)try{localStorage.setItem(OPENK,on?"1":"0")}catch(e){}if(on||wide())setFrame()}
+function layout(){document.body.classList.toggle("cp-dock",wide());if(wide())setFrame()}
+$("cpOpen").onclick=function(){setOpen(true,true)};$("cpClose").onclick=function(){setOpen(false,true)};
+window.addEventListener("resize",layout);layout();
+var was="0";try{was=localStorage.getItem(OPENK)||"0"}catch(e){}setOpen(was==="1",false);
+/* street addresses and codes stay out (js/refcheck.js + the same street rule as the Flow Map) */
+var ST="(?:st|street|rd|road|ave|av|avenue|ct|crt|court|dr|drv|drive|pde|parade|cres|crescent|pl|place|ln|lane|hwy|highway|blvd|bvd|boulevard|tce|terrace|cl|close|gr|grove|cct|circuit|esp|esplanade|sq|square|way|wy|mews|glen|parkway|pkwy|gdns|grv|cir|quay|hts)";
+var ADDR=new RegExp("\\b\\d+[a-z]?(?:\\s*[/-]\\s*\\d+)?\\s+((?:[a-z'-]+\\s+){1,2})"+ST+"\\b","gi"),STOP={on:1,the:1,to:1,at:1,in:1,a:1,an:1,of:1,for:1,and:1,then:1,by:1,or:1,is:1,it:1,up:1,from:1,with:1};
+function addr(s){var m;ADDR.lastIndex=0;while((m=ADDR.exec(s))){if(!m[1].trim().toLowerCase().split(/\s+/).some(function(w){return STOP[w]}))return true}return false}
+function why(s){if(addr(s))return "No street addresses, please.";var RC=window.RefCheck;if(!RC)return "This can't be checked right now, so it isn't saved.";return RC.blocked(s)?RC.MSG:""}
+/* push / amend form */
+function openForm(n){editId=n?n.id:null;$("ptTitle").textContent=n?"Amend task":"Push a task";$("ptWhat").value=n?n.title:"";$("ptDue").value=n&&n.due||"";$("ptTo").value=n&&n.to||"Office";$("ptMsg").textContent="";$("ptBack").classList.add("on");$("ptSheet").classList.add("on");setTimeout(function(){try{$("ptWhat").focus()}catch(e){}},30)}
+function closeForm(){$("ptBack").classList.remove("on");$("ptSheet").classList.remove("on");editId=null}
+$("cpPush").onclick=$("cpPush2").onclick=function(){openForm(null)};$("ptCancel").onclick=closeForm;$("ptBack").onclick=closeForm;
+$("ptSave").onclick=function(){var w=$("ptWhat").value.trim(),due=$("ptDue").value,to=$("ptTo").value==="Owner"?"Owner":"Office",from=to==="Owner"?"Office":"Owner";
+ if(!w){$("ptMsg").textContent="Type what needs doing first.";return}var bad=why(w);if(!bad&&window.deskHasCode&&deskHasCode(w))bad="No codes or long numbers: 3 or more digits look like a code. Say it in words.";if(bad){$("ptMsg").textContent=bad+" Not saved.";return}
+ var a=rd(),now=Date.now(),n=null;if(editId)a.forEach(function(x){if(x&&x.id===editId)n=x});
+ if(n){n.title=w;n.due=due;n.to=to;n.from=from;n.owner=to;n.mt=now;n.amended=now}
+ else{n={id:now.toString(36)+Math.random().toString(36).slice(2,6),title:w,note:"",done:false,from:from,to:to,owner:to,urgent:false,att:[],ts:now,mt:now,due:due,pushed:"desk"};a.push(n)}
+ if(!wr(a)){$("ptMsg").textContent="This browser won't save it (private mode?). Not saved.";return}
+ var wasEdit=!!editId;closeForm();draw();if(typeof toast==="function")toast(wasEdit?"Amended":"Pushed to "+to)};
+/* list of pushed tasks, with Amend and Done */
+function dueTxt(d){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(d||"");if(!m)return "";var t=new Date(+m[1],+m[2]-1,+m[3]);return ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][t.getDay()]+" "+t.getDate()+" "+["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][t.getMonth()]}
+function draw(){var L=$("cpList");L.textContent="";var a=rd().filter(function(n){return n&&n.pushed==="desk"&&!n.done}).sort(function(x,y){return(y.mt||0)-(x.mt||0)}).slice(0,12);
+ if(!a.length){var e=document.createElement("li");e.className="m";e.textContent="Nothing pushed yet.";L.appendChild(e);return}
+ a.forEach(function(n){var li=document.createElement("li"),t=document.createElement("div"),m=document.createElement("div"),r=document.createElement("div");
+  t.textContent=n.title;m.className="m";m.textContent="From "+(n.from||"")+" to "+(n.to||"")+(n.due?" \u00b7 due "+dueTxt(n.due):"")+(n.amended?" \u00b7 amended":"");r.className="cp-row";
+  var am=document.createElement("button");am.type="button";am.className="cp-hbtn";am.textContent="Amend";am.onclick=function(){openForm(n)};
+  var dn=document.createElement("button");dn.type="button";dn.className="cp-hbtn";dn.textContent="\u2713 Done";dn.onclick=function(){var b=rd();b.forEach(function(x){if(x&&x.id===n.id){x.done=true;x.mt=Date.now()}});wr(b);draw()};
+  r.appendChild(am);r.appendChild(dn);li.appendChild(t);li.appendChild(m);li.appendChild(r);L.appendChild(li)})}
+draw();if(window.RealmSync){RealmSync.onChange(function(){draw();return true})}
+/* status line in Desk's own words: never the backend's message */
+if(window.RealmSync&&RealmSync.onStatus){var SW={synced:"Synced with your other devices.",syncing:"Saved on this device. Syncing\u2026",offline:"Saved on this device. It syncs when you're back online.",nokey:"Saved on this device. It syncs once this device has its sync link.",badkey:"Saved on this device. This device needs a new sync link."};
+var sw=function(s){$("cpSync").textContent=SW[s]||"Saved on this device. Sync will try again soon."};RealmSync.onStatus(sw);sw(RealmSync.status())}
+window.addEventListener("storage",function(e){if(e.key===NK)draw()});
+})();</script>
 </body></html>
