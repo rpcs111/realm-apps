@@ -206,3 +206,87 @@
   try { var EL = window.AnchorEarly && AnchorEarly.loaded; if (EL) setTimeout(function () { A.say('Picked up ' + EL.address + ', where you left it.'); }, 50); } catch (e) {}
   setTimeout(function () { drawJobs(); paintStatus(); A.later(800); }, 400);
 })();
+
+/* ---- 3. Fix any part: a 44px "✎ Fix" on each job detail, each certificate part, each anchor/item row and each note.
+   Tapping it puts the cursor in that part with the text picked; when the change is made it is noted in the job's
+   change list (part, old, new, when, which screen), which syncs with the job. ---- */
+(function () {
+  var A = window.AnchorStudio; if (!A || !A.write) return;
+  var $ = function (id) { return document.getElementById(id); }, esc = A.esc || function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; }); };
+  var st = document.createElement('style');
+  st.textContent = '.an-fixwrap{display:flex;gap:6px;align-items:stretch}.an-fixwrap>input,.an-fixwrap>textarea{flex:1 1 auto;min-width:0}'
+    + '.an-fix{all:unset;box-sizing:border-box;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0 10px;border-radius:10px;border:1px solid #334155;background:#0a0a0a;color:#facc15;font:700 13px/1 system-ui,sans-serif;cursor:pointer}'
+    + '.an-fix:focus-visible{outline:2px solid #facc15}.an-fixhd{display:flex;align-items:center;justify-content:space-between;gap:6px}'
+    + '.an-fixing{outline:2px solid #facc15 !important;outline-offset:2px}.an-chg{font:12px/1.4 system-ui,sans-serif;color:#a3a3a3;margin:4px 0 0}.an-chg b{color:#e5e5e5}';
+  document.head.appendChild(st);
+  function fixBtn(part) { var b = document.createElement('button'); b.type = 'button'; b.className = 'an-fix'; b.textContent = '\u270e Fix'; b.setAttribute('data-part', part); b.setAttribute('aria-label', 'Fix ' + part); return b; }
+  function val(e) { if (e && e.classList && e.classList.contains('chips')) return [].map.call(e.querySelectorAll('.chip.on'), function (c) { return c.textContent.trim(); }).join(', ') || '(none picked)';
+    if (e && e.tagName === 'BUTTON') { var h = e.closest('.qcard') || e.parentNode, on = h ? h.querySelectorAll('button.on,button.active,button.sel,button[aria-pressed=true]') : []; return [].map.call(on, function (b) { return b.textContent.trim(); }).join(', ') || '(none picked)'; }
+    return e ? (e.isContentEditable ? e.innerText : e.type === 'checkbox' ? (e.checked ? 'yes' : 'no') : e.value) : ''; }
+  function editable(box) { return box.querySelector('input:not([type=hidden]):not([hidden]):not([type=file]),textarea:not([hidden]),[contenteditable=true],select') || box.querySelector('.chips') || box.querySelector('button:not(.amx):not(.an-fix):not([hidden])'); }
+  var open = null; /* {part, el, from} */
+  function finish() {
+    if (!open) return; var o = open; open = null; o.el.classList.remove('an-fixing');
+    var id = A.current(); if (!id) return;
+    setTimeout(function () { /* after the page has saved its own copy */
+      var to = val(o.el); if (to === o.from) return;
+      var r = A.rec(id) || {}, L = Array.isArray(r.amends) ? r.amends : [];
+      L.push({ part: o.part, from: String(o.from).slice(0, 300), to: String(to).slice(0, 300), at: Date.now() });
+      A.write(id, { amends: L.slice(-200) }); A.say('Fixed ' + o.part + '. The old wording is kept in this job\u2019s change list.');
+      A.drawJobs && A.drawJobs();
+    }, 300);
+  }
+  A.fix = function (part, e) {
+    if (!e) return false; finish();
+    if (e.closest && e.closest('details:not([open])')) e.closest('details').open = true;
+    if (!e.offsetParent && e.closest && e.closest('#certPane')) { /* on the other certificate page: go there first */
+      var tc = $('tabCert'); if (tc && !e.offsetParent) tc.click();
+      var ps = document.querySelectorAll('#certPane .ip[data-p]'); for (var i = 0; i < ps.length && !e.offsetParent; i++) ps[i].click(); }
+    try { e.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (x) {}
+    if (e.classList.contains('chips') && !e.hasAttribute('tabindex')) e.setAttribute('tabindex', '-1');
+    open = { part: part, el: e, from: val(e) }; e.classList.add('an-fixing');
+    try { e.focus({ preventScroll: true }); if (e.select && /text|search|number|^$/.test(e.type || '')) e.select(); else if (e.isContentEditable) document.getSelection().selectAllChildren(e); } catch (x) {}
+    e.addEventListener('blur', function once() { e.removeEventListener('blur', once); setTimeout(finish, e.tagName === 'BUTTON' ? 250 : 0); });
+    e.addEventListener('change', function once2() { e.removeEventListener('change', once2); finish(); });
+    A.say('Fixing ' + part + ': change it and it saves itself.');
+    return true;
+  };
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest && ev.target.closest('.an-fix'); if (!b) return;
+    ev.preventDefault(); ev.stopPropagation();
+    var part = b.getAttribute('data-part'), host = b.closest('.an-fixwrap, .qcard, .ckrow, .an-fixbox'), e = host && (b.__for || editable(host));
+    if (!A.fix(part, e)) A.say('Nothing to fix in ' + part + ' yet.');
+  }, true);
+  var JOB = { site: 'site address', client: 'client', date: 'date of works', due: 'inspection due', jobref: 'job ref' };
+  function deco() {
+    Object.keys(JOB).forEach(function (id) {
+      var i = $(id); if (!i || (i.parentNode && i.parentNode.classList.contains('an-fixwrap'))) return;
+      var w = document.createElement('span'); w.className = 'an-fixwrap'; i.parentNode.insertBefore(w, i); w.appendChild(i); w.appendChild(fixBtn(JOB[id]));
+    });
+    var q = document.querySelectorAll('#certPane .qcard[data-k]');
+    for (var k = 0; k < q.length; k++) { var c = q[k]; if (c.querySelector(':scope > .an-fixhd') || c.getAttribute('data-k') === 'checklist' || c.getAttribute('data-k') === 'import' || !editable(c)) continue;
+      var lab = c.querySelector(':scope > .qq'); if (!lab) continue;
+      var name = (lab.textContent || '').replace(/[✎:]/g, '').replace(/\s+/g, ' ').trim().toLowerCase() || c.getAttribute('data-k');
+      var hd = document.createElement('div'); hd.className = 'an-fixhd'; c.insertBefore(hd, lab); hd.appendChild(lab); hd.appendChild(fixBtn(name)); }
+    var rows = document.querySelectorAll('#ckList .ckrow');
+    for (var r = 0; r < rows.length; r++) { var h = rows[r].querySelector('.ckhead'); if (!h || h.querySelector('.an-fix')) continue;
+      var n = (rows[r].querySelector('.cknum') || {}).textContent || (r + 1), nm = (rows[r].querySelector('.ckname') || {}).value || 'item';
+      var fb = fixBtn('item ' + n + ' (' + nm + ')'); fb.__for = rows[r].querySelector('.ckname'); h.appendChild(fb);
+      var nb = fixBtn('item ' + n + ' note'); nb.__for = rows[r].querySelector('.cknote'); nb.style.marginTop = '6px';
+      var nw = document.createElement('span'); nw.className = 'an-fixwrap'; var note = rows[r].querySelector('.cknote'); if (note) { note.parentNode.insertBefore(nw, note); nw.appendChild(note); nw.appendChild(nb); } }
+    var nl = document.querySelectorAll('#notesList textarea, #notesList input[type=text]');
+    for (var t = 0; t < nl.length; t++) { var x = nl[t]; if (x.parentNode.classList.contains('an-fixwrap')) continue;
+      var ww = document.createElement('span'); ww.className = 'an-fixwrap'; x.parentNode.insertBefore(ww, x); ww.appendChild(x); ww.appendChild(fixBtn(x.id === 'siteNotesTx' ? 'site notes' : 'plan note ' + (t + 1))); }
+  }
+  A.hooks.push(deco); deco();
+  /* the change list, under the open job in "Your jobs" */
+  function chg() {
+    var cur = A.current(), li = cur && document.querySelector('#anJobList li[data-id="' + cur + '"]'); if (!li) return;
+    var r = A.rec(cur), L = (r && r.amends) || []; var old = li.querySelector('.an-chg'); if (old) old.remove();
+    if (!L.length) return;
+    var d = document.createElement('div'); d.className = 'an-chg';
+    d.innerHTML = 'Changes made (' + L.length + '): ' + L.slice(-3).reverse().map(function (a) { return '<b>' + esc(a.part) + '</b> \u201c' + esc(String(a.from).slice(0, 40)) + '\u201d \u2192 \u201c' + esc(String(a.to).slice(0, 40)) + '\u201d'; }).join(' \u00b7 ');
+    li.appendChild(d);
+  }
+  chg.jobs = true; A.hooks.push(chg); setTimeout(chg, 600);
+})();

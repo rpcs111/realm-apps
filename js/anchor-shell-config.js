@@ -13,7 +13,7 @@
       'that a job you save here shows on your other screens under \u201cYour jobs\u201d, at the cert you were up to',
       'that every part of the job has a \u270e Fix button'],
     amend: [{ sel: '#csBar', kind: 'jobs bar', pen: false }, { sel: '.qcard', kind: 'certificate question', pen: false },
-      { sel: '.an-fixwrap', kind: 'job detail', pen: false }, { sel: '#anJobs', kind: 'your jobs', pen: false }],
+      { sel: '.an-fixwrap', kind: 'job detail', pen: false }, { sel: '.ckrow', kind: 'anchor or item row', pen: false }, { sel: '#anJobs', kind: 'your jobs', pen: false }],
     whyNot: [
       { what: 'Diary, Email and Drive here', when: function () { return fb; },
         why: 'The Google sign-in for this page isn\u2019t set up yet, so those buttons open the Google version, with info@ filled in.' },
