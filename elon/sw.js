@@ -2,7 +2,7 @@
    Own cache prefix 'elon-app-' so it never touches the hub's sw.js or the ara-app-* caches, and they never touch it.
    Network first (HTTP cache bypassed), offline falls back to the last saved copy. Same-origin GET only. */
 var V='elon-app-v1';
-var CORE=['./','./index.html','./elon.webmanifest?v=1','./img/ara-symbol.svg?v=1','../version.json'];
+var CORE=['./','./index.html','./elon.webmanifest?v=2','./img/ara-symbol.svg?v=1','../version.json'];
 self.addEventListener('install',function(e){
   e.waitUntil(caches.open(V).then(function(c){return Promise.all(CORE.map(function(u){return fetch(new Request(u,{cache:'no-cache'})).then(function(r){if(r.ok)return c.put(u,r)}).catch(function(){})}))}).then(function(){return self.skipWaiting()}));
 });
