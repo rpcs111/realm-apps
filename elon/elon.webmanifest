@@ -2,7 +2,7 @@
  "id": "/realm-apps/elon/",
  "name": "Elon",
  "short_name": "Elon",
- "description": "Call or message Elon Musk 2.0 and Ara 2.0 in Grok Bot. Family panel with Julie.",
+ "description": "Call or message Elon and Ara in Grok Bot. Family panel with Julie.",
  "start_url": "/realm-apps/elon/?app=elon",
  "scope": "/realm-apps/elon/",
  "display": "standalone",
