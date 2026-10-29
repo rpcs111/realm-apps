@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en"><head><script>window.__araBIP=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__araBIP=e});</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0b1220"><title>Old Desk flow map</title>
+<link rel="manifest" href="desk-flow.webmanifest?v=20261030-2"><link rel="icon" href="pwa/deskflow.svg?v=20261030-1" type="image/svg+xml"><link rel="icon" type="image/png" sizes="192x192" href="pwa/deskflow-192.png?v=20261030-1"><link rel="apple-touch-icon" sizes="180x180" href="pwa/deskflow-apple-180.png?v=20261030-1">
+<meta name="application-name" content="Old Desk flow map"><meta name="apple-mobile-web-app-title" content="Old Desk flow map">
+<style>/* Old Desk flow map (30 Oct 2026). Asked for 29 Oct 6:52pm Melb: "bring back my other version of the map too... In my old desk version,
+   there is a flow map in there". The flow map that lived inside the Desk
+   Apps Script project, restored as its own page next to map.html. Same rings, arrows and gap chain. Client names,
+   addresses, job numbers, staff names and money were taken out because this repo is public; the live lists stay in Desk. */
+:root{--bg:#0b1220;--card:#131c2e;--ink:#e6edf7;--mute:#8a9ab5;--cyan:#22d3ee;--green:#34d399;--red:#f43f5e;--amber:#fbbf24;--line:#2a3a57}
+*{box-sizing:border-box}html,body{overflow-x:hidden}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;display:flex;flex-direction:column;min-height:100dvh}
+header{padding:calc(6px + env(safe-area-inset-top)) 12px 6px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;border-bottom:1px solid var(--line)}
+header .ttl b{color:var(--cyan);letter-spacing:.08em}header small{color:var(--mute);display:block;font-size:12px}
+header .nav{margin-left:auto;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+header .nav a{color:var(--cyan);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;padding:0 6px;white-space:nowrap}
+.check{color:#86efac;font-size:13px;margin:6px 12px 0}
+#wrap{position:relative;width:100%;flex:1 1 auto;min-height:420px;height:calc(100dvh - 170px);overflow:hidden;touch-action:none}
+svg{width:100%;height:100%;cursor:grab}
+.node circle{stroke-width:2.5;cursor:pointer}.node text{fill:var(--ink);font-size:13px;text-anchor:middle;pointer-events:none;font-weight:600}
+.sys circle{fill:#10263a;stroke:var(--cyan)}.step circle{fill:#132a22;stroke:var(--green)}.core circle{fill:#0e3a47;stroke:var(--cyan);stroke-width:4}
+.app circle{fill:#141a33;stroke:#60a5fa}.isgap circle{stroke:var(--red)!important;stroke-dasharray:6 4;fill:#2a1119!important}.nodelbl{fill:var(--red);font-size:11px;font-weight:700;text-anchor:middle;pointer-events:none}.int text{fill:#fde68a}
+.arr{fill:none;stroke-width:3}.arr.ok{stroke:var(--green)}.arr.no{stroke:var(--red);stroke-dasharray:8 6}.arrlbl{font-size:11px;font-weight:700;text-anchor:middle}
+.geo{stroke:var(--line);stroke-width:1;fill:none;opacity:.6}
+.flow{stroke:var(--green);stroke-width:3;fill:none}.gap{stroke:var(--red);stroke-width:4;fill:none;stroke-dasharray:8 6}
+.gaplbl{fill:var(--red);font-size:11px;font-weight:700;text-anchor:middle;cursor:pointer}
+.badge{fill:var(--red)}
+/* 30 Oct r5 (ELON phone fails 1-3): the panel is a fixed sheet inside the visible screen, own scroll, title and close always on screen;
+   the list and the panel keep a bottom gap the height of the TELL ARA bubble (measured, --arbpad) so it never covers a button;
+   on phones the map circles are too close for 44px tap circles, so taps go to the 44px part buttons (see fitHits). */
+#panel{position:fixed;left:0;right:0;bottom:0;z-index:60;max-height:min(75dvh,calc(100dvh - 24px - env(safe-area-inset-top)));overflow:auto;overscroll-behavior:contain;padding-bottom:calc(var(--arbpad,96px) + 8px)!important;background:var(--card);border-top:3px solid var(--cyan);border-radius:16px 16px 0 0;padding:16px;transform:translateY(105%);transition:transform .25s;visibility:hidden}
+#panel.open{transform:none;visibility:visible}#panel .x{position:sticky;float:right;top:0;right:auto;margin:-8px -8px 0 0;z-index:2;background:var(--card);border-radius:10px}#panel h2{margin:0 50px 4px 0;font-size:19px}#panel h3{margin:14px 0 6px;font-size:13px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.rule{background:#0f1a2b;border-left:3px solid var(--amber);padding:8px 10px;margin:6px 0;border-radius:6px;font-size:14px;min-height:44px}
+.gapitem{background:#2a1119;border-left:3px solid var(--red);padding:8px 10px;margin:6px 0;border-radius:6px;font-size:14px}
+.fix{background:#0f2a20;border-left:3px solid var(--green);padding:8px 10px;margin:6px 0;border-radius:6px;font-size:14px}
+.why{color:var(--amber);font-size:13px;margin:6px 0}
+[contenteditable]{outline:none}[contenteditable]:focus{box-shadow:0 0 0 2px var(--cyan)}
+textarea{width:100%;min-height:80px;background:#0b1220;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit;font-size:16px}
+.btn{background:var(--cyan);color:#012;border:0;border-radius:8px;padding:0 14px;min-height:44px;min-width:44px;font-weight:700;margin:8px 8px 0 0;cursor:pointer;font-size:14px}
+.btn.alt{background:none;color:var(--ink);border:1px solid var(--cyan)}
+a.btn{display:inline-flex;align-items:center;text-decoration:none}
+.x{position:absolute;right:8px;top:6px;background:none;color:var(--mute);font-size:24px;margin:0;width:44px;height:44px;border:0;cursor:pointer}
+.note{font-size:13px;color:var(--mute);margin:4px 0;min-height:44px}#saved{color:var(--green);font-size:13px;margin-left:4px}
+.legend{position:absolute;top:8px;left:8px;right:8px;font-size:12px;color:var(--mute);background:#0b1220cc;padding:6px 8px;border-radius:8px;pointer-events:none}
+.legend span{display:inline-block;width:18px;height:3px;vertical-align:middle;margin:0 4px 0 8px}
+#parts{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px calc(var(--arbpad,96px) + 12px)}
+.hit{fill:transparent!important;stroke:none!important}.nohit .node,.nohit .node circle,.gaplbl{pointer-events:none;cursor:default}
+#parts button{min-height:44px;min-width:44px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:#0f1a2b;color:var(--ink);font:600 13px system-ui,sans-serif;cursor:pointer}
+#parts button.g{border-color:var(--red);color:#fecdd3}
+#parts h3{width:100%;margin:4px 0 0;font-size:12px;letter-spacing:.1em;color:var(--mute)}
+</style></head><body>
+<header><div class="ttl"><b>Old Desk flow map</b> <small id="hint">Tap a part below · pinch or drag to move</small></div>
+<div class="nav"><a href="./index.html">&lsaquo; HUB</a><a href="./map.html" id="toMap">Flow Map &rsaquo;</a></div></header>
+<p class="check">You can check this: tap any part in the list below (or a node on a big screen), write a note and Save note, then open this page again. The red dot on the node shows your note is still there.</p>
+<div id="wrap">
+<div class="legend"><span style="background:var(--green)"></span>flow<span style="background:var(--red)"></span>gap, work falls through<span style="background:var(--cyan)"></span>system<span style="background:#60a5fa"></span>app · <b style="color:var(--red)">red node = not built / not live</b></div>
+<svg id="svg" viewBox="-660 -660 1320 1320" role="img" aria-label="Old Desk flow map"><defs><marker id="hOk" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#34d399"/></marker><marker id="hNo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#f43f5e"/></marker></defs><g id="vp"></g></svg>
+<div id="panel" role="dialog" aria-label="Node details"></div>
+</div>
+<div id="parts" aria-label="Every part of the map"></div>
+<script>
+const NODES = {
+ calendar:{t:"CALENDAR",k:"core",x:0,y:0,d:"Source of truth. Every job lives on a service calendar (Anchor Testing, Rope Access, Window, Gutter, Pressure, Internal). Job card = the Google Doc attached to the event.",
+  rules:["Diary always means Google Calendar — read service calendars by ID, never keyword search primary","BOOKINGS CONFIRMED is read-only","Approved anchor/static-line quotes get booked as ANCHOR TESTING","A building nickname is not an address: always push back for the exact street address","Every quote gets a YELLOW entry on the QUOTES calendar that converts to the booking when won","Certs linked on the ANCHOR TESTING booking so they can be pulled next year"]},
+ whatsapp:{t:"WhatsApp",k:"sys",a:-90,r:200,d:"One group per site. Crew photos, dates of works, access notes.",rules:["Pull the invite link every time a group is opened; log it to the register","Group link → Orion cert rebuild (date of works, +12 months)","Photos should auto-file to Drive per job"]},
+ zoho:{t:"Zoho",k:"sys",a:-50,r:200,d:"Estimates and invoices. Master list mirrored in REALM SOLD 2026.",rules:["Invoices/estimates in Zoho Books — never Xero or PayPal","Pull follow-up / uninvoiced lists from REALM SOLD 2026 first","Dupe-check estimates against Google Tasks before creating","On-site quote linked 3 ways: job booking, QUOTES calendar, site WhatsApp group"]},
+ deputy:{t:"Deputy",k:"sys",a:-10,r:200,d:"Roster and timesheets.",rules:["Ground crew and rope crew: names are kept in Deputy, not on this page","Vehicles: listed in Deputy"]},
+ gmail:{t:"Gmail",k:"sys",a:30,r:200,d:"Inquiries, approvals, cert sends, remittances.",rules:["The attachment travels with the email — never an empty compose after approval","No scheduled 7am client sends","Google writes go through the ORION BRIDGE, not Zapier","Triage goes to Gemini automations, not Claude (Google first)"]},
+ tasks:{t:"Tasks",k:"sys",a:230,r:200,d:"Owner to do / owner to go / Jobs to book / Realm quotes / links access.",rules:["Morning-brief actions → 'owner to go'","Every flow/link built → 'links access'","Writes via ORION BRIDGE only"]},
+ drive:{t:"Drive",k:"sys",a:150,r:200,d:"Certs, job folders, WhatsApp exports, register, SWMS templates.",rules:["Shared = link-viewable, no sign-in","Certs ONLY into ANCHOR ROOF TEST › <year> ANCHOR CERTS › client folder — no side folders","SWMS built from Realm's own templates, linked to the job + crew","Dupe cleanup goes to Gemini automations, not Claude — flag only, never delete certs"]},
+ sheets:{t:"Sheets",k:"sys",a:70,r:200,d:"REALM SOLD 2026 (invoices/estimates master), REALM SITE REGISTER, the links sheet, audit sheet.",rules:["One system per data type — REALM SOLD 2026 wins for money lists","Dupe check goes to Gemini automations, not Claude","Nothing cleaned without the owner's approval — flag, then the owner rules"]},
+ gemini:{t:"Gemini auto",k:"sys",a:110,r:200,int:1,d:"INTERNAL TEST BUILD — owner only, not shown to office staff. Workspace Studio / Apps Script flows that do the Google-side work instead of Claude: Gmail triage, Drive dupe cleanup, Sheets dupe check. Each run logs its status back to the register.",
+  gap:["Gmail triage — Gmail filters never ran","Gmail routing — never ran","Drive dupe cleanup — no flow built yet","Sheets dupe check — no flow built yet","Orion handoff → Gemini has never executed","Status log-back to REALM OPEN REGISTER not wired","Only live Studio flows today: Orion overseer + realm daily"],
+  fix:"Build 3 Workspace Studio flows (Gmail triage, Drive dupe flag, Sheets dupe flag). Each ends with one row to REALM OPEN REGISTER. Node goes green after one real run the owner accepts.",
+  rules:["Status: UNTESTED / INTERNAL ONLY","Google first: Gemini does Google-side steps, Orion reads the result back","Dupes are flagged, never deleted — the owner rules"]},
+ register:{t:"Register",k:"sys",a:190,r:200,d:"REALM OPEN REGISTER — every build, flow and status lands here. Answers 'where's that at'.",rules:["Log first, report second","Writes via ORION BRIDGE","Append only — existing rows change only with the owner's OK"]},
+ inquiry:{t:"Inquiry",k:"step",a:-90,r:390,d:"Email, phone, WhatsApp, client portals.",rules:["Intake: client · address · scope · billing? · site nickname vs billing name · WhatsApp group exists?"]},
+ quote:{t:"Quote",k:"step",a:-50,r:390,d:"Zoho estimate from site + history.",rules:["Dupe-check in Zoho + Tasks first","Every quote answers: anchor system (certified? by whom? when?) · access codes · how we get on the roof"]},
+ book:{t:"Book",k:"step",a:-10,r:390,d:"Approved estimate → calendar event + job card Doc.",rules:["Approval found in email = book same day"]},
+ roster:{t:"Roster",k:"step",a:30,r:390,d:"Crew and vehicle assigned in Deputy.",rules:["Use the standing crew roster"]},
+ job:{t:"Job",k:"step",a:70,r:390,d:"Crew on site, photos to WhatsApp, access codes on the job card.",rules:["SWMS + insurance cert sent before the crew arrives","Record: did the codes work, did we get roof access"]},
+ cert:{t:"Cert",k:"step",a:110,r:390,d:"Height safety cert built from WhatsApp date of works.",rules:["The owner sees the cert PDF inline on the phone before approving","Saved straight to the client folder, linked on the calendar"]},
+ review:{t:"Review",k:"step",a:150,r:390,d:"Client sign-off, complaints, next-clean date.",rules:["Every job closes with a next date or a 'no'"]},
+ invoice:{t:"Invoice",k:"step",a:190,r:390,d:"Zoho invoice raised from the job card.",rules:["Uninvoiced list from REALM SOLD 2026"]},
+ paid:{t:"Paid",k:"step",a:230,r:390,d:"Remittance in, reconciled, flows back to cash.",rules:["Debtor call before 10am while aged receivables are high"]},
+ desk:{t:"REALM DESK",k:"app",a:250,r:560,d:"LIVE web app (Orion Desk = same app). Office start screen: day list, bookings, links.",url:"https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec",rules:["Known faults: ~10 s blank load on Start","Header shows raw &middot;","No money card on Start yet"]},
+ certstudio:{t:"Cert Studio",k:"app",a:110,r:560,d:"Height safety cert builder (green branding).",gap:["Not a live app — HTML file only in Drive (Realm Cert Studio.html), never deployed","No phone link / tile possible until deployed"],fix:"Deploy as an Apps Script web app, anyone-with-link, then add the phone tile.",rules:["Certs straight to ANCHOR ROOF TEST › year › client folder","Never delete, overwrite or trash a cert"]},
+ proxmox:{t:"📶 Proxmox",k:"app",a:70,r:560,d:"Proxmox Wi-Fi tool (Wi-Fi symbol with Realm over the top).",gap:["Not found in Drive or the register","Only related item: Realm Server Map (Claude page, not a tool)"],fix:"Owner to say where it was built (Mac? Claude page?) — then bring it into Google as a web app.",rules:[]}
+};
+// arrows: from, to, live?, label, internal-only?
+const EDGES=[
+ {f:"gmail",t:"gemini",ok:0,l:"triage",int:1},
+ {f:"drive",t:"gemini",ok:0,l:"dupe cleanup",int:1},
+ {f:"sheets",t:"gemini",ok:0,l:"dupe check",int:1},
+ {f:"gemini",t:"register",ok:0,l:"status log",int:1},
+ {f:"desk",t:"register",ok:1,l:"reads"},
+ {f:"certstudio",t:"cert",ok:0,l:"not live"}
+];
+let SHOW_INT=false;
+const CHAIN=["inquiry","quote","book","roster","job","cert","review","invoice","paid"];
+const GAPS={
+ "inquiry>quote":{lbl:"slow quotes",items:["Quotes promised but not sent, some waiting more than a week"],fix:"Auto-draft the Zoho estimate the moment an inquiry is tagged; the owner only approves."},
+ "quote>book":{lbl:"unbooked",items:["Approved estimates and work orders not yet on the calendar"],fix:"Approval email detected \u2192 draft calendar event + job card \u2192 one tap to confirm. Biggest leak in the business."},
+ "book>roster":{lbl:"no link",items:["Deputy doesn't read the calendar \u2014 roster is typed twice"],fix:"Calendar event carries crew names; Deputy shift created from it."},
+ "roster>job":{lbl:"insurance",items:["Cert of currency not sent before some jobs","Public liability showing past expiry on the cert tracker"],fix:"Pre-start pack (SWMS + cert of currency + inductions) auto-sent 48h before every job. Job can't go green without it."},
+ "job>cert":{lbl:"",items:[],fix:""},
+ "cert>review":{lbl:"",items:[],fix:""},
+ "review>invoice":{lbl:"never billed",items:["Finished cleans not invoiced","A client asking for an invoice, not a quote","An open complaint"],fix:"Job marked done on calendar \u2192 draft Zoho invoice same day."},
+ "invoice>paid":{lbl:"aged debt",items:["Aged receivables high"],fix:"Dunning ladder: 7 / 14 / 30 days, then a phone task for the owner."}
+};
+/* Notes + amends: saved on this device (realm_deskflow_notes_v1, realm_deskflow_edits_v1). The old Desk saved to its sheet
+   through google.script.run; that does not exist outside Apps Script, so this page keeps them here and can copy a note into Note. */
+/* 29 Oct (ELON gate, FAIL 1): every step note goes through the Desk round 4 code check before it is saved on this device
+   or queued for the Desk, and again just before each send, so a blocked note already in the queue is dropped, never sent.
+   The block between the two markers is copied unchanged from js/watchme.js (Watch me work), which copied it from
+   DeskFix.html round 4 (sha256 9a151949...). Addresses and bank details are checked on top of it, below the end marker. */
+const NoteGuard=(function(){"use strict";
+/* ---------- code check (copied from the Desk fix round 4 code check, DeskFix.html lines 138-234) ---------- */
+var ENT={amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",nbsp:' ',middot:'\u00b7',mdash:'\u2014',ndash:'\u2013',hellip:'\u2026',bull:'\u2022',rarr:'\u2192',larr:'\u2190',times:'\u00d7',check:'\u2713'};
+function decodeEnt(s){var prev;s=String(s==null?'':s);
+  do{prev=s;s=s.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi,function(m,c){
+    if(c[0]==='#'){var n=c[1]==='x'||c[1]==='X'?parseInt(c.slice(2),16):parseInt(c.slice(1),10);try{return String.fromCodePoint(n)}catch(e){return ''}}
+    var v=ENT[c.toLowerCase()];return v==null?m:v})}while(s!==prev);
+  return s}
+/* ---- code check (round 3) ----
+   1. Digit-like characters become 0-9: an explicit table for circled and dingbat numbers (➍ ❹ ⓸), Roman numeral
+      characters (Ⅳ ⅶ), Ethiopic and Chinese numerals (四七一九); then NFKC (full-width ４, superscripts, ①);
+      any other number character left counts as a digit; every Unicode digit (Arabic-Indic, Persian, Devanagari...) becomes 0-9.
+   2. Words: run-together words are split (fourseven = four seven, keysafe = key safe), Roman runs too (ivviiiix);
+      number words, ordinals (first..ninth), double/triple, o/oh before a digit (oh oh seven = 007),
+      for/fore = 4, to/too = 2, won = 1, ate = 8 when next to a digit.
+   3. If a code word is anywhere in the note (key, safe, lockbox, lock, pin, code, combo, alarm, gate, door...),
+      3 or more digits ANYWHERE in the note = a code, whatever words sit between them.
+   4. Otherwise: 3 or more typed digits anywhere = a code; 3 or more digits in a row with only gaps or filler
+      (and, then, um, uh, er, sorry, ok, dash, comma...) between them = a code; 4 or more digits within 8 words = a code. */
+var DIGMAP=(function(){var m={};
+  function put(start,vals){for(var k=0;k<vals.length;k++)m[String.fromCodePoint(start+k)]=String(vals[k])}
+  var r10=[1,2,3,4,5,6,7,8,9,10],r12=[1,2,3,4,5,6,7,8,9,10,11,12];
+  put(0x2776,r10);put(0x2780,r10);put(0x278A,r10);put(0x24F5,r10);put(0x24EB,[11,12,13,14,15,16,17,18,19,20]);
+  put(0x2160,r12);put(0x2170,r12);put(0x216C,[50,100,500,1000]);put(0x217C,[50,100,500,1000]);put(0x1369,[1,2,3,4,5,6,7,8,9]);put(0x1372,[10,20,30,40,50,60,70,80,90,100]);
+  ['\u24FF','\u24EA','\u{1F10B}','\u{1F10C}','\u3007','\u96F6'].forEach(function(c){m[c]='0'});
+  var zh='\u4E00\u4E8C\u4E09\u56DB\u4E94\u516D\u4E03\u516B\u4E5D',zf='\u58F9\u8D30\u53C1\u8086\u4F0D\u9646\u67D2\u634C\u7396';
+  for(var k=0;k<9;k++){m[zh[k]]=String(k+1);m[zf[k]]=String(k+1)}
+  m['\u5341']='10';m['\u5344']='20';m['\u5EFF']='20';m['\u5345']='30';m['\u62FE']='10';m['\u4E24']='2';m['\u5169']='2';m['\u8CB3']='2';m['\u53C3']='3';m['\u9678']='6';
+  return m})();
+function asciiDigits(s){return s.replace(/\p{Nd}/gu,function(c){if(c>='0'&&c<='9')return c;var z=c.codePointAt(0),b=z;
+  while(b>0&&z-b<60&&/\p{Nd}/u.test(String.fromCodePoint(b-1)))b--;return String((z-b)%10)})}
+function normText(s){s=decodeEnt(String(s==null?'':s));
+  s=Array.from(s).map(function(c){var v=DIGMAP[c];return v==null?c:' '+v+' '}).join('');
+  s=s.normalize('NFKC');s=Array.from(s).map(function(c){var v=DIGMAP[c];return v==null?c:' '+v+' '}).join('').replace(/[\p{No}\p{Nl}]/gu,' 0 ');
+  return asciiDigits(s).toLowerCase()}
+var ONES={zero:0,nought:0,naught:0,nil:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9};
+var TEENS={ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19};
+var TENS={twenty:2,thirty:3,forty:4,fourty:4,fifty:5,sixty:6,seventy:7,eighty:8,ninety:9};
+var ORD={first:1,second:2,third:3,fourth:4,fifth:5,sixth:6,seventh:7,eighth:8,ninth:9};
+var BIG={hundred:'00',thousand:'000'};
+var REP={double:2,triple:3,treble:3};
+var ROMAN={ii:2,iii:3,iv:4,vi:6,vii:7,viii:8,ix:9,xi:11,xii:12},ROMAN1={i:1,v:5};
+var HOMO={for:4,fore:4,won:1,ate:8,to:2,too:2};
+var CODEW={key:1,keys:1,keysafe:1,keysafes:1,safe:1,safes:1,lockbox:1,lockboxes:1,lock:1,locks:1,padlock:1,pin:1,pins:1,code:1,codes:1,combo:1,combination:1,alarm:1,gate:1,door:1,passcode:1,password:1,keypad:1,box:1,boxes:1,lockup:1,keybox:1,keyboxes:1};
+var FILL={and:1,n:1,then:1,dash:1,hyphen:1,comma:1,x:1,by:1,slash:1,stroke:1,plus:1,times:1,colon:1,semicolon:1,star:1,hash:1,dot:1,point:1,space:1,bracket:1,underscore:1,o:1,oh:1,
+  um:1,umm:1,uh:1,uhh:1,er:1,erm:1,ah:1,hmm:1,sorry:1,ok:1,okay:1};
+/* the words a run-together word may be split into */
+var PARTS=Object.keys(ONES).concat(Object.keys(TEENS),Object.keys(TENS),Object.keys(ORD),Object.keys(BIG),Object.keys(REP),Object.keys(CODEW),['oh']).sort(function(a,b){return b.length-a.length});
+function known(w){return ONES[w]!=null||TEENS[w]!=null||TENS[w]!=null||ORD[w]!=null||BIG[w]!=null||REP[w]!=null||ROMAN[w]!=null||ROMAN1[w]!=null||CODEW[w]||FILL[w]||HOMO[w]!=null}
+function splitWords(w){if(w.length<5)return null;var memo={};
+  function go(i){if(i===w.length)return [];if(memo[i]!==undefined)return memo[i];memo[i]=null;
+    for(var k=0;k<PARTS.length;k++){var p=PARTS[k];if(w.substr(i,p.length)===p){var r=go(i+p.length);if(r){memo[i]=[p].concat(r);break}}}
+    return memo[i]}
+  var r=go(0);return r&&r.length>1?r:null}
+var RPARTS=['viii','vii','iii','xii','ix','iv','vi','ii','xi','x','v','i'],RVAL={viii:8,vii:7,iii:3,xii:12,ix:9,iv:4,vi:6,ii:2,xi:11,x:10,v:5,i:1};
+function splitRoman(w){if(!/^[ivx]{4,}$/.test(w)||w.indexOf('i')<0)return null;var out=[],i=0;
+  while(i<w.length){for(var k=0;k<RPARTS.length;k++){if(w.substr(i,RPARTS[k].length)===RPARTS[k]){out.push(RVAL[RPARTS[k]]);i+=RPARTS[k].length;break}}}
+  return out.length>1?out:null}
+function codeTokens(s){
+  var raw=normText(s).match(/[a-z]+|\d+|[^a-z\d]+/g)||[],T=[];
+  raw.forEach(function(x){
+    if(/^\d+$/.test(x)){T.push({d:x,typed:1});return}
+    if(!/^[a-z]+$/.test(x)){T.push({s:x});return}
+    if(!known(x)){var p=splitWords(x);if(p){p.forEach(function(y,k){if(k)T.push({s:' '});T.push({w:y})});return}
+      var r=splitRoman(x);if(r){r.forEach(function(y,k){if(k)T.push({s:' '});T.push({d:String(y),r:1})});return}}
+    T.push({w:x})});
+  function nb(i,dir){for(var j=i+dir;j>=0&&j<T.length;j+=dir)if(!T[j].s)return j;return -1}
+  function isD(k){return k>=0&&T[k].d!=null}
+  var i,t,j,codeMode=T.some(function(x){return x.w&&CODEW[x.w]});
+  for(i=0;i<T.length;i++){t=T[i];if(!t.w)continue;var w=t.w;
+    if(TENS[w]!=null){j=nb(i,1);if(j>=0&&ONES[T[j].w]>0){T[i]={d:String(TENS[w])+ONES[T[j].w]};T[j]={s:''};continue}T[i]={d:TENS[w]+'0'}}
+    else if(TEENS[w]!=null)T[i]={d:String(TEENS[w])};
+    else if(ONES[w]!=null)T[i]={d:String(ONES[w])};
+    else if(ORD[w]!=null)T[i]={d:String(ORD[w]),ord:1};
+    else if(BIG[w]!=null)T[i]={d:BIG[w]};
+    else if(ROMAN[w]!=null)T[i]={d:String(ROMAN[w]),r:1}}
+  for(i=0;i<T.length;i++)if(T[i].w&&ROMAN1[T[i].w]!=null&&[nb(i,-1),nb(i,1)].some(function(k){return k>=0&&T[k].r}))T[i]={d:String(ROMAN1[T[i].w]),r:1};
+  /* o / oh before a digit is a 0 (right to left, so "oh oh seven" = 007) */
+  for(i=T.length-1;i>=0;i--){t=T[i];if(t.w==='o'||t.w==='oh'){if(isD(nb(i,1)))T[i]={d:'0'}}}
+  for(i=0;i<T.length;i++){t=T[i];if(t.w&&REP[t.w]!=null){j=nb(i,1);if(j>=0&&T[j].d&&T[j].d.length===1){T[j]={d:T[j].d.repeat(REP[t.w])};T[i]={s:''}}}}
+  /* sound-alikes next to a digit (twice, so "for for seven" works). Without a code word they need a digit on both
+     sides, and to/too never count ("levels 2 to 4" stays a plain note). */
+  for(var pass=0;pass<2;pass++)for(i=0;i<T.length;i++){t=T[i];if(!t.w||HOMO[t.w]==null)continue;
+    var a=isD(nb(i,-1)),b=isD(nb(i,1));
+    if(codeMode?(a||b):(a&&b&&t.w!=='to'&&t.w!=='too'))T[i]={d:String(HOMO[t.w]),homo:1}}
+  T.codeMode=codeMode;return T}
+function hasCode(s){s=String(s==null?'':s);if(!s.trim())return false;
+  var T=codeTokens(s),i,t,all=0,typed=0,run=0,runNum=0,words=[];
+  for(i=0;i<T.length;i++){t=T[i];
+    if(t.d!=null){all+=t.d.length;if(t.typed)typed+=t.d.length;words.push(t.d.length);
+      run+=t.d.length;if(!t.ord)runNum+=t.d.length;
+      if(T.codeMode&&all>=3)return true;
+      if(typed>=3)return true;
+      if(run>=4||(run>=3&&runNum>0))return true}
+    else if(t.w!=null){words.push(0);if(!FILL[t.w]){run=0;runNum=0}}}
+  /* 4 or more digits within any 8 words */
+  for(i=0;i<words.length;i++){var n=0;for(var k=i;k<words.length&&k<i+8;k++)n+=words[k];if(n>=4)return true}
+  return false};
+/* ---------- end of copied code check ---------- */
+/* Flow Map only: street addresses ("12 Smith St", "twelve Smith Street") and bank details (BSB, account number, IBAN, SWIFT) */
+var NUMW='(?:\\d+[a-z]?|'+Object.keys(ONES).concat(Object.keys(TEENS),Object.keys(TENS)).join('|')+')';
+var STREET='(?:st|street|rd|road|ave|av|avenue|ct|crt|court|dr|drv|drive|pde|parade|cres|crescent|pl|place|ln|lane|hwy|highway|blvd|bvd|boulevard|tce|terrace|cl|close|gr|grove|cct|circuit|esp|esplanade|sq|square|bwy|broadway|way|wy|mews|glen|gln|parkway|pkwy|gdns|grv|rdg|cir|alley|arcade|strand|quay|wharf|promenade|hts)';
+/* street types that are also everyday words (walk, view, row...): only when typed like a name, e.g. '8 Smith Walk' */
+var STREET_TC=/\b\d+[A-Za-z]?(?:\s*[\/-]\s*\d+)?\s+(?:[A-Z][A-Za-z'-]+\s+){1,2}(?:Rise|Walk|View|Row|Link|Lo{2}p|Track|Trail|Gardens|Ridge|Hill|Circle|Green|Chase|Vista|Retreat|Path|Heights|Approach|RISE|WALK|VIEW|ROW|LINK|LO{2}P|TRACK|TRAIL|GARDENS|RIDGE|HILL|CIRCLE|GREEN|CHASE|VISTA|RETREAT|PATH|HEIGHTS|APPROACH)\b/;
+var STOP={on:1,the:1,to:1,at:1,in:1,a:1,an:1,of:1,for:1,and:1,then:1,by:1,or:1,is:1,it:1,its:1,up:1,from:1,with:1};
+var ADDR=new RegExp('\\b'+NUMW+'(?:\\s*[/-]\\s*\\d+)?\\s+((?:[a-z\'-]+\\s+){1,2})'+STREET+'\\b','g');
+var LOCKNUM=/\b(?:(?:key\s*safe|key\s*box|lock\s*box|padlock|combo|combination|code)\b(?:\s+[a-z'-]+){0,4}?|(?:pin|alarm)(?:\s+(?:code|number|no|is|it's|its|=))*)\s*#?\d/;
+var BANK=/\b(?:bsb|iban|swift|bic|acc(?:ount)?\.?\s*(?:no|num|number|#)|account\s+details|card\s+(?:no|number))\b/;
+var ADDR_THE=new RegExp('\\b'+NUMW+'(?:\\s*[/-]\\s*\\d+)?\\s+the\\s+(?:[a-z\'-]+\\s+)?'+STREET+'\\b');
+function hasAddr(t){var m;if(ADDR_THE.test(t))return true;ADDR.lastIndex=0;while((m=ADDR.exec(t))){if(!m[1].trim().split(/\s+/).some(function(w){return STOP[w]}))return true}return false}
+function blocked(s){s=String(s==null?'':s);if(!s.trim())return false;if(hasCode(s))return true;var t=normText(s).replace(/[^a-z0-9#/'-]+/g,' ');return hasAddr(t)||STREET_TC.test(decodeEnt(s).normalize('NFKC'))||BANK.test(t)||LOCKNUM.test(t)}
+return {hasCode:hasCode,blocked:blocked}})();
+const BLOCK_MSG='Note not saved. Leave out lockbox or key-safe codes, addresses and bank details.';
+/* Old Desk flow map: every note and every amend goes through Flow Map's NoteGuard (above, copied unchanged from map.html)
+   and js/refcheck.js before it is kept on this device or copied into Note. Blocked text is never saved. */
+function why(s){if(NoteGuard.blocked(s))return BLOCK_MSG;if(window.RefCheck&&RefCheck.blocked(s))return "Not saved. "+(RefCheck.why(s)||RefCheck.MSG);return ""}
+const NK="realm_deskflow_notes_v1",EK="realm_deskflow_edits_v1";
+function rd(k){try{return JSON.parse(localStorage.getItem(k)||"{}")||{}}catch(e){return{}}}
+function wr(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
+let NOTES=rd(NK),EDITS=rd(EK);
+Object.keys(EDITS).forEach(id=>{const n=NODES[id],e=EDITS[id];if(!n||!e)return;if(e.t)n.t=e.t;if(e.d)n.d=e.d;if(Array.isArray(e.rules))n.rules=e.rules});
+function amend(id,f,v){const w=why(v);if(w){const m=document.getElementById("saved");if(m)m.textContent=w;return false}EDITS[id]=EDITS[id]||{};EDITS[id][f]=v;EDITS[id].at=Date.now();wr(EK,EDITS)}
+function amendRule(id,i,v){const n=NODES[id],r=n.rules.slice();r[i]=v;if(amend(id,"rules",r)!==false)n.rules[i]=v;else openNode(id)}
+function ntxt(id){const v=NOTES[id];return v==null?"":typeof v==="string"?v:(v.txt||"")}
+function saveNote(id,txt){const w=why(txt);if(w)return w;const had=!!ntxt(id);NOTES[id]={txt:txt,at:Date.now(),amended:had||undefined};return wr(NK,NOTES)?(had?"\u2713 Amended":"\u2713 Saved"):"Not saved: this browser is not keeping data (private mode?)."}
+function toNote(id){const txt=ntxt(id);if(!txt)return"Save a note first.";const w=why(txt);if(w)return w;let a=[];try{a=JSON.parse(localStorage.getItem("realm_scribe_v1")||"[]");if(!Array.isArray(a))a=[]}catch(e){}
+ const name=NODES[id]?NODES[id].t:id.replace(/^gap:/,"Gap ").replace(">"," \u2192 ");
+ a.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:("Old Desk flow map \u00b7 "+name+": "+txt).slice(0,140),note:txt,done:false,from:"Ange",urgent:false,owner:"Ange",att:[],ts:Date.now(),mt:Date.now()});
+ try{localStorage.setItem("realm_scribe_v1",JSON.stringify(a));return"\u2713 Also in Note"}catch(e){return"Not copied: this browser is not keeping data."}}
+const P=id=>{const n=NODES[id];if(n.k==="core")return{x:0,y:0};const r=n.a*Math.PI/180;return{x:n.r*Math.cos(r),y:n.r*Math.sin(r)}};
+const vp=document.getElementById("vp"),NS="http://www.w3.org/2000/svg";
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||vp).appendChild(e);return e}
+function draw(){
+ vp.innerHTML="";
+ const all=Object.keys(NODES).filter(id=>SHOW_INT||!NODES[id].int);
+ for(let i=0;i<all.length;i++)for(let j=i+1;j<all.length;j++){
+  const A=NODES[all[i]],B=NODES[all[j]];if(A.k==="step"||B.k==="step"||A.k==="app"||B.k==="app")continue;
+  const a=P(all[i]),b=P(all[j]);el("line",{x1:a.x,y1:a.y,x2:b.x,y2:b.y,class:"geo"})}
+ for(let i=0;i<CHAIN.length-1;i++){
+  const k=CHAIN[i]+">"+CHAIN[i+1],g=GAPS[k],a=P(CHAIN[i]),b=P(CHAIN[i+1]);
+  const isGap=g&&g.items.length;
+  el("line",{x1:a.x,y1:a.y,x2:b.x,y2:b.y,class:isGap?"gap":"flow"});
+  if(isGap){const t=el("text",{x:(a.x+b.x)/2*1.13,y:(a.y+b.y)/2*1.13+4,class:"gaplbl"});t.textContent="\u26a0 "+g.lbl;}
+ }
+ EDGES.filter(e=>SHOW_INT||!e.int).forEach(e=>{
+  const a=P(e.f),b=P(e.t),mx=(a.x+b.x)/2*.72,my=(a.y+b.y)/2*.72;
+  const ra=NODES[e.f].k==="sys"?50:46,rb=NODES[e.t].k==="sys"?54:50;
+  const ua=Math.hypot(mx-a.x,my-a.y),ub=Math.hypot(b.x-mx,b.y-my);
+  const s={x:a.x+(mx-a.x)/ua*ra,y:a.y+(my-a.y)/ua*ra},t={x:b.x-(b.x-mx)/ub*rb,y:b.y-(b.y-my)/ub*rb};
+  el("path",{d:`M${s.x},${s.y} Q${mx},${my} ${t.x},${t.y}`,class:"arr "+(e.ok?"ok":"no"),"marker-end":e.ok?"url(#hOk)":"url(#hNo)"});
+  const lx=(s.x+2*mx+t.x)/4*.9,ly=(s.y+2*my+t.y)/4*.9,tx=el("text",{x:lx,y:ly-4,class:"arrlbl",fill:e.ok?"#34d399":"#f43f5e"});tx.textContent=e.l;
+ });
+ all.forEach(id=>{
+  const n=NODES[id],p=P(id),g=el("g",{class:"node "+n.k+(n.gap?" isgap":"")+(n.int?" int":""),transform:`translate(${p.x},${p.y})`,"data-id":id});
+  el("circle",{r:n.k==="core"?70:n.k==="sys"?48:44},g);el("circle",{r:44,class:"hit"},g);
+  if(n.gap){const w=el("text",{y:n.k==="sys"?64:60,class:"nodelbl"},g);w.textContent=n.int?"\u26a0 internal \u00b7 not built":"\u26a0 not live"}
+  const t=el("text",{y:5},g);t.textContent=n.t;
+  if(ntxt(id)){el("circle",{r:7,cx:34,cy:-34,class:"badge"},g)}
+  g.onclick=()=>openNode(id);
+ });
+ drawParts(all);fitHits();
+}
+/* Tap areas: nearest two node centres are 136.8 map units apart. A node is tappable only when that gap is at least 44 screen px,
+   so every tap circle can be 44px (r = 22px / scale) without overlapping its neighbour. Below that (phones, about under 424px of map)
+   the nodes are not tappable and the 44px part buttons below the map open them. Pinch in and the nodes come back. */
+const MIN_GAP=136.8;
+function mapScale(){const w=svg.clientWidth,h=svg.clientHeight;return w&&h?Math.min(w/vb.w,h/vb.h):0}
+function fitHits(){const s=mapScale(),on=s>0&&MIN_GAP*s>=44;svg.classList.toggle("nohit",!on);svg.dataset.hit=on?"on":"off";
+ document.querySelectorAll("#vp .hit").forEach(c=>{const g=c.parentNode,vis=+g.querySelector("circle").getAttribute("r");c.setAttribute("r",on?Math.max(vis,22/s+.5):vis)});
+ const h=document.getElementById("hint");if(h)h.textContent=on?"Tap a node or a part below \u00b7 pinch or drag to move":"Tap a part below \u00b7 pinch or drag to move"}
+/* TELL ARA bubble: keep a bottom gap of its measured height + its offset + 12px */
+function fitArb(){const b=document.getElementById("arbBtn");let pad=96;if(b){const r=b.getBoundingClientRect();if(r.height&&getComputedStyle(b).position==="fixed")pad=Math.max(64,Math.ceil(innerHeight-r.top)+12);else pad=24}
+ document.documentElement.style.setProperty("--arbpad",pad+"px")}
+addEventListener("resize",()=>{fitHits();fitArb()});new MutationObserver(fitArb).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class","style"]});addEventListener("load",()=>{fitHits();fitArb();setTimeout(fitArb,800)});
+/* the same parts as 44px buttons, so a phone can open any node without pinching */
+function drawParts(all){const B=document.getElementById("parts");B.textContent="";const h=document.createElement("h3");h.textContent="EVERY PART \u00b7 TAP TO OPEN";B.appendChild(h);
+ all.forEach(id=>{const b=document.createElement("button");b.type="button";b.textContent=NODES[id].t+(ntxt(id)?" \u2022":"");if(NODES[id].gap)b.className="g";b.onclick=()=>openNode(id);B.appendChild(b)});
+ Object.keys(GAPS).filter(k=>GAPS[k].items.length).forEach(k=>{const b=document.createElement("button");b.type="button";b.className="g";b.textContent="\u26a0 "+k.replace(">"," \u2192 ")+(ntxt("gap:"+k)?" \u2022":"");b.onclick=()=>openGap(k);B.appendChild(b)})}
+const panel=document.getElementById("panel");
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+const WHY_PUBLIC='<div class="why">Why no names, addresses or amounts here: this page is public, so the live list stays in Desk.</div>';
+function noteBox(id){const v=NOTES[id],at=v&&v.at?new Date(v.at).toLocaleString("en-AU",{timeZone:"Australia/Melbourne",day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}):"";
+ return `<h3>Notes \u00b7 saved on this device</h3><textarea id="nt" aria-label="Note for this part">${esc(ntxt(id))}</textarea><button class="btn" type="button" onclick="doSave('${id}')">${ntxt(id)?"Save amend":"Save note"}</button><button class="btn alt" type="button" onclick="doNote('${id}')">Also put in Note</button><span id="saved">${at?"Last saved "+esc(at):""}</span>
+ <div class="why">Why it is not on your other devices: the old Desk saved notes to its sheet, and that only works inside Desk. Use Also put in Note to carry it across.</div>`}
+function openNode(id){
+ const n=NODES[id],gi=Object.entries(GAPS).filter(([k,g])=>g.items.length&&k.split(">").includes(id));
+ panel.innerHTML=`<button class="x" type="button" aria-label="Close" onclick="closeP()">\u00d7</button><h2 contenteditable onblur="if(amend('${id}','t',this.innerText)!==false){NODES['${id}'].t=this.innerText;draw()}else this.innerText=NODES['${id}'].t">${esc(n.t)}</h2>
+ <div contenteditable class="note" onblur="if(amend('${id}','d',this.innerText)!==false)NODES['${id}'].d=this.innerText;else this.innerText=NODES['${id}'].d">${esc(n.d)}</div>
+ <div class="why">Amend: tap the name, the words or a rule and type. It keeps on this device.</div>
+ ${n.gap?`<h3>What's missing</h3>${n.gap.map(x=>`<div class="gapitem">${esc(x)}</div>`).join("")}<div class="fix">Fix: ${esc(n.fix||"")}</div>`:""}
+ ${n.url?`<h3>Open</h3><a class="btn" href="${esc(n.url)}" target="_blank" rel="noopener">Open ${esc(n.t)} \u2197</a><div class="why">Why it opens in a new tab: Desk is a Google web app and asks for the Realm key itself.</div>`:""}
+ <h3>Standing rules on this node</h3>${n.rules.length?n.rules.map((r,i)=>`<div class="rule" contenteditable onblur="amendRule('${id}',${i},this.innerText)">${esc(r)}</div>`).join(""):'<div class="note">No rules on this one yet.</div>'}
+ ${gi.map(([k,g])=>`<h3>Gap: ${esc(k.replace(">"," \u2192 "))}</h3>${g.items.map(x=>`<div class="gapitem">${esc(x)}</div>`).join("")}<div class="fix">Fix: ${esc(g.fix)}</div>`).join("")}${gi.length?WHY_PUBLIC:""}
+ ${noteBox(id)}`;showP();
+}
+function openGap(k){const g=GAPS[k];
+ panel.innerHTML=`<button class="x" type="button" aria-label="Close" onclick="closeP()">\u00d7</button><h2>Gap: ${esc(k.replace(">"," \u2192 "))}</h2><h3>Falling through now</h3>${g.items.map(x=>`<div class="gapitem">${esc(x)}</div>`).join("")}${WHY_PUBLIC}<h3>Better step</h3><div class="fix">${esc(g.fix)}</div>${noteBox("gap:"+k)}`;showP()}
+function doSave(id){const v=document.getElementById("nt").value,m=saveNote(id,v);if(why(v)){document.getElementById("saved").textContent=m;return}draw();if(id.indexOf("gap:")===0)openGap(id.slice(4));else openNode(id);document.getElementById("saved").textContent=m}
+function doNote(id){const v=document.getElementById("nt").value;if(v!==ntxt(id)){const r=saveNote(id,v);if(why(v)){document.getElementById("saved").textContent=r;return}}document.getElementById("saved").textContent=toNote(id);draw()}
+function showP(){panel.classList.add("open");panel.scrollTop=0;const x=panel.querySelector(".x");if(x)x.focus({preventScroll:true});requestAnimationFrame(()=>panel.scrollIntoView({block:"nearest"}))}
+function closeP(){panel.classList.remove("open")}
+let vb={x:-660,y:-660,w:1320,h:1320};const svg=document.getElementById("svg");
+function setVB(){svg.setAttribute("viewBox",`${vb.x} ${vb.y} ${vb.w} ${vb.h}`);fitHits()}
+let pts=new Map(),lastD=null;
+svg.addEventListener("pointerdown",e=>{pts.set(e.pointerId,e)});
+svg.addEventListener("pointermove",e=>{if(!pts.has(e.pointerId))return;const prev=pts.get(e.pointerId);pts.set(e.pointerId,e);
+ const s=vb.w/svg.clientWidth;
+ if(pts.size===1){vb.x-=(e.clientX-prev.clientX)*s;vb.y-=(e.clientY-prev.clientY)*s}
+ else if(pts.size===2){const[a,b]=[...pts.values()],d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);if(lastD){const f=lastD/d,cx=vb.x+vb.w/2,cy=vb.y+vb.h/2;vb.w*=f;vb.h*=f;vb.x=cx-vb.w/2;vb.y=cy-vb.h/2}lastD=d}
+ setVB()});
+["pointerup","pointercancel"].forEach(t=>svg.addEventListener(t,e=>{pts.delete(e.pointerId);lastD=null}));
+svg.addEventListener("wheel",e=>{e.preventDefault();const f=e.deltaY>0?1.1:.9,cx=vb.x+vb.w/2,cy=vb.y+vb.h/2;vb.w*=f;vb.h*=f;vb.x=cx-vb.w/2;vb.y=cy-vb.h/2;setVB()},{passive:false});
+if(/[?&]v=ange/.test(location.search))SHOW_INT=true;
+draw();
+</script>
+<script src="js/refcheck.js?v=20261029-r6"></script>
+<script src="js/saveapp.js?v=20261017s" data-mount="header .nav"></script>
+<script src="js/ara-version.js" defer></script>
+<script src="js/ara-install.js?v=20261017c" defer></script><script src="js/mic-chat.js?v=20261030-1" data-mount="header .nav" defer></script>
+</body></html>
