@@ -23,6 +23,11 @@
      data-allow-text: friendlier wording for the 'allow' state. */
   var BO = !!(CUR && CUR.hasAttribute('data-backoff')), boN = 0, boUntil = 0;
   var ALLOW_TXT = CUR && CUR.getAttribute('data-allow-text');
+  /* data-sync-anchor (30 Oct 2026, Anchor Studio only): this page syncs only its own job copies (realm_anchor_job_<address>) and its
+     Pick up list (realm_anchor_resume), with its own pull cursor and agreed copies (realm_sync_meta_anchor, realm_sync_base_anchor).
+     It never reads or moves the cursor the other pages share, so each side still gets every change made on another screen.
+     The device key and device name stay shared. Pages without it sync exactly what they did before. */
+  if (CUR && CUR.hasAttribute('data-sync-anchor')) { INC = [/^realm_anchor_job_[a-z0-9_]{1,60}$/, /^realm_anchor_resume$/]; META = 'realm_sync_meta_anchor'; BASE = 'realm_sync_base_anchor'; }
   function inScope(k) { if (!k || k.length > 80 || !/^[A-Za-z0-9_\-]+$/.test(k)) return false; for (var i = 0; i < INC.length; i++) if (INC[i].test(k)) return true; return false; }
   function rd(k) { try { return LS.getItem(k); } catch (e) { return null; } }
   function wr(k, v) { try { if (v == null) rawRemove.call(LS, k); else rawSet.call(LS, k, v); return true; } catch (e) { return false; } }
