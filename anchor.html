@@ -4,7 +4,7 @@
 <meta name="apple-mobile-web-app-title" content="Anchor Studio"><meta name="application-name" content="Anchor Studio"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="anchor.webmanifest?v=20261030-1"><link rel="icon" href="pwa/anchor-192.png?v=20261030-1" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" sizes="180x180" href="pwa/anchor-apple-180.png?v=20261030-1">
-<script src="js/anchor-store.js?v=20261030-1"></script><script src="js/cs-config.js?v=20261029-4"></script><script src="js/cs-jobs.js?v=20261029-4"></script><script src="js/anchor-gas.js?v=20261030-1"></script><script>
+<script src="js/anchor-store.js?v=20261030-1"></script><script src="js/cs-config.js?v=20261029-4"></script><script src="js/cs-jobs.js?v=20261029-4"></script><script src="js/anchor-early.js?v=20261030-4"></script><script src="js/anchor-gas.js?v=20261030-1"></script><script>
 /* Realm: connector calls -> Google Apps Script */
 (function(){
   var hasRun = typeof google!=='undefined' && google.script && google.script.run;
@@ -3211,4 +3211,4 @@ function persist(){ clearTimeout(pt); pt=setTimeout(async function(){ try{ var d
 @media (min-width:821px){.side,.stage,#certPane,#mergePane,.certrail{padding-bottom:132px!important}}
 </style>
 <script>if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){window.addEventListener('load',function(){navigator.serviceWorker.register('app-sw.js',{scope:'./anchor.html'}).catch(function(){})})}</script>
-<script src="js/cs-split.js?v=20261029-4"></script><script src="js/anchor-account.js?v=20261030-1"></script><script src="js/resume.js?v=20261029-4"></script><script>window.AnchorStore&&AnchorStore.wrapResume();</script><script src="js/cs-ui.js?v=20261029-4"></script><script src="js/app-shell-config.js?v=20261029-4"></script><script src="js/anchor-shell-config.js?v=20261030-1"></script><script src="js/app-shell.js?v=20261029-4" data-app="anchor" defer></script><script src="js/anchor.js?v=20261030-1" defer></script></body></html>
+<script src="js/cs-split.js?v=20261029-4"></script><script src="js/anchor-account.js?v=20261030-1"></script><script src="js/resume.js?v=20261029-4"></script><script>window.AnchorStore&&AnchorStore.wrapResume();</script><script src="js/cs-ui.js?v=20261029-4"></script><script src="js/app-shell-config.js?v=20261029-4"></script><script src="js/anchor-shell-config.js?v=20261030-1"></script><script src="js/app-shell.js?v=20261029-4" data-app="anchor" defer></script><script src="js/realm-sync.js?v=20261030-3" data-sync-anchor data-backoff data-allow-text="Saved on this device · tap to sync"></script><script src="js/anchor.js?v=20261030-4" defer></script></body></html>
