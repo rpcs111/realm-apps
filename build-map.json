@@ -106,7 +106,7 @@
    "name": "Grok How-To",
    "status": "green",
    "elon_verified": true,
-   "note": "Built 17 Oct: illustrated Grok guide with Julie's iPhone setup (her own login), Fold 8 / Flip 6 steps, Grok in 8 stops (official xAI sources only, no YouTube); Install button 44px and scrolls away, no longer pinned over cards. Headless test 390x844 and iPhone UA: 0 JS errors, no sideways scroll. Waiting for Elon's check. https://rpcs111.github.io/realm-apps/grok-howto.html",
+   "note": "Built 17 Oct: illustrated Grok guide with the Office iPhone setup (its own login), Fold 8 / Flip 6 steps, Grok in 8 stops (official xAI sources only, no YouTube); Install button 44px and scrolls away, no longer pinned over cards. Headless test 390x844 and iPhone UA: 0 JS errors, no sideways scroll. Waiting for Elon's check. https://rpcs111.github.io/realm-apps/grok-howto.html",
    "source": "Ange via Elon 15:06 UTC 16 Oct: Grok how-to infographic + Julie's phone",
    "verified_date": "2026-10-17",
    "verified_how": "Elon independent re-check v7 (version 2026.10.17-8), 390x844 Android, ?d=fold8 and ?d=julie: PASS. Report: /workspace/notes_test2/grokhowto_v7_elon/REPORT.md"
@@ -277,7 +277,7 @@
    "name": "Call-back-on-1300 button",
    "status": "grey",
    "elon_verified": false,
-   "note": "Button next to enquiry/quote so outbound uses 1300 and logs against the job. Stops Julie using personal mobile. 1 Oct still open.",
+   "note": "Button next to enquiry/quote so outbound uses 1300 and logs against the job. Stops Office using personal mobile. 1 Oct still open.",
    "source": "Elon overnight audit 16/17 Oct"
   },
   {
@@ -292,10 +292,10 @@
   {
    "id": "siptalk-ring-groups",
    "group": "1300 / COMMS",
-   "name": "SipTalk ring groups (RG1 Julie → RG2 Ange)",
+   "name": "SipTalk ring groups (RG1 Office → RG2 Ange)",
    "status": "grey",
    "elon_verified": false,
-   "note": "Current: 1300 rings Julie then Ange. Plan: bot answers; live transfer to Ange (RG1) only when stuck or VIP. Distinct from Build Map ring-group (Ara→Fold).",
+   "note": "Current: 1300 rings Office then Ange. Plan: bot answers; live transfer to Ange (RG1) only when stuck or VIP. Distinct from Build Map ring-group (Ara→Fold).",
    "source": "Elon overnight audit 16/17 Oct"
   },
   {
@@ -415,10 +415,10 @@
   {
    "id": "julie-guide",
    "group": "MISSED STEPS (17 Oct sweep)",
-   "name": "Julie: bad-day guide (talks Ange through a rough day)",
+   "name": "Office: bad-day guide (talks Ange through a rough day)",
    "status": "grey",
    "elon_verified": false,
-   "note": "Ange 17 Oct ~2am Melb voice: 'If I have a bad day and I'm not feeling it, you just guide me through it. And that's the whole idea of building Julie.' Not built. Scope to confirm with Ange.",
+   "note": "Ange 17 Oct ~2am Melb voice: 'If I have a bad day and I'm not feeling it, you just guide me through it. And that's the whole idea of building [Office].' Not built. Scope to confirm with Ange.",
    "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
   },
   {
@@ -613,10 +613,10 @@
   {
    "id": "julie-followup",
    "group": "MISSED STEPS (17 Oct sweep)",
-   "name": "Julie follow-up sheet (review, share, name)",
+   "name": "Office follow-up sheet (review, share, name)",
    "status": "grey",
    "elon_verified": false,
-   "note": "Draft v1 since 7 Oct, waiting on Ange: review, share, name the file. Julie stepping out.",
+   "note": "Draft v1 since 7 Oct, waiting on Ange: review, share, name the file. Office stepping out.",
    "source": "Missed-steps sweep 17 Oct (Ange: 'if I drop one, it's still there')"
   },
   {
