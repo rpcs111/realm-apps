@@ -979,6 +979,9 @@ header{flex-wrap:nowrap;padding-top:6px;padding-bottom:6px}header h1{white-space
 .cp-wa b{color:var(--txt)}
 #cpList{list-style:none;margin:6px 0 0;padding:0}#cpList li{border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin:6px 0;background:var(--card)}
 #cpList .m{font-size:12px;color:var(--mut)}#cpList .cp-row{margin:6px 0 0}
+#sotWeek{list-style:none;margin:6px 0 0;padding:0}#sotWeek li{border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin:6px 0;background:var(--card)}
+#sotWeek .t{font-weight:600;overflow-wrap:anywhere}#sotWeek .m{font-size:12px;color:var(--mut);overflow-wrap:anywhere}#sotWeek .s{font-size:12px;margin-top:4px;overflow-wrap:anywhere}
+#sotWeek .ok{color:var(--green)}#sotWeek .mi{color:var(--amber)}#sotWeek .na{color:var(--mut)}
 #ptBack{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.55);display:none}#ptBack.on{display:block}
 #ptSheet{position:fixed;left:0;right:0;bottom:0;z-index:51;background:var(--card);border-top:1px solid var(--line);border-radius:16px 16px 0 0;padding:14px 14px calc(16px + env(safe-area-inset-bottom));display:none;max-width:560px;margin:0 auto}
 #ptSheet.on{display:block}#ptSheet h3{margin:0 0 8px;font-size:16px}
@@ -996,6 +999,9 @@ header{flex-wrap:nowrap;padding-top:6px;padding-bottom:6px}header h1{white-space
  <div id="cpFrameWrap"><iframe id="cpFrame" title="Office calendar" loading="lazy" referrerpolicy="no-referrer"></iframe></div>
  <p class="cp-why">If you see a blank calendar, sign in to info@ in this browser.</p>
  <div class="cp-row"><a class="cp-link" id="cpOpenG" href="https://calendar.google.com/calendar/r" target="_blank" rel="noopener">Open in Google Calendar</a></div>
+ <h2 style="font-size:15px;margin:12px 0 0">Jobs this week</h2>
+ <p class="cp-why" id="sotWeekSt">From the jobs file. Read-only.</p>
+ <ul id="sotWeek"></ul>
  <h2 style="font-size:15px;margin:12px 0 0">Pushed tasks</h2>
  <p class="cp-why">These go to the Note to-do list.</p>
  <button type="button" class="cp-sync" id="cpSync" data-realm-sync>Saved on this device.</button>
@@ -1062,6 +1068,30 @@ draw();if(window.RealmSync){RealmSync.onChange(function(){draw();return true})}
 if(window.RealmSync&&RealmSync.onStatus){var SW={synced:"Synced with your other devices.",syncing:"Saved on this device. Syncing\u2026",offline:"Saved on this device. It syncs when you're back online.",nokey:"Saved on this device. It syncs once this device has its sync link.",badkey:"Saved on this device. This device needs a new sync link."};
 var sw=function(s){$("cpSync").textContent=SW[s]||"Saved on this device. Sync will try again soon."};RealmSync.onStatus(sw);sw(RealmSync.status())}
 window.addEventListener("storage",function(e){if(e.key===NK)draw()});
+})();</script>
+<script>/* Jobs this week (30 Oct 2026): read-only list from the jobs file (js/sot-jobs.js), next to the calendar embed.
+   Shows each job with an entry in the next 7 days and whether its calendar entry, WhatsApp group and photos are linked,
+   missing or no access. WhatsApp shows group names only. No editing, no buttons, nothing written back. */
+(function(){"use strict";var J=window.RealmJobs,$=function(i){return document.getElementById(i)};if(!J||!$("sotWeek"))return;
+var TZ="Australia/Melbourne";
+function dOnly(s){return /^(\d{4})-(\d{2})-(\d{2})$/.exec(s||"")}
+function ts(s){var m=dOnly(s);return m?new Date(+m[1],+m[2]-1,+m[3]).getTime():Date.parse(s)}/* all-day entries carry a date only: that day on this device */
+function when(s){var o=dOnly(s);if(o){try{return new Intl.DateTimeFormat("en-AU",{weekday:"short",day:"numeric",month:"short"}).format(new Date(+o[1],+o[2]-1,+o[3]))+", all day"}catch(e){return s}}var d=new Date(s);if(isNaN(d))return"";try{return new Intl.DateTimeFormat("en-AU",{timeZone:TZ,weekday:"short",day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}).format(d)}catch(e){return d.toLocaleString()}}
+function day(s){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||"");if(!m)return"";var t=new Date(+m[1],+m[2]-1,+m[3]);return t.getDate()+" "+["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][t.getMonth()]+" "+t.getFullYear()}
+function line(row,src){var L=J.link(row,src),sp=document.createElement("div");if(L.status==="na")return document.createTextNode("");sp.className="s "+(L.status==="linked"?"ok":L.status==="missing"?"mi":"na");
+ if(L.status==="linked"){var names=src==="whatsapp_groups"?L.items.map(function(x){return x&&(x.ref||x.label)}).filter(Boolean).join(", "):"";sp.textContent="\u2713 "+L.name+(src==="whatsapp_groups"?" (read-only): "+(names||"linked"):": linked")}
+ else if(L.status==="missing")sp.textContent=L.name+": missing"+(L.why?" \u00b7 "+L.why:"");
+ else sp.textContent=L.name+": no access"+(L.why?" \u00b7 "+L.why:"");return sp}
+function draw(){var ul=$("sotWeek"),st=$("sotWeekSt");ul.textContent="";var R=J.read();
+ if(R.state!=="ok"){st.textContent=R.msg;return}
+ var now=Date.now(),t0=new Date(now);t0.setHours(0,0,0,0);var a=t0.getTime(),b=a+7*86400000;
+ var rows=R.rows.filter(function(r){var s=r.next_event&&ts(r.next_event.start);return s&&!isNaN(s)&&s>=a&&s<b}).sort(function(x,y){return ts(x.next_event.start)-ts(y.next_event.start)});
+ st.textContent=rows.length?"From the jobs file. Read-only.":"From the jobs file: nothing in the next 7 days.";
+ rows.slice(0,20).forEach(function(r){var li=document.createElement("li"),t=document.createElement("div"),m=document.createElement("div");
+  t.className="t";t.textContent=r.address_display||r.key;m.className="m";
+  m.textContent=[when(r.next_event.start)+(r.next_event.placeholder?" (placeholder, not booked)":""),r.job_type?(r.job_type==="anchor"?"Anchor":r.job_type==="quote"?"Quote":"Other"):"",r.recert_due?"recert due "+day(r.recert_due):""].filter(Boolean).join(" \u00b7 ");
+  li.appendChild(t);li.appendChild(m);["calendar","whatsapp_groups","drive_photos"].forEach(function(k){li.appendChild(line(r,k))});ul.appendChild(li)})}
+draw();J.onChange(draw);if(window.RealmSync)RealmSync.onChange(function(d){if(d&&d.keys&&d.keys.indexOf(J.KEY)>=0)draw();return true});
 })();</script>
 <script>/* jobs file: the Load button stays hidden unless the page is opened with #jobsfile (fallback only) */
 if(window.RealmJobs)RealmJobs.mountLoader("#sotLoad");
