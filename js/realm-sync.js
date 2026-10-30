@@ -6,6 +6,13 @@
    It is kept on the device (localStorage 'realm_sync_token') and wiped from the address bar.
    28 Oct 2026: the Flow Map (realm_flow_map_v*) is no longer synced here: its step notes merge per step and save to
    Realm Desk with Google sign-in; whole-copy last-write-wins here could undo that merge.
+   30 Oct 2026: the jobs file (realm_sot_jobs_v1, read by js/sot-jobs.js) is synced too, so one load reaches every device.
+   It always goes in its own push, after the other keys, so a refusal never holds up another app's keys. Before that push the
+   whole store is measured from a full pull (the same pull op, since 0): every key plus the Add to Tasks map. If the store with
+   the new file would pass 7,000,000 characters, or can't be measured (the pull doesn't return the tasks map), the file is not pushed. A skipped or refused file is not tried again until the page
+   reloads or the file changes; it stays on this device and the status line says so (too big only when measured over the limit;
+   otherwise that the space can't be checked yet). A page whose sync scope lacks the jobs key (Anchor) never measures or pushes it.
+   The jobs file never reloads a page.
    Only the app-data keys listed in INC are synced. Never synced: realm_key, PINs, Private vault, capture outbox. */
 (function () {
   'use strict';
@@ -15,7 +22,12 @@
   var INC = [/^realm_scribe_v\d+$/, /^realm_notes$/, /^realm_notes_tasks_v\d+$/, /^realm_today_blocks$/, /^realm_next_(done|q|snz)_/,
     /^realm_layers_v\d+$/, /^realm_map_app_v\d+$/, /^realm_queue_v1$/, /^realm_queue_dryrun_v1$/,
     /^realm_metatron[A-Za-z0-9_]*$/, /^realm_prism_v\d+$/, /^realm_amends$/, /^realm_video_recent$/, /^realmCrew(Idea|Tree)$/,
-    /^realm_setup_[A-Za-z0-9_\-]+$/, /^realm-cert-items$/];
+    /^realm_setup_[A-Za-z0-9_\-]+$/, /^realm-cert-items$/, /^realm_sot_jobs_v1$/];
+  var JOBK = 'realm_sot_jobs_v1', JOB_LIMIT = 7000000, SIZEK = 'realm_sync_jobs_size'; /* SIZEK: local size log, never synced */
+  var JOB_TXT = { big: 'Jobs list too big to sync right now. The jobs file stays on this device. Everything else still syncs.',
+    nocheck: 'The jobs file stays on this device for now: the sync can\u2019t check the space yet. Everything else still syncs.',
+    refused: 'The jobs file stays on this device. Everything else still syncs.' };
+  var jobNo = null, jobNote = ''; /* jobNo: the file text that was skipped or refused (not tried again until reload or a new file) */
   var CUR = document.currentScript, LS = window.localStorage, SP = Storage.prototype, rawSet = SP.setItem, rawRemove = SP.removeItem;
   /* Opt-in per page (17 Oct 2026, Search Studio first): <script src="js/realm-sync.js" data-backoff data-allow-text="...">
      data-backoff: while the Engine can't be reached (Allow not done yet / blocked), back off 1, 2, 4 ... 30 min instead of
@@ -97,7 +109,7 @@
   // ---- status line ----
   var st = { state: 'local', msg: '', at: 0 }, el = null, statusFns = [], changeFns = [], readyFns = [];
   var TXT = {
-    synced: function () { return '\u2713 Synced with your other devices' + (st.at ? ' \u00b7 ' + new Date(st.at).toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit' }) : ''); },
+    synced: function () { return '\u2713 Synced with your other devices' + (st.at ? ' \u00b7 ' + new Date(st.at).toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit' }) : '') + (jobNote ? ' \u00b7 ' + jobNote : ''); },
     syncing: function () { return 'Saved on this device \u00b7 syncing\u2026'; },
     allow: function () { return ALLOW_TXT || 'Saved on this device \u2014 waiting for Ara Engine Allow'; },
     nokey: function () { return 'Saved on this device \u2014 open the sync link from Ara once on this device'; },
@@ -166,7 +178,7 @@
       if (!j || !j.ok) throw new Error(j && j.error || 'no answer');
       applyRemote(j.keys || {}, base, changed); meta.rev = j.rev || meta.rev; wj(BASE, base); wj(META, meta);
       return push(base, changed, 0);
-    }).then(function () {
+    }).then(function () { return pushJobs(base, changed, 0); }).then(function () {
       if (meta.nodel) { delete meta.nodel; wj(META, meta); }
       set('synced'); readyFns.forEach(function (f) { try { f(); } catch (e) {} });
       if (changed.length) notify(changed);
@@ -180,7 +192,7 @@
   function push(base, changed, n) {
     var items = {}, any = false, lk = localKeys();
     Object.keys(lk).concat(Object.keys(base)).forEach(function (k) {
-      if (items[k] || !inScope(k)) return;
+      if (items[k] || !inScope(k) || k === JOBK) return; /* the jobs file goes in its own push (pushJobs) */
       var L = rd(k), bb = base[k];
       if (bb ? bb.v === L : L == null) return;
       items[k] = { v: L, t: meta.t[k] || Date.now(), base: bb ? bb.r : 0 }; any = true;
@@ -194,12 +206,47 @@
       if (Object.keys(c).length && n < 3) { applyRemote(c, base, changed); wj(BASE, base); return push(base, changed, n + 1); }
     });
   }
+  /* the jobs file on its own: measure the store first, then push just that key. Never throws, so other keys' sync is unaffected. */
+  function sizeLog(o) { o.at = new Date().toISOString(); o.limit = JOB_LIMIT; wr(SIZEK, JSON.stringify(o)); }
+  function pushJobs(base, changed, n) {
+    if (!inScope(JOBK)) return Promise.resolve(); /* not this page's key (Anchor's own scope): never measured, never pushed */
+    var L = rd(JOBK), bb = base[JOBK];
+    if (bb ? bb.v === L : L == null) { if (jobNo !== L) jobNote = ''; return Promise.resolve(); }
+    if (jobNo !== null && jobNo === L) return Promise.resolve(); /* skipped or refused before: wait for a reload or a new file */
+    var item = { v: L, t: meta.t[JOBK] || Date.now(), base: bb ? bb.r : 0 };
+    var stop = function (why) { if (navigator.onLine === false) return; jobNo = L; jobNote = JOB_TXT[why]; };
+    /* measure gives 'ok' (measured, fits), 'big' (measured total over the limit) or 'nocheck' (size not known) */
+    var measure = L == null ? Promise.resolve('ok') : call({ op: 'pull', since: 0 }).then(function (j) {
+      /* pull since 0 returns every key in the store (all apps), the same shape the Engine saves. The whole store also holds the
+         Add to Tasks map; it is counted only when the pull returns it as an object. Without it the size is not known: no push. */
+      if (!j || !j.ok || !j.keys || typeof j.keys !== 'object') throw new Error('no store');
+      var tk = j.tasks, hasT = !!tk && typeof tk === 'object' && !Array.isArray(tk);
+      if (!hasT) throw new Error('tasks map not returned');
+      var now = JSON.stringify({ rev: j.rev || 0, keys: j.keys, tasks: tk }).length, ks = {};
+      Object.keys(j.keys).forEach(function (k) { ks[k] = j.keys[k]; });
+      ks[JOBK] = { v: L, t: item.t, r: (j.rev || 0) + 1, dev: dev };
+      var after = JSON.stringify({ rev: (j.rev || 0) + 1, keys: ks, tasks: tk }).length, ok = after <= JOB_LIMIT;
+      sizeLog({ measured: true, how: 'full pull: every key and the tasks map', store_now: now, store_with_file: after, file: L.length, keys: Object.keys(j.keys).length, tasks: Object.keys(tk).length, push: ok });
+      return ok ? 'ok' : 'big';
+    }).catch(function (e) { sizeLog({ measured: false, file: L.length, push: false, error: String(e && e.message || e).slice(0, 60) }); return 'nocheck'; });
+    return measure.then(function (m) {
+      if (m !== 'ok') { stop(m); return; }
+      return call({ op: 'push', items: { realm_sot_jobs_v1: item }, dev: (rd('realm_device') ? rd('realm_device') + '/' : '') + dev }).then(function (j) {
+        if (!j || !j.ok) throw new Error('refused');
+        if (j.accepted && j.accepted[JOBK] != null) { base[JOBK] = { v: item.v, r: j.accepted[JOBK] }; wj(BASE, base); jobNote = ''; jobNo = null; return; }
+        var c = j.conflicts || {};
+        if (c[JOBK] && n < 2) { var one = {}; one[JOBK] = c[JOBK]; applyRemote(one, base, changed); wj(BASE, base); return pushJobs(base, changed, n + 1); }
+        throw new Error('refused');
+      });
+    }).catch(function () { stop('refused'); });
+  }
   function notify(keys) {
     var handled = !!(CUR && CUR.hasAttribute('data-live')); // page reloads itself from 'storage' events (queue, mapper)
     keys.forEach(function (k) { try { window.dispatchEvent(new StorageEvent('storage', { key: k, newValue: rd(k), storageArea: LS, url: location.href })); } catch (e) {} });
     try { window.dispatchEvent(new CustomEvent('realmsync', { detail: { keys: keys } })); } catch (e) {}
     changeFns.forEach(function (f) { try { if (f({ keys: keys }) === true) handled = true; } catch (e) {} });
-    if (handled) return;
+    keys = keys.filter(function (k) { return k !== JOBK; }); /* the jobs file never reloads a page: its readers redraw from 'storage' */
+    if (handled || !keys.length) return;
     keys.forEach(function (k) { stale[k] = 1; });
     reloadWhenIdle();
   }
@@ -212,6 +259,7 @@
 
   window.RealmSync = {
     status: function () { return st.state; },
+    jobsNote: function () { return jobNote; },
     hasKey: function () { return !!rd(TOK); },
     syncNow: cycle,
     call: call,
