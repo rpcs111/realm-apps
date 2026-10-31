@@ -133,6 +133,8 @@ var SIDE=[
 ];
 var S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(err){S=null}
 if(!S||!S.nodes||S.v!==4)S=defaults();
+/* Saved layouts keep their own copy of each source note. Refresh those notes from the current defaults by id (positions, titles and KEY unchanged), so older wording never comes back from a layout saved on this or another device. */
+(function(){var D={};defaults().nodes.concat(STEPS,NOTES,SIDE).forEach(function(x){if(x&&x.id&&typeof x.src==="string")D[x.id]=x.src});var ch=false;S.nodes.forEach(function(n){if(!n)return;if(Object.prototype.hasOwnProperty.call(D,n.id)){if(n.src!==D[n.id]){n.src=D[n.id];ch=true}}["t","d","src"].forEach(function(k){if(typeof n[k]==="string"&&/\u004frion/i.test(n[k])){n[k]=n[k].replace(/\u004frion's/gi,"the 30 Sep map's").replace(/\u004frion/gi,"Map");ch=true}})});if(ch)save()})();
 function save(){localStorage.setItem(KEY,JSON.stringify(S))}
 var edit=false,statusOn=false,cubeOn=true,sel=null,connFrom=null;
 var $=function(i){return document.getElementById(i)},svg=$("svg");
