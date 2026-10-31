@@ -1,4 +1,4 @@
-/* Realm board (Ara) - shared model for queue.html (Layer 1) and mapper.html (live paste).
+/* Realm board - shared model for queue.html (Layer 1) and mapper.html (live paste).
    One board, one key: localStorage "realm_queue_v1". Both pages read and write the same object.
    No network calls. Nothing leaves this browser. 16 Oct 2026. */
 (function(){
@@ -20,7 +20,7 @@ var STEPS=[
  {id:'step_1',name:'Cert',url:'https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com',note:'',kw:['cert','certificate','recert','re cert','anchor test','load test','inspection due']},
  {id:'step_2',name:'Invoice',url:'https://books.zoho.com/',note:'',kw:['invoice','inv-','bill ','billed','raise inv']},
  {id:'step_3',name:'Outstanding',url:REG,note:'',kw:['outstanding','overdue','owed','owing','statement','balance','debtor','chase']},
- {id:'step_remit',name:'Remittance',url:'',note:'Payment / remittance in info@ closes the invoice.',kw:['remittance','remit','paid','payment received','eft','deposit']},
+ {id:'step_remit',name:'Remittance',url:'',note:'Payment / remittance in the office inbox closes the invoice.',kw:['remittance','remit','paid','payment received','eft','deposit']},
  {id:'step_4',name:'P&L',url:'https://docs.google.com/spreadsheets/d/1HXLRRgHZJDHSj0p_dp3WHgHO-6-Rxg8s/edit?authuser=info@realmpcs.com',note:'',kw:['p&l','pnl','profit','margin','labour cost','cost']},
  {id:'step_5',name:'Close',url:'',note:'',kw:['close','closed','close out','close-out','done','finished']},
  {id:'step_rebook',name:'Rebook',url:'',note:'Next due date / recurring rebook (not built yet).',kw:['rebook','next due','recurring','annual','12 months','next year']}

@@ -16,7 +16,7 @@ button,.btn{background:#4fd1ff;color:#e8eefc;border:0;border-radius:14px;padding
 button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 #tree{background:rgba(14,22,44,.72);border-radius:22px;padding:12px;margin-top:12px;overflow:auto}
 .imgs img{width:100%;border-radius:18px;background:rgba(14,22,44,.72)}
-</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style><script src="js/ara-account.js?v=20261028-1" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017-24"><meta name="ara-build" content="2026.10.17-24"><link rel="manifest" href="team.webmanifest?v=20261017-24"><link rel="icon" type="image/svg+xml" href="icon.svg"><style id="v20t">/* v20 (Elon): Install sits in the header (top-right), the title keeps clear of it */header h1{max-width:calc(100% - 190px)}</style></head><body>
+</style><link rel="stylesheet" href="realm.css"><style id="rlgrok">html,body{background:radial-gradient(ellipse at 50% 30%,#0b1430 0%,#05070f 65%) fixed!important;color:#e8eefc}input,textarea,select{background:#0f1830;color:#e8eefc;border-color:rgba(0,229,255,.35)}a{color:#7de9ff}</style><script src="js/ara-account.js?v=20261028-1" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017-24"><meta name="ara-build" content="2026.10.17-24"><link rel="manifest" href="team.webmanifest?v=20261017-24"><link rel="icon" type="image/svg+xml" href="icon.svg"><style id="v20t">/* v20: Install sits in the header (top-right), the title keeps clear of it */header h1{max-width:calc(100% - 190px)}</style></head><body>
 <header><h1>Realm Crew</h1><p>Ange's AI family: who does what</p><a class="back" href="index.html">&larr; Back to Realm home</a></header>
 <main>
 <h2>Family tree (edit me)</h2>
@@ -31,11 +31,11 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 <div class="cost">Inside Grok Heavy plan; no extra fee confirmed. Spend cap set privately</div>
 
 
-<h2>Historical (before 27 Oct 2026): Echo's checklist (before every reply)</h2>
+<h2>Historical (before 27 Oct 2026): reply checklist (before every reply)</h2>
 <div class="card" style="--c:#ff8a3d"><ol>
 <li>Starts with "I got you, bro", then the next two steps, then the answer.</li>
 <li>Rule 36: nothing repeated or paraphrased. Already delivered? Say "check your screen".</li>
-<li>Rule 37: never ask Ange for anything Ara or Nova can do.</li>
+<li>Rule 37: never ask Ange for anything the bots can do.</li>
 <li>Rule 38: rule questions answered from the channel doc register; conflicts flagged.</li>
 <li>No repeats of earlier replies in this conversation.</li>
 <li>Open-task list checked: nothing missed (rule 5).</li>
@@ -44,28 +44,6 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 <h2>Day in the life (Melbourne time)</h2>
 <p>RETIRED (27 Oct 2026): these old team routines are retired.</p>
 
-<h2>Historical (before 27 Oct 2026): Gaps closed: who owns each of the 20</h2>
-<div class="card" style="--c:#4fb8ff"><ol>
-<li>Rule 19 blank: ECHO (asks Ange once)</li>
-<li>Rules 1-39 have no status: ECHO</li>
-<li>Duplicate 23-25 text and 28/31/32 numbering: ECHO</li>
-<li>No owners or due dates: ECHO</li>
-<li>No habits section in the register: ECHO</li>
-<li>No single library location: FORGE</li>
-<li>Duplicate folders: FORGE (archive, never delete)</li>
-<li>Unsorted folders: FORGE</li>
-<li>Rule 25 five-year goals and "fix it" button: ORACLE</li>
-<li>Rule 34 coworker team not created: ARA</li>
-<li>Rule 34 no Grok usage figure: ORACLE</li>
-<li>Rule 16 BYD Shark drive mode: ARA</li>
-<li>Rule 22 five-minute Realm Flow Map: FORGE</li>
-<li>Rule 15 Proxmox plan: FORGE</li>
-<li>Rule 28 payroll flow: Ange's own. Bots only read it.</li>
-<li>Rule 21 resume template: ORACLE</li>
-<li>Rule 11 chat audit trail in HANDOFF: NOVA</li>
-<li>No execution tracker: ECHO</li>
-<li>Claude Export folder empty: SENTRY</li>
-<li>Desk links: FORGE (Ange picks)</li></ol></div>
 
 <h2>Self-check: does this page follow the rules?</h2>
 <div class="card" style="--c:#22c58b"><ul>
@@ -97,9 +75,9 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>
 const bots=[
-['42* – Chief','#ffb347','Ange\'s chief and only contact. Passes work down and brings back one answer.'],
-['ELON – Gate','#3fa9ff','Checks and audits every change before it merges. Reports to 42*.'],
-['Ara – Builder','#ff6fb5','Builds and tests apps. Reports to 42*.'],
+['The Fixer – Chief','#ffb347','Ange\'s chief and only contact. Passes work down and brings back one answer.'],
+['ELON – Gate','#3fa9ff','Checks and audits every change before it merges. Reports to The Fixer.'],
+['Builder','#ff6fb5','Builds and tests apps. Reports to The Fixer.'],
 ['Inbox Sweep','#ff8a3d','Overnight inbox sweep.'],
 ['Money','#ffb800','Money lane.'],
 ['Jobs &amp; Clients','#4fb8ff','Jobs and clients.'],
@@ -112,10 +90,10 @@ const bots=[
 document.getElementById('cards').innerHTML=bots.map(b=>`<div class="card" style="--c:${b[1]}"><h3>${b[0]}</h3><p>${b[2]}</p></div>`).join('');
 const DEF=`flowchart TD
   ANGE([ANGE - Boss]):::boss
-  ANGE --> CHIEF[42* – Chief]:::b2
+  ANGE --> CHIEF[The Fixer – Chief]:::b2
   ANGE --> NOVA[NOVA - Gemini backend]:::nova
   CHIEF --> ELON[ELON – Gate]:::b4
-  ELON --> ARA[Ara – Builder]:::ara
+  ELON --> ARA[Builder]:::ara
   ELON --> SWEEP[Inbox Sweep]:::b1
   ELON --> MONEY[Money]:::b3
   ELON --> JOBS["Jobs & Clients"]:::b4

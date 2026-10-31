@@ -2,7 +2,7 @@
  "id": "/realm-apps/realm-eta-v2",
  "name": "ETA",
  "short_name": "ETA",
- "description": "ETA board, by Ara",
+ "description": "ETA board",
  "start_url": "./eta.html?app=eta",
  "scope": "./eta.html",
  "display": "standalone",
