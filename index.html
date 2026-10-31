@@ -97,12 +97,11 @@ button.shelf-btn[disabled]{border-color:#404040;color:#8a8a8a;cursor:not-allowed
 </div>
 <script src="js/history.js?v=20261029b" data-mount="#hub-no-deck-panel"></script><script src="js/hub-shelves.js?v=20261029-1"></script>
 <script>
-/* REALM DESK web app (the working Desk). It asks for the Realm key itself. */
-var EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";
+/* DESK on Pages (desk-pages.html) is the Desk; it never leaves rpcs111.github.io. */
 var FOUR=[
  {name:"SEARCH STUDIO",sub:"Search · amend notes",u:"./search.html"},
  {name:"NOTE",sub:"Pick up where you left off · to-dos",u:"./notes.html"},
- {name:"DESK",sub:"Job board",u:EXEC,ext:true},
+ {name:"DESK",sub:"Job board",u:"./desk-pages.html"},
  {name:"DECK",sub:"History · what changed",u:"./deck.html"}];
 var MORE=[
  {name:"FLOW",sub:"Programs + bridges",u:"./metatron3.html"},
@@ -118,7 +117,7 @@ var MORE=[
  {name:"FINDINGS",sub:"What changed",u:"./findings.html"},
  {name:"TEAM",sub:"Who does what",u:"./team.html"},
  {name:"CAPTURE",sub:"Quick capture",u:"./capture.html"},
- {name:"CERT STUDIO",sub:"Anchor certs",u:"./cert.html"},
+ {name:"CERT STUDIO",sub:"Anchor certs",u:"./certstudio.html"},
  {name:"REGISTER",sub:"REALM OPEN REGISTER sheet",u:"https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit",ext:true},
  {name:"PHONE GEAR",sub:"Phone kit doc",u:"https://docs.google.com/document/d/1z9FHDyTNk-vjCIQcMi_NaSBlJJ-ao_lyR1_UhaCRjY0/edit",ext:true}];
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
