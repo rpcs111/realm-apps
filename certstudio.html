@@ -705,7 +705,8 @@ window.REALM_CUBE=CUBE;
   setInterval(scan,1500); // the redo panel box is added later
 })();
 </script>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"></head><body>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><style id="perColourTap">#perColour{appearance:none;-webkit-appearance:none;width:44px;height:44px;flex:0 0 44px;margin:0;border-radius:10px;background:transparent;display:grid;place-content:center;cursor:pointer}#perColour::before{content:"";width:22px;height:22px;box-sizing:border-box;border:2px solid currentColor;border-radius:6px}#perColour:checked::before{background:var(--accent,#16a34a);border-color:var(--accent,#16a34a);box-shadow:inset 0 0 0 3px #fff}#perColour:focus-visible{outline:3px solid var(--accent,#16a34a);outline-offset:2px}</style>
+</head><body>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
 <style>
 :root{--ground:#EEF1F0;--surface:#FFFFFF;--surface-2:#E4EAE8;--line:#C9D3D0;--ink:#152020;--muted:#5A6A68;--accent:#E2601A;--blue:#3B67C6;--green:#3FA34D;--red:#D9342B;--yellow:#F0B429;
@@ -3211,4 +3212,4 @@ function persist(){ clearTimeout(pt); pt=setTimeout(async function(){ try{ var d
 @media (min-width:821px){.side,.stage,#certPane,#mergePane,.certrail{padding-bottom:132px!important}}
 </style>
 <script>if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){window.addEventListener('load',function(){navigator.serviceWorker.register('app-sw.js',{scope:'./certstudio.html'}).catch(function(){})})}</script>
-<script src="js/cs-split.js?v=20261029-4"></script><script src="js/cs-account.js?v=20261029-9"></script><script src="js/resume.js?v=20261029-4"></script><script src="js/cs-ui.js?v=20261029-4"></script><script src="js/app-shell-config.js?v=20261029-4"></script><script src="js/cs-shell-config.js?v=20261029-4"></script><script src="js/app-shell.js?v=20261029-4" data-app="certstudio" defer></script></body></html>
+<script src="js/cs-split.js?v=20261029-4"></script><script src="js/cs-account.js?v=20261029-9"></script><script src="js/resume.js?v=20261029-4"></script><script src="js/cs-ui.js?v=20261029-4"></script><script src="js/app-shell-config.js?v=20261029-4"></script><script src="js/cs-shell-config.js?v=20261029-4"></script><script src="js/app-shell.js?v=20261030-m2" data-app="certstudio" defer></script></body></html>
