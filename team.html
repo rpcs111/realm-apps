@@ -97,9 +97,9 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>
 const bots=[
-['42* – Chief','#ffb347','Ange\'s chief and only contact. Passes work down and brings back one answer.'],
-['ELON – Gate','#3fa9ff','Checks and audits every change before it merges. Reports to 42*.'],
-['Ara – Builder','#ff6fb5','Builds and tests apps. Reports to 42*.'],
+['The Fixer – Chief','#ffb347','Ange\'s chief and only contact. Passes work down and brings back one answer.'],
+['ELON – Gate','#3fa9ff','Checks and audits every change before it merges. Reports to The Fixer.'],
+['Ara – Builder','#ff6fb5','Builds and tests apps. Reports to The Fixer.'],
 ['Inbox Sweep','#ff8a3d','Overnight inbox sweep.'],
 ['Money','#ffb800','Money lane.'],
 ['Jobs &amp; Clients','#4fb8ff','Jobs and clients.'],
@@ -112,7 +112,7 @@ const bots=[
 document.getElementById('cards').innerHTML=bots.map(b=>`<div class="card" style="--c:${b[1]}"><h3>${b[0]}</h3><p>${b[2]}</p></div>`).join('');
 const DEF=`flowchart TD
   ANGE([ANGE - Boss]):::boss
-  ANGE --> CHIEF[42* – Chief]:::b2
+  ANGE --> CHIEF[The Fixer – Chief]:::b2
   ANGE --> NOVA[NOVA - Gemini backend]:::nova
   CHIEF --> ELON[ELON – Gate]:::b4
   ELON --> ARA[Ara – Builder]:::ara
