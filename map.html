@@ -44,17 +44,16 @@ a.go{display:inline-block;background:#0e7490;color:#fff!important;border-radius:
 <a href="./nirvana/index.html#automations">Automations</a>
 <a href="./desk.html">Realm Desk</a>
 <a href="./nirvana/index.html#desk">Desk history</a>
-<a href="https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com" target="_blank" rel="noopener">Anchor certs</a>
+<a href="./certstudio.html">Anchor certs</a>
 <a href="./notes.html">Note</a>
 <a href="./build-map.html">Build Map</a>
 <a href="./index.html">Realm Apps home</a>
 <a href="https://calendar.google.com/calendar/r?authuser=info@realmpcs.com" target="_blank" rel="noopener">Google Calendar (source of truth)</a>
 <a href="https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com" target="_blank" rel="noopener">REALM OPEN REGISTER</a>
-<a href="https://script.google.com/macros/s/AKfycbyraSxweXHy2Io-vI4rJ9pGskyKzIedY1PdtYPYtybupFfovZsoP7ROLWEvdAnZIcs/exec?authuser=info@realmpcs.com" target="_blank" rel="noopener">24 Sep original</a>
 <button id="wipe" style="margin-top:12px">Reset map to defaults</button></div>
 <script>
 const KEY='realm_flow_map_v3',NS='http://www.w3.org/2000/svg';let MEM=null;
-const DESK='https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec?authuser=info@realmpcs.com',CERT='https://script.google.com/macros/s/AKfycbwFil-RiQujoffiDoBnGk6YvjLuyr1vaqCQKVUPtWT9NmGVQryPcwEsjIlieL93Yps/exec?authuser=info@realmpcs.com',YGMB='./notes.html',BOOKS='https://books.zoho.com/app',CAL='https://calendar.google.com/calendar/r?authuser=info@realmpcs.com',REG='https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com',BM='./build-map.html';
+const YGMB='./notes.html',BOOKS='https://books.zoho.com/app',CAL='https://calendar.google.com/calendar/r?authuser=info@realmpcs.com',REG='https://docs.google.com/spreadsheets/d/1REJWxu7oD3MY9z7TCPsv-OznnPTu1lAHsONMlU8refM/edit?authuser=info@realmpcs.com',BM='./build-map.html';
 /* 17 Oct 2026: every node now opens something real. st = live | wait (live, waiting on an Ange-only step) | plan (not built, opens the Build Map). Links always come from here; your saved titles and notes are kept. */
 function defaults(){const AL='waiting on the Engine Allow',ZO='Opens the Zoho Books sign-in only. No Zoho pull is built yet and the bots cannot reach Zoho.';
  const s=[['Enquiry','Gmail · no WhatsApp yet','https://mail.google.com/mail/?authuser=info@realmpcs.com#inbox','wait','Gmail works. WhatsApp has no route yet (the bots have no WhatsApp link).'],['Log','Note',YGMB,'wait',AL+'. Notes save on this phone until then.'],['Quote','opens Zoho (sign-in)',BOOKS+'#/quotes','wait',ZO],['Follow-up','Note',YGMB,'wait',AL+'. Notes save on this phone until then.'],['Book','Google Calendar',CAL,'live',''],['Roster','waiting on Deputy access','https://once.deputy.com','red','Waiting on Deputy access: shifts are not in the calendar yet. This opens the general Deputy sign-in only. Look-only: nobody edits shifts.'],['Job day','Realm Desk','./desk-pages.html','live',''],['Cert','Anchor Studio','./certstudio.html','red','Not proven live yet: the real-cert test waits on the WhatsApp exports.'],['Invoice','done jobs not invoiced',BOOKS+'#/invoices','red','The done-jobs list now comes from the job join (1 Nov), but the Zoho data stops at 16 Jul. '+ZO],['Close','Open Register',REG,'live','']];
