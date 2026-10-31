@@ -20,11 +20,11 @@
     '#arbSheet .r{display:flex;gap:8px}#arbSheet button{min-height:48px;border-radius:12px;border:0;font:800 16px system-ui,sans-serif;cursor:pointer}#arbSend{flex:1;background:#7c3aed;color:#fff}#arbX{padding:0 16px;background:#1f2937;color:#e4e4e7}' +
     '#arbMsg{min-height:1.2em;color:#cbd5e1;font-size:13px;margin-top:8px}';
   var btn, sheet, ta, msg, sending = false;
-  function count() { if (!btn) return; var n = rd().length; var i = btn.querySelector('i'); if (n) { if (!i) { i = document.createElement('i'); btn.appendChild(i); } i.textContent = n; i.title = n + ' waiting to reach Ara'; } else if (i) i.remove(); }
+  function count() { if (!btn) return; var n = rd().length; var i = btn.querySelector('i'); if (n) { if (!i) { i = document.createElement('i'); btn.appendChild(i); } i.textContent = n; i.title = n + ' waiting to reach the apps team'; } else if (i) i.remove(); }
   function say(t) { if (msg) msg.textContent = t; }
   function flush() {
     var q = rd(); if (!q.length || sending) return Promise.resolve();
-    if (navigator.onLine === false) { say('Saved on this device. Sends to Ara when you are back online.'); return Promise.resolve(); }
+    if (navigator.onLine === false) { say('Saved on this device. Sends to the apps team when you are back online.'); return Promise.resolve(); }
     sending = true;
     var items = q.slice(0, 50).map(function (x) { return { id: x.id, text: x.text, category: 'Ara', ts: x.ts }; });
     return fetch(API, { method: 'POST', body: JSON.stringify({ app: 'capture', items: items }) })
@@ -33,27 +33,27 @@
         if (!j || !j.ok) throw new Error(j && j.error || 'not saved');
         var done = {}; (j.saved || []).concat(j.dupes || []).forEach(function (id) { done[id] = 1; });
         wr(rd().filter(function (x) { return !done[x.id]; })); count();
-        say('\u2713 Ara has it.');
+        say('\u2713 The apps team has it.');
       })
-      .catch(function () { say('Saved on this device \u2014 it reaches Ara once the Ara Engine is allowed (it retries by itself).'); })
+      .catch(function () { say('Saved on this device \u2014 it reaches the apps team once sending is allowed (it retries by itself).'); })
       .then(function () { sending = false; });
   }
-  function open() { sheet.hidden = false; say(rd().length ? rd().length + ' message(s) waiting to reach Ara.' : ''); setTimeout(function () { try { ta.focus(); } catch (e) {} }, 50); }
+  function open() { sheet.hidden = false; say(rd().length ? rd().length + ' message(s) waiting to reach the apps team.' : ''); setTimeout(function () { try { ta.focus(); } catch (e) {} }, 50); }
   function close() { sheet.hidden = true; }
   function init() {
     if (document.getElementById('arbBtn')) return;
     var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
-    btn = document.createElement('button'); btn.type = 'button'; btn.id = 'arbBtn'; btn.setAttribute('aria-label', 'Message Ara'); btn.title = 'Type a message to Ara';
-    btn.appendChild(document.createTextNode('TELL ARA'));
+    btn = document.createElement('button'); btn.type = 'button'; btn.id = 'arbBtn'; btn.setAttribute('aria-label', 'Message the apps team'); btn.title = 'Type a message to the apps team';
+    btn.appendChild(document.createTextNode('TELL APPS'));
     var save = document.getElementById('araSave');
     var inline = window.innerWidth >= 600 && save && save.className !== 'fx' && save.parentNode;
     if (inline) save.parentNode.insertBefore(btn, save); else { btn.className = 'fx'; document.body.appendChild(btn); }
     if (inline) btn.style.marginLeft = 'auto';
     if (inline && save.className === 'ap') save.style.marginLeft = '8px';
-    sheet = document.createElement('div'); sheet.id = 'arbSheet'; sheet.hidden = true; sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-label', 'Message Ara');
-    sheet.innerHTML = '<form><b>Message Ara</b><div style="color:#94a3b8;font-size:13px">From ' + appName.replace(/[<>&"]/g, '') + '. Saved on this device first, then goes to Ara\u2019s inbox. Nothing is emailed.</div>' +
-      '<textarea id="arbText" placeholder="Type (or use the keyboard mic) \u2026" aria-label="Message for Ara"></textarea>' +
-      '<div class="r"><button type="submit" id="arbSend">Send to Ara</button><button type="button" id="arbX">Close</button></div><div id="arbMsg" role="status" aria-live="polite"></div></form>';
+    sheet = document.createElement('div'); sheet.id = 'arbSheet'; sheet.hidden = true; sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-label', 'Message the apps team');
+    sheet.innerHTML = '<form><b>Message the apps team</b><div style="color:#94a3b8;font-size:13px">From ' + appName.replace(/[<>&"]/g, '') + '. Saved on this device first, then goes to the apps team\u2019s inbox. Nothing is emailed.</div>' +
+      '<textarea id="arbText" placeholder="Type (or use the keyboard mic) \u2026" aria-label="Message for the apps team"></textarea>' +
+      '<div class="r"><button type="submit" id="arbSend">Send</button><button type="button" id="arbX">Close</button></div><div id="arbMsg" role="status" aria-live="polite"></div></form>';
     document.body.appendChild(sheet);
     ta = sheet.querySelector('#arbText'); msg = sheet.querySelector('#arbMsg');
     btn.addEventListener('click', open);
@@ -61,7 +61,7 @@
     sheet.addEventListener('click', function (e) { if (e.target === sheet) close(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) close(); });
     sheet.querySelector('form').addEventListener('submit', function (e) {
-      e.preventDefault(); var t = ta.value.trim(); if (!t) { say('Type something for Ara first.'); return; }
+      e.preventDefault(); var t = ta.value.trim(); if (!t) { say('Type something first.'); return; }
       var q = rd(); q.push({ id: 'ara_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7), text: ('[' + appName + (devTag() ? ' \u00b7 ' + devTag() : '') + '] ' + t).slice(0, 2000), dev: devTag(), ts: new Date().toISOString() });
       if (!wr(q)) { say('This browser is not saving (private mode?).'); return; }
       ta.value = ''; count(); say('Saved on this device. Sending\u2026'); flush();

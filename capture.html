@@ -1,5 +1,5 @@
-<!doctype html><html lang="en"><head><script>/* v17: catch Chrome's install prompt before any other script */window.__araBIP=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__araBIP=e});</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><meta name="theme-color" content="#000000"><meta name="color-scheme" content="dark"><meta name="application-name" content="Ara Capture"><meta name="apple-mobile-web-app-title" content="Ara Capture"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
-<title>Ara Capture</title>
+<!doctype html><html lang="en"><head><script>/* v17: catch Chrome's install prompt before any other script */window.__araBIP=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__araBIP=e});</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><meta name="theme-color" content="#000000"><meta name="color-scheme" content="dark"><meta name="application-name" content="Realm Capture"><meta name="apple-mobile-web-app-title" content="Realm Capture"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<title>Realm Capture</title>
 <link rel="manifest" href="ara-capture.webmanifest?v=20261017-24">
 <link rel="icon" type="image/svg+xml" href="pwa/hub-ara-48.svg?v=20261017-24"><link rel="apple-touch-icon" href="pwa/hub-ara-192.svg?v=20261017-24">
 <link rel="stylesheet" href="css/ara-theme.css"><link rel="stylesheet" href="css/realm-ui.css?v=20261017-24">
@@ -47,31 +47,31 @@ h2.cap-h i{font-style:normal;background:rgba(255,255,255,.06);border-radius:999p
 .recent .rs{flex:none;font-size:11px;color:var(--rui-mute)}.recent .rs.ok{color:#86efac}
 .tips{font-size:12px;color:var(--rui-mute);margin:16px 2px 0;line-height:1.5}
 .tips kbd{font:inherit;border:1px solid var(--rui-line);border-radius:4px;padding:0 4px}
-</style><script src="js/ara-account.js?v=20261028-1" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017-24"><meta name="ara-build" content="2026.10.17-24"><style id="v19c">/* v20 Batch B: the one small Ara symbol shows here too (fixed bottom-right, same as every page); keyboard hint only on devices with a keyboard */@media (hover:none),(pointer:coarse){.tips .kb{display:none}}</style><style id="v20m1">/* v20 fix (Elon gate): one Ara symbol per page, the 44px button bottom-right; no extra header mark */.rui-mark{display:none!important}</style><style id="v20c2">/* v20 (Elon): header matches Notes/Search exactly */.rui-top .nav a{padding:8px 6px!important}</style></head>
+</style><script src="js/ara-account.js?v=20261028-1" defer></script><link rel="stylesheet" href="css/ara-clean.css?v=20261017-24"><meta name="ara-build" content="2026.10.17-24"><style id="v19c">/* v20 Batch B: the one small Realm symbol shows here too (fixed bottom-right, same as every page); keyboard hint only on devices with a keyboard */@media (hover:none),(pointer:coarse){.tips .kb{display:none}}</style><style id="v20m1">/* v20 fix (gate): one Realm symbol per page, the 44px button bottom-right; no extra header mark */.rui-mark{display:none!important}</style><style id="v20c2">/* v20: header matches Notes/Search exactly */.rui-top .nav a{padding:8px 6px!important}</style></head>
 <body class="rui">
-<header class="rui-top"><span class="rui-mark" role="img" aria-label="Ara"></span><b class="rui-title">Ara Capture</b><nav class="nav"><a href="./index.html">‹ Apps</a><a href="./notes.html">Notes ›</a></nav></header>
+<header class="rui-top"><span class="rui-mark" role="img" aria-label="Realm"></span><b class="rui-title">Realm Capture</b><nav class="nav"><a href="./index.html">‹ Apps</a><a href="./notes.html">Notes ›</a></nav></header>
 <main class="cap">
  <div class="cap-in">
   <textarea id="dump" aria-label="Brain dump" placeholder="Dump it all here, bro. Talk or type: tasks, feelings, ideas, jobs, things to buy… one per sentence or line."></textarea>
   <div id="interim" aria-live="polite"></div>
   <div class="cap-bar">
-   <button id="mic" class="cap-mic" type="button" aria-pressed="false" aria-label="Talk to Ara"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(25 12 9.5)"><rect x="1.3" y="5.4" width="8.4" height="8.2" rx="3.6" fill="currentColor" fill-opacity=".3"/><path d="M9.7 6.9h10.4a1.8 1.8 0 0 1 1.8 1.8v1.6a1.8 1.8 0 0 1-1.8 1.8H9.7"/></g><path d="M14.6 10.7l1.5 7" stroke-width="2.8"/><circle cx="14.6" cy="10.7" r="1.9" fill="currentColor" stroke-width="1.4"/><path d="M16.1 17.7v2.6M11.9 21.6h8.4"/></svg><span id="micL">Talk</span></button>
+   <button id="mic" class="cap-mic" type="button" aria-pressed="false" aria-label="Talk"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(25 12 9.5)"><rect x="1.3" y="5.4" width="8.4" height="8.2" rx="3.6" fill="currentColor" fill-opacity=".3"/><path d="M9.7 6.9h10.4a1.8 1.8 0 0 1 1.8 1.8v1.6a1.8 1.8 0 0 1-1.8 1.8H9.7"/></g><path d="M14.6 10.7l1.5 7" stroke-width="2.8"/><circle cx="14.6" cy="10.7" r="1.9" fill="currentColor" stroke-width="1.4"/><path d="M16.1 17.7v2.6M11.9 21.6h8.4"/></svg><span id="micL">Talk</span></button>
    <button id="clear" class="cap-clear" type="button">Clear</button>
    <button id="save" class="cap-save" type="button" disabled>Save&nbsp;<span id="saveN"></span></button>
   </div>
  </div>
  <div class="cap-msg" id="msg" aria-live="polite"></div>
- <h2 class="cap-h">Ara sorted it <i id="nItems">0</i></h2>
+ <h2 class="cap-h">Sorted <i id="nItems">0</i></h2>
  <div class="chips" id="chips"><div class="empty">Each sentence or line becomes its own item here. Tap a label to change it.</div></div>
  <section class="recent"><h2 class="cap-h">Saved <i id="nSaved">0</i> <span id="syncState" style="letter-spacing:0;text-transform:none;font-weight:400"></span></h2><ul id="recent"></ul></section>
- <p class="tips">Saved items stay on this device first, so nothing is lost offline, then sync to Ara's inbox. <span class="kb"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> saves, <kbd>Esc</kbd> stops the mic.</span></p>
+ <p class="tips">Saved items stay on this device first, so nothing is lost offline, then sync to the bots' inbox. <span class="kb"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> saves, <kbd>Esc</kbd> stops the mic.</span></p>
 </main>
 <script src="js/ara-capture-rules.js?v=20261017-24"></script>
 <script>
 (function(){
 'use strict';
 var A=window.AraCapture;
-/* Backend: Ara Engine web app (deployment @1, module "capture"). Append-only, no secret (this repo is public).
+/* Backend: Realm Engine web app (deployment @1, module "capture"). Append-only, no secret (this page is public).
    Override on a device with localStorage 'ara_capture_api' (or ?api=...); 'off' disables sync. */
 var API_DEFAULT='https://script.google.com/macros/s/AKfycbxzrPy359CBlkbrYuR0-5xJB4GLXIQ6xNDIE6EFEb2xvnoY0n5sodcnljN4Ohqf4nWa/exec';
 var KQ='ara_capture_v1',KD='ara_capture_draft',KO='ara_capture_overrides',KA='ara_capture_api';
@@ -127,7 +127,7 @@ function save(){
   items.forEach(function(it){q.push({id:uid(),text:it.text,category:it.cat,ts:now,sync:'pending'})});
   if(!setQueue(q)){note('warn','<b>Could not save on this device</b> (storage full or blocked). Copy your text before closing.');return}
   var n=items.length;dump.value='';saveDraft();parse();renderRecent();
-  note('','<b>Saved '+n+' on this device.</b> Syncing to Ara…');
+  note('','<b>Saved '+n+' on this device.</b> Syncing…');
   sync(true);
   if(!listening)dump.focus();
 }
@@ -153,13 +153,13 @@ function sync(force){
     var q2=queue();q2.forEach(function(x){if(done[x.id])x.sync='synced'});setQueue(q2);
     fails=0;nextTry=0;syncing=false;
     var left=q2.filter(function(x){return x.sync!=='synced'}).length;
-    note('','<b>Synced to Ara\u2019s inbox.</b>'+(left?' '+left+' still to go…':''));renderRecent();
+    note('','<b>Synced to the bots\u2019 inbox.</b>'+(left?' '+left+' still to go…':''));renderRecent();
     if(left)setTimeout(function(){sync(true)},800);
   })
   .catch(function(){syncing=false;afterFail(pend.length)});
 }
 function afterFail(n,why){fails++;nextTry=Date.now()+Math.min(5*60000,15000*Math.pow(2,Math.min(fails,5)));
-  note('warn','<b>Saved on phone, will sync</b> ('+n+' waiting'+(why==='offline'?', offline':'')+'). Ara\u2019s inbox opens once Ange taps the one Allow on the Ara Engine.');renderSyncState(n)}
+  note('warn','<b>Saved on phone, will sync</b> ('+n+' waiting'+(why==='offline'?', offline':'')+'). The bots\u2019 inbox opens once Ange taps the one Allow on the Realm Engine.');renderSyncState(n)}
 function renderSyncState(n){$('syncState').textContent=n?'· '+n+' waiting to sync':(queue().length?'· all synced':'')}
 addEventListener('online',function(){sync(true)});
 document.addEventListener('visibilitychange',function(){if(!document.hidden)sync(false)});
@@ -180,7 +180,7 @@ function startMic(auto){
   if(!SR){note('warn','<b>Voice isn\u2019t available in this browser.</b> Type instead (or use the keyboard mic).');dump.focus();return}
   wantMic=true;if(listening)return;
   try{rec=new SR();rec.lang=(navigator.language&&/^en/i.test(navigator.language))?navigator.language:'en-AU';rec.continuous=true;rec.interimResults=true;rec.maxAlternatives=1;
-    rec.onstart=function(){setMicUI(true);lastStart=Date.now();if(!dump.value)note('','Listening. Say it all; Ara splits it. Say <b>"next thing"</b> to start a new item.')};
+    rec.onstart=function(){setMicUI(true);lastStart=Date.now();if(!dump.value)note('','Listening. Say it all; it gets split up. Say <b>"next thing"</b> to start a new item.')};
     rec.onresult=function(e){var interim='';for(var i=e.resultIndex;i<e.results.length;i++){var r=e.results[i];if(r.isFinal)appendText(r[0].transcript);else interim+=r[0].transcript}$('interim').textContent=interim};
     rec.onerror=function(e){var er=e&&e.error;
       if(er==='not-allowed'||er==='service-not-allowed'){wantMic=false;note('warn',auto?'<b>Tap Talk to start the mic</b> (or just type).':'<b>Mic is blocked.</b> Allow the microphone for this app, or type instead.');dump.focus()}
