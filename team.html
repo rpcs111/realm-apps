@@ -65,11 +65,6 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 <textarea id="idea" style="min-height:140px" placeholder="e.g. Add a bot for the morning jobs."></textarea>
 <button class="pink" onclick="copyIdea()">Copy</button><span id="saved"></span>
 
-<h2>Pictures</h2>
-<div class="grid imgs">
-<div class="card" style="--c:#ff6fb5"><h3>Umbrella triage</h3><img src="img/umbrella.svg" alt="Umbrella triage"><a class="btn" href="img/umbrella.svg" download="realm-umbrella.svg">Download</a></div>
-<div class="card" style="--c:#4fd1ff"><h3>Family tree</h3><img src="img/family.svg" alt="Family tree"><a class="btn" href="img/family.svg" download="realm-family.svg">Download</a></div>
-</div>
 <p style="text-align:center"><a class="btn" href="index.html">&larr; Back to Realm home</a></p>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
@@ -90,14 +85,14 @@ const DEF=`flowchart TD
   ANGE --> CHIEF[The Fixer – Chief]:::b2
   CHIEF --> ELON[ELON – Gate]:::b4
   CHIEF --> SLEDGE[Sledge]:::b1
-  CHIEF --> ARA[Builder]:::ara
+  CHIEF --> BUILDER[Builder]:::bld
   CHIEF --> CLEAVER[Cleaver]:::b4
   CHIEF --> CROWBAR[Crowbar]:::b5
   CHIEF --> KNUCKLES[Knuckles]:::b7
   CHIEF --> MONEY["Money & Admin"]:::b3
   CHIEF --> JOBS["Jobs & Inbox"]:::b2
   classDef boss fill:#ffb347,stroke:#ff6fb5,color:#fff,font-size:20px
-  classDef ara fill:#ff6fb5,stroke:#fff,color:#fff
+  classDef bld fill:#ff6fb5,stroke:#fff,color:#fff
   classDef b1 fill:#ff8a3d,color:#fff
   classDef b2 fill:#22c58b,color:#fff
   classDef b3 fill:#ffd23f,color:#111
