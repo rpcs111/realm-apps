@@ -218,7 +218,7 @@ async function checkPanel(page, context, errors, shotTag, opts) {
     const panel = document.getElementById('araPanel');
     const r = sym ? sym.getBoundingClientRect() : { width: 0, height: 0 };
     const scripts = [...document.querySelectorAll('script[src]')].map(s => s.getAttribute('src'));
-    const visible = [...document.querySelectorAll('#araSym,#ara,#arbBtn,[aria-label="Ara"],[aria-label="Ara 2.0"]')].filter(el => {
+    const visible = [...document.querySelectorAll('#araSym,#ara,#arbBtn,[aria-label^="Ara"]')].filter(el => {
       const s = getComputedStyle(el);
       if (s.display === 'none' || s.visibility === 'hidden' || el.hidden) return false;
       const b = el.getBoundingClientRect();
