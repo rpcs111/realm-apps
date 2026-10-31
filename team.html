@@ -3,7 +3,7 @@
 <style>
 body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;background:linear-gradient(135deg,#fff7d6,#ffe3f1 45%,#dff4ff);color:#e8eefc}
 header{padding:24px 16px;text-align:center;background:linear-gradient(90deg,#ff6fb5,#ffb347,#4fd1ff);color:#fff;text-shadow:0 2px 4px #0003}
-header h1{margin:0;font-size:2.4em}a.back{color:#fff;font-weight:700}
+header h1{margin:0;font-size:2.4em}a.back{color:#fff;font-weight:700;display:inline-flex;align-items:center;min-height:44px;padding:0 12px}
 main{max-width:1100px;margin:auto;padding:16px}
 h2{color:#e0459b;font-size:1.6em}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
@@ -12,7 +12,7 @@ h2{color:#e0459b;font-size:1.6em}
 .tag{display:inline-block;padding:3px 10px;border-radius:99px;font-weight:700;font-size:.85em;background:var(--c);color:#fff;margin-right:6px}
 .card ul{padding-left:20px}.cost{font-size:.85em;color:#8f9bb8}
 textarea{width:100%;min-height:260px;font-family:monospace;font-size:14px;border-radius:14px;border:3px solid #ffb347;padding:10px;box-sizing:border-box;background:rgba(14,22,44,.72)}
-button,.btn{background:#4fd1ff;color:#e8eefc;border:0;border-radius:14px;padding:12px 18px;font-size:1em;font-weight:700;margin:6px 6px 0 0;cursor:pointer;text-decoration:none;display:inline-block}
+button,.btn{background:#4fd1ff;color:#e8eefc;border:0;border-radius:14px;padding:12px 18px;font-size:1em;font-weight:700;margin:6px 6px 0 0;cursor:pointer;text-decoration:none;display:inline-block;min-height:44px;box-sizing:border-box}
 button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 #tree{background:rgba(14,22,44,.72);border-radius:22px;padding:12px;margin-top:12px;overflow:auto}
 .imgs img{width:100%;border-radius:18px;background:rgba(14,22,44,.72)}
@@ -77,46 +77,37 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 const bots=[
 ['The Fixer – Chief','#ffb347','Ange\'s chief and only contact. Passes work down and brings back one answer.'],
 ['ELON – Gate','#3fa9ff','Checks and audits every change before it merges. Reports to The Fixer.'],
+['Sledge','#ff8a3d','Runs the apps lane. Reports to The Fixer.'],
 ['Builder','#ff6fb5','Builds and tests apps. Reports to The Fixer.'],
-['Inbox Sweep','#ff8a3d','Overnight inbox sweep.'],
-['Money','#ffb800','Money lane.'],
-['Jobs &amp; Clients','#4fb8ff','Jobs and clients.'],
-['Brain Dump','#00b3a4','Brain dumps.'],
-['Directory Site','#ff4f6d','Directory site.'],
-['Infra','#c35cff','Infra.'],
-['Coach','#22c58b','Accountability coach.'],
-['Legal &amp; Finance','#ffcc00','Reviews the business sale papers and the insolvency.'],
-['NOVA','#8a7dff','Gemini backend. Audits the back end.']];
+['Cleaver','#4fb8ff','Helper bot. Reports to The Fixer.'],
+['Crowbar','#00b3a4','Helper bot. Reports to The Fixer.'],
+['Knuckles','#c35cff','Helper bot. Reports to The Fixer.'],
+['Money &amp; Admin','#ffb800','Money and admin. Reports to The Fixer.'],
+['Jobs &amp; Inbox','#22c58b','Jobs and inbox. Reports to The Fixer.']];
 document.getElementById('cards').innerHTML=bots.map(b=>`<div class="card" style="--c:${b[1]}"><h3>${b[0]}</h3><p>${b[2]}</p></div>`).join('');
 const DEF=`flowchart TD
   ANGE([ANGE - Boss]):::boss
   ANGE --> CHIEF[The Fixer – Chief]:::b2
-  ANGE --> NOVA[NOVA - Gemini backend]:::nova
   CHIEF --> ELON[ELON – Gate]:::b4
-  ELON --> ARA[Builder]:::ara
-  ELON --> SWEEP[Inbox Sweep]:::b1
-  ELON --> MONEY[Money]:::b3
-  ELON --> JOBS["Jobs & Clients"]:::b4
-  ELON --> BRAIN[Brain Dump]:::b5
-  ELON --> DIR[Directory Site]:::b6
-  ELON --> INFRA[Infra]:::b7
-  ELON --> COACH[Coach]:::b8
-  ELON --> LEGAL["Legal & Finance"]:::b5
+  CHIEF --> SLEDGE[Sledge]:::b1
+  CHIEF --> ARA[Builder]:::ara
+  CHIEF --> CLEAVER[Cleaver]:::b4
+  CHIEF --> CROWBAR[Crowbar]:::b5
+  CHIEF --> KNUCKLES[Knuckles]:::b7
+  CHIEF --> MONEY["Money & Admin"]:::b3
+  CHIEF --> JOBS["Jobs & Inbox"]:::b2
   classDef boss fill:#ffb347,stroke:#ff6fb5,color:#fff,font-size:20px
   classDef ara fill:#ff6fb5,stroke:#fff,color:#fff
-  classDef nova fill:#8a7dff,stroke:#fff,color:#fff
   classDef b1 fill:#ff8a3d,color:#fff
   classDef b2 fill:#22c58b,color:#fff
   classDef b3 fill:#ffd23f,color:#111
   classDef b4 fill:#4fb8ff,color:#fff
   classDef b5 fill:#00b3a4,color:#fff
-  classDef b6 fill:#ff4f6d,color:#fff
-  classDef b7 fill:#c35cff,color:#fff
-  classDef b8 fill:#ffe066,color:#111`;
-const src=document.getElementById('src');src.value=localStorage.getItem('realmCrewTree_v2')||DEF;
+  classDef b7 fill:#c35cff,color:#fff`;
+const src=document.getElementById('src');src.value=localStorage.getItem('realmCrewTree_v3')||DEF;
 mermaid.initialize({startOnLoad:false,flowchart:{htmlLabels:false},theme:'base',themeVariables:{lineColor:'#e0459b',primaryColor:'#fff3c4'}});
 let n=0,t;
-async function render(){localStorage.setItem('realmCrewTree_v2',src.value);try{const {svg}=await mermaid.render('m'+(n++),src.value);document.getElementById('tree').innerHTML=svg}catch(e){document.getElementById('tree').innerHTML='<p style="color:#ff4f6d">Tree text has a mistake: '+e.message+'</p>'}}
+async function render(){localStorage.setItem('realmCrewTree_v3',src.value);try{const {svg}=await mermaid.render('m'+(n++),src.value);document.getElementById('tree').innerHTML=svg}catch(e){document.getElementById('tree').innerHTML='<p style="color:#ff4f6d">Tree text has a mistake: '+e.message+'</p>'}}
 src.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(render,600)});
 function resetTree(){src.value=DEF;render()}
 function save(b,name){const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click()}
