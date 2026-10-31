@@ -48,7 +48,7 @@ button.pink{background:#ff6fb5;color:#fff}button.orange{background:#ffb347}
 <h2>Self-check: does this page follow the rules?</h2>
 <div class="card" style="--c:#22c58b"><ul>
 <li>Rule 1 result first: Yes, crew tree up top.</li>
-<li>Rule 2 links not talk: Yes, image download links and home link.</li>
+<li>Rule 2 links not talk: Yes, tree download buttons (SVG and PNG) and home link.</li>
 <li>Rule 10 Ange's yes: Yes, nothing here sends, spends or deletes.</li>
 <li>Rule 11 easy, not cluttered, editable: Yes, editable tree and idea box.</li>
 <li>Rule 14 phone-first: Yes, cards stack on phone.</li>
@@ -81,16 +81,16 @@ const bots=[
 ['Jobs &amp; Inbox','#22c58b','Jobs and inbox. Reports to Chief.']];
 document.getElementById('cards').innerHTML=bots.map(b=>`<div class="card" style="--c:${b[1]}"><h3>${b[0]}</h3><p>${b[2]}</p></div>`).join('');
 const DEF=`flowchart TD
-  ANGE([ANGE - Boss]):::boss
-  ANGE --> CHIEF[Chief]:::b2
-  CHIEF --> GATE[Gate]:::b4
-  CHIEF --> DELIVERY[App delivery]:::b1
-  CHIEF --> APPS[App builds]:::apps
-  CHIEF --> SITES["Sites & Drive"]:::b4
-  CHIEF --> RECOVERY[Work recovery]:::b5
-  CHIEF --> CHASE[Money chase]:::b7
-  CHIEF --> MONEY["Money & Admin"]:::b3
-  CHIEF --> JOBS["Jobs & Inbox"]:::b2
+  N1([ANGE - Boss]):::boss
+  N1 --> N2[Chief]:::b2
+  N2 --> N3[Gate]:::b4
+  N2 --> N4[App delivery]:::b1
+  N2 --> N5[App builds]:::apps
+  N2 --> N6["Sites & Drive"]:::b4
+  N2 --> N7[Work recovery]:::b5
+  N2 --> N8[Money chase]:::b7
+  N2 --> N9["Money & Admin"]:::b3
+  N2 --> N10["Jobs & Inbox"]:::b2
   classDef boss fill:#ffb347,stroke:#ff6fb5,color:#fff,font-size:20px
   classDef apps fill:#ff6fb5,stroke:#fff,color:#fff
   classDef b1 fill:#ff8a3d,color:#fff
@@ -99,10 +99,10 @@ const DEF=`flowchart TD
   classDef b4 fill:#4fb8ff,color:#fff
   classDef b5 fill:#00b3a4,color:#fff
   classDef b7 fill:#c35cff,color:#fff`;
-const src=document.getElementById('src');src.value=localStorage.getItem('realmCrewTree_v5')||DEF;
+const src=document.getElementById('src');src.value=localStorage.getItem('realmCrewTree_v6')||DEF;
 mermaid.initialize({startOnLoad:false,flowchart:{htmlLabels:false},theme:'base',themeVariables:{lineColor:'#e0459b',primaryColor:'#fff3c4'}});
 let n=0,t;
-async function render(){localStorage.setItem('realmCrewTree_v5',src.value);try{const {svg}=await mermaid.render('m'+(n++),src.value);document.getElementById('tree').innerHTML=svg}catch(e){document.getElementById('tree').innerHTML='<p style="color:#ff4f6d">Tree text has a mistake: '+e.message+'</p>'}}
+async function render(){localStorage.setItem('realmCrewTree_v6',src.value);try{const {svg}=await mermaid.render('m'+(n++),src.value);document.getElementById('tree').innerHTML=svg}catch(e){document.getElementById('tree').innerHTML='<p style="color:#ff4f6d">Tree text has a mistake: '+e.message+'</p>'}}
 src.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(render,600)});
 function resetTree(){src.value=DEF;render()}
 function save(b,name){const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click()}
