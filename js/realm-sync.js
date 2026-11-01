@@ -99,9 +99,9 @@
   var TXT = {
     synced: function () { return '\u2713 Synced with your other devices' + (st.at ? ' \u00b7 ' + new Date(st.at).toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit' }) : ''); },
     syncing: function () { return 'Saved on this device \u00b7 syncing\u2026'; },
-    allow: function () { return ALLOW_TXT || 'Saved on this device \u2014 waiting for Ara Engine Allow'; },
-    nokey: function () { return 'Saved on this device \u2014 open the sync link from Ara once on this device'; },
-    badkey: function () { return 'Saved on this device \u2014 sync link not accepted, ask Ara for the new one'; },
+    allow: function () { return ALLOW_TXT || 'Saved on this device \u2014 waiting for the sign-in OK'; },
+    nokey: function () { return 'Saved on this device \u2014 open the sync link from the team once on this device'; },
+    badkey: function () { return 'Saved on this device \u2014 sync link not accepted, ask the team for the new one'; },
     offline: function () { return 'Saved on this device \u2014 offline, syncs when back online'; },
     error: function () { return (!st.msg || st.msg === 'error') ? TXT.allow() : 'Saved on this device \u2014 sync will retry (' + st.msg + ')'; }
   };
