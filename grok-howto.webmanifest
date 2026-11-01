@@ -1,7 +1,7 @@
 {
  "id": "/realm-apps/grok-howto",
- "name": "Grok How-To",
- "short_name": "Grok How-To",
+ "name": "How-To",
+ "short_name": "How-To",
  "description": "How to use Grok: the app, voice, pictures, and Julie's iPhone setup",
  "start_url": "./grok-howto.html?app=grok-howto",
  "scope": "./grok-howto.html",

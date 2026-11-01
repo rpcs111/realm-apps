@@ -74,11 +74,11 @@ const bots=[
 ['Gate','#3fa9ff','Checks and audits every change before it merges. Reports to Chief.'],
 ['App delivery','#ff8a3d','Runs the apps lane. Reports to Chief.'],
 ['App builds','#ff6fb5','Builds and tests apps. Reports to Chief.'],
-['Sites &amp; Drive','#4fb8ff','Helper bot. Reports to Chief.'],
-['Work recovery','#00b3a4','Helper bot. Reports to Chief.'],
-['Money chase','#c35cff','Helper bot. Reports to Chief.'],
-['Money &amp; Admin','#ffb800','Money and admin. Reports to Chief.'],
-['Jobs &amp; Inbox','#22c58b','Jobs and inbox. Reports to Chief.']];
+['Websites and files','#4fb8ff','Helper bot. Reports to Chief.'],
+['Work catch-up','#00b3a4','Helper bot. Reports to Chief.'],
+['Unpaid invoices','#c35cff','Helper bot. Reports to Chief.'],
+['Bills and admin','#ffb800','Bills, payments and paperwork. Reports to Chief.'],
+['Jobs and clients','#22c58b','Job sheets and client messages. Reports to Chief.']];
 document.getElementById('cards').innerHTML=bots.map(b=>`<div class="card" style="--c:${b[1]}"><h3>${b[0]}</h3><p>${b[2]}</p></div>`).join('');
 const DEF=`flowchart TD
   N1([ANGE - Boss]):::boss
@@ -86,11 +86,11 @@ const DEF=`flowchart TD
   N2 --> N3[Gate]:::b4
   N2 --> N4[App delivery]:::b1
   N2 --> N5[App builds]:::apps
-  N2 --> N6["Sites & Drive"]:::b4
-  N2 --> N7[Work recovery]:::b5
-  N2 --> N8[Money chase]:::b7
-  N2 --> N9["Money & Admin"]:::b3
-  N2 --> N10["Jobs & Inbox"]:::b2
+  N2 --> N6[Websites and files]:::b4
+  N2 --> N7[Work catch-up]:::b5
+  N2 --> N8[Unpaid invoices]:::b7
+  N2 --> N9[Bills and admin]:::b3
+  N2 --> N10[Jobs and clients]:::b2
   classDef boss fill:#ffb347,stroke:#ff6fb5,color:#fff,font-size:20px
   classDef apps fill:#ff6fb5,stroke:#fff,color:#fff
   classDef b1 fill:#ff8a3d,color:#fff
