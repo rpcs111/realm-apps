@@ -63,14 +63,18 @@ const APPS=[['home','Home','all apps','./index.html','live'],['notes','Note','no
 /* 17 Oct: added F&H store, Reorder, Xenon, Vault, Bills log. Nodes with no real page open the Build Map. red = broken. */
 const PLAN=[['p1300','1300 line','research and drafts only, nothing on','red'],['pjulie','Julie','bad-day guide'],['parab','Notes send button','built in Notes','wait','./notes.html'],['psync','Engine sync','waits on Allow','wait'],['pfh','F&H store','not live','red'],['preorder','Reorder','planned'],['pxenon','Xenon','checker, planned'],['pvault','Vault','side branch, not live'],['pbills','Bills log','private sheet, no app','wait'],['pwa','WhatsApp','pipe into Drive is dead','red'],['pdrive','Drive','cleanup partly done','wait'],['psec','Security','kill switch plan only','red'],['pprox','Proxmox server','about three-quarters done','wait']];
 function load(){let d=null;try{d=JSON.parse(localStorage.getItem(KEY))}catch(e){d=MEM}const D=defaults();
- if(d&&Array.isArray(d.nodes)){const m={};d.nodes.forEach(x=>{if(x&&x.id)m[x.id]=x});D.nodes.forEach(n=>{const o=m[n.id];if(!o)return;if(o.note)n.note=o.note;if(o.title&&!OLDNAME.test(o.title))n.title=o.title})}return D}
+ if(d&&Array.isArray(d.nodes)){const m={};d.nodes.forEach(x=>{if(x&&x.id)m[x.id]=x});D.nodes.forEach(n=>{const o=m[n.id];if(!o)return;if(o.note)n.note=o.note;if(ownTitle(n.id,o.title))n.title=o.title})}return D}
 /* 1 Nov: a title saved under an old bot name gives way to the current one */
 const OLDNAME=/^\s*(ara(\s+2\.[01])?|builder|nova)\s*$/i;
+/* 1 Nov: a saved title that was only a past built-in default for that step id gives way to today's default (s9 was 'Invoice').
+   Titles typed by hand are kept. Used on load and on save, so a save never writes an old default back. */
+const PASTTITLE={s9:['invoice']};
+function ownTitle(id,t){if(!t||OLDNAME.test(t))return false;const v=String(t).trim().toLowerCase();return !(PASTTITLE[id]||[]).includes(v)}
 /* 28 Oct: save only writes the steps THIS tab changed (DIRTY); every other step is taken from storage first, so two tabs
    (or the Engine sync) never wipe each other's notes. save(true) = full reset. */
 let DIRTY={};function mark(n){DIRTY[n.id]=1}
 function stored(){let d=null;try{d=JSON.parse(localStorage.getItem(KEY))}catch(e){d=MEM}d=d||MEM;const m={};if(d&&Array.isArray(d.nodes))d.nodes.forEach(x=>{if(x&&x.id)m[x.id]=x});return m}
-function save(all){const m=all?{}:stored();S.nodes.forEach(n=>{const o=m[n.id];if(DIRTY[n.id]||!o)return;n.note=o.note||'';if(o.title)n.title=o.title});DIRTY={};const t=JSON.stringify(S);try{localStorage.setItem(KEY,t)}catch(e){}MEM=JSON.parse(t)}
+function save(all){const m=all?{}:stored();S.nodes.forEach(n=>{const o=m[n.id];if(DIRTY[n.id]||!o)return;n.note=o.note||'';if(ownTitle(n.id,o.title))n.title=o.title});DIRTY={};const t=JSON.stringify(S);try{localStorage.setItem(KEY,t)}catch(e){}MEM=JSON.parse(t)}
 /* 3-way note merge: base = the text this tab last saw, cur = what is saved now, mine = what Ange typed. Nothing is dropped. */
 function merge3(base,cur,mine){base=base||'';cur=cur||'';mine=mine||'';if(cur===base||cur===mine)return mine;if(mine===base||!mine)return cur;if(!cur||mine.indexOf(cur)>=0)return mine;if(cur.indexOf(mine)>=0)return cur;return cur+'\n'+mine}
 /* 29 Oct (ELON gate, FAIL 1): every step note goes through the Desk round 4 code check before it is saved on this device
