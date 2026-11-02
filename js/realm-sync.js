@@ -41,7 +41,47 @@
      The device key and device name stay shared. Pages without it sync exactly what they did before. */
   if (CUR && CUR.hasAttribute('data-sync-anchor')) { INC = [/^realm_anchor_job_[a-z0-9_]{1,60}$/, /^realm_anchor_resume$/]; META = 'realm_sync_meta_anchor'; BASE = 'realm_sync_base_anchor'; }
   function inScope(k) { if (!k || k.length > 80 || !/^[A-Za-z0-9_\-]+$/.test(k)) return false; for (var i = 0; i < INC.length; i++) if (INC[i].test(k)) return true; return false; }
-  function rd(k) { try { return LS.getItem(k); } catch (e) { return null; } }
+  var rawGet = SP.getItem, used = {}; /* used: synced keys this page has read since this file loaded */
+  function rd(k) { try { return rawGet.call(LS, k); } catch (e) { return null; } }
+  /* 2 Nov: a change from another device reloads this page only if it is this page's own data: a key the page has read (also while
+     it redraws from the change), or the full key, in quotes, in this page's own inline scripts. Text, comments outside scripts, data
+     blocks, and keys that only start the same way or contain the name do not count. Other apps' data is stored quietly and shows
+     when that app opens. */
+  var own = null;
+  function mine(k) {
+    if (used[k]) return true;
+    if (own == null) {
+      own = '';
+      try { var s = document.scripts; for (var i = 0; i < s.length; i++) { var ty = (s[i].type || '').toLowerCase(); if (!s[i].src && (!ty || /javascript|module/.test(ty))) own += s[i].text + '\n'; } } catch (e) {}
+    }
+    if (own.indexOf('"' + k + '"') >= 0 || own.indexOf("'" + k + "'") >= 0 || own.indexOf('`' + k + '`') >= 0) return true;
+    var L = ownList();
+    for (var i = 0; i < L.length; i++) { var t = L[i]; if (t === k || (t.charAt(t.length - 1) === '*' && k.indexOf(t.slice(0, -1)) === 0)) return true; }
+    return false;
+  }
+  /* 2 Nov: keys a page reads before this file loads also count as its own when the page names them:
+     - listed on this script tag (data-sync-own="realm_a realm_b_*") or in <meta name="realm-sync-own" content="...">;
+     - the value of a "key" or "...Key" field in the page's own JSON settings block (e.g. "key": "realm_prism_v2");
+     - a quoted key start that the page's own script joins with "+" (e.g. 'realm_setup_' + name), which covers every key with that start.
+     A name has to be at least 8 characters with its "*", so a bare 'realm_' never counts. */
+  var ownPre = null;
+  function ownList() {
+    if (ownPre) return ownPre;
+    ownPre = [];
+    var add = function (t) { t = String(t || '').trim(); if (t.length >= 8 && t.length <= 81 && /^[A-Za-z0-9_\-]+\*?$/.test(t)) ownPre.push(t); };
+    try {
+      if (CUR) (CUR.getAttribute('data-sync-own') || '').split(/[\s,]+/).forEach(add);
+      var mt = document.querySelector('meta[name="realm-sync-own"]'); if (mt) (mt.getAttribute('content') || '').split(/[\s,]+/).forEach(add);
+      var sc = document.scripts, x;
+      for (var i = 0; i < sc.length; i++) {
+        if (sc[i].src) continue;
+        var ty = (sc[i].type || '').toLowerCase(), tx = sc[i].text || '';
+        if (/json/.test(ty)) { var r1 = /"(?:key|[A-Za-z]+Key)"\s*:\s*"([A-Za-z0-9_\-]{3,80})"/g; while ((x = r1.exec(tx))) add(x[1]); }
+        else if (!ty || /javascript|module/.test(ty)) { var r2 = /(['"`])([A-Za-z0-9_\-]{3,79}[_\-])\1\s*\+/g; while ((x = r2.exec(tx))) add(x[2] + '*'); }
+      }
+    } catch (e) {}
+    return ownPre;
+  }
   function wr(k, v) { try { if (v == null) rawRemove.call(LS, k); else rawSet.call(LS, k, v); return true; } catch (e) { return false; } }
   function rj(k, d) { try { var v = JSON.parse(rd(k)); return v == null ? d : v; } catch (e) { return d; } }
   function wj(k, o) { return wr(k, JSON.stringify(o)); }
@@ -66,6 +106,7 @@
     meta.t[k] = Date.now(); if (stale[k]) { meta.nodel = meta.nodel || {}; meta.nodel[k] = 1; }
     wj(META, meta); soon(1500);
   }
+  SP.getItem = function (k) { try { if (this === LS && inScope(String(k))) used[String(k)] = 1; } catch (e) {} return rawGet.apply(this, arguments); };
   SP.setItem = function (k, v) { if (guard && this === LS && guard[String(k)]) return; var r = rawSet.apply(this, arguments); try { if (this === LS && inScope(String(k))) touch(String(k)); } catch (e) {} return r; };
   SP.removeItem = function (k) { if (guard && this === LS && guard[String(k)]) return; var r = rawRemove.apply(this, arguments); try { if (this === LS && inScope(String(k))) touch(String(k)); } catch (e) {} return r; };
 
@@ -158,23 +199,33 @@
 
   var busy = false, again = false, timer = 0;
   function soon(ms) { clearTimeout(timer); timer = setTimeout(cycle, ms || 0); }
+  /* 2 Nov: coming back to an app, and the minute timer, only pull when the last pull is 5+ minutes old. Your own changes still send
+     within 2 seconds (touch), and the Sync now button and coming back online still pull at once. */
+  var lastPull = 0, PULL_GAP = 300000;
+  function backSoon() { if (!document.hidden && Date.now() - lastPull >= PULL_GAP) soon(200); }
   function localKeys() { var o = {}; for (var i = 0; i < LS.length; i++) { var k = LS.key(i); if (inScope(k)) o[k] = 1; } return o; }
+  function canon(v) { if (Array.isArray(v)) return v.map(canon); if (v && typeof v === 'object') { var o = {}; Object.keys(v).sort().forEach(function (k) { o[k] = canon(v[k]); }); return o; } return v; }
+  function same(a, b) { if (a === b) return true; if (a == null || b == null) return false; try { return JSON.stringify(canon(JSON.parse(a))) === JSON.stringify(canon(JSON.parse(b))); } catch (e) { return false; } }
   function applyRemote(keys, base, changed) {
     Object.keys(keys).forEach(function (k) {
       if (!inScope(k)) return;
       var R = keys[k], bb = base[k], L = rd(k), noDel = !!(meta.nodel && meta.nodel[k]);
       var lNewer = (meta.t[k] || 0) > (R.t || 0);
       var m = merge(bb ? bb.v : null, L, R.v == null ? null : R.v, noDel, lNewer);
-      if (m !== L) { wr(k, m); changed.push(k); }
+      if (m !== L) { wr(k, m); if (!same(m, L)) changed.push(k); } /* 2 Nov: only a real change in the data counts (same data, other key order or spacing, does not) */
       base[k] = { v: R.v == null ? null : R.v, r: R.r || 0 };
     });
   }
+  /* 2 Nov: after a failed sync, automatic tries back off (30 s, 1, 2, 4 ... up to 30 min) with one timer; tapping the sync line
+     or coming back online tries at once. */
+  var errN = 0, errUntil = 0, retryT = 0;
   function cycle(force) {
     if (busy) { again = true; return Promise.resolve(); }
+    if (force !== true && errUntil && Date.now() < errUntil) { if (!retryT) retryT = setTimeout(function () { retryT = 0; cycle(); }, errUntil - Date.now()); return Promise.resolve(); }
     if (BO && force !== true && boUntil && Date.now() < boUntil) return Promise.resolve(); // backing off: Engine not reachable yet
     var k = rd(TOK);
     if (navigator.onLine === false) { set('offline'); return Promise.resolve(); }
-    busy = true;
+    busy = true; lastPull = Date.now();
     var base = rj(BASE, {}), changed = [];
     var p = !k
       ? post({ app: 'sync', op: 'ping' }).then(function (j) { set(j && j.engine ? 'nokey' : 'allow'); throw { quiet: 1 }; })
@@ -185,10 +236,12 @@
       return push(base, changed, 0);
     }).then(function () { return pushJobs(base, changed, 0); }).then(function () {
       if (meta.nodel) { delete meta.nodel; wj(META, meta); }
+      errN = 0; errUntil = 0;
       set('synced'); readyFns.forEach(function (f) { try { f(); } catch (e) {} });
       if (changed.length) notify(changed);
     }).catch(function (e) {
       if (e && e.quiet) return;
+      errUntil = Date.now() + Math.min(30000 * Math.pow(2, errN), 1800000); errN++;
       if (e && e.net) set(e.message === 'offline' ? 'offline' : 'allow');
       else if (e && /unauthorised/.test(e.message)) set('badkey');
       else set('error', e && e.message);
@@ -250,14 +303,117 @@
     keys.forEach(function (k) { try { window.dispatchEvent(new StorageEvent('storage', { key: k, newValue: rd(k), storageArea: LS, url: location.href })); } catch (e) {} });
     try { window.dispatchEvent(new CustomEvent('realmsync', { detail: { keys: keys } })); } catch (e) {}
     changeFns.forEach(function (f) { try { if (f({ keys: keys }) === true) handled = true; } catch (e) {} });
-    keys = keys.filter(function (k) { return k !== JOBK; }); /* the jobs file never reloads a page: its readers redraw from 'storage' */
+    /* 2 Nov: pages that can redraw in place listen for 'realm-sync:changed' (detail.keys) and call preventDefault() once they have
+       redrawn; then the page does not reload. Pages without a listener keep the one capped reload for their own data. */
+    try { var ev = new CustomEvent('realm-sync:changed', { detail: { keys: keys.slice() }, cancelable: true }); window.dispatchEvent(ev); if (ev.defaultPrevented) handled = true; } catch (e) {}
+    keys = keys.filter(function (k) { return k !== JOBK && mine(k); }); /* the jobs file never reloads a page: its readers redraw from 'storage'; nor does another app's data */
     if (handled || !keys.length) return;
     keys.forEach(function (k) { stale[k] = 1; });
     reloadWhenIdle();
   }
+  /* 2 Nov: hard cap. A page reloads itself for sync at most once every 30 seconds (counted across reloads in this tab).
+     Inside that time it shows a "New data, tap to refresh" line instead, and the new data is already saved on this device. */
+  var RLK = 'realm_sync_reload_at', RL_GAP = 30000, freshEl = null;
+  function lastReload() { try { return +sessionStorage.getItem(RLK) || 0; } catch (e) { return 0; } }
+  function doReload() {
+    guard = {}; Object.keys(stale).forEach(function (k) { guard[k] = 1; });
+    try { sessionStorage.setItem(RLK, String(Date.now())); } catch (e) {}
+    keepDrafts();
+    location.reload();
+  }
+  function showFresh() {
+    if (freshEl || !document.body) return;
+    freshEl = document.createElement('button'); freshEl.type = 'button'; freshEl.id = 'realmSyncFresh';
+    freshEl.textContent = 'New data, tap to refresh';
+    freshEl.style.cssText = 'position:fixed;left:8px;bottom:60px;z-index:2147482001;max-width:calc(100vw - 16px);min-height:44px;min-width:44px;font:600 14px/1.3 system-ui,sans-serif;padding:8px 16px;border-radius:999px;border:1px solid #fcd34d;background:rgba(2,6,23,.94);color:#fde68a;cursor:pointer';
+    freshEl.addEventListener('click', doReload);
+    document.body.appendChild(freshEl);
+  }
+  /* 2 Nov: typed text is never lost to a sync reload. A box (input, textarea or contenteditable) the user typed in and has not
+     emptied counts as unsaved, and so does the box that has focus while it holds text. Then the page does not reload: it shows the
+     "New data, tap to refresh" line instead. As a backstop, those drafts are kept in this tab (sessionStorage, never synced) when
+     the page goes away and put back into the same empty box after any reload. PIN, password, key and code boxes are never kept. */
+  var DRK = 'realm_sync_drafts', DR_AGE = 600000, dirty = [];
+  /* Secret boxes are never kept and never hold a reload.
+     - Always secret, whatever the words say: type=password, a secret autocomplete value (current-password, new-password,
+       one-time-code, cc-*), and data-no-draft.
+     - A text input is secret if a whole word pin/password/passcode/key/code/otp/token/secret appears in its name, id, aria-label,
+       placeholder or label. No negation counts for inputs ("Never share your PIN" is still a PIN box).
+     - A note box (textarea or editable area) is checked the same way, except that a "no" directly followed by a list holding the
+       word ("no codes or key numbers") does not count. "not", "never", "do not" and "don't" never cancel a word.
+     Parts of words do not count (typing, keyboard); camelCase ids are split into words first, so lkPin and realmKey count. */
+  var SECRET_AC = /^(current-password|new-password|one-time-code|cc-[a-z-]+)$/, SECRET_W = /\b(pin|password|passcode|key|code|otp|token|secret)s?\b/i;
+  var NO_LIST = /\bno\s+[a-z]+(?:\s+numbers?)?(?:\s+(?:or|and|nor)\s+[a-z]+(?:\s+numbers?)?)*/gi;
+  function words(t) { return String(t || '').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Za-z])(\d)/g, '$1 $2').replace(/[_\-]+/g, ' '); }
+  function secretWords(t, note) {
+    t = words(t);
+    if (note) t = t.replace(NO_LIST, function (m) { return SECRET_W.test(m) ? ' ' : m; });
+    return SECRET_W.test(t);
+  }
+  function labelText(e) {
+    var t = [], i, l = e.labels || [];
+    for (i = 0; i < l.length; i++) t.push(l[i].textContent);
+    var by = (e.getAttribute('aria-labelledby') || '').split(/\s+/);
+    for (i = 0; i < by.length; i++) { var x = by[i] && document.getElementById(by[i]); if (x) t.push(x.textContent); }
+    return t;
+  }
+  function secret(e) {
+    if (e.hasAttribute('data-no-draft')) return true;
+    if (e.tagName === 'INPUT' && (e.type || '').toLowerCase() === 'password') return true;
+    var ac = (e.getAttribute('autocomplete') || '').toLowerCase().split(/\s+/);
+    for (var i = 0; i < ac.length; i++) if (SECRET_AC.test(ac[i])) return true;
+    var note = e.tagName !== 'INPUT';
+    return [e.id, e.name, e.getAttribute('aria-label'), e.getAttribute('placeholder')].concat(labelText(e)).some(function (t) { return secretWords(t, note); });
+  }
+  function draftable(e) {
+    if (!e || !e.tagName || e.hasAttribute('data-no-draft')) return false;
+    var ce = e.isContentEditable && e.getAttribute('contenteditable') !== null, t = e.tagName;
+    if (t === 'INPUT') { var ty = (e.type || 'text').toLowerCase(); if (!/^(text|search|email|url|tel|number)$/.test(ty)) return false; }
+    else if (t !== 'TEXTAREA' && !ce) return false;
+    return !secret(e);
+  }
+  function val(e) { return e.isContentEditable && e.tagName !== 'INPUT' && e.tagName !== 'TEXTAREA' ? (e.innerText || '') : (e.value || ''); }
+  function fkey(e) {
+    var t = e.tagName.toLowerCase(), k = e.id ? '#' + e.id : e.name ? t + '[name=' + e.name + ']' : '';
+    if (!k) { var all = document.querySelectorAll(t); for (var i = 0; i < all.length; i++) if (all[i] === e) { k = t + ':' + i; break; } }
+    return k;
+  }
+  document.addEventListener('input', function (ev) { var e = ev.target; if (draftable(e) && dirty.indexOf(e) < 0) dirty.push(e); }, true);
+  function unsaved() {
+    dirty = dirty.filter(function (e) { return e.isConnected; });
+    for (var i = 0; i < dirty.length; i++) if (val(dirty[i]).trim()) return true;
+    var a = document.activeElement;
+    return !!(a && draftable(a) && val(a).trim());
+  }
+  function keepDrafts() {
+    var o = {}, n = 0, a = document.activeElement, L = dirty.slice();
+    if (a && draftable(a) && L.indexOf(a) < 0) L.push(a);
+    L.forEach(function (e) { if (!e.isConnected) return; var v = val(e); if (v.trim()) { o[fkey(e)] = v; n++; } });
+    try { if (n) sessionStorage.setItem(DRK, JSON.stringify({ p: location.pathname, t: Date.now(), f: o })); else sessionStorage.removeItem(DRK); } catch (e) {}
+  }
+  var pend = null;
+  function putBackDrafts() {
+    if (pend === null) {
+      pend = {}; var d = null; try { d = JSON.parse(sessionStorage.getItem(DRK) || 'null'); sessionStorage.removeItem(DRK); } catch (e) {}
+      if (d && d.p === location.pathname && d.f && Date.now() - (d.t || 0) <= DR_AGE) pend = d.f;
+    }
+    Object.keys(pend).forEach(function (k) {
+      var e = null, m = /^([a-z0-9]+):(\d+)$/.exec(k);
+      try { e = m ? document.querySelectorAll(m[1])[+m[2]] : document.querySelector(k.charAt(0) === '#' ? '[id="' + k.slice(1).replace(/"/g, '') + '"]' : k); } catch (x) {}
+      if (!e || !draftable(e) || val(e).trim()) return;
+      if (e.tagName === 'INPUT' || e.tagName === 'TEXTAREA') e.value = pend[k]; else e.innerText = pend[k];
+      delete pend[k];
+      if (dirty.indexOf(e) < 0) dirty.push(e);
+      try { e.dispatchEvent(new Event('input', { bubbles: true })); } catch (x) {}
+    });
+  }
+  window.addEventListener('load', function () { putBackDrafts(); setTimeout(putBackDrafts, 600); });
+  window.addEventListener('pagehide', keepDrafts);
+  window.addEventListener('beforeunload', keepDrafts);
   function reloadWhenIdle() {
+    if (Date.now() - lastReload() < RL_GAP || unsaved()) { showFresh(); return; }
     var a = document.activeElement, typing = a && (/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) || a.isContentEditable);
-    if (!typing && !document.hidden) { guard = {}; Object.keys(stale).forEach(function (k) { guard[k] = 1; }); location.reload(); return; }
+    if (!typing && !document.hidden) { doReload(); return; }
     var go = function () { document.removeEventListener('visibilitychange', go); document.removeEventListener('focusout', go); setTimeout(reloadWhenIdle, 400); };
     document.addEventListener('visibilitychange', go); document.addEventListener('focusout', go);
   }
@@ -274,10 +430,10 @@
     onReady: function (fn) { readyFns.push(fn); },
     _merge: merge
   };
-  function start() { paint(); soon(300); }
+  function start() { putBackDrafts(); paint(); soon(300); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
-  document.addEventListener('visibilitychange', function () { if (!document.hidden) soon(200); });
-  window.addEventListener('focus', function () { soon(200); });
-  window.addEventListener('online', function () { boN = 0; boUntil = 0; soon(200); });
-  setInterval(function () { if (!document.hidden) cycle(); }, 60000);
+  document.addEventListener('visibilitychange', backSoon);
+  window.addEventListener('focus', backSoon);
+  window.addEventListener('online', function () { boN = 0; boUntil = 0; errN = 0; errUntil = 0; soon(200); });
+  setInterval(function () { if (!document.hidden && Date.now() - lastPull >= PULL_GAP) cycle(); }, 60000);
 })();
