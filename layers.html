@@ -193,6 +193,8 @@ document.addEventListener('click',function(ev){var t=ev.target.closest('[data-me
  if(t.hasAttribute('data-go')){var g=t.getAttribute('data-go');location.hash=g?'#/'+g:'#/'}});
 document.addEventListener('keydown',function(ev){if((ev.key==='Enter'||ev.key===' ')&&ev.target.classList&&ev.target.classList.contains('band')){ev.preventDefault();location.hash='#/'+ev.target.getAttribute('data-go')}});
 window.addEventListener('hashchange',route);
+/* New data from another device: redraw the layers in place (not while an item is open for mending), so the page does not reload */
+window.addEventListener('realm-sync:changed',function(e){if((e.detail&&e.detail.keys||[]).indexOf(KEY)<0||open)return;var y=window.scrollY;load();route();window.scrollTo(0,y);e.preventDefault()});
 $('bExp').onclick=function(){var all=Object.keys(IDX).map(function(id){var x=cur(id);x.where=IDX[id].kind==='layer'?'layer':((IDX[id].layer?IDX[id].layer.id:'open')+' / '+(IDX[id].group||''));return x});
  var out={app:'realm-layers',key:KEY,exported:new Date().toISOString(),built:D.built,edits:S.edits,items:all};
  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,1)],{type:'application/json'}));a.download='realm-layers-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500);toast('Exported')};
