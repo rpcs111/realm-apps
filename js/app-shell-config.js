@@ -75,7 +75,7 @@ window.APP_SHELL_CONFIG={
    ]
   },
   desk:{
-   page:'desk-app.html',name:'Desk',icon:'pwa/star-desk-192.png?v=20261026-1',start:'./desk-app.html?app=desk-app',openFrom:'#go',
+   page:'desk-pages.html',name:'Desk',icon:'pwa/star-desk-192.png?v=20261026-1',start:'./desk-pages.html?app=desk-pages',openFrom:'#go',
    checks:['the job board (tap Open)','the Desk icon on this phone (tap Save app)'],
    amend:[{sel:'main',kind:'Desk launcher'},{sel:'.rz-list li',kind:'unfinished job',pen:false}],
    resumeList:{at:'main',how:'after',heading:'Pick up where you left off'},
