@@ -122,5 +122,6 @@ ab.onclick=function(){vw(!document.body.classList.contains('all'))};vw(new URLSe
 window.addEventListener('storage',draw);draw();setInterval(tk,1000);
 })();
 </script><script>/* keep the typed note when you jump in and out (see js/reconnect.js) */
-window.RealmLine&&RealmLine.drafts(['nq']);</script><script src="js/realm-sync.js?v=20261028-7"></script><script src="js/ara-button.js?v=20261017-24" defer></script>
+window.RealmLine&&RealmLine.drafts(['nq']);</script><script>/* New data from another device: the blocks, notes and next-job lines here already redraw from it, so the page does not reload */
+window.addEventListener('realm-sync:changed',function(e){var P=location.pathname.split('/').pop()||'staff.html';if(P=='today.html')P='staff.html';var mine=['realm_today_blocks','realm_notes','realm_next_done_'+P,'realm_next_q_'+P,'realm_next_snz_'+P];if((e.detail&&e.detail.keys||[]).some(function(k){return mine.indexOf(k)>=0}))e.preventDefault()});</script><script src="js/realm-sync.js?v=20261028-7"></script><script src="js/ara-button.js?v=20261017-24" defer></script>
 </body></html>
