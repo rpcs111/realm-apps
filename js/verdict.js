@@ -11,7 +11,8 @@
       (no codes, links, emails or file names: the same rules the History Log scrub refuses), then the code check copied
       from js/watchme.js (Desk fix round 4 rules), and only then the same queue. A refused reason is never stored or sent.
    4. Offline queue (localStorage "deck_verdict_q"): unsent taps re-send by themselves when the phone comes back online,
-      when the app is reopened, and every 30 seconds while any are waiting. One send at a time, 20 second limit each.
+      when the app is reopened, and on a timer while any are waiting (30s, then 1, 2, 4 and 5 minutes; it stops after 6 failed
+      tries and the line says "tap here to try again"). One send at a time, 20 second limit each.
       Each tap has its own id and the Engine ignores a repeat id, so a late re-send never writes a second row.
    Usage: <script src="js/verdict.js" data-where="Deck" data-targets="#dev ul.ev > li, #ludList li.lud-ask"></script>
    (history rows are mounted by js/history.js through window.DeckVerdict.mount). No key, token or secret is in this file. */
@@ -161,10 +162,19 @@ function flush(){if(busy)return busy;
    if(navigator.onLine===false){done(false);return}
    var it=q[0];
    post(it).then(function(){var q2=qget().filter(function(x){return x.id!==it.id});qput(q2);markSent(it);paintAll();next()},
-    function(e){var q2=qget();q2.forEach(function(x){if(x.id===it.id){x.tries=(x.tries||0)+1;x.err=String(e&&e.message||e).slice(0,60)}});qput(q2);paintAll();done(false)})}
+    function(e){var q2=qget();q2.forEach(function(x){if(x.id===it.id){x.tries=(x.tries||0)+1;x.lastTry=Date.now();x.err=String(e&&e.message||e).slice(0,60)}});qput(q2);paintAll();done(false)})}
   next()}).then(function(v){busy=null;return v});
  return busy}
 function pending(id){return qget().some(function(x){return x.id===id})}
+/* 2 Nov: automatic re-sends back off (30s, 1, 2, 4, then every 5 minutes) and stop after 6 failed tries, so a send that keeps failing is not re-sent forever.
+   Then the line says "not sent, tap here to try again". Any new Agree or Disagree tap also tries again. */
+var MAXT=6;
+function qitem(id){return id?qget().filter(function(x){return x.id===id})[0]:null}
+function stuck(it){return !!it&&(it.tries||0)>=MAXT}
+function due(){var q=qget();if(!q.length)return false;var h=q[0],t=h.tries||0;if(t>=MAXT)return false;
+ return !t||!h.lastTry||Date.now()-h.lastTry>=Math.min(300000,TICK_MS*Math.pow(2,t-1))}
+function auto(){if(due())flush()}
+function retry(){var q=qget(),n=0;q.forEach(function(x){if(stuck(x)){x.tries=0;x.lastTry=0;n++}});if(n)qput(q);paintAll();return flush()}
 
 /* ---------- a verdict tap ---------- */
 function record(line,label,v){var st=vget(),cur=st[line];
@@ -172,7 +182,7 @@ function record(line,label,v){var st=vget(),cur=st[line];
  var it={id:newId(),line:line,label:label,v:v,t:Date.now()};
  st[line]={v:v,t:it.t,qid:it.id,sent:0};
  if(!wr(LSV,st))return null;
- var q=qget();q.push(it);qput(q);paintAll();flush();return st[line]}
+ var q=qget();q.push(it);qput(q);paintAll();retry();return st[line]}
 function askWhy(line,label,shown){
  var H=window.DeckHistory;if(!H||!H.note)return;
  var whyIt=null;
@@ -182,11 +192,11 @@ function askWhy(line,label,shown){
    if(!RC)return "This note can't be checked right now, so it isn't sent.";if(RC.blocked(note))return RC.MSG;return hasCode(note)?codeMsg(note):""},
   okMsg:"Sent. The bots' inbox wrote it down.",
   kept:function(){return !!(whyIt&&pending(whyIt.id))},
-  failMsg:function(){return whyIt&&pending(whyIt.id)?"Kept on this phone. It sends by itself when you're back online.":"Not sent, and this phone couldn't keep it. Copy your reason and try again."},
+  failMsg:function(){return whyIt&&pending(whyIt.id)?(stuck(qitem(whyIt.id))?"Not sent after 6 tries. It is kept on this phone. Tap try again on the line under Agree and Disagree to send it.":"Kept on this phone. It tries again by itself a few times; if it still can't send, the line under Agree and Disagree says tap here to try again."):"Not sent, and this phone couldn't keep it. Copy your reason and try again."},
   send:function(note){var st=vget(),s=st[line];if(!s||s.v!=="disagree")return Promise.reject(new Error("no verdict"));
    if(!whyIt||whyIt.why!==note){whyIt={id:newId(),line:line,label:label,v:"disagree",why:note,t:Date.now()};
     s.whyId=whyIt.id;s.whySent=0;s.why=1;st[line]=s;wr(LSV,st);var q=qget();q.push(whyIt);qput(q);paintAll()}
-   var id=whyIt.id;return flush().then(function(){if(pending(id))throw new Error("queued")})}})}
+   var id=whyIt.id;return retry().then(function(){if(pending(id))throw new Error("queued")})}})}
 
 /* ---------- what shows on the line ---------- */
 var MOUNTS=[];
@@ -194,15 +204,20 @@ function paint(m){var s=vget()[m.line],a=m.a,d=m.d,t=m.t;
  a.setAttribute("aria-pressed",s&&s.v==="agree"?"true":"false");d.setAttribute("aria-pressed",s&&s.v==="disagree"?"true":"false");
  if(!s){t.textContent="";t.hidden=true;return}
  var w=s.v==="agree"?"You agreed":"You disagreed",sent=s.sent||!pending(s.qid);
- var x=w+" \u00b7 "+hm(s.t)+" \u00b7 "+(sent?"sent \u2713":"waiting to send");
- if(s.v==="disagree")x+=s.why?(s.whySent||(s.whyId&&!pending(s.whyId))?" \u00b7 reason sent \u2713":" \u00b7 reason waiting to send"):" \u00b7 tap Disagree to say why";
- t.hidden=false;t.textContent=x;t.className="dv-st "+s.v+(sent?"":" wait")}
+ var k1=!sent&&stuck(qitem(s.qid)),k2=s.v==="disagree"&&s.why&&!s.whySent&&stuck(qitem(s.whyId)),k=k1||k2;
+ var x=w+" \u00b7 "+hm(s.t)+" \u00b7 "+(sent?"sent \u2713":k1?"not sent":"waiting to send");
+ if(s.v==="disagree")x+=s.why?(s.whySent||(s.whyId&&!pending(s.whyId))?" \u00b7 reason sent \u2713":k2?" \u00b7 reason not sent":" \u00b7 reason waiting to send"):" \u00b7 tap Disagree to say why";
+ if(k)x+=" \u00b7 tap here to try again";
+ t.hidden=false;t.textContent=x;t.className="dv-st "+s.v+(sent&&!k?"":" wait")+(k?" stuck":"");
+ if(k){t.setAttribute("role","button");t.tabIndex=0}else{t.removeAttribute("role");t.removeAttribute("tabindex")}}
 function paintAll(){MOUNTS=MOUNTS.filter(function(m){return m.el.isConnected});MOUNTS.forEach(paint)}
 /* label goes in the sent row only (it can hold a history row id); shown is what Ange sees, never an id */
 function mount(el,line,label,shown){if(!el||el.querySelector(":scope > .dv"))return;
  var box=mk("div","dv"),a=mk("button","dv-b dv-agree","\u2713 Agree"),d=mk("button","dv-b dv-dis","\u2717 Disagree"),t=mk("div","dv-st");
  a.type=d.type="button";a.setAttribute("aria-label","Agree with what was done");d.setAttribute("aria-label","Disagree with what was done");
  t.setAttribute("aria-live","polite");box.setAttribute("data-dv",line);
+ var again=function(e){if(!t.classList.contains("stuck"))return;e.stopPropagation();if(e.preventDefault)e.preventDefault();retry()};
+ t.addEventListener("click",again);t.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" ")again(e)});
  a.addEventListener("click",function(e){e.stopPropagation();record(line,label,"agree")});
  d.addEventListener("click",function(e){e.stopPropagation();if(record(line,label,"disagree"))askWhy(line,label,shown)});
  box.appendChild(a);box.appendChild(d);box.appendChild(t);el.appendChild(box);
@@ -226,17 +241,17 @@ function css(){if(document.getElementById("dvCss"))return;var s=mk("style");s.id
  ".dv-b:focus-visible{outline:2px solid var(--accent,#22d3ee);outline-offset:2px}"+
  ".dv-b.dv-agree[aria-pressed=true]{background:#052e1a;border-color:#22c55e;color:#bbf7d0}"+
  ".dv-b.dv-dis[aria-pressed=true]{background:#2a0a0a;border-color:#ef4444;color:#fecaca}"+
- ".dv-st{flex:1 0 100%;font-size:12px;color:#a7f3d0;overflow-wrap:anywhere}.dv-st.disagree{color:#fca5a5}.dv-st.wait{color:#fbbf24}"+
+ ".dv-st{flex:1 0 100%;font-size:12px;color:#a7f3d0;overflow-wrap:anywhere}.dv-st.disagree{color:#fca5a5}.dv-st.wait{color:#fbbf24}.dv-st.stuck{cursor:pointer;min-height:44px;display:flex;align-items:center;text-decoration:underline}"+
  "#hist td.c-dv .dv{flex-direction:column;align-items:stretch}#hist td.c-dv .dv-b{flex:0 0 auto;width:100%;padding:0 6px}"+
  "@media (max-width:599.98px){#hist td.c-dv .dv{flex-direction:row;flex-wrap:wrap}#hist td.c-dv .dv-b{flex:1 1 0;width:auto}}";
  document.head.appendChild(s)}
 
 function start(){css();scan();
  if(TARGETS&&window.MutationObserver)new MutationObserver(function(){scan()}).observe(document.body,{childList:true,subtree:true});
- addEventListener("online",flush);
- document.addEventListener("visibilitychange",function(){if(!document.hidden)flush()});
- setInterval(function(){if(qget().length)flush()},TICK_MS);
- if(qget().length)flush()}
+ addEventListener("online",auto);
+ document.addEventListener("visibilitychange",function(){if(!document.hidden)auto()});
+ setInterval(auto,TICK_MS);
+ auto()}
 window.DeckVerdict={refBlocked:function(s){return !window.RefCheck||window.RefCheck.blocked(s)},mount:mount,flush:flush,queue:qget,verdicts:vget,hasCode:hasCode,_text:rowText};
 css();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
