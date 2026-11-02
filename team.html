@@ -116,5 +116,6 @@ const idea=document.getElementById('idea');idea.value=localStorage.getItem('real
 idea.addEventListener('input',()=>{localStorage.setItem('realmCrewIdea',idea.value);document.getElementById('saved').textContent=' Saved'});
 function copyIdea(){navigator.clipboard.writeText(idea.value);document.getElementById('saved').textContent=' Copied'}
 render();
-</script><script src="js/realm-sync.js?v=20261028-7"></script>
+</script><script>/* New data from another device: show the new idea text in place, unless you are typing in that box */
+window.addEventListener('realm-sync:changed',function(e){var b=document.getElementById('idea');if((e.detail&&e.detail.keys||[]).indexOf('realmCrewIdea')<0||!b||document.activeElement===b)return;b.value=localStorage.getItem('realmCrewIdea')||'';e.preventDefault()});</script><script src="js/realm-sync.js?v=20261028-7"></script>
 <script src="js/ara-install.js?v=20261017-24" defer></script><script src="js/ara-version.js" defer></script><script src="js/saveapp.js?v=20261017-24" data-mount="header" data-mode="float" defer></script></body></html>
