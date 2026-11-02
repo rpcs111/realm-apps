@@ -245,5 +245,6 @@ buildPad();showGate();
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./private-sw.js',{scope:'./private.html'}).catch(function(){})})}
 })();
 </script>
+<script src="js/ara-version.js" defer></script><!-- 2 Nov: picks up a new deploy (version.json) and reloads once -->
 </body>
 </html>
