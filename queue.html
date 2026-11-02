@@ -102,7 +102,7 @@ header.q-top{padding:0 10px}header.q-top h1{font-size:15px;margin:0;white-space:
  <button id="notesBtn">Load next-week notes</button>
  <button id="expBtn">Export JSON</button><button id="impBtn">Import JSON</button><input type="file" id="impFile" accept="application/json,.json" hidden>
  <button id="resetBtn" class="warn">Reset</button>
- <a class="btn" id="mapperLink" href="mapper.html">Live mapper (paste) →</a>
+ <a class="btn" id="mapperLink" href="mapper.html">Old map editor (paste) →</a>
 </div>
 <div id="hint"></div>
 <div class="tabs"><button data-t="board" class="on">Board</button><button data-t="apps">Apps</button></div>
@@ -118,7 +118,7 @@ header.q-top{padding:0 10px}header.q-top h1{font-size:15px;margin:0;white-space:
   <button id="clrLog" class="warn" style="margin:6px 0">Clear log</button><div id="log"></div></aside>
 </div>
 <div id="dry"><div class="box" id="drybox"></div></div>
-<footer>Queue only. Paste into any node from the <a href="mapper.html">live mapper</a> (same board). Triggers, flow, voice and rules come next. · Deputy stays Deputy (look-only), Google Tasks stays Google Tasks. · Storage: this device only</footer>
+<footer>Queue only. Paste into any node from the <a href="mapper.html">old map editor</a> (same board). Triggers, flow, voice and rules come next. · Deputy stays Deputy (look-only), Google Tasks stays Google Tasks. · Storage: this device only</footer>
 <script src="js/realm-board.js"></script>
 <script>
 (function(){
@@ -196,7 +196,7 @@ function showSel(){
  h+='<div class="field"><label>Note (pastes from the mapper land here, timestamped)</label><textarea id="fNote" rows="5">'+esc(n.note||'')+'</textarea></div>';
  var ul=urlLabel(n.url);
  h+='<div class="field"><label>Link URL</label><input id="fUrl" type="'+(ul?'text':'url')+'" inputmode="url" placeholder="https://…" value="'+esc(ul||n.url||'')+'">'+(ul?'<span class="muted" id="fUrlK">Link kept. Paste a new link to replace it.</span>':'')+'</div>';
- h+='<p id="fOpenP"'+(n.url?'':' hidden')+'><a class="btn" id="fOpen" href="'+esc(n.url||'#')+'" target="_blank" rel="noopener">Open ↗</a> <a class="btn" href="mapper.html#'+encodeURIComponent(n.id)+'">Paste into this node →</a></p>';
+ h+='<p id="fOpenP"'+(n.url?'':' hidden')+'><a class="btn" id="fOpen" href="'+esc(n.url||'#')+'" target="_blank" rel="noopener">Open ↗</a> <a class="btn" href="mapper.html#'+encodeURIComponent(n.id)+'">Paste into this node (old map editor) →</a></p>';
  if(n.type==='action')h+='<p><button id="fDry">Dry run this button</button></p>';
  var ln=S.edges.filter(function(e){return e.a===n.id||e.b===n.id}).map(function(e){return byId(e.a===n.id?e.b:e.a)}).filter(Boolean);
  h+='<div class="kv"><b>Linked to</b>'+(ln.length?ln.map(function(x){return esc(x.name)}).join(', '):'<span class="muted">nothing yet</span>')+'</div>';
