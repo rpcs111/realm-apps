@@ -38,13 +38,13 @@ a{color:var(--c)}
 .dots{display:flex;gap:12px;justify-content:center;margin:12px 0 8px;min-height:18px}
 .dots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--c)}
 .dots i.f{background:var(--c)}
-#pin{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+#pin{position:absolute;opacity:0;pointer-events:none;width:44px;height:44px;padding:0;border:0} /* 2 Nov: hidden typing box behind the keypad; 44px so it never counts as a tiny tap, taps still go to the keypad */
 .pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px auto 0;max-width:280px}
 .pad button{font-size:22px;min-height:58px;border-radius:50%;aspect-ratio:1/1;width:72px;justify-self:center;padding:0}
 .pad button.t{font-size:14px;border:none;background:none}
 #gmsg{min-height:22px;font-size:14px;color:var(--bad);margin-top:8px}
 .glinks{margin-top:14px;display:flex;justify-content:center;gap:16px}
-.glinks button{background:none;border:none;color:var(--mut);font-size:13px;min-height:32px;text-decoration:underline}
+.glinks button{background:none;border:none;color:var(--mut);font-size:13px;min-height:44px;text-decoration:underline}
 /* app */
 header{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#000d;backdrop-filter:blur(6px);z-index:2}
 header h1{font-size:18px;margin:0;flex:1}
