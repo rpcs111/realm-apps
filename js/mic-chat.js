@@ -239,7 +239,7 @@ return { MSG: MSG, why: why };
     if (!logEl) return;
     var log = get(LOG), wait = {};
     get(OUT).forEach(function (x) { wait[x.id] = 1; });
-    if (!log.length) { logEl.innerHTML = '<p class="mc-empty">Tap Talk and say it, or type it. Saved for Ara. Ara passes it to 42*.</p>'; return; }
+    if (!log.length) { logEl.innerHTML = '<p class="mc-empty">Tap Talk and say it, or type it. Saved for your Helper, who passes it on.</p>'; return; }
     logEl.innerHTML = log.map(function (m) {
       var st = wait[m.id] ? 'On this phone, sending\u2026' : 'Sent';
       return '<div class="mc-msg' + (m.who === 'bot' ? ' mc-bot' : '') + '">' + esc(m.text) + '<i>' + esc(hhmm(m.ts)) + (m.who === 'bot' ? '' : ' \u00b7 ' + st) + '</i></div>';
@@ -265,7 +265,7 @@ return { MSG: MSG, why: why };
         if (!j || !j.ok) throw new Error('not saved');
         var done = {}; (j.saved || []).concat(j.dupes || []).forEach(function (id) { done[id] = 1; });
         put(OUT, get(OUT).filter(function (x) { return !done[x.id]; })); fails = 0;
-        say('\u2713 Saved for Ara');
+        say('\u2713 Saved for your Helper');
       })
       .catch(function () { fails++; say('Saved on this phone. It keeps trying by itself.'); later(Math.min(300000, 10000 * Math.pow(2, Math.min(fails - 1, 5)))); })
       .then(function () { sending = false; render(); });
@@ -320,15 +320,15 @@ return { MSG: MSG, why: why };
     if (document.getElementById('micChatBtn')) return;
     var st = document.createElement('style'); st.id = 'micChatCss'; st.textContent = css; document.head.appendChild(st);
     btn = document.createElement('button'); btn.type = 'button'; btn.id = 'micChatBtn';
-    btn.setAttribute('aria-label', 'Talk to the bots'); btn.title = 'Talk to the bots'; btn.setAttribute('aria-haspopup', 'dialog');
+    btn.setAttribute('aria-label', 'Talk to Helper'); btn.title = 'Talk to Helper'; btn.setAttribute('aria-haspopup', 'dialog');
     btn.innerHTML = SM7B;
     var sel = (S && S.getAttribute('data-mount')) || 'header', host = document.querySelector(sel);
     if (host) host.appendChild(btn); else { btn.className = 'fx'; document.body.appendChild(btn); }
     ov = document.createElement('div'); ov.id = 'micChat'; ov.hidden = true;
     ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-labelledby', 'mcTitle');
-    ov.innerHTML = '<div class="mc-top"><b id="mcTitle">TALK TO THE BOTS<small>Saved for Ara. Ara passes it to 42*. Nothing is emailed.</small></b><button type="button" id="mcClose" aria-label="Close">Close</button></div>'
+    ov.innerHTML = '<div class="mc-top"><b id="mcTitle">TALK TO HELPER<small>Saved for your Helper, who passes it on. Nothing is emailed.</small></b><button type="button" id="mcClose" aria-label="Close">Close</button></div>'
       + '<div class="mc-log" id="mcLog" aria-live="polite"></div>'
-      + '<div class="mc-foot"><textarea id="mcText" placeholder="Say it or type it\u2026" aria-label="Message for the bots" enterkeyhint="send"></textarea>'
+      + '<div class="mc-foot"><textarea id="mcText" placeholder="Say it or type it\u2026" aria-label="Message for Helper" enterkeyhint="send"></textarea>'
       + '<div class="mc-row"><button type="button" id="mcTalk" aria-pressed="false">' + MIC + '<span>Talk</span></button><button type="button" id="mcSend" disabled>Send</button></div>'
       + '<div class="mc-status" id="mcStatus" role="status" aria-live="polite"></div></div>';
     document.body.appendChild(ov);
