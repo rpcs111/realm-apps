@@ -67,7 +67,12 @@ function migrate(S){
  S._changed=changed;return S;
 }
 function load(){var S=null;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){S=null}S=migrate(S);var c=S._changed;delete S._changed;if(c)save(S);return S}
-function save(S){S.saved=new Date().toISOString();localStorage.setItem(KEY,JSON.stringify(S))}
+/* 2 Nov: save only when the board itself changed. The saved time is not part of the board, so the same board is never written
+   again with a new time (each new time made the sync send the whole board again from every open device). Returns true when written. */
+function canon(v,top){if(Array.isArray(v))return v.map(function(x){return canon(x)});if(v&&typeof v==='object'){var o={};Object.keys(v).sort().forEach(function(k){if(!(top&&k==='saved'))o[k]=canon(v[k])});return o}return v}
+function same(S){var old=null;try{old=JSON.parse(localStorage.getItem(KEY))}catch(e){old=null}return !!(old&&typeof old==='object'&&JSON.stringify(canon(old,1))===JSON.stringify(canon(S,1)))?old:null}
+function changed(S){return !same(S)}
+function save(S){var old=same(S);if(old){if(old.saved)S.saved=old.saved;return false}S.saved=new Date().toISOString();localStorage.setItem(KEY,JSON.stringify(S));return true}
 function kwOf(n){var all=STEPS.concat(SYS);for(var i=0;i<all.length;i++)if(all[i].id===n.id)return all[i].kw||[];return[]}
 function stamp(d){d=d||new Date();var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];function z(x){return(x<10?'0':'')+x}return d.getDate()+' '+M[d.getMonth()]+' '+d.getFullYear()+' '+z(d.getHours())+':'+z(d.getMinutes())}
 /* File pasted text into a node's notes, timestamped. Returns the node. */
@@ -99,5 +104,5 @@ function suggest(S,text,max){
  });
  out.sort(function(a,b){return b.score-a.score});return out.slice(0,max||5);
 }
-window.RealmBoard={KEY:KEY,STAT:STAT,TYPES:TYPES,STEPS:STEPS,SYS:SYS,SERVICES:SERVICES,W:W,H:H,seed:seed,migrate:migrate,load:load,save:save,byId:byId,file:file,suggest:suggest,stamp:stamp};
+window.RealmBoard={KEY:KEY,STAT:STAT,TYPES:TYPES,STEPS:STEPS,SYS:SYS,SERVICES:SERVICES,W:W,H:H,seed:seed,migrate:migrate,load:load,save:save,changed:changed,byId:byId,file:file,suggest:suggest,stamp:stamp};
 })();
