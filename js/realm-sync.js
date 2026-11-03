@@ -341,12 +341,15 @@
        placeholder or label. No negation counts for inputs ("Never share your PIN" is still a PIN box).
      - A note box (textarea or editable area) is checked the same way, except that a "no" directly followed by a list holding the
        word ("no codes or key numbers") does not count. "not", "never", "do not" and "don't" never cancel a word.
-     Parts of words do not count (typing, keyboard); camelCase ids are split into words first, so lkPin and realmKey count. */
+     Parts of words do not count (typing, keyboard); camelCase ids are split into words first, so lkPin and realmKey count.
+     One narrow allow: "post code", "postal code" and "zip code" are address boxes, so that "code" does not count. Any other
+     secret word in the same text still counts, and every other code ("access code", "PIN code", "security code") is secret. */
   var SECRET_AC = /^(current-password|new-password|one-time-code|cc-[a-z-]+)$/, SECRET_W = /\b(pin|password|passcode|key|code|otp|token|secret)s?\b/i;
+  var PLACE_CODE = /\b(?:post|postal|zip)\s+codes?\b/gi;
   var NO_LIST = /\bno\s+[a-z]+(?:\s+numbers?)?(?:\s+(?:or|and|nor)\s+[a-z]+(?:\s+numbers?)?)*/gi;
   function words(t) { return String(t || '').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Za-z])(\d)/g, '$1 $2').replace(/[_\-]+/g, ' '); }
   function secretWords(t, note) {
-    t = words(t);
+    t = words(t).replace(PLACE_CODE, ' ');
     if (note) t = t.replace(NO_LIST, function (m) { return SECRET_W.test(m) ? ' ' : m; });
     return SECRET_W.test(t);
   }

@@ -302,9 +302,11 @@ var SEED=[
  {t:"Job flow + Tonight previews",n:"Built local-only, waiting on review"}
 ];
 var items=[],showDone=false;
-function load(){try{var r=JSON.parse(localStorage.getItem(KEY)||"null");if(Array.isArray(r)){items=r;return}}catch(e){}
+function load(){try{var r=JSON.parse(localStorage.getItem(KEY)||"null");if(Array.isArray(r)){items=r;fixOld();return}}catch(e){}
   items=SEED.map(function(s){return {id:uid(),t:s.t,n:s.n,d:false}});save()}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(items))}catch(e){}}
+/* once per device: a list saved before the rename keeps the old finish label; change that exact text only */
+function fixOld(){var F="realm_desk_finish_fix1",o="Fresh key, Desk v3, Scribe",nw="Fresh key, new Desk, Scribe",ch=false;try{if(localStorage.getItem(F)==="1")return;items.forEach(function(x){if(!x)return;if(x.n===o){x.n=nw;ch=true}if(x.t===o){x.t=nw;ch=true}});if(ch)save();localStorage.setItem(F,"1")}catch(e){}}
 function render(){
   var open=items.filter(function(x){return !x.d}).length;
   $("openCount").textContent=open;$("fCount").textContent=open+" open";

@@ -659,7 +659,7 @@ window.run=function(fn,args,cb){
   }).withFailureHandler(fail).api(rkey(),fn,args||[]);
 };
 /* Start tile buttons pass the tab name; make sure an unknown tab never throws */
-var _go=window.go;window.go=function(name,btn){if(!document.getElementById('tab-'+name))return;btn=btn||document.querySelectorAll('nav button')[TABIX[name]];_go(name,btn);try{btn.scrollIntoView({inline:'center',block:'nearest'})}catch(e){}pushView({tab:name})};
+var _go=window.go;window.go=function(name,btn){if(!document.getElementById('tab-'+name))return;btn=btn||document.querySelectorAll('nav button')[TABIX[name]];_go(name,btn);try{sessionStorage.setItem('desk_pages_tab',name)}catch(e){}try{btn.scrollIntoView({inline:'center',block:'nearest'})}catch(e){}pushView({tab:name})};
 
 /* ---------- 2. Back stays inside Desk ---------- */
 var H=(window.google&&google.script&&google.script.history)||null,cur={tab:'start'},depth=0,silent=false,selfBack=0,pending=null;
@@ -952,7 +952,9 @@ document.addEventListener('contextmenu',function(e){if(e.target.closest&&e.targe
    If they stay, the old path runs first and a null or empty answer throws on Start before this can catch it. */
 (function boot(){var booted=Object.keys(loaded).some(function(k){return loaded[k]});
   if(!booted)run('whoami',[],function(w){var e=document.getElementById('who');if(e)e.textContent=w});
-  var t=(CFG.tab&&TABIX[CFG.tab]!=null)?CFG.tab:'start';
+  /* a link that names a tab wins; otherwise reopen the tab that was open in this browser tab before the reload; unknown means Start */
+  var was='';try{was=sessionStorage.getItem('desk_pages_tab')||''}catch(e){}
+  var t=(CFG.tab&&TABIX[CFG.tab]!=null)?CFG.tab:(TABIX.hasOwnProperty(was)&&document.getElementById('tab-'+was))?was:'start';
   try{if(H)H.replace({tab:t},{},'');else history.replaceState({tab:t},'')}catch(e){}cur={tab:t};
   if(t!=='start'){silent=true;try{go(t)}finally{silent=false}}
   loaded[t]=false;load(t,true)})();
