@@ -3,9 +3,9 @@
 <meta name="theme-color" content="#000000"><title>Desk</title>
 <link rel="manifest" href="desk-cube.webmanifest?v=20261029-1"><link rel="icon" type="image/png" sizes="192x192" href="pwa/desk-cube-192.png?v=20261029-1"><link rel="apple-touch-icon" sizes="180x180" href="pwa/desk-cube-apple-180.png?v=20261029-1"><meta name="application-name" content="Desk"><meta name="apple-mobile-web-app-title" content="Desk">
 <script>/* Desk launcher (26 Oct 2026). REALM DESK itself is a Google Apps Script page and cannot carry its own install file,
-   so this page is the installable Desk icon. Opened from the installed icon it goes straight to REALM DESK. */
+   so this page is the installable Desk icon. Opened from the installed icon it opens Desk on Pages (desk-pages.html) at once and stays on this site. */
 var DESK_EXEC="https://script.google.com/macros/s/AKfycbxhGb1O-6S6C2PJS92EEuViEBDu0wj2AGTzgkGtm_7MixmXsepE-XxF9rgly0f6SwARGw/exec";
-(function(){var sa=false;try{sa=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true}catch(e){}if(sa)location.replace(DESK_EXEC)})();</script>
+(function(){var sa=false;try{sa=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true}catch(e){}if(sa)location.replace("./desk-pages.html")})();</script>
 <style>*{box-sizing:border-box}body{margin:0;min-height:100dvh;background:#000;color:#e5e5e5;font:15px/1.45 system-ui,-apple-system,Roboto,sans-serif}
 header{display:flex;align-items:center;gap:10px;padding:calc(8px + env(safe-area-inset-top)) 12px 8px;border-bottom:1px solid #1f1f1f}
 .mark{width:28px;height:28px;background:url(pwa/star-desk.svg?v=20261026-1) center/cover no-repeat;border-radius:6px}
@@ -15,7 +15,7 @@ a.go{display:flex;align-items:center;justify-content:center;min-height:56px;bord
 p{color:#a3a3a3;font-size:13px}</style></head><body>
 <header><span class="mark" role="img" aria-label="Desk star"></span><b>DESK</b><div class="nav"><a href="./index.html">&lsaquo; HUB</a></div></header>
 <main><a class="go" id="go" href="#">OPEN DESK</a>
-<p>Desk is the job board (REALM DESK). Tap <b>Save app</b> above to put a Desk icon on this phone or computer; the icon opens REALM DESK straight away.</p></main>
+<p>Desk is the job board (REALM DESK). Tap <b>Save app</b> above to put a Desk icon on this phone or computer; the icon opens Desk on Pages straight away.</p></main>
 <script>document.getElementById("go").href=DESK_EXEC;</script>
 <script src="js/saveapp.js?v=20261017s" data-mount="header .nav"></script>
 <script src="js/ara-version.js" defer></script>
